@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "#server/*": ["./src/server/*"],
-      "#hooks": ["./src/hooks/index"]
+      "#lib/*": ["./lib/*/index.ts"],
+      "#server/*": ["./server/*/index.ts"],
+      "#hooks": ["./hooks/index.ts"],
+      "#components": ["./components/index.ts"],
+      "#components/*": ["./components/*/index.ts"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

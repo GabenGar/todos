@@ -11,14 +11,10 @@ function TodosLayout({
 }) {
   return (
     <>
-      <header>TODOs</header>
       <section>
-        {/* Include shared UI here e.g. a header or sidebar */}
-        <nav></nav>
-
+        <header>TODOs</header>
         {children}
       </section>
-      <footer>Repo Link</footer>
     </>
   );
 }
