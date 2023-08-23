@@ -1,10 +1,11 @@
+import { type Metadata } from "next";
 import { ClientProvider } from "#hooks";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const metadata: Metadata = {
+  title: "Next.js",
+};
+
+function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
@@ -13,3 +14,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default RootLayout;
