@@ -4,7 +4,10 @@
   "description": "The list of todos in NextJS.",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,15 @@
   "bugs": {
     "url": "https://github.com/GabenGar/todos/issues"
   },
-  "homepage": "https://github.com/GabenGar/todos#readme"
+  "homepage": "https://github.com/GabenGar/todos#readme",
+  "dependencies": {
+    "next": "^13.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.0.0",
+    "@types/react": "^18.2.21",
+    "typescript": "^5.1.6"
+  }
 }
