@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { getDictionary } from "#server";
 import { type IBasePageParams } from "#pages/types";
-import { TodoList } from "#components";
+import { TodoList } from "#components/todo-list";
 
 interface IProps {
   params: IBasePageParams;
