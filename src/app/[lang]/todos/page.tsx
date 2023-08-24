@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { getDictionary } from "#server";
 import { type IBasePageParams } from "#pages/types";
+import { TodoList } from "#components";
 
 interface IProps {
   params: IBasePageParams;
@@ -15,9 +16,12 @@ async function TodosPage({ params }: IProps) {
   const dict = await getDictionary(lang);
 
   return (
-    <section>
+    <>
       <h1>{dict.todos}</h1>
-    </section>
+      <section>
+        <TodoList id={"todos"}/>
+      </section>
+    </>
   );
 }
 
