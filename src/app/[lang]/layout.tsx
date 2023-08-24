@@ -13,8 +13,12 @@ interface IProps {
 }
 
 export const metadata: Metadata = {
-  title: "Next.js",
-  description: "Site built with NextJS."
+  title: { template: "%s | Next.js", default: "Next.js" },
+  description: "Site built with NextJS.",
+  openGraph: {
+    title: "Next.js",
+    description: "Site built with NextJS.",
+  },
 };
 
 function RootLayout({ children, params }: IProps) {
