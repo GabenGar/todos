@@ -1,4 +1,6 @@
 import { type Metadata } from "next";
+import Link from "next/link";
+import { REPOSITORY_URL, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { ClientProvider } from "#hooks";
 import { GlobalNavigation } from "#components";
@@ -13,10 +15,10 @@ interface IProps {
 }
 
 export const metadata: Metadata = {
-  title: { template: "%s | Next.js", default: "Next.js" },
+  title: { template: `%s | ${SITE_TITLE}`, default: SITE_TITLE },
   description: "Site built with NextJS.",
   openGraph: {
-    title: "Next.js",
+    title: SITE_TITLE,
     description: "Site built with NextJS.",
   },
 };
@@ -32,7 +34,9 @@ function RootLayout({ children, params }: IProps) {
             <GlobalNavigation />
           </header>
           {children}
-          <footer>Repo URL</footer>
+          <footer>
+            <a href={REPOSITORY_URL}>Repository</a>
+          </footer>
         </ClientProvider>
       </body>
     </html>
