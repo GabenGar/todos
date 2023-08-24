@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(
   { params, searchParams }: IProps,
-  parent?: ResolvingMetadata
+  parent?: ResolvingMetadata,
 ): Promise<Metadata> {
   const id = params.todo_id;
 

@@ -1,1 +1,1 @@
-export const HomePageURL = "/"
+export const HomePageURL = "/";

@@ -7,7 +7,8 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   // Check if there is any supported locale in the pathname
   const pathname = request.nextUrl.pathname;
   const pathnameIsMissingLocale = LOCALES.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    (locale) =>
+      !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
   // Redirect if there is no locale
@@ -54,7 +55,7 @@ function getLocale(request: Request): string {
     languages,
     // @ts-expect-error readonly type issue
     LOCALES,
-    DEFAULT_LOCALE
+    DEFAULT_LOCALE,
   );
 
   return locale;
