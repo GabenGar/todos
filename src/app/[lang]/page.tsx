@@ -7,10 +7,6 @@ interface IProps {
   params: IBasePageParams;
 }
 
-export const metadata: Metadata = {
-  title: "Next.js",
-};
-
 async function FrontPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
