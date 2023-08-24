@@ -5,6 +5,8 @@ import { GlobalNavigation } from "#components";
 import type { ReactNode } from "react";
 import type { IBasePageParams } from "#pages/types";
 
+import "../../styles/global.scss";
+
 interface IProps {
   children: ReactNode;
   params: IBasePageParams;

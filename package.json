@@ -32,6 +32,7 @@
     "@types/negotiator": "^0.6.1",
     "@types/node": "^16.0.0",
     "@types/react": "^18.2.21",
+    "sass": "^1.66.1",
     "typescript": "^5.1.6"
   }
 }
