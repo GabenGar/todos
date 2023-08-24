@@ -1,8 +1,13 @@
+const mdx = require("@next/mdx");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     typedRoutes: true,
+    mdxRs: true,
   },
 };
 
-module.exports = nextConfig;
+const withMDX = mdx();
+
+module.exports = withMDX(nextConfig);

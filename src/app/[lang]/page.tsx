@@ -25,6 +25,9 @@ async function FrontPage({ params }: IProps) {
           <li>
             <Link href="/todos">TODOs</Link>
           </li>
+          <li>
+            <Link href="/mdx">MDX</Link>
+          </li>
         </ul>
       </section>
     </>
