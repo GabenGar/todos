@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
+      "#pages/types": ["./app/types.ts"],
       "#lib/*": ["./lib/*/index.ts"],
+      "#server": ["./server/index.ts"],
       "#server/*": ["./server/*/index.ts"],
       "#hooks": ["./hooks/index.ts"],
       "#components": ["./components/index.ts"],

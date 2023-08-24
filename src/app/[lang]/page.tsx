@@ -1,16 +1,25 @@
 import { type Metadata } from "next";
 import Link from "next/link";
+import { getDictionary } from "#server";
+import type { IBasePageParams } from "#pages/types";
+
+interface IProps {
+  params: IBasePageParams;
+}
 
 export const metadata: Metadata = {
   title: "Next.js",
 };
 
-function FrontPage() {
+async function FrontPage({ params }: IProps) {
+  const { lang } = params;
+  const dict = await getDictionary(lang);
+
   return (
     <>
       <section>
         <header>
-          <h1>Hello, Next.js!</h1>
+          <h1>{dict.home}</h1>
         </header>
         <ul>
           <li>

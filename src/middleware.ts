@@ -1,12 +1,27 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
+import { DEFAULT_LOCALE, LOCALES } from "#lib/internationalization";
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
-  const url = new URL("/home", request.url);
-  const response = NextResponse.redirect(url);
+  // Check if there is any supported locale in the pathname
+  const pathname = request.nextUrl.pathname;
+  const pathnameIsMissingLocale = LOCALES.every(
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  );
 
-  return response;
+  // Redirect if there is no locale
+  if (pathnameIsMissingLocale) {
+    const locale = getLocale(request);
+    // e.g. incoming request is `/products`
+    // The new URL is now `/en/products`
+    const url = new URL(`/${locale}/${pathname}`, request.url);
+    const redirect = NextResponse.redirect(url);
+
+    return redirect;
+  }
+
+  return;
 }
 
 /**
@@ -26,18 +41,21 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    // "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    // Optional: only run on root (/) URL
+    "/",
   ],
 };
-
-const locales = ["en"] as const;
-const defaultLocale = locales[0];
 
 function getLocale(request: Request): string {
   const headers = Object.fromEntries(request.headers);
   const languages = new Negotiator({ headers }).languages();
-
-  const locale = match(languages, locales, defaultLocale);
+  const locale = match(
+    languages,
+    // @ts-expect-error readonly type issue
+    LOCALES,
+    DEFAULT_LOCALE
+  );
 
   return locale;
 }
