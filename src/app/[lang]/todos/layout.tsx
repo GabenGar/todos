@@ -1,15 +1,14 @@
+import { IBaseLayoutProps } from "#pages/types";
 import { type Metadata } from "next";
+
+interface IProps extends IBaseLayoutProps {}
 
 export const metadata: Metadata = {
   title: "TODOs",
-  description: "The list of TODOs"
+  description: "The list of TODOs",
 };
 
-function TodosLayout({
-  children, // will be a page or nested layout
-}: {
-  children: React.ReactNode;
-}) {
+function TodosLayout({ children }: IProps) {
   return (
     <>
       <section>

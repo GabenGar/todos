@@ -8,7 +8,7 @@ interface IProps extends IBasePageProps {
 }
 
 function TodoPage({ params }: IProps) {
-  return <h1>Hello, TODO "{params.todo_id}"!</h1>;
+  return <h1>Hello, TODO &quot;{params.todo_id}&quot;!</h1>;
 }
 
 export async function generateStaticParams() {

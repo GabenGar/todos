@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 async function TodosPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
+
   return <h1>{dict.todos}</h1>;
 }
 
