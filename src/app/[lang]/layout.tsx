@@ -14,6 +14,7 @@ interface IProps {
 
 export const metadata: Metadata = {
   title: "Next.js",
+  description: "Site built with NextJS."
 };
 
 function RootLayout({ children, params }: IProps) {

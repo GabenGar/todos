@@ -1,7 +1,10 @@
-interface IProps {
+import type { Metadata, ResolvingMetadata } from "next";
+import type { IBasePageProps } from "#pages/types";
+
+interface IProps extends IBasePageProps {
   params: {
     todo_id: string;
-  };
+  } & IBasePageProps["params"];
 }
 
 function TodoPage({ params }: IProps) {
@@ -16,6 +19,17 @@ export async function generateStaticParams() {
   });
 
   return ids;
+}
+
+export async function generateMetadata(
+  { params, searchParams }: IProps,
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const id = params.todo_id;
+
+  return {
+    title: `TODO "${id}"`,
+  };
 }
 
 export default TodoPage;

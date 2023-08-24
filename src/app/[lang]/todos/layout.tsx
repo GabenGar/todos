@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "TODOs",
+  description: "The list of TODOs"
 };
 
 function TodosLayout({
