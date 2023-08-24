@@ -1,4 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { match } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   const url = new URL("/home", request.url);
@@ -27,3 +29,15 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };
+
+const locales = ["en"] as const;
+const defaultLocale = locales[0];
+
+function getLocale(request: Request): string {
+  const headers = Object.fromEntries(request.headers);
+  const languages = new Negotiator({ headers }).languages();
+
+  const locale = match(languages, locales, defaultLocale);
+
+  return locale;
+}
