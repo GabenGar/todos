@@ -1,12 +1,18 @@
-import { Form, Label } from "#components/forms";
+import { Form, type IFormElements, Label } from "#components/forms";
 import type { ITodoInit } from "./types";
 
-import styles from "./new-todo.module.scss"
+import styles from "./new-todo.module.scss";
 
 interface IProps {
   id: string;
   onNewTodo: (todoInit: ITodoInit) => Promise<void>;
 }
+
+const FIELD = {
+  TITLE: { name: "title", label: "Title" },
+  DESCRIPTION: { name: "description", label: "Description" },
+} as const;
+type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
 export function NewTodoForm({ id, onNewTodo }: IProps) {
   return (
@@ -14,15 +20,15 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
       id={id}
       className={styles.block}
       onSubmit={async (event) => {
-        const formElements = event.currentTarget.elements;
-        const title = (formElements["title"] as HTMLInputElement).value.trim();
-        const description = (
-          formElements["description"] as HTMLInputElement
-        ).value.trim();
+        const formElements = event.currentTarget
+          .elements as IFormElements<IFieldName>;
+        const title = formElements.title.value.trim();
+        const description = formElements.description.value.trim();
 
         if (!title) {
           return;
         }
+
         const init: ITodoInit = {
           title,
           description,
@@ -34,24 +40,25 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
       {(formID) => (
         <>
           <div>
-            <Label htmlFor={`${formID}-title`}>Title</Label>
+            <Label htmlFor={`${formID}-${FIELD.TITLE.name}`}>{FIELD.TITLE.label}</Label>
             <input
               form={formID}
               type="text"
-              name="title"
-              id={`${formID}-title`}
+              name={FIELD.TITLE.name}
+              id={`${formID}-${FIELD.TITLE.name}`}
               minLength={1}
-              maxLength={256}
+              maxLength={128}
               required
             />
           </div>
+
           <div>
-            <Label htmlFor={`${formID}-description`}>Description</Label>
+            <Label htmlFor={`${formID}-${FIELD.DESCRIPTION.name}`}>{FIELD.DESCRIPTION.label}</Label>
             <input
               form={formID}
               type="text"
-              name="description"
-              id={`${formID}-description`}
+              name={FIELD.DESCRIPTION.name}
+              id={`${formID}-${FIELD.DESCRIPTION.name}`}
               minLength={1}
               maxLength={512}
             />
