@@ -1,4 +1,4 @@
-import { Form, Label } from "#components/forms";
+import { Form, Label } from "#components/form";
 import type { ITodoInit } from "./types";
 
 import styles from "./new-todo.module.scss"
