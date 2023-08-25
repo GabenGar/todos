@@ -17,6 +17,9 @@
       "#server/*": [
         "./server/*/index.ts"
       ],
+      "#browser/*": [
+        "./browser/*"
+      ],
       "#hooks": [
         "./hooks/index.ts"
       ],
