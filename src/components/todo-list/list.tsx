@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
 import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
-import { Article, ArticleBody, ArticleHeader, type IArticleProps } from "#components/articles";
+import { Article, ArticleBody, ArticleHeader, type IArticleProps } from "#components/article";
 import { Loading } from "components/loading";
 import { NewTodoForm } from "./new-todo";
 import { TodoItem } from "./item";

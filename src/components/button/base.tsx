@@ -16,7 +16,7 @@ export interface IButtonBaseProps
    * it needs to behave like a submit button, but look like a normal one.
    */
   viewType?: IViewType;
-  onClick: (event: IClickEvent) => Promise<void> | void;
+  onClick?: (event: IClickEvent) => Promise<void> | void;
 }
 
 export const ButtonBase = createBlockComponent(styles, Component);

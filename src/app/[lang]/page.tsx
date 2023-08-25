@@ -1,11 +1,11 @@
+import { type Metadata } from "next";
 import Link from "next/link";
 import { SITE_TITLE } from "#environment";
 import { getDictionary } from "#server";
-import { Heading } from "#components/headings";
-import { Article, ArticleHeader } from "#components/articles";
-
-import { type Metadata } from "next";
+import { Heading } from "#components/heading";
+import { Article, ArticleHeader } from "#components/article";
 import type { IBasePageParams } from "#pages/types";
+
 
 import styles from "./page.module.scss";
 
