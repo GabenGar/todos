@@ -5,6 +5,8 @@ import { TodoList } from "#components/todo-list";
 import type { Metadata } from "next";
 import type { IBasePageParams } from "#pages/types";
 
+import styles from "./page.module.scss"
+
 interface IProps {
   params: IBasePageParams;
 }
@@ -20,7 +22,7 @@ async function TodosPage({ params }: IProps) {
   return (
     <>
       <Heading level={1}>{dict.todos}</Heading>
-      <section>
+      <section className={styles.block}>
         <TodoList id={"todos"} />
       </section>
     </>
