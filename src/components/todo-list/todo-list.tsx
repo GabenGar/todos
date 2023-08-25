@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
-import { Form, Label } from "#components/forms";
 import type {
   IBaseComponentPropsWithChildren,
   IBaseComponentProps,
 } from "#components/types";
+import { NewTodoForm } from "./new-todo-form";
 import type { ITodo, ITodoInit } from "./types";
 
 interface ITodoListProps extends IBaseComponentProps<"div"> {
@@ -35,60 +35,7 @@ export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
 
   return (
     <div {...props}>
-      <Form
-        id={todoListID}
-        onSubmit={async (event) => {
-          const formElements = event.currentTarget.elements;
-          const title = (
-            formElements["title"] as HTMLInputElement
-          ).value.trim();
-          const description = (
-            formElements["description"] as HTMLInputElement
-          ).value.trim();
-
-          if (!title) {
-            return;
-          }
-          const init: ITodoInit = {
-            title,
-            description,
-          };
-
-          await addTodo(init);
-        }}
-      >
-        {(formID) => (
-          <>
-            <div>
-              <Label htmlFor={`${formID}-title`}>Title</Label>
-              <input
-                form={formID}
-                type="text"
-                name="title"
-                id={`${formID}-title`}
-                minLength={1}
-                maxLength={256}
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor={`${formID}-description`}>Description</Label>
-              <input
-                form={formID}
-                type="text"
-                name="description"
-                id={`${formID}-description`}
-                minLength={1}
-                maxLength={512}
-              />
-            </div>
-
-            <button form={formID} type="submit">
-              Add
-            </button>
-          </>
-        )}
-      </Form>
+      <NewTodoForm id={todoListID} onNewTodo={addTodo}/>
       <ul>
         {todos.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
