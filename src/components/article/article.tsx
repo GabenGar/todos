@@ -13,36 +13,31 @@ interface IArticleFooterProps
   extends IBaseComponentPropsWithChildren<"footer"> {}
 
 export const Article = createBlockComponent(styles, ArticleComponent);
-export const ArticleHeader = createBlockComponent(styles.header, ArticleHeaderComponent);
-export const ArticleBody = createBlockComponent(styles.body, ArticleBodyComponent);
-export const ArticleFooter = createBlockComponent(styles.footer, ArticleFooterComponent);
+export const ArticleHeader = createBlockComponent(
+  styles.header,
+  ArticleHeaderComponent,
+);
+export const ArticleBody = createBlockComponent(
+  styles.body,
+  ArticleBodyComponent,
+);
+export const ArticleFooter = createBlockComponent(
+  styles.footer,
+  ArticleFooterComponent,
+);
 
 function ArticleComponent({ ...props }: IArticleProps) {
   return <article {...props} />;
 }
 
-function ArticleHeaderComponent({
-  children,
-  ...blockProps
-}: IArticleHeaderProps) {
-  return (
-    <header className={styles.header} {...blockProps}>
-      {children}
-    </header>
-  );
+function ArticleHeaderComponent({ ...props }: IArticleHeaderProps) {
+  return <header {...props} />;
 }
 
-function ArticleBodyComponent({ children, ...blockProps }: IArticleBodyProps) {
-  return <section {...blockProps}>{children}</section>;
+function ArticleBodyComponent({ ...props }: IArticleBodyProps) {
+  return <section {...props} />;
 }
 
-function ArticleFooterComponent({
-  children,
-  ...blockProps
-}: IArticleFooterProps) {
-  return (
-    <footer className={styles.footer} {...blockProps}>
-      {children}
-    </footer>
-  );
+function ArticleFooterComponent({ ...props }: IArticleFooterProps) {
+  return <footer {...props} />;
 }
