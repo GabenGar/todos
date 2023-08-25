@@ -1,0 +1,55 @@
+@use "./variables.scss" as vars;
+
+@mixin button() {
+  --local-colour-text-primary: var(--colour-text-primary);
+  --local-colour-text-secondary: var(--colour-text-secondary);
+  --local-colour-text-tertiary: var(--colour-text-tertiary);
+  --local-colour-background-primary: var(--colour-background-primary);
+  --local-colour-background-secondary: var(--colour-background-secondary);
+  --local-colour-background-tertiary: var(--colour-background-tertiary);
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: vars.$size-small;
+  box-sizing: border-box;
+  min-height: vars.$min-button-size;
+  min-width: vars.$min-button-size;
+  width: auto;
+  font-family: inherit;
+  font-size: 100%;
+  color: var(--local-colour-text-primary);
+  background-color: var(--local-colour-background-secondary);
+  border-radius: vars.$radius-small;
+  border: vars.$size-nano solid var(--local-colour-text-tertiary);
+  box-shadow:
+    inset 2px 2px 3px hsla(0, 0%, 90%, 20%),
+    inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
+  padding: vars.$size-small;
+  margin: 0;
+  cursor: pointer;
+
+  transition-duration: var(--duration-global);
+  transition-property: opacity, box-shadow, background-color, border-color;
+
+  &:focus,
+  &:hover {
+    background-color: var(--local-colour-background-primary);
+  }
+
+  &:active {
+    box-shadow:
+      inset 2px 2px 3px hsla(0, 0%, 0%, 50%),
+      inset -2px -2px 3px hsla(0, 0%, 90%, 20%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    background-color: var(--local-colour-background-secondary);
+    box-shadow:
+      inset 2px 2px 3px hsla(0, 0%, 90%, 20%),
+      inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
+    cursor: not-allowed;
+  }
+}
