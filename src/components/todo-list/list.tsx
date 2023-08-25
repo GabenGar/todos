@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
-import type {
-  IBaseComponentPropsWithChildren,
-  IBaseComponentProps,
-} from "#components/types";
-import { NewTodoForm } from "./new-todo-form";
+import { now } from "#lib/dates";
+import type { IBaseComponentProps } from "#components/types";
+import { NewTodoForm } from "./new-todo";
+import { TodoItem } from "./item";
 import type { ITodo, ITodoInit } from "./types";
 
 interface ITodoListProps extends IBaseComponentProps<"div"> {
   id: string;
   onUpdate?: (newTodos: ITodo[]) => Promise<void>;
-}
-
-interface ITodoItemProps extends IBaseComponentPropsWithChildren<"li"> {
-  todo: ITodo;
 }
 
 export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
@@ -25,7 +20,7 @@ export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
       id: nanoid(),
       title,
       description,
-      created_at: new Date(),
+      created_at: now(),
     };
 
     const newTodos = [...todos, newTodo];
@@ -35,26 +30,12 @@ export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
 
   return (
     <div {...props}>
-      <NewTodoForm id={todoListID} onNewTodo={addTodo}/>
+      <NewTodoForm id={todoListID} onNewTodo={addTodo} />
       <ul>
         {todos.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
       </ul>
     </div>
-  );
-}
-
-function TodoItem({ todo, ...props }: ITodoItemProps) {
-  const { id, created_at, title, description } = todo;
-
-  return (
-    <li {...props}>
-      {created_at.toISOString()}
-      <br />
-      {title}
-      <br />
-      {description}
-    </li>
   );
 }
