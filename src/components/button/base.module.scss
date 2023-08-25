@@ -1,9 +1,6 @@
 @use "../../styles/sass/variables.scss" as *;
 @use "../../styles/sass/mixins.scss" as mixins;
 
-.block {}
-
-
 .block {
   @include mixins.button();
 

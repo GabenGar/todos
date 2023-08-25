@@ -1,12 +1,13 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { createBlockComponent } from "#components/meta";
-import type { IBaseComponentProps } from "#components/types";
+import type { IBaseComponentPropsWithChildren } from "#components/types";
 import type { IClickEvent, IViewType } from "./types";
 
 import styles from "./base.module.scss";
 
-export interface IButtonBaseProps extends IBaseComponentProps<"button"> {
+export interface IButtonBaseProps
+  extends IBaseComponentPropsWithChildren<"button"> {
   /**
    * A type of the view of button.
    * Is not related to `HTMLButtonElement.type`
@@ -14,7 +15,7 @@ export interface IButtonBaseProps extends IBaseComponentProps<"button"> {
    * For cases like a submit button within a nested dependant form -
    * it needs to behave like a submit button, but look like a normal one.
    */
-  viewType: IViewType;
+  viewType?: IViewType;
   onClick: (event: IClickEvent) => Promise<void> | void;
 }
 
@@ -22,7 +23,7 @@ export const ButtonBase = createBlockComponent(styles, Component);
 
 function Component({
   className,
-  viewType,
+  viewType = "button",
   onClick,
   ...props
 }: IButtonBaseProps) {
