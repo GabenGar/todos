@@ -1,7 +1,9 @@
-import { type Metadata } from "next";
 import { getDictionary } from "#server";
-import { type IBasePageParams } from "#pages/types";
+import { Heading } from "#components/headings";
 import { TodoList } from "#components/todo-list";
+
+import type { Metadata } from "next";
+import type { IBasePageParams } from "#pages/types";
 
 interface IProps {
   params: IBasePageParams;
@@ -17,9 +19,9 @@ async function TodosPage({ params }: IProps) {
 
   return (
     <>
-      <h1>{dict.todos}</h1>
+      <Heading level={1}>{dict.todos}</Heading>
       <section>
-        <TodoList id={"todos"}/>
+        <TodoList id={"todos"} />
       </section>
     </>
   );

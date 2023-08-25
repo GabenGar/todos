@@ -1,7 +1,7 @@
 @use "../../styles/sass/variables.scss" as *;
 
-.block {}
-
-.form {
-  display: none;
+.block {
+  padding: $size-small;
 }
+
+.section {}

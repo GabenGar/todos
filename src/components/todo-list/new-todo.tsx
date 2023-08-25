@@ -1,6 +1,8 @@
 import { Form, Label } from "#components/forms";
 import type { ITodoInit } from "./types";
 
+import styles from "./new-todo.module.scss"
+
 interface IProps {
   id: string;
   onNewTodo: (todoInit: ITodoInit) => Promise<void>;
@@ -10,6 +12,7 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
   return (
     <Form
       id={id}
+      className={styles.block}
       onSubmit={async (event) => {
         const formElements = event.currentTarget.elements;
         const title = (formElements["title"] as HTMLInputElement).value.trim();

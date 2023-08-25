@@ -6,6 +6,8 @@ import { NewTodoForm } from "./new-todo";
 import { TodoItem } from "./item";
 import type { ITodo, ITodoInit } from "./types";
 
+import styles from "./list.module.scss";
+
 interface ITodoListProps extends IBaseComponentProps<"div"> {
   id: string;
   onUpdate?: (newTodos: ITodo[]) => Promise<void>;
@@ -28,12 +30,18 @@ export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
     changeTodos(newTodos);
   }
 
+  async function removeTodo(removedID: ITodo["id"]) {
+    const newTodos = todos.filter(({ id }) => id !== removedID);
+    onUpdate?.(newTodos);
+    changeTodos(newTodos);
+  }
+
   return (
     <div {...props}>
       <NewTodoForm id={todoListID} onNewTodo={addTodo} />
-      <ul>
+      <ul className={styles.list}>
         {todos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} />
+          <TodoItem key={todo.id} todo={todo} onRemoval={removeTodo} />
         ))}
       </ul>
     </div>
