@@ -1,6 +1,7 @@
 import { getDictionary } from "#server";
 import { Heading } from "#components/headings";
 import { TodoList } from "#components/todo-list";
+import { Article } from "#components/articles";
 
 import type { Metadata } from "next";
 import type { IBasePageParams } from "#pages/types";
@@ -23,7 +24,7 @@ async function TodosPage({ params }: IProps) {
     <>
       <Heading level={1}>{dict.todos}</Heading>
       <section className={styles.block}>
-        <TodoList id={"todos"} />
+        <Article><TodoList id={"todos"} /></Article>
       </section>
     </>
   );

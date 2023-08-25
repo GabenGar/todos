@@ -5,9 +5,8 @@
   gap: $size-small;
   max-width: $width-phone;
   width: 100%;
-  background-color: var(--colour1-primary);
   border-radius: $radius-normal;
-  border: $size-thin solid var(--colour0-tertiary);
+  border: $size-thin solid hsl(100, 0, 0);
   padding: $size-normal;
   margin: 0 auto;
 

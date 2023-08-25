@@ -22,8 +22,8 @@
   grid-template-columns: 100%;
   align-content: baseline;
   gap: $size-normal;
-  color: hsl(100, 0, 0);
-  background-color: hsl(100, 0, 90);
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background-tertiary);
   padding-bottom: $size-normal;
 
   & > * {
