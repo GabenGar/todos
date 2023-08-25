@@ -1,19 +1,31 @@
 import type { ReactNode } from "react";
 import type { IBaseComponentProps } from "#components/types";
 
-import styles from "./form.module.scss"
+import styles from "./form.module.scss";
 
 interface IProps extends IBaseComponentProps<"form"> {
   id: string;
   children?: (formID: string) => ReactNode;
 }
 
-export function Form({ id, className, onSubmit, children, ...props }: IProps) {
+export type IFormElements<InputName extends string> = HTMLFormControlsCollection &
+  Record<InputName, HTMLInputElement>;
+
+/**
+ * @TODO Input names generic
+ */
+export function Form({
+  id,
+  className,
+  onSubmit,
+  children,
+  ...props
+}: IProps) {
   const formID = `${id}-form`;
 
   return (
     <div id={id} className={styles.block}>
-      {children(formID)}
+      {children?.(formID)}
       <form
         {...props}
         id={formID}

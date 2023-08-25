@@ -3,7 +3,8 @@ import type { IBaseComponentPropsWithChildren } from "#components/types";
 
 import styles from "./article.module.scss";
 
-interface IArticleProps extends IBaseComponentPropsWithChildren<"article"> {}
+export interface IArticleProps
+  extends IBaseComponentPropsWithChildren<"article"> {}
 interface IArticleHeaderProps
   extends IBaseComponentPropsWithChildren<"header"> {}
 interface IArticleBodyProps
@@ -24,7 +25,11 @@ function ArticleHeaderComponent({
   children,
   ...blockProps
 }: IArticleHeaderProps) {
-  return <header {...blockProps}>{children}</header>;
+  return (
+    <header className={styles.header} {...blockProps}>
+      {children}
+    </header>
+  );
 }
 
 function ArticleBodyComponent({ children, ...blockProps }: IArticleBodyProps) {
@@ -35,5 +40,9 @@ function ArticleFooterComponent({
   children,
   ...blockProps
 }: IArticleFooterProps) {
-  return <footer {...blockProps}>{children}</footer>;
+  return (
+    <footer className={styles.footer} {...blockProps}>
+      {children}
+    </footer>
+  );
 }

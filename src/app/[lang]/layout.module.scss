@@ -7,8 +7,8 @@
   justify-content: space-between;
   align-items: center;
   gap: $size-normal;
-  color: hsl(100, 0, 0);
-  background-color: hsl(100, 0, 85);
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background-secondary);
   padding: $size-small $size-normal;
 
   @media (min-width: $width-tablet) {
@@ -46,8 +46,8 @@
   align-items: center;
   justify-content: space-between;
   gap: $size-normal;
-  color: hsl(100, 0, 0);
-  background-color: hsl(100, 0, 85);
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background-secondary);
   padding: $size-small $size-normal;
 
   @media (min-width: $width-tablet) {

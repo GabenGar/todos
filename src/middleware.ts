@@ -3,7 +3,7 @@ import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { DEFAULT_LOCALE, LOCALES } from "#lib/internationalization";
 
-export async function middleware(request: NextRequest): Promise<NextResponse> {
+export async function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const pathname = request.nextUrl.pathname;
   const pathnameIsMissingLocale = LOCALES.every(
@@ -21,8 +21,6 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 
     return redirect;
   }
-
-  return;
 }
 
 /**
