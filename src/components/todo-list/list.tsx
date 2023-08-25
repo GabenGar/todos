@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
 import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
-import type { IBaseComponentProps } from "#components/types";
+import { Article, ArticleBody, ArticleHeader, type IArticleProps } from "#components/articles";
 import { Loading } from "components/loading";
 import { NewTodoForm } from "./new-todo";
 import { TodoItem } from "./item";
@@ -10,7 +10,7 @@ import type { ITodo, ITodoInit } from "./types";
 
 import styles from "./list.module.scss";
 
-interface ITodoListProps extends IBaseComponentProps<"div"> {
+interface ITodoListProps extends IArticleProps {
   id: string;
   onUpdate?: (newTodos: ITodo[]) => Promise<void>;
 }
@@ -58,13 +58,18 @@ export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
   }
 
   return (
-    <div {...props}>
-      <NewTodoForm id={todoListID} onNewTodo={addTodo} />
-      <ul className={styles.list}>
-        {todos?.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} onRemoval={removeTodo} />
-        )) ?? <Loading />}
-      </ul>
-    </div>
+    <Article {...props}>
+      <ArticleHeader>
+        <NewTodoForm id={todoListID} onNewTodo={addTodo} />
+      </ArticleHeader>
+
+      <ArticleBody>
+        <ul className={styles.list}>
+          {todos?.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} onRemoval={removeTodo} />
+          )) ?? <Loading />}
+        </ul>
+      </ArticleBody>
+    </Article>
   );
 }
