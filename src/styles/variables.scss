@@ -15,6 +15,48 @@
   --colour-background-tertiary: hsla(0, 0%, 80%);
   --colour-background-tertiary-transparent: hsla(0, 0%, 80%, 50%);
 
+  // button colours
+  --submit-colour-text-primary: hsl(240, 100%, 50%);
+  --submit-colour-text-secondary: hsl(240, 70%, 50%);
+  --submit-colour-text-tertiary: hsl(240, 60%, 60%);
+  --submit-colour-background-primary: hsl(220, 100%, 70%);
+  --submit-colour-background-secondary: hsl(220, 80%, 80%);
+  --submit-colour-background-tertiary: hsl(220, 60%, 85%);
+
+  --positive-colour-text-primary: hsl(120, 100%, 35%);
+  --positive-colour-text-secondary: hsl(120, 80%, 25%);
+  --positive-colour-text-tertiary: hsl(120, 60%, 25%);
+  --positive-colour-background-primary: hsl(120, 100%, 70%);
+  --positive-colour-background-secondary: hsl(120, 100%, 75%);
+  --positive-colour-background-tertiary: hsl(120, 100%, 75%);
+
+  --negative-colour-text-primary: hsl(0, 100%, 60%);
+  --negative-colour-text-secondary: hsl(0, 100%, 45%);
+  --negative-colour-text-tertiary: hsl(0, 80%, 50%);
+  --negative-colour-background-primary: hsl(0, 100%, 75%);
+  --negative-colour-background-secondary: hsl(0, 100%, 80%);
+  --negative-colour-background-tertiary: hsl(0, 100%, 85%);
+
+  // links
+  --anchour-colour-text-primary: hsl(240, 100%, 40%);
+  --anchour-colour-text-secondary: hsla(230, 70%, 40%);
+  --anchour-colour-text-tertiary: hsla(230, 60%, 40%);
+  --anchour-colour-background-primary: hsl(200, 100%, 80%);
+  --anchour-colour-background-secondary: hsla(210, 70%, 75%);
+  --anchour-colour-background-tertiary: hsla(210, 60%, 70%);
+
+  --anchour-internal-colour-text-primary: hsl(340, 100%, 20%);
+  --anchour-internal-colour-text-secondary: hsla(340, 80%, 20%);
+  --anchour-internal-colour-text-tertiary: hsla(340, 60%, 15%);
+  --anchour-internal-colour-background-primary: hsl(340, 100%, 80%);
+  --anchour-internal-colour-background-secondary: hsla(340, 70%, 70%);
+  --anchour-internal-colour-background-tertiary: hsla(340, 60%, 60%);
+
+  --anchour-local-colour-text-primary: hsl(280, 100%, 30%);
+  --anchour-local-colour-text-secondary: hsla(280, 70%, 30%);
+  --anchour-local-colour-background-primary: hsl(260, 100%, 80%);
+  --anchour-local-colour-background-secondary: hsla(260, 70%, 7%);
+
   // durations
   --duration-fast: 250ms;
   --duration-global: var(--duration-fast);

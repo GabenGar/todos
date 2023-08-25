@@ -1,4 +1,5 @@
-import { Form, type IFormElements, Label } from "#components/forms";
+import { Form, Label, type IFormElements } from "#components/form";
+import { ButtonSubmit } from "#components/button";
 import type { ITodoInit } from "./types";
 
 import styles from "./new-todo.module.scss";
@@ -40,7 +41,9 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
       {(formID) => (
         <>
           <div>
-            <Label htmlFor={`${formID}-${FIELD.TITLE.name}`}>{FIELD.TITLE.label}</Label>
+            <Label htmlFor={`${formID}-${FIELD.TITLE.name}`}>
+              {FIELD.TITLE.label}
+            </Label>
             <input
               form={formID}
               type="text"
@@ -53,7 +56,9 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
           </div>
 
           <div>
-            <Label htmlFor={`${formID}-${FIELD.DESCRIPTION.name}`}>{FIELD.DESCRIPTION.label}</Label>
+            <Label htmlFor={`${formID}-${FIELD.DESCRIPTION.name}`}>
+              {FIELD.DESCRIPTION.label}
+            </Label>
             <input
               form={formID}
               type="text"
@@ -64,9 +69,7 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
             />
           </div>
 
-          <button form={formID} type="submit">
-            Add
-          </button>
+          <ButtonSubmit form={formID} viewType="button">Add</ButtonSubmit>
         </>
       )}
     </Form>

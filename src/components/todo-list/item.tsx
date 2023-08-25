@@ -1,14 +1,18 @@
+import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
+import { Button } from "#components/button";
 import type { ITodo } from "./types";
 
-import styles from "./item.module.scss"
+import styles from "./item.module.scss";
 
 interface IProps extends IBaseComponentPropsWithChildren<"li"> {
   todo: ITodo;
-  onRemoval: (id: ITodo["id"]) => Promise<void>
+  onRemoval: (id: ITodo["id"]) => Promise<void>;
 }
 
-export function TodoItem({ todo, onRemoval, ...props }: IProps) {
+export const TodoItem = createBlockComponent(styles, Component);
+
+export function Component({ todo, onRemoval, ...props }: IProps) {
   const { id, created_at, title, description } = todo;
 
   return (
@@ -19,7 +23,7 @@ export function TodoItem({ todo, onRemoval, ...props }: IProps) {
       <br />
       {description}
       <br />
-      <button type="button" onClick={async () => onRemoval(id)}>Remove</button>
+      <Button onClick={async () => onRemoval(id)}>Remove</Button>
     </li>
   );
 }

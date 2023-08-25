@@ -1,3 +1,5 @@
+import { createBlockComponent } from "#components/meta";
+
 import type { ReactNode } from "react";
 import type { IBaseComponentProps } from "#components/types";
 
@@ -8,13 +10,15 @@ interface IProps extends IBaseComponentProps<"form"> {
   children?: (formID: string) => ReactNode;
 }
 
-export type IFormElements<InputName extends string> = HTMLFormControlsCollection &
-  Record<InputName, HTMLInputElement>;
+export type IFormElements<InputName extends string> =
+  HTMLFormControlsCollection & Record<InputName, HTMLInputElement>;
 
 /**
  * @TODO Input names generic
  */
-export function Form({
+export const Form = createBlockComponent(styles, Component);
+
+export function Component({
   id,
   className,
   onSubmit,
@@ -24,7 +28,7 @@ export function Form({
   const formID = `${id}-form`;
 
   return (
-    <div id={id} className={styles.block}>
+    <div id={id} className={className}>
       {children?.(formID)}
       <form
         {...props}

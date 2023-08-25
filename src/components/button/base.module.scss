@@ -1,0 +1,36 @@
+@use "../../styles/sass/variables.scss" as *;
+@use "../../styles/sass/mixins.scss" as mixins;
+
+.block {
+  @include mixins.button();
+
+  &_clicking {
+    cursor: progress;
+  }
+}
+
+.submit {
+  --local-colour-text-primary: var(--submit-colour-text-primary);
+  --local-colour-text-secondary: var(--submit-colour-text-secondary);
+  --local-colour-text-tertiary: var(--submit-colour-text-tertiary);
+  --local-colour-background-primary: var(--submit-colour-background-primary);
+  --local-colour-background-secondary: var(--submit-colour-background-secondary);
+  --local-colour-background-tertiary: var(--submit-colour-background-secondary);
+}
+
+.positive {
+  --local-colour-text-primary: var(--positive-colour-text-primary);
+  --local-colour-text-secondary: var(--positive-colour-text-secondary);
+  --local-colour-text-tertiary: var(--positive-colour-text-tertiary);
+  --local-colour-background-primary: var(--positive-colour-background-primary);
+  --local-colour-background-secondary: var(--positive-colour-background-secondary);
+  --local-colour-background-tertiary: var(--positive-colour-background-secondary);
+}
+.negative {
+  --local-colour-text-primary: var(--negative-colour-text-primary);
+  --local-colour-text-secondary: var(--negative-colour-text-secondary);
+  --local-colour-text-tertiary: var(--negative-colour-text-tertiary);
+  --local-colour-background-primary: var(--negative-colour-background-primary);
+  --local-colour-background-secondary: var(--negative-colour-background-secondary);
+  --local-colour-background-tertiary: var(--negative-colour-background-secondary);
+}

@@ -1,5 +1,5 @@
 import { getDictionary } from "#server";
-import { Heading } from "#components/headings";
+import { Heading } from "#components/heading";
 import { TodoList } from "#components/todo-list";
 
 import type { Metadata } from "next";
