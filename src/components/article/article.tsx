@@ -1,3 +1,4 @@
+import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 
 import styles from "./article.module.scss";
@@ -10,26 +11,27 @@ interface IArticleBodyProps
 interface IArticleFooterProps
   extends IBaseComponentPropsWithChildren<"footer"> {}
 
-export function Article({ children, ...blockProps }: IArticleProps) {
-  return (
-    <article className={styles.block} {...blockProps}>
-      {children}
-    </article>
-  );
+export const Article = createBlockComponent(styles, ArticleComponent);
+export const ArticleHeader = createBlockComponent(styles.header, ArticleHeaderComponent);
+export const ArticleBody = createBlockComponent(styles.body, ArticleBodyComponent);
+export const ArticleFooter = createBlockComponent(styles.footer, ArticleFooterComponent);
+
+function ArticleComponent({ ...props }: IArticleProps) {
+  return <article {...props} />;
 }
 
-export function ArticleHeader({
+function ArticleHeaderComponent({
   children,
   ...blockProps
 }: IArticleHeaderProps) {
   return <header {...blockProps}>{children}</header>;
 }
 
-export function ArticleBody({ children, ...blockProps }: IArticleBodyProps) {
+function ArticleBodyComponent({ children, ...blockProps }: IArticleBodyProps) {
   return <section {...blockProps}>{children}</section>;
 }
 
-export function ArticleFooter({
+function ArticleFooterComponent({
   children,
   ...blockProps
 }: IArticleFooterProps) {
