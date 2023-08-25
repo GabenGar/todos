@@ -1,0 +1,21 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  display: grid;
+  gap: $size-small;
+  max-width: $width-phone;
+  width: 100%;
+  border-radius: $radius-normal;
+  border: $size-thin solid hsl(100, 0, 0);
+  padding: $size-normal;
+  margin: 0 auto;
+
+  @media (min-width: $width-laptop) {
+    max-width: calc(#{$width-phone} * 1.1);
+  }
+
+}
+
+.form {
+  display: none;
+}

@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import Link from "next/link";
 import { REPOSITORY_URL, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { ClientProvider } from "#hooks";
@@ -8,6 +7,7 @@ import type { ReactNode } from "react";
 import type { IBasePageParams } from "#pages/types";
 
 import "../../styles/global.scss";
+import styles from "./layout.module.scss";
 
 interface IProps {
   children: ReactNode;
@@ -30,11 +30,11 @@ function RootLayout({ children, params }: IProps) {
     <html lang={lang}>
       <body>
         <ClientProvider>
-          <header>
+          <header className={styles.header}>
             <GlobalNavigation />
           </header>
-          {children}
-          <footer>
+          <main className={styles.main}>{children}</main>
+          <footer className={styles.footer}>
             <a href={REPOSITORY_URL}>Repository</a>
           </footer>
         </ClientProvider>

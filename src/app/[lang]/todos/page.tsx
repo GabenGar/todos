@@ -1,6 +1,12 @@
-import { type Metadata } from "next";
 import { getDictionary } from "#server";
-import { type IBasePageParams } from "#pages/types";
+import { Heading } from "#components/headings";
+import { TodoList } from "#components/todo-list";
+import { Article } from "#components/articles";
+
+import type { Metadata } from "next";
+import type { IBasePageParams } from "#pages/types";
+
+import styles from "./page.module.scss"
 
 interface IProps {
   params: IBasePageParams;
@@ -14,7 +20,14 @@ async function TodosPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
 
-  return <h1>{dict.todos}</h1>;
+  return (
+    <>
+      <Heading level={1}>{dict.todos}</Heading>
+      <section className={styles.block}>
+        <Article><TodoList id={"todos"} /></Article>
+      </section>
+    </>
+  );
 }
 
 export default TodosPage;

@@ -1,0 +1,7 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  display: inline-block;
+  padding: $size-small 0;
+  cursor: pointer;
+}

@@ -1,0 +1,21 @@
+:root {
+  // text colours
+  --colour-text-primary: hsl(0, 0%, 10%);
+  --colour-text-transparent: hsl(0, 0%, 10%, 60%);
+  --colour-text-secondary: hsl(0, 0%, 30%);
+  --colour-text-secondary-transparent: hsla(0, 0%, 30%, 40%);
+  --colour-text-tertiary: hsla(0, 0%, 40%);
+  --colour-text-tertiary-transparent: hsla(0, 0%, 40%, 40%);
+
+  // background colours
+  --colour-background-primary: hsl(0, 0%, 98%);
+  --colour-background-primary-transparent: hsla(0, 0%, 98%, 50%);
+  --colour-background-secondary: hsl(0, 0%, 90%);
+  --colour-background-secondary-transparent: hsla(0, 0%, 90%, 50%);
+  --colour-background-tertiary: hsla(0, 0%, 80%);
+  --colour-background-tertiary-transparent: hsla(0, 0%, 80%, 50%);
+
+  // durations
+  --duration-fast: 250ms;
+  --duration-global: var(--duration-fast);
+}

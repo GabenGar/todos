@@ -23,6 +23,9 @@
       "#components": [
         "./components/index.ts"
       ],
+      "#components/types": [
+        "./components/types.ts"
+      ],
       "#components/*": [
         "./components/*/index.ts"
       ]

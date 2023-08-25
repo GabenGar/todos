@@ -1,0 +1,38 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  display: grid;
+  gap: $size-normal;
+  max-width: $width-tablet;
+  width: 100%;
+  background-color: var(--colour-background-secondary);
+  padding: 0;
+  margin: 0 auto;
+
+  @media (min-width: $width-phone) {
+    padding: $size-big;
+  }
+}
+
+.header {
+  display: grid;
+  align-items: center;
+  justify-items: flex-start;
+  background-color: var(--colour-background-primary);
+  padding: $size-normal;
+}
+
+.body {
+  display: grid;
+  gap: $size-small;
+  background-color: var(--colour-background-primary);
+  padding: $size-normal;
+}
+
+.footer {
+  display: grid;
+  align-items: center;
+  justify-items: flex-start;
+  background-color: var(--colour-background-primary);
+  padding: $size-normal;
+}
