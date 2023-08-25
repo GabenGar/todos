@@ -1,3 +1,5 @@
+import clsx from "clsx";
+import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 
 import styles from "./heading.module.scss";
@@ -12,27 +14,29 @@ interface IProps
   level: IHeadingLevel;
 }
 
-export function Heading({ level, ...props }: IProps) {
-  const className = `${styles.block} ${styles[`h${level}`]}`;
+export const Heading = createBlockComponent(styles, Component);
+
+function Component({ level, className, ...props }: IProps) {
+  const finalClassName = clsx(styles[`h${level}`], className);
 
   switch (level) {
     case 1: {
-      return <h1 className={className} {...props} />;
+      return <h1 className={finalClassName} {...props} />;
     }
     case 2: {
-      return <h2 {...props} />;
+      return <h2 className={finalClassName} {...props} />;
     }
     case 3: {
-      return <h3 {...props} />;
+      return <h3 className={finalClassName} {...props} />;
     }
     case 4: {
-      return <h4 {...props} />;
+      return <h4 className={finalClassName} {...props} />;
     }
     case 5: {
-      return <h5 {...props} />;
+      return <h5 className={finalClassName} {...props} />;
     }
     case 6: {
-      return <h6 {...props} />;
+      return <h6 className={finalClassName} {...props} />;
     }
 
     default: {

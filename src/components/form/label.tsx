@@ -1,9 +1,12 @@
+import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 
 import styles from "./label.module.scss";
 
 interface IProps extends IBaseComponentPropsWithChildren<"label"> {}
 
-export function Label({ ...props }: IProps) {
-  return <label className={styles.block} {...props} />;
+export const Label = createBlockComponent(styles, Component);
+
+function Component({ ...props }: IProps) {
+  return <label {...props} />;
 }
