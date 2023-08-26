@@ -1,8 +1,7 @@
+import type { Metadata } from "next";
 import { getDictionary } from "#server";
 import { Heading } from "#components/heading";
-import { TodoList } from "#components/todo-list";
-
-import type { Metadata } from "next";
+import { TodoList } from "#entities/todo";
 import type { IBasePageParams } from "#pages/types";
 
 import styles from "../page.module.scss";

@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
-import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
-import { Article, ArticleBody, ArticleHeader, type IArticleProps } from "#components/article";
+import { setLocalStoreItem } from "#browser/local-storage";
+import {
+  Article,
+  ArticleBody,
+  ArticleHeader,
+  type IArticleProps,
+} from "#components/article";
 import { Loading } from "components/loading";
 import { NewTodoForm } from "./new-todo";
 import { TodoItem } from "./item";
-import type { ITodo, ITodoInit } from "./types";
+import { getTodos } from "../lib";
+import type { ITodo, ITodoInit } from "../types";
 
 import styles from "./list.module.scss";
 
@@ -24,8 +30,7 @@ export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
       return;
     }
 
-    const storedTodos = getLocalStoreItem<ITodo[]>("todos", []);
-    changeTodos(storedTodos);
+    getTodos().then((storedTodos) => changeTodos(storedTodos));
   }, [todos]);
 
   async function addTodo({ title, description }: ITodoInit) {
