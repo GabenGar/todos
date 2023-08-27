@@ -34,6 +34,9 @@
       ],
       "#entities/*": [
         "./entities/*/index.ts"
+      ],
+      "#types": [
+        "./types.ts"
       ]
     },
     "lib": [

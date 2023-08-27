@@ -1,2 +1,2 @@
 export { TodoList } from "./list/list";
-export { getTodos } from "./lib";
+export { getTodos, createTodo, editTodo, removeTodo } from "./lib";
