@@ -1,6 +1,6 @@
 import { Form, Label, type IFormElements } from "#components/form";
 import { ButtonSubmit } from "#components/button";
-import type { ITodoInit } from "./types";
+import type { ITodoInit } from "../types";
 
 import styles from "./new-todo.module.scss";
 
