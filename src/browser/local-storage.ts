@@ -12,6 +12,13 @@ export type ILocalStoreKey =
 
 export function getLocalStoreItem<Type = unknown>(
   storeName: ILocalStoreKey,
+): Type | undefined;
+export function getLocalStoreItem<Type = unknown>(
+  storeName: ILocalStoreKey,
+  defaultValue: Type,
+): Type;
+export function getLocalStoreItem<Type = unknown>(
+  storeName: ILocalStoreKey,
   defaultValue?: Type,
 ): Type | undefined {
   const storageItem = localStorage.getItem(storeName);

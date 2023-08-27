@@ -1,0 +1,75 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import {
+  Article,
+  ArticleBody,
+  ArticleHeader,
+  type IArticleProps,
+} from "#components/article";
+import { Loading } from "components/loading";
+import { NewTodoForm } from "./new-todo";
+import { TodoItem } from "./item";
+import { createTodo, getTodos, removeTodo } from "../lib";
+import type { ITodo, ITodoInit } from "../types";
+
+import styles from "./list.module.scss";
+
+interface ITodoListProps extends IArticleProps {
+  id: string;
+}
+
+export function TodoList({ id, ...props }: ITodoListProps) {
+  const [isInitialized, changeInitialization] = useState(false);
+  const [todos, changeTodos] = useState<ITodo[]>([]);
+  const todoListID = `${id}-todolist`;
+
+  useEffect(() => {
+    getTodos().then((storedTodos) => changeTodos(storedTodos));
+    changeInitialization(true);
+  }, []);
+
+  async function handleTodoCreation(init: ITodoInit) {
+    if (!isInitialized) {
+      return;
+    }
+
+    await createTodo(init);
+    const newTodos = await getTodos();
+    changeTodos(newTodos);
+  }
+
+  async function handleTodoRemoval(removedID: ITodo["id"]) {
+    if (!isInitialized) {
+      return;
+    }
+
+    await removeTodo(removedID);
+    const newTodos = await getTodos();
+    changeTodos(newTodos);
+  }
+
+  return (
+    <Article {...props}>
+      <ArticleHeader>
+        <NewTodoForm id={todoListID} onNewTodo={handleTodoCreation} />
+      </ArticleHeader>
+
+      <ArticleBody>
+        <ul className={styles.list}>
+          {!isInitialized ? (
+            <Loading />
+          ) : (
+            todos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onRemoval={handleTodoRemoval}
+              />
+            ))
+          )}
+        </ul>
+      </ArticleBody>
+    </Article>
+  );
+}

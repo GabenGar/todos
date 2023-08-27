@@ -1,6 +1,6 @@
 import { Form, Label, type IFormElements } from "#components/form";
 import { ButtonSubmit } from "#components/button";
-import type { ITodoInit } from "./types";
+import type { ITodoInit } from "../types";
 
 import styles from "./new-todo.module.scss";
 
@@ -32,7 +32,7 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
 
         const init: ITodoInit = {
           title,
-          description,
+          description: !description ? undefined : description,
         };
 
         await onNewTodo(init);
@@ -69,7 +69,9 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
             />
           </div>
 
-          <ButtonSubmit form={formID} viewType="button">Add</ButtonSubmit>
+          <ButtonSubmit form={formID} viewType="button">
+            Add
+          </ButtonSubmit>
         </>
       )}
     </Form>

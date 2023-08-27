@@ -31,6 +31,12 @@
       ],
       "#components/*": [
         "./components/*/index.ts"
+      ],
+      "#entities/*": [
+        "./entities/*/index.ts"
+      ],
+      "#types": [
+        "./types.ts"
       ]
     },
     "lib": [

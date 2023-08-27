@@ -8,13 +8,13 @@ export interface IButtonSubmitProps
 export const ButtonSubmit = createBlockComponent(undefined, Component);
 
 function Component({
-  viewType,
+  viewType = "submit",
   className,
   children,
   ...blockProps
 }: IButtonSubmitProps) {
   return (
-    <ButtonBase {...blockProps} type="submit" viewType={viewType ?? "submit"}>
+    <ButtonBase {...blockProps} type="submit" viewType={viewType}>
       {children ?? "Submit"}
     </ButtonBase>
   );
