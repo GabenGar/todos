@@ -1,7 +1,6 @@
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
-import { Button } from "#components/button";
-import type { ITodo } from "./types";
+import type { ITodo } from "../types";
 
 import styles from "./item.module.scss";
 
@@ -23,7 +22,6 @@ export function Component({ todo, onRemoval, ...props }: IProps) {
       <br />
       {description}
       <br />
-      <Button onClick={async () => onRemoval(id)}>Remove</Button>
     </li>
   );
 }
