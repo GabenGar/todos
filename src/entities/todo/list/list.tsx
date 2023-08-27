@@ -1,7 +1,6 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
-import { now } from "#lib/dates";
-import { setLocalStoreItem } from "#browser/local-storage";
 import {
   Article,
   ArticleBody,
@@ -11,68 +10,64 @@ import {
 import { Loading } from "components/loading";
 import { NewTodoForm } from "./new-todo";
 import { TodoItem } from "./item";
-import { getTodos } from "../lib";
+import { createTodo, getTodos, removeTodo } from "../lib";
 import type { ITodo, ITodoInit } from "../types";
 
 import styles from "./list.module.scss";
 
 interface ITodoListProps extends IArticleProps {
   id: string;
-  onUpdate?: (newTodos: ITodo[]) => Promise<void>;
 }
 
-export function TodoList({ id, onUpdate, ...props }: ITodoListProps) {
-  const [todos, changeTodos] = useState<ITodo[]>();
+export function TodoList({ id, ...props }: ITodoListProps) {
+  const [isInitialized, changeInitialization] = useState(false);
+  const [todos, changeTodos] = useState<ITodo[]>([]);
   const todoListID = `${id}-todolist`;
 
   useEffect(() => {
-    if (todos) {
-      return;
-    }
-
     getTodos().then((storedTodos) => changeTodos(storedTodos));
-  }, [todos]);
+    changeInitialization(true);
+  }, []);
 
-  async function addTodo({ title, description }: ITodoInit) {
-    if (!todos) {
+  async function handleTodoCreation(init: ITodoInit) {
+    if (!isInitialized) {
       return;
     }
 
-    const newTodo: ITodo = {
-      id: nanoid(),
-      title,
-      description,
-      created_at: now(),
-    };
-
-    const newTodos = [...todos, newTodo];
-    onUpdate?.(newTodos);
+    await createTodo(init);
+    const newTodos = await getTodos();
     changeTodos(newTodos);
-    setLocalStoreItem("todos", newTodos);
   }
 
-  async function removeTodo(removedID: ITodo["id"]) {
-    if (!todos) {
+  async function handleTodoRemoval(removedID: ITodo["id"]) {
+    if (!isInitialized) {
       return;
     }
 
-    const newTodos = todos.filter(({ id }) => id !== removedID);
-    onUpdate?.(newTodos);
+    await removeTodo(removedID);
+    const newTodos = await getTodos();
     changeTodos(newTodos);
-    setLocalStoreItem("todos", newTodos);
   }
 
   return (
     <Article {...props}>
       <ArticleHeader>
-        <NewTodoForm id={todoListID} onNewTodo={addTodo} />
+        <NewTodoForm id={todoListID} onNewTodo={handleTodoCreation} />
       </ArticleHeader>
 
       <ArticleBody>
         <ul className={styles.list}>
-          {todos?.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} onRemoval={removeTodo} />
-          )) ?? <Loading />}
+          {!isInitialized ? (
+            <Loading />
+          ) : (
+            todos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onRemoval={handleTodoRemoval}
+              />
+            ))
+          )}
         </ul>
       </ArticleBody>
     </Article>
