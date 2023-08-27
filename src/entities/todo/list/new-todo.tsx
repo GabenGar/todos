@@ -32,7 +32,7 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
 
         const init: ITodoInit = {
           title,
-          description,
+          description: !description ? undefined : description,
         };
 
         await onNewTodo(init);
@@ -69,7 +69,9 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
             />
           </div>
 
-          <ButtonSubmit form={formID} viewType="button">Add</ButtonSubmit>
+          <ButtonSubmit form={formID} viewType="button">
+            Add
+          </ButtonSubmit>
         </>
       )}
     </Form>

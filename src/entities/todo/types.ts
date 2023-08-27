@@ -5,8 +5,8 @@ export interface ITodoInit extends Pick<ITodo, "title" | "description"> {}
 
 export interface ITodo {
   id: INanoidID
-  createdAt: IDateTime;
-  updatedAt: IDateTime;
+  created_at: IDateTime;
+  updated_at: IDateTime;
   title: string;
   description?: string;
 }
