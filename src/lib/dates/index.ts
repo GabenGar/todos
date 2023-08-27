@@ -1,4 +1,4 @@
-export type DateTime = string;
+export type IDateTime = string;
 
 export function toISODateTime(date: Date) {
   const timestamp = date.toISOString();

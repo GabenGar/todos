@@ -16,12 +16,11 @@ export function Component({ todo, onRemoval, ...props }: IProps) {
 
   return (
     <li {...props} className={styles.block}>
-      {created_at}
-      <br />
       {title}
       <br />
       {description}
       <br />
+      {created_at}
     </li>
   );
 }

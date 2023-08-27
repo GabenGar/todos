@@ -1,11 +1,12 @@
-import type { DateTime } from "#lib/dates";
+import type { IDateTime } from "#lib/dates";
+import type { INanoidID } from "#lib/strings";
 
 export interface ITodoInit extends Pick<ITodo, "title" | "description"> {}
 
 export interface ITodo {
-  id: string;
-  created_at: DateTime;
-  updated_at: DateTime;
+  id: INanoidID
+  createdAt: IDateTime;
+  updatedAt: IDateTime;
   title: string;
   description?: string;
 }
