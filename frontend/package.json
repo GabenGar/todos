@@ -1,7 +1,7 @@
 {
-  "name": "todos",
+  "name": "frontend",
   "version": "0.0.2",
-  "description": "The list of todos in NextJS.",
+  "description": "NextJS frontend for todo list.",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -10,17 +10,7 @@
     "format": "prettier ./src --write",
     "dev": "next dev"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GabenGar/todos.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GabenGar/todos/issues"
-  },
-  "homepage": "https://github.com/GabenGar/todos#readme",
+
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.4.0",
     "@mdx-js/loader": "^2.3.0",

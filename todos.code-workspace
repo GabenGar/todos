@@ -4,6 +4,10 @@
       "path": ".",
       "name": "todos"
     },
+    {
+      "path": "frontend",
+      "name": "frontend"
+    }
   ],
   "settings": {
     "files.exclude": {
@@ -14,7 +18,8 @@
       "**/.DS_Store": true,
       "**/Thumbs.db": true,
       "**/node_modules": true,
-      ".next": true
+      ".next": true,
+      "frontend": true
     },
     "files.watcherExclude": {
       "**/.git/objects/**": true,
@@ -30,5 +35,4 @@
       "dotenv.dotenv-vscode"
     ]
   }
-
 }

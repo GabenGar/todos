@@ -1,0 +1,24 @@
+{
+  "name": "todos",
+  "version": "0.0.2",
+  "description": "The list of todos in NextJS.",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "lint": "cd frontend && npm run lint",
+    "format": "cd frontend && npm run format",
+    "dev": "cd frontend && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabenGar/todos.git"
+  },
+  "keywords": ["NextJS"],
+  "author": "GabenGar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GabenGar/todos/issues"
+  },
+  "homepage": "https://github.com/GabenGar/todos#readme"
+}
