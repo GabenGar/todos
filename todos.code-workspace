@@ -1,0 +1,34 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "todos"
+    },
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/node_modules": true,
+      ".next": true
+    },
+    "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
+      "**/node_modules/*/**": true,
+      "**/.hg/store/**": true
+    },
+    "typescript.referencesCodeLens.enabled": true,
+  },
+  "extensions": {
+    "recommendations": [
+      "eamodio.gitlens",
+      "dotenv.dotenv-vscode"
+    ]
+  }
+
+}
