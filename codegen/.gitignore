@@ -1,5 +1,4 @@
-# VSCode workspace file
-*.code-workspace
+dist/
 
 # Dependency directories
 node_modules/
