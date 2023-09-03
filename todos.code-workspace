@@ -7,7 +7,11 @@
     {
       "path": "frontend",
       "name": "frontend"
-    }
+    },
+    {
+      "path": "codegen",
+      "name": "codegen"
+    },
   ],
   "settings": {
     "files.exclude": {
