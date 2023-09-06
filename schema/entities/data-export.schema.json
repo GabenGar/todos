@@ -3,7 +3,7 @@
   "title": "DataExport",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "id", "createdAt", "data"],
+  "required": ["version", "id", "created_at", "data"],
   "properties": {
     "version": {
       "type": "integer",
