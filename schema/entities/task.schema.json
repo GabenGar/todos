@@ -1,0 +1,27 @@
+{
+  "$id": "/entities/task",
+  "title": "Task",
+  "type":"object",
+  "additionalProperties": false,
+  "properties": {
+    "id":  {
+      "$ref": "/strings/nanoid"
+    },
+    "created_at":  {
+      "$ref": "/dates/datetime"
+    },
+    "updated_at":  {
+      "$ref": "/dates/datetime"
+    },
+    "title":  {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    }
+  }
+}

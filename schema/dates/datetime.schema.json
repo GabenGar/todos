@@ -1,0 +1,7 @@
+{
+  "$id": "/dates/datetime",
+  "title": "DateTime",
+  "description": "[`RFC 3339`](https://www.rfc-editor.org/rfc/rfc3339) `datetime` string.",
+  "type": "string",
+  "format": "date-time"
+}

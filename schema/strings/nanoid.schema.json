@@ -1,0 +1,8 @@
+{
+  "$id": "/strings/nanoid",
+  "title": "NanoID",
+  "description": "[`nanoid`](https://github.com/ai/nanoid) string with default parameters.",
+  "type": "string",
+  "minLength": 21,
+  "maxLength": 21
+}
