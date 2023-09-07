@@ -21,6 +21,9 @@ export async function createDataExport(): Promise<IDataExport> {
     },
   };
 
+  console.log(dataExport);
+
+
   const validate = await createValidator<IDataExport>(dataExportSchema.$id);
 
   validate(dataExport);

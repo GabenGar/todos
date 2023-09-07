@@ -1,5 +1,4 @@
-
-import { addSchema, validate } from "@hyperjump/json-schema/draft-2020-12";
+import { addSchema, validate  } from "@hyperjump/json-schema/draft-2020-12";
 import dataExportSchema from "#schema/entities/data-export.schema.json";
 import taskSchema from "#schema/entities/task.schema.json";
 import nanoidSchema from "#schema/strings/nanoid.schema.json";
