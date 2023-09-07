@@ -17,9 +17,17 @@ export async function createDataExport(): Promise<IDataExport> {
     },
   };
 
-  const validate = await createValidator<IDataExport>(dataExportSchema.$id);
+  const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
+    await createValidator<IDataExport>(dataExportSchema.$id);
 
   validate(dataExport);
 
   return dataExport;
+}
+
+export async function consumeDataExport(dataExport: unknown) {
+  const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
+    await createValidator<IDataExport>(dataExportSchema.$id);
+
+  validate(dataExport);
 }

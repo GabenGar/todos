@@ -44,18 +44,16 @@ function toSchemaID(id: string) {
 
 export async function createValidator<InputType>(
   schemaID: string,
-): Promise<(data: unknown) => data is InputType> {
+): Promise<(data: unknown) => asserts data is InputType> {
   const validatorFunc = await validate(toSchemaID(schemaID));
 
-  function validator(data: unknown): data is InputType {
+  function validator(data: unknown): asserts data is InputType {
     const result = validatorFunc(data, BASIC);
 
     if (!result.valid) {
       console.error(result);
       throw new Error(`Data does not conform to schema "${schemaID}".`);
     }
-
-    return result.valid;
   }
 
   return validator;
