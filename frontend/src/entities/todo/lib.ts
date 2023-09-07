@@ -3,7 +3,34 @@ import { now } from "#lib/dates";
 import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
 import type { ITodo, ITodoInit, ITodoUpdate } from "./types";
 
+let isMigrated = false;
+
+export async function migrateTasks() {
+  const storedTodos = getLocalStoreItem<ITodo[]>("todos", []);
+
+  // remove `description` keys which are empty strings
+  const legacyTodos = storedTodos.filter(
+    ({ description }) => description === "",
+  );
+
+  if (legacyTodos.length) {
+    const updates = legacyTodos.map<ITodoUpdate>(
+      ({ description, id, title }) => {
+        return { id, title, description: undefined };
+      },
+    );
+
+    await editTodos(updates);
+
+    isMigrated = true
+  }
+}
+
 export async function getTodos(): Promise<ITodo[]> {
+  if (!isMigrated) {
+    await migrateTasks()
+  }
+
   const storedTodos = getLocalStoreItem<ITodo[]>("todos", []);
 
   return storedTodos;

@@ -7,6 +7,6 @@ export interface IDataExport {
   id: INanoidID;
   created_at: IDateTime
   data: {
-    todos: ITodo[];
+    tasks: ITodo[];
   };
 }
