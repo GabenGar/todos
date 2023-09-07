@@ -38,7 +38,7 @@ function toSchemaID(id: string) {
     throw new Error(`Schema "${id}" doesn't start with "/".`);
   }
 
-  return `https://gabengar.vercel.app${id}`;
+  return `https://gabengar.vercel.app/schema${id}`;
 }
 
 export async function createValidator<InputType>(
