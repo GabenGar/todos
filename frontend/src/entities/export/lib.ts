@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import dataExportSchema from "#schema/entities/data-export.schema.json";
 import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
-import { getTodos } from "#entities/todo";
+import { ITodo, getTodos } from "#entities/todo";
 import type { IDataExport } from "./types";
 
 export async function createDataExport(): Promise<IDataExport> {
@@ -25,9 +25,13 @@ export async function createDataExport(): Promise<IDataExport> {
   return dataExport;
 }
 
-export async function consumeDataExport(dataExport: unknown) {
+export async function importDataExport(dataExport: unknown) {
   const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
     await createValidator<IDataExport>(dataExportSchema.$id);
 
   validate(dataExport);
+}
+
+async function consumeTasks(tasks: ITodo[]) {
+
 }

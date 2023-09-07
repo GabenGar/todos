@@ -22,13 +22,13 @@ export async function migrateTasks() {
 
     await editTodos(updates);
 
-    isMigrated = true
+    isMigrated = true;
   }
 }
 
 export async function getTodos(): Promise<ITodo[]> {
   if (!isMigrated) {
-    await migrateTasks()
+    await migrateTasks();
   }
 
   const storedTodos = getLocalStoreItem<ITodo[]>("todos", []);
