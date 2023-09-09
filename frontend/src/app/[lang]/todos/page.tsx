@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getDictionary } from "#server";
 import { Heading } from "#components/heading";
+import { Article, ArticleHeader } from "#components/article";
 import { TodoList } from "#entities/todo";
-import { DataExportForm } from "#entities/data-export";
+import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import type { IBasePageParams } from "#pages/types";
 
 import styles from "../page.module.scss";
@@ -24,7 +25,12 @@ async function TodosPage({ params }: IProps) {
       <Heading level={1}>{dict.todos}</Heading>
       <section className={styles.block}>
         <TodoList id={"todos"} />
-        <DataExportForm />
+        <Article>
+          <ArticleHeader>
+            <DataExportForm />
+            <ImportDataExportForm id="import-data-export" />
+          </ArticleHeader>
+        </Article>
       </section>
     </>
   );

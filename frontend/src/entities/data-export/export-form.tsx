@@ -1,11 +1,9 @@
 import { toJSONPretty } from "#lib/json";
-import { IArticleProps } from "#components/article";
 import { createBlockComponent } from "#components/meta";
-import { Article, ArticleHeader } from "#components/article";
-import { Button } from "#components/button";
+import { Button, IButtonProps } from "#components/button";
 import { createDataExport } from "./lib";
 
-interface IProps extends IArticleProps {}
+interface IProps extends Omit<IButtonProps, "onClick"> {}
 
 export const DataExportForm = createBlockComponent(undefined, Component);
 
@@ -27,11 +25,9 @@ function Component({ ...props }: IProps) {
   }
 
   return (
-    <Article {...props}>
-      <ArticleHeader>
-        <Button onClick={handleExportCreation}>Export</Button>
-      </ArticleHeader>
-    </Article>
+    <Button {...props} onClick={handleExportCreation}>
+      Export
+    </Button>
   );
 }
 
