@@ -11,7 +11,7 @@ interface IProps extends IBaseComponentPropsWithChildren<"li"> {
 
 export const TodoItem = createBlockComponent(styles, Component);
 
-export function Component({ todo, onRemoval, ...props }: IProps) {
+function Component({ todo, onRemoval, ...props }: IProps) {
   const { id, created_at, title, description } = todo;
 
   return (

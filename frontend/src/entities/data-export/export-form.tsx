@@ -1,5 +1,4 @@
-import { nanoid } from "nanoid";
-import { toJSON, toJSONPretty } from "#lib/json";
+import { toJSONPretty } from "#lib/json";
 import { IArticleProps } from "#components/article";
 import { createBlockComponent } from "#components/meta";
 import { Article, ArticleHeader } from "#components/article";
@@ -11,28 +10,26 @@ interface IProps extends IArticleProps {}
 export const DataExportForm = createBlockComponent(undefined, Component);
 
 function Component({ ...props }: IProps) {
+  async function handleExportCreation() {
+    const dataExport = await createDataExport();
+    const dataExportJSON = toJSONPretty(dataExport);
+    const blob = new Blob([dataExportJSON], {
+      type: "application/json",
+    });
+    const anchourElement = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    const hash = await getHash(dataExportJSON);
+    const filename = `data-export-${hash}.json`;
+
+    anchourElement.href = url;
+    anchourElement.download = filename;
+    anchourElement.click();
+  }
+
   return (
     <Article {...props}>
       <ArticleHeader>
-        <Button
-          onClick={async () => {
-            const dataExport = await createDataExport();
-            const dataExportJSON = toJSONPretty(dataExport);
-            const blob = new Blob([dataExportJSON], {
-              type: "application/json",
-            });
-            const anchourElement = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            const hash = await getHash(dataExportJSON);
-            const filename = `data-export-${hash}.json`;
-
-            anchourElement.href = url;
-            anchourElement.download = filename;
-            anchourElement.click();
-          }}
-        >
-          Export
-        </Button>
+        <Button onClick={handleExportCreation}>Export</Button>
       </ArticleHeader>
     </Article>
   );
