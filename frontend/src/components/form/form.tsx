@@ -2,36 +2,36 @@
 import { type ReactNode, type FormEvent, useState } from "react";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
+import { IFormEvent } from "./types";
 
 import styles from "./form.module.scss";
 
-interface IProps extends IBaseComponentProps<"form"> {
+export interface IFormProps<InputName extends string = string> extends IBaseComponentProps<"form"> {
   id: string;
   children?: (formID: string) => ReactNode;
-  onSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
-  onReset?: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (event: IFormEvent<InputName>) => Promise<void>;
+  onReset?: (event: IFormEvent<InputName>) => Promise<void>;
 }
 
-export type IFormElements<InputName extends string> =
-  HTMLFormControlsCollection & Record<InputName, HTMLInputElement>;
+
 
 /**
  * @TODO Input names generic
  */
 export const Form = createBlockComponent(styles, Component);
 
-export function Component({
+function Component<InputName extends string>({
   id,
   className,
   onSubmit,
   onReset,
   children,
   ...props
-}: IProps) {
+}: IFormProps<InputName>) {
   const [isSubmitting, switchSubmitting] = useState(false);
   const formID = `${id}-form`;
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: IFormEvent<InputName>) {
     event.preventDefault();
 
     if (isSubmitting) {
@@ -50,7 +50,7 @@ export function Component({
     }
   }
 
-  async function handleReset(event: FormEvent<HTMLFormElement>) {
+  async function handleReset(event: IFormEvent<InputName>) {
     if (isSubmitting) {
       return;
     }

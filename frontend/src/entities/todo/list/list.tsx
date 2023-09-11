@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import {
   Article,
   ArticleBody,
+  ArticleFooter,
   ArticleHeader,
   type IArticleProps,
 } from "#components/article";
 import { Loading } from "components/loading";
+import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import { NewTodoForm } from "./new-todo";
 import { TodoItem } from "./item";
 import { createTodo, getTodos, removeTodo } from "../lib";
@@ -70,6 +72,19 @@ export function TodoList({ id, ...props }: ITodoListProps) {
           )}
         </ul>
       </ArticleBody>
+
+      <ArticleFooter>
+        <ul className={styles.buttons}>
+          <DataExportForm />
+          <ImportDataExportForm
+            id="import-data-export"
+            onSuccess={async () => {
+              const newTodos = await getTodos();
+              changeTodos(newTodos);
+            }}
+          />
+        </ul>
+      </ArticleFooter>
     </Article>
   );
 }

@@ -1,0 +1,33 @@
+{
+  "$id": "/entities/data-export",
+  "title": "DataExport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "created_at", "data"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "id": {
+      "$ref": "/strings/nanoid"
+    },
+    "created_at": {
+      "$ref": "/dates/datetime"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "tasks": {
+          "type": "array",
+          "minLength": 1,
+          "items": {
+            "$ref": "/entities/task"
+          }
+        }
+      }
+    }
+  }
+}

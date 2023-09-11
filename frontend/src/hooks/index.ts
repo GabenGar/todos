@@ -2,4 +2,4 @@
 /**
  * Hooks are always client-side.
  */
-export { ClientProvider } from "./client";
+export { ClientProvider, useClient } from "./client";
