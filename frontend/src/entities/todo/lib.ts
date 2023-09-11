@@ -6,8 +6,9 @@ import type { ITodo, ITodoInit, ITodoUpdate } from "./types";
 let isMigrated = false;
 
 export async function migrateTasks() {
-  const storedTasks = getLocalStoreItem<ITodo[]>("todos", []);
+  console.debug(`Migrating tasks...`);
 
+  const storedTasks = getLocalStoreItem<ITodo[]>("todos", []);
   // remove `description` keys which are empty strings
   const legacyTasks = storedTasks.filter(
     ({ description }) => description === "",
@@ -30,14 +31,20 @@ export async function migrateTasks() {
   }
 
   isMigrated = true;
+
+  console.debug(`Migrated tasks.`);
 }
 
 export async function getTodos(): Promise<ITodo[]> {
+  console.debug(`Getting tasks...`);
+
   if (!isMigrated) {
     await migrateTasks();
   }
 
   const storedTodos = getLocalStoreItem<ITodo[]>("todos", []);
+
+  console.debug(`Got ${storedTodos.length} tasks.`);
 
   return storedTodos;
 }
@@ -53,6 +60,8 @@ export async function createTodo(init: ITodoInit): Promise<ITodo> {
  * @returns Added todos.
  */
 async function createTodos(inits: ITodoInit[]): Promise<ITodo[]> {
+  console.debug(`Creating ${inits.length} tasks...`);
+
   const incomingTodos = inits.map(({ title, description }) => {
     const newTodo: ITodo = {
       id: nanoid(),
@@ -70,6 +79,8 @@ async function createTodos(inits: ITodoInit[]): Promise<ITodo[]> {
   const newTodos = [...currentTodos, ...incomingTodos];
   setLocalStoreItem("todos", newTodos);
 
+  console.debug(`Created ${inits.length} tasks.`);
+
   return incomingTodos;
 }
 
@@ -84,6 +95,8 @@ export async function editTodo(update: ITodoUpdate): Promise<ITodo> {
  * @returns The edited Todos.
  */
 async function editTodos(updates: ITodoUpdate[]): Promise<ITodo[]> {
+  console.debug(`Editing ${updates.length} tasks...`);
+
   const storedTodos = await getTodos();
   const updateIDs = new Set(updates.map(({ id }) => id));
 
@@ -119,6 +132,8 @@ async function editTodos(updates: ITodoUpdate[]): Promise<ITodo[]> {
     updateIDs.has(id),
   );
 
+  console.debug(`Edited ${editedTodos.length} tasks.`);
+
   return editedTodos;
 }
 
@@ -133,6 +148,8 @@ export async function removeTodo(id: ITodo["id"]): Promise<ITodo> {
  * @returns The removed Todos
  */
 async function removeTodos(ids: ITodo["id"][]): Promise<ITodo[]> {
+  console.debug(`Removing ${ids.length} tasks...`);
+
   const removedIDs = new Set(ids);
 
   if (removedIDs.size !== ids.length) {
@@ -147,6 +164,8 @@ async function removeTodos(ids: ITodo["id"][]): Promise<ITodo[]> {
   setLocalStoreItem("todos", filteredTodos);
 
   const removedTodos = storedTodos.filter(({ id }) => removedIDs.has(id));
+
+  console.debug(`Removed ${removedTodos.length} tasks.`);
 
   return removedTodos;
 }
