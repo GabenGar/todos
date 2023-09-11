@@ -1,4 +1,12 @@
 {
-  "home": "Welcome to Gabengar's!",
-  "todos": "TODOs"
+  "layout": {
+    "source_code": "Source Code"
+  },
+  "home": {
+    "heading": "Welcome to Gabengar's!",
+    "link_tasks": "Tasks"
+  },
+  "todos": {
+    "heading": "Tasks"
+  }
 }

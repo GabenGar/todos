@@ -1,13 +1,14 @@
+import type { ReactNode } from "react";
 import { type Metadata } from "next";
 import { REPOSITORY_URL, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { ClientProvider } from "#hooks";
 import { GlobalNavigation } from "#components";
-import type { ReactNode } from "react";
 import type { IBasePageParams } from "#pages/types";
 
 import "../../styles/global.scss";
 import styles from "./layout.module.scss";
+import { getDictionary } from "#server";
 
 interface IProps {
   children: ReactNode;
@@ -23,8 +24,10 @@ export const metadata: Metadata = {
   },
 };
 
-function RootLayout({ children, params }: IProps) {
+async function RootLayout({ children, params }: IProps) {
   const { lang } = params;
+  const dict = await getDictionary(lang);
+  const { layout } = dict
 
   return (
     <html lang={lang}>
@@ -35,7 +38,7 @@ function RootLayout({ children, params }: IProps) {
           </header>
           <main className={styles.main}>{children}</main>
           <footer className={styles.footer}>
-            <a href={REPOSITORY_URL}>Repository</a>
+            <a href={REPOSITORY_URL}>{layout.source_code}</a>
           </footer>
         </ClientProvider>
       </body>

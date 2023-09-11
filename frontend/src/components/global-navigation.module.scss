@@ -1,0 +1,10 @@
+@use "../styles/sass/variables.scss" as *;
+
+.block {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+}
