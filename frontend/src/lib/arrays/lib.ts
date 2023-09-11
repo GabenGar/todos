@@ -2,7 +2,7 @@ export function filterMapArray<OutputType, InputType>(
   inputArray: readonly InputType[],
   filterFunction: (inputItem: InputType) => boolean,
   mapperFunction: (inputItem: InputType) => OutputType,
-): [OutputType, ...rest: OutputType[]] | undefined {
+): [OutputType, ...OutputType[]] | undefined {
   const outputArray = inputArray.reduce<OutputType[]>(
     (outputArray, inputItem) => {
       if (!filterFunction(inputItem)) {
@@ -22,5 +22,5 @@ export function filterMapArray<OutputType, InputType>(
     return undefined;
   }
 
-  return outputArray as [OutputType, ...rest: OutputType[]];
+  return outputArray as [OutputType, ...OutputType[]];
 }
