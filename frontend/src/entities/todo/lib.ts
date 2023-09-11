@@ -6,24 +6,36 @@ import type { ITodo, ITodoInit, ITodoUpdate } from "./types";
 let isMigrated = false;
 
 export async function migrateTasks() {
-  const storedTodos = getLocalStoreItem<ITodo[]>("todos", []);
+  const storedTasks = getLocalStoreItem<ITodo[]>("todos", []);
 
   // remove `description` keys which are empty strings
-  const legacyTodos = storedTodos.filter(
+  const legacyTasks = storedTasks.filter(
     ({ description }) => description === "",
   );
 
-  if (legacyTodos.length) {
-    const updates = legacyTodos.map<ITodoUpdate>(
+  if (legacyTasks.length) {
+    const updates = legacyTasks.map<ITodoUpdate>(
       ({ description, id, title }) => {
         return { id, title, description: undefined };
       },
     );
 
-    await editTodos(updates);
+    const updatedTasks = storedTasks.map<ITodo>((currentTask) => {
+      const legacyTask = legacyTasks.find(({ id }) => id === currentTask.id);
 
-    isMigrated = true;
+      if (!legacyTask) {
+        return currentTask;
+      }
+
+      const updatedTask = { ...currentTask, description: undefined };
+
+      return updatedTask;
+    });
+
+    setLocalStoreItem("todos", updatedTasks);
   }
+
+  isMigrated = true;
 }
 
 export async function getTodos(): Promise<ITodo[]> {
