@@ -6,7 +6,8 @@ import { TodoList } from "#entities/todo";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import type { IBasePageParams } from "#pages/types";
 
-import styles from "../page.module.scss";
+import styles from "./page.module.scss";
+
 
 interface IProps {
   params: IBasePageParams;
@@ -27,8 +28,10 @@ async function TodosPage({ params }: IProps) {
         <TodoList id={"todos"} />
         <Article>
           <ArticleHeader>
-            <DataExportForm />
-            <ImportDataExportForm id="import-data-export" />
+            <ul className={styles.buttons}>
+              <DataExportForm />
+              <ImportDataExportForm id="import-data-export" />
+            </ul>
           </ArticleHeader>
         </Article>
       </section>

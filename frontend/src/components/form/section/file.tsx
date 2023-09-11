@@ -1,21 +1,36 @@
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
-import { InputFile } from "../input";
+import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
 
-interface IProps extends IBaseComponentPropsWithChildren<"div"> {
-  id: string;
-  name: string;
-  form: string;
-}
+import styles from "./file.module.scss";
 
-export const InputSectionFile = createBlockComponent(undefined, Component);
+interface IProps
+  extends Omit<IBaseComponentPropsWithChildren<"div">, "id" | "form" | "name">,
+    Pick<IInputFileProps, "id" | "form" | "name" | "accept" | "multiple"> {}
 
-function Component({ id, name, form, children, ...props }: IProps) {
+export const InputSectionFile = createBlockComponent(styles, Component);
+
+function Component({
+  id,
+  name,
+  form,
+  accept,
+  multiple,
+  children,
+  ...props
+}: IProps) {
   return (
     <div {...props}>
-      <Label htmlFor={id}>{children}</Label>
-      <InputFile id={id} name={name} form={form} />
+      <InputFile
+        id={id}
+        className={styles.input}
+        name={name}
+        form={form}
+        accept={accept}
+        multiple={multiple}
+      />
+      <Label className={styles.label} htmlFor={id}>{children}</Label>
     </div>
   );
 }

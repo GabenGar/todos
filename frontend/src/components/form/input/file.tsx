@@ -1,7 +1,7 @@
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
 
-interface IInputFileProps extends Omit<IBaseComponentProps<"input">, "type"> {
+export interface IInputFileProps extends Omit<IBaseComponentProps<"input">, "type"> {
   id: string;
   form: string;
   name: string;

@@ -1,0 +1,27 @@
+@use "../../../styles/sass/variables.scss" as *;
+
+.block {
+  position: relative;
+  display: grid;
+}
+
+.label {
+  display: block;
+  padding: 0 $size-small;
+}
+
+.input {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  opacity: 0;
+
+  &:focus,
+  &::focus-within {
+    & + .label {
+      outline: thin dotted;
+    }
+  }
+}
