@@ -18,12 +18,13 @@ export const metadata: Metadata = {
 async function TodosPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
+  const { todos } = dict;
 
   return (
     <>
-      <Heading level={1}>{dict.todos}</Heading>
+      <Heading level={1}>{todos.heading}</Heading>
       <section className={styles.block}>
-        <TodoList id={"todos"} />
+        <TodoList translation={todos} id={"todos"} />
       </section>
     </>
   );

@@ -1,6 +1,12 @@
 const dictionaries = {
-  en: async () =>
-    import("./dictionaries/en.json").then((module) => module.default),
+  en: async () => {
+    const dictModule = await import("../../localization/en.json");
+    return dictModule.default;
+  },
+  ru: async () => {
+    const dictModule = await import("../../localization/ru.json");
+    return dictModule.default;
+  }
 };
 
 export const getDictionary = async (locale: keyof typeof dictionaries) => {

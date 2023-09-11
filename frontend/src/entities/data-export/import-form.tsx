@@ -1,22 +1,25 @@
+import { fromJSON } from "#lib/json";
+import { ILocalization } from "#lib/localization";
 import { Form, IFormEvent } from "#components/form";
 import { InputSectionFile } from "#components/form/section";
-import { fromJSON } from "#lib/json";
+import { ButtonSubmit } from "#components/button";
 import { importDataExport } from "./lib";
 
 import styles from "./import-form.module.scss";
-import { ButtonSubmit } from "#components/button";
-
-const FIELD = {
-  FILE: { name: "file", label: "Click to import file" },
-} as const;
-type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
 interface IProps {
+  translation: ILocalization["todos"];
   id: string;
   onSuccess?: () => Promise<void>;
 }
 
-export function ImportDataExportForm({ id, onSuccess }: IProps) {
+export function ImportDataExportForm({ translation, id, onSuccess }: IProps) {
+  const { click_to_file, import_tasks } = translation;
+  const FIELD = {
+    FILE: { name: "file", label: click_to_file },
+  } as const;
+  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+
   async function handleImportDataExport(event: IFormEvent<IFieldName>) {
     const filesInput = event.currentTarget.elements.file;
     const files = filesInput.files;
@@ -39,7 +42,11 @@ export function ImportDataExportForm({ id, onSuccess }: IProps) {
   }
 
   return (
-    <Form<IFieldName> id={id} className={styles.block} onSubmit={handleImportDataExport}>
+    <Form<IFieldName>
+      id={id}
+      className={styles.block}
+      onSubmit={handleImportDataExport}
+    >
       {(formID) => (
         <>
           <InputSectionFile
@@ -51,7 +58,7 @@ export function ImportDataExportForm({ id, onSuccess }: IProps) {
             {FIELD.FILE.label}
           </InputSectionFile>
           <ButtonSubmit form={formID} viewType="button">
-            Start import
+            {import_tasks}
           </ButtonSubmit>
         </>
       )}

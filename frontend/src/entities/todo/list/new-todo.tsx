@@ -1,26 +1,24 @@
-import {
-  Form,
-  Label,
-  type IFormElements,
-  type IFormEvent,
-} from "#components/form";
+import { ILocalization } from "#lib/localization";
+import { Form, Label, type IFormEvent } from "#components/form";
 import { ButtonSubmit } from "#components/button";
 import type { ITodoInit } from "../types";
 
 import styles from "./new-todo.module.scss";
 
 interface IProps {
+  translation: ILocalization["todos"]["new_todo"];
   id: string;
   onNewTodo: (todoInit: ITodoInit) => Promise<void>;
 }
 
-const FIELD = {
-  TITLE: { name: "title", label: "Title" },
-  DESCRIPTION: { name: "description", label: "Description" },
-} as const;
-type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+export function NewTodoForm({ translation, id, onNewTodo }: IProps) {
+  const { title, description, add } = translation;
+  const FIELD = {
+    TITLE: { name: "title", label: title },
+    DESCRIPTION: { name: "description", label: description },
+  } as const;
+  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
-export function NewTodoForm({ id, onNewTodo }: IProps) {
   async function handleSubmit(event: IFormEvent<IFieldName>) {
     const formElements = event.currentTarget.elements;
     const title = formElements.title.value.trim();
@@ -72,7 +70,7 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
           </div>
 
           <ButtonSubmit form={formID} viewType="button">
-            Add
+            {add}
           </ButtonSubmit>
         </>
       )}

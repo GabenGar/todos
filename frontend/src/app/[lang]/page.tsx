@@ -6,7 +6,6 @@ import { Heading } from "#components/heading";
 import { Article, ArticleHeader } from "#components/article";
 import type { IBasePageParams } from "#pages/types";
 
-
 import styles from "./page.module.scss";
 
 interface IProps {
@@ -20,16 +19,17 @@ export const metadata: Metadata = {
 async function FrontPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
+  const { home } = dict;
 
   return (
     <>
-      <Heading level={1}>{dict.home}</Heading>
+      <Heading level={1}>{home.heading}</Heading>
       <section className={styles.block}>
         <Article>
           <ArticleHeader>
             <ul>
               <li>
-                <Link href="/todos">TODOs</Link>
+                <Link href={`/${lang}/todos`}>{home.link_tasks}</Link>
               </li>
             </ul>
           </ArticleHeader>

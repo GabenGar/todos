@@ -1,20 +1,59 @@
 "use client";
-
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SITE_TITLE } from "#environment";
+import { LOCALES } from "#lib/internationalization";
 import { HomePageURL } from "#lib/urls";
+
+import styles from "./global-navigation.module.scss";
 
 export function GlobalNavigation() {
   const pathname = usePathname();
   const isActive = pathname === HomePageURL;
 
   return (
-    <nav>
-      <ul>
+    <nav className={styles.block}>
+      <ul className={styles.list}>
         <li>
-          {!isActive ? <Link href={HomePageURL}>Home</Link> : <span>Home</span>}
+          {!isActive ? (
+            <Link href={HomePageURL}>{SITE_TITLE}</Link>
+          ) : (
+            <span>{SITE_TITLE}</span>
+          )}
+        </li>
+
+        <li>
+          <LocaleSwitcher />
         </li>
       </ul>
     </nav>
   );
 }
+
+export function LocaleSwitcher() {
+  const pathName = usePathname();
+
+  return (
+    <ul>
+      {LOCALES.map((locale) => (
+        <li key={locale}>
+          <Link href={redirectedPathName(locale, pathName) as Route}>
+            {locale}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+const redirectedPathName = (locale: string, pathName: string) => {
+  if (!pathName) {
+    return "/";
+  }
+
+  const segments = pathName.split("/");
+  segments[1] = locale;
+
+  return segments.join("/");
+};

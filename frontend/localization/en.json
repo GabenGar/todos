@@ -1,0 +1,20 @@
+{
+  "layout": {
+    "source_code": "Source Code"
+  },
+  "home": {
+    "heading": "Welcome to Gabengar's!",
+    "link_tasks": "Tasks"
+  },
+  "todos": {
+    "heading": "Tasks",
+    "new_todo": {
+      "title": "Title",
+      "description": "Description",
+      "add": "Add"
+    },
+    "export_tasks": "Export tasks",
+    "click_to_file": "Click to upload a file",
+    "import_tasks": "Import tasks"
+  }
+}
