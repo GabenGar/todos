@@ -14,12 +14,6 @@ export async function migrateTasks() {
   );
 
   if (legacyTasks.length) {
-    const updates = legacyTasks.map<ITodoUpdate>(
-      ({ description, id, title }) => {
-        return { id, title, description: undefined };
-      },
-    );
-
     const updatedTasks = storedTasks.map<ITodo>((currentTask) => {
       const legacyTask = legacyTasks.find(({ id }) => id === currentTask.id);
 
@@ -27,7 +21,7 @@ export async function migrateTasks() {
         return currentTask;
       }
 
-      const updatedTask = { ...currentTask, description: undefined };
+      const updatedTask: ITodo = { ...currentTask, description: undefined };
 
       return updatedTask;
     });
