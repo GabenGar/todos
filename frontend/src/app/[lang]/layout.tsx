@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 import { type Metadata } from "next";
 import { REPOSITORY_URL, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
+import { getDictionary } from "#server";
 import { ClientProvider } from "#hooks";
 import { GlobalNavigation } from "#components";
 import type { IBasePageParams } from "#pages/types";
 
 import "../../styles/global.scss";
 import styles from "./layout.module.scss";
-import { getDictionary } from "#server";
 
 interface IProps {
   children: ReactNode;

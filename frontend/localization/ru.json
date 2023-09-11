@@ -1,0 +1,20 @@
+{
+  "layout": {
+    "source_code": "Исходный код"
+  },
+  "home": {
+    "heading": "Добро пожаловать на Gabengar's!",
+    "link_tasks": "Задачи"
+  },
+  "todos": {
+    "heading": "Задачи",
+    "new_todo": {
+      "title": "Название",
+      "description": "Описание",
+      "add": "Добавить"
+    },
+    "export_tasks": "Экспортировать задачи",
+    "click_to_file": "Кликните, чтобы загрузить файл",
+    "import_tasks": "Импортировать задачи"
+  }
+}

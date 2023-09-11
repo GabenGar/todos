@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { ILocalization } from "#lib/localization";
 import {
   Article,
   ArticleBody,
@@ -18,10 +19,11 @@ import type { ITodo, ITodoInit } from "../types";
 import styles from "./list.module.scss";
 
 interface ITodoListProps extends IArticleProps {
+  translation: ILocalization["todos"];
   id: string;
 }
 
-export function TodoList({ id, ...props }: ITodoListProps) {
+export function TodoList({ translation, id, ...props }: ITodoListProps) {
   const [isInitialized, changeInitialization] = useState(false);
   const [todos, changeTodos] = useState<ITodo[]>([]);
   const todoListID = `${id}-todolist`;
@@ -54,7 +56,11 @@ export function TodoList({ id, ...props }: ITodoListProps) {
   return (
     <Article {...props}>
       <ArticleHeader>
-        <NewTodoForm id={todoListID} onNewTodo={handleTodoCreation} />
+        <NewTodoForm
+          translation={translation.new_todo}
+          id={todoListID}
+          onNewTodo={handleTodoCreation}
+        />
       </ArticleHeader>
 
       <ArticleBody>
@@ -75,8 +81,9 @@ export function TodoList({ id, ...props }: ITodoListProps) {
 
       <ArticleFooter>
         <ul className={styles.buttons}>
-          <DataExportForm />
+          <DataExportForm translation={translation} />
           <ImportDataExportForm
+            translation={translation}
             id="import-data-export"
             onSuccess={async () => {
               const newTodos = await getTodos();

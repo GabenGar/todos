@@ -1,13 +1,14 @@
 import { toJSONPretty } from "#lib/json";
-import { createBlockComponent } from "#components/meta";
-import { Button, IButtonProps } from "#components/button";
+import { ILocalization } from "#lib/localization";
+import { Button } from "#components/button";
 import { createDataExport } from "./lib";
 
-interface IProps extends Omit<IButtonProps, "onClick"> {}
+interface IProps {
+  translation: ILocalization["todos"]
+}
 
-export const DataExportForm = createBlockComponent(undefined, Component);
-
-function Component({ ...props }: IProps) {
+ export function DataExportForm({ translation }: IProps) {
+  const { export_tasks } = translation
   async function handleExportCreation() {
     const dataExport = await createDataExport();
     const dataExportJSON = toJSONPretty(dataExport);
@@ -25,8 +26,8 @@ function Component({ ...props }: IProps) {
   }
 
   return (
-    <Button {...props} onClick={handleExportCreation}>
-      Export
+    <Button onClick={handleExportCreation}>
+      {export_tasks}
     </Button>
   );
 }
