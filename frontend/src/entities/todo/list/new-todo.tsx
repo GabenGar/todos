@@ -35,8 +35,6 @@ export function NewTodoForm({ id, onNewTodo }: IProps) {
       description: !description ? undefined : description,
     };
 
-    console.log(description, init);
-
     await onNewTodo(init);
   }
 

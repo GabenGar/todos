@@ -1,5 +1,6 @@
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
+import { useClient } from "#hooks";
 import type { ITodo } from "../types";
 
 import styles from "./item.module.scss";
@@ -12,7 +13,13 @@ interface IProps extends IBaseComponentPropsWithChildren<"li"> {
 export const TodoItem = createBlockComponent(styles, Component);
 
 function Component({ todo, onRemoval, ...props }: IProps) {
+  const clientInfo = useClient();
   const { id, created_at, title, description } = todo;
+  const formattedDate = !clientInfo.isClient
+    ? created_at
+    : Intl.DateTimeFormat(String(clientInfo.locale)).format(
+        new Date(created_at),
+      );
 
   return (
     <li {...props} className={styles.block}>
@@ -20,7 +27,7 @@ function Component({ todo, onRemoval, ...props }: IProps) {
       <br />
       {description}
       <br />
-      {created_at}
+      {formattedDate}
     </li>
   );
 }

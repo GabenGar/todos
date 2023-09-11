@@ -4,6 +4,7 @@ import { fromJSON } from "#lib/json";
 import { importDataExport } from "./lib";
 
 import styles from "./import-form.module.scss";
+import { ButtonSubmit } from "#components/button";
 
 const FIELD = {
   FILE: { name: "file", label: "Click to import file" },
@@ -49,6 +50,9 @@ export function ImportDataExportForm({ id, onSuccess }: IProps) {
           >
             {FIELD.FILE.label}
           </InputSectionFile>
+          <ButtonSubmit form={formID} viewType="button">
+            Start import
+          </ButtonSubmit>
         </>
       )}
     </Form>
