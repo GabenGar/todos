@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { type Metadata } from "next";
-import { REPOSITORY_URL, SITE_TITLE } from "#environment";
+import { REPOSITORY_URL, SITE_ORIGIN, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { getDictionary } from "#server";
 import { ClientProvider } from "#hooks";
@@ -16,6 +16,7 @@ interface IProps {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: { template: `%s | ${SITE_TITLE}`, default: SITE_TITLE },
   description: "Site built with NextJS.",
   openGraph: {

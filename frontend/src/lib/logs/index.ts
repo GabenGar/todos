@@ -2,9 +2,10 @@ import { DEFAULT_LOG_LEVEL } from "#environment";
 import { toQuotedStrings } from "#lib/strings";
 
 const LOG_LEVELS = ["debug", "log", "info", "warn", "error"] as const;
-let currentLogLevel = DEFAULT_LOG_LEVEL;
-
 export type ILogLevel = (typeof LOG_LEVELS)[number];
+
+validateLogLevel(DEFAULT_LOG_LEVEL);
+let currentLogLevel = DEFAULT_LOG_LEVEL;
 
 export function validateLogLevel(
   inputData: unknown,
