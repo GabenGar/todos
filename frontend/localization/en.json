@@ -1,6 +1,7 @@
 {
   "layout": {
-    "source_code": "Source Code"
+    "source_code": "Source Code",
+    "log_level": "Log level"
   },
   "home": {
     "heading": "Welcome to Gabengar's!",

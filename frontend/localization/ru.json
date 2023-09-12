@@ -1,6 +1,7 @@
 {
   "layout": {
-    "source_code": "Исходный код"
+    "source_code": "Исходный код",
+    "log_level": "Уровень логов"
   },
   "home": {
     "heading": "Добро пожаловать на Gabengar's!",

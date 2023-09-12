@@ -18,9 +18,11 @@ export async function migrateTasks() {
   if (!legacyTasks.length) {
     isMigrated = true;
     logInfo(`Migrated tasks.`);
+
+    return
   }
 
-  logInfo(`Migrating ${legacyTasks.length} tasks...`);
+  logInfo(`Migrating ${legacyTasks.length} legacy tasks...`);
   const updatedTasks = storedTasks.map<ITodo>((currentTask) => {
     const legacyTask = legacyTasks.find(({ id }) => id === currentTask.id);
 
@@ -37,7 +39,7 @@ export async function migrateTasks() {
 
   isMigrated = true;
 
-  logInfo(`Migrated ${legacyTasks.length} tasks.`);
+  logInfo(`Migrated ${legacyTasks.length} legacy tasks.`);
 }
 
 export async function getTodos(): Promise<ITodo[]> {

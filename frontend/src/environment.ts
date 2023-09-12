@@ -1,3 +1,5 @@
+import type { ILogLevel } from "#lib/logs";
+
 export const NODE_ENV = process.env.NODE_ENV;
 
 export const SITE_ORIGIN = process.env.NEXT_PUBLIC_ORIGIN!;
@@ -18,7 +20,10 @@ if (!REPOSITORY_URL) {
   throw new Error(`"NEXT_PUBLIC_REPOSITORY_URL" is not set.`);
 }
 
-export const DEFAULT_LOG_LEVEL = process.env.NEXT_PUBLIC_DEFAULT_LOG_LEVEL;
+/**
+ * @TODO somehow validate this value without cyclic dependencies.
+ */
+export const DEFAULT_LOG_LEVEL = process.env.NEXT_PUBLIC_DEFAULT_LOG_LEVEL as ILogLevel;
 
 export const IS_BROWSER = typeof window !== "undefined";
 export const IS_DEVELOPMENT = NODE_ENV === "development";

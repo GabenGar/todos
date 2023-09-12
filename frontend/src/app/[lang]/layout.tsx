@@ -4,7 +4,7 @@ import { REPOSITORY_URL, SITE_ORIGIN, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { getDictionary } from "#server";
 import { ClientProvider } from "#hooks";
-import { GlobalNavigation } from "#components";
+import { GlobalNavigation, LoggerSwitcher } from "#components";
 import type { IBasePageParams } from "#pages/types";
 
 import "../../styles/global.scss";
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 async function RootLayout({ children, params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { layout } = dict
+  const { layout } = dict;
 
   return (
     <html lang={lang}>
@@ -39,7 +39,14 @@ async function RootLayout({ children, params }: IProps) {
           </header>
           <main className={styles.main}>{children}</main>
           <footer className={styles.footer}>
-            <a href={REPOSITORY_URL}>{layout.source_code}</a>
+            <ul>
+              <li>
+                <a href={REPOSITORY_URL}>{layout.source_code}</a>
+              </li>
+              <li>
+                <LoggerSwitcher translation={layout} />
+              </li>
+            </ul>
           </footer>
         </ClientProvider>
       </body>
