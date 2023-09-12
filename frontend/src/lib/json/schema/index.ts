@@ -5,6 +5,7 @@ import dataExportSchema from "#schema/entities/data-export.schema.json";
 import taskSchema from "#schema/entities/task.schema.json";
 import nanoidSchema from "#schema/strings/nanoid.schema.json";
 import dateTimeSchema from "#schema/dates/datetime.schema.json";
+import { logError } from "#lib/logs";
 
 init();
 
@@ -51,7 +52,7 @@ export async function createValidator<InputType>(
     const result = validatorFunc(data, BASIC);
 
     if (!result.valid) {
-      console.error(result);
+      logError(result);
       throw new Error(`Data does not conform to schema "${schemaID}".`);
     }
   }

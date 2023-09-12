@@ -1,12 +1,13 @@
 import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
+import { logDebug, logInfo } from "#lib/logs";
 import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
 import type { ITodo, ITodoInit, ITodoUpdate } from "./types";
 
 let isMigrated = false;
 
 export async function migrateTasks() {
-  console.debug(`Migrating tasks...`);
+  logInfo(`Migrating tasks...`);
 
   const storedTasks = getLocalStoreItem<ITodo[]>("todos", []);
   // remove `description` keys which are empty strings
@@ -14,29 +15,33 @@ export async function migrateTasks() {
     ({ description }) => description === "",
   );
 
-  if (legacyTasks.length) {
-    const updatedTasks = storedTasks.map<ITodo>((currentTask) => {
-      const legacyTask = legacyTasks.find(({ id }) => id === currentTask.id);
-
-      if (!legacyTask) {
-        return currentTask;
-      }
-
-      const updatedTask: ITodo = { ...currentTask, description: undefined };
-
-      return updatedTask;
-    });
-
-    setLocalStoreItem("todos", updatedTasks);
+  if (!legacyTasks.length) {
+    isMigrated = true;
+    logInfo(`Migrated tasks.`);
   }
+
+  logInfo(`Migrating ${legacyTasks.length} tasks...`);
+  const updatedTasks = storedTasks.map<ITodo>((currentTask) => {
+    const legacyTask = legacyTasks.find(({ id }) => id === currentTask.id);
+
+    if (!legacyTask) {
+      return currentTask;
+    }
+
+    const updatedTask: ITodo = { ...currentTask, description: undefined };
+
+    return updatedTask;
+  });
+
+  setLocalStoreItem("todos", updatedTasks);
 
   isMigrated = true;
 
-  console.debug(`Migrated tasks.`);
+  logInfo(`Migrated ${legacyTasks.length} tasks.`);
 }
 
 export async function getTodos(): Promise<ITodo[]> {
-  console.debug(`Getting tasks...`);
+  logDebug(`Getting tasks...`);
 
   if (!isMigrated) {
     await migrateTasks();
@@ -44,7 +49,7 @@ export async function getTodos(): Promise<ITodo[]> {
 
   const storedTodos = getLocalStoreItem<ITodo[]>("todos", []);
 
-  console.debug(`Got ${storedTodos.length} tasks.`);
+  logDebug(`Got ${storedTodos.length} tasks.`);
 
   return storedTodos;
 }
@@ -60,7 +65,7 @@ export async function createTodo(init: ITodoInit): Promise<ITodo> {
  * @returns Added todos.
  */
 async function createTodos(inits: ITodoInit[]): Promise<ITodo[]> {
-  console.debug(`Creating ${inits.length} tasks...`);
+  logDebug(`Creating ${inits.length} tasks...`);
 
   const incomingTodos = inits.map(({ title, description }) => {
     const newTodo: ITodo = {
@@ -79,7 +84,7 @@ async function createTodos(inits: ITodoInit[]): Promise<ITodo[]> {
   const newTodos = [...currentTodos, ...incomingTodos];
   setLocalStoreItem("todos", newTodos);
 
-  console.debug(`Created ${inits.length} tasks.`);
+  logDebug(`Created ${inits.length} tasks.`);
 
   return incomingTodos;
 }
@@ -95,7 +100,7 @@ export async function editTodo(update: ITodoUpdate): Promise<ITodo> {
  * @returns The edited Todos.
  */
 async function editTodos(updates: ITodoUpdate[]): Promise<ITodo[]> {
-  console.debug(`Editing ${updates.length} tasks...`);
+  logDebug(`Editing ${updates.length} tasks...`);
 
   const storedTodos = await getTodos();
   const updateIDs = new Set(updates.map(({ id }) => id));
@@ -132,7 +137,7 @@ async function editTodos(updates: ITodoUpdate[]): Promise<ITodo[]> {
     updateIDs.has(id),
   );
 
-  console.debug(`Edited ${editedTodos.length} tasks.`);
+  logDebug(`Edited ${editedTodos.length} tasks.`);
 
   return editedTodos;
 }
@@ -148,7 +153,7 @@ export async function removeTodo(id: ITodo["id"]): Promise<ITodo> {
  * @returns The removed Todos
  */
 async function removeTodos(ids: ITodo["id"][]): Promise<ITodo[]> {
-  console.debug(`Removing ${ids.length} tasks...`);
+  logDebug(`Removing ${ids.length} tasks...`);
 
   const removedIDs = new Set(ids);
 
@@ -165,7 +170,7 @@ async function removeTodos(ids: ITodo["id"][]): Promise<ITodo[]> {
 
   const removedTodos = storedTodos.filter(({ id }) => removedIDs.has(id));
 
-  console.debug(`Removed ${removedTodos.length} tasks.`);
+  logDebug(`Removed ${removedTodos.length} tasks.`);
 
   return removedTodos;
 }

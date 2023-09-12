@@ -1,4 +1,8 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
+  "dotenv.enableSecretpeeking": false,
+  "files.associations": {
+    ".env.*": "dotenv"
+  },
 }

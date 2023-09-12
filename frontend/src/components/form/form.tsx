@@ -1,22 +1,23 @@
 "use client";
-import { type ReactNode, type FormEvent, useState } from "react";
+
+import { type ReactNode, useState } from "react";
+import { logError } from "#lib/logs";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
-import { IFormEvent } from "./types";
+import type { IFormEvent } from "./types";
 
 import styles from "./form.module.scss";
 
-export interface IFormProps<InputName extends string = string> extends IBaseComponentProps<"form"> {
+export interface IFormProps<InputName extends string = string>
+  extends IBaseComponentProps<"form"> {
   id: string;
   children?: (formID: string) => ReactNode;
   onSubmit: (event: IFormEvent<InputName>) => Promise<void>;
   onReset?: (event: IFormEvent<InputName>) => Promise<void>;
 }
 
-
-
 /**
- * @TODO Input names generic
+ * @TODO submit button
  */
 export const Form = createBlockComponent(styles, Component);
 
@@ -44,7 +45,7 @@ function Component<InputName extends string>({
       await onSubmit?.(event);
       await handleReset(event);
     } catch (error) {
-      console.error(error);
+      logError(error);
     } finally {
       switchSubmitting(false);
     }
