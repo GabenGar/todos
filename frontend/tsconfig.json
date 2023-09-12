@@ -3,7 +3,10 @@
     "baseUrl": "./src",
     "paths": {
       "#environment": [
-        "./environment.ts"
+        "./environment/index.ts"
+      ],
+      "#environment/*": [
+        "./environment/*/index.ts"
       ],
       "#pages/types": [
         "./app/types.ts"
