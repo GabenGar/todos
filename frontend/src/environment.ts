@@ -20,4 +20,5 @@ if (!REPOSITORY_URL) {
 
 export const DEFAULT_LOG_LEVEL = process.env.NEXT_PUBLIC_DEFAULT_LOG_LEVEL;
 
+export const IS_BROWSER = typeof window !== "undefined";
 export const IS_DEVELOPMENT = NODE_ENV === "development";

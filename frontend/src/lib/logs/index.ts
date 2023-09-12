@@ -1,4 +1,7 @@
-import { DEFAULT_LOG_LEVEL } from "#environment";
+/**
+ * @TODO implement [`pino`](https://github.com/pinojs/pino)
+ */
+import { DEFAULT_LOG_LEVEL, IS_BROWSER } from "#environment";
 import { toQuotedStrings } from "#lib/strings";
 
 const LOG_LEVELS = ["debug", "log", "info", "warn", "error"] as const;
