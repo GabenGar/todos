@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import dataExportSchema from "#schema/entities/data-export.schema.json";
 import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
+import { logDebug, logInfo } from "#lib/logs";
 import { setLocalStoreItem } from "#browser/local-storage";
 import { type ITodo, getTodos } from "#entities/todo";
 import type { IDataExport } from "./types";
@@ -27,31 +28,29 @@ export async function createDataExport(): Promise<IDataExport> {
 }
 
 export async function importDataExport(dataExport: unknown) {
-  console.log(`Importing data export...`);
+  logInfo(`Importing data export...`);
 
-  console.debug(`Validating data export...`);
+  logDebug(`Validating data export...`);
 
   const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
     await createValidator<IDataExport>(dataExportSchema.$id);
 
   validate(dataExport);
 
-  console.debug(
+  logDebug(
     `Validated data export "${dataExport.id}" of version "${dataExport.version}".`,
   );
 
-  console.log(
+  logDebug(
     `Importing ${dataExport.data.tasks.length} tasks of data export "${dataExport.id}"...`,
   );
 
   const updatedTasks = await importTasks(dataExport.data.tasks);
   setLocalStoreItem("todos", updatedTasks);
 
-  console.log(
-    `Imported tasks of data export "${dataExport.id}"...`,
-  );
+  logDebug(`Imported tasks of data export "${dataExport.id}".`);
 
-  console.log(`Imported data export "${dataExport.id}".`);
+  logInfo(`Imported data export "${dataExport.id}".`);
 }
 
 async function importTasks(incomingTasks: ITodo[]) {

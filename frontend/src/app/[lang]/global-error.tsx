@@ -1,18 +1,29 @@
 "use client"; // Error components must be Client Components
 
 import { useEffect } from "react";
+import { logError } from "#lib/logs";
+import { Heading } from "#components/heading";
+import { Button } from "#components/button";
 
-function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
+interface IProps {
+  error: Error;
+  reset: () => void;
+}
+
+/**
+ * @TODO multilang
+ */
+function GlobalError({ error, reset }: IProps) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
+    logError(error);
   }, [error]);
 
   return (
     <html>
       <body>
-        <h2>Something went wrong!</h2>
-        <button onClick={() => reset()}>Try again</button>
+        <Heading level={2}>Something went wrong!</Heading>
+        <Button onClick={() => reset()}>Try again</Button>
       </body>
     </html>
   );

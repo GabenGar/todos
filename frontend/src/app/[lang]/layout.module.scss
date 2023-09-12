@@ -54,3 +54,11 @@
     padding: $size-small $size-big;
   }
 }
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+  width: 100%;
+}

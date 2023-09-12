@@ -1,11 +1,13 @@
-"use client"; // Error components must be Client Components
+// Error components must be Client Components
+"use client";
 
 import { useEffect } from "react";
+import { logError } from "#lib/logs";
 
 function PageError({ error, reset }: { error: Error; reset: () => void }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
+    logError(error);
   }, [error]);
 
   return (
