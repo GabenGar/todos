@@ -39,7 +39,7 @@ async function RootLayout({ children, params }: IProps) {
           </header>
           <main className={styles.main}>{children}</main>
           <footer className={styles.footer}>
-            <ul>
+            <ul className={styles.list}>
               <li>
                 <a href={REPOSITORY_URL}>{layout.source_code}</a>
               </li>
