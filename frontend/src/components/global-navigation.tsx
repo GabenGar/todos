@@ -1,11 +1,11 @@
 "use client";
 
 import type { Route } from "next";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { HomePageURL } from "#lib/urls";
+import { Link } from "./link";
 
 import styles from "./global-navigation.module.scss";
 

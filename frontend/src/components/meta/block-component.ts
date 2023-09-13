@@ -15,7 +15,7 @@ interface IBlockStyles {
 
 /**
  * Concatenates `className` of the component with the `className`
- * of the props passed to it, so it could be passed with `...props` call.
+ * of the props passed to it, so it could be passed with `{...props}` call.
  * @param blockClassName
  * Either a `className` string or a `styles` object module.
  * The `styles` object always assumes the presence of the `.block` style.
@@ -57,7 +57,9 @@ export function createBlockComponent<Props extends IBaseProps = IBaseProps>(
   return (...args: Parameters<typeof functionComponent>) => {
     const [props, ref] = args;
     const baseClassName =
-      typeof blockClassName == "string" ? blockClassName : blockClassName?.block;
+      typeof blockClassName == "string"
+        ? blockClassName
+        : blockClassName?.block;
     const className = clsx(baseClassName, props.className);
 
     return functionComponent({ ...props, className }, ref);

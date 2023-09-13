@@ -8,7 +8,7 @@ const VIEW_TYPES = [
   "positive",
 ] as const;
 
-export type IViewType = typeof VIEW_TYPES[number]
+export type IViewType = (typeof VIEW_TYPES)[number];
 
 export interface IClickEvent
   extends IReactMouseEvent<HTMLButtonElement, MouseEvent> {}

@@ -4,7 +4,7 @@ import type { INanoidID } from "#lib/strings";
 export interface ITodoInit extends Pick<ITodo, "title" | "description"> {}
 
 export interface ITodo {
-  id: INanoidID
+  id: INanoidID;
   created_at: IDateTime;
   updated_at: IDateTime;
   title: string;

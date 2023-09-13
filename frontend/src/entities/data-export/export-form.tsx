@@ -4,11 +4,11 @@ import { Button } from "#components/button";
 import { createDataExport } from "./lib";
 
 interface IProps {
-  translation: ILocalization["todos"]
+  translation: ILocalization["todos"];
 }
 
- export function DataExportForm({ translation }: IProps) {
-  const { export_tasks } = translation
+export function DataExportForm({ translation }: IProps) {
+  const { export_tasks } = translation;
   async function handleExportCreation() {
     const dataExport = await createDataExport();
     const dataExportJSON = toJSONPretty(dataExport);
@@ -25,11 +25,7 @@ interface IProps {
     anchourElement.click();
   }
 
-  return (
-    <Button onClick={handleExportCreation}>
-      {export_tasks}
-    </Button>
-  );
+  return <Button onClick={handleExportCreation}>{export_tasks}</Button>;
 }
 
 /**

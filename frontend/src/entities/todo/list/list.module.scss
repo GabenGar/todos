@@ -1,6 +1,7 @@
 @use "../../../styles/sass/variables.scss" as *;
 
-.block {}
+.block {
+}
 
 .list {
   display: flex;
@@ -16,7 +17,6 @@
     background-color: var(--colour1-primary);
     padding: $size-small;
   }
-
 }
 
 .buttons {
