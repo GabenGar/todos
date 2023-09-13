@@ -1,3 +1,3 @@
-import type engJSON from "../../../localization/en.json"
+import type engJSON from "../../../localization/en.json";
 
-export type ILocalization = typeof engJSON
+export type ILocalization = typeof engJSON;

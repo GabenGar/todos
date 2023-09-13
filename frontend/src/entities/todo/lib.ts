@@ -19,7 +19,7 @@ export async function migrateTasks() {
     isMigrated = true;
     logInfo(`Migrated tasks.`);
 
-    return
+    return;
   }
 
   logInfo(`Migrating ${legacyTasks.length} legacy tasks...`);

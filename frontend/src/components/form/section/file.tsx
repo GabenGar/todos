@@ -30,7 +30,9 @@ function Component({
         accept={accept}
         multiple={multiple}
       />
-      <Label className={styles.label} htmlFor={id}>{children}</Label>
+      <Label className={styles.label} htmlFor={id}>
+        {children}
+      </Label>
     </div>
   );
 }

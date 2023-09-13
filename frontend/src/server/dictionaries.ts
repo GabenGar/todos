@@ -6,7 +6,7 @@ const dictionaries = {
   ru: async () => {
     const dictModule = await import("../../localization/ru.json");
     return dictModule.default;
-  }
+  },
 };
 
 export const getDictionary = async (locale: keyof typeof dictionaries) => {

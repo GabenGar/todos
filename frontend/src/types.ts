@@ -1,1 +1,1 @@
-export type IOneOrMany<Type> = Type | Type[]
+export type IOneOrMany<Type> = Type | Type[];

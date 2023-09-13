@@ -57,7 +57,9 @@ export function createBlockComponent<Props extends IBaseProps = IBaseProps>(
   return (...args: Parameters<typeof functionComponent>) => {
     const [props, ref] = args;
     const baseClassName =
-      typeof blockClassName == "string" ? blockClassName : blockClassName?.block;
+      typeof blockClassName == "string"
+        ? blockClassName
+        : blockClassName?.block;
     const className = clsx(baseClassName, props.className);
 
     return functionComponent({ ...props, className }, ref);
