@@ -1,0 +1,55 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  justify-content: center;
+  min-height: $min-button-size;
+  background-color: var(--local-background-tertiary);
+  border: $size-nano solid var(--local-text-tertiary);
+  border-radius: $radius-small;
+  padding: 0 $size-normal;
+
+  &:link {
+    color: var(--local-text-secondary);
+  }
+
+  &:visited {
+    color: var(--local-text-secondary);
+  }
+
+  &:focus {
+    color: var(--local-text-primary);
+    background-color: var(--local-background-primary);
+    border-color: var(--local-text-primary);
+
+    & .content {
+      border-color: var(--local-text-primary);
+    }
+  }
+
+  &:hover {
+    color: var(--local-text-primary);
+    background-color: var(--local-background-secondary);
+    border-color: var(--local-text-primary);
+
+    & .content {
+      border-color: var(--local-text-primary);
+    }
+  }
+
+  &:active {
+    color: var(--local-background-primary);
+    background-color: var(--local-text-primary);
+    border-color: var(--local-background-primary);
+
+    & .content {
+      border-color: var(--local-background-primary);
+    }
+  }
+}
+
+.content {
+  border-bottom: $size-nano solid transparent;
+
+  transition-property: color, border-color;
+  transition-duration: var(--duration-global);
+}

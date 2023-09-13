@@ -1,0 +1,17 @@
+@use "../../styles/sass/variables.scss" as *;
+@use "../../styles/sass/mixins.scss" as mixins;
+
+.block {
+  @include mixins.link();
+
+  --local-text-primary: var(--anchour-internal-colour-text-primary);
+  --local-text-secondary: var(--anchour-internal-colour-text-secondary);
+  --local-text-tertiary: var(--anchour-internal-colour-text-tertiary);
+  --local-background-primary: var(--anchour-internal-colour-background-primary);
+  --local-background-secondary: var(
+    --anchour-internal-colour-background-secondary
+  );
+  --local-background-tertiary: var(
+    --anchour-internal-colour-background-tertiary
+  );
+}

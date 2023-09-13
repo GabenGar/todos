@@ -15,7 +15,7 @@ interface IBlockStyles {
 
 /**
  * Concatenates `className` of the component with the `className`
- * of the props passed to it, so it could be passed with `...props` call.
+ * of the props passed to it, so it could be passed with `{...props}` call.
  * @param blockClassName
  * Either a `className` string or a `styles` object module.
  * The `styles` object always assumes the presence of the `.block` style.

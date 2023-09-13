@@ -8,6 +8,7 @@
     "link_tasks": "Задачи"
   },
   "todos": {
+    "title": "Задачи",
     "heading": "Задачи",
     "new_todo": {
       "title": "Название",

@@ -53,3 +53,48 @@
     cursor: not-allowed;
   }
 }
+
+@mixin link() {
+  --local-text-primary: var(--anchour-colour-text-primary);
+  --local-text-secondary: var(--anchour-colour-text-secondary);
+  --local-text-tertiary: var(--anchour-colour-text-tertiary);
+  --local-background-primary: var(--anchour-colour-background-primary);
+  --local-background-secondary: var(--anchour-colour-background-secondary);
+  --local-background-tertiary: var(--anchour-colour-background-tertiary);
+
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  outline: none;
+  text-decoration: none;
+  border-bottom: vars.$size-nano solid transparent;
+  // small padding so the letters won't spill out horizontally
+  padding: 0 2px;
+  transition-property: color, border-color, background-color;
+  transition-duration: var(--duration-global);
+
+  &:link {
+    color: var(--local-text-primary);
+  }
+
+  &:visited {
+    color: var(--local-text-secondary);
+  }
+
+  &:focus {
+    background-color: var(--local-background-primary);
+    border-bottom-color: var(--local-text-primary);
+  }
+
+  &:hover {
+    background-color: var(--local-background-secondary);
+    border-bottom-color: var(--local-text-primary);
+  }
+
+  &:active {
+    color: var(--local-background-primary);
+    background-color: var(--local-text-primary);
+    border-bottom-color: var(--local-background-primary);
+  }
+}
