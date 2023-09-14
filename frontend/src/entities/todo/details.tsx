@@ -14,6 +14,7 @@ import { createBlockComponent } from "#components/meta";
 import { Loading } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
+import { DateTime } from "#components/date";
 import { getTask } from "./lib";
 
 import styles from "./details.module.scss";
@@ -59,10 +60,8 @@ function Component({ translation, taskID, ...props }: IProps) {
       {(headinglevel) => (
         <>
           <ArticleHeader>
-            <Heading level={headinglevel}>
-              <div>&quot;{title}&quot;</div>
-              <div>{id}</div>
-            </Heading>
+            <Heading level={headinglevel}>&quot;{title}&quot;</Heading>
+            <div>{id}</div>
           </ArticleHeader>
           <ArticleBody>
             <dl>
@@ -73,9 +72,13 @@ function Component({ translation, taskID, ...props }: IProps) {
           <ArticleFooter>
             <dl>
               <dt>{translation.creation_date}:</dt>
-              <dd>{created_at}</dd>
+              <dd>
+                <DateTime dateTime={created_at} />
+              </dd>
               <dt>{translation.last_updated}:</dt>
-              <dd>{updated_at}</dd>
+              <dd>
+                <DateTime dateTime={updated_at} />
+              </dd>
             </dl>
             <ul>
               <li>
