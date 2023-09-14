@@ -11,9 +11,10 @@ import {
   type IArticleProps,
 } from "#components/article";
 import { createBlockComponent } from "#components/meta";
-import { Loading } from "#components";
+import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
+import { DateTime } from "#components/date";
 import { getTask } from "./lib";
 
 import styles from "./details.module.scss";
@@ -59,24 +60,28 @@ function Component({ translation, taskID, ...props }: IProps) {
       {(headinglevel) => (
         <>
           <ArticleHeader>
-            <Heading level={headinglevel}>
-              <div>&quot;{title}&quot;</div>
-              <div>{id}</div>
-            </Heading>
+            <Heading level={headinglevel}>&quot;{title}&quot;</Heading>
+            <div>{id}</div>
           </ArticleHeader>
           <ArticleBody>
-            <dl>
-              <dt>{translation.description}:</dt>
-              <dd>{description ?? translation.no_description}</dd>
-            </dl>
+            <DescriptionList>
+              <DescriptionSection
+                dKey={translation.description}
+                dValue={description ?? translation.no_description}
+              />
+            </DescriptionList>
           </ArticleBody>
           <ArticleFooter>
-            <dl>
-              <dt>{translation.creation_date}:</dt>
-              <dd>{created_at}</dd>
-              <dt>{translation.last_updated}:</dt>
-              <dd>{updated_at}</dd>
-            </dl>
+            <DescriptionList>
+              <DescriptionSection
+                dKey={translation.creation_date}
+                dValue={<DateTime dateTime={created_at} />}
+              />
+              <DescriptionSection
+                dKey={translation.last_updated}
+                dValue={<DateTime dateTime={updated_at} />}
+              />
+            </DescriptionList>
             <ul>
               <li>
                 <Link href={"/todos"}>{translation.back_to_tasks}</Link>
