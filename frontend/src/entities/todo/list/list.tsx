@@ -25,11 +25,11 @@ interface ITodoListProps extends IArticleProps {
 
 export function TodoList({ translation, id, ...props }: ITodoListProps) {
   const [isInitialized, changeInitialization] = useState(false);
-  const [todos, changeTodos] = useState<ITodo[]>([]);
+  const [tasks, changeTasks] = useState<ITodo[]>([]);
   const todoListID = `${id}-todolist`;
 
   useEffect(() => {
-    getTodos().then((storedTodos) => changeTodos(storedTodos));
+    getTodos().then((storedTodos) => changeTasks(storedTodos));
     changeInitialization(true);
   }, []);
 
@@ -40,7 +40,7 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
 
     await createTodo(init);
     const newTodos = await getTodos();
-    changeTodos(newTodos);
+    changeTasks(newTodos);
   }
 
   async function handleTodoRemoval(removedID: ITodo["id"]) {
@@ -50,7 +50,7 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
 
     await removeTodo(removedID);
     const newTodos = await getTodos();
-    changeTodos(newTodos);
+    changeTasks(newTodos);
   }
 
   return (
@@ -68,10 +68,11 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
           {!isInitialized ? (
             <Loading />
           ) : (
-            todos.map((todo) => (
+            tasks.map((task) => (
               <TodoItem
-                key={todo.id}
-                todo={todo}
+                key={task.id}
+                translation={translation}
+                task={task}
                 onRemoval={handleTodoRemoval}
               />
             ))
@@ -87,7 +88,7 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
             id="import-data-export"
             onSuccess={async () => {
               const newTodos = await getTodos();
-              changeTodos(newTodos);
+              changeTasks(newTodos);
             }}
           />
         </ul>

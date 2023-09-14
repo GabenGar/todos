@@ -17,6 +17,11 @@
     },
     "export_tasks": "Export tasks",
     "click_to_file": "Click to upload a file",
-    "import_tasks": "Import tasks"
+    "import_tasks": "Import tasks",
+    "details": "Details"
+  },
+  "task": {
+    "title": "Task",
+    "heading": "Task"
   }
 }

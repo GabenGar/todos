@@ -25,7 +25,7 @@ async function FrontPage({ params }: IProps) {
         <ArticleHeader>
           <ul>
             <li>
-              <Link href={`/${lang}/todos`}>{home.link_tasks}</Link>
+              <Link href={`/todos`}>{home.link_tasks}</Link>
             </li>
           </ul>
         </ArticleHeader>
