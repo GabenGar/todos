@@ -45,13 +45,13 @@ export async function migrateTasks() {
 export async function getTask(taskID: ITodo["id"]) {
   const tasks = await getTodos();
 
-  const task = tasks.find(({id}) => id === taskID);
+  const task = tasks.find(({ id }) => id === taskID);
 
   if (!task) {
-    throw new Error(`No task with ID "${taskID}" exists.`)
+    throw new Error(`No task with ID "${taskID}" exists.`);
   }
 
-  return task
+  return task;
 }
 
 export async function getTodos(): Promise<ITodo[]> {

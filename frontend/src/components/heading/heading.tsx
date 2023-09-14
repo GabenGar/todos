@@ -49,6 +49,6 @@ export function validateHeadinglevel(
   inputLevel: unknown,
 ): asserts inputLevel is IHeadingLevel {
   if (!HEADING_LEVELS.includes(inputLevel as IHeadingLevel)) {
-    throw new Error(`Unknown heading level "${inputLevel}".`)
+    throw new Error(`Unknown heading level "${inputLevel}".`);
   }
 }

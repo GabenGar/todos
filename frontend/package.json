@@ -1,13 +1,13 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "NextJS frontend for todo list.",
   "private": true,
   "scripts": {
     "build": "next build",
     "start": "next start",
     "lint": "next lint && prettier ./src --check",
-    "format": "prettier ./src --write",
+    "format": "prettier --log-level=warn ./src --write",
     "dev": "next dev"
   },
   "dependencies": {

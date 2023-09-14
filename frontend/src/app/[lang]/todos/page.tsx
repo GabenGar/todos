@@ -3,7 +3,6 @@ import { TodoList } from "#entities/todo";
 import { Page } from "#components";
 import type { IBasePageParams } from "#pages/types";
 
-
 interface IProps {
   params: IBasePageParams;
 }
