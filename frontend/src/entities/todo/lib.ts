@@ -42,6 +42,18 @@ export async function migrateTasks() {
   logInfo(`Migrated ${legacyTasks.length} legacy tasks.`);
 }
 
+export async function getTask(taskID: ITodo["id"]) {
+  const tasks = await getTodos();
+
+  const task = tasks.find(({ id }) => id === taskID);
+
+  if (!task) {
+    throw new Error(`No task with ID "${taskID}" exists.`);
+  }
+
+  return task;
+}
+
 export async function getTodos(): Promise<ITodo[]> {
   logDebug(`Getting tasks...`);
 

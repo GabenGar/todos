@@ -17,6 +17,16 @@
     },
     "export_tasks": "Экспортировать задачи",
     "click_to_file": "Кликните, чтобы загрузить файл",
-    "import_tasks": "Импортировать задачи"
+    "import_tasks": "Импортировать задачи",
+    "details": "Детали"
+  },
+  "task": {
+    "title": "Задача",
+    "heading": "Задача",
+    "description": "Описание",
+    "no_description": "Без описания",
+    "creation_date": "Дата создания",
+    "last_updated": "Последнее обновление",
+    "back_to_tasks": "Обратно к задачам"
   }
 }

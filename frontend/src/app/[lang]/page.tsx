@@ -1,12 +1,10 @@
 import { type Metadata } from "next";
 import { SITE_TITLE } from "#environment";
 import { getDictionary } from "#server";
-import { Heading } from "#components/heading";
+import { Page } from "#components";
 import { Article, ArticleHeader } from "#components/article";
 import { Link } from "#components/link";
 import type { IBasePageParams } from "#pages/types";
-
-import styles from "./page.module.scss";
 
 interface IProps {
   params: IBasePageParams;
@@ -22,20 +20,19 @@ async function FrontPage({ params }: IProps) {
   const { home } = dict;
 
   return (
-    <>
-      <Heading level={1}>{home.heading}</Heading>
-      <section className={styles.block}>
-        <Article>
+    <Page heading={home.heading}>
+      <Article headingLevel={2}>
+        {() => (
           <ArticleHeader>
             <ul>
               <li>
-                <Link href={`/${lang}/todos`}>{home.link_tasks}</Link>
+                <Link href={`/todos`}>{home.link_tasks}</Link>
               </li>
             </ul>
           </ArticleHeader>
-        </Article>
-      </section>
-    </>
+        )}
+      </Article>
+    </Page>
   );
 }
 

@@ -1,7 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
-import { DEFAULT_LOCALE, LOCALES } from "#lib/internationalization";
+import { DEFAULT_LOCALE, ILocale, LOCALES } from "#lib/internationalization";
+import { logDebug } from "#lib/logs";
 
 export async function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
@@ -48,6 +49,19 @@ export const config = {
 
 function getLocale(request: Request): string {
   const headers = Object.fromEntries(request.headers);
+
+  // look at the referer header
+  if (headers.referer) {
+    logDebug(`Referer for url "${request.url}": "${headers.referer}"`);
+    const url = new URL(headers.referer);
+    // get the locale value out of referer
+    const [_, locale] = url.pathname.split("/");
+
+    if (LOCALES.includes(locale as ILocale)) {
+      return locale;
+    }
+  }
+
   const languages = new Negotiator({ headers }).languages();
   const locale = match(
     languages,

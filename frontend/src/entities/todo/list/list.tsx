@@ -25,11 +25,11 @@ interface ITodoListProps extends IArticleProps {
 
 export function TodoList({ translation, id, ...props }: ITodoListProps) {
   const [isInitialized, changeInitialization] = useState(false);
-  const [todos, changeTodos] = useState<ITodo[]>([]);
+  const [tasks, changeTasks] = useState<ITodo[]>([]);
   const todoListID = `${id}-todolist`;
 
   useEffect(() => {
-    getTodos().then((storedTodos) => changeTodos(storedTodos));
+    getTodos().then((storedTodos) => changeTasks(storedTodos));
     changeInitialization(true);
   }, []);
 
@@ -40,7 +40,7 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
 
     await createTodo(init);
     const newTodos = await getTodos();
-    changeTodos(newTodos);
+    changeTasks(newTodos);
   }
 
   async function handleTodoRemoval(removedID: ITodo["id"]) {
@@ -50,48 +50,53 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
 
     await removeTodo(removedID);
     const newTodos = await getTodos();
-    changeTodos(newTodos);
+    changeTasks(newTodos);
   }
 
   return (
     <Article {...props}>
-      <ArticleHeader>
-        <NewTodoForm
-          translation={translation.new_todo}
-          id={todoListID}
-          onNewTodo={handleTodoCreation}
-        />
-      </ArticleHeader>
+      {() => (
+        <>
+          <ArticleHeader>
+            <NewTodoForm
+              translation={translation.new_todo}
+              id={todoListID}
+              onNewTodo={handleTodoCreation}
+            />
+          </ArticleHeader>
 
-      <ArticleBody>
-        <ul className={styles.list}>
-          {!isInitialized ? (
-            <Loading />
-          ) : (
-            todos.map((todo) => (
-              <TodoItem
-                key={todo.id}
-                todo={todo}
-                onRemoval={handleTodoRemoval}
+          <ArticleBody>
+            <ul className={styles.list}>
+              {!isInitialized ? (
+                <Loading />
+              ) : (
+                tasks.map((task) => (
+                  <TodoItem
+                    key={task.id}
+                    translation={translation}
+                    task={task}
+                    onRemoval={handleTodoRemoval}
+                  />
+                ))
+              )}
+            </ul>
+          </ArticleBody>
+
+          <ArticleFooter>
+            <ul className={styles.buttons}>
+              <DataExportForm translation={translation} />
+              <ImportDataExportForm
+                translation={translation}
+                id="import-data-export"
+                onSuccess={async () => {
+                  const newTodos = await getTodos();
+                  changeTasks(newTodos);
+                }}
               />
-            ))
-          )}
-        </ul>
-      </ArticleBody>
-
-      <ArticleFooter>
-        <ul className={styles.buttons}>
-          <DataExportForm translation={translation} />
-          <ImportDataExportForm
-            translation={translation}
-            id="import-data-export"
-            onSuccess={async () => {
-              const newTodos = await getTodos();
-              changeTodos(newTodos);
-            }}
-          />
-        </ul>
-      </ArticleFooter>
+            </ul>
+          </ArticleFooter>
+        </>
+      )}
     </Article>
   );
 }

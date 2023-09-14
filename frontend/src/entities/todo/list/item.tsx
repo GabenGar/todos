@@ -1,20 +1,24 @@
+import { ILocalization } from "#lib/localization";
+import { useClient } from "#hooks";
+import { Link } from "#components/link";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
-import { useClient } from "#hooks";
+import { Loading } from "#components";
 import type { ITodo } from "../types";
 
 import styles from "./item.module.scss";
 
 interface IProps extends IBaseComponentPropsWithChildren<"li"> {
-  todo: ITodo;
+  translation: ILocalization["todos"];
+  task: ITodo;
   onRemoval: (id: ITodo["id"]) => Promise<void>;
 }
 
 export const TodoItem = createBlockComponent(styles, Component);
 
-function Component({ todo, onRemoval, ...props }: IProps) {
+function Component({ translation, task, onRemoval, ...props }: IProps) {
   const clientInfo = useClient();
-  const { id, created_at, title, description } = todo;
+  const { id, created_at, title, description } = task;
   const formattedDate = !clientInfo.isClient
     ? created_at
     : Intl.DateTimeFormat(String(clientInfo.locale)).format(
@@ -28,6 +32,8 @@ function Component({ todo, onRemoval, ...props }: IProps) {
       {description}
       <br />
       {formattedDate}
+      <br />
+      <Link href={`/task/${id}`}>{translation.details}</Link>
     </li>
   );
 }

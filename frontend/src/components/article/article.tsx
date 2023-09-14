@@ -1,10 +1,17 @@
+import { type ReactNode } from "react";
 import { createBlockComponent } from "#components/meta";
-import type { IBaseComponentPropsWithChildren } from "#components/types";
+import { validateHeadinglevel, type IHeadingLevel } from "#components/heading";
+import type {
+  IBaseComponentProps,
+  IBaseComponentPropsWithChildren,
+} from "#components/types";
 
 import styles from "./article.module.scss";
 
-export interface IArticleProps
-  extends IBaseComponentPropsWithChildren<"article"> {}
+export interface IArticleProps extends IBaseComponentProps<"article"> {
+  headingLevel: IHeadingLevel;
+  children?: (headingLevel: IHeadingLevel) => ReactNode;
+}
 interface IArticleHeaderProps
   extends IBaseComponentPropsWithChildren<"header"> {}
 interface IArticleBodyProps
@@ -26,8 +33,10 @@ export const ArticleFooter = createBlockComponent(
   ArticleFooterComponent,
 );
 
-function ArticleComponent({ ...props }: IArticleProps) {
-  return <article {...props} />;
+function ArticleComponent({ headingLevel, children, ...props }: IArticleProps) {
+  validateHeadinglevel(headingLevel);
+
+  return <article {...props}>{children?.(headingLevel)}</article>;
 }
 
 function ArticleHeaderComponent({ ...props }: IArticleHeaderProps) {

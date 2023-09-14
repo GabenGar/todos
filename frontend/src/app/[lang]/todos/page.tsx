@@ -1,9 +1,7 @@
 import { getDictionary } from "#server";
-import { Heading } from "#components/heading";
 import { TodoList } from "#entities/todo";
+import { Page } from "#components";
 import type { IBasePageParams } from "#pages/types";
-
-import styles from "../page.module.scss";
 
 interface IProps {
   params: IBasePageParams;
@@ -25,12 +23,9 @@ async function TodosPage({ params }: IProps) {
   const { todos } = dict;
 
   return (
-    <>
-      <Heading level={1}>{todos.heading}</Heading>
-      <section className={styles.block}>
-        <TodoList translation={todos} id={"todos"} />
-      </section>
-    </>
+    <Page heading={todos.heading}>
+      <TodoList headingLevel={2} translation={todos} id={"todos"} />
+    </Page>
   );
 }
 
