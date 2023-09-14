@@ -21,14 +21,16 @@ async function FrontPage({ params }: IProps) {
 
   return (
     <Page heading={home.heading}>
-      <Article>
-        <ArticleHeader>
-          <ul>
-            <li>
-              <Link href={`/todos`}>{home.link_tasks}</Link>
-            </li>
-          </ul>
-        </ArticleHeader>
+      <Article headingLevel={2}>
+        {() => (
+          <ArticleHeader>
+            <ul>
+              <li>
+                <Link href={`/todos`}>{home.link_tasks}</Link>
+              </li>
+            </ul>
+          </ArticleHeader>
+        )}
       </Article>
     </Page>
   );

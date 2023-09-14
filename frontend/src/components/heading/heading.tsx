@@ -5,7 +5,7 @@ import type { IBaseComponentPropsWithChildren } from "#components/types";
 import styles from "./heading.module.scss";
 
 const HEADING_LEVELS = [1, 2, 3, 4, 5, 6] as const;
-type IHeadingLevel = (typeof HEADING_LEVELS)[number];
+export type IHeadingLevel = (typeof HEADING_LEVELS)[number];
 
 interface IProps
   extends IBaseComponentPropsWithChildren<
@@ -42,5 +42,13 @@ function Component({ level, className, ...props }: IProps) {
     default: {
       throw new Error(`Unknown heading level "${level satisfies never}".`);
     }
+  }
+}
+
+export function validateHeadinglevel(
+  inputLevel: unknown,
+): asserts inputLevel is IHeadingLevel {
+  if (!HEADING_LEVELS.includes(inputLevel as IHeadingLevel)) {
+    throw new Error(`Unknown heading level "${inputLevel}".`)
   }
 }

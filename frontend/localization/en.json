@@ -22,6 +22,11 @@
   },
   "task": {
     "title": "Task",
-    "heading": "Task"
+    "heading": "Task",
+    "description": "Description",
+    "no_description": "No description provided",
+    "creation_date": "Creation date",
+    "last_updated": "Last updated",
+    "back_to_tasks": "Back to tasks"
   }
 }

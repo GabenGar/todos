@@ -25,7 +25,7 @@ async function TodosPage({ params }: IProps) {
 
   return (
     <Page heading={todos.heading}>
-      <TodoList translation={todos} id={"todos"} />
+      <TodoList headingLevel={2} translation={todos} id={"todos"} />
     </Page>
   );
 }

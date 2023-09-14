@@ -55,44 +55,48 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
 
   return (
     <Article {...props}>
-      <ArticleHeader>
-        <NewTodoForm
-          translation={translation.new_todo}
-          id={todoListID}
-          onNewTodo={handleTodoCreation}
-        />
-      </ArticleHeader>
+      {() => (
+        <>
+          <ArticleHeader>
+            <NewTodoForm
+              translation={translation.new_todo}
+              id={todoListID}
+              onNewTodo={handleTodoCreation}
+            />
+          </ArticleHeader>
 
-      <ArticleBody>
-        <ul className={styles.list}>
-          {!isInitialized ? (
-            <Loading />
-          ) : (
-            tasks.map((task) => (
-              <TodoItem
-                key={task.id}
+          <ArticleBody>
+            <ul className={styles.list}>
+              {!isInitialized ? (
+                <Loading />
+              ) : (
+                tasks.map((task) => (
+                  <TodoItem
+                    key={task.id}
+                    translation={translation}
+                    task={task}
+                    onRemoval={handleTodoRemoval}
+                  />
+                ))
+              )}
+            </ul>
+          </ArticleBody>
+
+          <ArticleFooter>
+            <ul className={styles.buttons}>
+              <DataExportForm translation={translation} />
+              <ImportDataExportForm
                 translation={translation}
-                task={task}
-                onRemoval={handleTodoRemoval}
+                id="import-data-export"
+                onSuccess={async () => {
+                  const newTodos = await getTodos();
+                  changeTasks(newTodos);
+                }}
               />
-            ))
-          )}
-        </ul>
-      </ArticleBody>
-
-      <ArticleFooter>
-        <ul className={styles.buttons}>
-          <DataExportForm translation={translation} />
-          <ImportDataExportForm
-            translation={translation}
-            id="import-data-export"
-            onSuccess={async () => {
-              const newTodos = await getTodos();
-              changeTasks(newTodos);
-            }}
-          />
-        </ul>
-      </ArticleFooter>
+            </ul>
+          </ArticleFooter>
+        </>
+      )}
     </Article>
   );
 }

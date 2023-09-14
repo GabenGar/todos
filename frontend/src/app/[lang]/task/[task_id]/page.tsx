@@ -29,7 +29,7 @@ async function TaskDetailsPage({ params }: IProps) {
 
   return (
     <Page heading={task.heading}>
-      <TaskDetails taskID={task_id} />
+      <TaskDetails translation={task} headingLevel={2} taskID={task_id} />
     </Page>
   );
 }

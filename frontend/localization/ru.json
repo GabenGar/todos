@@ -22,6 +22,11 @@
   },
   "task": {
     "title": "Задача",
-    "heading": "Задача"
+    "heading": "Задача",
+    "description": "Описание",
+    "no_description": "Без описания",
+    "creation_date": "Дата создания",
+    "last_updated": "Последнее обновление",
+    "back_to_tasks": "Обратно к задачам"
   }
 }
