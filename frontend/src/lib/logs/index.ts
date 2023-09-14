@@ -1,5 +1,7 @@
 /**
- * @TODO implement [`pino`](https://github.com/pinojs/pino)
+ * @TODOs
+ * - local storage log level
+ * - implement [`pino`](https://github.com/pinojs/pino)
  */
 import { DEFAULT_LOG_LEVEL, IS_BROWSER } from "#environment";
 import { toQuotedStrings } from "#lib/strings";
