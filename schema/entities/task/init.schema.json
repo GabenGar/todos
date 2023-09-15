@@ -1,22 +1,17 @@
 {
-  "$id": "/entities/task",
-  "title": "Task",
+  "$id": "/entities/task/init",
+  "title": "TaskInit",
   "type":"object",
   "additionalProperties": false,
+  "required": ["title"],
   "properties": {
-    "id":  {
-      "$ref": "/strings/nanoid"
-    },
-    "created_at":  {
-      "$ref": "/dates/datetime"
-    },
-    "updated_at":  {
-      "$ref": "/dates/datetime"
-    },
     "title":  {
       "type": "string",
       "minLength": 1,
       "maxLength": 256
+    },
+    "status": {
+      "$ref": "/entities/task/status"
     },
     "description": {
       "type": "string",

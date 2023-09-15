@@ -1,14 +1,13 @@
 import { nanoid } from "nanoid";
-import dataExportSchema from "#schema/entities/data-export.schema.json";
 import { now } from "#lib/dates";
-import { createValidator } from "#lib/json/schema";
+import { createValidator, dataExportSchema } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
 import { setLocalStoreItem } from "#browser/local-storage";
-import { type ITodo, getTodos } from "#entities/todo";
+import { type ITask, getTasks } from "#entities/task";
 import type { IDataExport } from "./types";
 
 export async function createDataExport(): Promise<IDataExport> {
-  const tasks = await getTodos();
+  const tasks = await getTasks();
 
   const dataExport: IDataExport = {
     version: 1,
@@ -53,12 +52,12 @@ export async function importDataExport(dataExport: unknown) {
   logInfo(`Imported data export "${dataExport.id}".`);
 }
 
-async function importTasks(incomingTasks: ITodo[]) {
-  const currentTasks = await getTodos();
+async function importTasks(incomingTasks: ITask[]) {
+  const currentTasks = await getTasks();
   const currentIDs = currentTasks.map(({ id }) => id);
   const newTasks = incomingTasks.filter(({ id }) => !currentIDs.includes(id));
 
-  const updatedTasks = currentTasks.map<ITodo>((currentTask) => {
+  const updatedTasks = currentTasks.map<ITask>((currentTask) => {
     const changedTask = incomingTasks.find(({ id }) => id === currentTask.id);
 
     if (

@@ -1,0 +1,17 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.pending {
+  color: var(--colour-text-secondary);
+}
+
+.in-progress {
+  color: var(--submit-colour-text-secondary);
+}
+
+.finished {
+  color: var(--positive-colour-text-secondary);
+}
+
+.failed {
+  color: var(--negative-colour-text-secondary);
+}

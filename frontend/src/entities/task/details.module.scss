@@ -1,0 +1,19 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+}
+
+.footer {
+  gap: $size-normal;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: $size-normal;
+  width: 100%;
+}
+
+.action {
+  width: 6em;
+}

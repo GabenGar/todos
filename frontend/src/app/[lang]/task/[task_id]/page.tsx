@@ -1,7 +1,7 @@
 import type { INanoidID } from "#lib/strings";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import { TaskDetails } from "#entities/todo";
+import { TaskDetails } from "#entities/task";
 import type { IBasePageParams } from "#pages/types";
 
 interface IParams extends IBasePageParams {

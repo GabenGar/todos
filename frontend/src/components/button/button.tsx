@@ -7,6 +7,6 @@ export interface IButtonProps
 
 export const Button = createBlockComponent(undefined, Component);
 
-function Component({ className, ...props }: IButtonProps) {
+function Component({ ...props }: IButtonProps) {
   return <ButtonBase type="button" {...props} />;
 }

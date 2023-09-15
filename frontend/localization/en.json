@@ -13,7 +13,15 @@
     "new_todo": {
       "title": "Title",
       "description": "Description",
+      "status": "Status",
       "add": "Add"
+    },
+    "status": "Status",
+    "status_values": {
+      "pending": "Pending",
+      "in-progress": "In progress",
+      "finished": "Finished",
+      "failed": "Failed"
     },
     "export_tasks": "Export tasks",
     "click_to_file": "Click to upload a file",
@@ -27,6 +35,19 @@
     "no_description": "No description provided",
     "creation_date": "Creation date",
     "last_updated": "Last updated",
-    "back_to_tasks": "Back to tasks"
+    "back_to_tasks": "Back to tasks",
+    "status": "Status",
+    "status_values": {
+      "pending": "Pending",
+      "in-progress": "In progress",
+      "finished": "Finished",
+      "failed": "Failed"
+    },
+    "actions": {
+      "fail": "Fail",
+      "delay": "Delay",
+      "start": "Start",
+      "complete": "Complete"
+    }
   }
 }
