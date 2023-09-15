@@ -1,4 +1,5 @@
 import { logInfo } from "#lib/logs";
+import { now } from "#lib/dates";
 import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
 import type { ITask } from "../types";
 
@@ -15,7 +16,7 @@ function migrateV1() {
   const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
   // remove `description` keys which are empty strings
   const legacyTasks = storedTasks.filter(
-    ({ description }) => description === "",
+    ({ description, updated_at }) => description === "" || updated_at!,
   );
 
   if (!legacyTasks.length) {
@@ -31,7 +32,10 @@ function migrateV1() {
       return currentTask;
     }
 
-    const updatedTask: ITask = { ...currentTask, description: undefined };
+    const description =
+      legacyTask.description === "" ? undefined : legacyTask.description;
+    const updated_at = !legacyTask.updated_at ? now() : legacyTask.updated_at;
+    const updatedTask: ITask = { ...currentTask, description, updated_at };
 
     return updatedTask;
   });
