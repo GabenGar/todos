@@ -10,11 +10,12 @@ import {
   type IArticleProps,
 } from "#components/article";
 import { Loading } from "components/loading";
-import { validateHeadinglevel, type IHeadingLevel } from "#components/heading";
+import { type IHeadingLevel } from "#components/heading";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import { NewTaskForm } from "./new";
 import { TaskItem } from "./item";
-import { createTask, getTasks } from "./lib";
+import { getTasks } from "./lib/get";
+import { createTask } from "./lib/create";
 import type { ITask, ITaskInit } from "./types";
 
 import styles from "./list.module.scss";

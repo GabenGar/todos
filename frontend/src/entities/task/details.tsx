@@ -15,14 +15,15 @@ import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { DateTime } from "#components/date";
-import { getTask } from "./lib";
+import { getTask } from "./lib/get";
+import { TaskStatus } from "./status";
 
 import styles from "./details.module.scss";
-import { TaskStatus } from "./status";
 
 interface IProps extends IArticleProps {
   translation: ILocalization["task"];
   taskID: INanoidID;
+
 }
 
 export const TaskDetails = createBlockComponent(styles, Component);

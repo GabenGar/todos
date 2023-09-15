@@ -1,6 +1,6 @@
 import { logInfo } from "#lib/logs";
 import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
-import type { ITask } from "./types";
+import type { ITask } from "../types";
 
 export async function migrateTasks() {
   logInfo(`Migrating tasks...`);

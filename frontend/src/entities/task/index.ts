@@ -1,4 +1,7 @@
 export { TaskList } from "./list";
 export { TaskDetails } from "./details";
-export { getTask, getTasks, createTask, editTask, removeTask } from "./lib";
+export { getTask, getTasks } from "./lib/get";
+export { createTask } from "./lib/create";
+export { editTask } from "./lib/edit";
+export { removeTask } from "./lib/remove";
 export type { ITask, ITaskInit, ITaskUpdate } from "./types";
