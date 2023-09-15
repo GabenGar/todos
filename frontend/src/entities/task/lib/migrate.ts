@@ -16,7 +16,7 @@ function migrateV1() {
   const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
   // remove `description` keys which are empty strings
   const legacyTasks = storedTasks.filter(
-    ({ description, updated_at }) => description === "" || updated_at!,
+    ({ description, updated_at }) => description === "" || !updated_at,
   );
 
   if (!legacyTasks.length) {
