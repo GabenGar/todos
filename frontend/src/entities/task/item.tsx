@@ -3,19 +3,18 @@ import { Link } from "#components/link";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 import { DateTime } from "#components/date";
-import type { ITodo } from "../types";
+import type { ITask } from "./types";
 
 import styles from "./item.module.scss";
 
 interface IProps extends IBaseComponentPropsWithChildren<"li"> {
   translation: ILocalization["todos"];
-  task: ITodo;
-  onRemoval: (id: ITodo["id"]) => Promise<void>;
+  task: ITask;
 }
 
-export const TodoItem = createBlockComponent(styles, Component);
+export const TaskItem = createBlockComponent(styles, Component);
 
-function Component({ translation, task, onRemoval, ...props }: IProps) {
+function Component({ translation, task, ...props }: IProps) {
   const { id, created_at, title, description } = task;
 
   return (

@@ -1,0 +1,22 @@
+{
+  "$id": "/entities/task/init",
+  "title": "TaskInit",
+  "type":"object",
+  "additionalProperties": false,
+  "required": ["title"],
+  "properties": {
+    "title":  {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "status": {
+      "$ref": "/entities/task/status"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    }
+  }
+}

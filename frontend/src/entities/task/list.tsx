@@ -11,46 +11,38 @@ import {
 } from "#components/article";
 import { Loading } from "components/loading";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
-import { NewTodoForm } from "./new-todo";
-import { TodoItem } from "./item";
-import { createTodo, getTodos, removeTodo } from "../lib";
-import type { ITodo, ITodoInit } from "../types";
+import { NewTaskForm } from "./new";
+import { TaskItem } from "./item";
+import { createTask, getTasks } from "./lib";
+import type { ITask, ITaskInit } from "./types";
 
 import styles from "./list.module.scss";
 
-interface ITodoListProps extends IArticleProps {
+interface IProps extends IArticleProps {
   translation: ILocalization["todos"];
   id: string;
 }
 
-export function TodoList({ translation, id, ...props }: ITodoListProps) {
+export function TaskList({ translation, id, ...props }: IProps) {
   const [isInitialized, changeInitialization] = useState(false);
-  const [tasks, changeTasks] = useState<ITodo[]>([]);
-  const todoListID = `${id}-todolist`;
+  const [tasks, changeTasks] = useState<ITask[]>([]);
+  const taskListID = `${id}-task-list`;
 
   useEffect(() => {
-    getTodos().then((storedTodos) => changeTasks(storedTodos));
-    changeInitialization(true);
+    getTasks().then((storedTasks) => {
+      changeTasks(storedTasks);
+      changeInitialization(true);
+    });
   }, []);
 
-  async function handleTodoCreation(init: ITodoInit) {
+  async function handleTaskCreation(init: ITaskInit) {
     if (!isInitialized) {
       return;
     }
 
-    await createTodo(init);
-    const newTodos = await getTodos();
-    changeTasks(newTodos);
-  }
-
-  async function handleTodoRemoval(removedID: ITodo["id"]) {
-    if (!isInitialized) {
-      return;
-    }
-
-    await removeTodo(removedID);
-    const newTodos = await getTodos();
-    changeTasks(newTodos);
+    await createTask(init);
+    const newTasks = await getTasks();
+    changeTasks(newTasks);
   }
 
   return (
@@ -58,10 +50,10 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
       {() => (
         <>
           <ArticleHeader>
-            <NewTodoForm
+            <NewTaskForm
               translation={translation.new_todo}
-              id={todoListID}
-              onNewTodo={handleTodoCreation}
+              id={taskListID}
+              onNewTask={handleTaskCreation}
             />
           </ArticleHeader>
 
@@ -71,11 +63,10 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
                 <Loading />
               ) : (
                 tasks.map((task) => (
-                  <TodoItem
+                  <TaskItem
                     key={task.id}
                     translation={translation}
                     task={task}
-                    onRemoval={handleTodoRemoval}
                   />
                 ))
               )}
@@ -89,8 +80,8 @@ export function TodoList({ translation, id, ...props }: ITodoListProps) {
                 translation={translation}
                 id="import-data-export"
                 onSuccess={async () => {
-                  const newTodos = await getTodos();
-                  changeTasks(newTodos);
+                  const newTasks = await getTasks();
+                  changeTasks(newTasks);
                 }}
               />
             </ul>

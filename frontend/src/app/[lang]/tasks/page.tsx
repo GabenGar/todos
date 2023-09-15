@@ -1,5 +1,5 @@
 import { getDictionary } from "#server";
-import { TodoList } from "#entities/todo";
+import { TaskList } from "#entities/task";
 import { Page } from "#components";
 import type { IBasePageParams } from "#pages/types";
 
@@ -24,7 +24,7 @@ async function TodosPage({ params }: IProps) {
 
   return (
     <Page heading={todos.heading}>
-      <TodoList headingLevel={2} translation={todos} id={"todos"} />
+      <TaskList headingLevel={2} translation={todos} id={"todos"} />
     </Page>
   );
 }

@@ -1,17 +1,17 @@
-import { ILocalization } from "#lib/localization";
+import type { ILocalization } from "#lib/localization";
 import { Form, Label, type IFormEvent } from "#components/form";
 import { ButtonSubmit } from "#components/button";
-import type { ITodoInit } from "../types";
+import type { ITaskInit } from "./types";
 
-import styles from "./new-todo.module.scss";
+import styles from "./new.module.scss";
 
 interface IProps {
   translation: ILocalization["todos"]["new_todo"];
   id: string;
-  onNewTodo: (todoInit: ITodoInit) => Promise<void>;
+  onNewTask: (taskInit: ITaskInit) => Promise<void>;
 }
 
-export function NewTodoForm({ translation, id, onNewTodo }: IProps) {
+export function NewTaskForm({ translation, id, onNewTask }: IProps) {
   const { title, description, add } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
@@ -28,12 +28,12 @@ export function NewTodoForm({ translation, id, onNewTodo }: IProps) {
       return;
     }
 
-    const init: ITodoInit = {
+    const init: ITaskInit = {
       title,
       description: !description ? undefined : description,
     };
 
-    await onNewTodo(init);
+    await onNewTask(init);
   }
 
   return (

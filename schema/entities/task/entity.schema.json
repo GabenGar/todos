@@ -1,0 +1,31 @@
+{
+  "$id": "/entities/task/entity",
+  "title": "Task",
+  "type":"object",
+  "additionalProperties": false,
+  "required": ["id", "created_at", "updated_at", "title"],
+  "properties": {
+    "id":  {
+      "$ref": "/strings/nanoid"
+    },
+    "created_at":  {
+      "$ref": "/dates/datetime"
+    },
+    "updated_at":  {
+      "$ref": "/dates/datetime"
+    },
+    "title":  {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "status": {
+      "$ref": "/entities/task/status"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    }
+  }
+}
