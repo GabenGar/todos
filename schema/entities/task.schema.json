@@ -3,6 +3,7 @@
   "title": "Task",
   "type":"object",
   "additionalProperties": false,
+  "required": ["id", "created_at", "updated_at", "title"],
   "properties": {
     "id":  {
       "$ref": "/strings/nanoid"
@@ -17,6 +18,9 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 256
+    },
+    "status": {
+      "$ref": "/entities/task-status"
     },
     "description": {
       "type": "string",
