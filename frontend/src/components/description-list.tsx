@@ -57,20 +57,23 @@ function DescriptionSectionComponent({
     isHorizontal && styles.section_horizontal,
   );
 
+  // separate returns to avoid passing `dKey` and `dValue` to DOM
+  if (!("dKey" in props)) {
+    return (
+      <div className={blockClass} {...props}>
+        {props.children}
+      </div>
+    );
+  }
+
+  const {dKey, dValue, ...blockProps} = props
+
   return (
-    <div className={blockClass} {...props}>
-      {!("dKey" in props) ? (
-        props.children
-      ) : (
-        <>
-          <DescriptionTerm className={styles.key}>
-            {props.dKey}:
-          </DescriptionTerm>
-          <DescriptionDetails className={styles.value}>
-            {props.dValue}
-          </DescriptionDetails>
-        </>
-      )}
+    <div className={blockClass} {...blockProps}>
+      <DescriptionTerm className={styles.key}>{dKey}:</DescriptionTerm>
+      <DescriptionDetails className={styles.value}>
+        {dValue}
+      </DescriptionDetails>
     </div>
   );
 }

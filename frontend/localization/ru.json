@@ -13,7 +13,15 @@
     "new_todo": {
       "title": "Название",
       "description": "Описание",
+      "status": "Статус",
       "add": "Добавить"
+    },
+    "status": "Статус",
+    "status_values": {
+      "pending": "В ожидании",
+      "in-progress": "В ходе выполнения",
+      "finished": "Завершена",
+      "failed": "Провалена"
     },
     "export_tasks": "Экспортировать задачи",
     "click_to_file": "Кликните, чтобы загрузить файл",
@@ -27,6 +35,13 @@
     "no_description": "Без описания",
     "creation_date": "Дата создания",
     "last_updated": "Последнее обновление",
-    "back_to_tasks": "Обратно к задачам"
+    "back_to_tasks": "Обратно к задачам",
+    "status": "Статус",
+    "status_values": {
+      "pending": "В ожидании",
+      "in-progress": "В ходе выполнения",
+      "finished": "Завершена",
+      "failed": "Провалена"
+    }
   }
 }

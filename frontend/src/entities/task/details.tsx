@@ -18,6 +18,7 @@ import { DateTime } from "#components/date";
 import { getTask } from "./lib";
 
 import styles from "./details.module.scss";
+import { TaskStatus } from "./status";
 
 interface IProps extends IArticleProps {
   translation: ILocalization["task"];
@@ -53,25 +54,34 @@ function Component({ translation, taskID, ...props }: IProps) {
     );
   }
 
-  const { id, title, description, created_at, updated_at } = task;
+  const { id, title, description, created_at, updated_at, status } = task;
 
   return (
     <Article {...props}>
       {(headinglevel) => (
         <>
           <ArticleHeader>
-            <Heading level={headinglevel}>&quot;{title}&quot;</Heading>
+            <Heading level={headinglevel}>{title}</Heading>
             <div>{id}</div>
           </ArticleHeader>
           <ArticleBody>
             <DescriptionList>
               <DescriptionSection
+                isHorizontal
+                dKey={translation.status}
+                dValue={
+                  <TaskStatus
+                    translation={translation.status_values}
+                    status={status}
+                  />
+                }
+              />
+              <DescriptionSection
                 dKey={translation.description}
                 dValue={description ?? translation.no_description}
               />
             </DescriptionList>
-          </ArticleBody>
-          <ArticleFooter>
+            <hr style={{ width: "100%" }} />
             <DescriptionList>
               <DescriptionSection
                 dKey={translation.creation_date}
@@ -82,9 +92,11 @@ function Component({ translation, taskID, ...props }: IProps) {
                 dValue={<DateTime dateTime={updated_at} />}
               />
             </DescriptionList>
+          </ArticleBody>
+          <ArticleFooter>
             <ul>
               <li>
-                <Link href={"/todos"}>{translation.back_to_tasks}</Link>
+                <Link href="/tasks">{translation.back_to_tasks}</Link>
               </li>
             </ul>
           </ArticleFooter>

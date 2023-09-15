@@ -11,11 +11,15 @@ interface IProps {
   onNewTask: (taskInit: ITaskInit) => Promise<void>;
 }
 
+/**
+ * @TODO status selector
+ */
 export function NewTaskForm({ translation, id, onNewTask }: IProps) {
-  const { title, description, add } = translation;
+  const { title, description, add, status } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
+    // STATUS: { name: "status", label: status  }
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
