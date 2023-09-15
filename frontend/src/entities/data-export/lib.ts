@@ -63,7 +63,8 @@ async function importTasks(incomingTasks: ITask[]) {
     if (
       !changedTask ||
       (currentTask.title === changedTask.title &&
-        currentTask.description === changedTask.description)
+        currentTask.description === changedTask.description &&
+        currentTask.status === changedTask.status)
     ) {
       return currentTask;
     } else {
