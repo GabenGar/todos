@@ -9,6 +9,7 @@ export async function editTask(update: ITaskUpdate): Promise<ITask> {
   const validate: Awaited<ReturnType<typeof createValidator<ITaskUpdate>>> =
     await createValidator(taskUpdateSchema.$id);
   validate(update);
+
   const [editedTask] = await editTasks([update]);
 
   return editedTask;
@@ -47,11 +48,17 @@ async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
       : task.description !== update.description
       ? update.description
       : task.description;
+    const updatedStatus = !update.status
+      ? task.status
+      : task.status !== update.status
+      ? update.status
+      : task.status;
     const updatedTask: ITask = {
       ...task,
       updated_at: now(),
       title: updatedTitle,
       description: updatedDescription,
+      status: updatedStatus,
     };
 
     return updatedTask;

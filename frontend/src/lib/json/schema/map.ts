@@ -8,15 +8,24 @@ import {
   taskStatusSchema,
   taskUpdateSchema,
 } from "./types";
+import { SITE_ORIGIN } from "#environment";
 
 export const schemaMap = new Map<string, SchemaObject>([
-  [dataExportSchema.$id, dataExportSchema],
-  [taskSchema.$id, taskSchema],
-  [taskInitSchema.$id, taskInitSchema],
-  [taskStatusSchema.$id, taskStatusSchema],
-  [taskUpdateSchema.$id, taskUpdateSchema],
-  [nanoidSchema.$id, nanoidSchema],
-  [dateTimeSchema.$id, dateTimeSchema],
+  [toRetrievalURL(dataExportSchema.$id), dataExportSchema],
+  [toRetrievalURL(taskSchema.$id), taskSchema],
+  [toRetrievalURL(taskInitSchema.$id), taskInitSchema],
+  [toRetrievalURL(taskStatusSchema.$id), taskStatusSchema],
+  [toRetrievalURL(taskUpdateSchema.$id), taskUpdateSchema],
+  [toRetrievalURL(nanoidSchema.$id), nanoidSchema],
+  [toRetrievalURL(dateTimeSchema.$id), dateTimeSchema],
 ]);
 
 export type ISchemaMap = typeof schemaMap;
+
+export function toRetrievalURL(id: string) {
+  if (!id.startsWith("/")) {
+    throw new Error(`Schema ID "${id}" doesn't start with "/".`)
+  }
+
+  return `${SITE_ORIGIN}${id}`
+}

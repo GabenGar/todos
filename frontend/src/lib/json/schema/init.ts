@@ -1,17 +1,19 @@
 import { addSchema } from "@hyperjump/json-schema/draft-2020-12";
-import type { SchemaObject } from "@hyperjump/json-schema/schema/experimental";
 import { logDebug } from "#lib/logs";
+import { ISchemaMap } from "./map";
 
-export function initSchemas(metaSchema: string, schemas: SchemaObject[]) {
+export function initSchemas(metaSchema: string, schemaMap: ISchemaMap) {
   logDebug(
-    `Loading ${schemas.length} schemas with metaschema "${metaSchema}"...`,
+    `Loading ${schemaMap.size} schemas with metaschema "${metaSchema}"...`,
   );
 
-  const addedIDs = schemas.map<ReturnType<typeof addSchema>>((schema) => {
-    const id = addSchema(schema, undefined, metaSchema);
+  const addedIDs = Array.from(schemaMap).map<ReturnType<typeof addSchema>>(
+    ([retrievalUri, schema]) => {
+      const id = addSchema(schema, retrievalUri, metaSchema);
 
-    return id;
-  });
+      return id;
+    },
+  );
 
   logDebug(
     `Loaded ${addedIDs.length} schemas with metaschema "${metaSchema}".`,

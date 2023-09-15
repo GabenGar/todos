@@ -2,7 +2,7 @@ import { validate } from "@hyperjump/json-schema/draft-2020-12";
 import { BASIC } from "@hyperjump/json-schema/experimental";
 import { logError } from "#lib/logs";
 import { initSchemas } from "./init";
-import { schemaMap } from "./map";
+import { schemaMap, toRetrievalURL } from "./map";
 
 const metaSchema = "https://json-schema.org/draft/2020-12/schema";
 
@@ -12,11 +12,11 @@ export async function createValidator<InputType>(
   schemaID: string,
 ): Promise<(data: unknown) => asserts data is InputType> {
   if (!isInitialized) {
-    initSchemas(metaSchema, Array.from(schemaMap.values()));
+    initSchemas(metaSchema, schemaMap);
     isInitialized = true;
   }
 
-  const validatorFunc = await validate(schemaID);
+  const validatorFunc = await validate(toRetrievalURL(schemaID));
 
   function validator(data: unknown): asserts data is InputType {
     const result = validatorFunc(data, BASIC);
