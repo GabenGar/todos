@@ -4,6 +4,8 @@ import { ButtonSubmit } from "#components/button";
 import type { ITaskInit } from "./types";
 
 import styles from "./new.module.scss";
+import { logMessage } from "#lib/logs";
+import { toJSON } from "#lib/json";
 
 interface IProps {
   translation: ILocalization["todos"]["new_todo"];
@@ -28,14 +30,13 @@ export function NewTaskForm({ translation, id, onNewTask }: IProps) {
     const title = formElements.title.value.trim();
     const description = formElements.description.value.trim();
 
-    if (!title) {
-      return;
-    }
-
     const init: ITaskInit = {
       title,
-      description: !description ? undefined : description,
     };
+
+    if (description.length) {
+      init.description = description;
+    }
 
     await onNewTask(init);
   }

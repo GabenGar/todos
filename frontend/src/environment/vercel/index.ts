@@ -28,6 +28,9 @@ export const NEXT_PUBLIC_VERCEL_ENV = getVercelEnvironmentVariable(
  */
 export const NEXT_PUBLIC_VERCEL_URL = (() => {
   const url = getVercelEnvironmentVariable(process.env.NEXT_PUBLIC_VERCEL_URL);
+  if (!url) {
+    return;
+  }
 
   return `https://${url}`;
 })();
