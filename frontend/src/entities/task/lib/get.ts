@@ -33,5 +33,5 @@ export async function getTasks(): Promise<ITask[]> {
 
   logDebug(`Got ${tasks.length} tasks.`);
 
-  return storedTasks;
+  return tasks;
 }
