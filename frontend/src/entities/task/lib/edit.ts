@@ -53,11 +53,7 @@ export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
       : task.status !== update.status
       ? update.status
       : task.status;
-    const updatedDeletionDate = !update.deleted_at
-      ? task.deleted_at
-      : task.deleted_at !== update.deleted_at
-      ? update.deleted_at
-      : task.deleted_at;
+    const updatedDeletionDate = update.deleted_at ?? task.deleted_at;
     const updatedTask: ITask = {
       ...task,
       updated_at: now(),

@@ -17,7 +17,7 @@ export async function getTask(taskID: ITask["id"]) {
   return task;
 }
 
-export async function getTasks(): Promise<ITask[]> {
+export async function getTasks(includeDeleted = true): Promise<ITask[]> {
   logDebug(`Getting tasks...`);
 
   if (!isMigrated) {
@@ -29,9 +29,10 @@ export async function getTasks(): Promise<ITask[]> {
   }
 
   const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
-  const tasks = storedTasks.filter(({ deleted_at }) => !deleted_at);
+  const filteredTasks = includeDeleted
+    ? storedTasks
+    : storedTasks.filter(({ deleted_at }) => !deleted_at);
+  logDebug(`Got ${filteredTasks.length} tasks.`);
 
-  logDebug(`Got ${tasks.length} tasks.`);
-
-  return tasks;
+  return filteredTasks;
 }

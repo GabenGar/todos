@@ -17,20 +17,20 @@ export async function removeTask(id: ITask["id"]): Promise<ITask> {
 async function removeTasks(ids: ITask["id"][]): Promise<ITask[]> {
   logDebug(`Removing ${ids.length} tasks...`);
 
-  const removedIDs = new Set(ids);
+  const IDsForRemoval = new Set(ids);
 
-  if (removedIDs.size !== ids.length) {
+  if (IDsForRemoval.size !== ids.length) {
     throw new Error(
-      `The amount of IDs (${removedIDs.size}) does not match the amount of removals (${ids.length}).`,
+      `The amount of IDs (${IDsForRemoval.size}) does not match the amount of removals (${ids.length}).`,
     );
   }
 
   const storedTasks = await getTasks();
-  const tasksForRemoval = storedTasks.filter(({ id }) => removedIDs.has(id));
+  const tasksForRemoval = storedTasks.filter(({ id }) => IDsForRemoval.has(id));
 
-  if (tasksForRemoval.length !== removedIDs.size) {
+  if (tasksForRemoval.length !== IDsForRemoval.size) {
     throw new Error(
-      `The amount of tasks for removal (${tasksForRemoval.length}) is not equal to removed IDs (${removedIDs.size}).`,
+      `The amount of tasks for removal (${tasksForRemoval.length}) is not equal to removed IDs (${IDsForRemoval.size}).`,
     );
   }
   const updates = tasksForRemoval.map<ITaskUpdate>(({ id }) => {
