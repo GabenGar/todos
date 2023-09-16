@@ -8,7 +8,7 @@ let isMigrated = false;
 export async function getTask(taskID: ITask["id"]) {
   const tasks = await getTasks();
 
-  const task = tasks.find(({ id }) => id === taskID);
+  const task = tasks.find(({ id, deleted_at }) => !deleted_at && id === taskID);
 
   if (!task) {
     throw new Error(`No task with ID "${taskID}" exists.`);
@@ -28,9 +28,10 @@ export async function getTasks(): Promise<ITask[]> {
     }
   }
 
-  const tasks = getLocalStoreItem<ITask[]>("todos", []);
+  const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
+  const tasks = storedTasks.filter(({ deleted_at }) => !deleted_at);
 
   logDebug(`Got ${tasks.length} tasks.`);
 
-  return tasks;
+  return storedTasks;
 }

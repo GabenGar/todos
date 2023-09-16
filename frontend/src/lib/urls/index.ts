@@ -1,3 +1,4 @@
 import type { Route } from "next";
 
-export const HomePageURL = "/" as Route;
+export const homePageURL = "/" as Route;
+export const tasksPageURL = "/tasks" as Route;

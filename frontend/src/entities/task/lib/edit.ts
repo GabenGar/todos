@@ -19,7 +19,7 @@ export async function editTask(update: ITaskUpdate): Promise<ITask> {
  * @param updates Incoming updates. It it assumed they have unique ids.
  * @returns The edited tasks.
  */
-async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
+export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
   logDebug(`Editing ${updates.length} tasks...`);
 
   const storedTasks = await getTasks();

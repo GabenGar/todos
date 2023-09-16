@@ -20,6 +20,7 @@ export interface ITask {
   id: INanoidID;
   created_at: IDateTime;
   updated_at: IDateTime;
+  deleted_at?: IDateTime;
   title: string;
   status: ITaskStatus;
   description?: string;
@@ -31,4 +32,4 @@ export interface ITaskInit
 
 export interface ITaskUpdate
   extends Pick<ITask, "id">,
-    Pick<Partial<ITask>, "title" | "description" | "status"> {}
+    Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {}

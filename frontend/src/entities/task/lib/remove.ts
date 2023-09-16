@@ -1,7 +1,8 @@
 import { logDebug } from "#lib/logs";
-import { setLocalStoreItem } from "#browser/local-storage";
+import { now } from "#lib/dates";
 import { getTasks } from "./get";
-import type { ITask } from "../types";
+import type { ITask, ITaskUpdate } from "../types";
+import { editTasks } from "./edit";
 
 export async function removeTask(id: ITask["id"]): Promise<ITask> {
   const [removedTask] = await removeTasks([id]);
@@ -25,13 +26,22 @@ async function removeTasks(ids: ITask["id"][]): Promise<ITask[]> {
   }
 
   const storedTasks = await getTasks();
-  const filteredTasks = storedTasks.filter(({ id }) => !removedIDs.has(id));
+  const tasksForRemoval = storedTasks.filter(({ id }) => removedIDs.has(id));
 
-  setLocalStoreItem("todos", filteredTasks);
+  if (tasksForRemoval.length !== removedIDs.size) {
+    throw new Error(
+      `The amount of tasks for removal (${tasksForRemoval.length}) is not equal to removed IDs (${removedIDs.size}).`,
+    );
+  }
+  const updates = tasksForRemoval.map<ITaskUpdate>(({ id }) => {
+    return {
+      id,
+      deleted_at: now(),
+    };
+  });
+  const updatedTasks = await editTasks(updates);
 
-  const removedTasks = storedTasks.filter(({ id }) => removedIDs.has(id));
+  logDebug(`Removed ${updatedTasks.length} tasks.`);
 
-  logDebug(`Removed ${removedTasks.length} tasks.`);
-
-  return removedTasks;
+  return updatedTasks;
 }
