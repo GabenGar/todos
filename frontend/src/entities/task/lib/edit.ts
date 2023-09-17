@@ -19,7 +19,7 @@ export async function editTask(update: ITaskUpdate): Promise<ITask> {
  * @param updates Incoming updates. It it assumed they have unique ids.
  * @returns The edited tasks.
  */
-async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
+export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
   logDebug(`Editing ${updates.length} tasks...`);
 
   const storedTasks = await getTasks();
@@ -53,12 +53,14 @@ async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
       : task.status !== update.status
       ? update.status
       : task.status;
+    const updatedDeletionDate = update.deleted_at ?? task.deleted_at;
     const updatedTask: ITask = {
       ...task,
       updated_at: now(),
       title: updatedTitle,
       description: updatedDescription,
       status: updatedStatus,
+      deleted_at: updatedDeletionDate,
     };
 
     return updatedTask;

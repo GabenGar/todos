@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { INanoidID } from "#lib/strings";
 import type { ILocalization } from "#lib/localization";
+import { tasksPageURL } from "#lib/urls";
 import { createBlockComponent } from "#components/meta";
 import {
   Article,
@@ -18,6 +20,7 @@ import { DateTime } from "#components/date";
 import { Button } from "#components/button";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
+import { removeTask } from "./lib/remove";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
 
@@ -32,6 +35,7 @@ interface IProps extends IArticleProps {
 export const TaskDetails = createBlockComponent(styles, Component);
 
 function Component({ translation, taskID, onEdit, ...props }: IProps) {
+  const router = useRouter();
   const [task, changeTask] = useState<Awaited<ReturnType<typeof getTask>>>();
 
   useEffect(() => {
@@ -58,7 +62,8 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
     );
   }
 
-  const { id, title, description, created_at, updated_at, status } = task;
+  const { id, title, description, created_at, updated_at, status, deleted_at } =
+    task;
 
   return (
     <Article {...props}>
@@ -171,10 +176,25 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
                 </Button>
               </li>
             </ul>
-
+            <hr style={{ width: "100%" }} />
             <ul>
               <li>
                 <Link href="/tasks">{translation.back_to_tasks}</Link>
+              </li>
+            </ul>
+            <hr style={{ width: "100%" }} />
+            <ul>
+              <li>
+                <Button
+                  viewType="negative"
+                  disabled={Boolean(deleted_at)}
+                  onClick={async () => {
+                    await removeTask(id);
+                    router.push(tasksPageURL);
+                  }}
+                >
+                  {translation.delete}
+                </Button>
               </li>
             </ul>
           </ArticleFooter>

@@ -4,21 +4,21 @@ import type { Route } from "next";
 import { usePathname } from "next/navigation";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
-import { HomePageURL } from "#lib/urls";
+import { homePageURL } from "#lib/urls";
 import { Link } from "./link";
 
 import styles from "./global-navigation.module.scss";
 
 export function GlobalNavigation() {
   const pathname = usePathname();
-  const isActive = pathname === HomePageURL;
+  const isActive = pathname === homePageURL;
 
   return (
     <nav className={styles.block}>
       <ul className={styles.list}>
         <li>
           {!isActive ? (
-            <Link href={HomePageURL}>{SITE_TITLE}</Link>
+            <Link href={homePageURL}>{SITE_TITLE}</Link>
           ) : (
             <span>{SITE_TITLE}</span>
           )}

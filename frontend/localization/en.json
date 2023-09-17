@@ -48,6 +48,7 @@
       "delay": "Delay",
       "start": "Start",
       "complete": "Complete"
-    }
+    },
+    "delete": "Delete"
   }
 }

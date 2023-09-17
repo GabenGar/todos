@@ -26,13 +26,16 @@ interface IProps extends IArticleProps {
   headingLevel: IHeadingLevel;
 }
 
+/**
+ * @TODO get tasks filter
+ */
 export function TaskList({ translation, id, headingLevel, ...props }: IProps) {
   const [isInitialized, changeInitialization] = useState(false);
   const [tasks, changeTasks] = useState<ITask[]>([]);
   const taskListID = `${id}-task-list`;
 
   useEffect(() => {
-    getTasks().then((storedTasks) => {
+    getTasks(false).then((storedTasks) => {
       changeTasks(storedTasks);
       changeInitialization(true);
     });
@@ -44,7 +47,7 @@ export function TaskList({ translation, id, headingLevel, ...props }: IProps) {
     }
 
     await createTask(init);
-    const newTasks = await getTasks();
+    const newTasks = await getTasks(false);
     changeTasks(newTasks);
   }
 
@@ -85,7 +88,7 @@ export function TaskList({ translation, id, headingLevel, ...props }: IProps) {
                   translation={translation}
                   id="import-data-export"
                   onSuccess={async () => {
-                    const newTasks = await getTasks();
+                    const newTasks = await getTasks(false);
                     changeTasks(newTasks);
                   }}
                 />

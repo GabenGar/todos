@@ -1,15 +1,15 @@
 {
   "$id": "/entities/task/update",
   "title": "TaskUpdate",
-  "type":"object",
+  "type": "object",
   "additionalProperties": false,
   "required": ["id"],
   "minProperties": 2,
   "properties": {
-    "id":  {
+    "id": {
       "$ref": "/strings/nanoid"
     },
-    "title":  {
+    "title": {
       "type": "string",
       "minLength": 1,
       "maxLength": 256
@@ -21,6 +21,9 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 2048
+    },
+    "deleted_at": {
+      "$ref": "/dates/datetime"
     }
   }
 }
