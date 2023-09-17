@@ -3,28 +3,32 @@
 import { type ReactNode, useState } from "react";
 import { logError } from "#lib/logs";
 import { isError, validateError } from "#lib/errors";
+import type { ILocalizationCommon } from "#lib/localization";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
+import { ButtonSubmit } from "#components/button";
+import { InputSection } from "./section";
 import type { IFormEvent } from "./types";
 
 import styles from "./form.module.scss";
 
 export interface IFormProps<InputName extends string = string>
   extends IBaseComponentProps<"form"> {
+  commonTranslation: ILocalizationCommon;
   id: string;
-  children?: (formID: string) => ReactNode;
+  children?: (formID: string, isSubmitting: boolean) => ReactNode;
   onSubmit: (event: IFormEvent<InputName>) => Promise<void>;
   onReset?: (event: IFormEvent<InputName>) => Promise<void>;
+  submitButton?: null | ((formID: string, isSubmitting: boolean) => ReactNode);
 }
 
-/**
- * @TODO submit button
- */
 export const Form = createBlockComponent(styles, Component);
 
 function Component<InputName extends string>({
+  commonTranslation,
   id,
   className,
+  submitButton,
   onSubmit,
   onReset,
   children,
@@ -72,7 +76,7 @@ function Component<InputName extends string>({
 
   return (
     <div id={id} className={className}>
-      {children?.(formID)}
+      {children?.(formID, isSubmitting)}
       {errors && (
         <ol>
           {errors.map((error, index) => (
@@ -84,6 +88,29 @@ function Component<InputName extends string>({
           ))}
         </ol>
       )}
+
+      {
+        // don't render the button at all if `null`
+        submitButton === null ? undefined : (
+          <InputSection>
+            {/* render default button if not a function */}
+            {submitButton === undefined ? (
+              <ButtonSubmit form={formID} disabled={isSubmitting}>
+                {!isSubmitting
+                  ? commonTranslation.form.submit
+                  : commonTranslation.form.submitting}
+              </ButtonSubmit>
+            ) : (
+              <CustomButton
+                formID={formID}
+                isSubmitting={isSubmitting}
+                submitButton={submitButton}
+              />
+            )}
+          </InputSection>
+        )
+      }
+
       <form
         {...props}
         id={formID}
@@ -91,5 +118,30 @@ function Component<InputName extends string>({
         onReset={handleReset}
       />
     </div>
+  );
+}
+
+interface ICustomButtonProps {
+  formID: string;
+  isSubmitting: boolean;
+  submitButton: (formID: string, isSubmitting: boolean) => ReactNode;
+}
+
+function CustomButton({
+  formID,
+  isSubmitting,
+  submitButton,
+}: ICustomButtonProps) {
+  const result = submitButton(formID, isSubmitting);
+
+  // render custom button if result is not a string
+  if (typeof result !== "string") {
+    return <>{result}</>;
+  }
+
+  return (
+    <ButtonSubmit form={formID} disabled={isSubmitting}>
+      {result}
+    </ButtonSubmit>
   );
 }

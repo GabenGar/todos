@@ -3,6 +3,12 @@
     "source_code": "Source Code",
     "log_level": "Log level"
   },
+  "common": {
+    "form": {
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    }
+  },
   "home": {
     "heading": "Welcome to Gabengar's!",
     "link_tasks": "Tasks"
@@ -14,7 +20,8 @@
       "title": "Title",
       "description": "Description",
       "status": "Status",
-      "add": "Add"
+      "add": "Add",
+      "adding": "Adding..."
     },
     "status": "Status",
     "status_values": {
@@ -26,6 +33,7 @@
     "export_tasks": "Export tasks",
     "click_to_file": "Click to upload a file",
     "import_tasks": "Import tasks",
+    "importing_tasks": "Importing tasks...",
     "details": "Details"
   },
   "task": {

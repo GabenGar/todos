@@ -176,16 +176,21 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
                 </Button>
               </li>
             </ul>
+
             <hr style={{ width: "100%" }} />
+
             <ul>
               <li>
                 <Link href="/tasks">{translation.back_to_tasks}</Link>
               </li>
             </ul>
+
             <hr style={{ width: "100%" }} />
-            <ul>
-              <li>
+
+            <ul className={styles.actions}>
+              <li className={styles.delete}>
                 <Button
+                  className={styles.action}
                   viewType="negative"
                   disabled={Boolean(deleted_at)}
                   onClick={async () => {

@@ -24,8 +24,8 @@ export type ISchemaMap = typeof schemaMap;
 
 export function toRetrievalURL(id: string) {
   if (!id.startsWith("/")) {
-    throw new Error(`Schema ID "${id}" doesn't start with "/".`)
+    throw new Error(`Schema ID "${id}" doesn't start with "/".`);
   }
 
-  return `${SITE_ORIGIN}${id}`
+  return `${SITE_ORIGIN}${id}`;
 }

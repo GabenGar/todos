@@ -1,13 +1,13 @@
-import type { ILocalization } from "#lib/localization";
-import { Form, Label, type IFormEvent } from "#components/form";
+import type { ILocalization, ILocalizationCommon } from "#lib/localization";
+import { Form, type IFormEvent } from "#components/form";
 import { ButtonSubmit } from "#components/button";
+import { InputSectionText } from "#components/form/section";
 import type { ITaskInit } from "./types";
 
 import styles from "./new.module.scss";
-import { logMessage } from "#lib/logs";
-import { toJSON } from "#lib/json";
 
 interface IProps {
+  commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"]["new_todo"];
   id: string;
   onNewTask: (taskInit: ITaskInit) => Promise<void>;
@@ -16,8 +16,13 @@ interface IProps {
 /**
  * @TODO status selector
  */
-export function NewTaskForm({ translation, id, onNewTask }: IProps) {
-  const { title, description, add, status } = translation;
+export function NewTaskForm({
+  commonTranslation,
+  translation,
+  id,
+  onNewTask,
+}: IProps) {
+  const { title, description, add, adding, status } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
@@ -42,41 +47,36 @@ export function NewTaskForm({ translation, id, onNewTask }: IProps) {
   }
 
   return (
-    <Form id={id} className={styles.block} onSubmit={handleSubmit}>
+    <Form<IFieldName>
+      commonTranslation={commonTranslation}
+      id={id}
+      className={styles.block}
+      onSubmit={handleSubmit}
+      submitButton={(formID, isSubmitting) => (!isSubmitting ? add : adding)}
+    >
       {(formID) => (
         <>
-          <div>
-            <Label htmlFor={`${formID}-${FIELD.TITLE.name}`}>
-              {FIELD.TITLE.label}
-            </Label>
-            <input
-              form={formID}
-              type="text"
-              name={FIELD.TITLE.name}
-              id={`${formID}-${FIELD.TITLE.name}`}
-              minLength={1}
-              maxLength={256}
-              required
-            />
-          </div>
+          <InputSectionText
+            id={`${formID}-${FIELD.TITLE.name}`}
+            form={formID}
+            name={FIELD.TITLE.name}
+            minLength={1}
+            maxLength={256}
+            required
+          >
+            {FIELD.TITLE.label}
+          </InputSectionText>
 
-          <div>
-            <Label htmlFor={`${formID}-${FIELD.DESCRIPTION.name}`}>
-              {FIELD.DESCRIPTION.label}
-            </Label>
-            <input
-              form={formID}
-              type="text"
-              name={FIELD.DESCRIPTION.name}
-              id={`${formID}-${FIELD.DESCRIPTION.name}`}
-              minLength={1}
-              maxLength={2048}
-            />
-          </div>
-
-          <ButtonSubmit form={formID} viewType="button">
-            {add}
-          </ButtonSubmit>
+          <InputSectionText
+            id={`${formID}-${FIELD.DESCRIPTION.name}`}
+            form={formID}
+            name={FIELD.DESCRIPTION.name}
+            minLength={1}
+            maxLength={2048}
+            required
+          >
+            {FIELD.DESCRIPTION.label}
+          </InputSectionText>
         </>
       )}
     </Form>

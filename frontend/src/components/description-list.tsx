@@ -66,14 +66,12 @@ function DescriptionSectionComponent({
     );
   }
 
-  const {dKey, dValue, ...blockProps} = props
+  const { dKey, dValue, ...blockProps } = props;
 
   return (
     <div className={blockClass} {...blockProps}>
       <DescriptionTerm className={styles.key}>{dKey}:</DescriptionTerm>
-      <DescriptionDetails className={styles.value}>
-        {dValue}
-      </DescriptionDetails>
+      <DescriptionDetails className={styles.value}>{dValue}</DescriptionDetails>
     </div>
   );
 }

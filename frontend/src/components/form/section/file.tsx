@@ -1,13 +1,13 @@
 import { createBlockComponent } from "#components/meta";
-import type { IBaseComponentPropsWithChildren } from "#components/types";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
+import { IInputSectionProps, InputSection } from "./section";
 
 import styles from "./file.module.scss";
 
 interface IProps
-  extends Omit<IBaseComponentPropsWithChildren<"div">, "id" | "form" | "name">,
-    Pick<IInputFileProps, "id" | "form" | "name" | "accept" | "multiple"> {}
+  extends IInputSectionProps,
+    Pick<IInputFileProps, "accept" | "multiple"> {}
 
 export const InputSectionFile = createBlockComponent(styles, Component);
 
@@ -17,11 +17,15 @@ function Component({
   form,
   accept,
   multiple,
+  defaultValue,
+  readOnly,
+  required,
+  disabled,
   children,
   ...props
 }: IProps) {
   return (
-    <div {...props}>
+    <InputSection {...props}>
       <InputFile
         id={id}
         className={styles.input}
@@ -29,10 +33,13 @@ function Component({
         form={form}
         accept={accept}
         multiple={multiple}
+        readOnly={readOnly}
+        disabled={disabled}
+        required={required}
       />
       <Label className={styles.label} htmlFor={id}>
         {children}
       </Label>
-    </div>
+    </InputSection>
   );
 }
