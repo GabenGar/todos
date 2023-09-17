@@ -1,15 +1,10 @@
 import { createBlockComponent } from "#components/meta";
-import type { IBaseComponentProps } from "#components/types";
+import { Input, IInputProps } from "./input";
 
-export interface IInputFileProps
-  extends Omit<IBaseComponentProps<"input">, "type"> {
-  id: string;
-  form: string;
-  name: string;
-}
+export interface IInputFileProps extends IInputProps {}
 
 export const InputFile = createBlockComponent(undefined, Component);
 
 function Component({ ...blockProps }: IInputFileProps) {
-  return <input type="file" {...blockProps} />;
+  return <Input type="file" {...blockProps} />;
 }

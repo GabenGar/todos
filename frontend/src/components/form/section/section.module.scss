@@ -1,0 +1,14 @@
+@use "../../../styles/sass/variables.scss" as *;
+
+.block {
+  color: var(--colour-text-secondary);
+
+  &:hover,
+  &:focus-within {
+    color: var(--colour-text-primary);
+  }
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color, border-color, box-shadow;
+
+}

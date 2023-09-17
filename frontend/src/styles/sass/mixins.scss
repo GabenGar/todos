@@ -98,3 +98,38 @@
     border-bottom-color: var(--local-background-primary);
   }
 }
+
+@mixin input($border-radius: vars.$radius-small) {
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  width: 100%;
+  color: var(--colour-text-secondary);
+  caret-color: inherit;
+  background-color: var(--colour-background-secondary);
+  font-family: inherit;
+  font-size: 100%;
+  border-radius: $border-radius;
+  border: vars.$size-thin solid transparent;
+  padding: vars.$size-small;
+  margin: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color, border-color, box-shadow;
+
+  &:hover {
+    color: var(--colour-text-primary);
+  }
+
+  &:focus {
+    color: var(--colour-text-primary);
+    background-color: var(--colour-background-primary);
+    border-color: var(--submit-colour-text-primary);
+    outline: none;
+  }
+
+  &:read-only {
+    color: var(--colour-text-primary);
+    background-color: var(--colour-background-secondary);
+  }
+}
