@@ -1,6 +1,6 @@
 {
   "name": "todos",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "The list of todos in NextJS.",
   "private": true,
   "scripts": {
