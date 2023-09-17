@@ -1,5 +1,5 @@
 import { fromJSON } from "#lib/json";
-import { ILocalization } from "#lib/localization";
+import type { ILocalizationCommon, ILocalization } from "#lib/localization";
 import { Form, IFormEvent } from "#components/form";
 import { InputSectionFile } from "#components/form/section";
 import { ButtonSubmit } from "#components/button";
@@ -8,13 +8,19 @@ import { importDataExport } from "./lib";
 import styles from "./import-form.module.scss";
 
 interface IProps {
+  commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"];
   id: string;
   onSuccess?: () => Promise<void>;
 }
 
-export function ImportDataExportForm({ translation, id, onSuccess }: IProps) {
-  const { click_to_file, import_tasks } = translation;
+export function ImportDataExportForm({
+  commonTranslation,
+  translation,
+  id,
+  onSuccess,
+}: IProps) {
+  const { click_to_file, import_tasks, importing_tasks } = translation;
   const FIELD = {
     FILE: { name: "file", label: click_to_file },
   } as const;
@@ -43,8 +49,14 @@ export function ImportDataExportForm({ translation, id, onSuccess }: IProps) {
 
   return (
     <Form<IFieldName>
+      commonTranslation={commonTranslation}
       id={id}
       className={styles.block}
+      submitButton={(formID, isSubmitting) => (
+        <ButtonSubmit viewType="button" form={formID} disabled={isSubmitting}>
+          {!isSubmitting ? import_tasks : importing_tasks}
+        </ButtonSubmit>
+      )}
       onSubmit={handleImportDataExport}
     >
       {(formID) => (
@@ -54,12 +66,10 @@ export function ImportDataExportForm({ translation, id, onSuccess }: IProps) {
             form={formID}
             name={FIELD.FILE.name}
             accept=".json,application/json"
+            required
           >
             {FIELD.FILE.label}
           </InputSectionFile>
-          <ButtonSubmit form={formID} viewType="button">
-            {import_tasks}
-          </ButtonSubmit>
         </>
       )}
     </Form>

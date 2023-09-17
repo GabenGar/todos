@@ -3,6 +3,12 @@
     "source_code": "Исходный код",
     "log_level": "Уровень логов"
   },
+  "common": {
+    "form": {
+      "submit": "Отправить",
+      "submitting": "Отправляем..."
+    }
+  },
   "home": {
     "heading": "Добро пожаловать на Gabengar's!",
     "link_tasks": "Задачи"
@@ -14,7 +20,8 @@
       "title": "Название",
       "description": "Описание",
       "status": "Статус",
-      "add": "Добавить"
+      "add": "Добавить",
+      "adding": "Добавляем..."
     },
     "status": "Статус",
     "status_values": {
@@ -26,6 +33,7 @@
     "export_tasks": "Экспортировать задачи",
     "click_to_file": "Кликните, чтобы загрузить файл",
     "import_tasks": "Импортировать задачи",
+    "importing_tasks": "Импортируем задачи...",
     "details": "Детали"
   },
   "task": {

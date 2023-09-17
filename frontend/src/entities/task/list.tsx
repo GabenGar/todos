@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { ILocalization } from "#lib/localization";
+import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import {
   Article,
   ArticleBody,
@@ -21,6 +21,7 @@ import type { ITask, ITaskInit } from "./types";
 import styles from "./list.module.scss";
 
 interface IProps extends IArticleProps {
+  commonTraslation: ILocalizationCommon;
   translation: ILocalization["todos"];
   id: string;
   headingLevel: IHeadingLevel;
@@ -29,7 +30,13 @@ interface IProps extends IArticleProps {
 /**
  * @TODO get tasks filter
  */
-export function TaskList({ translation, id, headingLevel, ...props }: IProps) {
+export function TaskList({
+  commonTraslation,
+  translation,
+  id,
+  headingLevel,
+  ...props
+}: IProps) {
   const [isInitialized, changeInitialization] = useState(false);
   const [tasks, changeTasks] = useState<ITask[]>([]);
   const taskListID = `${id}-task-list`;
@@ -58,6 +65,7 @@ export function TaskList({ translation, id, headingLevel, ...props }: IProps) {
           <>
             <ArticleHeader>
               <NewTaskForm
+                commonTranslation={commonTraslation}
                 translation={translation.new_todo}
                 id={taskListID}
                 onNewTask={handleTaskCreation}
@@ -83,15 +91,21 @@ export function TaskList({ translation, id, headingLevel, ...props }: IProps) {
 
             <ArticleFooter>
               <ul className={styles.buttons}>
-                <DataExportForm translation={translation} />
-                <ImportDataExportForm
-                  translation={translation}
-                  id="import-data-export"
-                  onSuccess={async () => {
-                    const newTasks = await getTasks(false);
-                    changeTasks(newTasks);
-                  }}
-                />
+                <li>
+                  <DataExportForm translation={translation} />
+                </li>
+
+                <li>
+                  <ImportDataExportForm
+                    commonTranslation={commonTraslation}
+                    translation={translation}
+                    id="import-data-export"
+                    onSuccess={async () => {
+                      const newTasks = await getTasks(false);
+                      changeTasks(newTasks);
+                    }}
+                  />
+                </li>
               </ul>
             </ArticleFooter>
           </>

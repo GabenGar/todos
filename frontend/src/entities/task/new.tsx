@@ -1,4 +1,4 @@
-import type { ILocalization } from "#lib/localization";
+import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import { ButtonSubmit } from "#components/button";
 import { InputSectionText } from "#components/form/section";
@@ -7,6 +7,7 @@ import type { ITaskInit } from "./types";
 import styles from "./new.module.scss";
 
 interface IProps {
+  commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"]["new_todo"];
   id: string;
   onNewTask: (taskInit: ITaskInit) => Promise<void>;
@@ -15,8 +16,13 @@ interface IProps {
 /**
  * @TODO status selector
  */
-export function NewTaskForm({ translation, id, onNewTask }: IProps) {
-  const { title, description, add, status } = translation;
+export function NewTaskForm({
+  commonTranslation,
+  translation,
+  id,
+  onNewTask,
+}: IProps) {
+  const { title, description, add, adding, status } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
@@ -41,7 +47,13 @@ export function NewTaskForm({ translation, id, onNewTask }: IProps) {
   }
 
   return (
-    <Form id={id} className={styles.block} onSubmit={handleSubmit}>
+    <Form<IFieldName>
+      commonTranslation={commonTranslation}
+      id={id}
+      className={styles.block}
+      onSubmit={handleSubmit}
+      submitButton={(formID, isSubmitting) => (!isSubmitting ? add : adding)}
+    >
       {(formID) => (
         <>
           <InputSectionText
@@ -65,10 +77,6 @@ export function NewTaskForm({ translation, id, onNewTask }: IProps) {
           >
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
-
-          <ButtonSubmit form={formID} viewType="button">
-            {add}
-          </ButtonSubmit>
         </>
       )}
     </Form>

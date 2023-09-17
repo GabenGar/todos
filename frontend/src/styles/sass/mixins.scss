@@ -110,7 +110,7 @@
   font-family: inherit;
   font-size: 100%;
   border-radius: $border-radius;
-  border: vars.$size-thin solid transparent;
+  border: vars.$size-thin solid var(--colour-background-tertiary);
   padding: vars.$size-small;
   margin: 0;
 

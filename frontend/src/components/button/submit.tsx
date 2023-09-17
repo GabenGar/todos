@@ -14,7 +14,7 @@ function Component({
   ...blockProps
 }: IButtonSubmitProps) {
   return (
-    <ButtonBase {...blockProps} type="submit" viewType={viewType}>
+    <ButtonBase type="submit" viewType={viewType} {...blockProps}>
       {children ?? "Submit"}
     </ButtonBase>
   );
