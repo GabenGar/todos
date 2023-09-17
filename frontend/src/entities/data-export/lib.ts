@@ -7,7 +7,7 @@ import { type ITask, getTasks } from "#entities/task";
 import type { IDataExport } from "./types";
 
 export async function createDataExport(): Promise<IDataExport> {
-  const tasks = await getTasks();
+  const tasks = await getTasks(false);
 
   const dataExport: IDataExport = {
     version: 1,
@@ -59,13 +59,14 @@ async function importTasks(incomingTasks: ITask[]) {
 
   const updatedTasks = currentTasks.map<ITask>((currentTask) => {
     const changedTask = incomingTasks.find(({ id }) => id === currentTask.id);
-
-    if (
+    const isNotUpdated =
       !changedTask ||
+      currentTask.deleted_at ||
       (currentTask.title === changedTask.title &&
         currentTask.description === changedTask.description &&
-        currentTask.status === changedTask.status)
-    ) {
+        currentTask.status === changedTask.status);
+
+    if (isNotUpdated) {
       return currentTask;
     } else {
       return changedTask;

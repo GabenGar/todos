@@ -88,7 +88,7 @@ export function TaskList({ translation, id, headingLevel, ...props }: IProps) {
                   translation={translation}
                   id="import-data-export"
                   onSuccess={async () => {
-                    const newTasks = await getTasks();
+                    const newTasks = await getTasks(false);
                     changeTasks(newTasks);
                   }}
                 />

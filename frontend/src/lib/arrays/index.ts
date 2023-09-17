@@ -1,1 +1,1 @@
-export { filterMapArray } from "./lib";
+export { filterMapArray } from "./filter-map";
