@@ -1,11 +1,10 @@
 import type { ILocalization } from "#lib/localization";
-import { Form, Label, type IFormEvent } from "#components/form";
+import { Form, type IFormEvent } from "#components/form";
 import { ButtonSubmit } from "#components/button";
+import { InputSectionText } from "#components/form/section";
 import type { ITaskInit } from "./types";
 
 import styles from "./new.module.scss";
-import { logMessage } from "#lib/logs";
-import { toJSON } from "#lib/json";
 
 interface IProps {
   translation: ILocalization["todos"]["new_todo"];
@@ -45,34 +44,27 @@ export function NewTaskForm({ translation, id, onNewTask }: IProps) {
     <Form id={id} className={styles.block} onSubmit={handleSubmit}>
       {(formID) => (
         <>
-          <div>
-            <Label htmlFor={`${formID}-${FIELD.TITLE.name}`}>
-              {FIELD.TITLE.label}
-            </Label>
-            <input
-              form={formID}
-              type="text"
-              name={FIELD.TITLE.name}
-              id={`${formID}-${FIELD.TITLE.name}`}
-              minLength={1}
-              maxLength={256}
-              required
-            />
-          </div>
+          <InputSectionText
+            id={`${formID}-${FIELD.TITLE.name}`}
+            form={formID}
+            name={FIELD.TITLE.name}
+            minLength={1}
+            maxLength={256}
+            required
+          >
+            {FIELD.TITLE.label}
+          </InputSectionText>
 
-          <div>
-            <Label htmlFor={`${formID}-${FIELD.DESCRIPTION.name}`}>
-              {FIELD.DESCRIPTION.label}
-            </Label>
-            <input
-              form={formID}
-              type="text"
-              name={FIELD.DESCRIPTION.name}
-              id={`${formID}-${FIELD.DESCRIPTION.name}`}
-              minLength={1}
-              maxLength={2048}
-            />
-          </div>
+          <InputSectionText
+            id={`${formID}-${FIELD.DESCRIPTION.name}`}
+            form={formID}
+            name={FIELD.DESCRIPTION.name}
+            minLength={1}
+            maxLength={2048}
+            required
+          >
+            {FIELD.DESCRIPTION.label}
+          </InputSectionText>
 
           <ButtonSubmit form={formID} viewType="button">
             {add}

@@ -7,7 +7,7 @@ import styles from "./file.module.scss";
 
 interface IProps
   extends IInputSectionProps,
-    Pick<IInputFileProps, "id" | "form" | "name" | "accept" | "multiple"> {}
+    Pick<IInputFileProps, "accept" | "multiple"> {}
 
 export const InputSectionFile = createBlockComponent(styles, Component);
 

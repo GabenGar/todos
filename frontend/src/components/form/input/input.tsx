@@ -3,7 +3,7 @@ import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
 import type { IRequiredSome } from "#types";
 
-import styles from "./html.module.scss";
+import styles from "./input.module.scss";
 
 interface IInputBaseProps
   extends IRequiredSome<

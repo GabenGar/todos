@@ -5,7 +5,7 @@
   overflow-wrap: anywhere;
   max-width: $width-tablet;
   width: 100%;
-  background-color: hsl(100, 0, 100);
+  background-color: var(--colour-backround-primary);
   border-radius: $radius-normal;
   margin: 0 auto;
 }

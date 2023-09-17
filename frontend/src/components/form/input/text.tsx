@@ -1,10 +1,10 @@
 import { createBlockComponent } from "#components/meta";
 import { Input, type IInputProps } from "./input";
 
-interface IProps extends IInputProps {}
+export interface IInputTextProps extends IInputProps {}
 
 export const InputText = createBlockComponent(undefined, Component);
 
-function Component({ ...props }: IProps) {
+function Component({ ...props }: IInputTextProps) {
   return <Input type="text" {...props} />;
 }
