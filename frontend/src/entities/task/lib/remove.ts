@@ -1,6 +1,6 @@
 import { logDebug } from "#lib/logs";
 import { now } from "#lib/dates";
-import { getTasks } from "./get";
+import { getLocalStoreItem } from "#browser/local-storage";
 import type { ITask, ITaskUpdate } from "../types";
 import { editTasks } from "./edit";
 
@@ -25,7 +25,7 @@ async function removeTasks(ids: ITask["id"][]): Promise<ITask[]> {
     );
   }
 
-  const storedTasks = await getTasks();
+  const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
   const tasksForRemoval = storedTasks.filter(({ id }) => IDsForRemoval.has(id));
 
   if (tasksForRemoval.length !== IDsForRemoval.size) {

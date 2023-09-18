@@ -1,8 +1,7 @@
 import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator, taskUpdateSchema } from "#lib/json/schema";
-import { setLocalStoreItem } from "#browser/local-storage";
-import { getTasks } from "./get";
+import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
 import type { ITask, ITaskUpdate } from "../types";
 
 export async function editTask(update: ITaskUpdate): Promise<ITask> {
@@ -22,7 +21,7 @@ export async function editTask(update: ITaskUpdate): Promise<ITask> {
 export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
   logDebug(`Editing ${updates.length} tasks...`);
 
-  const storedTasks = await getTasks();
+  const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
   const updateIDs = new Set(updates.map(({ id }) => id));
 
   if (updateIDs.size !== updates.length) {

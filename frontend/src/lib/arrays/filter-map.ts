@@ -1,15 +1,15 @@
 export function filterMapArray<OutputType, InputType>(
   inputArray: readonly InputType[],
-  filterFunction: (inputItem: InputType) => boolean,
-  mapperFunction: (inputItem: InputType) => OutputType,
+  filterFunction: (inputItem: InputType, index: number) => boolean,
+  mapperFunction: (inputItem: InputType, index: number) => OutputType,
 ): [OutputType, ...OutputType[]] | undefined {
   const outputArray = inputArray.reduce<OutputType[]>(
-    (outputArray, inputItem) => {
-      if (!filterFunction(inputItem)) {
+    (outputArray, inputItem, index) => {
+      if (!filterFunction(inputItem, index)) {
         return outputArray;
       }
 
-      const outputItem = mapperFunction(inputItem);
+      const outputItem = mapperFunction(inputItem, index);
 
       outputArray.push(outputItem);
 

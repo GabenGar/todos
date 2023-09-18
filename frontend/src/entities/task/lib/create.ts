@@ -2,8 +2,7 @@ import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator, taskInitSchema } from "#lib/json/schema";
-import { setLocalStoreItem } from "#browser/local-storage";
-import { getTasks } from "./get";
+import { getLocalStoreItem, setLocalStoreItem } from "#browser/local-storage";
 import type { ITask, ITaskInit } from "../types";
 
 export async function createTask(init: ITaskInit): Promise<ITask> {
@@ -36,7 +35,7 @@ async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
     return newTask;
   });
 
-  const currentTasks = await getTasks();
+  const currentTasks = getLocalStoreItem<ITask[]>("todos", []);
 
   const newTasks = [...currentTasks, ...incomingTasks];
   setLocalStoreItem("todos", newTasks);
