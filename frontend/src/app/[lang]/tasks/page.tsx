@@ -26,7 +26,7 @@ async function TodosPage({ params }: IProps) {
     <Page heading={todos.heading}>
       <TaskList
         headingLevel={2}
-        commonTraslation={common}
+        commonTranslation={common}
         translation={todos}
         id={"todos"}
       />
