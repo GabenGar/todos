@@ -73,7 +73,6 @@ export function NewTaskForm({
             name={FIELD.DESCRIPTION.name}
             minLength={1}
             maxLength={2048}
-            required
           >
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
