@@ -49,10 +49,10 @@ export function TaskList({
   useEffect(() => {
     getTasks({ includeDeleted: false, page: parsedPage }).then((newTasks) => {
       if (parsedPage !== newTasks.pagination.currentPage) {
-        const searchParams = new URLSearchParams([
+        const urlSearchParams = new URLSearchParams([
           ["page", String(newTasks.pagination.currentPage)],
         ]);
-        router.replace(`/tasks?${searchParams.toString()}`);
+        return router.replace(`/tasks?${urlSearchParams.toString()}`);
       }
 
       changeTasks(newTasks);
