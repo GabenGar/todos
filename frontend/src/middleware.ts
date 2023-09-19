@@ -6,7 +6,8 @@ import { logDebug } from "#lib/logs";
 
 export async function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
-  const pathname = request.nextUrl.pathname;
+  const { pathname, search, hash } = request.nextUrl;
+
   const pathnameIsMissingLocale = LOCALES.every(
     (locale) =>
       !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
@@ -17,7 +18,8 @@ export async function middleware(request: NextRequest) {
     const locale = getLocale(request);
     // e.g. incoming request is `/products`
     // The new URL is now `/en/products`
-    const url = new URL(`/${locale}/${pathname}`, request.url);
+    const url = new URL(`/${locale}${pathname}${search}${hash}`, request.url);
+
     const redirect = NextResponse.redirect(url);
 
     return redirect;

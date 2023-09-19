@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { Route } from "next";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import {
@@ -47,16 +48,23 @@ export function TaskList({
   const parsedPage = page === null ? undefined : Number(page);
 
   useEffect(() => {
-    getTasks({ includeDeleted: false, page: parsedPage }).then((newTasks) => {
+    (async () => {
+      const newTasks = await getTasks({
+        includeDeleted: false,
+        page: parsedPage,
+      });
       if (parsedPage !== newTasks.pagination.currentPage) {
         const urlSearchParams = new URLSearchParams([
           ["page", String(newTasks.pagination.currentPage)],
         ]);
-        return router.replace(`/tasks?${urlSearchParams.toString()}`);
+
+        router.replace(`/tasks?${urlSearchParams.toString()}`);
+
+        return;
       }
 
       changeTasks(newTasks);
-    });
+    })();
   }, [parsedPage]);
 
   async function handleTaskCreation(init: ITaskInit) {

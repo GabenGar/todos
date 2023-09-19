@@ -45,3 +45,9 @@
 .button {
   width: 100%;
 }
+
+.disabled {
+  display: flex;
+  justify-content: center;
+  color: var(--colour-text-secondary)
+}

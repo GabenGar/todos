@@ -37,27 +37,49 @@ function Component({
       {...props}
     >
       <li className={styles.first}>
-        <LinkButton href={buildURL(1)} className={styles.button}>
-          {first}
-        </LinkButton>
+        {currentPage === 1 ? (
+          <span className={styles.disabled}>{first}</span>
+        ) : (
+          <LinkButton href={buildURL(1)} className={styles.button}>
+            {first}
+          </LinkButton>
+        )}
       </li>
       <li className={styles.previous}>
-        <LinkButton href={buildURL(currentPage - 1)} className={styles.button}>
-          {previous}
-        </LinkButton>
+        {currentPage - 1 <= 1 ? (
+          <span className={styles.disabled}>{previous}</span>
+        ) : (
+          <LinkButton
+            href={buildURL(currentPage - 1)}
+            className={styles.button}
+          >
+            {previous}
+          </LinkButton>
+        )}
       </li>
       <li className={styles.current}>
         {current}: {currentMin} - {currentMax}
       </li>
       <li className={styles.next}>
-        <LinkButton href={buildURL(currentPage + 1)} className={styles.button}>
-          {next}
-        </LinkButton>
+        {currentPage + 1 >= totalPages ? (
+          <span className={styles.disabled}>{next}</span>
+        ) : (
+          <LinkButton
+            href={buildURL(currentPage + 1)}
+            className={styles.button}
+          >
+            {next}
+          </LinkButton>
+        )}
       </li>
       <li className={styles.last}>
-        <LinkButton href={buildURL(totalPages)} className={styles.button}>
-          {last}
-        </LinkButton>
+        {currentPage === totalPages ? (
+          <span className={styles.disabled}>{last}</span>
+        ) : (
+          <LinkButton href={buildURL(totalPages)} className={styles.button}>
+            {last}
+          </LinkButton>
+        )}
       </li>
     </ul>
   );
