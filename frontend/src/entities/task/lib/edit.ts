@@ -22,7 +22,7 @@ export async function editTask(update: ITaskUpdate): Promise<ITask> {
 export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
   logDebug(`Editing ${updates.length} tasks...`);
 
-  const storedTasks = await getAllTasks()
+  const storedTasks = await getAllTasks();
   const updateIDs = new Set(updates.map(({ id }) => id));
 
   if (updateIDs.size !== updates.length) {
