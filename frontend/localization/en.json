@@ -13,7 +13,8 @@
       "previous": "Previous",
       "current": "Current",
       "next": "Next",
-      "last": "Last"
+      "last": "Last",
+      "out_of": "out of"
     }
   },
   "home": {

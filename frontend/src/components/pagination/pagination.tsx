@@ -21,8 +21,10 @@ function Component({
   buildURL,
   ...props
 }: IProps) {
-  const { first, previous, current, next, last } = commonTranslation.pagination;
-  const { currentPage, currentMin, currentMax, totalPages } = pagination;
+  const { first, previous, current, next, last, out_of } =
+    commonTranslation.pagination;
+  const { currentPage, currentMin, currentMax, totalPages, totalCount } =
+    pagination;
   const buttonWidth = Math.max(
     first.length,
     previous.length,
@@ -58,7 +60,14 @@ function Component({
         )}
       </li>
       <li className={styles.current}>
-        {current}: {currentMin} - {currentMax}
+        <ul className={styles.stats}>
+          <li>
+            {currentMin} - {currentMax} {out_of} {totalCount}
+          </li>
+          <li>
+            {current}: {currentPage}
+          </li>
+        </ul>
       </li>
       <li className={styles.next}>
         {currentPage + 1 >= totalPages ? (

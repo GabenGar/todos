@@ -30,6 +30,12 @@
   justify-self: center;
 }
 
+.stats {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
 .next {
   min-width: var(--local-min-width);
   grid-area: next;
