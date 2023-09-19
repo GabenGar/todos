@@ -4,6 +4,7 @@ import type { IPagination } from "#lib/pagination";
 import type { IBaseComponentProps } from "#components/types";
 import { createBlockComponent } from "#components/meta";
 import { LinkButton } from "#components/link";
+import { PaginationOverview } from "./overview";
 
 import styles from "./pagination.module.scss";
 
@@ -13,6 +14,9 @@ interface IProps extends IBaseComponentProps<"ul"> {
   buildURL: (page: number) => string;
 }
 
+/**
+ * @TODO button icons
+ */
 export const Pagination = createBlockComponent(styles, Component);
 
 function Component({
@@ -21,10 +25,8 @@ function Component({
   buildURL,
   ...props
 }: IProps) {
-  const { first, previous, current, next, last, out_of } =
-    commonTranslation.pagination;
-  const { currentPage, currentMin, currentMax, totalPages, totalCount } =
-    pagination;
+  const { first, previous, current, next, last } = commonTranslation.pagination;
+  const { currentPage, totalPages } = pagination;
   const buttonWidth = Math.max(
     first.length,
     previous.length,
@@ -40,53 +42,60 @@ function Component({
     >
       <li className={styles.first}>
         {currentPage === 1 ? (
-          <span className={styles.disabled}>{first}</span>
+          <span className={styles.disabled}>
+            <span>|&lt;</span> <span>{first}</span>
+          </span>
         ) : (
           <LinkButton href={buildURL(1)} className={styles.button}>
-            {first}
+            <span>|&lt;</span> <span>{first}</span>
           </LinkButton>
         )}
       </li>
+
       <li className={styles.previous}>
         {currentPage - 1 <= 1 ? (
-          <span className={styles.disabled}>{previous}</span>
+          <span className={styles.disabled}>
+            <span>&lt;</span> <span>{previous}</span>
+          </span>
         ) : (
           <LinkButton
             href={buildURL(currentPage - 1)}
             className={styles.button}
           >
-            {previous}
+            <span>&lt;</span> <span>{previous}</span>
           </LinkButton>
         )}
       </li>
+
       <li className={styles.current}>
-        <ul className={styles.stats}>
-          <li>
-            {currentMin} - {currentMax} {out_of} {totalCount}
-          </li>
-          <li>
-            {current}: {currentPage}
-          </li>
-        </ul>
+        <PaginationOverview
+          commonTranslation={commonTranslation}
+          pagination={pagination}
+        />
       </li>
+
       <li className={styles.next}>
         {currentPage + 1 >= totalPages ? (
-          <span className={styles.disabled}>{next}</span>
+          <span className={styles.disabled}>
+            <span>&gt;</span> <span>{next}</span>
+          </span>
         ) : (
           <LinkButton
             href={buildURL(currentPage + 1)}
             className={styles.button}
           >
-            {next}
+            <span>&gt;</span> <span>{next}</span>
           </LinkButton>
         )}
       </li>
       <li className={styles.last}>
         {currentPage === totalPages ? (
-          <span className={styles.disabled}>{last}</span>
+          <span className={styles.disabled}>
+            <span>&gt;|</span> <span>{last}</span>
+          </span>
         ) : (
           <LinkButton href={buildURL(totalPages)} className={styles.button}>
-            {last}
+            <span>&gt;|</span> <span>{last}</span>
           </LinkButton>
         )}
       </li>

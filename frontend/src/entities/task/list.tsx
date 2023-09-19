@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { Route } from "next";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import {
@@ -13,7 +12,7 @@ import {
 } from "#components/article";
 import { Loading } from "components/loading";
 import { type IHeadingLevel } from "#components/heading";
-import { Pagination } from "#components/pagination";
+import { Pagination, PaginationOverview } from "#components/pagination";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import { NewTaskForm } from "./new";
 import { TaskItem } from "./item";
@@ -45,7 +44,7 @@ export function TaskList({
   const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
   const taskListID = `${id}-task-list`;
   const page = searchParams.get("page");
-  const parsedPage = page === null ? undefined : Number(page);
+  const parsedPage = page === null ? undefined : parseInt(page, 10);
 
   useEffect(() => {
     (async () => {
@@ -88,6 +87,15 @@ export function TaskList({
             </ArticleHeader>
 
             <ArticleBody>
+              {!tasks ? (
+                <Loading />
+              ) : (
+                <PaginationOverview
+                  commonTranslation={commonTranslation}
+                  pagination={tasks.pagination}
+                />
+              )}
+
               <ul className={styles.list}>
                 {!tasks ? (
                   <Loading />
@@ -112,8 +120,9 @@ export function TaskList({
                   buildURL={(page) => {
                     const searchParams = new URLSearchParams([
                       ["page", String(page)],
-                    ]);
-                    return `/tasks?${searchParams.toString()}`;
+                    ]).toString();
+
+                    return `/tasks?${searchParams}`;
                   }}
                 />
               )}
