@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import {
   Article,
@@ -11,17 +12,18 @@ import {
 } from "#components/article";
 import { Loading } from "components/loading";
 import { type IHeadingLevel } from "#components/heading";
+import { Pagination, PaginationOverview } from "#components/pagination";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import { NewTaskForm } from "./new";
 import { TaskItem } from "./item";
 import { getTasks } from "./lib/get";
 import { createTask } from "./lib/create";
-import type { ITask, ITaskInit } from "./types";
+import type { ITaskInit } from "./types";
 
 import styles from "./list.module.scss";
 
 interface IProps extends IArticleProps {
-  commonTraslation: ILocalizationCommon;
+  commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"];
   id: string;
   headingLevel: IHeadingLevel;
@@ -31,30 +33,42 @@ interface IProps extends IArticleProps {
  * @TODO get tasks filter
  */
 export function TaskList({
-  commonTraslation,
+  commonTranslation,
   translation,
   id,
   headingLevel,
   ...props
 }: IProps) {
-  const [isInitialized, changeInitialization] = useState(false);
-  const [tasks, changeTasks] = useState<ITask[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
   const taskListID = `${id}-task-list`;
+  const page = searchParams.get("page");
+  const parsedPage = page === null ? undefined : parseInt(page, 10);
 
   useEffect(() => {
-    getTasks(false).then((storedTasks) => {
-      changeTasks(storedTasks);
-      changeInitialization(true);
-    });
-  }, []);
+    (async () => {
+      const newTasks = await getTasks({
+        includeDeleted: false,
+        page: parsedPage,
+      });
+      if (parsedPage !== newTasks.pagination.currentPage) {
+        const urlSearchParams = new URLSearchParams([
+          ["page", String(newTasks.pagination.currentPage)],
+        ]);
+
+        router.replace(`/tasks?${urlSearchParams.toString()}`);
+
+        return;
+      }
+
+      changeTasks(newTasks);
+    })();
+  }, [parsedPage]);
 
   async function handleTaskCreation(init: ITaskInit) {
-    if (!isInitialized) {
-      return;
-    }
-
     await createTask(init);
-    const newTasks = await getTasks(false);
+    const newTasks = await getTasks();
     changeTasks(newTasks);
   }
 
@@ -65,7 +79,7 @@ export function TaskList({
           <>
             <ArticleHeader>
               <NewTaskForm
-                commonTranslation={commonTraslation}
+                commonTranslation={commonTranslation}
                 translation={translation.new_todo}
                 id={taskListID}
                 onNewTask={handleTaskCreation}
@@ -73,11 +87,20 @@ export function TaskList({
             </ArticleHeader>
 
             <ArticleBody>
+              {!tasks ? (
+                <Loading />
+              ) : (
+                <PaginationOverview
+                  commonTranslation={commonTranslation}
+                  pagination={tasks.pagination}
+                />
+              )}
+
               <ul className={styles.list}>
-                {!isInitialized ? (
+                {!tasks ? (
                   <Loading />
                 ) : (
-                  tasks.map((task) => (
+                  tasks.items.map((task) => (
                     <TaskItem
                       key={task.id}
                       headingLevel={headingLevel}
@@ -87,6 +110,22 @@ export function TaskList({
                   ))
                 )}
               </ul>
+
+              {!tasks ? (
+                <Loading />
+              ) : (
+                <Pagination
+                  commonTranslation={commonTranslation}
+                  pagination={tasks.pagination}
+                  buildURL={(page) => {
+                    const searchParams = new URLSearchParams([
+                      ["page", String(page)],
+                    ]).toString();
+
+                    return `/tasks?${searchParams}`;
+                  }}
+                />
+              )}
             </ArticleBody>
 
             <ArticleFooter>
@@ -97,11 +136,11 @@ export function TaskList({
 
                 <li>
                   <ImportDataExportForm
-                    commonTranslation={commonTraslation}
+                    commonTranslation={commonTranslation}
                     translation={translation}
                     id="import-data-export"
                     onSuccess={async () => {
-                      const newTasks = await getTasks(false);
+                      const newTasks = await getTasks();
                       changeTasks(newTasks);
                     }}
                   />

@@ -7,6 +7,14 @@
     "form": {
       "submit": "Отправить",
       "submitting": "Отправляем..."
+    },
+    "pagination": {
+      "first": "Первая",
+      "previous": "Предыдущая",
+      "current": "Нынешняя",
+      "next": "Следующая",
+      "last": "Последняя",
+      "out_of": "из"
     }
   },
   "home": {

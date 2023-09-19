@@ -1,0 +1,85 @@
+@use "../../styles/sass/variables.scss" as *;
+
+// different layout per resolution so the buttons
+// wouldn't fall out of boundaries
+.block {
+  display: inline-grid;
+  grid:
+    "current" auto
+    "next" auto
+    "previous" auto
+    "last" auto
+    "first" auto;
+  gap: $size-normal;
+  border-radius: $radius-normal;
+  border: $size-thin solid var(--colour-text-secondary);
+  padding: $size-small;
+
+  @media (min-width: $width-tablet) {
+    grid:
+      "current  current" auto
+      "previous next" auto
+      "first    last" auto;
+  }
+}
+
+.first {
+  min-width: var(--local-min-width);
+  grid-area: first;
+  justify-self: center;
+
+  @media (min-width: $width-tablet) {
+    justify-self: flex-start;
+  }
+}
+
+.previous {
+  min-width: var(--local-min-width);
+  grid-area: previous;
+  justify-self: center;
+
+  @media (min-width: $width-tablet) {
+    justify-self: flex-start;
+  }
+}
+
+.current {
+  min-width: var(--local-min-width);
+  grid-area: current;
+  justify-self: center;
+}
+
+.next {
+  min-width: var(--local-min-width);
+  grid-area: next;
+  justify-self: center;
+
+  @media (min-width: $width-tablet) {
+    justify-self: end;
+  }
+}
+
+.last {
+  min-width: var(--local-min-width);
+  grid-area: last;
+  justify-self: center;
+
+  @media (min-width: $width-tablet) {
+    justify-self: end;
+  }
+}
+
+.button {
+  width: 100%;
+  justify-content: start;
+}
+
+.disabled {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: $size-small;
+  min-height: $min-button-height;
+  color: var(--colour-text-secondary);
+  padding: 0 $size-normal;
+}

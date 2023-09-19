@@ -7,6 +7,14 @@
     "form": {
       "submit": "Submit",
       "submitting": "Submitting..."
+    },
+    "pagination": {
+      "first": "First",
+      "previous": "Previous",
+      "current": "Current",
+      "next": "Next",
+      "last": "Last",
+      "out_of": "out of"
     }
   },
   "home": {

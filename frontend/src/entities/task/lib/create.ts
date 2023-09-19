@@ -3,8 +3,8 @@ import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator, taskInitSchema } from "#lib/json/schema";
 import { setLocalStoreItem } from "#browser/local-storage";
-import { getTasks } from "./get";
 import type { ITask, ITaskInit } from "../types";
+import { getAllTasks } from "./get";
 
 export async function createTask(init: ITaskInit): Promise<ITask> {
   const validate: Awaited<ReturnType<typeof createValidator<ITaskInit>>> =
@@ -36,7 +36,7 @@ async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
     return newTask;
   });
 
-  const currentTasks = await getTasks();
+  const currentTasks = await getAllTasks();
 
   const newTasks = [...currentTasks, ...incomingTasks];
   setLocalStoreItem("todos", newTasks);
