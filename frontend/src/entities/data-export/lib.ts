@@ -3,11 +3,11 @@ import { now } from "#lib/dates";
 import { createValidator, dataExportSchema } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
 import { setLocalStoreItem } from "#browser/local-storage";
-import { type ITask, getTasks } from "#entities/task";
+import { type ITask, getTasks, getAllTasks } from "#entities/task";
 import type { IDataExport } from "./types";
 
 export async function createDataExport(): Promise<IDataExport> {
-  const tasks = await getTasks(false);
+  const tasks = await getAllTasks(false);
 
   const dataExport: IDataExport = {
     version: 1,
@@ -53,7 +53,7 @@ export async function importDataExport(dataExport: unknown) {
 }
 
 async function importTasks(incomingTasks: ITask[]) {
-  const currentTasks = await getTasks();
+  const currentTasks = await getAllTasks(false);
   const currentIDs = currentTasks.map(({ id }) => id);
   const newTasks = incomingTasks.filter(({ id }) => !currentIDs.includes(id));
 

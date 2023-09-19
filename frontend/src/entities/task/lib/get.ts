@@ -24,7 +24,7 @@ export async function getTask(taskID: ITask["id"]) {
     }
   }
 
-  const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
+  const storedTasks = await getAllTasks();
   const task = storedTasks.find(({ id }) => id === taskID);
 
   if (!task) {
@@ -32,6 +32,18 @@ export async function getTask(taskID: ITask["id"]) {
   }
 
   return task;
+}
+
+/**
+ * @TODO derive its logic from `getTasks()` instead
+ */
+export async function getAllTasks(includeDeleted = true) {
+  const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
+  const fitleredTasks = includeDeleted
+    ? storedTasks
+    : storedTasks.filter(({ deleted_at }) => !deleted_at);
+
+  return fitleredTasks;
 }
 
 /**
@@ -51,7 +63,7 @@ export async function getTasks(
   }
 
   const { includeDeleted, page } = options;
-  const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
+  const storedTasks = await getAllTasks();
   const filteredTasks = storedTasks.filter(({ deleted_at }) =>
     includeDeleted ? true : !deleted_at,
   );
