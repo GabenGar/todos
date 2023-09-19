@@ -29,7 +29,7 @@
   justify-self: center;
 
   @media (min-width: $width-tablet) {
-    justify-self: start;
+    justify-self: flex-start;
   }
 }
 
@@ -39,7 +39,7 @@
   justify-self: center;
 
   @media (min-width: $width-tablet) {
-    justify-self: start;
+    justify-self: flex-start;
   }
 }
 
@@ -76,9 +76,10 @@
 
 .disabled {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   gap: $size-small;
   min-height: $min-button-height;
   color: var(--colour-text-secondary);
+  padding: 0 $size-normal;
 }
