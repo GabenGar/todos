@@ -3,10 +3,12 @@ import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { migrateTasks } from "./migrate";
 import type { ITask } from "../types";
+import { isSubstring } from "#lib/strings";
 
 interface IOptions {
   includeDeleted?: boolean;
   page?: number;
+  query?: string;
 }
 
 let isMigrated = false;
@@ -62,10 +64,22 @@ export async function getTasks(
     }
   }
 
-  const { includeDeleted, page } = options;
+  const { includeDeleted, page, query } = options;
   const storedTasks = await getAllTasks();
-  const filteredTasks = storedTasks.filter(({ deleted_at }) =>
-    includeDeleted ? true : !deleted_at,
+  const filteredTasks = storedTasks.filter(
+    ({ deleted_at, title, description }) => {
+      const isDeletedIncluded = includeDeleted ? true : !deleted_at;
+
+      if (!isDeletedIncluded) {
+        return false;
+      }
+
+      const isMatchingQuery = !query
+        ? true
+        : isSubstring(query, title) || isSubstring(query, description);
+
+      return isDeletedIncluded && isMatchingQuery;
+    },
   );
   const pagination = createPagination(filteredTasks.length, page);
   const items = filteredTasks.slice(
