@@ -15,7 +15,7 @@ import { Loading } from "components/loading";
 import { type IHeadingLevel } from "#components/heading";
 import { Pagination, PaginationOverview } from "#components/pagination";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
-import { NewTaskForm } from "./new";
+import { type INewTaskFormProps, NewTaskForm } from "./new";
 import { TaskItem } from "./item";
 import { getTasks } from "./lib/get";
 import { createTask } from "./lib/create";
@@ -43,7 +43,6 @@ export function TaskList({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
-  const taskListID = `${id}-task-list`;
   const inputPage = searchParams.get("page");
   const page = inputPage === null ? undefined : parseInt(inputPage, 10);
   const inputQuery = searchParams.get("query");
@@ -87,14 +86,12 @@ export function TaskList({
       {(headingLevel) => {
         return (
           <>
-            <ArticleHeader>
-              <NewTaskForm
-                commonTranslation={commonTranslation}
-                translation={translation.new_todo}
-                id={taskListID}
-                onNewTask={handleTaskCreation}
-              />
-            </ArticleHeader>
+            <Header
+              commonTranslation={commonTranslation}
+              translation={translation}
+              id={id}
+              onNewTask={handleTaskCreation}
+            />
 
             <ArticleBody>
               {!tasks ? (
@@ -162,5 +159,29 @@ export function TaskList({
         );
       }}
     </Article>
+  );
+}
+
+interface IHeaderProps
+  extends Pick<IProps, "commonTranslation" | "translation" | "id">,
+    Pick<INewTaskFormProps, "onNewTask"> {}
+
+function Header({
+  commonTranslation,
+  translation,
+  id,
+  onNewTask,
+}: IHeaderProps) {
+  const [] = useState()
+  const taskListID = `${id}-task-list`;
+  return (
+    <ArticleHeader>
+      <NewTaskForm
+        commonTranslation={commonTranslation}
+        translation={translation.new_todo}
+        id={taskListID}
+        onNewTask={onNewTask}
+      />
+    </ArticleHeader>
   );
 }

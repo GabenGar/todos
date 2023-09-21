@@ -6,7 +6,7 @@ import type { ITaskInit } from "./types";
 
 import styles from "./new.module.scss";
 
-interface IProps {
+export interface INewTaskFormProps {
   commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"]["new_todo"];
   id: string;
@@ -21,7 +21,7 @@ export function NewTaskForm({
   translation,
   id,
   onNewTask,
-}: IProps) {
+}: INewTaskFormProps) {
   const { title, description, add, adding, status } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },

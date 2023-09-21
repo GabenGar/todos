@@ -42,7 +42,14 @@
     "click_to_file": "Кликните, чтобы загрузить файл",
     "import_tasks": "Импортировать задачи",
     "importing_tasks": "Импортируем задачи...",
-    "details": "Детали"
+    "details": "Детали",
+    "search": "Искать",
+    "add": "Добавить",
+    "search_tasks": {
+      "query": "Query",
+      "search": "Искать",
+      "searching": "Ищем..."
+    }
   },
   "task": {
     "title": "Задача",
