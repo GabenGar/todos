@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { INanoidID } from "#lib/strings";
 import type { ILocalization } from "#lib/localization";
-import { tasksPageURL } from "#lib/urls";
+import { createTasksPageURL } from "#lib/urls";
 import { createBlockComponent } from "#components/meta";
 import {
   Article,
@@ -195,7 +195,7 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
                   disabled={Boolean(deleted_at)}
                   onClick={async () => {
                     await removeTask(id);
-                    router.push(tasksPageURL);
+                    router.push(createTasksPageURL);
                   }}
                 >
                   {translation.delete}
