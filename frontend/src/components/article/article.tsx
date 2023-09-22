@@ -12,11 +12,11 @@ export interface IArticleProps extends IBaseComponentProps<"article"> {
   headingLevel: IHeadingLevel;
   children?: (headingLevel: IHeadingLevel) => ReactNode;
 }
-interface IArticleHeaderProps
+export interface IArticleHeaderProps
   extends IBaseComponentPropsWithChildren<"header"> {}
-interface IArticleBodyProps
+export interface IArticleBodyProps
   extends IBaseComponentPropsWithChildren<"section"> {}
-interface IArticleFooterProps
+export interface IArticleFooterProps
   extends IBaseComponentPropsWithChildren<"footer"> {}
 
 export const Article = createBlockComponent(styles, ArticleComponent);
