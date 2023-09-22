@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
+import { createTasksPageURL } from "#lib/urls";
 import {
   Article,
   ArticleBody,
@@ -13,8 +14,10 @@ import {
 import { Loading } from "components/loading";
 import { type IHeadingLevel } from "#components/heading";
 import { Pagination, PaginationOverview } from "#components/pagination";
+import { Button } from "#components/button";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
-import { NewTaskForm } from "./new";
+import { type INewTaskFormProps, NewTaskForm } from "./new";
+import { ISearchTasksFormProps, SearchTasksForm } from "./search";
 import { TaskItem } from "./item";
 import { getTasks } from "./lib/get";
 import { createTask } from "./lib/create";
@@ -42,34 +45,61 @@ export function TaskList({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
-  const taskListID = `${id}-task-list`;
-  const page = searchParams.get("page");
-  const parsedPage = page === null ? undefined : parseInt(page, 10);
+  const inputPage = searchParams.get("page");
+  const page = inputPage === null ? undefined : parseInt(inputPage, 10);
+  const inputQuery = searchParams.get("query");
+  const query =
+    inputQuery === null || inputQuery.trim().length === 0
+      ? undefined
+      : inputQuery.trim();
+  const options: Parameters<typeof getTasks>[0] = {
+    includeDeleted: false,
+    page,
+    query,
+  };
 
   useEffect(() => {
     (async () => {
-      const newTasks = await getTasks({
-        includeDeleted: false,
-        page: parsedPage,
-      });
-      if (parsedPage !== newTasks.pagination.currentPage) {
-        const urlSearchParams = new URLSearchParams([
-          ["page", String(newTasks.pagination.currentPage)],
-        ]);
+      const newTasks = await getTasks(options);
 
-        router.replace(`/tasks?${urlSearchParams.toString()}`);
+      if (newTasks.pagination.totalCount === 0) {
+        changeTasks(newTasks);
+        return;
+      }
+
+      if (page !== newTasks.pagination.currentPage) {
+        const newTasksURL = createTasksPageURL({
+          page: newTasks.pagination.currentPage,
+          query,
+        });
+
+        router.replace(newTasksURL);
 
         return;
       }
 
       changeTasks(newTasks);
     })();
-  }, [parsedPage]);
+  }, [page, query]);
 
   async function handleTaskCreation(init: ITaskInit) {
     await createTask(init);
-    const newTasks = await getTasks();
+    const newTasks = await getTasks(options);
     changeTasks(newTasks);
+  }
+
+  async function handleTaskSearch(newQuery: string) {
+    const { pagination } = await getTasks({
+      includeDeleted: false,
+      query: newQuery,
+    });
+
+    const newURL = createTasksPageURL({
+      page: pagination.currentPage,
+      query: newQuery,
+    });
+
+    router.push(newURL);
   }
 
   return (
@@ -77,14 +107,14 @@ export function TaskList({
       {(headingLevel) => {
         return (
           <>
-            <ArticleHeader>
-              <NewTaskForm
-                commonTranslation={commonTranslation}
-                translation={translation.new_todo}
-                id={taskListID}
-                onNewTask={handleTaskCreation}
-              />
-            </ArticleHeader>
+            <Header
+              commonTranslation={commonTranslation}
+              translation={translation}
+              id={id}
+              query={query}
+              onNewTask={handleTaskCreation}
+              onSearch={handleTaskSearch}
+            />
 
             <ArticleBody>
               {!tasks ? (
@@ -118,11 +148,12 @@ export function TaskList({
                   commonTranslation={commonTranslation}
                   pagination={tasks.pagination}
                   buildURL={(page) => {
-                    const searchParams = new URLSearchParams([
-                      ["page", String(page)],
-                    ]).toString();
+                    const url = createTasksPageURL({
+                      page,
+                      query,
+                    });
 
-                    return `/tasks?${searchParams}`;
+                    return url;
                   }}
                 />
               )}
@@ -140,7 +171,7 @@ export function TaskList({
                     translation={translation}
                     id="import-data-export"
                     onSuccess={async () => {
-                      const newTasks = await getTasks();
+                      const newTasks = await getTasks(options);
                       changeTasks(newTasks);
                     }}
                   />
@@ -151,5 +182,58 @@ export function TaskList({
         );
       }}
     </Article>
+  );
+}
+
+interface IHeaderProps
+  extends Pick<IProps, "commonTranslation" | "translation" | "id">,
+    Pick<INewTaskFormProps, "onNewTask">,
+    Pick<ISearchTasksFormProps, "onSearch"> {
+  query?: string;
+}
+
+function Header({
+  commonTranslation,
+  translation,
+  id,
+  query,
+  onNewTask,
+  onSearch,
+}: IHeaderProps) {
+  const [isNewFormShown, switchNewForm] = useState(false);
+  const [isSearchFormShown, switchSearchForm] = useState(Boolean(query));
+  const { add, search } = translation;
+  const newFormID = `${id}-task-list-new`;
+  const searchFormID = `${id}-task-list-search`;
+
+  return (
+    <ArticleHeader>
+      <div className={styles.header}>
+        <Button onClick={() => switchSearchForm((old) => !old)}>
+          {search}
+        </Button>
+        {isSearchFormShown && (
+          <SearchTasksForm
+            commonTranslation={commonTranslation}
+            translation={translation.search_tasks}
+            id={searchFormID}
+            defaultQuery={query}
+            onSearch={onSearch}
+          />
+        )}
+      </div>
+
+      <div className={styles.header}>
+        <Button onClick={() => switchNewForm((old) => !old)}>{add}</Button>
+        {isNewFormShown && (
+          <NewTaskForm
+            commonTranslation={commonTranslation}
+            translation={translation.new_todo}
+            id={newFormID}
+            onNewTask={onNewTask}
+          />
+        )}
+      </div>
+    </ArticleHeader>
   );
 }
