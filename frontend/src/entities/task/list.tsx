@@ -14,8 +14,10 @@ import {
 import { Loading } from "components/loading";
 import { type IHeadingLevel } from "#components/heading";
 import { Pagination, PaginationOverview } from "#components/pagination";
+import { Button } from "#components/button";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
+import { ISearchTasksFormProps, SearchTasksForm } from "./search";
 import { TaskItem } from "./item";
 import { getTasks } from "./lib/get";
 import { createTask } from "./lib/create";
@@ -60,6 +62,11 @@ export function TaskList({
     (async () => {
       const newTasks = await getTasks(options);
 
+      if (newTasks.pagination.totalCount === 0) {
+        changeTasks(newTasks);
+        return;
+      }
+
       if (page !== newTasks.pagination.currentPage) {
         const newTasksURL = createTasksPageURL({
           page: newTasks.pagination.currentPage,
@@ -81,6 +88,20 @@ export function TaskList({
     changeTasks(newTasks);
   }
 
+  async function handleTaskSearch(newQuery: string) {
+    const { pagination } = await getTasks({
+      includeDeleted: false,
+      query: newQuery,
+    });
+
+    const newURL = createTasksPageURL({
+      page: pagination.currentPage,
+      query: newQuery,
+    });
+
+    router.push(newURL);
+  }
+
   return (
     <Article headingLevel={headingLevel} {...props}>
       {(headingLevel) => {
@@ -90,7 +111,9 @@ export function TaskList({
               commonTranslation={commonTranslation}
               translation={translation}
               id={id}
+              query={query}
               onNewTask={handleTaskCreation}
+              onSearch={handleTaskSearch}
             />
 
             <ArticleBody>
@@ -164,24 +187,53 @@ export function TaskList({
 
 interface IHeaderProps
   extends Pick<IProps, "commonTranslation" | "translation" | "id">,
-    Pick<INewTaskFormProps, "onNewTask"> {}
+    Pick<INewTaskFormProps, "onNewTask">,
+    Pick<ISearchTasksFormProps, "onSearch"> {
+  query?: string;
+}
 
 function Header({
   commonTranslation,
   translation,
   id,
+  query,
   onNewTask,
+  onSearch,
 }: IHeaderProps) {
-  const [] = useState()
-  const taskListID = `${id}-task-list`;
+  const [isNewFormShown, switchNewForm] = useState(false);
+  const [isSearchFormShown, switchSearchForm] = useState(Boolean(query));
+  const { add, search } = translation;
+  const newFormID = `${id}-task-list-new`;
+  const searchFormID = `${id}-task-list-search`;
+
   return (
     <ArticleHeader>
-      <NewTaskForm
-        commonTranslation={commonTranslation}
-        translation={translation.new_todo}
-        id={taskListID}
-        onNewTask={onNewTask}
-      />
+      <div className={styles.header}>
+        <Button onClick={() => switchSearchForm((old) => !old)}>
+          {search}
+        </Button>
+        {isSearchFormShown && (
+          <SearchTasksForm
+            commonTranslation={commonTranslation}
+            translation={translation.search_tasks}
+            id={searchFormID}
+            defaultQuery={query}
+            onSearch={onSearch}
+          />
+        )}
+      </div>
+
+      <div className={styles.header}>
+        <Button onClick={() => switchNewForm((old) => !old)}>{add}</Button>
+        {isNewFormShown && (
+          <NewTaskForm
+            commonTranslation={commonTranslation}
+            translation={translation.new_todo}
+            id={newFormID}
+            onNewTask={onNewTask}
+          />
+        )}
+      </div>
     </ArticleHeader>
   );
 }

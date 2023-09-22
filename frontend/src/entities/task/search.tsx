@@ -5,10 +5,11 @@ import { InputSectionText } from "#components/form/section";
 
 // import styles from "./search.module.scss";
 
-interface IProps {
+export interface ISearchTasksFormProps {
   id: string;
   commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"]["search_tasks"];
+  defaultQuery?: string;
   onSearch: (newQuery: string) => Promise<void>;
 }
 
@@ -16,9 +17,12 @@ export function SearchTasksForm({
   commonTranslation,
   translation,
   id,
+  defaultQuery,
   onSearch,
-}: IProps) {
-  const [currentQuery, changeCurrentQuery] = useState<string>();
+}: ISearchTasksFormProps) {
+  const [currentQuery, changeCurrentQuery] = useState<string | undefined>(
+    defaultQuery,
+  );
   const { query, search, searching } = translation;
   const FIELD = {
     QUERY: { name: "query", label: query },
@@ -33,8 +37,8 @@ export function SearchTasksForm({
       return;
     }
 
-    await onSearch(query);
     changeCurrentQuery(query);
+    await onSearch(query);
   }
 
   return (
@@ -42,11 +46,9 @@ export function SearchTasksForm({
       commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
-      submitButton={(formID, isSubmitting) =>
-        !isSubmitting ? search : searching
-      }
+      submitButton={(_, isSubmitting) => (!isSubmitting ? search : searching)}
     >
-      {(formID, isSubmitting) => (
+      {(formID) => (
         <>
           <InputSectionText
             id={`${formID}-${FIELD.QUERY.name}`}
@@ -54,7 +56,7 @@ export function SearchTasksForm({
             name={FIELD.QUERY.name}
             minLength={1}
             maxLength={32}
-            required
+            defaultValue={defaultQuery}
           >
             {FIELD.QUERY.label}
           </InputSectionText>

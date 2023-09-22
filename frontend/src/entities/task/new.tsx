@@ -1,6 +1,5 @@
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import { ButtonSubmit } from "#components/button";
 import { InputSectionText } from "#components/form/section";
 import type { ITaskInit } from "./types";
 

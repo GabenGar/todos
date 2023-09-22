@@ -92,7 +92,7 @@ function Component<InputName extends string>({
       {
         // don't render the button at all if `null`
         submitButton === null ? undefined : (
-          <InputSection>
+          <InputSection className={styles.submit}>
             {/* render default button if not a function */}
             {submitButton === undefined ? (
               <ButtonSubmit form={formID} disabled={isSubmitting}>

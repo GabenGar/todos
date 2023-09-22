@@ -53,7 +53,7 @@ function Component({
       </li>
 
       <li className={styles.previous}>
-        {currentPage - 1 <= 1 ? (
+        {currentPage - 1 <= 0 ? (
           <span className={styles.disabled}>
             <span>&lt;</span> <span>{previous}</span>
           </span>
@@ -75,7 +75,7 @@ function Component({
       </li>
 
       <li className={styles.next}>
-        {currentPage + 1 >= totalPages ? (
+        {currentPage + 1 >= totalPages + 1 ? (
           <span className={styles.disabled}>
             <span>&gt;</span> <span>{next}</span>
           </span>

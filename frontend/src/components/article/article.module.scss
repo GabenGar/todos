@@ -18,6 +18,7 @@
   display: grid;
   align-items: center;
   justify-items: flex-start;
+  gap: $size-small;
   background-color: var(--colour-background-primary);
   padding: $size-normal;
 }
@@ -33,6 +34,7 @@
   display: grid;
   align-items: center;
   justify-items: flex-start;
+  gap: $size-small;
   background-color: var(--colour-background-primary);
   padding: $size-normal;
 }
