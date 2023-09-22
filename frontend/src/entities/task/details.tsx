@@ -195,7 +195,8 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
                   disabled={Boolean(deleted_at)}
                   onClick={async () => {
                     await removeTask(id);
-                    router.push(createTasksPageURL);
+                    const url = createTasksPageURL();
+                    router.push(url);
                   }}
                 >
                   {translation.delete}
