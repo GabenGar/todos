@@ -5,7 +5,7 @@ import { useClient } from "#hooks";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 
-import styles from "./datetime.module.scss"
+import styles from "./datetime.module.scss";
 
 interface IProps extends IBaseComponentPropsWithChildren<"time"> {
   dateTime: string;

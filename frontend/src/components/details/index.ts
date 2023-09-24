@@ -1,4 +1,4 @@
-export { Details , DetailsHeader, DetailsBody, DetailsFooter } from "./details";
+export { Details, DetailsHeader, DetailsBody, DetailsFooter } from "./details";
 export type {
   IDetailsProps,
   IDetailsHeaderProps,

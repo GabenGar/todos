@@ -28,7 +28,9 @@ import type { ITaskInit } from "./types";
 
 import styles from "./list.module.scss";
 
-interface IProps extends ITranslatableProps, Pick<IDetailsProps, "headingLevel"> {
+interface IProps
+  extends ITranslatableProps,
+    Pick<IDetailsProps, "headingLevel"> {
   translation: ILocalization["todos"];
   taskTranslation: ILocalization["task"];
   id: string;

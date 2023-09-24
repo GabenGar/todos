@@ -14,5 +14,5 @@ export type IBaseComponentPropsWithChildren<
 };
 
 export interface ITranslatableProps {
-  commonTranslation: ILocalizationCommon
+  commonTranslation: ILocalizationCommon;
 }

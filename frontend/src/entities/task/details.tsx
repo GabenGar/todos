@@ -11,7 +11,13 @@ import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { DateTime } from "#components/date";
 import { Button } from "#components/button";
-import { Details, DetailsBody, DetailsFooter, DetailsHeader, IDetailsProps } from "#components/details";
+import {
+  Details,
+  DetailsBody,
+  DetailsFooter,
+  DetailsHeader,
+  IDetailsProps,
+} from "#components/details";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
 import { removeTask } from "./lib/remove";

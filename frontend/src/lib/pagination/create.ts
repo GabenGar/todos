@@ -14,7 +14,7 @@ export function createPagination(
   }
 
   const offset = (currentPage - 1) * PAGINATION_LIMIT;
-  const currentMin =  totalCount === 0 ? 0 : offset + 1;
+  const currentMin = totalCount === 0 ? 0 : offset + 1;
   const currentMax =
     offset + PAGINATION_LIMIT > totalCount
       ? totalCount
