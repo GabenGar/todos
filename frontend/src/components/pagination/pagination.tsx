@@ -8,7 +8,7 @@ import { PaginationOverview } from "./overview";
 
 import styles from "./pagination.module.scss";
 
-interface IProps extends IBaseComponentProps<"ul"> {
+export interface IPaginationProps extends IBaseComponentProps<"ul"> {
   commonTranslation: ILocalizationCommon;
   pagination: IPagination;
   buildURL: (page: number) => string;
@@ -24,7 +24,7 @@ function Component({
   pagination,
   buildURL,
   ...props
-}: IProps) {
+}: IPaginationProps) {
   const { first, previous, current, next, last } = commonTranslation.pagination;
   const { currentPage, totalPages } = pagination;
   const buttonWidth = Math.max(

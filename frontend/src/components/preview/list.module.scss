@@ -1,0 +1,15 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  display: grid;
+  gap: $size-normal;
+  padding: $size-normal 0;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: $size-normal;
+}
