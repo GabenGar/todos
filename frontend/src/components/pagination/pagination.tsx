@@ -41,7 +41,7 @@ function Component({
       {...props}
     >
       <li className={styles.first}>
-        {currentPage === 1 ? (
+        {currentPage === 1 || currentPage === 0 ? (
           <span className={styles.disabled}>
             <span>|&lt;</span> <span>{first}</span>
           </span>

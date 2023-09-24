@@ -6,8 +6,6 @@ import type {
   IBaseComponentPropsWithChildren,
 } from "#components/types";
 
-import styles from "./article.module.scss";
-
 export interface IArticleProps extends IBaseComponentProps<"article"> {
   headingLevel: IHeadingLevel;
   children?: (headingLevel: IHeadingLevel) => ReactNode;
@@ -19,17 +17,17 @@ export interface IArticleBodyProps
 export interface IArticleFooterProps
   extends IBaseComponentPropsWithChildren<"footer"> {}
 
-export const Article = createBlockComponent(styles, ArticleComponent);
+export const Article = createBlockComponent(undefined, ArticleComponent);
 export const ArticleHeader = createBlockComponent(
-  styles.header,
+  undefined,
   ArticleHeaderComponent,
 );
 export const ArticleBody = createBlockComponent(
-  styles.body,
+  undefined,
   ArticleBodyComponent,
 );
 export const ArticleFooter = createBlockComponent(
-  styles.footer,
+  undefined,
   ArticleFooterComponent,
 );
 

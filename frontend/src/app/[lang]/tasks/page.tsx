@@ -20,15 +20,16 @@ export async function generateMetadata({ params }: IProps) {
 async function TodosPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { common, todos } = dict;
+  const { common, todos, task } = dict;
 
   return (
     <Page heading={todos.heading}>
       <TaskList
         headingLevel={2}
         commonTranslation={common}
+        taskTranslation={task}
         translation={todos}
-        id={"todos"}
+        id={"tasks"}
       />
     </Page>
   );

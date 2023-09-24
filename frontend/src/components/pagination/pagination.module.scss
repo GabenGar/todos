@@ -12,7 +12,7 @@
     "first" auto;
   gap: $size-normal;
   border-radius: $radius-normal;
-  border: $size-thin solid var(--colour-text-secondary);
+  border: $size-thin solid var(--colour-text-secondary-transparent);
   padding: $size-small;
 
   @media (min-width: $width-tablet) {

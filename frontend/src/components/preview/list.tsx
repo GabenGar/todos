@@ -16,6 +16,9 @@ interface IProps
     Pick<IPaginationProps, "pagination" | "buildURL">,
     ITranslatableProps {}
 
+/**
+ * @TODO customizable "no items" message
+ */
 export const PreviewList = createBlockComponent(styles, Component);
 
 function Component({
@@ -27,18 +30,26 @@ function Component({
 }: IProps) {
   return (
     <div {...props}>
-      <PaginationOverview
-        commonTranslation={commonTranslation}
-        pagination={pagination}
-      />
+      {pagination.totalCount === 0 ? (
+        <p className={styles.nothing}>{commonTranslation.list.no_items}</p>
+      ) : (
+        <>
+          <PaginationOverview
+            className={styles.info}
+            commonTranslation={commonTranslation}
+            pagination={pagination}
+          />
 
-      <div className={styles.list}>{children}</div>
+          <div className={styles.list}>{children}</div>
 
-      <Pagination
-        commonTranslation={commonTranslation}
-        pagination={pagination}
-        buildURL={buildURL}
-      />
+          <Pagination
+            className={styles.pagination}
+            commonTranslation={commonTranslation}
+            pagination={pagination}
+            buildURL={buildURL}
+          />
+        </>
+      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { importDataExport } from "./lib";
 
 import styles from "./import-form.module.scss";
 
-interface IProps {
+export interface IImportDataExportFormProps {
   commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"];
   id: string;
@@ -19,7 +19,7 @@ export function ImportDataExportForm({
   translation,
   id,
   onSuccess,
-}: IProps) {
+}: IImportDataExportFormProps) {
   const { click_to_file, import_tasks, importing_tasks } = translation;
   const FIELD = {
     FILE: { name: "file", label: click_to_file },
