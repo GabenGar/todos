@@ -22,7 +22,7 @@ interface IProps extends IPreviewProps {
   translation: ILocalization["task"];
 }
 
-export const TaskPreview = createBlockComponent(styles.block, Component);
+export const TaskPreview = createBlockComponent(styles, Component);
 
 function Component({ task, translation, ...props }: IProps) {
   const { id, title, description, status, created_at, updated_at } = task;

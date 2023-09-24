@@ -6,18 +6,12 @@ import type { INanoidID } from "#lib/strings";
 import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";
 import { createBlockComponent } from "#components/meta";
-import {
-  Article,
-  ArticleBody,
-  ArticleFooter,
-  ArticleHeader,
-  type IArticleProps,
-} from "#components/article";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { DateTime } from "#components/date";
 import { Button } from "#components/button";
+import { Details, DetailsBody, DetailsFooter, DetailsHeader, IDetailsProps } from "#components/details";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
 import { removeTask } from "./lib/remove";
@@ -26,7 +20,7 @@ import type { ITask } from "./types";
 
 import styles from "./details.module.scss";
 
-interface IProps extends IArticleProps {
+interface IProps extends IDetailsProps {
   translation: ILocalization["task"];
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
@@ -44,21 +38,21 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
 
   if (!task) {
     return (
-      <Article {...props}>
+      <Details {...props}>
         {(headinglevel) => (
           <>
-            <ArticleHeader>
+            <DetailsHeader>
               <Loading />
-            </ArticleHeader>
-            <ArticleBody>
+            </DetailsHeader>
+            <DetailsBody>
               <Loading />
-            </ArticleBody>
-            <ArticleFooter>
+            </DetailsBody>
+            <DetailsFooter>
               <Loading />
-            </ArticleFooter>
+            </DetailsFooter>
           </>
         )}
-      </Article>
+      </Details>
     );
   }
 
@@ -66,15 +60,15 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
     task;
 
   return (
-    <Article {...props}>
+    <Details {...props}>
       {(headinglevel) => (
         <>
-          <ArticleHeader>
+          <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <div>{id}</div>
-          </ArticleHeader>
+            <div className={styles.id}>{id}</div>
+          </DetailsHeader>
 
-          <ArticleBody>
+          <DetailsBody>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
@@ -102,9 +96,9 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
                 dValue={<DateTime dateTime={updated_at} />}
               />
             </DescriptionList>
-          </ArticleBody>
+          </DetailsBody>
 
-          <ArticleFooter className={styles.footer}>
+          <DetailsFooter className={styles.footer}>
             {/* @TODO two-layer group */}
             <ul className={styles.actions}>
               <li>
@@ -203,9 +197,9 @@ function Component({ translation, taskID, onEdit, ...props }: IProps) {
                 </Button>
               </li>
             </ul>
-          </ArticleFooter>
+          </DetailsFooter>
         </>
       )}
-    </Article>
+    </Details>
   );
 }
