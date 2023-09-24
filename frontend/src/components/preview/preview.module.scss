@@ -1,0 +1,53 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  flex: 0 0 $width-mobile;
+  display: grid;
+  grid-template:
+    "header" auto
+    "body" 1fr
+    "footer" auto
+    / minmax(100%, 1fr);
+  min-height: var(--local-min-height, 20em);
+  gap: $size-normal;
+  overflow: hidden;
+  background-color: var(--colour-background-primary);
+  border-radius: 10px;
+  border: $size-thin solid transparent;
+  transition-property: color, background-color, border, box-shadow;
+  transition-duration: var(--duration-global);
+
+  & > * {
+    padding: $size-normal;
+  }
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 0 5px var(--positive-colour-text-primary);
+  }
+
+  @media (min-width: $width-laptop) {
+    flex-basis: calc(#{$width-mobile} * 1.1);
+  }
+}
+
+.header {
+  grid-area: header;
+  align-self: flex-start;
+}
+
+.body {
+  grid-area: body;
+  display: grid;
+  flex-flow: column nowrap;
+  align-self: flex-end;
+}
+
+.footer {
+  grid-area: footer;
+  align-self: flex-end;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  gap: $size-small;
+}

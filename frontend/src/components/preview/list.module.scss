@@ -1,0 +1,28 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  display: grid;
+  gap: $size-normal;
+}
+
+.nothing {
+  justify-self: center;
+}
+
+.info {
+  background-color: var(--colour-background-primary);
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: $size-normal;
+}
+
+.pagination {
+  justify-self: center;
+  max-width: $width-phone;
+  background-color: var(--colour-background-primary);
+}

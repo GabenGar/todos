@@ -5,6 +5,8 @@ import { useClient } from "#hooks";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 
+import styles from "./datetime.module.scss";
+
 interface IProps extends IBaseComponentPropsWithChildren<"time"> {
   dateTime: string;
 }
@@ -12,7 +14,7 @@ interface IProps extends IBaseComponentPropsWithChildren<"time"> {
 /**
  * @TODO formatting options
  */
-export const DateTime = createBlockComponent(undefined, Component);
+export const DateTime = createBlockComponent(styles, Component);
 
 function Component({ dateTime, children, ...props }: IProps) {
   const clientInfo = useClient();

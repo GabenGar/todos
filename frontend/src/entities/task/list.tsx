@@ -2,34 +2,38 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import type { ILocalization, ILocalizationCommon } from "#lib/localization";
+import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";
-import {
-  Article,
-  ArticleBody,
-  ArticleFooter,
-  ArticleHeader,
-  type IArticleProps,
-} from "#components/article";
 import { Loading } from "components/loading";
-import { type IHeadingLevel } from "#components/heading";
-import { Pagination, PaginationOverview } from "#components/pagination";
 import { Button } from "#components/button";
-import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
+import { PreviewList } from "#components/preview";
+import {
+  Details,
+  DetailsBody,
+  DetailsHeader,
+  IDetailsProps,
+} from "#components/details";
+import { ITranslatableProps } from "#components/types";
+import {
+  DataExportForm,
+  IImportDataExportFormProps,
+  ImportDataExportForm,
+} from "#entities/data-export";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
-import { ISearchTasksFormProps, SearchTasksForm } from "./search";
-import { TaskItem } from "./item";
+import { type ISearchTasksFormProps, SearchTasksForm } from "./search";
 import { getTasks } from "./lib/get";
 import { createTask } from "./lib/create";
+import { TaskPreview } from "./preview";
 import type { ITaskInit } from "./types";
 
 import styles from "./list.module.scss";
 
-interface IProps extends IArticleProps {
-  commonTranslation: ILocalizationCommon;
+interface IProps
+  extends ITranslatableProps,
+    Pick<IDetailsProps, "headingLevel"> {
   translation: ILocalization["todos"];
+  taskTranslation: ILocalization["task"];
   id: string;
-  headingLevel: IHeadingLevel;
 }
 
 /**
@@ -38,9 +42,9 @@ interface IProps extends IArticleProps {
 export function TaskList({
   commonTranslation,
   translation,
+  taskTranslation,
   id,
   headingLevel,
-  ...props
 }: IProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -103,103 +107,82 @@ export function TaskList({
   }
 
   return (
-    <Article headingLevel={headingLevel} {...props}>
-      {(headingLevel) => {
-        return (
-          <>
-            <Header
-              commonTranslation={commonTranslation}
-              translation={translation}
-              id={id}
-              query={query}
-              onNewTask={handleTaskCreation}
-              onSearch={handleTaskSearch}
+    <>
+      <Forms
+        commonTranslation={commonTranslation}
+        translation={translation}
+        headingLevel={headingLevel}
+        id={id}
+        query={query}
+        onNewTask={handleTaskCreation}
+        onSearch={handleTaskSearch}
+      />
+
+      {!tasks ? (
+        <Details headingLevel={headingLevel}>
+          {() => (
+            <DetailsBody>
+              <Loading />
+            </DetailsBody>
+          )}
+        </Details>
+      ) : (
+        <PreviewList
+          commonTranslation={commonTranslation}
+          pagination={tasks.pagination}
+          buildURL={(page) => {
+            const url = createTasksPageURL({
+              page,
+              query,
+            });
+
+            return url;
+          }}
+        >
+          {tasks.items.map((task) => (
+            <TaskPreview
+              key={task.id}
+              headingLevel={headingLevel}
+              translation={taskTranslation}
+              task={task}
             />
+          ))}
+        </PreviewList>
+      )}
 
-            <ArticleBody>
-              {!tasks ? (
-                <Loading />
-              ) : (
-                <PaginationOverview
-                  commonTranslation={commonTranslation}
-                  pagination={tasks.pagination}
-                />
-              )}
-
-              <ul className={styles.list}>
-                {!tasks ? (
-                  <Loading />
-                ) : (
-                  tasks.items.map((task) => (
-                    <TaskItem
-                      key={task.id}
-                      headingLevel={headingLevel}
-                      translation={translation}
-                      task={task}
-                    />
-                  ))
-                )}
-              </ul>
-
-              {!tasks ? (
-                <Loading />
-              ) : (
-                <Pagination
-                  commonTranslation={commonTranslation}
-                  pagination={tasks.pagination}
-                  buildURL={(page) => {
-                    const url = createTasksPageURL({
-                      page,
-                      query,
-                    });
-
-                    return url;
-                  }}
-                />
-              )}
-            </ArticleBody>
-
-            <ArticleFooter>
-              <ul className={styles.buttons}>
-                <li>
-                  <DataExportForm translation={translation} />
-                </li>
-
-                <li>
-                  <ImportDataExportForm
-                    commonTranslation={commonTranslation}
-                    translation={translation}
-                    id="import-data-export"
-                    onSuccess={async () => {
-                      const newTasks = await getTasks(options);
-                      changeTasks(newTasks);
-                    }}
-                  />
-                </li>
-              </ul>
-            </ArticleFooter>
-          </>
-        );
-      }}
-    </Article>
+      <ImportForms
+        commonTranslation={commonTranslation}
+        translation={translation}
+        headingLevel={headingLevel}
+        id={id}
+        onSuccess={async () => {
+          const updatedTasks = await getTasks(options);
+          changeTasks(updatedTasks);
+        }}
+      />
+    </>
   );
 }
 
-interface IHeaderProps
-  extends Pick<IProps, "commonTranslation" | "translation" | "id">,
+interface IFormsProps
+  extends Pick<
+      IProps,
+      "commonTranslation" | "translation" | "id" | "headingLevel"
+    >,
     Pick<INewTaskFormProps, "onNewTask">,
     Pick<ISearchTasksFormProps, "onSearch"> {
   query?: string;
 }
 
-function Header({
+function Forms({
   commonTranslation,
   translation,
+  headingLevel,
   id,
   query,
   onNewTask,
   onSearch,
-}: IHeaderProps) {
+}: IFormsProps) {
   const [isNewFormShown, switchNewForm] = useState(false);
   const [isSearchFormShown, switchSearchForm] = useState(Boolean(query));
   const { add, search } = translation;
@@ -207,33 +190,77 @@ function Header({
   const searchFormID = `${id}-task-list-search`;
 
   return (
-    <ArticleHeader>
-      <div className={styles.header}>
-        <Button onClick={() => switchSearchForm((old) => !old)}>
-          {search}
-        </Button>
-        {isSearchFormShown && (
-          <SearchTasksForm
-            commonTranslation={commonTranslation}
-            translation={translation.search_tasks}
-            id={searchFormID}
-            defaultQuery={query}
-            onSearch={onSearch}
-          />
-        )}
-      </div>
+    <Details headingLevel={headingLevel}>
+      {() => (
+        <DetailsHeader>
+          <div className={styles.header}>
+            <Button onClick={() => switchSearchForm((old) => !old)}>
+              {search}
+            </Button>
+            {isSearchFormShown && (
+              <SearchTasksForm
+                commonTranslation={commonTranslation}
+                translation={translation.search_tasks}
+                id={searchFormID}
+                defaultQuery={query}
+                onSearch={onSearch}
+              />
+            )}
+          </div>
 
-      <div className={styles.header}>
-        <Button onClick={() => switchNewForm((old) => !old)}>{add}</Button>
-        {isNewFormShown && (
-          <NewTaskForm
-            commonTranslation={commonTranslation}
-            translation={translation.new_todo}
-            id={newFormID}
-            onNewTask={onNewTask}
-          />
-        )}
-      </div>
-    </ArticleHeader>
+          <div className={styles.header}>
+            <Button onClick={() => switchNewForm((old) => !old)}>{add}</Button>
+            {isNewFormShown && (
+              <NewTaskForm
+                commonTranslation={commonTranslation}
+                translation={translation.new_todo}
+                id={newFormID}
+                onNewTask={onNewTask}
+              />
+            )}
+          </div>
+        </DetailsHeader>
+      )}
+    </Details>
+  );
+}
+
+interface IImportFormsProps
+  extends Pick<
+      IProps,
+      "commonTranslation" | "translation" | "id" | "headingLevel"
+    >,
+    Pick<IImportDataExportFormProps, "onSuccess"> {}
+
+function ImportForms({
+  commonTranslation,
+  translation,
+  headingLevel,
+  id,
+  onSuccess,
+}: IImportFormsProps) {
+  const importFormID = `${id}-import-data-export`;
+
+  return (
+    <Details headingLevel={headingLevel}>
+      {() => (
+        <DetailsHeader>
+          <ul className={styles.buttons}>
+            <li>
+              <DataExportForm translation={translation} />
+            </li>
+
+            <li>
+              <ImportDataExportForm
+                commonTranslation={commonTranslation}
+                translation={translation}
+                id={importFormID}
+                onSuccess={onSuccess}
+              />
+            </li>
+          </ul>
+        </DetailsHeader>
+      )}
+    </Details>
   );
 }

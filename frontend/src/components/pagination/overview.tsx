@@ -1,12 +1,13 @@
-import type { ILocalizationCommon } from "#lib/localization";
 import type { IPagination } from "#lib/pagination";
 import { createBlockComponent } from "#components/meta";
-import type { IBaseComponentProps } from "#components/types";
+import type {
+  IBaseComponentProps,
+  ITranslatableProps,
+} from "#components/types";
 
 import styles from "./overview.module.scss";
 
-interface IProps extends IBaseComponentProps<"ul"> {
-  commonTranslation: ILocalizationCommon;
+interface IProps extends IBaseComponentProps<"ul">, ITranslatableProps {
   pagination: IPagination;
 }
 

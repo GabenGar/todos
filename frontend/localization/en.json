@@ -15,10 +15,13 @@
       "next": "Next",
       "last": "Last",
       "out_of": "out of"
+    },
+    "list": {
+      "no_items": "No items found."
     }
   },
   "home": {
-    "heading": "Welcome to Gabengar's!",
+    "heading": "Welcome",
     "link_tasks": "Tasks"
   },
   "todos": {
@@ -72,6 +75,7 @@
       "start": "Start",
       "complete": "Complete"
     },
-    "delete": "Delete"
+    "delete": "Delete",
+    "details": "Details"
   }
 }
