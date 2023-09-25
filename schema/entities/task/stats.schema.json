@@ -1,0 +1,13 @@
+{
+  "$id": "/entities/task/stats",
+  "title": "TaskStatsAll",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["pending", "in-progress", "finished", "failed"],
+  "properties": {
+    "pending": { "$ref": "/numbers/non-negative-integer" },
+    "in-progress": { "$ref": "/numbers/non-negative-integer" },
+    "finished": { "$ref": "/numbers/non-negative-integer" },
+    "failed": { "$ref": "/numbers/non-negative-integer" }
+  }
+}

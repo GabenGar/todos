@@ -1,0 +1,6 @@
+{
+  "$id": "/numbers/non-negative-integer",
+  "title": "NonNegativeInteger",
+  "type": "integer",
+  "minimum": 0
+}
