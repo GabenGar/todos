@@ -1,4 +1,3 @@
-import { type Metadata } from "next";
 import { SITE_TITLE } from "#environment";
 import { getDictionary } from "#server";
 import { Page } from "#components";
@@ -10,9 +9,15 @@ interface IProps {
   params: IBasePageParams;
 }
 
-export const metadata: Metadata = {
-  title: `Welcome to ${SITE_TITLE}!`,
-};
+export async function generateMetadata({ params }: IProps) {
+  const { lang } = params;
+  const dict = await getDictionary(lang);
+  const { home } = dict;
+
+  return {
+    title: `${home.title} | ${SITE_TITLE}`,
+  };
+}
 
 async function FrontPage({ params }: IProps) {
   const { lang } = params;

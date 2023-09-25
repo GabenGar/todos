@@ -21,7 +21,8 @@
     }
   },
   "home": {
-    "heading": "Welcome",
+    "title": "Welcome!",
+    "heading": "Welcome!",
     "link_tasks": "Tasks"
   },
   "todos": {
