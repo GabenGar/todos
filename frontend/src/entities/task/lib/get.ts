@@ -1,14 +1,15 @@
 import { logDebug } from "#lib/logs";
 import { IPaginatedCollection, createPagination } from "#lib/pagination";
+import { isSubstring } from "#lib/strings";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { migrateTasks } from "./migrate";
-import type { ITask } from "../types";
-import { isSubstring } from "#lib/strings";
+import type { ITask, ITaskStatsAll } from "../types";
 
 interface IOptions {
   includeDeleted?: boolean;
   page?: number;
   query?: string;
+  status?: ITask["status"];
 }
 
 let isMigrated = false;
@@ -46,6 +47,23 @@ export async function getAllTasks(includeDeleted = true) {
     : storedTasks.filter(({ deleted_at }) => !deleted_at);
 
   return fitleredTasks;
+}
+
+export async function getTaskStatsAll(): Promise<ITaskStatsAll> {
+  const currentTasks = await getAllTasks();
+  const initStats: ITaskStatsAll = {
+    finished: 0,
+    "in-progress": 0,
+    failed: 0,
+    pending: 0,
+  };
+  const stats = currentTasks.reduce<ITaskStatsAll>((stats, task) => {
+    stats[task.status] = stats[task.status]++
+
+    return stats
+  }, initStats);
+
+  return stats
 }
 
 /**

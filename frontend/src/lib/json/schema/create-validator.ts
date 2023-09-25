@@ -2,9 +2,9 @@ import { validate } from "@hyperjump/json-schema/draft-2020-12";
 import { BASIC } from "@hyperjump/json-schema/experimental";
 import { DEFAULT_LOG_LEVEL, IS_DEVELOPMENT } from "#environment";
 import { logDebug } from "#lib/logs";
+import { toJSONPretty } from "../";
 import { initSchemas } from "./init";
 import { schemaMap, toRetrievalURL } from "./map";
-import { toJSONPretty } from "../";
 
 const metaSchema = "https://json-schema.org/draft/2020-12/schema";
 

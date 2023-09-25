@@ -7,4 +7,6 @@ export {
   taskSchema,
   taskStatusSchema,
   taskUpdateSchema,
+  taskStatsAllSchema,
+  nonNegativeIntegerSchema,
 } from "./types";

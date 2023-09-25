@@ -1,4 +1,5 @@
 import type { IDateTime } from "#lib/dates";
+import type { INonNegativeInteger } from "#lib/numbers";
 import { toQuotedStrings, type INanoidID } from "#lib/strings";
 
 const statuses = ["pending", "in-progress", "finished", "failed"] as const;
@@ -33,3 +34,10 @@ export interface ITaskInit
 export interface ITaskUpdate
   extends Pick<ITask, "id">,
     Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {}
+
+export interface ITaskStatsAll {
+  pending: INonNegativeInteger;
+  "in-progress": INonNegativeInteger;
+  finished: INonNegativeInteger;
+  failed: INonNegativeInteger;
+}

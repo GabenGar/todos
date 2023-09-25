@@ -7,6 +7,8 @@ import {
   taskSchema,
   taskStatusSchema,
   taskUpdateSchema,
+  nonNegativeIntegerSchema,
+  taskStatsAllSchema
 } from "./types";
 import { SITE_ORIGIN } from "#environment";
 
@@ -18,6 +20,8 @@ export const schemaMap = new Map<string, SchemaObject>([
   [toRetrievalURL(taskUpdateSchema.$id), taskUpdateSchema],
   [toRetrievalURL(nanoidSchema.$id), nanoidSchema],
   [toRetrievalURL(dateTimeSchema.$id), dateTimeSchema],
+  [toRetrievalURL(nonNegativeIntegerSchema.$id), nonNegativeIntegerSchema],
+  [toRetrievalURL(taskStatsAllSchema.$id), taskStatsAllSchema],
 ]);
 
 export type ISchemaMap = typeof schemaMap;
