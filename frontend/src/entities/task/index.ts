@@ -1,6 +1,7 @@
 export { TaskList } from "./list";
 export { TaskDetails } from "./details";
-export { getTask, getTasks, getAllTasks } from "./lib/get";
+export { TaskStatus } from "./status";
+export { getTask, getTasks, getAllTasks, getTasksStats } from "./lib/get";
 export { createTask } from "./lib/create";
 export { editTask } from "./lib/edit";
 export { removeTask } from "./lib/remove";

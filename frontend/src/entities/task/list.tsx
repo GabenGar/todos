@@ -11,12 +11,12 @@ import {
   Details,
   DetailsBody,
   DetailsHeader,
-  IDetailsProps,
+  type IDetailsProps,
 } from "#components/details";
 import { ITranslatableProps } from "#components/types";
 import {
   DataExportForm,
-  IImportDataExportFormProps,
+  type IImportDataExportFormProps,
   ImportDataExportForm,
 } from "#entities/data-export";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
@@ -24,7 +24,7 @@ import { type ISearchTasksFormProps, SearchTasksForm } from "./search";
 import { getTasks } from "./lib/get";
 import { createTask } from "./lib/create";
 import { TaskPreview } from "./preview";
-import type { ITaskInit } from "./types";
+import { isTaskStatus, type ITaskInit } from "./types";
 
 import styles from "./list.module.scss";
 
@@ -36,9 +36,6 @@ interface IProps
   id: string;
 }
 
-/**
- * @TODO get tasks filter
- */
 export function TaskList({
   commonTranslation,
   translation,
@@ -49,17 +46,17 @@ export function TaskList({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
-  const inputPage = searchParams.get("page");
-  const page = inputPage === null ? undefined : parseInt(inputPage, 10);
-  const inputQuery = searchParams.get("query");
-  const query =
-    inputQuery === null || inputQuery.trim().length === 0
-      ? undefined
-      : inputQuery.trim();
+  const inputPage = searchParams.get("page")?.trim();
+  const page = !inputPage ? undefined : parseInt(inputPage, 10);
+  const inputQuery = searchParams.get("query")?.trim();
+  const query = !inputQuery ? undefined : inputQuery;
+  const inputStatus = searchParams.get("status")?.trim();
+  const status = !isTaskStatus(inputStatus) ? undefined : inputStatus;
   const options: Parameters<typeof getTasks>[0] = {
     includeDeleted: false,
     page,
     query,
+    status,
   };
 
   useEffect(() => {
@@ -75,6 +72,7 @@ export function TaskList({
         const newTasksURL = createTasksPageURL({
           page: newTasks.pagination.currentPage,
           query,
+          status,
         });
 
         router.replace(newTasksURL);
@@ -84,11 +82,24 @@ export function TaskList({
 
       changeTasks(newTasks);
     })();
-  }, [page, query]);
+  }, [page, query, status]);
 
   async function handleTaskCreation(init: ITaskInit) {
     await createTask(init);
     const newTasks = await getTasks(options);
+
+    if (newTasks.pagination.totalPages !== tasks?.pagination.totalPages) {
+      const newOptions = {
+        page: newTasks.pagination.totalPages,
+        query: options?.query,
+        status: options?.status,
+      };
+      const newURL = createTasksPageURL(newOptions);
+      router.replace(newURL);
+
+      return;
+    }
+
     changeTasks(newTasks);
   }
 
@@ -103,7 +114,7 @@ export function TaskList({
       query: newQuery,
     });
 
-    router.push(newURL);
+    router.replace(newURL);
   }
 
   return (
@@ -138,6 +149,7 @@ export function TaskList({
 
             return url;
           }}
+          sortingOrder="descending"
         >
           {tasks.items.map((task) => (
             <TaskPreview

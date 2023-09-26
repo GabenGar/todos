@@ -49,7 +49,6 @@ function Component({ task, translation, ...props }: IProps) {
               />
 
               <DescriptionSection
-                isHorizontal
                 dKey={translation.description}
                 dValue={description ?? translation.no_description}
               />

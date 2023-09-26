@@ -1,11 +1,10 @@
-import type { ReactNode } from "react";
 import type { ILocale } from "#lib/internationalization";
 
-export interface IBaseLayoutProps {
-  children: ReactNode;
+export interface IStaticPageProps {
+  params: IBasePageParams;
 }
 
-export interface IBasePageProps {
+export interface IDynamicPageProps {
   params: IBasePageParams;
   searchParams: { [key: string]: string | string[] | undefined };
 }

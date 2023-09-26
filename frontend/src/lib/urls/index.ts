@@ -2,10 +2,18 @@ import type { Route } from "next";
 import type { ITask } from "#entities/task";
 
 export const homePageURL = "/" as Route;
-export function createTasksPageURL(searchParams?: {
+
+export const taskStatsPageURL = "/stats/tasks";
+
+interface ICreateTasksPageURLParams {
   page?: number;
   query?: string;
-}): Route {
+  status?: ITask["status"];
+}
+
+export function createTasksPageURL(
+  searchParams?: ICreateTasksPageURLParams,
+): Route {
   const urlSearchParams = new URLSearchParams();
 
   if (searchParams?.page) {
@@ -13,7 +21,11 @@ export function createTasksPageURL(searchParams?: {
   }
 
   if (searchParams?.query) {
-    urlSearchParams.set("query", String(searchParams.query));
+    urlSearchParams.set("query", searchParams.query);
+  }
+
+  if (searchParams?.status) {
+    urlSearchParams.set("status", searchParams.status);
   }
 
   urlSearchParams.sort();

@@ -1,8 +1,13 @@
 import type { IDateTime } from "#lib/dates";
+import type { INonNegativeInteger } from "#lib/numbers";
 import { toQuotedStrings, type INanoidID } from "#lib/strings";
 
 const statuses = ["pending", "in-progress", "finished", "failed"] as const;
 type ITaskStatus = (typeof statuses)[number];
+
+export function isTaskStatus(inputStatus: unknown): inputStatus is ITaskStatus {
+  return statuses.includes(inputStatus as ITaskStatus);
+}
 
 export function validateTaskStatus(
   inputStatus: unknown,
@@ -33,3 +38,11 @@ export interface ITaskInit
 export interface ITaskUpdate
   extends Pick<ITask, "id">,
     Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {}
+
+export interface ITaskStatsAll {
+  all: INonNegativeInteger;
+  pending: INonNegativeInteger;
+  "in-progress": INonNegativeInteger;
+  finished: INonNegativeInteger;
+  failed: INonNegativeInteger;
+}

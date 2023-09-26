@@ -1,14 +1,15 @@
 import { logDebug } from "#lib/logs";
 import { IPaginatedCollection, createPagination } from "#lib/pagination";
+import { isSubstring } from "#lib/strings";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { migrateTasks } from "./migrate";
-import type { ITask } from "../types";
-import { isSubstring } from "#lib/strings";
+import type { ITask, ITaskStatsAll } from "../types";
 
 interface IOptions {
   includeDeleted?: boolean;
   page?: number;
   query?: string;
+  status?: ITask["status"];
 }
 
 let isMigrated = false;
@@ -48,6 +49,28 @@ export async function getAllTasks(includeDeleted = true) {
   return fitleredTasks;
 }
 
+export async function getTasksStats(): Promise<ITaskStatsAll> {
+  const currentTasks = await getAllTasks();
+  const initStats: ITaskStatsAll = {
+    all: 0,
+    finished: 0,
+    "in-progress": 0,
+    failed: 0,
+    pending: 0,
+  };
+  const stats = currentTasks.reduce<ITaskStatsAll>((stats, task) => {
+    stats.all = stats.all + 1;
+
+    if (!task.deleted_at) {
+      stats[task.status] = stats[task.status] + 1;
+    }
+
+    return stats;
+  }, initStats);
+
+  return stats;
+}
+
 /**
  * @TODO validation
  */
@@ -64,10 +87,10 @@ export async function getTasks(
     }
   }
 
-  const { includeDeleted, page, query } = options;
+  const { includeDeleted, page, query, status: searchStatus } = options;
   const storedTasks = await getAllTasks();
   const filteredTasks = storedTasks.filter(
-    ({ deleted_at, title, description }) => {
+    ({ deleted_at, title, description, status }) => {
       const isDeletedIncluded = includeDeleted ? true : !deleted_at;
 
       if (!isDeletedIncluded) {
@@ -78,7 +101,11 @@ export async function getTasks(
         ? true
         : isSubstring(query, title) || isSubstring(query, description);
 
-      return isDeletedIncluded && isMatchingQuery;
+      const isMatchingStatus = !searchStatus ? true : status === searchStatus;
+      const isIncluded =
+        isDeletedIncluded && isMatchingQuery && isMatchingStatus;
+
+      return isIncluded;
     },
   );
   const pagination = createPagination(filteredTasks.length, page);

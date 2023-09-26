@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { createBlockComponent } from "#components/meta";
 import {
   type IPaginationProps,
@@ -14,7 +15,9 @@ import styles from "./list.module.scss";
 interface IProps
   extends IBaseComponentPropsWithChildren<"div">,
     Pick<IPaginationProps, "pagination" | "buildURL">,
-    ITranslatableProps {}
+    ITranslatableProps {
+  sortingOrder?: "ascending" | "descending";
+}
 
 /**
  * @TODO customizable "no items" message
@@ -25,9 +28,15 @@ function Component({
   commonTranslation,
   pagination,
   buildURL,
+  sortingOrder = "ascending",
   children,
   ...props
 }: IProps) {
+  const listClass = clsx(
+    styles.list,
+    sortingOrder === "descending" && styles.descending,
+  );
+
   return (
     <div {...props}>
       {pagination.totalCount === 0 ? (
@@ -40,7 +49,7 @@ function Component({
             pagination={pagination}
           />
 
-          <div className={styles.list}>{children}</div>
+          <div className={listClass}>{children}</div>
 
           <Pagination
             className={styles.pagination}

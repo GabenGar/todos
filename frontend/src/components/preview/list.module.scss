@@ -21,6 +21,10 @@
   gap: $size-normal;
 }
 
+.descending {
+  flex-flow: row-reverse wrap-reverse;
+}
+
 .pagination {
   justify-self: center;
   max-width: $width-phone;
