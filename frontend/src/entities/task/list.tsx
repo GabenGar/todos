@@ -72,7 +72,7 @@ export function TaskList({
         const newTasksURL = createTasksPageURL({
           page: newTasks.pagination.currentPage,
           query,
-          status
+          status,
         });
 
         router.replace(newTasksURL);
@@ -93,11 +93,11 @@ export function TaskList({
         page: newTasks.pagination.totalPages,
         query: options?.query,
         status: options?.status,
-      }
+      };
       const newURL = createTasksPageURL(newOptions);
       router.replace(newURL);
 
-      return
+      return;
     }
 
     changeTasks(newTasks);

@@ -8,7 +8,7 @@ import {
   taskStatusSchema,
   taskUpdateSchema,
   nonNegativeIntegerSchema,
-  taskStatsAllSchema
+  taskStatsAllSchema,
 } from "./types";
 import { SITE_ORIGIN } from "#environment";
 
