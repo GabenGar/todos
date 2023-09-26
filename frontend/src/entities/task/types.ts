@@ -5,6 +5,10 @@ import { toQuotedStrings, type INanoidID } from "#lib/strings";
 const statuses = ["pending", "in-progress", "finished", "failed"] as const;
 type ITaskStatus = (typeof statuses)[number];
 
+export function isTaskStatus(inputStatus: unknown): inputStatus is ITaskStatus {
+  return statuses.includes(inputStatus as ITaskStatus);
+}
+
 export function validateTaskStatus(
   inputStatus: unknown,
 ): asserts inputStatus is ITaskStatus {
