@@ -37,8 +37,6 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   return metadata;
 }
 
-export const metadata: Metadata = {};
-
 async function RootLayout({ children, params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
