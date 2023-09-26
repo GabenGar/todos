@@ -225,7 +225,7 @@ function Forms({
             {isNewFormShown && (
               <NewTaskForm
                 commonTranslation={commonTranslation}
-                translation={translation.new_todo}
+                translation={translation}
                 id={newFormID}
                 onNewTask={onNewTask}
               />
