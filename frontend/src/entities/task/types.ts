@@ -36,6 +36,7 @@ export interface ITaskUpdate
     Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {}
 
 export interface ITaskStatsAll {
+  all: INonNegativeInteger;
   pending: INonNegativeInteger;
   "in-progress": INonNegativeInteger;
   finished: INonNegativeInteger;

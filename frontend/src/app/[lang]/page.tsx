@@ -1,13 +1,12 @@
 import { SITE_TITLE } from "#environment";
+import { taskStatsPageURL } from "#lib/urls";
 import { getDictionary } from "#server";
+import type { IStaticPageProps } from "#pages/types";
 import { Page } from "#components";
-import { Article, ArticleHeader } from "#components/article";
 import { Link } from "#components/link";
-import type { IBasePageParams } from "#pages/types";
+import { Details, DetailsHeader } from "#components/details";
 
-interface IProps {
-  params: IBasePageParams;
-}
+interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps) {
   const { lang } = params;
@@ -26,17 +25,17 @@ async function FrontPage({ params }: IProps) {
 
   return (
     <Page heading={home.heading}>
-      <Article headingLevel={2}>
+      <Details headingLevel={2}>
         {() => (
-          <ArticleHeader>
+          <DetailsHeader>
             <ul>
               <li>
-                <Link href={`/tasks`}>{home.link_tasks}</Link>
+                <Link href={taskStatsPageURL}>{home.link_tasks}</Link>
               </li>
             </ul>
-          </ArticleHeader>
+          </DetailsHeader>
         )}
-      </Article>
+      </Details>
     </Page>
   );
 }

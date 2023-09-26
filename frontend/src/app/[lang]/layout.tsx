@@ -16,15 +16,28 @@ interface IProps {
   params: IBasePageParams;
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_ORIGIN),
-  title: { template: `%s | ${SITE_TITLE}`, default: SITE_TITLE },
-  description: "Site built with NextJS.",
-  openGraph: {
-    title: SITE_TITLE,
-    description: "Site built with NextJS.",
-  },
-};
+export async function generateMetadata({ params }: IProps): Promise<Metadata> {
+  const { lang } = params;
+  const dict = await getDictionary(lang);
+  const { layout } = dict;
+
+  const metadata: Metadata = {
+    metadataBase: new URL(SITE_ORIGIN),
+    title: { template: `%s | ${SITE_TITLE}`, default: SITE_TITLE },
+    description: layout.description,
+    generator: "Next.js",
+    openGraph: {
+      type: "website",
+      locale: lang,
+      title: SITE_TITLE,
+      description: layout.description,
+    },
+  };
+
+  return metadata;
+}
+
+export const metadata: Metadata = {};
 
 async function RootLayout({ children, params }: IProps) {
   const { lang } = params;
@@ -38,7 +51,9 @@ async function RootLayout({ children, params }: IProps) {
           <header className={styles.header}>
             <GlobalNavigation />
           </header>
+
           <main className={styles.main}>{children}</main>
+
           <footer className={styles.footer}>
             <ul className={styles.list}>
               <li>

@@ -1,5 +1,6 @@
 {
   "layout": {
+    "description": "Manage tasks in browser",
     "source_code": "Source Code",
     "log_level": "Log level"
   },
@@ -78,5 +79,17 @@
     },
     "delete": "Delete",
     "details": "Details"
+  },
+  "stats_tasks": {
+    "title": "Task stats",
+    "heading": "Task Stats",
+    "description": "Rundown of the tasks",
+    "status_values": {
+      "all": "All",
+      "pending": "Pending",
+      "in-progress": "In progress",
+      "finished": "Finished",
+      "failed": "Failed"
+    }
   }
 }
