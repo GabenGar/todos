@@ -6,7 +6,7 @@ import { type IInputSectionProps, InputSection } from "./section";
 
 interface IProps
   extends IInputSectionProps,
-    Pick<IInputSelectProps, "multiple"| "size"> {
+    Pick<IInputSelectProps, "multiple" | "size"> {
   label: ReactNode;
 }
 
