@@ -38,5 +38,8 @@ export function createTasksPageURL(
 }
 
 export function createTaskPageURL(id: ITask["id"]): Route {
-  return `/task/${id}` as Route;
+  const urlSearchParams = new URLSearchParams([["task_id", id]]).toString();
+  const url = `/task?${urlSearchParams}`;
+
+  return url as Route;
 }
