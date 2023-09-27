@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import type { INanoidID } from "#lib/strings";
 import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";
+import { logError } from "#lib/logs";
+import { isError } from "#lib/errors";
 import { createBlockComponent } from "#components/meta";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
@@ -26,7 +28,7 @@ import type { ITask } from "./types";
 
 import styles from "./details.module.scss";
 
-interface IProps extends IDetailsProps {
+export interface ITaskDetailsProps extends IDetailsProps {
   translation: ILocalization["task"];
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
@@ -34,12 +36,29 @@ interface IProps extends IDetailsProps {
 
 export const TaskDetails = createBlockComponent(styles, Component);
 
-function Component({ translation, taskID, onEdit, ...props }: IProps) {
+function Component({
+  translation,
+  taskID,
+  onEdit,
+  ...props
+}: ITaskDetailsProps) {
   const router = useRouter();
   const [task, changeTask] = useState<Awaited<ReturnType<typeof getTask>>>();
 
   useEffect(() => {
-    getTask(taskID).then((task) => changeTask(task));
+    (async () => {
+      try {
+        const newTask = await getTask(taskID);
+        changeTask(newTask);
+      } catch (error) {
+        if (!isError(error)) {
+          throw error;
+        }
+
+        logError(error);
+        router.replace("/404");
+      }
+    })();
   }, [taskID]);
 
   if (!task) {

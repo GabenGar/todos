@@ -1,5 +1,6 @@
 export { TaskList } from "./list";
 export { TaskDetails } from "./details";
+export type { ITaskDetailsProps } from "./details";
 export { TaskStatus } from "./status";
 export { getTask, getTasks, getAllTasks, getTasksStats } from "./lib/get";
 export { createTask } from "./lib/create";
