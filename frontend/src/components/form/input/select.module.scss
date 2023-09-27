@@ -1,0 +1,16 @@
+@use "../../../styles/sass/variables.scss" as *;
+@use "../../../styles/sass/mixins.scss" as mixin;
+
+.block {
+  @include mixin.input();
+  cursor: pointer;
+
+  &:focus {
+    background-color: var(--colour-background-primary);
+  }
+}
+
+.option {
+  background-color: var(--colour-background-primary);
+  cursor: pointer;
+}

@@ -20,11 +20,15 @@ import {
   ImportDataExportForm,
 } from "#entities/data-export";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
-import { type ISearchTasksFormProps, SearchTasksForm } from "./search";
+import {
+  type ISearchTasksFormProps,
+  SearchTasksForm,
+  type ITaskSearchQuery,
+} from "./search";
 import { getTasks } from "./lib/get";
 import { createTask } from "./lib/create";
 import { TaskPreview } from "./preview";
-import { isTaskStatus, type ITaskInit } from "./types";
+import { isTaskStatus, type ITask, type ITaskInit } from "./types";
 
 import styles from "./list.module.scss";
 
@@ -33,6 +37,7 @@ interface IProps
     Pick<IDetailsProps, "headingLevel"> {
   translation: ILocalization["todos"];
   taskTranslation: ILocalization["task"];
+  statusTranslation: ILocalization["stats_tasks"]["status_values"];
   id: string;
 }
 
@@ -40,6 +45,7 @@ export function TaskList({
   commonTranslation,
   translation,
   taskTranslation,
+  statusTranslation,
   id,
   headingLevel,
 }: IProps) {
@@ -103,15 +109,17 @@ export function TaskList({
     changeTasks(newTasks);
   }
 
-  async function handleTaskSearch(newQuery: string) {
+  async function handleTaskSearch(newQuery: ITaskSearchQuery) {
     const { pagination } = await getTasks({
       includeDeleted: false,
-      query: newQuery,
+      query: newQuery.query,
+      status: newQuery?.status,
     });
 
     const newURL = createTasksPageURL({
       page: pagination.currentPage,
-      query: newQuery,
+      query: newQuery.query,
+      status: newQuery?.status,
     });
 
     router.replace(newURL);
@@ -122,9 +130,11 @@ export function TaskList({
       <Forms
         commonTranslation={commonTranslation}
         translation={translation}
+        statusTranslation={statusTranslation}
         headingLevel={headingLevel}
         id={id}
         query={query}
+        status={status}
         onNewTask={handleTaskCreation}
         onSearch={handleTaskSearch}
       />
@@ -179,19 +189,26 @@ export function TaskList({
 interface IFormsProps
   extends Pick<
       IProps,
-      "commonTranslation" | "translation" | "id" | "headingLevel"
+      | "commonTranslation"
+      | "translation"
+      | "statusTranslation"
+      | "id"
+      | "headingLevel"
     >,
     Pick<INewTaskFormProps, "onNewTask">,
     Pick<ISearchTasksFormProps, "onSearch"> {
   query?: string;
+  status?: ITask["status"];
 }
 
 function Forms({
   commonTranslation,
   translation,
+  statusTranslation,
   headingLevel,
   id,
   query,
+  status,
   onNewTask,
   onSearch,
 }: IFormsProps) {
@@ -212,9 +229,10 @@ function Forms({
             {isSearchFormShown && (
               <SearchTasksForm
                 commonTranslation={commonTranslation}
-                translation={translation.search_tasks}
+                translation={translation}
+                statusTranslation={statusTranslation}
                 id={searchFormID}
-                defaultQuery={query}
+                defaultQuery={{ query, status }}
                 onSearch={onSearch}
               />
             )}
@@ -225,7 +243,7 @@ function Forms({
             {isNewFormShown && (
               <NewTaskForm
                 commonTranslation={commonTranslation}
-                translation={translation.new_todo}
+                translation={translation}
                 id={newFormID}
                 onNewTask={onNewTask}
               />

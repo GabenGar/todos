@@ -1,31 +1,31 @@
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import { InputSectionText } from "#components/form/section";
-import type { ITaskInit } from "./types";
+import { InputOption } from "#components/form/input";
+import { InputSectionSelect, InputSectionText } from "#components/form/section";
+import { type ITaskInit, isTaskStatus } from "./types";
 
 import styles from "./new.module.scss";
+import statusStyles from "./status.module.scss";
 
 export interface INewTaskFormProps {
   commonTranslation: ILocalizationCommon;
-  translation: ILocalization["todos"]["new_todo"];
+  translation: ILocalization["todos"];
   id: string;
   onNewTask: (taskInit: ITaskInit) => Promise<void>;
 }
 
-/**
- * @TODO status selector
- */
 export function NewTaskForm({
   commonTranslation,
   translation,
   id,
   onNewTask,
 }: INewTaskFormProps) {
-  const { title, description, add, adding, status } = translation;
+  const { title, description, add, adding, status } = translation.new_todo;
+  const { status_values } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
-    // STATUS: { name: "status", label: status  }
+    STATUS: { name: "status", label: status },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -33,6 +33,7 @@ export function NewTaskForm({
     const formElements = event.currentTarget.elements;
     const title = formElements.title.value.trim();
     const description = formElements.description.value.trim();
+    const status = formElements.status.value.trim();
 
     const init: ITaskInit = {
       title,
@@ -40,6 +41,10 @@ export function NewTaskForm({
 
     if (description.length) {
       init.description = description;
+    }
+
+    if (isTaskStatus(status)) {
+      init.status = status;
     }
 
     await onNewTask(init);
@@ -75,6 +80,36 @@ export function NewTaskForm({
           >
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
+
+          <InputSectionSelect
+            label={FIELD.STATUS.label}
+            id={`${formID}-${FIELD.STATUS.name}`}
+            form={formID}
+            name={FIELD.STATUS.name}
+          >
+            <InputOption
+              className={statusStyles["in-progress"]}
+              value="in-progress"
+            >
+              {status_values["in-progress"]}
+            </InputOption>
+
+            <InputOption
+              className={statusStyles.pending}
+              value="pending"
+              selected
+            >
+              {status_values.pending}
+            </InputOption>
+
+            <InputOption className={statusStyles.finished} value="finished">
+              {status_values.finished}
+            </InputOption>
+
+            <InputOption className={statusStyles.failed} value="failed">
+              {status_values.failed}
+            </InputOption>
+          </InputSectionSelect>
         </>
       )}
     </Form>
