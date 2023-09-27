@@ -101,9 +101,11 @@ export function NewTaskForm({
             >
               {status_values.pending}
             </InputOption>
+
             <InputOption className={statusStyles.finished} value="finished">
               {status_values.finished}
             </InputOption>
+
             <InputOption className={statusStyles.failed} value="failed">
               {status_values.failed}
             </InputOption>
