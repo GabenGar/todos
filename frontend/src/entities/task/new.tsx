@@ -66,6 +66,7 @@ export function NewTaskForm({
             name={FIELD.TITLE.name}
             minLength={1}
             maxLength={256}
+            rows={2}
             required
           >
             {FIELD.TITLE.label}
@@ -77,6 +78,7 @@ export function NewTaskForm({
             name={FIELD.DESCRIPTION.name}
             minLength={1}
             maxLength={2048}
+            rows={4}
           >
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
