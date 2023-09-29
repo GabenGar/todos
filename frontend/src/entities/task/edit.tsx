@@ -14,7 +14,7 @@ interface IProps extends ITranslatableProps {
   onTaskEdit: (taskUpdate: ITaskUpdate) => Promise<void>;
 }
 
-export function editTaskForm({
+export function EditTaskForm({
   commonTranslation,
   translation,
   currentTask,

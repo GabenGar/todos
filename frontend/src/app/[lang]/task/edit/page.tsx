@@ -1,0 +1,34 @@
+import { getDictionary } from "#server";
+import { Page } from "#components";
+import type { IBasePageParams } from "#pages/types";
+import { Client } from "./client";
+
+interface IParams extends IBasePageParams {}
+
+interface IProps {
+  params: IParams;
+}
+
+export async function generateMetadata({ params }: IProps) {
+  const { lang } = params;
+  const dict = await getDictionary(lang);
+  const { task } = dict;
+
+  return {
+    title: `${task.title}`,
+  };
+}
+
+async function TaskEditPage({ params }: IProps) {
+  const { lang } = params;
+  const dict = await getDictionary(lang);
+  const { task } = dict;
+
+  return (
+    <Page heading={task.heading}>
+      <Client translation={task} />
+    </Page>
+  );
+}
+
+export default TaskEditPage;

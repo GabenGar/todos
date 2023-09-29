@@ -91,5 +91,10 @@
       "finished": "Finished",
       "failed": "Failed"
     }
+  },
+  "task_edit": {
+    "title": "Edit task",
+    "heading": "Edit Task",
+    "description": "Edit task title, description and status."
   }
 }
