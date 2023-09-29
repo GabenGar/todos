@@ -155,6 +155,7 @@ export function TaskList({
             const url = createTasksPageURL({
               page,
               query,
+              status
             });
 
             return url;
