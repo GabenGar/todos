@@ -1,13 +1,14 @@
 @use "../../../styles/sass/variables.scss" as *;
-
+@use "../../../styles/sass/mixins.scss" as mixins;
 .block {
   position: relative;
   display: grid;
 }
 
 .label {
-  display: block;
-  padding: 0 $size-small;
+  @include mixins.button();
+  // display: block;
+  // padding: 0 $size-small;
 }
 
 .input {

@@ -1,0 +1,8 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  background-color: inherit;
+  width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
