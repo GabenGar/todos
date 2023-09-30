@@ -7,7 +7,7 @@ import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
 
 import statusStyles from "./status.module.scss";
 
-interface IProps extends ITranslatableProps {
+export interface IEditTaskFormProps extends ITranslatableProps {
   translation: ILocalization["todos"];
   id: string;
   currentTask: ITask;
@@ -20,9 +20,9 @@ export function EditTaskForm({
   currentTask,
   id,
   onTaskEdit,
-}: IProps) {
+}: IEditTaskFormProps) {
   const { title, description, status } = translation.new_todo;
-  const { status_values } = translation;
+  const { status_values, editing, edit } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
@@ -60,7 +60,12 @@ export function EditTaskForm({
   }
 
   return (
-    <Form commonTranslation={commonTranslation} id={id} onSubmit={handleSubmit}>
+    <Form
+      commonTranslation={commonTranslation}
+      id={id}
+      submitButton={(formID, isSubmitting) => (!isSubmitting ? edit : editing)}
+      onSubmit={handleSubmit}
+    >
       {(formID) => (
         <>
           <InputSectionText

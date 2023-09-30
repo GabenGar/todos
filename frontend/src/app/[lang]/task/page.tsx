@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
 import type { IBasePageParams } from "#pages/types";
@@ -9,7 +10,7 @@ interface IProps {
   params: IParams;
 }
 
-export async function generateMetadata({ params }: IProps) {
+export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { lang } = params;
   const dict = await getDictionary(lang);
   const { task } = dict;

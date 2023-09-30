@@ -54,7 +54,9 @@
       "query": "Query",
       "search": "Search",
       "searching": "Searching..."
-    }
+    },
+    "edit": "Edit",
+    "editing": "Editing..."
   },
   "task": {
     "title": "Task",
@@ -63,7 +65,7 @@
     "no_description": "No description provided",
     "creation_date": "Creation date",
     "last_updated": "Last updated",
-    "back_to_tasks": "Back to tasks",
+    "edit": "Edit",
     "status": "Status",
     "status_values": {
       "pending": "Pending",
@@ -95,6 +97,7 @@
   "task_edit": {
     "title": "Edit task",
     "heading": "Edit Task",
-    "description": "Edit task title, description and status."
+    "description": "Edit task title, description and status.",
+    "task": "Task"
   }
 }

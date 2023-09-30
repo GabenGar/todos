@@ -1,20 +1,85 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { EditTaskForm, ITaskDetailsProps, TaskDetails } from "#entities/task";
+import { ILocalization } from "#lib/localization";
+import { createTaskPageURL } from "#lib/urls";
+import { Loading } from "#components";
+import type { ITranslatableProps } from "#components/types";
+import { Details, DetailsBody, DetailsHeader } from "#components/details";
+import { Link } from "#components/link";
+import {
+  EditTaskForm,
+  editTask,
+  type IEditTaskFormProps,
+  getTask,
+} from "#entities/task";
 
-interface IProps extends Pick<ITaskDetailsProps, "translation"> {}
+interface IProps
+  extends ITranslatableProps,
+    Pick<IEditTaskFormProps, "translation"> {
+  pageTranslation: ILocalization["task_edit"];
+}
 
-export function Client({ translation }: IProps) {
+export function Client({
+  commonTranslation,
+  translation,
+  pageTranslation,
+}: IProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [currentTask, changeCurrentTask] =
+    useState<Awaited<ReturnType<typeof getTask>>>();
   const taskID = searchParams.get("task_id")?.trim();
 
-  if (!taskID) {
-    router.replace("/404");
+  useEffect(() => {
+    if (!taskID) {
+      router.replace("/404");
+      return;
+    }
 
-    return null;
-  }
+    (async () => {
+      const task = await getTask(taskID);
+      changeCurrentTask(task);
+    })();
+  }, [taskID]);
 
-  return <EditTaskForm />;
+  return (
+    <Details headingLevel={2}>
+      {(headingLevel) => (
+        <>
+          <DetailsHeader>
+            <ul>
+              <li>
+                {!currentTask ? (
+                  <Loading />
+                ) : (
+                  <Link href={createTaskPageURL(currentTask.id)}>
+                    {pageTranslation.task}
+                  </Link>
+                )}
+              </li>
+            </ul>
+          </DetailsHeader>
+
+          <DetailsBody>
+            {!currentTask ? (
+              <Loading />
+            ) : (
+              <EditTaskForm
+                commonTranslation={commonTranslation}
+                translation={translation}
+                id="edit-task"
+                currentTask={currentTask}
+                onTaskEdit={async (taskUpdate) => {
+                  const editedTask = await editTask(taskUpdate);
+                  changeCurrentTask(editedTask);
+                }}
+              />
+            )}
+          </DetailsBody>
+        </>
+      )}
+    </Details>
+  );
 }
