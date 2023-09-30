@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useClient } from "#hooks";
 import { createBlockComponent } from "#components/meta";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
-import { IInputSectionProps, InputSection } from "./section";
+import { type IInputSectionProps, InputSection } from "./section";
 
 import styles from "./file.module.scss";
 
@@ -12,6 +13,11 @@ interface IProps
   extends IInputSectionProps,
     Pick<IInputFileProps, "accept" | "multiple"> {}
 
+/**
+ * @TODOs
+ * - styling for drag and drop states
+ * - validation of inputs
+ */
 export const InputSectionFile = createBlockComponent(styles, Component);
 
 function Component({
@@ -25,13 +31,54 @@ function Component({
   required,
   disabled,
   children,
+  onDragEnter,
+  onDragOver,
+  onDrop,
   ...props
 }: IProps) {
+  const client = useClient();
   const [currentFiles, changeCurrentFiles] = useState<File[]>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <InputSection {...props}>
+    <InputSection
+      // Drag'n'Drop from
+      // https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications#selecting_files_using_drag_and_drop
+      onDragEnter={async (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        onDragEnter?.(event);
+      }}
+      onDragOver={async (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        onDragOver?.(event);
+      }}
+      onDrop={async (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const dataTransfer = event.dataTransfer;
+        const fileList = dataTransfer.files;
+
+        if (!inputRef.current) {
+          return;
+        }
+
+        inputRef.current.files = fileList;
+        // setting the thing above doesn't trigger `onChange()`
+        // so it is set manually in there
+        // @TODO find a way to trigger `onChange()`
+        changeCurrentFiles(Array.from(fileList));
+
+        onDrop?.(event);
+      }}
+      {...props}
+    >
       <InputFile
+        ref={inputRef}
         id={id}
         className={styles.input}
         name={name}
@@ -53,6 +100,7 @@ function Component({
           changeCurrentFiles(files);
         }}
       />
+
       {!currentFiles ? (
         <Label className={styles.label} htmlFor={id}>
           {children}
@@ -61,7 +109,14 @@ function Component({
         <ul>
           {currentFiles.map(({ name, size, type }, index) => (
             <li key={index}>
-              {type} - {name} - {size}
+              {type} - {name} -{" "}
+              {!client.isClient
+                ? size
+                : // @TODO proper size formatter
+                  new Intl.NumberFormat(client.locale.toString(), {
+                    style: "unit",
+                    unit: "byte",
+                  }).format(size)}
             </li>
           ))}
         </ul>
