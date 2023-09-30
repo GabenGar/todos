@@ -76,7 +76,7 @@ export function SearchTasksForm({
             form={formID}
             name={FIELD.QUERY.name}
             minLength={1}
-            maxLength={32}
+            maxLength={20}
             defaultValue={defaultQuery?.query}
           >
             {FIELD.QUERY.label}

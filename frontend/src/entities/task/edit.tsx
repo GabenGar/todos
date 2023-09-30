@@ -1,27 +1,28 @@
-import type { ILocalization, ILocalizationCommon } from "#lib/localization";
+import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import { InputOption } from "#components/form/input";
 import { InputSectionSelect, InputSectionText } from "#components/form/section";
-import { type ITaskInit, isTaskStatus } from "./types";
+import type { ITranslatableProps } from "#components/types";
+import { InputOption } from "#components/form/input";
+import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
 
-import styles from "./new.module.scss";
 import statusStyles from "./status.module.scss";
 
-export interface INewTaskFormProps {
-  commonTranslation: ILocalizationCommon;
+export interface IEditTaskFormProps extends ITranslatableProps {
   translation: ILocalization["todos"];
   id: string;
-  onNewTask: (taskInit: ITaskInit) => Promise<void>;
+  currentTask: ITask;
+  onTaskEdit: (taskUpdate: ITaskUpdate) => Promise<void>;
 }
 
-export function NewTaskForm({
+export function EditTaskForm({
   commonTranslation,
   translation,
+  currentTask,
   id,
-  onNewTask,
-}: INewTaskFormProps) {
-  const { title, description, add, adding, status } = translation.new_todo;
-  const { status_values } = translation;
+  onTaskEdit,
+}: IEditTaskFormProps) {
+  const { title, description, status } = translation.new_todo;
+  const { status_values, editing, edit } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
@@ -35,28 +36,35 @@ export function NewTaskForm({
     const description = formElements.description.value.trim();
     const status = formElements.status.value.trim();
 
-    const init: ITaskInit = {
-      title,
+    const update: ITaskUpdate = {
+      id: currentTask.id,
     };
 
-    if (description.length) {
-      init.description = description;
+    if (!title && !description && !status) {
+      return;
     }
 
-    if (isTaskStatus(status)) {
-      init.status = status;
+    if (title && title !== currentTask.title) {
+      update.title = title;
     }
 
-    await onNewTask(init);
+    if (description && description !== currentTask.description) {
+      update.description = description;
+    }
+
+    if (isTaskStatus(status) && status !== currentTask.status) {
+      update.status = status;
+    }
+
+    await onTaskEdit(update);
   }
 
   return (
-    <Form<IFieldName>
+    <Form
       commonTranslation={commonTranslation}
       id={id}
-      className={styles.block}
+      submitButton={(formID, isSubmitting) => (!isSubmitting ? edit : editing)}
       onSubmit={handleSubmit}
-      submitButton={(formID, isSubmitting) => (!isSubmitting ? add : adding)}
     >
       {(formID) => (
         <>
@@ -67,7 +75,7 @@ export function NewTaskForm({
             minLength={1}
             maxLength={256}
             rows={2}
-            required
+            defaultValue={currentTask.title}
           >
             {FIELD.TITLE.label}
           </InputSectionText>
@@ -79,6 +87,7 @@ export function NewTaskForm({
             minLength={1}
             maxLength={2048}
             rows={4}
+            defaultValue={currentTask.description}
           >
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
@@ -92,6 +101,7 @@ export function NewTaskForm({
             <InputOption
               className={statusStyles["in-progress"]}
               value="in-progress"
+              selected={currentTask.status === "in-progress"}
             >
               {status_values["in-progress"]}
             </InputOption>
@@ -99,16 +109,24 @@ export function NewTaskForm({
             <InputOption
               className={statusStyles.pending}
               value="pending"
-              selected
+              selected={currentTask.status === "pending"}
             >
               {status_values.pending}
             </InputOption>
 
-            <InputOption className={statusStyles.finished} value="finished">
+            <InputOption
+              className={statusStyles.finished}
+              value="finished"
+              selected={currentTask.status === "finished"}
+            >
               {status_values.finished}
             </InputOption>
 
-            <InputOption className={statusStyles.failed} value="failed">
+            <InputOption
+              className={statusStyles.failed}
+              value="failed"
+              selected={currentTask.status === "failed"}
+            >
               {status_values.failed}
             </InputOption>
           </InputSectionSelect>

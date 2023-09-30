@@ -9,3 +9,5 @@ export type {
   IInputOptionProps,
   IInputOptionGroupProps,
 } from "./select";
+export { InputTextArea } from "./text-area";
+export type { IInputTextAreaProps } from "./text-area";

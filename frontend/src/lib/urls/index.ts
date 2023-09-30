@@ -43,3 +43,10 @@ export function createTaskPageURL(id: ITask["id"]): Route {
 
   return url as Route;
 }
+
+export function createTaskEditPageURL(id: ITask["id"]): Route {
+  const urlSearchParams = new URLSearchParams([["task_id", id]]).toString();
+  const url = `/task/edit?${urlSearchParams}`;
+
+  return url as Route;
+}

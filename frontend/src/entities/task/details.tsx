@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { INanoidID } from "#lib/strings";
 import type { ILocalization } from "#lib/localization";
-import { createTasksPageURL } from "#lib/urls";
+import { createTaskEditPageURL, createTasksPageURL } from "#lib/urls";
 import { logError } from "#lib/logs";
 import { isError } from "#lib/errors";
 import { createBlockComponent } from "#components/meta";
@@ -200,7 +200,7 @@ function Component({
 
             <ul>
               <li>
-                <Link href="/tasks">{translation.back_to_tasks}</Link>
+                <Link href={createTaskEditPageURL(id)}>{translation.edit}</Link>
               </li>
             </ul>
 

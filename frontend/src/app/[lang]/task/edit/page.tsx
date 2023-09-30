@@ -13,23 +13,29 @@ interface IProps {
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { task } = dict;
+  const { task_edit } = dict;
 
-  return {
-    title: `${task.title}`,
+  const metaData: Metadata = {
+    title: `${task_edit.title}`,
   };
+
+  return metaData;
 }
 
-async function TaskDetailsPage({ params }: IProps) {
+async function TaskEditPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { task } = dict;
+  const { common, todos, task_edit } = dict;
 
   return (
-    <Page heading={task.heading}>
-      <Client translation={task} />
+    <Page heading={task_edit.heading}>
+      <Client
+        commonTranslation={common}
+        translation={todos}
+        pageTranslation={task_edit}
+      />
     </Page>
   );
 }
 
-export default TaskDetailsPage;
+export default TaskEditPage;
