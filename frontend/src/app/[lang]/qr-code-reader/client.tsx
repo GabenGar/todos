@@ -29,7 +29,10 @@ export function Client({ commonTranslation, translation }: IProps) {
 
           <DetailsBody>
             <DescriptionList>
-              <DescriptionSection dKey={translation.result} dValue={content ?? translation.no_result} />
+              <DescriptionSection
+                dKey={translation.result}
+                dValue={content ?? translation.no_result}
+              />
             </DescriptionList>
           </DetailsBody>
         </>

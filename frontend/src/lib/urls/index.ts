@@ -51,4 +51,4 @@ export function createTaskEditPageURL(id: ITask["id"]): Route {
   return url as Route;
 }
 
-export const qrCodeReaderURL = "/qr-code-reader"
+export const qrCodeReaderURL = "/qr-code-reader";

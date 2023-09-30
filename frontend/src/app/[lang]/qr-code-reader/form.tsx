@@ -18,7 +18,7 @@ export function QRCodeReaderForm({
   commonTranslation,
   translation,
   id,
-  onSuccessfulScan
+  onSuccessfulScan,
 }: IProps) {
   const [qrReader, changeQRreader] = useState<Html5Qrcode>();
   const { form } = translation;
@@ -44,7 +44,7 @@ export function QRCodeReaderForm({
     const QRCodeFile = files.item(0)!;
     const result = await qrReader.scanFile(QRCodeFile, false);
 
-    await onSuccessfulScan(result)
+    await onSuccessfulScan(result);
   }
 
   return (
