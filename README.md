@@ -1,6 +1,6 @@
 # TODOs
 
-## Develop
+## Installation
 
 1. Clone the repo:
    ```sh
@@ -10,21 +10,44 @@
    ```sh
    cd ./todos
    ```
-3. Open git config:
+
+3. Install all dependencies:
+    ```sh
+    npm run install-all
+    ```
+4. Build the project:
+    ```sh
+    npm run build
+    ```
+5. Start the server:
+    ```sh
+    npm run start
+    ```
+
+
+## Develop
+
+```sh
+npm run dev
+```
+
+### Prep the Workflow
+
+1. Open git config:
    ```sh
    open ./.git/config
    ```
-4. Add `user` section:
+2. Add `user` section:
    ```ini
    [user]
        name = <username>
        email = <email>
    ```
-5. Add ssh key to `core` section:
+3. Add ssh key to `core` section:
    ```ini
      sshCommand = ssh -i <ssh_key_path> -F /dev/null
    ```
-6. Change `push` remote to ssh endpoint:
+4. Change `push` remote to ssh endpoint:
    ```sh
    git remote set-url --push origin git@github.com:<username>/todos.git
    ```
