@@ -7,6 +7,7 @@ import type { ILocalizationCommon } from "#lib/localization";
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
 import { ButtonSubmit } from "#components/button";
+import { Pre } from "#components/pre";
 import { InputSection } from "./section";
 import type { IFormEvent } from "./types";
 
@@ -81,9 +82,7 @@ function Component<InputName extends string>({
         <ol>
           {errors.map((error, index) => (
             <li key={index}>
-              <pre className={styles.pre}>
-                {isError(error) ? String(error) : error}
-              </pre>
+              <Pre>{isError(error) ? String(error) : error}</Pre>
             </li>
           ))}
         </ol>

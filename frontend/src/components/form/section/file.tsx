@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { createBlockComponent } from "#components/meta";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
@@ -24,6 +27,8 @@ function Component({
   children,
   ...props
 }: IProps) {
+  const [currentFiles, changeCurrentFiles] = useState<File[]>();
+
   return (
     <InputSection {...props}>
       <InputFile
@@ -36,10 +41,31 @@ function Component({
         readOnly={readOnly}
         disabled={disabled}
         required={required}
+        onChange={async (event) => {
+          const fileList = event.target.files;
+
+          if (!fileList) {
+            changeCurrentFiles(undefined);
+            return;
+          }
+
+          const files = Array.from(fileList);
+          changeCurrentFiles(files);
+        }}
       />
-      <Label className={styles.label} htmlFor={id}>
-        {children}
-      </Label>
+      {!currentFiles ? (
+        <Label className={styles.label} htmlFor={id}>
+          {children}
+        </Label>
+      ) : (
+        <ul>
+          {currentFiles.map(({ name, size, type }, index) => (
+            <li key={index}>
+              {type} - {name} - {size}
+            </li>
+          ))}
+        </ul>
+      )}
     </InputSection>
   );
 }

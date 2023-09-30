@@ -21,10 +21,25 @@
       "no_items": "No items found."
     }
   },
+  "pages": {
+    "qr_code_reader": {
+      "title": "QR code reader",
+      "heading": "QR Code Reader",
+      "description": "Read any QR code from a file and view its contents",
+      "result": "Result",
+      "no_result": "Nothing",
+      "form": {
+        "file_label": "Click to upload a file",
+        "scan": "Scan",
+        "scanning": "Scanning..."
+      }
+    }
+  },
   "home": {
     "title": "Welcome!",
     "heading": "Welcome!",
-    "link_tasks": "Tasks"
+    "link_tasks": "Tasks",
+    "link_qr_code": "QR code reader"
   },
   "todos": {
     "title": "Tasks",
