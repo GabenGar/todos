@@ -26,6 +26,8 @@
       "title": "QR code reader",
       "heading": "QR Code Reader",
       "description": "Read any QR code from a file and view its contents",
+      "result": "Result",
+      "no_result": "Nothing",
       "form": {
         "file_label": "Click to upload a file",
         "scan": "Scan",
