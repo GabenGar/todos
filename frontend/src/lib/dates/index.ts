@@ -25,7 +25,10 @@ const formatDateTimeOptions: Intl.DateTimeFormatOptions = {
   timeZoneName: "long",
 };
 export function formatDateTime(locale: Intl.Locale, dateTime: IDateTime) {
-  const formatter = Intl.DateTimeFormat(String(locale), formatDateTimeOptions);
+  const formatter = new Intl.DateTimeFormat(
+    String(locale),
+    formatDateTimeOptions,
+  );
   const formattedDateTime = formatter.format(new Date(dateTime));
 
   return formattedDateTime;

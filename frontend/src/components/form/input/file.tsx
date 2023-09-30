@@ -1,10 +1,16 @@
+import { forwardRef, type Ref } from "react";
 import { createBlockComponent } from "#components/meta";
 import { Input, IInputProps } from "./input";
 
 export interface IInputFileProps extends IInputProps {}
 
-export const InputFile = createBlockComponent(undefined, Component);
+export const InputFile = forwardRef<HTMLInputElement, IInputFileProps>(
+  createBlockComponent(undefined, Component),
+);
 
-function Component({ ...blockProps }: IInputFileProps) {
-  return <Input type="file" {...blockProps} />;
+function Component(
+  { ...blockProps }: IInputFileProps,
+  ref?: Ref<HTMLInputElement>,
+) {
+  return <Input ref={ref} type="file" {...blockProps} />;
 }
