@@ -1,0 +1,7 @@
+{
+  "$id": "/strings/title",
+  "title": "Title",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 256
+}
