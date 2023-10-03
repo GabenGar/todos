@@ -1,3 +1,10 @@
+/**
+ * @TODO raw json stringifier
+ */
+
+/**
+ * @param inputJSON
+ */
 export function fromJSON<OutputType = unknown>(inputJSON: string): OutputType {
   return JSON.parse(inputJSON) as OutputType;
 }

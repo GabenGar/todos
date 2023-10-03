@@ -1,6 +1,8 @@
 import type { nanoid } from "nanoid";
 
 export type INanoidID = ReturnType<typeof nanoid>;
+export type ITitle = string;
+export type IDescription = string;
 
 export function toQuotedStrings(
   stringArray: readonly string[],

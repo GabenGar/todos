@@ -9,20 +9,32 @@ import {
   taskUpdateSchema,
   nonNegativeIntegerSchema,
   taskStatsAllSchema,
+  titleSchema,
+  descriptionSchema,
+  placeInitSchema,
+  placeSchema,
+  placeUpdateSchema,
 } from "./types";
 import { SITE_ORIGIN } from "#environment";
 
-export const schemaMap = new Map<string, SchemaObject>([
-  [toRetrievalURL(dataExportSchema.$id), dataExportSchema],
-  [toRetrievalURL(taskSchema.$id), taskSchema],
-  [toRetrievalURL(taskInitSchema.$id), taskInitSchema],
-  [toRetrievalURL(taskStatusSchema.$id), taskStatusSchema],
-  [toRetrievalURL(taskUpdateSchema.$id), taskUpdateSchema],
-  [toRetrievalURL(nanoidSchema.$id), nanoidSchema],
-  [toRetrievalURL(dateTimeSchema.$id), dateTimeSchema],
-  [toRetrievalURL(nonNegativeIntegerSchema.$id), nonNegativeIntegerSchema],
-  [toRetrievalURL(taskStatsAllSchema.$id), taskStatsAllSchema],
-]);
+const schemas = [
+  dataExportSchema,
+  taskSchema,
+  taskInitSchema,
+  taskStatusSchema,
+  taskUpdateSchema,
+  nanoidSchema,
+  dateTimeSchema,
+  nonNegativeIntegerSchema,
+  taskStatsAllSchema,
+  titleSchema,
+  descriptionSchema,
+  placeInitSchema,
+  placeSchema,
+  placeUpdateSchema,
+].map<[string, SchemaObject]>((schema) => [toRetrievalURL(schema.$id), schema]);
+
+export const schemaMap = new Map(schemas);
 
 export type ISchemaMap = typeof schemaMap;
 
