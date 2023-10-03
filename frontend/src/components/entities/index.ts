@@ -1,0 +1,1 @@
+export { EntityID } from "./id"

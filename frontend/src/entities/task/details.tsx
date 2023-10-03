@@ -18,8 +18,9 @@ import {
   DetailsBody,
   DetailsFooter,
   DetailsHeader,
-  IDetailsProps,
+  type IDetailsProps,
 } from "#components/details";
+import { EntityID } from "#components/entities";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
 import { removeTask } from "./lib/remove";
@@ -90,7 +91,7 @@ function Component({
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <div className={styles.id}>{id}</div>
+            <EntityID>{id}</EntityID>
           </DetailsHeader>
 
           <DetailsBody>
