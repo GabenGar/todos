@@ -112,7 +112,16 @@
   "task_edit": {
     "title": "Edit task",
     "heading": "Edit Task",
-    "description": "Edit task title, description and status.",
+    "description": "Edit task details.",
     "task": "Task"
+  },
+  "place": {
+    "title": "Title",
+    "description": "Description",
+    "no_description": "No description provided",
+    "created_at": "Date of creation",
+    "updated_at": "Last updated",
+    "add": "Add place",
+    "adding": "Adding place..."
   }
 }
