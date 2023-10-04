@@ -20,7 +20,7 @@ interface IProps
 }
 
 /**
- * @TODO customizable "no items" message
+ * @TODO `previews` prop
  */
 export const PreviewList = createBlockComponent(styles, Component);
 

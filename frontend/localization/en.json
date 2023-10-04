@@ -33,6 +33,14 @@
         "scan": "Scan",
         "scanning": "Scanning..."
       }
+    },
+    "places": {
+      "title": "Places",
+      "heading": "Places"
+    },
+    "place": {
+      "title": "Place",
+      "heading": "Place"
     }
   },
   "home": {

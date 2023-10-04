@@ -52,3 +52,9 @@ export function createTaskEditPageURL(id: ITask["id"]): Route {
 }
 
 export const qrCodeReaderURL = "/qr-code-reader";
+
+export function createPlacesPageURL(): Route {
+  const url = "/places";
+
+  return url as Route;
+}

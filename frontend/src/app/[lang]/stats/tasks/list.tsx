@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import type { ILocalization } from "#lib/localization";
+import { createTasksPageURL } from "#lib/urls";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { TaskStatus, getTasksStats } from "#entities/task";
 import { Link } from "#components/link";
 import type { ITranslatableProps } from "#components/types";
-import { createTasksPageURL } from "#lib/urls";
 
 interface IProps extends ITranslatableProps {
   translation: ILocalization["stats_tasks"];
