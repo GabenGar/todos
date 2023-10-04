@@ -9,6 +9,7 @@ import {
   PreviewBody,
   PreviewHeader,
 } from "#components/preview";
+import { DateTime } from "#components/date";
 import type { IPlace } from "./types";
 
 interface IProps extends IPreviewProps {
@@ -41,8 +42,14 @@ function Component({ translation, place, ...props }: IProps) {
             />
             <DescriptionList
               sections={[
-                [translation.created_at, created_at],
-                [translation.created_at, updated_at],
+                [
+                  translation.created_at,
+                  <DateTime key={"created_at"} dateTime={created_at} />,
+                ],
+                [
+                  translation.updated_at,
+                  <DateTime key={"updated_at"} dateTime={updated_at} />,
+                ],
               ]}
             />
           </PreviewBody>
