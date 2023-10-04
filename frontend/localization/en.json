@@ -47,7 +47,8 @@
     "title": "Welcome!",
     "heading": "Welcome!",
     "link_tasks": "Tasks",
-    "link_qr_code": "QR code reader"
+    "link_qr_code": "QR code reader",
+    "link_places": "Places"
   },
   "todos": {
     "title": "Tasks",

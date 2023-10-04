@@ -1,5 +1,5 @@
 import { SITE_TITLE } from "#environment";
-import { qrCodeReaderURL, taskStatsPageURL } from "#lib/urls";
+import { createPlacesPageURL, qrCodeReaderURL, taskStatsPageURL } from "#lib/urls";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
 import { Page } from "#components";
@@ -31,6 +31,9 @@ async function FrontPage({ params }: IProps) {
             <ul>
               <li>
                 <Link href={taskStatsPageURL}>{home.link_tasks}</Link>
+              </li>
+              <li>
+                <Link href={createPlacesPageURL()}>{home.link_places}</Link>
               </li>
               <li>
                 <Link href={qrCodeReaderURL}>{home.link_qr_code}</Link>

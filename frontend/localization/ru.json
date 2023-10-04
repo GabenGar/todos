@@ -47,7 +47,8 @@
     "title": "Добро пожаловать!",
     "heading": "Добро пожаловать!",
     "link_tasks": "Задачи",
-    "link_qr_code": "Считыватель QR кодов"
+    "link_qr_code": "Считыватель QR кодов",
+    "link_places": "Места"
   },
   "todos": {
     "title": "Задачи",
