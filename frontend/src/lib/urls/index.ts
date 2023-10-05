@@ -53,8 +53,22 @@ export function createTaskEditPageURL(id: ITask["id"]): Route {
 
 export const qrCodeReaderURL = "/qr-code-reader";
 
-export function createPlacesPageURL(): Route {
-  const url = "/places";
+interface ICreatePlacesPageURLParams {
+  page?: number;
+}
+
+export function createPlacesPageURL(
+  searchParams?: ICreatePlacesPageURLParams,
+): Route {
+  const urlSearchParams = new URLSearchParams();
+
+  if (searchParams?.page) {
+    urlSearchParams.set("page", String(searchParams.page));
+  }
+
+  const url = !urlSearchParams.size
+    ? "/places"
+    : `/places?${urlSearchParams.toString()}`;
 
   return url as Route;
 }
