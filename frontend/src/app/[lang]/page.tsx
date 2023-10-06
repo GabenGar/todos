@@ -1,5 +1,9 @@
 import { SITE_TITLE } from "#environment";
-import { createPlacesPageURL, qrCodeReaderURL, taskStatsPageURL } from "#lib/urls";
+import {
+  createPlacesPageURL,
+  qrCodeReaderURL,
+  taskStatsPageURL,
+} from "#lib/urls";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
 import { Page } from "#components";

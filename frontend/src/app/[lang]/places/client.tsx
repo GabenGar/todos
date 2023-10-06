@@ -67,7 +67,9 @@ export function Client({ commonTranslation, translation }: IProps) {
       <Details headingLevel={2}>
         {(headingLevel) => (
           <DetailsHeader>
-            <Button onClick={() => switchAddForm((value) => !value)}>{translation.add}</Button>
+            <Button onClick={() => switchAddForm((value) => !value)}>
+              {translation.add}
+            </Button>
             {isAddFormShown && (
               <PlaceCreateForm
                 commonTranslation={commonTranslation}

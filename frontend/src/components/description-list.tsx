@@ -52,7 +52,6 @@ function DescriptionListComponent({ ...props }: IDescriptionListProps) {
 
   const { sections, ...otherProps } = props;
 
-
   return (
     <dl {...otherProps}>
       {sections.map(([dKey, dValue], index) => (

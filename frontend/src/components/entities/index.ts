@@ -1,1 +1,1 @@
-export { EntityID } from "./id"
+export { EntityID } from "./id";
