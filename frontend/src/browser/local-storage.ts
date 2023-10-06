@@ -1,3 +1,6 @@
+/**
+ * @TODO key-based factory
+ */
 import { fromJSON, toJSON } from "#lib/json";
 
 /**
@@ -5,6 +8,7 @@ import { fromJSON, toJSON } from "#lib/json";
  */
 export const LOCAL_STORAGE_KEYS = {
   TODOS: "todos",
+  PLACES: "places",
 } as const;
 
 export type ILocalStoreKey =

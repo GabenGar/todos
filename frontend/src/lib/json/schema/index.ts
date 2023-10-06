@@ -9,4 +9,9 @@ export {
   taskUpdateSchema,
   taskStatsAllSchema,
   nonNegativeIntegerSchema,
+  descriptionSchema,
+  placeInitSchema,
+  placeSchema,
+  placeUpdateSchema,
+  titleSchema,
 } from "./types";

@@ -8,8 +8,14 @@ import { createBlockComponent } from "./meta";
 
 import styles from "./description-list.module.scss";
 
-interface IDescriptionListProps extends IBaseComponentPropsWithChildren<"dl"> {}
+type IDescriptionListProps = IBaseComponentProps<"dl"> &
+  ({ sections: IDescriptionMap } | { children: ReactNode });
 
+/**
+ * Is not actual `Map` because keys can be of nullish values
+ * without being equal.
+ */
+interface IDescriptionMap extends Array<[ReactNode, ReactNode]> {}
 type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
   isHorizontal?: boolean;
 } & ({ dKey: ReactNode; dValue?: ReactNode } | { children?: ReactNode });
@@ -19,9 +25,6 @@ interface IDescriptionTermProps extends IBaseComponentPropsWithChildren<"dt"> {}
 interface IDescriptionDetailsProps
   extends IBaseComponentPropsWithChildren<"dd"> {}
 
-/**
- * @TODO accept `Map` as props.
- */
 export const DescriptionList = createBlockComponent(
   styles,
   DescriptionListComponent,
@@ -43,7 +46,19 @@ export const DescriptionDetails = createBlockComponent(
 );
 
 function DescriptionListComponent({ ...props }: IDescriptionListProps) {
-  return <dl {...props} />;
+  if ("children" in props) {
+    return <dl {...props} />;
+  }
+
+  const { sections, ...otherProps } = props;
+
+  return (
+    <dl {...otherProps}>
+      {sections.map(([dKey, dValue], index) => (
+        <DescriptionSection key={index} dKey={dKey} dValue={dValue} />
+      ))}
+    </dl>
+  );
 }
 
 function DescriptionSectionComponent({
