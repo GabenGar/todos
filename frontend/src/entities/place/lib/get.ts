@@ -32,7 +32,7 @@ export async function getPlaces(
   const pagination = createPagination(storedPlaces.length, page);
   const items = storedPlaces.slice(
     pagination.offset,
-    pagination.currentMax + 1,
+    pagination.currentMax,
   );
   const collection: IPaginatedCollection<IPlace> = {
     pagination,

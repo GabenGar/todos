@@ -11,21 +11,23 @@ import {
 interface IProps extends Pick<IDetailsProps, "headingLevel"> {}
 
 export function DetailsPlaceHolder({ ...props }: IProps) {
-  <Details {...props}>
-    {(headinglevel) => (
-      <>
-        <DetailsHeader>
-          <Heading level={headinglevel}>
+  return (
+    <Details {...props}>
+      {(headinglevel) => (
+        <>
+          <DetailsHeader>
+            <Heading level={headinglevel}>
+              <Loading />
+            </Heading>
+          </DetailsHeader>
+          <DetailsBody>
             <Loading />
-          </Heading>
-        </DetailsHeader>
-        <DetailsBody>
-          <Loading />
-        </DetailsBody>
-        <DetailsFooter>
-          <Loading />
-        </DetailsFooter>
-      </>
-    )}
-  </Details>;
+          </DetailsBody>
+          <DetailsFooter>
+            <Loading />
+          </DetailsFooter>
+        </>
+      )}
+    </Details>
+  );
 }

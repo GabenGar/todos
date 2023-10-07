@@ -4,6 +4,8 @@ import type { IPlace } from "#entities/place";
 
 export const homePageURL = "/" as Route;
 
+export const notFoundURL = "/404" as Route;
+
 export const taskStatsPageURL = "/stats/tasks";
 
 interface ICreateTasksPageURLParams {

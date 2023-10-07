@@ -1,5 +1,5 @@
-import { ILocalization } from "#lib/localization";
-import { createTaskPageURL } from "#lib/urls";
+import type { ILocalization } from "#lib/localization";
+import { createPlacePageURL } from "#lib/urls";
 import { DescriptionList } from "#components";
 import { EntityID } from "#components/entities";
 import { Heading } from "#components/heading";
@@ -12,8 +12,8 @@ import {
   PreviewFooter,
 } from "#components/preview";
 import { DateTime } from "#components/date";
-import type { IPlace } from "./types";
 import { Link } from "#components/link";
+import type { IPlace } from "./types";
 
 import styles from "./preview.module.scss";
 
@@ -33,10 +33,11 @@ function Component({ translation, place, ...props }: IProps) {
         <>
           <PreviewHeader>
             <Heading level={headingLevel}>{title}</Heading>
-            <EntityID>{id}</EntityID>
           </PreviewHeader>
 
           <PreviewBody>
+            <EntityID>{id}</EntityID>
+
             <DescriptionList
               sections={[
                 [
@@ -45,6 +46,7 @@ function Component({ translation, place, ...props }: IProps) {
                 ],
               ]}
             />
+
             <DescriptionList
               sections={[
                 [
@@ -60,7 +62,7 @@ function Component({ translation, place, ...props }: IProps) {
           </PreviewBody>
 
           <PreviewFooter>
-            <Link className={styles.link} href={createTaskPageURL(id)}>
+            <Link className={styles.link} href={createPlacePageURL(id)}>
               {translation.details}
             </Link>
           </PreviewFooter>

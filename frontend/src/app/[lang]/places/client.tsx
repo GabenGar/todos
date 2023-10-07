@@ -88,6 +88,7 @@ export function Client({ commonTranslation, translation }: IProps) {
         <PreviewList
           pagination={places.pagination}
           commonTranslation={commonTranslation}
+          sortingOrder="descending"
           buildURL={(page) => createPlacesPageURL({ page })}
         >
           {places.items.map((place) => (

@@ -12,14 +12,14 @@ import {
 import { EntityID } from "#components/entities";
 import type { IPlace } from "./types";
 
-export interface ITaskDetailsProps extends IDetailsProps {
+export interface IPlaceDetailsProps extends IDetailsProps {
   translation: ILocalization["place"];
   place: IPlace;
 }
 
-export const TaskDetails = createBlockComponent(undefined, Component);
+export const PlaceDetails = createBlockComponent(undefined, Component);
 
-function Component({ translation, place, ...props }: ITaskDetailsProps) {
+function Component({ translation, place, ...props }: IPlaceDetailsProps) {
   const { id, title, description, created_at, updated_at } = place;
 
   return (
@@ -28,7 +28,7 @@ function Component({ translation, place, ...props }: ITaskDetailsProps) {
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID>{id}</EntityID>
+             <EntityID>{id}</EntityID>
           </DetailsHeader>
 
           <DetailsBody>
@@ -40,6 +40,7 @@ function Component({ translation, place, ...props }: ITaskDetailsProps) {
                 ],
               ]}
             />
+
             <DescriptionList
               sections={[
                 [
