@@ -11,14 +11,15 @@ interface IOptions {
 
 const defaultOptions = {} as const satisfies IOptions;
 
-export async function getAllPlaces(): Promise<IPlace[]> {
-  const validate: Awaited<ReturnType<typeof createValidator<IPlace>>> =
-    await createValidator(placeSchema.$id);
-  const storedPlaces = getLocalStoreItem<IPlace[]>("places", []);
+export async function getPlace(placeID: IPlace["id"]) {
+  const storedTasks = await getAllPlaces();
+  const task = storedTasks.find(({ id }) => id === placeID);
 
-  storedPlaces.forEach((place) => validate(place));
+  if (!task) {
+    throw new Error(`No place with ID "${placeID}" exists.`);
+  }
 
-  return storedPlaces;
+  return task;
 }
 
 export async function getPlaces(
@@ -29,10 +30,7 @@ export async function getPlaces(
   const { page } = options;
   const storedPlaces = await getAllPlaces();
   const pagination = createPagination(storedPlaces.length, page);
-  const items = storedPlaces.slice(
-    pagination.offset,
-    pagination.currentMax + 1,
-  );
+  const items = storedPlaces.slice(pagination.offset, pagination.currentMax);
   const collection: IPaginatedCollection<IPlace> = {
     pagination,
     items,
@@ -41,4 +39,14 @@ export async function getPlaces(
   logDebug(`Got ${items.length} places.`);
 
   return collection;
+}
+
+export async function getAllPlaces(): Promise<IPlace[]> {
+  const validate: Awaited<ReturnType<typeof createValidator<IPlace>>> =
+    await createValidator(placeSchema.$id);
+  const storedPlaces = getLocalStoreItem<IPlace[]>("places", []);
+
+  storedPlaces.forEach((place) => validate(place));
+
+  return storedPlaces;
 }

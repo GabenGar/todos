@@ -109,10 +109,7 @@ export async function getTasks(
     },
   );
   const pagination = createPagination(filteredTasks.length, page);
-  const items = filteredTasks.slice(
-    pagination.offset,
-    pagination.currentMax + 1,
-  );
+  const items = filteredTasks.slice(pagination.offset, pagination.currentMax);
   const collection: IPaginatedCollection<ITask> = {
     pagination,
     items,

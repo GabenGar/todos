@@ -3,17 +3,6 @@
 .block {
 }
 
-.id {
-  color: var(--colour-text-secondary);
-
-  transition-duration: var(--duration-global);
-  transition-property: color;
-
-  &:hover {
-    color: var(--colour-text-primary);
-  }
-}
-
 .footer {
   gap: $size-normal;
 }

@@ -1,7 +1,10 @@
 import type { Route } from "next";
 import type { ITask } from "#entities/task";
+import type { IPlace } from "#entities/place";
 
 export const homePageURL = "/" as Route;
+
+export const notFoundURL = "/404" as Route;
 
 export const taskStatsPageURL = "/stats/tasks";
 
@@ -56,7 +59,6 @@ export const qrCodeReaderURL = "/qr-code-reader";
 interface ICreatePlacesPageURLParams {
   page?: number;
 }
-
 export function createPlacesPageURL(
   searchParams?: ICreatePlacesPageURLParams,
 ): Route {
@@ -69,6 +71,14 @@ export function createPlacesPageURL(
   const url = !urlSearchParams.size
     ? "/places"
     : `/places?${urlSearchParams.toString()}`;
+
+  return url as Route;
+}
+
+export function createPlacePageURL(id: IPlace["id"]): Route {
+  const urlSearchParams = new URLSearchParams([["place_id", id]]).toString();
+
+  const url = `/place?${urlSearchParams}`;
 
   return url as Route;
 }

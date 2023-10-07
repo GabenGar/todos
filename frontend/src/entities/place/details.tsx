@@ -1,43 +1,37 @@
 import type { ILocalization } from "#lib/localization";
-import { createPlacePageURL } from "#lib/urls";
-import { DescriptionList } from "#components";
-import { EntityID } from "#components/entities";
-import { Heading } from "#components/heading";
 import { createBlockComponent } from "#components/meta";
-import {
-  type IPreviewProps,
-  Preview,
-  PreviewBody,
-  PreviewHeader,
-  PreviewFooter,
-} from "#components/preview";
+import { DescriptionList } from "#components";
+import { Heading } from "#components/heading";
 import { DateTime } from "#components/date";
-import { Link } from "#components/link";
+import {
+  Details,
+  DetailsBody,
+  DetailsHeader,
+  type IDetailsProps,
+} from "#components/details";
+import { EntityID } from "#components/entities";
 import type { IPlace } from "./types";
 
-import styles from "./preview.module.scss";
-
-interface IProps extends IPreviewProps {
+export interface IPlaceDetailsProps extends IDetailsProps {
   translation: ILocalization["place"];
   place: IPlace;
 }
 
-export const PlacePreview = createBlockComponent(styles, Component);
+export const PlaceDetails = createBlockComponent(undefined, Component);
 
-function Component({ translation, place, ...props }: IProps) {
+function Component({ translation, place, ...props }: IPlaceDetailsProps) {
   const { id, title, description, created_at, updated_at } = place;
 
   return (
-    <Preview {...props}>
-      {(headingLevel) => (
+    <Details {...props}>
+      {(headinglevel) => (
         <>
-          <PreviewHeader>
-            <Heading level={headingLevel}>{title}</Heading>
-          </PreviewHeader>
-
-          <PreviewBody>
+          <DetailsHeader>
+            <Heading level={headinglevel}>{title}</Heading>
             <EntityID>{id}</EntityID>
+          </DetailsHeader>
 
+          <DetailsBody>
             <DescriptionList
               sections={[
                 [
@@ -59,15 +53,9 @@ function Component({ translation, place, ...props }: IProps) {
                 ],
               ]}
             />
-          </PreviewBody>
-
-          <PreviewFooter>
-            <Link className={styles.link} href={createPlacePageURL(id)}>
-              {translation.details}
-            </Link>
-          </PreviewFooter>
+          </DetailsBody>
         </>
       )}
-    </Preview>
+    </Details>
   );
 }
