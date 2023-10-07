@@ -30,10 +30,7 @@ export async function getPlaces(
   const { page } = options;
   const storedPlaces = await getAllPlaces();
   const pagination = createPagination(storedPlaces.length, page);
-  const items = storedPlaces.slice(
-    pagination.offset,
-    pagination.currentMax,
-  );
+  const items = storedPlaces.slice(pagination.offset, pagination.currentMax);
   const collection: IPaginatedCollection<IPlace> = {
     pagination,
     items,

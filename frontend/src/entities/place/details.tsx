@@ -28,7 +28,7 @@ function Component({ translation, place, ...props }: IPlaceDetailsProps) {
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-             <EntityID>{id}</EntityID>
+            <EntityID>{id}</EntityID>
           </DetailsHeader>
 
           <DetailsBody>
