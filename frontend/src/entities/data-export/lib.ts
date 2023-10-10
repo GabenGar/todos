@@ -3,20 +3,28 @@ import { now } from "#lib/dates";
 import { createValidator, dataExportSchema } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
 import { setLocalStoreItem } from "#browser/local-storage";
-import { type ITask, getTasks, getAllTasks } from "#entities/task";
+import { type ITask, getAllTasks } from "#entities/task";
+import { getAllPlaces } from "#entities/place";
 import type { IDataExport } from "./types";
 
 export async function createDataExport(): Promise<IDataExport> {
   const tasks = await getAllTasks(false);
+  const places = await getAllPlaces();
 
   const dataExport: IDataExport = {
     version: 1,
     id: nanoid(),
     created_at: now(),
-    data: {
-      tasks,
-    },
+    data: {},
   };
+
+  if (tasks.length) {
+    dataExport.data.tasks = tasks;
+  }
+
+  if (places.length) {
+    dataExport.data.places = places;
+  }
 
   const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
     await createValidator<IDataExport>(dataExportSchema.$id);
@@ -35,24 +43,27 @@ export async function importDataExport(dataExport: unknown) {
     await createValidator<IDataExport>(dataExportSchema.$id);
 
   validate(dataExport);
+  const { id, version, data } = dataExport;
+  logDebug(`Validated data export "${id}" of version "${version}".`);
 
-  logDebug(
-    `Validated data export "${dataExport.id}" of version "${dataExport.version}".`,
-  );
+  if (data.tasks) {
+    const updatedTasks = await importTasks(data.tasks, id);
+    setLocalStoreItem("todos", updatedTasks);
 
-  logDebug(
-    `Importing ${dataExport.data.tasks.length} tasks of data export "${dataExport.id}"...`,
-  );
+    logDebug(`Imported tasks of data export "${id}".`);
+  }
 
-  const updatedTasks = await importTasks(dataExport.data.tasks);
-  setLocalStoreItem("todos", updatedTasks);
-
-  logDebug(`Imported tasks of data export "${dataExport.id}".`);
-
-  logInfo(`Imported data export "${dataExport.id}".`);
+  logInfo(`Imported data export "${id}".`);
 }
 
-async function importTasks(incomingTasks: ITask[]) {
+async function importTasks(
+  incomingTasks: ITask[],
+  exportID: IDataExport["id"],
+) {
+  logDebug(
+    `Importing ${incomingTasks.length} tasks of data export "${exportID}"...`,
+  );
+
   const currentTasks = await getAllTasks(false);
   const currentIDs = currentTasks.map(({ id }) => id);
   const newTasks = incomingTasks.filter(({ id }) => !currentIDs.includes(id));
