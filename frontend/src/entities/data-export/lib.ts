@@ -3,20 +3,28 @@ import { now } from "#lib/dates";
 import { createValidator, dataExportSchema } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
 import { setLocalStoreItem } from "#browser/local-storage";
-import { type ITask, getTasks, getAllTasks } from "#entities/task";
+import { type ITask, getAllTasks } from "#entities/task";
+import { type IPlace, getAllPlaces } from "#entities/place";
 import type { IDataExport } from "./types";
 
 export async function createDataExport(): Promise<IDataExport> {
   const tasks = await getAllTasks(false);
+  const places = await getAllPlaces();
 
   const dataExport: IDataExport = {
     version: 1,
     id: nanoid(),
     created_at: now(),
-    data: {
-      tasks,
-    },
+    data: {},
   };
+
+  if (tasks.length) {
+    dataExport.data.tasks = tasks;
+  }
+
+  if (places.length) {
+    dataExport.data.places = places;
+  }
 
   const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
     await createValidator<IDataExport>(dataExportSchema.$id);
@@ -35,24 +43,34 @@ export async function importDataExport(dataExport: unknown) {
     await createValidator<IDataExport>(dataExportSchema.$id);
 
   validate(dataExport);
+  const { id, version, data } = dataExport;
+  logDebug(`Validated data export "${id}" of version "${version}".`);
 
-  logDebug(
-    `Validated data export "${dataExport.id}" of version "${dataExport.version}".`,
-  );
+  if (data.tasks) {
+    const updatedTasks = await importTasks(id, data.tasks);
+    setLocalStoreItem("todos", updatedTasks);
 
-  logDebug(
-    `Importing ${dataExport.data.tasks.length} tasks of data export "${dataExport.id}"...`,
-  );
+    logDebug(`Imported tasks of data export "${id}".`);
+  }
 
-  const updatedTasks = await importTasks(dataExport.data.tasks);
-  setLocalStoreItem("todos", updatedTasks);
+  if (data.places) {
+    const updatedPlaces = await importPlaces(id, data.places);
+    setLocalStoreItem("places", updatedPlaces);
 
-  logDebug(`Imported tasks of data export "${dataExport.id}".`);
+    logDebug(`Imported places of data export "${id}".`);
+  }
 
-  logInfo(`Imported data export "${dataExport.id}".`);
+  logInfo(`Imported data export "${id}".`);
 }
 
-async function importTasks(incomingTasks: ITask[]) {
+async function importTasks(
+  exportID: IDataExport["id"],
+  incomingTasks: ITask[],
+) {
+  logDebug(
+    `Importing ${incomingTasks.length} tasks of data export "${exportID}"...`,
+  );
+
   const currentTasks = await getAllTasks(false);
   const currentIDs = currentTasks.map(({ id }) => id);
   const newTasks = incomingTasks.filter(({ id }) => !currentIDs.includes(id));
@@ -76,4 +94,38 @@ async function importTasks(incomingTasks: ITask[]) {
   updatedTasks.push(...newTasks);
 
   return updatedTasks;
+}
+
+async function importPlaces(
+  exportID: IDataExport["id"],
+  incomingPlaces: IPlace[],
+) {
+  logDebug(
+    `Importing ${incomingPlaces.length} places of data export "${exportID}"...`,
+  );
+
+  const currentPlaces = await getAllPlaces();
+  const currentIDs = new Set(currentPlaces.map(({ id }) => id));
+  const newPlaces = incomingPlaces.filter(({ id }) => !currentIDs.has(id));
+
+  const updatedPlaces = currentPlaces.map<IPlace>((currentPlace) => {
+    const changedPlace = incomingPlaces.find(
+      ({ id }) => id === currentPlace.id,
+    );
+    const isNotUpdated =
+      !changedPlace ||
+      currentPlace.deleted_at ||
+      (currentPlace.title === changedPlace.title &&
+        currentPlace.description === changedPlace.description);
+
+    if (isNotUpdated) {
+      return currentPlace;
+    } else {
+      return changedPlace;
+    }
+  });
+
+  updatedPlaces.push(...newPlaces);
+
+  return updatedPlaces;
 }
