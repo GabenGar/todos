@@ -109,7 +109,9 @@ async function importPlaces(
   const newPlaces = incomingPlaces.filter(({ id }) => !currentIDs.has(id));
 
   const updatedPlaces = currentPlaces.map<IPlace>((currentPlace) => {
-    const changedPlace = incomingPlaces.find(({ id }) => id === currentPlace.id);
+    const changedPlace = incomingPlaces.find(
+      ({ id }) => id === currentPlace.id,
+    );
     const isNotUpdated =
       !changedPlace ||
       currentPlace.deleted_at ||
