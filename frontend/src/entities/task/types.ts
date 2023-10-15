@@ -1,4 +1,5 @@
 import type { IDateTime } from "#lib/dates";
+import { IEntityItem } from "#lib/entities";
 import type { INonNegativeInteger } from "#lib/numbers";
 import { toQuotedStrings, type INanoidID } from "#lib/strings";
 
@@ -21,7 +22,7 @@ export function validateTaskStatus(
   }
 }
 
-export interface ITask {
+export interface ITaskStore {
   id: INanoidID;
   created_at: IDateTime;
   updated_at: IDateTime;
@@ -29,6 +30,11 @@ export interface ITask {
   title: string;
   status: ITaskStatus;
   description?: string;
+  place?: INanoidID
+}
+
+export interface ITask extends Omit<ITaskStore, "place"> {
+  place?: IEntityItem
 }
 
 export interface ITaskInit

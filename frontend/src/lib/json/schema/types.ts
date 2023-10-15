@@ -1,3 +1,4 @@
+export { default as entityItemSchema } from "#schema/entities/item.schema.json";
 export { default as dataExportSchema } from "#schema/entities/data-export.schema.json";
 export { default as taskSchema } from "#schema/entities/task/entity.schema.json";
 export { default as taskStatusSchema } from "#schema/entities/task/status.schema.json";

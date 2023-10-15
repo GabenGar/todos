@@ -14,6 +14,7 @@ import {
   placeInitSchema,
   placeSchema,
   placeUpdateSchema,
+  entityItemSchema,
 } from "./types";
 import { SITE_ORIGIN } from "#environment";
 
@@ -32,6 +33,7 @@ const schemas = [
   placeInitSchema,
   placeSchema,
   placeUpdateSchema,
+  entityItemSchema,
 ].map<[string, SchemaObject]>((schema) => [toRetrievalURL(schema.$id), schema]);
 
 export const schemaMap = new Map(schemas);
