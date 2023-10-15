@@ -1,7 +1,7 @@
 import { logInfo } from "#lib/logs";
 import { now } from "#lib/dates";
 import { setLocalStoreItem } from "#browser/local-storage";
-import type { ITask } from "../types";
+import type { ITaskStore } from "../types";
 import { getAllTasks } from "./get";
 
 export async function migrateTasks() {
@@ -26,7 +26,7 @@ async function migrateV1() {
 
   logInfo(`Migrating ${legacyTasks.length} V1 legacy tasks...`);
 
-  const updatedTasks = storedTasks.map<ITask>((currentTask) => {
+  const updatedTasks = storedTasks.map<ITaskStore>((currentTask) => {
     const legacyTask = legacyTasks.find(({ id }) => id === currentTask.id);
 
     if (!legacyTask) {
@@ -36,7 +36,7 @@ async function migrateV1() {
     const description =
       legacyTask.description === "" ? undefined : legacyTask.description;
     const updated_at = !legacyTask.updated_at ? now() : legacyTask.updated_at;
-    const updatedTask: ITask = { ...currentTask, description, updated_at };
+    const updatedTask: ITaskStore = { ...currentTask, description, updated_at };
 
     return updatedTask;
   });
@@ -57,14 +57,14 @@ async function migrateV2() {
 
   logInfo(`Migrating ${legacyTasks.length} V2 legacy tasks...`);
 
-  const updatedTasks = storedTasks.map<ITask>((currentTask) => {
+  const updatedTasks = storedTasks.map<ITaskStore>((currentTask) => {
     const legacyTask = legacyTasks.find(({ id }) => id === currentTask.id);
 
     if (!legacyTask) {
       return currentTask;
     }
 
-    const updatedTask: ITask = { ...currentTask, status: "pending" };
+    const updatedTask: ITaskStore = { ...currentTask, status: "pending" };
 
     return updatedTask;
   });

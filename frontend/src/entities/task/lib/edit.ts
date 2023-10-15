@@ -2,8 +2,9 @@ import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator, taskUpdateSchema } from "#lib/json/schema";
 import { setLocalStoreItem } from "#browser/local-storage";
-import type { ITask, ITaskUpdate } from "../types";
+import type { ITask, ITaskStore, ITaskUpdate } from "../types";
 import { getAllTasks } from "./get";
+import { toTasks } from "./to-tasks";
 
 export async function editTask(update: ITaskUpdate): Promise<ITask> {
   const validate: Awaited<ReturnType<typeof createValidator<ITaskUpdate>>> =
@@ -31,7 +32,7 @@ export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
     );
   }
 
-  const tasksWithUpdatedApplied = storedTasks.map<ITask>((task) => {
+  const tasksWithUpdatedApplied = storedTasks.map<ITaskStore>((task) => {
     if (!updateIDs.has(task.id)) {
       return task;
     }
@@ -54,7 +55,7 @@ export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
       ? update.status
       : task.status;
     const updatedDeletionDate = update.deleted_at ?? task.deleted_at;
-    const updatedTask: ITask = {
+    const updatedTask: ITaskStore = {
       ...task,
       updated_at: now(),
       title: updatedTitle,
@@ -68,9 +69,11 @@ export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
 
   setLocalStoreItem("todos", tasksWithUpdatedApplied);
 
-  const editedTasks = tasksWithUpdatedApplied.filter(({ id }) =>
+  const inputTasks = tasksWithUpdatedApplied.filter(({ id }) =>
     updateIDs.has(id),
   );
+
+  const editedTasks = await toTasks(inputTasks);
 
   logDebug(`Edited ${editedTasks.length} tasks.`);
 
