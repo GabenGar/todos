@@ -58,7 +58,8 @@
       "description": "Description",
       "status": "Status",
       "add": "Add",
-      "adding": "Adding..."
+      "adding": "Adding...",
+      "place": "Place"
     },
     "status": "Status",
     "status_values": {

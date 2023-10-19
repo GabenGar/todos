@@ -20,12 +20,14 @@ export function NewTaskForm({
   id,
   onNewTask,
 }: INewTaskFormProps) {
-  const { title, description, add, adding, status } = translation.new_todo;
+  const { title, description, add, adding, status, place } =
+    translation.new_todo;
   const { status_values } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
     STATUS: { name: "status", label: status },
+    PLACE: { name: "place_id", label: place },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -34,6 +36,7 @@ export function NewTaskForm({
     const title = formElements.title.value.trim();
     const description = formElements.description.value.trim();
     const status = formElements.status.value.trim();
+    const place_id = formElements.place_id.value.trim();
 
     const init: ITaskInit = {
       title,
@@ -45,6 +48,10 @@ export function NewTaskForm({
 
     if (isTaskStatus(status)) {
       init.status = status;
+    }
+
+    if (place_id.length) {
+      init.place_id = place_id;
     }
 
     await onNewTask(init);
@@ -81,6 +88,16 @@ export function NewTaskForm({
             rows={4}
           >
             {FIELD.DESCRIPTION.label}
+          </InputSectionText>
+
+          <InputSectionText
+            id={`${formID}-${FIELD.PLACE.name}`}
+            form={formID}
+            name={FIELD.PLACE.name}
+            minLength={21}
+            maxLength={21}
+          >
+            {FIELD.PLACE.label}
           </InputSectionText>
 
           <InputSectionSelect

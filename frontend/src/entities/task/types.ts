@@ -1,3 +1,4 @@
+import { IPlace } from "#entities/place";
 import type { IDateTime } from "#lib/dates";
 import { IEntityItem } from "#lib/entities";
 import type { INonNegativeInteger } from "#lib/numbers";
@@ -30,16 +31,18 @@ export interface ITaskStore {
   title: string;
   status: ITaskStatus;
   description?: string;
-  place?: INanoidID
+  place?: INanoidID;
 }
 
 export interface ITask extends Omit<ITaskStore, "place"> {
-  place?: IEntityItem
+  place?: IEntityItem;
 }
 
 export interface ITaskInit
   extends Pick<ITask, "title" | "description">,
-    Pick<Partial<ITask>, "status"> {}
+    Pick<Partial<ITask>, "status"> {
+  place_id?: IPlace["id"];
+}
 
 export interface ITaskUpdate
   extends Pick<ITask, "id">,

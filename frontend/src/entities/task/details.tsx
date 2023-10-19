@@ -125,14 +125,14 @@ function Component({
               />
 
               <DescriptionSection
+                isHorizontal
                 dKey={translation.place}
                 dValue={
                   !place ? (
                     translation.place_unknown
                   ) : (
                     <Link href={createPlacePageURL(place.id)} target="_blank">
-                      &quot;{place.title ?? translation.place_unknown}&quot; (
-                      {place.id})
+                      {place.title ?? translation.place_unknown} ({place.id})
                     </Link>
                   )
                 }

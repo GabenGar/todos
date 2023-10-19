@@ -28,7 +28,7 @@ function Component({
   // render a normal input if constraints fit a value
   // into a single row on a preview component
   const isShort = Boolean(
-    minLength && minLength < 21 && maxLength && maxLength < 21,
+    minLength && minLength < 22 && maxLength && maxLength < 22,
   );
 
   return (
