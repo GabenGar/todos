@@ -4,10 +4,16 @@ export type INanoidID = ReturnType<typeof nanoid>;
 export type ITitle = string;
 export type IDescription = string;
 
+type IStringCollection = readonly string[] | Set<string>;
+
 export function toQuotedStrings(
-  stringArray: readonly string[],
+  stringCollection: IStringCollection,
   joiner = ",",
 ): string {
+  const stringArray =
+    stringCollection instanceof Set
+      ? Array.from(stringCollection)
+      : stringCollection;
   const quotedStrings = stringArray
     .map((value) => toQuotedString(value))
     .join(joiner);

@@ -46,7 +46,9 @@ export interface ITaskInit
 
 export interface ITaskUpdate
   extends Pick<ITask, "id">,
-    Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {}
+    Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {
+  place_id?: IPlace["id"];
+}
 
 export interface ITaskStatsAll {
   all: INonNegativeInteger;

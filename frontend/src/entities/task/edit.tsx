@@ -21,12 +21,13 @@ export function EditTaskForm({
   id,
   onTaskEdit,
 }: IEditTaskFormProps) {
-  const { title, description, status } = translation.new_todo;
+  const { title, description, status, place } = translation.new_todo;
   const { status_values, editing, edit } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
     STATUS: { name: "status", label: status },
+    PLACE: { name: "place_id", label: place },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -90,6 +91,17 @@ export function EditTaskForm({
             defaultValue={currentTask.description}
           >
             {FIELD.DESCRIPTION.label}
+          </InputSectionText>
+
+          <InputSectionText
+            id={`${formID}-${FIELD.PLACE.name}`}
+            form={formID}
+            name={FIELD.PLACE.name}
+            minLength={21}
+            maxLength={21}
+            defaultValue={currentTask.place?.id}
+          >
+            {FIELD.PLACE.label}
           </InputSectionText>
 
           <InputSectionSelect

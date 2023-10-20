@@ -56,6 +56,7 @@ async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
       const message = `These places do not exist: ${toQuotedStrings(
         invalidIDs,
       )}.`;
+
       throw new Error(message);
     }
   }
