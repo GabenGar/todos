@@ -1,6 +1,6 @@
 export type { IInputProps } from "./input";
-export { InputText } from "./text";
-export type { IInputTextProps } from "./text";
+export { InputText } from "./text/text";
+export type { IInputTextProps } from "./text/text";
 export { InputFile } from "./file";
 export type { IInputFileProps } from "./file";
 export { InputSelect, InputOption, InputOptionGroup } from "./select";
@@ -9,5 +9,6 @@ export type {
   IInputOptionProps,
   IInputOptionGroupProps,
 } from "./select";
-export { InputTextArea } from "./text-area";
-export type { IInputTextAreaProps } from "./text-area";
+export { InputTextArea } from "./text/text-area";
+export type { IInputTextAreaProps } from "./text/text-area";
+export { InputNanoID } from "./text/nanoid";

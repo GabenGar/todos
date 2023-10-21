@@ -1,6 +1,6 @@
 import { createBlockComponent } from "#components/meta";
 import { type IInputTextProps, InputText, InputTextArea } from "../input";
-import { IInputTextAreaProps } from "../input/text-area";
+import { IInputTextAreaProps } from "../input/text/text-area";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
 

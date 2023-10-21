@@ -1,7 +1,11 @@
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import { InputOption } from "#components/form/input";
-import { InputSectionSelect, InputSectionText } from "#components/form/section";
+import {
+  InputSectionNanoID,
+  InputSectionSelect,
+  InputSectionText,
+} from "#components/form/section";
 import { type ITaskInit, isTaskStatus } from "./types";
 
 import styles from "./new.module.scss";
@@ -90,15 +94,13 @@ export function NewTaskForm({
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
 
-          <InputSectionText
+          <InputSectionNanoID
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}
             name={FIELD.PLACE.name}
-            minLength={21}
-            maxLength={21}
           >
             {FIELD.PLACE.label}
-          </InputSectionText>
+          </InputSectionNanoID>
 
           <InputSectionSelect
             label={FIELD.STATUS.label}

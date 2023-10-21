@@ -1,6 +1,10 @@
 import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import { InputSectionSelect, InputSectionText } from "#components/form/section";
+import {
+  InputSectionNanoID,
+  InputSectionSelect,
+  InputSectionText,
+} from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
 import { InputOption } from "#components/form/input";
 import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
@@ -93,16 +97,13 @@ export function EditTaskForm({
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
 
-          <InputSectionText
+          <InputSectionNanoID
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}
             name={FIELD.PLACE.name}
-            minLength={21}
-            maxLength={21}
-            defaultValue={currentTask.place?.id}
           >
             {FIELD.PLACE.label}
-          </InputSectionText>
+          </InputSectionNanoID>
 
           <InputSectionSelect
             label={FIELD.STATUS.label}

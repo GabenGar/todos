@@ -1,5 +1,5 @@
 import { createBlockComponent } from "#components/meta";
-import { Input, type IInputProps } from "./input";
+import { Input, type IInputProps } from "../input";
 
 export interface IInputTextProps extends IInputProps {}
 
