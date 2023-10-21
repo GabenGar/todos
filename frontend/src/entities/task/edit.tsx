@@ -40,6 +40,7 @@ export function EditTaskForm({
     const title = formElements.title.value.trim();
     const description = formElements.description.value.trim();
     const status = formElements.status.value.trim();
+    const place_id = formElements.place_id.value.trim();
 
     const update: ITaskUpdate = {
       id: currentTask.id,
@@ -59,6 +60,10 @@ export function EditTaskForm({
 
     if (isTaskStatus(status) && status !== currentTask.status) {
       update.status = status;
+    }
+
+    if (place_id && place_id !== currentTask.place?.id) {
+      update.place_id = place_id;
     }
 
     await onTaskEdit(update);
@@ -101,6 +106,7 @@ export function EditTaskForm({
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}
             name={FIELD.PLACE.name}
+            defaultValue={currentTask.place?.id}
           >
             {FIELD.PLACE.label}
           </InputSectionNanoID>

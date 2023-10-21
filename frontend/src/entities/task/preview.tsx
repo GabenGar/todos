@@ -12,6 +12,7 @@ import {
 } from "#components/preview";
 import { DateTime } from "#components/date";
 import { Link } from "#components/link";
+import { EntityID } from "#components/entities";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
 
@@ -37,6 +38,7 @@ function Component({ task, translation, ...props }: IProps) {
           </PreviewHeader>
 
           <PreviewBody>
+            <EntityID>{id}</EntityID>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
@@ -61,8 +63,7 @@ function Component({ task, translation, ...props }: IProps) {
                     translation.place_unknown
                   ) : (
                     <Link href={createPlacePageURL(place.id)} target="_blank">
-                      &quot;{place.title ?? translation.place_unknown}&quot; (
-                      {place.id})
+                      {place.title ?? translation.place_unknown} ({place.id})
                     </Link>
                   )
                 }
