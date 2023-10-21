@@ -82,7 +82,8 @@ async function importTasks(
       currentTask.deleted_at ||
       (currentTask.title === changedTask.title &&
         currentTask.description === changedTask.description &&
-        currentTask.status === changedTask.status && currentTask.place === changedTask.place);
+        currentTask.status === changedTask.status &&
+        currentTask.place === changedTask.place);
 
     if (isNotUpdated) {
       return currentTask;
