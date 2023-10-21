@@ -1,5 +1,5 @@
 import type { ILocalization } from "#lib/localization";
-import { createTaskPageURL } from "#lib/urls";
+import { createPlacePageURL, createTaskPageURL } from "#lib/urls";
 import { DescriptionList, DescriptionSection } from "#components";
 import { Heading } from "#components/heading";
 import { createBlockComponent } from "#components/meta";
@@ -12,6 +12,7 @@ import {
 } from "#components/preview";
 import { DateTime } from "#components/date";
 import { Link } from "#components/link";
+import { EntityID } from "#components/entities";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
 
@@ -25,7 +26,8 @@ interface IProps extends IPreviewProps {
 export const TaskPreview = createBlockComponent(styles, Component);
 
 function Component({ task, translation, ...props }: IProps) {
-  const { id, title, description, status, created_at, updated_at } = task;
+  const { id, title, description, status, created_at, updated_at, place } =
+    task;
 
   return (
     <Preview {...props}>
@@ -36,6 +38,7 @@ function Component({ task, translation, ...props }: IProps) {
           </PreviewHeader>
 
           <PreviewBody>
+            <EntityID>{id}</EntityID>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
@@ -51,6 +54,19 @@ function Component({ task, translation, ...props }: IProps) {
               <DescriptionSection
                 dKey={translation.description}
                 dValue={description ?? translation.no_description}
+              />
+
+              <DescriptionSection
+                dKey={translation.place}
+                dValue={
+                  !place ? (
+                    translation.place_unknown
+                  ) : (
+                    <Link href={createPlacePageURL(place.id)} target="_blank">
+                      {place.title ?? translation.place_unknown} ({place.id})
+                    </Link>
+                  )
+                }
               />
             </DescriptionList>
 

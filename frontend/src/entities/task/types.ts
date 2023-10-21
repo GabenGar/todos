@@ -1,4 +1,6 @@
+import { IPlace } from "#entities/place";
 import type { IDateTime } from "#lib/dates";
+import { IEntityItem } from "#lib/entities";
 import type { INonNegativeInteger } from "#lib/numbers";
 import { toQuotedStrings, type INanoidID } from "#lib/strings";
 
@@ -21,7 +23,7 @@ export function validateTaskStatus(
   }
 }
 
-export interface ITask {
+export interface ITaskStore {
   id: INanoidID;
   created_at: IDateTime;
   updated_at: IDateTime;
@@ -29,15 +31,24 @@ export interface ITask {
   title: string;
   status: ITaskStatus;
   description?: string;
+  place?: INanoidID;
+}
+
+export interface ITask extends Omit<ITaskStore, "place"> {
+  place?: IEntityItem;
 }
 
 export interface ITaskInit
   extends Pick<ITask, "title" | "description">,
-    Pick<Partial<ITask>, "status"> {}
+    Pick<Partial<ITask>, "status"> {
+  place_id?: IPlace["id"];
+}
 
 export interface ITaskUpdate
   extends Pick<ITask, "id">,
-    Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {}
+    Pick<Partial<ITask>, "title" | "description" | "status" | "deleted_at"> {
+  place_id?: IPlace["id"];
+}
 
 export interface ITaskStatsAll {
   all: INonNegativeInteger;

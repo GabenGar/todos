@@ -14,4 +14,5 @@ export {
   placeSchema,
   placeUpdateSchema,
   titleSchema,
+  entityItemSchema,
 } from "./types";

@@ -58,7 +58,8 @@
       "description": "Description",
       "status": "Status",
       "add": "Add",
-      "adding": "Adding..."
+      "adding": "Adding...",
+      "place": "Place"
     },
     "status": "Status",
     "status_values": {
@@ -90,6 +91,8 @@
     "creation_date": "Creation date",
     "last_updated": "Last updated",
     "edit": "Edit",
+    "place": "Place",
+    "place_unknown": "Unknown",
     "status": "Status",
     "status_values": {
       "pending": "Pending",

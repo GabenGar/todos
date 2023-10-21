@@ -24,6 +24,9 @@
     },
     "deleted_at": {
       "$ref": "/dates/datetime"
+    },
+    "place_id": {
+      "$ref": "/strings/nanoid"
     }
   }
 }

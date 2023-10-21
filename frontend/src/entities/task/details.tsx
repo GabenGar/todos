@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { INanoidID } from "#lib/strings";
 import type { ILocalization } from "#lib/localization";
-import { createTaskEditPageURL, createTasksPageURL } from "#lib/urls";
+import {
+  createPlacePageURL,
+  createTaskEditPageURL,
+  createTasksPageURL,
+} from "#lib/urls";
 import { logError } from "#lib/logs";
 import { isError } from "#lib/errors";
 import { createBlockComponent } from "#components/meta";
@@ -82,8 +86,16 @@ function Component({
     );
   }
 
-  const { id, title, description, created_at, updated_at, status, deleted_at } =
-    task;
+  const {
+    id,
+    title,
+    description,
+    created_at,
+    updated_at,
+    status,
+    deleted_at,
+    place,
+  } = task;
 
   return (
     <Details {...props}>
@@ -106,12 +118,29 @@ function Component({
                   />
                 }
               />
+
               <DescriptionSection
                 dKey={translation.description}
                 dValue={description ?? translation.no_description}
               />
+
+              <DescriptionSection
+                isHorizontal
+                dKey={translation.place}
+                dValue={
+                  !place ? (
+                    translation.place_unknown
+                  ) : (
+                    <Link href={createPlacePageURL(place.id)} target="_blank">
+                      {place.title ?? translation.place_unknown} ({place.id})
+                    </Link>
+                  )
+                }
+              />
             </DescriptionList>
+
             <hr style={{ width: "100%" }} />
+
             <DescriptionList>
               <DescriptionSection
                 dKey={translation.creation_date}

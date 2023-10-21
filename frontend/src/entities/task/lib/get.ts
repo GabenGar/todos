@@ -1,9 +1,13 @@
 import { logDebug } from "#lib/logs";
-import { IPaginatedCollection, createPagination } from "#lib/pagination";
+import { type IPaginatedCollection, createPagination } from "#lib/pagination";
 import { isSubstring } from "#lib/strings";
+import { type IEntityItem } from "#lib/entities";
+import { createValidator, taskSchema } from "#lib/json/schema";
 import { getLocalStoreItem } from "#browser/local-storage";
+import { getAllPlaces } from "#entities/place";
+import type { ITask, ITaskStatsAll, ITaskStore } from "../types";
 import { migrateTasks } from "./migrate";
-import type { ITask, ITaskStatsAll } from "../types";
+import { toTasks } from "./to-tasks";
 
 interface IOptions {
   includeDeleted?: boolean;
@@ -18,7 +22,7 @@ const defaultOptions = {
   includeDeleted: false,
 } as const satisfies IOptions;
 
-export async function getTask(taskID: ITask["id"]) {
+export async function getTask(taskID: ITask["id"]): Promise<ITask> {
   if (!isMigrated) {
     try {
       await migrateTasks();
@@ -28,20 +32,53 @@ export async function getTask(taskID: ITask["id"]) {
   }
 
   const storedTasks = await getAllTasks();
-  const task = storedTasks.find(({ id }) => id === taskID);
+  const storeTask = storedTasks.find(({ id }) => id === taskID);
 
-  if (!task) {
+  if (!storeTask) {
     throw new Error(`No task with ID "${taskID}" exists.`);
+  }
+
+  const { place, ...restTask } = storeTask;
+  const task: ITask = {
+    ...restTask,
+  };
+
+  if (storeTask.place) {
+    const placeID = storeTask.place;
+    const places = await getAllPlaces();
+    const place = places.find(({ id }) => id === placeID);
+
+    if (!place) {
+      throw new Error(
+        `Place with ID "${placeID}" on task with ID "${storeTask.id}" does not exist.`,
+      );
+    }
+
+    const placeItem: IEntityItem = {
+      id: place.id,
+      title: place.title,
+    };
+
+    task.place = placeItem;
   }
 
   return task;
 }
 
 /**
- * @TODO derive its logic from `getTasks()` instead
+ * @TODO
+ * - derive its logic from `getTasks()` instead
  */
-export async function getAllTasks(includeDeleted = true) {
-  const storedTasks = getLocalStoreItem<ITask[]>("todos", []);
+export async function getAllTasks(
+  includeDeleted = true,
+): Promise<ITaskStore[]> {
+  const validate: Awaited<ReturnType<typeof createValidator<ITaskStore>>> =
+    await createValidator(taskSchema.$id);
+
+  const storedTasks = getLocalStoreItem<ITaskStore[]>("todos", []);
+
+  storedTasks.forEach((task) => validate(task));
+
   const fitleredTasks = includeDeleted
     ? storedTasks
     : storedTasks.filter(({ deleted_at }) => !deleted_at);
@@ -71,9 +108,6 @@ export async function getTasksStats(): Promise<ITaskStatsAll> {
   return stats;
 }
 
-/**
- * @TODO validation
- */
 export async function getTasks(
   options: IOptions = defaultOptions,
 ): Promise<IPaginatedCollection<ITask>> {
@@ -109,7 +143,13 @@ export async function getTasks(
     },
   );
   const pagination = createPagination(filteredTasks.length, page);
-  const items = filteredTasks.slice(pagination.offset, pagination.currentMax);
+  const inputTasks = filteredTasks.slice(
+    pagination.offset,
+    pagination.currentMax,
+  );
+
+  const items = await toTasks(inputTasks);
+
   const collection: IPaginatedCollection<ITask> = {
     pagination,
     items,

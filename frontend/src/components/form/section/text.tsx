@@ -1,6 +1,6 @@
 import { createBlockComponent } from "#components/meta";
 import { type IInputTextProps, InputText, InputTextArea } from "../input";
-import { IInputTextAreaProps } from "../input/text-area";
+import { IInputTextAreaProps } from "../input/text/text-area";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
 
@@ -28,7 +28,7 @@ function Component({
   // render a normal input if constraints fit a value
   // into a single row on a preview component
   const isShort = Boolean(
-    minLength && minLength < 21 && maxLength && maxLength < 21,
+    minLength && minLength < 22 && maxLength && maxLength < 22,
   );
 
   return (

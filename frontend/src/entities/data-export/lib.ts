@@ -3,7 +3,7 @@ import { now } from "#lib/dates";
 import { createValidator, dataExportSchema } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
 import { setLocalStoreItem } from "#browser/local-storage";
-import { type ITask, getAllTasks } from "#entities/task";
+import { getAllTasks, type ITaskStore } from "#entities/task";
 import { type IPlace, getAllPlaces } from "#entities/place";
 import type { IDataExport } from "./types";
 
@@ -65,7 +65,7 @@ export async function importDataExport(dataExport: unknown) {
 
 async function importTasks(
   exportID: IDataExport["id"],
-  incomingTasks: ITask[],
+  incomingTasks: ITaskStore[],
 ) {
   logDebug(
     `Importing ${incomingTasks.length} tasks of data export "${exportID}"...`,
@@ -75,14 +75,15 @@ async function importTasks(
   const currentIDs = currentTasks.map(({ id }) => id);
   const newTasks = incomingTasks.filter(({ id }) => !currentIDs.includes(id));
 
-  const updatedTasks = currentTasks.map<ITask>((currentTask) => {
+  const updatedTasks = currentTasks.map<ITaskStore>((currentTask) => {
     const changedTask = incomingTasks.find(({ id }) => id === currentTask.id);
     const isNotUpdated =
       !changedTask ||
       currentTask.deleted_at ||
       (currentTask.title === changedTask.title &&
         currentTask.description === changedTask.description &&
-        currentTask.status === changedTask.status);
+        currentTask.status === changedTask.status &&
+        currentTask.place === changedTask.place);
 
     if (isNotUpdated) {
       return currentTask;

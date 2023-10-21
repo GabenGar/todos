@@ -58,7 +58,8 @@
       "description": "Описание",
       "status": "Статус",
       "add": "Добавить",
-      "adding": "Добавляем..."
+      "adding": "Добавляем...",
+      "place": "Место"
     },
     "status": "Статус",
     "status_values": {
@@ -90,6 +91,8 @@
     "creation_date": "Дата создания",
     "last_updated": "Последнее обновление",
     "edit": "Редактировать",
+    "place": "Место",
+    "place_unknown": "Неизвестно",
     "status": "Статус",
     "status_values": {
       "pending": "В ожидании",
