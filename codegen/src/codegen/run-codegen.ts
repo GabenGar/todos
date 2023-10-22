@@ -1,8 +1,8 @@
 import { reduceFolder } from "#lib/fs";
 
-export async function runCodegen(folderPath: string) {
+export async function runCodegen(inputFolder: string, outputFolder: string) {
   const count = await reduceFolder(
-    folderPath,
+    inputFolder,
     0,
     async (accum, entry, entrypath) => {
       console.log(
