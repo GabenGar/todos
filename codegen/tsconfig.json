@@ -10,6 +10,9 @@
     "rootDir": "./",
     "baseUrl": "./",
     "paths": {
+      "#codegen": [
+        "./src/codegen/index.ts"
+      ],
       "#lib/*": [
         "./src/lib/*/index.ts"
       ]

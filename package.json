@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "install-all": "npm install && cd frontend && npm install",
-    "build": "cd frontend && npm run build",
+    "build-all": "npm run build-frontend && npm run build-codegen",
+    "build-frontend": "cd frontend && npm run build",
+    "build-codegen": "cd codegen && npm run build",
     "start": "cd frontend && npm start",
     "lint": "cd frontend && npm run lint",
     "format": "cd frontend && npm run format",
@@ -16,7 +18,9 @@
     "type": "git",
     "url": "git+https://github.com/GabenGar/todos.git"
   },
-  "keywords": ["NextJS"],
+  "keywords": [
+    "NextJS"
+  ],
   "author": "GabenGar",
   "license": "MIT",
   "bugs": {
