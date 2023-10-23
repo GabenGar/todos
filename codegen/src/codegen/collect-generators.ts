@@ -1,8 +1,8 @@
 import path from "node:path";
 import { reduceFolder } from "#lib/fs";
 import {
-  ICodeGenerator,
-  IGeneratorMap,
+  type ICodeGenerator,
+  type IGeneratorMap,
   type IGeneratorModule,
   generatorName,
 } from "./types.js";
