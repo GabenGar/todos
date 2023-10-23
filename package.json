@@ -4,15 +4,21 @@
   "description": "The list of todos in NextJS.",
   "private": true,
   "scripts": {
-    "install-all": "npm install && cd frontend && npm install",
+    "install-all": "npm install && npm run install-frontend && npm run install-codegen",
+    "install-frontend": "cd frontend && npm install",
+    "install-codegen": "cd codegen && npm install",
     "build-all": "npm run build-frontend && npm run build-codegen",
     "build-frontend": "cd frontend && npm run build",
     "build-codegen": "cd codegen && npm run build",
     "start": "cd frontend && npm start",
-    "lint": "cd frontend && npm run lint",
-    "format": "cd frontend && npm run format",
+    "lint-all": "npm run lint-frontend && npm run lint-codegen",
+    "lint-frontend": "cd frontend && npm run lint",
+    "lint-codegen": "cd codegen && npm run lint",
+    "format-all": "npm run format-frontend && npm run format-codegen",
+    "format-frontend": "cd frontend && npm run format",
+    "format-codegen": "cd codegen && npm run format",
     "dev": "cd frontend && npm run dev",
-    "prep": "npm run build-all && npm run format && npm run install-all"
+    "prep": "npm run install-all && npm run build-all && npm run format-all"
   },
   "repository": {
     "type": "git",
