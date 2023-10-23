@@ -18,7 +18,8 @@
     "format-frontend": "cd frontend && npm run format",
     "format-codegen": "cd codegen && npm run format",
     "dev": "cd frontend && npm run dev",
-    "prep": "npm run install-all && npm run build-all && npm run format-all"
+    "prep": "npm run install-all && npm run build-all && npm run format-all",
+    "codegen": "cd frontend && npm run codegen"
   },
   "repository": {
     "type": "git",

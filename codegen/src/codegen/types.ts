@@ -2,8 +2,11 @@ export interface IGeneratorModule {
   default: () => Promise<string>;
 }
 
-export type ICodegenModule = { module: string } | { modules: string[] };
+export interface IGeneratorMap extends Map<string, ICodeGenerator> {}
 
-interface IModule {
+export interface ICodeGenerator {
   name: string;
+  generate: () => Promise<string>;
 }
+
+export const generatorName = "generator.js";

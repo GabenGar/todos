@@ -1,8 +1,28 @@
-import { mkdtemp } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { ParseArgsConfig, parseArgs } from "node:util";
 import { runCodegen } from "#codegen";
 
-const inputFolder = path.dirname(fileURLToPath(import.meta.url));
-const outputFolder = await mkdtemp(".tmp/codegen");
+const options: ParseArgsConfig = {
+  strict: true,
+  allowPositionals: true,
+};
+const { positionals } = parseArgs(options);
+
+if (positionals.length !== 2) {
+  throw new Error(
+    `Provided ${positionals.length} arguments while only 2 allowed.`,
+  );
+}
+
+const inputFolder = positionals.at(0)?.trim();
+
+if (!inputFolder) {
+  throw new Error("No input folder was provided.");
+}
+
+const outputFolder = positionals.at(1)?.trim();
+
+if (!outputFolder) {
+  throw new Error("No output folder was provided.");
+}
+
 await runCodegen(inputFolder, outputFolder);
