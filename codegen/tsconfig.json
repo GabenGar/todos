@@ -9,10 +9,16 @@
     "moduleResolution": "Node16",
     "rootDir": "./",
     "baseUrl": "./",
-    "paths": {},
+    "paths": {
+      "#codegen": [
+        "./src/codegen/index.ts"
+      ],
+      "#lib/*": [
+        "./src/lib/*/index.ts"
+      ]
+    },
     "resolveJsonModule": true,
     "outDir": "./dist",
-    "importHelpers": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
