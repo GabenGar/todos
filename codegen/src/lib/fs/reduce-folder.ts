@@ -9,8 +9,8 @@ export async function reduceFolder<AccumulatorType>(
   reducer: (
     accumulator: AccumulatorType,
     entry: Dirent,
-    entryPath: PathLike
-  ) => Promise<AccumulatorType>
+    entryPath: PathLike,
+  ) => Promise<AccumulatorType>,
 ): Promise<AccumulatorType> {
   let accumulator = initValue;
 

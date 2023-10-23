@@ -1,13 +1,13 @@
-import path from "node:path";
-import { opendir } from "node:fs/promises";
 import type { Dirent, PathLike } from "node:fs";
+import { opendir } from "node:fs/promises";
+import path from "node:path";
 
 /**
  * @TODO non-recursive walk
  */
 export async function walkFolder(
   folderPath: PathLike,
-  callback: (entry: Dirent, folderPath: string) => Promise<void>
+  callback: (entry: Dirent, folderPath: string) => Promise<void>,
 ) {
   console.debug(`Walking folder "${folderPath}"...`);
 
@@ -18,7 +18,7 @@ export async function walkFolder(
 
 async function walk(
   folderPath: PathLike,
-  callback: (entry: Dirent, folderPath: string) => Promise<void>
+  callback: (entry: Dirent, folderPath: string) => Promise<void>,
 ) {
   const folder = await opendir(folderPath, { encoding: "utf8" });
 
