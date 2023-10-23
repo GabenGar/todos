@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/index.js",
-    "lint": "biome lint ./src && tsc --noEmit",
-    "format": "biome check ./src --apply && tsc --noEmit"
+    "lint": "biome lint ./ && tsc --noEmit",
+    "format": "biome check ./ --apply && tsc --noEmit"
   },
   "imports": {
     "#codegen": "./dist/src/codegen/index.js",
