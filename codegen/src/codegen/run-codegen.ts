@@ -1,19 +1,15 @@
-import { reduceFolder } from "#lib/fs";
+import { collectGenerators } from "./collect-generators.js";
+import { generateCode } from "./generate-code.js";
 
 export async function runCodegen(inputFolder: string, outputFolder: string) {
   console.log(
-    `Codegen this 8::::::::::::::::D~~~~ at input folder "${inputFolder}".`,
+    `Running codegen at input folder "${inputFolder}" and output folder "${outputFolder}"...`,
   );
 
-  const count = await reduceFolder(
-    inputFolder,
-    0,
-    async (accum, entry, entrypath) => {
-      return accum + 1;
-    },
-  );
+  const generators = await collectGenerators(inputFolder);
+  await generateCode(outputFolder, generators);
 
   console.log(
-    `Codegen this 8::::::::::::::::D~~~~ at output folder "${outputFolder}" ${count} times.`,
+    `Ran codegen at input folder "${inputFolder}" and output folder "${outputFolder}".`,
   );
 }

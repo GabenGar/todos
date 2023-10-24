@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint && prettier --log-level=warn ./src --check",
     "format": "prettier --log-level=warn ./src --write",
-    "dev": "next dev"
+    "dev": "next dev",
+    "codegen": "cd ../codegen && npm start -- ../frontend/dist/src/codegen/generators ../frontend/src/codegen/output"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.4.0",
