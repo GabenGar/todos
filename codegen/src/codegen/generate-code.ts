@@ -41,8 +41,8 @@ export async function generateCode(
   const backupTempPath = await mkdtemp(path.join(tmpdir()));
   const backupPath = path.join(backupTempPath, "backup");
   await rename(outputFolder, backupPath);
-  await rename(temporaryPath, outputFolder)
-  await rm(backupTempPath)
+  await rename(temporaryPath, outputFolder);
+  await rm(backupTempPath);
 
   console.debug(`Replaced the contents of folder "${outputFolder}".`);
 
