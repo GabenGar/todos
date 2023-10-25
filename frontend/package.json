@@ -10,7 +10,7 @@
     "lint": "next lint && prettier --log-level=warn ./src --check",
     "format": "prettier --log-level=warn ./src --write",
     "dev": "next dev",
-    "codegen": "npm run build-codegen && cd ../codegen && npm start -- ../frontend/src/codegen/generators ../frontend/src/codegen/output && prettier --log-level=warn ./src/codegen/output --write"
+    "codegen": "npm run build-codegen && cd ../codegen && npm start -- ../frontend/src/codegen/generators ../frontend/src/codegen/output && cd ../frontend && prettier --log-level=warn ./src/codegen/output --write"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.4.0",

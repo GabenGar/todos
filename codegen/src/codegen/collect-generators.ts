@@ -23,7 +23,7 @@ export async function collectGenerators(
 
         validateGeneratorModule(generatorModule, modulePath);
 
-        const generatorName = path.relative(inputFolder, modulePath);
+        const generatorName = path.dirname(path.relative(inputFolder, modulePath));
         const codegenGenerator: ICodeGenerator = {
           name: generatorName,
           generate: generatorModule.default,
