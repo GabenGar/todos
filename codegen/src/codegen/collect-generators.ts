@@ -6,6 +6,7 @@ import {
   type IGeneratorModule,
   generatorName,
 } from "./types.js";
+import { pathToFileURL } from "node:url";
 
 export async function collectGenerators(
   inputFolder: string,
@@ -18,7 +19,7 @@ export async function collectGenerators(
     async (generators, entry, entrypath) => {
       if (entry.isFile() && entry.name === generatorName) {
         const modulePath = String(entrypath);
-        const generatorModule: object = await import(modulePath);
+        const generatorModule: object = await import(String(pathToFileURL(modulePath)));
 
         validateGeneratorModule(generatorModule, modulePath);
 
@@ -46,7 +47,7 @@ function validateGeneratorModule(
   inputModule: object,
   modulePath: string,
 ): asserts inputModule is IGeneratorModule {
-  const exportsAmount = Object.keys(module).length;
+  const exportsAmount = Object.keys(inputModule).length;
 
   if (exportsAmount !== 1) {
     throw new Error(
@@ -54,13 +55,13 @@ function validateGeneratorModule(
     );
   }
 
-  if (!("default" in module)) {
+  if (!("default" in inputModule)) {
     throw new Error(
       `Generator module "${modulePath}" does not have a default export.`,
     );
   }
 
-  if (typeof module.default !== "function") {
+  if (typeof inputModule.default !== "function") {
     throw new Error(
       `Default export of generator module "${modulePath}" is not a function.`,
     );

@@ -42,7 +42,7 @@ export async function generateCode(
   const backupPath = path.join(backupTempPath, "backup");
   await rename(outputFolder, backupPath);
   await rename(temporaryPath, outputFolder);
-  await rm(backupTempPath);
+  await rm(backupTempPath, { recursive: true });
 
   console.debug(`Replaced the contents of folder "${outputFolder}".`);
 
