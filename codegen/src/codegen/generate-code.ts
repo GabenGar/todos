@@ -38,11 +38,14 @@ export async function generateCode(
   console.debug(
     `Replacing the contents of folder "${outputFolder}" with folder "${temporaryPath}"...`,
   );
-  const backupTempPath = await mkdtemp(path.join(tmpdir()));
+
+  const backupTempPath = await mkdtemp(path.join(tmpdir()), {
+    encoding: "utf8",
+  });
   const backupPath = path.join(backupTempPath, "backup");
   await rename(outputFolder, backupPath);
   await rename(temporaryPath, outputFolder);
-  await rm(backupTempPath);
+  await rm(backupTempPath, { recursive: true });
 
   console.debug(`Replaced the contents of folder "${outputFolder}".`);
 

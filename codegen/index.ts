@@ -1,3 +1,4 @@
+import path from "node:path";
 import { ParseArgsConfig, parseArgs } from "node:util";
 import { runCodegen } from "#codegen";
 
@@ -25,4 +26,6 @@ if (!outputFolder) {
   throw new Error("No output folder was provided.");
 }
 
-await runCodegen(inputFolder, outputFolder);
+const resolvedInputFolder = path.resolve(inputFolder);
+const resolvedOutputFolder = path.resolve(outputFolder);
+await runCodegen(resolvedInputFolder, resolvedOutputFolder);
