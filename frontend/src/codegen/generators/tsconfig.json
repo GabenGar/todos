@@ -3,9 +3,7 @@
     "outDir": "./",
     "rootDir": "./",
     "target": "es2020",
-    "lib": [
-      "ES2020"
-    ],
+    "lib": ["ES2020"],
     "allowJs": false,
     "module": "Node16",
     "moduleResolution": "Node16",
@@ -15,8 +13,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": [
-    "**/*.ts",
-  ],
+  "include": ["**/*.ts"],
   "exclude": []
 }

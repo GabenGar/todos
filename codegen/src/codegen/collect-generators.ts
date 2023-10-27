@@ -1,4 +1,5 @@
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { reduceFolder } from "#lib/fs";
 import {
   type ICodeGenerator,
@@ -6,7 +7,6 @@ import {
   type IGeneratorModule,
   generatorName,
 } from "./types.js";
-import { pathToFileURL } from "node:url";
 
 export async function collectGenerators(
   inputFolder: string,
@@ -19,11 +19,15 @@ export async function collectGenerators(
     async (generators, entry, entrypath) => {
       if (entry.isFile() && entry.name === generatorName) {
         const modulePath = String(entrypath);
-        const generatorModule: object = await import(String(pathToFileURL(modulePath)));
+        const generatorModule: object = await import(
+          String(pathToFileURL(modulePath))
+        );
 
         validateGeneratorModule(generatorModule, modulePath);
 
-        const generatorName = path.dirname(path.relative(inputFolder, modulePath));
+        const generatorName = path.dirname(
+          path.relative(inputFolder, modulePath),
+        );
         const codegenGenerator: ICodeGenerator = {
           name: generatorName,
           generate: generatorModule.default,
