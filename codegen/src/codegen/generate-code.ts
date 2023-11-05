@@ -26,6 +26,11 @@ export async function generateCode(
     const { name: generatorName, generate } = codeGenerator;
     const generatorPath = path.join(temporaryPath, generatorName);
     const modulesInfo = await generate();
+
+    if (!Array.isArray(modulesInfo)) {
+      throw new Error("Nested codegen is not implemented.")
+    }
+
     await mkdir(generatorPath, { recursive: true });
 
     for await (const moduleInfo of modulesInfo) {
