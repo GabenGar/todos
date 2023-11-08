@@ -5,8 +5,11 @@ export interface IGeneratedNestedModule {
   /**
    * A name for the nested modules.
    */
-  name: string;
-  moduleMap: Map<IModuleInfo["name"], IModuleInfo>;
+  name: string | string[];
+  /**
+   * A map of module folder names and their contents
+   */
+  moduleMap: Map<string, IModuleInfo[]>;
 }
 
 export interface IGeneratorModule {
@@ -39,3 +42,7 @@ interface IModuleExport {
 }
 
 export const generatorName = "generator.js";
+export const codeMessage = `/**
+   * This module was generated automatically."
+   * Do not edit it manually."
+   */`;

@@ -1,14 +1,8 @@
 import { mkdir, mkdtemp, rename, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { IGeneratorMap, IModuleInfo } from "./types.js";
-
-const codeMessage = [
-  "/**",
-  " * This module was generated automatically.",
-  " * Do not edit it manually.",
-  " */",
-].join("\n");
+import { generateNestedCode } from "./generate-nested-code.js";
+import { type IGeneratorMap, type IModuleInfo, codeMessage } from "./types.js";
 
 export async function generateCode(
   outputFolder: string,
@@ -17,7 +11,9 @@ export async function generateCode(
   console.debug(`Generating code for ${generators.size} generators...`);
 
   console.debug("Creating a temporary folder...");
-  const temporaryPath = await mkdtemp(path.join(tmpdir()));
+  const temporaryPath = await mkdtemp(
+    path.join(tmpdir(), "todos-codegen", "incoming", ""),
+  );
   console.debug(`Created the temporary folder "${temporaryPath}".`);
 
   for await (const [_, codeGenerator] of generators) {
@@ -25,15 +21,21 @@ export async function generateCode(
 
     const { name: generatorName, generate } = codeGenerator;
     const generatorPath = path.join(temporaryPath, generatorName);
-    const modulesInfo = await generate();
+    const generatorModule = await generate();
 
-    if (!Array.isArray(modulesInfo)) {
-      throw new Error("Nested codegen is not implemented.")
+    if (!Array.isArray(generatorModule)) {
+      if (!("type" in generatorModule) || generatorModule.type !== "nested") {
+        throw new Error(
+          `Generator module at "${generatorPath}" is not a valid nested generator module.`,
+        );
+      }
+      await generateNestedCode(generatorModule, generatorPath);
+      continue;
     }
 
     await mkdir(generatorPath, { recursive: true });
 
-    for await (const moduleInfo of modulesInfo) {
+    for await (const moduleInfo of generatorModule) {
       await saveModule(generatorPath, moduleInfo);
     }
 
@@ -44,9 +46,12 @@ export async function generateCode(
     `Replacing the contents of folder "${outputFolder}" with folder "${temporaryPath}"...`,
   );
 
-  const backupTempPath = await mkdtemp(path.join(tmpdir()), {
-    encoding: "utf8",
-  });
+  const backupTempPath = await mkdtemp(
+    path.join(tmpdir(), "todos-codegen", "backup", ""),
+    {
+      encoding: "utf8",
+    },
+  );
   const backupPath = path.join(backupTempPath, "backup");
   await rename(outputFolder, backupPath);
   await rename(temporaryPath, outputFolder);
