@@ -11,13 +11,23 @@ export async function generateCode(
   console.debug(`Generating code for ${generators.size} generators...`);
 
   console.debug("Creating a temporary folder...");
+
+  // creating temp folder manually because `mkdtemp()`
+  // cannot into recursive creation
+  await mkdir(path.join(tmpdir(), "todos-codegen", "incoming"), {
+    recursive: true,
+  });
   const temporaryPath = await mkdtemp(
-    path.join(tmpdir(), "todos-codegen", "incoming", ""),
+    path.join(tmpdir(), "todos-codegen", "incoming", path.sep),
   );
+
   console.debug(`Created the temporary folder "${temporaryPath}".`);
 
+  const generatorCount = 1;
   for await (const [_, codeGenerator] of generators) {
-    console.debug(`Generating code for generator "${codeGenerator.name}"...`);
+    console.debug(
+      `Generating code for generator "${codeGenerator.name}" (${generatorCount} out of ${generators.size})...`,
+    );
 
     const { name: generatorName, generate } = codeGenerator;
     const generatorPath = path.join(temporaryPath, generatorName);
@@ -46,8 +56,13 @@ export async function generateCode(
     `Replacing the contents of folder "${outputFolder}" with folder "${temporaryPath}"...`,
   );
 
+  // creating temp folder manually because `mkdtemp()`
+  // cannot into recursive creation
+  await mkdir(path.join(tmpdir(), "todos-codegen", "backup"), {
+    recursive: true,
+  });
   const backupTempPath = await mkdtemp(
-    path.join(tmpdir(), "todos-codegen", "backup", ""),
+    path.join(tmpdir(), "todos-codegen", "backup", path.sep),
     {
       encoding: "utf8",
     },

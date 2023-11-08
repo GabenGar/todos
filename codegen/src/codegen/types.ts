@@ -43,6 +43,6 @@ interface IModuleExport {
 
 export const generatorName = "generator.js";
 export const codeMessage = `/**
-   * This module was generated automatically."
-   * Do not edit it manually."
+   * This module was generated automatically.
+   * Do not edit it manually.
    */`;
