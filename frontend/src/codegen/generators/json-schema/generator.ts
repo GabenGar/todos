@@ -1,4 +1,4 @@
-import type { IModuleInfo } from "../../../../../codegen/src/codegen/types.js"
+import type { IModuleInfo } from "../../../../../codegen/src/codegen/types.js";
 
 async function generateRocketShip(): Promise<IModuleInfo[]> {
   const content = `export const ROCKET_SHIP = "8::::::::::::::::D~~~~"`;

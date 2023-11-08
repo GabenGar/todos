@@ -16,7 +16,5 @@
   },
   "include": ["**/*.ts"],
   "exclude": [],
-  "references": [
-    { "path": "../../../../codegen/tsconfig.json" }
-  ]
+  "references": [{ "path": "../../../../codegen/tsconfig.json" }]
 }
