@@ -1,12 +1,26 @@
+export type IGeneratedModule = IModuleInfo[] | IGeneratedNestedModule;
+
+export interface IGeneratedNestedModule {
+  type: "nested";
+  /**
+   * A name for the nested modules.
+   */
+  name: string | string[];
+  /**
+   * A map of module folder names and their contents
+   */
+  moduleMap: Map<string, IModuleInfo[]>;
+}
+
 export interface IGeneratorModule {
-  default: () => Promise<IModuleInfo[]>;
+  default: () => Promise<IGeneratedModule>;
 }
 
 export interface IGeneratorMap extends Map<string, ICodeGenerator> {}
 
 export interface ICodeGenerator {
   name: string;
-  generate: () => Promise<IModuleInfo[]>;
+  generate: () => Promise<IGeneratedModule>;
 }
 
 export interface IModuleInfo {
@@ -28,3 +42,7 @@ interface IModuleExport {
 }
 
 export const generatorName = "generator.js";
+export const codeMessage = `/**
+   * This module was generated automatically.
+   * Do not edit it manually.
+   */`;

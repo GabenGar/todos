@@ -11,8 +11,10 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true
   },
   "include": ["**/*.ts"],
-  "exclude": []
+  "exclude": [],
+  "references": [{ "path": "../../../../codegen/tsconfig.json" }]
 }
