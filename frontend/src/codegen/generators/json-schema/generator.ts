@@ -1,7 +1,7 @@
-import type { IModuleInfo } from "../../../../../codegen/src/codegen/types.js";
+import type { IGeneratedNestedModule, IModuleInfo } from "../../../../../codegen/src/codegen/types.js";
 
-async function generateRocketShip(): Promise<IModuleInfo[]> {
-  const content = `export const ROCKET_SHIP = "8::::::::::::::::D~~~~"`;
+async function generateJSONSchemas(): Promise<IGeneratedNestedModule> {
+  const content = `export const ROCKET_SHIP = ""`;
   const moduleData: IModuleInfo = {
     name: "schema",
     content,
@@ -12,4 +12,4 @@ async function generateRocketShip(): Promise<IModuleInfo[]> {
   return modulesData;
 }
 
-export default generateRocketShip;
+export default generateJSONSchemas;
