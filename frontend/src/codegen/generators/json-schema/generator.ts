@@ -1,6 +1,6 @@
 import path from "node:path";
 import { readFile } from "node:fs/promises";
-import stringifyObject from 'stringify-object';
+import stringifyObject from "stringify-object";
 // @TODO import from a core lib once it's implemented
 import { reduceFolder } from "../../../../../codegen/dist/src/lib/fs/index.js";
 import type {
@@ -45,7 +45,11 @@ async function getSchemas(): Promise<ISchemaMap> {
 
       const content = await readFile(entryPath, { encoding: "utf8" });
       const schema: ISchema = JSON.parse(content);
-      const schemaPath = path.relative(schemaFolderPath, entryPath);
+      const moduleName = path.join(
+        path.dirname(entryPath),
+        path.basename(entryPath, schemaFileExtension),
+      );
+      const schemaPath = path.relative(schemaFolderPath, moduleName);
 
       schemaMap.set(schemaPath, schema);
 
