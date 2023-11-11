@@ -1,4 +1,4 @@
-import type { Dirent,} from "node:fs";
+import type { Dirent } from "node:fs";
 import { opendir } from "node:fs/promises";
 import path from "node:path";
 import { walkFolder } from "./walk-folder.js";

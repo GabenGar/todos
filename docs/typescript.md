@@ -41,7 +41,7 @@ const validateTask = createAssertionFunction<ITask>((inputData) => {
 So it has to be written like this instead:
 
 ```typescript
-const validateTask: ReturnType<typeof createAssertionFunction<<ITask>>> = createAssertionFunction<ITask>((inputData) => {
+const validateTask: ReturnType<typeof createAssertionFunction<ITask>> = createAssertionFunction<ITask>((inputData) => {
   const isInputData =
     typeof inputData === "object" &&
     inputData !== null &&
