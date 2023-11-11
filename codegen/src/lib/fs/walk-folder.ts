@@ -6,7 +6,7 @@ import path from "node:path";
  * @TODO non-recursive walk
  */
 export async function walkFolder(
-  folderPath: PathLike,
+  folderPath: string,
   callback: (entry: Dirent, folderPath: string) => Promise<void>,
 ) {
   console.debug(`Walking folder "${folderPath}"...`);
@@ -17,7 +17,7 @@ export async function walkFolder(
 }
 
 async function walk(
-  folderPath: PathLike,
+  folderPath: string,
   callback: (entry: Dirent, folderPath: string) => Promise<void>,
 ) {
   const folder = await opendir(folderPath, { encoding: "utf8" });

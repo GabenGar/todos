@@ -11,17 +11,14 @@ export async function generateNestedCode(
   generatorPath: string,
 ) {
   const { name, moduleMap } = generatorModule;
-  const moduleName = typeof name === "string" ? [name] : name;
   let moduleCount = 1;
 
   console.debug(
-    `Generating ${moduleMap.size} modules for the nested module "${path.join(
-      ...moduleName,
-    )}" at "${generatorPath}"...`,
+    `Generating ${moduleMap.size} modules for the nested module "${name}" at "${generatorPath}"...`,
   );
 
-  for await (const [_, moduleInfos] of moduleMap) {
-    const moduleFolderPath = path.join(generatorPath, ...moduleName);
+  for await (const [moduleName, moduleInfos] of moduleMap) {
+    const moduleFolderPath = path.join(generatorPath, moduleName);
 
     await mkdir(moduleFolderPath, { recursive: true });
 

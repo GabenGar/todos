@@ -1,15 +1,15 @@
-import type { Dirent, PathLike } from "node:fs";
+import type { Dirent } from "node:fs";
 import { opendir } from "node:fs/promises";
 import path from "node:path";
 import { walkFolder } from "./walk-folder.js";
 
 export async function reduceFolder<AccumulatorType>(
-  folderPath: PathLike,
+  folderPath: string,
   initValue: AccumulatorType,
   reducer: (
     accumulator: AccumulatorType,
     entry: Dirent,
-    entryPath: PathLike,
+    entryPath: string,
   ) => Promise<AccumulatorType>,
 ): Promise<AccumulatorType> {
   let accumulator = initValue;

@@ -30,3 +30,4 @@ export const DEFAULT_LOG_LEVEL = process.env
 
 export const IS_BROWSER = typeof window !== "undefined";
 export const IS_DEVELOPMENT = NODE_ENV === "development";
+export const ROCKET_SHIP = "8::::::::::::::::D~~~~";

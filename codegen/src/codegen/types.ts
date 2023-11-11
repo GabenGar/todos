@@ -4,8 +4,9 @@ export interface IGeneratedNestedModule {
   type: "nested";
   /**
    * A name for the nested modules.
+   * Is not used in the output path.
    */
-  name: string | string[];
+  name: string;
   /**
    * A map of module folder names and their contents
    */
