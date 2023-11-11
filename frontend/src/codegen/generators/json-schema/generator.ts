@@ -1,13 +1,14 @@
 import path from "node:path";
 import { readFile } from "node:fs/promises";
+import stringifyObject from 'stringify-object';
 // @TODO import from a core lib once it's implemented
-import { reduceFolder } from "../../../../../codegen/src/lib/fs/index.js";
+import { reduceFolder } from "../../../../../codegen/dist/src/lib/fs/index.js";
 import type {
   IGeneratedNestedModule,
   IModuleInfo,
 } from "../../../../../codegen/src/codegen/types.js";
 
-const schemaFolderPath = path.resolve("../../../../../schema");
+const schemaFolderPath = path.resolve("../schema");
 const schemaFileExtension = ".schema.json";
 
 /**
@@ -21,6 +22,7 @@ interface ISchema {
 
 async function generateJSONSchemas(): Promise<IGeneratedNestedModule> {
   const schemas = await getSchemas();
+
   const moduleMap = toNestedModules(schemas);
 
   const nestedModule: IGeneratedNestedModule = {
@@ -60,7 +62,7 @@ function toNestedModules(
   const moduleMap = Array.from(schemaMap.entries()).reduce<
     IGeneratedNestedModule["moduleMap"]
   >((moduleMap, [schemaPath, schema]) => {
-    const content = `export const schema = ${schema} as const`;
+    const content = `export const schema = ${stringifyObject(schema)} as const`;
     const moduleExports: IModuleInfo["exports"] = [
       { name: "schema", type: "concrete" },
     ];
