@@ -41,8 +41,8 @@
       "#types": [
         "./types.ts"
       ],
-      "#schema/*": [
-        "../../schema/*"
+      "#json-schema/*": [
+        ".codegen/output/json-schema/*/index.ts"
       ]
     },
     "lib": [
