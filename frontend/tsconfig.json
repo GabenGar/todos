@@ -42,7 +42,7 @@
         "./types.ts"
       ],
       "#json-schema/*": [
-        ".codegen/output/json-schema/*/index.ts"
+        "./codegen/output/json-schema/*/index.ts"
       ]
     },
     "lib": [

@@ -77,7 +77,7 @@ async function saveIndexFile(
         })
         .join(", ");
 
-      const exportStatement = `export {${symbolExports}} from "./${moduleName}.js"`;
+      const exportStatement = `export {${symbolExports}} from "./${moduleName}"`;
 
       lines.push(exportStatement);
 
