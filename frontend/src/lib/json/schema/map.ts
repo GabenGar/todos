@@ -34,13 +34,11 @@ const schemas = [
   placeSchema,
   placeUpdateSchema,
   entityItemSchema,
-].map<[string, SchemaObject]>(
-  (schema) => [
-    toRetrievalURL(schema.$id),
-    // @ts-expect-error const object versus mutable type
-    schema
-  ]
-);
+].map<[string, SchemaObject]>((schema) => [
+  toRetrievalURL(schema.$id),
+  // @ts-expect-error const object versus mutable type
+  schema,
+]);
 
 export const schemaMap = new Map(schemas);
 
