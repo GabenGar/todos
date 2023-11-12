@@ -2,7 +2,12 @@ import { mkdir, mkdtemp, rename, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { generateNestedCode } from "./generate-nested-code.js";
-import { type IGeneratorMap, type IModuleInfo, codeMessage } from "./types.js";
+import {
+  type IGeneratorMap,
+  type IModuleInfo,
+  codeMessage,
+  indexFileName,
+} from "./types.js";
 
 export async function generateCode(
   outputFolder: string,
@@ -43,11 +48,15 @@ export async function generateCode(
       continue;
     }
 
+    const indexModules = new Map<string, IModuleInfo["exports"]>();
     await mkdir(generatorPath, { recursive: true });
 
     for await (const moduleInfo of generatorModule) {
       await saveModule(generatorPath, moduleInfo);
+      indexModules.set(moduleInfo.name, moduleInfo.exports);
     }
+
+    await saveIndexFile(generatorPath, indexModules);
 
     console.debug(`Generated code for generator "${codeGenerator.name}".`);
   }
@@ -56,8 +65,8 @@ export async function generateCode(
     `Replacing the contents of folder "${outputFolder}" with folder "${temporaryPath}"...`,
   );
 
-  // not doing transactional replacement because windows
-  // is upset over folder renames
+  // not doing transactional replacement because
+  // windows is upset over folder renames
   await rm(outputFolder, { recursive: true, maxRetries: 5, retryDelay: 500 });
   await rename(temporaryPath, outputFolder);
 
@@ -68,7 +77,7 @@ export async function generateCode(
 
 async function saveModule(
   generatorPath: string,
-  { name, content, exports }: IModuleInfo,
+  { name, content }: IModuleInfo,
 ) {
   console.debug(`Generating code for the module "${name}"...`);
 
@@ -80,4 +89,42 @@ async function saveModule(
   await writeFile(modulePath, fileContent, { encoding: "utf8" });
 
   console.debug(`Generated code for the module "${name}".`);
+}
+
+async function saveIndexFile(
+  generatorPath: string,
+  indexModules: Map<string, IModuleInfo["exports"]>,
+) {
+  console.debug(`Generating index file for generator "${generatorPath}"...`);
+
+  const indexFilePath = path.join(generatorPath, indexFileName);
+  const indexContent = Array.from(indexModules)
+    .reduce<string[]>((lines, [moduleName, moduleExports]) => {
+      if (!moduleExports.length) {
+        throw new Error(
+          `Generated code must export at least one symbol and the module "${moduleName}" exported none.`,
+        );
+      }
+
+      const symbolExports = moduleExports
+        .map<string>(({ name, type, alias }) => {
+          const symbolString = `${type === "abstract" ? `type ${name}` : name}${
+            alias ? ` as ${alias}` : ""
+          }`;
+
+          return symbolString;
+        })
+        .join(", ");
+
+      const exportStatement = `export {${symbolExports}} from "./${moduleName}"`;
+
+      lines.push(exportStatement);
+
+      return lines;
+    }, [])
+    .join("\n");
+
+  await writeFile(indexFilePath, indexContent, { encoding: "utf8" });
+
+  console.debug(`Generated index file for generator "${generatorPath}".`);
 }

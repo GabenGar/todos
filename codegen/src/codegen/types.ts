@@ -43,6 +43,7 @@ interface IModuleExport {
 }
 
 export const generatorName = "generator.js";
+export const indexFileName = "index.ts";
 export const codeMessage = `/**
    * This module was generated automatically.
    * Do not edit it manually.
