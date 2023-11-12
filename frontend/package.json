@@ -1,11 +1,11 @@
 {
   "name": "frontend",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "NextJS frontend for todo list.",
   "private": true,
   "scripts": {
     "build": "next build",
-    "build-codegen": "cd ./src/codegen/generators && tsc --build",
+    "build-codegen": "cd ./src/codegen/generators && npm run build",
     "start": "next start",
     "lint": "next lint && prettier --log-level=warn ./src --check",
     "format": "prettier --log-level=warn ./src --write",
