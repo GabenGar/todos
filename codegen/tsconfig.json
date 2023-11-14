@@ -17,6 +17,10 @@
         "./src/lib/*/index.ts"
       ]
     },
+    // https://github.com/microsoft/TypeScript/wiki/Performance#controlling-types-inclusion
+    "types": [
+      "node"
+    ],
     "resolveJsonModule": true,
     "outDir": "./dist",
     "isolatedModules": true,
