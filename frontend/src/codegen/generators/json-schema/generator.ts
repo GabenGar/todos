@@ -66,17 +66,9 @@ function toNestedModules(
   const moduleMap = Array.from(schemaMap.entries()).reduce<
     IGeneratedNestedModule["moduleMap"]
   >((moduleMap, [schemaPath, schema]) => {
-    const content = `export const schema = ${stringifyObject(schema)} as const`;
-    const moduleExports: IModuleInfo["exports"] = [
-      { name: "schema", type: "concrete" },
-    ];
-    const moduleInfos: IModuleInfo[] = [
-      {
-        name: "schema",
-        content,
-        exports: moduleExports,
-      },
-    ];
+    const schemaModule = createSchemaModule(schema);
+    const validationModule = createValidationModule(schema);
+    const moduleInfos: IModuleInfo[] = [schemaModule, validationModule];
 
     moduleMap.set(schemaPath, moduleInfos);
 
@@ -84,6 +76,36 @@ function toNestedModules(
   }, new Map());
 
   return moduleMap;
+}
+
+function createSchemaModule(schema: ISchema): IModuleInfo {
+  const content = `export const schema = ${stringifyObject(schema)} as const`;
+  const moduleExports: IModuleInfo["exports"] = [
+    { name: "schema", type: "concrete" },
+  ];
+
+  const moduleInfo: IModuleInfo = {
+    name: "schema",
+    content,
+    exports: moduleExports,
+  };
+
+  return moduleInfo;
+}
+
+function createValidationModule(schema: ISchema): IModuleInfo {
+  const moduleImports = `import {createValidator} from "#lib/json/schema"`;
+  const content = `export const validateSchema = () => {}`;
+  const moduleExports: IModuleInfo["exports"] = [
+    { name: "validateSchema", type: "concrete" },
+  ];
+  const moduleInfo: IModuleInfo = {
+    name: "validate",
+    content: [moduleImports, content].join("\n"),
+    exports: moduleExports,
+  };
+
+  return moduleInfo;
 }
 
 export default generateJSONSchemas;
