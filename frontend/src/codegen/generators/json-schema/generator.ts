@@ -67,8 +67,7 @@ function toNestedModules(
     IGeneratedNestedModule["moduleMap"]
   >((moduleMap, [schemaPath, schema]) => {
     const schemaModule = createSchemaModule(schema);
-    const validationModule = createValidationModule(schema);
-    const moduleInfos: IModuleInfo[] = [schemaModule, validationModule];
+    const moduleInfos: IModuleInfo[] = [schemaModule];
 
     moduleMap.set(schemaPath, moduleInfos);
 
@@ -87,21 +86,6 @@ function createSchemaModule(schema: ISchema): IModuleInfo {
   const moduleInfo: IModuleInfo = {
     name: "schema",
     content,
-    exports: moduleExports,
-  };
-
-  return moduleInfo;
-}
-
-function createValidationModule(schema: ISchema): IModuleInfo {
-  const moduleImports = `import {createValidator} from "#lib/json/schema"`;
-  const content = `export const validateSchema = () => {}`;
-  const moduleExports: IModuleInfo["exports"] = [
-    { name: "validateSchema", type: "concrete" },
-  ];
-  const moduleInfo: IModuleInfo = {
-    name: "validate",
-    content: [moduleImports, content].join("\n"),
     exports: moduleExports,
   };
 
