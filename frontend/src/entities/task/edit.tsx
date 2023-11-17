@@ -111,7 +111,6 @@ export function EditTaskForm({
             {FIELD.PLACE.label}
           </InputSectionNanoID>
 
-
           <InputSectionSelect
             label={FIELD.STATUS.label}
             id={`${formID}-${FIELD.STATUS.name}`}

@@ -229,7 +229,9 @@ function Component({
 
             <ul>
               <li>
-                <LinkButton href={createTaskEditPageURL(id)}>{translation.edit}</LinkButton>
+                <LinkButton href={createTaskEditPageURL(id)}>
+                  {translation.edit}
+                </LinkButton>
               </li>
             </ul>
 

@@ -1,3 +1,3 @@
 export interface IJSONSchema {
-  $id: string
+  $id: string;
 }
