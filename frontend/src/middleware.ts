@@ -67,7 +67,6 @@ function getLocale(request: Request): string {
   const languages = new Negotiator({ headers }).languages();
   const locale = match(
     languages,
-    // @ts-expect-error readonly type issue
     LOCALES,
     DEFAULT_LOCALE,
   );

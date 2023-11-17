@@ -1,5 +1,8 @@
 # TODOs
 
+## Requrements
+NodeJS - 20.9+
+
 ## Installation
 
 1. Clone the repo:
