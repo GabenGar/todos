@@ -1,11 +1,14 @@
 import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
-import { createValidator, dataExportSchema } from "#lib/json/schema";
+import { createValidator } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
 import { setLocalStoreItem } from "#browser/local-storage";
 import { getAllTasks, type ITaskStore } from "#entities/task";
 import { type IPlace, getAllPlaces } from "#entities/place";
 import type { IDataExport } from "./types";
+
+const validateDataExport: ReturnType<typeof createValidator<IDataExport>> =
+  createValidator<IDataExport>("/entities/data-export");
 
 export async function createDataExport(): Promise<IDataExport> {
   const tasks = await getAllTasks(false);
@@ -26,10 +29,7 @@ export async function createDataExport(): Promise<IDataExport> {
     dataExport.data.places = places;
   }
 
-  const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
-    await createValidator<IDataExport>(dataExportSchema.$id);
-
-  validate(dataExport);
+  validateDataExport(dataExport);
 
   return dataExport;
 }
@@ -39,10 +39,8 @@ export async function importDataExport(dataExport: unknown) {
 
   logDebug(`Validating data export...`);
 
-  const validate: Awaited<ReturnType<typeof createValidator<IDataExport>>> =
-    await createValidator<IDataExport>(dataExportSchema.$id);
+  validateDataExport(dataExport);
 
-  validate(dataExport);
   const { id, version, data } = dataExport;
   logDebug(`Validated data export "${id}" of version "${version}".`);
 

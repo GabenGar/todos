@@ -1,8 +1,8 @@
-import { createValidator, placeSchema } from "#lib/json/schema";
+import { createValidator } from "#lib/json/schema";
+import { IPaginatedCollection, createPagination } from "#lib/pagination";
+import { logDebug } from "#lib/logs";
 import { getLocalStoreItem } from "#browser/local-storage";
 import type { IPlace } from "../types";
-import { logDebug } from "#lib/logs";
-import { IPaginatedCollection, createPagination } from "#lib/pagination";
 
 interface IOptions {
   page?: number;
@@ -10,6 +10,8 @@ interface IOptions {
 }
 
 const defaultOptions = {} as const satisfies IOptions;
+
+const validatePlace = createValidator<IPlace>("/entities/place/entity");
 
 export async function getPlace(placeID: IPlace["id"]) {
   const storedTasks = await getAllPlaces();
@@ -42,11 +44,9 @@ export async function getPlaces(
 }
 
 export async function getAllPlaces(): Promise<IPlace[]> {
-  const validate: Awaited<ReturnType<typeof createValidator<IPlace>>> =
-    await createValidator(placeSchema.$id);
   const storedPlaces = getLocalStoreItem<IPlace[]>("places", []);
 
-  storedPlaces.forEach((place) => validate(place));
+  storedPlaces.forEach((place) => validatePlace(place));
 
   return storedPlaces;
 }

@@ -2,7 +2,7 @@ import { logDebug } from "#lib/logs";
 import { type IPaginatedCollection, createPagination } from "#lib/pagination";
 import { isSubstring } from "#lib/strings";
 import { type IEntityItem } from "#lib/entities";
-import { createValidator, taskSchema } from "#lib/json/schema";
+import { createValidator } from "#lib/json/schema";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { getAllPlaces } from "#entities/place";
 import type { ITask, ITaskStatsAll, ITaskStore } from "../types";
@@ -21,6 +21,8 @@ let isMigrated = false;
 const defaultOptions = {
   includeDeleted: false,
 } as const satisfies IOptions;
+
+const validateTask = createValidator<ITaskStore>("/entities/task/entity");
 
 export async function getTask(taskID: ITask["id"]): Promise<ITask> {
   if (!isMigrated) {
@@ -72,12 +74,9 @@ export async function getTask(taskID: ITask["id"]): Promise<ITask> {
 export async function getAllTasks(
   includeDeleted = true,
 ): Promise<ITaskStore[]> {
-  const validate: Awaited<ReturnType<typeof createValidator<ITaskStore>>> =
-    await createValidator(taskSchema.$id);
-
   const storedTasks = getLocalStoreItem<ITaskStore[]>("todos", []);
 
-  storedTasks.forEach((task) => validate(task));
+  storedTasks.forEach((task) => validateTask(task));
 
   const fitleredTasks = includeDeleted
     ? storedTasks
