@@ -135,6 +135,10 @@
     "updated_at": "Last updated",
     "add": "Add place",
     "adding": "Adding place...",
-    "details": "Details"
+    "details": "Details",
+    "edit": {
+      "Confirm changes": "Confirm changes",
+      "Applying changes...": "Applying changes..."
+    }
   }
 }

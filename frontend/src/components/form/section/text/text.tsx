@@ -1,10 +1,10 @@
 import { createBlockComponent } from "#components/meta";
-import { type IInputTextProps, InputText, InputTextArea } from "../input";
-import { IInputTextAreaProps } from "../input/text/text-area";
-import { Label } from "../label";
-import { type IInputSectionProps, InputSection } from "./section";
+import { type IInputTextProps, InputText, InputTextArea } from "../../input";
+import { IInputTextAreaProps } from "../../input/text/text-area";
+import { Label } from "../../label";
+import { type IInputSectionProps, InputSection } from "../section";
 
-interface IProps
+export interface IInputSectionTextProps
   extends IInputSectionProps,
     Pick<IInputTextProps, "minLength" | "maxLength">,
     Pick<IInputTextAreaProps, "rows"> {}
@@ -24,7 +24,7 @@ function Component({
   rows,
   children,
   ...props
-}: IProps) {
+}: IInputSectionTextProps) {
   // render a normal input if constraints fit a value
   // into a single row on a preview component
   const isShort = Boolean(
