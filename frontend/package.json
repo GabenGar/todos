@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@types/negotiator": "^0.6.3",
-    "@types/node": "^16.0.0",
+    "@types/node": "^20.9.0",
     "@types/react": "^18.2.37",
     "@types/stringify-object": "^4.0.5",
     "eslint": "8.53.0",
