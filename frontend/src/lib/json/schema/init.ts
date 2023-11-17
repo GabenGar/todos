@@ -1,21 +1,43 @@
-import { addSchema } from "@hyperjump/json-schema/draft-2020-12";
-import { logDebug } from "#lib/logs";
-import { ISchemaMap } from "./map";
+import AJV2020, { type AnySchema } from "ajv/dist/2020";
+import { schemas, type IValidSchemaID } from "./map";
 
-export function initSchemas(metaSchema: string, schemaMap: ISchemaMap) {
-  logDebug(
-    `Loading ${schemaMap.size} schemas with metaschema "${metaSchema}"...`,
-  );
+interface ISchemaMap extends Record<IValidSchemaID, AnySchema> {}
 
-  const addedIDs = Array.from(schemaMap).map<ReturnType<typeof addSchema>>(
-    ([retrievalUri, schema]) => {
-      const id = addSchema(schema, retrievalUri, metaSchema);
+export const ajv = createAJV();
 
-      return id;
-    },
-  );
+function createAJV() {
+  const schemaMap = schemas.reduce<ISchemaMap>((schemaMap, schema) => {
+    schemaMap[schema.$id] = schema as AnySchema;
 
-  logDebug(
-    `Loaded ${addedIDs.length} schemas with metaschema "${metaSchema}".`,
-  );
+    return schemaMap;
+  }, {} as ISchemaMap);
+
+  // there are duplicate IDs
+  if (Object.keys(schemaMap).length !== schemas.length) {
+    const duplicateKeys = Object.entries(
+      schemas.reduce<Record<IValidSchemaID, number>>(
+        (keyMap, { $id }) => {
+          const currentCount = keyMap[$id];
+
+          if (!currentCount) {
+            keyMap[$id] = 1;
+          } else {
+            keyMap[$id] = currentCount + 1;
+          }
+
+          return keyMap;
+        },
+        {} as Record<IValidSchemaID, number>,
+      ),
+    )
+      .filter(([id, count]) => count > 1)
+      .map<string>(([id]) => `"${id}"`)
+      .join(", ");
+
+    throw new Error(`Duplicated schema IDs: ${duplicateKeys}.`);
+  }
+
+  const ajv = new AJV2020({ schemas: schemaMap });
+
+  return ajv;
 }

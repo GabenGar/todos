@@ -1,50 +1,34 @@
-import { validate } from "@hyperjump/json-schema/draft-2020-12";
-import { BASIC } from "@hyperjump/json-schema/experimental";
-import { DEFAULT_LOG_LEVEL, IS_DEVELOPMENT } from "#environment";
-import { logDebug } from "#lib/logs";
-import { toJSONPretty } from "../";
-import { initSchemas } from "./init";
-import { schemaMap, toRetrievalURL } from "./map";
+import { type ValidateFunction, type DefinedError } from "ajv/dist/2020";
+import { validateSchemaID, IValidSchemaID } from "./map";
+import { ajv } from "./init";
 
-const metaSchema = "https://json-schema.org/draft/2020-12/schema";
+export function createValidator<InputType>(
+  schemaID: IValidSchemaID,
+): (data: unknown) => asserts data is InputType {
+  validateSchemaID(schemaID);
+  let validateFunction: ValidateFunction<InputType>;
 
-let isInitialized = false;
+  function validate(data: unknown): asserts data is InputType {
+    if (!validateFunction) {
+      const validator = ajv.getSchema<InputType>(schemaID);
 
-export async function createValidator<InputType>(
-  schemaID: string,
-): Promise<(data: unknown) => asserts data is InputType> {
-  if (!isInitialized) {
-    initSchemas(metaSchema, schemaMap);
-    isInitialized = true;
-  }
+      if (!validator) {
+        throw new Error(
+          `Failed to find the schema for ID "${schemaID}" despite it being a valid ID.`,
+        );
+      }
 
-  const validatorFunc = await validate(toRetrievalURL(schemaID));
-
-  function validator(data: unknown): asserts data is InputType {
-    // log input data during development
-    if (IS_DEVELOPMENT && DEFAULT_LOG_LEVEL === "debug") {
-      const dataView = Array.isArray(data)
-        ? data
-        : typeof data === "object"
-        ? data !== null
-          ? Object.entries(data)
-          : data
-        : data;
-      logDebug(
-        `Validating data with schema "${schemaID}":\n${toJSONPretty(dataView)}`,
-      );
+      validateFunction = validateFunction;
     }
 
-    const result = validatorFunc(data, BASIC);
+    validateFunction(data);
 
-    if (!result.valid) {
-      throw new Error(
-        `Data does not conform to schema "${schemaID}":\n${toJSONPretty(
-          result,
-        )}`,
-      );
+    if (validateFunction.errors) {
+      const errors = [...(validateFunction.errors as DefinedError[])];
+      const message = errors.map((error) => error.message).join("\n");
+      throw new Error(message);
     }
   }
 
-  return validator;
+  return validate;
 }
