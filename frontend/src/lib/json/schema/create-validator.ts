@@ -18,7 +18,7 @@ export function createValidator<InputType>(
         );
       }
 
-      validateFunction = validateFunction;
+      validateFunction = validator;
     }
 
     validateFunction(data);

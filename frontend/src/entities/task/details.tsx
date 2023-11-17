@@ -14,7 +14,7 @@ import { isError } from "#lib/errors";
 import { createBlockComponent } from "#components/meta";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
-import { Link } from "#components/link";
+import { Link, LinkButton } from "#components/link";
 import { DateTime } from "#components/date";
 import { Button } from "#components/button";
 import {
@@ -125,7 +125,6 @@ function Component({
               />
 
               <DescriptionSection
-                isHorizontal
                 dKey={translation.place}
                 dValue={
                   !place ? (
@@ -230,7 +229,7 @@ function Component({
 
             <ul>
               <li>
-                <Link href={createTaskEditPageURL(id)}>{translation.edit}</Link>
+                <LinkButton href={createTaskEditPageURL(id)}>{translation.edit}</LinkButton>
               </li>
             </ul>
 

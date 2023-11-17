@@ -111,41 +111,32 @@ export function EditTaskForm({
             {FIELD.PLACE.label}
           </InputSectionNanoID>
 
+
           <InputSectionSelect
             label={FIELD.STATUS.label}
             id={`${formID}-${FIELD.STATUS.name}`}
             form={formID}
             name={FIELD.STATUS.name}
+            // @TODO fix a stale value being default after update
+            // despite other fields updating instantly.
+            defaultValue={currentTask.status}
           >
             <InputOption
               className={statusStyles["in-progress"]}
               value="in-progress"
-              selected={currentTask.status === "in-progress"}
             >
               {status_values["in-progress"]}
             </InputOption>
 
-            <InputOption
-              className={statusStyles.pending}
-              value="pending"
-              selected={currentTask.status === "pending"}
-            >
+            <InputOption className={statusStyles.pending} value="pending">
               {status_values.pending}
             </InputOption>
 
-            <InputOption
-              className={statusStyles.finished}
-              value="finished"
-              selected={currentTask.status === "finished"}
-            >
+            <InputOption className={statusStyles.finished} value="finished">
               {status_values.finished}
             </InputOption>
 
-            <InputOption
-              className={statusStyles.failed}
-              value="failed"
-              selected={currentTask.status === "failed"}
-            >
+            <InputOption className={statusStyles.failed} value="failed">
               {status_values.failed}
             </InputOption>
           </InputSectionSelect>
