@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "NextJS frontend for todo list.",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.2",
     "@hyperjump/json-schema": "^1.6.5",
+    "ajv": "^8.12.0",
     "clsx": "^2.0.0",
     "html5-qrcode": "^2.3.8",
     "nanoid": "^5.0.3",

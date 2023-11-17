@@ -1,24 +1,20 @@
-import type { SchemaObject } from "@hyperjump/json-schema/schema/experimental";
-import {
-  dataExportSchema,
-  dateTimeSchema,
-  nanoidSchema,
-  taskInitSchema,
-  taskSchema,
-  taskStatusSchema,
-  taskUpdateSchema,
-  nonNegativeIntegerSchema,
-  taskStatsAllSchema,
-  titleSchema,
-  descriptionSchema,
-  placeInitSchema,
-  placeSchema,
-  placeUpdateSchema,
-  entityItemSchema,
-} from "./types";
-import { SITE_ORIGIN } from "#environment";
+import { schema as entityItemSchema } from "#json-schema/entities/item";
+import { schema as dataExportSchema } from "#json-schema/entities/data-export";
+import { schema as taskSchema } from "#json-schema/entities/task/entity";
+import { schema as taskStatusSchema } from "#json-schema/entities/task/status";
+import { schema as taskInitSchema } from "#json-schema/entities/task/init";
+import { schema as taskUpdateSchema } from "#json-schema/entities/task/update";
+import { schema as taskStatsAllSchema } from "#json-schema/entities/task/stats";
+import { schema as placeSchema } from "#json-schema/entities/place/entity";
+import { schema as placeInitSchema } from "#json-schema/entities/place/init";
+import { schema as placeUpdateSchema } from "#json-schema/entities/place/update";
+import { schema as nonNegativeIntegerSchema } from "#json-schema/numbers/non-negative-integer";
+import { schema as nanoidSchema } from "#json-schema/strings/nanoid";
+import { schema as titleSchema } from "#json-schema/strings/title";
+import { schema as descriptionSchema } from "#json-schema/strings/description";
+import { schema as dateTimeSchema } from "#json-schema/dates/datetime";
 
-const schemas = [
+export const schemas = [
   dataExportSchema,
   taskSchema,
   taskInitSchema,
@@ -34,20 +30,19 @@ const schemas = [
   placeSchema,
   placeUpdateSchema,
   entityItemSchema,
-].map<[string, SchemaObject]>((schema) => [
-  toRetrievalURL(schema.$id),
-  // @ts-expect-error const object versus mutable type
-  schema,
-]);
+] as const;
+const validIDs = schemas.map((schema) => schema.$id);
 
-export const schemaMap = new Map(schemas);
+export type IValidSchemaID = (typeof validIDs)[number];
 
-export type ISchemaMap = typeof schemaMap;
+export function isValidSchemaID(input: unknown): input is IValidSchemaID {
+  return validIDs.includes(input as IValidSchemaID);
+}
 
-export function toRetrievalURL(id: string) {
-  if (!id.startsWith("/")) {
-    throw new Error(`Schema ID "${id}" doesn't start with "/".`);
+export function validateSchemaID(
+  input: unknown,
+): asserts input is IValidSchemaID {
+  if (!isValidSchemaID(input)) {
+    throw new Error(`Unknown schema ID "${input}".`);
   }
-
-  return `${SITE_ORIGIN}${id}`;
 }

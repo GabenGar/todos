@@ -65,11 +65,7 @@ function getLocale(request: Request): string {
   }
 
   const languages = new Negotiator({ headers }).languages();
-  const locale = match(
-    languages,
-    LOCALES,
-    DEFAULT_LOCALE,
-  );
+  const locale = match(languages, LOCALES, DEFAULT_LOCALE);
 
   return locale;
 }

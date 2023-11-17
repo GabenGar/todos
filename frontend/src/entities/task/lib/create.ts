@@ -1,13 +1,15 @@
 import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
-import { createValidator, taskInitSchema } from "#lib/json/schema";
+import { createValidator } from "#lib/json/schema";
 import { toQuotedStrings } from "#lib/strings";
 import { setLocalStoreItem } from "#browser/local-storage";
 import { type IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskInit, ITaskStore } from "../types";
 import { getAllTasks } from "./get";
 import { toTasks } from "./to-tasks";
+
+const validateTaskInit = createValidator<ITaskInit>("/entities/task/init");
 
 export async function createTask(init: ITaskInit): Promise<ITask> {
   const [newTask] = await createTasks([init]);
@@ -22,12 +24,7 @@ export async function createTask(init: ITaskInit): Promise<ITask> {
 async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
   logDebug(`Creating ${inits.length} tasks...`);
 
-  const validate: Awaited<ReturnType<typeof createValidator<ITaskInit>>> =
-    await createValidator(taskInitSchema.$id);
-
-  inits.forEach((init) => {
-    validate(init);
-  });
+  inits.forEach((init) => validateTaskInit(init));
 
   // validate place IDs
   const placeIDs = inits.reduce<Set<IPlace["id"]>>((placeIDs, { place_id }) => {

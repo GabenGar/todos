@@ -32,8 +32,6 @@ export function TasksStats({ commonTranslation, translation }: IProps) {
         dValue={
           !stats ? (
             <Loading />
-          ) : stats.all === 0 ? (
-            <span>{stats.all}</span>
           ) : (
             <Link href={createTasksPageURL()}>{stats.all}</Link>
           )

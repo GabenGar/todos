@@ -1,15 +1,3 @@
-export { schema as entityItemSchema } from "#json-schema/entities/item";
-export { schema as dataExportSchema } from "#json-schema/entities/data-export";
-export { schema as taskSchema } from "#json-schema/entities/task/entity";
-export { schema as taskStatusSchema } from "#json-schema/entities/task/status";
-export { schema as taskInitSchema } from "#json-schema/entities/task/init";
-export { schema as taskUpdateSchema } from "#json-schema/entities/task/update";
-export { schema as taskStatsAllSchema } from "#json-schema/entities/task/stats";
-export { schema as placeSchema } from "#json-schema/entities/place/entity";
-export { schema as placeInitSchema } from "#json-schema/entities/place/init";
-export { schema as placeUpdateSchema } from "#json-schema/entities/place/update";
-export { schema as nonNegativeIntegerSchema } from "#json-schema/numbers/non-negative-integer";
-export { schema as nanoidSchema } from "#json-schema/strings/nanoid";
-export { schema as titleSchema } from "#json-schema/strings/title";
-export { schema as descriptionSchema } from "#json-schema/strings/description";
-export { schema as dateTimeSchema } from "#json-schema/dates/datetime";
+export interface IJSONSchema {
+  $id: string;
+}

@@ -73,6 +73,7 @@ export function Client({
                 currentTask={currentTask}
                 onTaskEdit={async (taskUpdate) => {
                   const editedTask = await editTask(taskUpdate);
+
                   changeCurrentTask(editedTask);
                 }}
               />
