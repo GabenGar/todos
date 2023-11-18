@@ -23,7 +23,9 @@ export function Client({ commonTranslation, translation }: IProps) {
   const router = useRouter();
   const [currentPlace, changePlace] =
     useState<Awaited<ReturnType<typeof getPlace>>>();
-  const placeID = searchParams.get("place_id")?.trim();
+  const inputPlaceID = searchParams.get("place_id")?.trim();
+  // consider an empty string as `undefined`
+  const placeID = !inputPlaceID?.length ? undefined : inputPlaceID;
 
   useEffect(() => {
     if (!placeID) {

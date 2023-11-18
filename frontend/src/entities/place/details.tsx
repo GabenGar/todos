@@ -1,4 +1,5 @@
 import type { ILocalization } from "#lib/localization";
+import { createPlaceEditPageURL } from "#lib/urls";
 import { createBlockComponent } from "#components/meta";
 import { DescriptionList } from "#components";
 import { Heading } from "#components/heading";
@@ -6,10 +7,12 @@ import { DateTime } from "#components/date";
 import {
   Details,
   DetailsBody,
+  DetailsFooter,
   DetailsHeader,
   type IDetailsProps,
 } from "#components/details";
 import { EntityID } from "#components/entities";
+import { LinkButton } from "#components/link";
 import type { IPlace } from "./types";
 
 export interface IPlaceDetailsProps extends IDetailsProps {
@@ -54,6 +57,16 @@ function Component({ translation, place, ...props }: IPlaceDetailsProps) {
               ]}
             />
           </DetailsBody>
+
+          <DetailsFooter>
+            <ul>
+              <li>
+                <LinkButton href={createPlaceEditPageURL(id)}>
+                  {translation["Edit"]}
+                </LinkButton>
+              </li>
+            </ul>
+          </DetailsFooter>
         </>
       )}
     </Details>

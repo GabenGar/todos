@@ -25,15 +25,12 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 async function PlaceEditPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { common, todos, task_edit } = dict;
+  const { common, pages, place } = dict;
+  const { heading } = pages.place_edit;
 
   return (
-    <Page heading={task_edit.heading}>
-      <Client
-        commonTranslation={common}
-        translation={todos}
-        pageTranslation={task_edit}
-      />
+    <Page heading={heading}>
+      <Client commonTranslation={common} translation={place} />
     </Page>
   );
 }

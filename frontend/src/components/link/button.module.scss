@@ -3,10 +3,11 @@
 .block {
   justify-content: center;
   min-height: $min-button-size;
+  min-width: $min-button-size;
   background-color: var(--local-background-tertiary);
   border: $size-nano solid var(--local-text-tertiary);
   border-radius: $radius-small;
-  padding: 0 $size-normal;
+  padding: $size-small;
 
   &:link {
     color: var(--local-text-secondary);
