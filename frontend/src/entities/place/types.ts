@@ -1,4 +1,5 @@
 import type { IDateTime } from "#lib/dates";
+import type { INonNegativeInteger } from "#lib/numbers";
 import type { IDescription, INanoidID, ITitle } from "#lib/strings";
 
 export interface IPlace {
@@ -15,3 +16,7 @@ export interface IPlaceInit extends Pick<IPlace, "title" | "description"> {}
 export interface IPlaceUpdate
   extends Pick<Required<IPlace>, "id">,
     Pick<Partial<IPlace>, "title" | "description" | "deleted_at"> {}
+
+export interface IPlacesStatsAll {
+  all: INonNegativeInteger;
+}

@@ -5,6 +5,6 @@ export { PlaceCreateForm } from "./forms/create";
 export { EditPlaceForm } from "./forms/edit";
 export type { IEditPlaceFormProps } from "./forms/edit";
 export { createPlace } from "./lib/create";
-export { getPlaces, getPlace, getAllPlaces } from "./lib/get";
+export { getPlaces, getPlace, getAllPlaces, getPlacesStats } from "./lib/get";
 export { editPlace } from "./lib/edit";
 export type { IPlace, IPlaceInit, IPlaceUpdate } from "./types";

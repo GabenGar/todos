@@ -7,6 +7,7 @@ export const homePageURL = "/" as Route;
 export const notFoundURL = "/404" as Route;
 
 export const taskStatsPageURL = "/stats/tasks";
+export const statsPlacesPageURL = "/stats/places";
 
 interface ICreateTasksPageURLParams {
   page?: number;

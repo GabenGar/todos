@@ -2,7 +2,7 @@ import { createValidator } from "#lib/json/schema";
 import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
 import { getLocalStoreItem } from "#browser/local-storage";
-import type { IPlace } from "../types";
+import type { IPlace, IPlacesStatsAll } from "../types";
 
 interface IOptions {
   page?: number;
@@ -49,4 +49,19 @@ export async function getAllPlaces(): Promise<IPlace[]> {
   storedPlaces.forEach((place) => validatePlace(place));
 
   return storedPlaces;
+}
+
+export async function getPlacesStats() {
+  const currentPlaces = await getAllPlaces();
+
+  const initStats: IPlacesStatsAll = {
+    all: 0,
+  };
+  const stats = currentPlaces.reduce<IPlacesStatsAll>((stats, task) => {
+    stats.all = stats.all + 1;
+
+    return stats;
+  }, initStats);
+
+  return stats;
 }
