@@ -1,7 +1,7 @@
 import { createBlockComponent } from "#components/meta";
-import { InputNanoID } from "../input";
-import { Label } from "../label";
-import { type IInputSectionProps, InputSection } from "./section";
+import { InputNanoID } from "../../input";
+import { Label } from "../../label";
+import { type IInputSectionProps, InputSection } from "../section";
 
 interface IProps extends Omit<IInputSectionProps, "minLength" | "maxLength"> {}
 

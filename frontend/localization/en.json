@@ -41,6 +41,10 @@
     "place": {
       "title": "Place",
       "heading": "Place"
+    },
+    "place_edit": {
+      "title": "Edit Place",
+      "heading": "Edit Place"
     }
   },
   "home": {
@@ -135,6 +139,12 @@
     "updated_at": "Last updated",
     "add": "Add place",
     "adding": "Adding place...",
-    "details": "Details"
+    "details": "Details",
+    "Place": "Place",
+    "Edit": "Edit",
+    "edit": {
+      "Confirm changes": "Confirm changes",
+      "Applying changes...": "Applying changes..."
+    }
   }
 }

@@ -82,3 +82,11 @@ export function createPlacePageURL(id: IPlace["id"]): Route {
 
   return url as Route;
 }
+
+export function createPlaceEditPageURL(id: IPlace["id"]): Route {
+  const urlSearchParams = new URLSearchParams([["place_id", id]]).toString();
+
+  const url = `/place/edit?${urlSearchParams}`;
+
+  return url as Route;
+}

@@ -1,0 +1,47 @@
+{
+  "folders": [
+    {
+      "name": "todos",
+      "path": "."
+    },
+    {
+      "name": "frontend",
+      "path": "frontend"
+    },
+    {
+      "name": "codegen",
+      "path": "codegen"
+    },
+    {
+      "name": "schema",
+      "path": "schema"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.DS_Store": true,
+      "**/.git": true,
+      "**/.hg": true,
+      "**/.svn": true,
+      "**/CVS": true,
+      "**/node_modules": true,
+      "**/Thumbs.db": true,
+      "codegen": true,
+      "frontend": true,
+      "schema": true
+    },
+    "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
+      "**/.hg/store/**": true,
+      "**/node_modules/*/**": true
+    },
+    "typescript.referencesCodeLens.enabled": true
+  },
+  "extensions": {
+    "recommendations": [
+      "eamodio.gitlens",
+      "dotenv.dotenv-vscode"
+    ]
+  },
+}
