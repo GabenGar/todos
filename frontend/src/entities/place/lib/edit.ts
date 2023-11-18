@@ -39,13 +39,13 @@ async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
     const updatedTitle = !update.title
       ? place.title
       : place.title !== update.title
-      ? update.title
-      : place.title;
+        ? update.title
+        : place.title;
     const updatedDescription = !update.description
       ? place.description
       : place.description !== update.description
-      ? update.description
-      : place.description;
+        ? update.description
+        : place.description;
     const updatedDeletionDate = update.deleted_at ?? place.deleted_at;
     const updatedPlace: IPlace = {
       ...place,
