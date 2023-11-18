@@ -1,7 +1,7 @@
 import { SITE_TITLE } from "#environment";
 import {
-  createPlacesPageURL,
   qrCodeReaderURL,
+  statsPlacesPageURL,
   taskStatsPageURL,
 } from "#lib/urls";
 import { getDictionary } from "#server";
@@ -37,7 +37,7 @@ async function FrontPage({ params }: IProps) {
                 <Link href={taskStatsPageURL}>{home.link_tasks}</Link>
               </li>
               <li>
-                <Link href={createPlacesPageURL()}>{home.link_places}</Link>
+                <Link href={statsPlacesPageURL}>{home.link_places}</Link>
               </li>
               <li>
                 <Link href={qrCodeReaderURL}>{home.link_qr_code}</Link>

@@ -45,6 +45,14 @@
     "place_edit": {
       "title": "Edit Place",
       "heading": "Edit Place"
+    },
+    "stats_places": {
+      "title": "Stats of places",
+      "heading": "Stats of Places",
+      "description": "View the stats of places.",
+      "stats": {
+        "All": "All"
+      }
     }
   },
   "home": {
