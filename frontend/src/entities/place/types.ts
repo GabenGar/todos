@@ -19,4 +19,5 @@ export interface IPlaceUpdate
 
 export interface IPlacesStatsAll {
   all: INonNegativeInteger;
+  eventless: INonNegativeInteger;
 }

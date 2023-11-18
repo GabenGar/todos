@@ -2,6 +2,7 @@ import { createValidator } from "#lib/json/schema";
 import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
 import { getLocalStoreItem } from "#browser/local-storage";
+import { ITask, getAllTasks } from "#entities/task";
 import type { IPlace, IPlacesStatsAll } from "../types";
 
 interface IOptions {
@@ -53,12 +54,28 @@ export async function getAllPlaces(): Promise<IPlace[]> {
 
 export async function getPlacesStats() {
   const currentPlaces = await getAllPlaces();
+  const currentTasks = await getAllTasks(false);
+  const usedPlaceIDs = currentTasks.reduce<Set<ITask["id"]>>(
+    (usedPlaces, task) => {
+      if (task.place) {
+        usedPlaces.add(task.place);
+      }
+
+      return usedPlaces;
+    },
+    new Set(),
+  );
 
   const initStats: IPlacesStatsAll = {
     all: 0,
+    eventless: 0,
   };
-  const stats = currentPlaces.reduce<IPlacesStatsAll>((stats, task) => {
+  const stats = currentPlaces.reduce<IPlacesStatsAll>((stats, place) => {
     stats.all = stats.all + 1;
+
+    if (!usedPlaceIDs.has(place.id)) {
+      stats.eventless = stats.eventless + 1;
+    }
 
     return stats;
   }, initStats);
