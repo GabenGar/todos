@@ -3,11 +3,11 @@ import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { ITask, getAllTasks } from "#entities/task";
-import type { IPlace, IPlacesStatsAll } from "../types";
+import type { IPlace, IPlacesCategory, IPlacesStatsAll } from "../types";
 
 interface IOptions {
   page?: number;
-  // query?: string;
+  category?: IPlacesCategory;
 }
 
 const defaultOptions = {} as const satisfies IOptions;
@@ -30,9 +30,25 @@ export async function getPlaces(
 ): Promise<IPaginatedCollection<IPlace>> {
   logDebug(`Getting places...`);
 
-  const { page } = options;
+  const { page, category } = options;
   const storedPlaces = await getAllPlaces();
-  const pagination = createPagination(storedPlaces.length, page);
+  const storedTasks = await getAllTasks(false);
+  const usedPlaceIDs = storedTasks.reduce<Set<ITask["id"]>>(
+    (usedPlaces, task) => {
+      if (task.place) {
+        usedPlaces.add(task.place);
+      }
+
+      return usedPlaces;
+    },
+    new Set(),
+  );
+  const fileteredPlaces = storedPlaces.filter(({ id }) => {
+    const isIncluded = !category ? true : usedPlaceIDs.has(id);
+
+    return isIncluded;
+  });
+  const pagination = createPagination(fileteredPlaces.length, page);
   const items = storedPlaces.slice(pagination.offset, pagination.currentMax);
   const collection: IPaginatedCollection<IPlace> = {
     pagination,

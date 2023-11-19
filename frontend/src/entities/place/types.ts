@@ -21,3 +21,5 @@ export interface IPlacesStatsAll {
   all: INonNegativeInteger;
   eventless: INonNegativeInteger;
 }
+
+export type IPlacesCategory = "eventless"
