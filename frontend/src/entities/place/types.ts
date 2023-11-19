@@ -22,4 +22,9 @@ export interface IPlacesStatsAll {
   eventless: INonNegativeInteger;
 }
 
-export type IPlacesCategory = "eventless"
+const placeCategories = ["eventless"] as const;
+export type IPlacesCategory = (typeof placeCategories)[number];
+
+export function isPlaceCategory(input: unknown): input is IPlacesCategory {
+  return placeCategories.includes(input as IPlacesCategory);
+}
