@@ -15,6 +15,7 @@ import {
   PlacePreview,
   createPlace,
   getPlaces,
+  isPlaceCategory,
 } from "#entities/place";
 
 interface IProps extends ITranslatableProps {
@@ -29,13 +30,23 @@ export function Client({ commonTranslation, translation }: IProps) {
     useState<Awaited<ReturnType<typeof getPlaces>>>();
   const inputPage = searchParams.get("page")?.trim();
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
+  const inputCategory = searchParams.get("category")?.trim();
+  const category =
+    !inputCategory || !isPlaceCategory(inputCategory)
+      ? undefined
+      : inputCategory;
+  const options = {
+    page,
+    category,
+  };
 
   useEffect(() => {
     (async () => {
-      const newPlaces = await getPlaces({ page });
+      const newPlaces = await getPlaces(options);
 
       if (page !== newPlaces.pagination.currentPage) {
         const url = createPlacesPageURL({
+          ...options,
           page: newPlaces.pagination.currentPage,
         });
         router.replace(url);
@@ -44,12 +55,12 @@ export function Client({ commonTranslation, translation }: IProps) {
 
       changePlaces(newPlaces);
     })();
-  }, [page]);
+  }, [page, category]);
 
   async function handlePlaceCreation(init: IPlaceInit) {
     await createPlace(init);
 
-    const newPlaces = await getPlaces();
+    const newPlaces = await getPlaces(options);
 
     if (places?.pagination.totalPages !== newPlaces.pagination.totalPages) {
       const url = createPlacesPageURL({

@@ -35,6 +35,21 @@ export function PlacesStats({ commonTranslation, translation }: IProps) {
           )
         }
       />
+      <DescriptionSection
+        isHorizontal
+        dKey={translation.stats["Eventless"]}
+        dValue={
+          !stats ? (
+            <Loading />
+          ) : stats.eventless === 0 ? (
+            <span>{stats.eventless}</span>
+          ) : (
+            <Link href={createPlacesPageURL({ category: "eventless" })}>
+              {stats.eventless}
+            </Link>
+          )
+        }
+      />
     </DescriptionList>
   );
 }

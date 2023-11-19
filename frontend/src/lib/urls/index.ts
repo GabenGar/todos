@@ -1,6 +1,6 @@
 import type { Route } from "next";
 import type { ITask } from "#entities/task";
-import type { IPlace } from "#entities/place";
+import type { IPlace, IPlacesCategory } from "#entities/place";
 
 export const homePageURL = "/" as Route;
 
@@ -59,6 +59,7 @@ export const qrCodeReaderURL = "/qr-code-reader";
 
 interface ICreatePlacesPageURLParams {
   page?: number;
+  category?: IPlacesCategory;
 }
 export function createPlacesPageURL(
   searchParams?: ICreatePlacesPageURLParams,
@@ -68,6 +69,12 @@ export function createPlacesPageURL(
   if (searchParams?.page) {
     urlSearchParams.set("page", String(searchParams.page));
   }
+
+  if (searchParams?.category) {
+    urlSearchParams.set("category", String(searchParams.category));
+  }
+
+  urlSearchParams.sort();
 
   const url = !urlSearchParams.size
     ? "/places"
