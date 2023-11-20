@@ -4,10 +4,12 @@ import { logDebug } from "#lib/logs";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { ITask, getAllTasks } from "#entities/task";
 import type { IPlace, IPlacesCategory, IPlacesStatsAll } from "../types";
+import { isSubstring } from "#lib/strings";
 
 interface IOptions {
   page?: number;
   category?: IPlacesCategory;
+  query?: string;
 }
 
 const defaultOptions = {} as const satisfies IOptions;
@@ -30,7 +32,7 @@ export async function getPlaces(
 ): Promise<IPaginatedCollection<IPlace>> {
   logDebug(`Getting places...`);
 
-  const { page, category } = options;
+  const { page, category, query } = options;
   const storedPlaces = await getAllPlaces();
   const storedTasks = await getAllTasks(false);
   const usedPlaceIDs = storedTasks.reduce<Set<ITask["id"]>>(
@@ -43,8 +45,12 @@ export async function getPlaces(
     },
     new Set(),
   );
-  const fileteredPlaces = storedPlaces.filter(({ id }) => {
-    const isIncluded = !category ? true : usedPlaceIDs.has(id);
+  const fileteredPlaces = storedPlaces.filter(({ id, title, description }) => {
+    const isMatchingCategory = !category ? true : usedPlaceIDs.has(id);
+    const isMatchingQuery = !query
+      ? true
+      : isSubstring(query, title) || isSubstring(query, description);
+    const isIncluded = isMatchingCategory && isMatchingQuery;
 
     return isIncluded;
   });

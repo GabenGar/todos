@@ -28,7 +28,7 @@ export function toQuotedString(inputString: string): string {
 }
 
 /**
- * Checks if `inputString` is a part of `parentString`.
+ * Checks if `inputString` is a part of `parentString` case-insensitively.
  * @returns
  * `true` if `inputString` is a part of `parentString`, otherwise `false`.
  */
