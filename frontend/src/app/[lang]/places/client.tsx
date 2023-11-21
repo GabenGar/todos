@@ -8,7 +8,6 @@ import { Loading } from "#components";
 import { Details, DetailsHeader } from "#components/details";
 import { PreviewList } from "#components/preview";
 import type { ITranslatableProps } from "#components/types";
-import { Button } from "#components/button";
 import {
   type IPlaceInit,
   PlaceCreateForm,
@@ -16,6 +15,8 @@ import {
   createPlace,
   getPlaces,
   isPlaceCategory,
+  SearchPlacesForm,
+  type IPlaceSearchQuery,
 } from "#entities/place";
 
 interface IProps extends ITranslatableProps {
@@ -25,7 +26,6 @@ interface IProps extends ITranslatableProps {
 export function Client({ commonTranslation, translation }: IProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isAddFormShown, switchAddForm] = useState(false);
   const [places, changePlaces] =
     useState<Awaited<ReturnType<typeof getPlaces>>>();
   const inputPage = searchParams.get("page")?.trim();
@@ -35,9 +35,12 @@ export function Client({ commonTranslation, translation }: IProps) {
     !inputCategory || !isPlaceCategory(inputCategory)
       ? undefined
       : inputCategory;
+  const inputQuery = searchParams.get("query")?.trim();
+  const query = !inputQuery ? undefined : inputQuery;
   const options = {
     page,
     category,
+    query,
   };
 
   useEffect(() => {
@@ -55,7 +58,7 @@ export function Client({ commonTranslation, translation }: IProps) {
 
       changePlaces(newPlaces);
     })();
-  }, [page, category]);
+  }, [page, category, query]);
 
   async function handlePlaceCreation(init: IPlaceInit) {
     await createPlace(init);
@@ -73,22 +76,49 @@ export function Client({ commonTranslation, translation }: IProps) {
     changePlaces(newPlaces);
   }
 
+  async function handlePlaceSearch({ query }: IPlaceSearchQuery) {
+    const { pagination } = await getPlaces({
+      ...options,
+      query,
+      page: undefined,
+    });
+
+    const newURL = createPlacesPageURL({
+      ...options,
+      page: pagination.currentPage,
+      query,
+    });
+
+    router.replace(newURL);
+  }
+
   return (
     <>
       <Details headingLevel={2}>
         {(headingLevel) => (
           <DetailsHeader>
-            <Button onClick={() => switchAddForm((value) => !value)}>
-              {translation.add}
-            </Button>
-            {isAddFormShown && (
+            <details style={{ width: "100%" }}>
+              <summary style={{ cursor: "pointer" }}>{translation.add}</summary>
               <PlaceCreateForm
                 commonTranslation={commonTranslation}
                 translation={translation}
                 id="create-place"
                 onNewPlace={handlePlaceCreation}
               />
-            )}
+            </details>
+
+            <details style={{ width: "100%" }} open={Boolean(query)}>
+              <summary style={{ cursor: "pointer" }}>
+                {translation.search["Search"]}
+              </summary>
+              <SearchPlacesForm
+                commonTranslation={commonTranslation}
+                translation={translation}
+                id="search-places"
+                defaultQuery={options}
+                onSearch={handlePlaceSearch}
+              />
+            </details>
           </DetailsHeader>
         )}
       </Details>
@@ -100,7 +130,7 @@ export function Client({ commonTranslation, translation }: IProps) {
           pagination={places.pagination}
           commonTranslation={commonTranslation}
           sortingOrder="descending"
-          buildURL={(page) => createPlacesPageURL({ page })}
+          buildURL={(page) => createPlacesPageURL({ ...options, page })}
         >
           {places.items.map((place) => (
             <PlacePreview

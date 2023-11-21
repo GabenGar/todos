@@ -1,6 +1,7 @@
 import { createValidator } from "#lib/json/schema";
 import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
+import { isSubstring } from "#lib/strings";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { ITask, getAllTasks } from "#entities/task";
 import type { IPlace, IPlacesCategory, IPlacesStatsAll } from "../types";
@@ -8,6 +9,7 @@ import type { IPlace, IPlacesCategory, IPlacesStatsAll } from "../types";
 interface IOptions {
   page?: number;
   category?: IPlacesCategory;
+  query?: string;
 }
 
 const defaultOptions = {} as const satisfies IOptions;
@@ -30,7 +32,7 @@ export async function getPlaces(
 ): Promise<IPaginatedCollection<IPlace>> {
   logDebug(`Getting places...`);
 
-  const { page, category } = options;
+  const { page, category, query } = options;
   const storedPlaces = await getAllPlaces();
   const storedTasks = await getAllTasks(false);
   const usedPlaceIDs = storedTasks.reduce<Set<ITask["id"]>>(
@@ -43,13 +45,18 @@ export async function getPlaces(
     },
     new Set(),
   );
-  const fileteredPlaces = storedPlaces.filter(({ id }) => {
-    const isIncluded = !category ? true : usedPlaceIDs.has(id);
+  const filteredPlaces = storedPlaces.filter(({ id, title, description }) => {
+    const isMatchingCategory = !category ? true : !usedPlaceIDs.has(id);
+    const isMatchingQuery = !query
+      ? true
+      : isSubstring(query, title) || isSubstring(query, description);
+
+    const isIncluded = isMatchingCategory && isMatchingQuery;
 
     return isIncluded;
   });
-  const pagination = createPagination(fileteredPlaces.length, page);
-  const items = storedPlaces.slice(pagination.offset, pagination.currentMax);
+  const pagination = createPagination(filteredPlaces.length, page);
+  const items = filteredPlaces.slice(pagination.offset, pagination.currentMax);
   const collection: IPaginatedCollection<IPlace> = {
     pagination,
     items,
