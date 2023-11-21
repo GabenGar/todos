@@ -154,6 +154,11 @@
     "edit": {
       "Confirm changes": "Confirm changes",
       "Applying changes...": "Applying changes..."
+    },
+    "search": {
+      "Query":"Query",
+      "Search":"Search",
+      "Searching...":"Searching..."
     }
   }
 }

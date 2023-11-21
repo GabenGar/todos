@@ -1,10 +1,10 @@
 import { createValidator } from "#lib/json/schema";
 import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
+import { isSubstring } from "#lib/strings";
 import { getLocalStoreItem } from "#browser/local-storage";
 import { ITask, getAllTasks } from "#entities/task";
 import type { IPlace, IPlacesCategory, IPlacesStatsAll } from "../types";
-import { isSubstring } from "#lib/strings";
 
 interface IOptions {
   page?: number;

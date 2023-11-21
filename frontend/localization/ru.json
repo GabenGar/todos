@@ -154,6 +154,11 @@
     "edit": {
       "Confirm changes": "Применить изменения",
       "Applying changes...": "Применяем изменения..."
+    },
+    "search": {
+      "Query":"Запрос",
+      "Search":"Искать",
+      "Searching...":"Ищем..."
     }
   }
 }

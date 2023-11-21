@@ -1,6 +1,7 @@
 export { PlacePreview } from "./preview";
 export { PlaceDetails } from "./details";
 export type { IPlaceDetailsProps } from "./details";
+export { SearchPlacesForm } from "./forms/search"
 export { PlaceCreateForm } from "./forms/create";
 export { EditPlaceForm } from "./forms/edit";
 export type { IEditPlaceFormProps } from "./forms/edit";
