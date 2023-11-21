@@ -8,7 +8,6 @@ import { Loading } from "#components";
 import { Details, DetailsHeader } from "#components/details";
 import { PreviewList } from "#components/preview";
 import type { ITranslatableProps } from "#components/types";
-import { Button } from "#components/button";
 import {
   type IPlaceInit,
   PlaceCreateForm,
@@ -81,7 +80,7 @@ export function Client({ commonTranslation, translation }: IProps) {
     const { pagination } = await getPlaces({
       ...options,
       query,
-      page: undefined
+      page: undefined,
     });
 
     const newURL = createPlacesPageURL({

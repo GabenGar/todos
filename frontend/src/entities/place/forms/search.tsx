@@ -1,3 +1,7 @@
+"use client";
+// not sure why it needs this directive considering
+// it's only called from the client component
+
 import { useState } from "react";
 import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
