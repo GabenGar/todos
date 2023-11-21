@@ -60,6 +60,7 @@ export const qrCodeReaderURL = "/qr-code-reader";
 interface ICreatePlacesPageURLParams {
   page?: number;
   category?: IPlacesCategory;
+  query?: string
 }
 export function createPlacesPageURL(
   searchParams?: ICreatePlacesPageURLParams,
@@ -71,7 +72,11 @@ export function createPlacesPageURL(
   }
 
   if (searchParams?.category) {
-    urlSearchParams.set("category", String(searchParams.category));
+    urlSearchParams.set("category", searchParams.category);
+  }
+
+  if (searchParams?.query) {
+    urlSearchParams.set("query", searchParams.query);
   }
 
   urlSearchParams.sort();

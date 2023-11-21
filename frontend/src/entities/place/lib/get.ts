@@ -45,17 +45,18 @@ export async function getPlaces(
     },
     new Set(),
   );
-  const fileteredPlaces = storedPlaces.filter(({ id, title, description }) => {
-    const isMatchingCategory = !category ? true : usedPlaceIDs.has(id);
+  const filteredPlaces = storedPlaces.filter(({ id, title, description }) => {
+    const isMatchingCategory = !category ? true : !usedPlaceIDs.has(id);
     const isMatchingQuery = !query
       ? true
       : isSubstring(query, title) || isSubstring(query, description);
+
     const isIncluded = isMatchingCategory && isMatchingQuery;
 
     return isIncluded;
   });
-  const pagination = createPagination(fileteredPlaces.length, page);
-  const items = storedPlaces.slice(pagination.offset, pagination.currentMax);
+  const pagination = createPagination(filteredPlaces.length, page);
+  const items = filteredPlaces.slice(pagination.offset, pagination.currentMax);
   const collection: IPaginatedCollection<IPlace> = {
     pagination,
     items,
