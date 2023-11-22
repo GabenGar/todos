@@ -8,4 +8,10 @@ export { getTask, getTasks, getAllTasks, getTasksStats } from "./lib/get";
 export { createTask } from "./lib/create";
 export { editTask } from "./lib/edit";
 export { removeTask } from "./lib/remove";
-export type { ITask, ITaskInit, ITaskUpdate, ITaskStore } from "./types";
+export type {
+  ITask,
+  ITaskInit,
+  ITaskUpdate,
+  ITaskStore,
+  ITasksStats,
+} from "./types";

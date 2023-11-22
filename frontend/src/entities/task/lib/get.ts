@@ -4,8 +4,8 @@ import { isSubstring } from "#lib/strings";
 import { type IEntityItem } from "#lib/entities";
 import { createValidator } from "#lib/json/schema";
 import { getLocalStoreItem } from "#browser/local-storage";
-import { getAllPlaces } from "#entities/place";
-import type { ITask, ITaskStatsAll, ITaskStore } from "../types";
+import { IPlace, getAllPlaces } from "#entities/place";
+import type { ITask, ITasksStats, ITaskStore } from "../types";
 import { migrateTasks } from "./migrate";
 import { toTasks } from "./to-tasks";
 
@@ -85,16 +85,21 @@ export async function getAllTasks(
   return fitleredTasks;
 }
 
-export async function getTasksStats(): Promise<ITaskStatsAll> {
+export async function getTasksStats(
+  placeID?: IPlace["id"],
+): Promise<ITasksStats> {
   const currentTasks = await getAllTasks();
-  const initStats: ITaskStatsAll = {
+  const initStats: ITasksStats = {
     all: 0,
     finished: 0,
     "in-progress": 0,
     failed: 0,
     pending: 0,
   };
-  const stats = currentTasks.reduce<ITaskStatsAll>((stats, task) => {
+  const filteredTasks = !placeID
+    ? currentTasks
+    : currentTasks.filter(({ place }) => place === placeID);
+  const stats = filteredTasks.reduce<ITasksStats>((stats, task) => {
     stats.all = stats.all + 1;
 
     if (!task.deleted_at) {

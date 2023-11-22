@@ -50,7 +50,7 @@ export interface ITaskUpdate
   place_id?: IPlace["id"];
 }
 
-export interface ITaskStatsAll {
+export interface ITasksStats {
   all: INonNegativeInteger;
   pending: INonNegativeInteger;
   "in-progress": INonNegativeInteger;

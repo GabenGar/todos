@@ -1,6 +1,7 @@
 import type { IDateTime } from "#lib/dates";
 import type { INonNegativeInteger } from "#lib/numbers";
 import type { IDescription, INanoidID, ITitle } from "#lib/strings";
+import { ITasksStats } from "entities/task";
 
 export interface IPlace {
   id: INanoidID;
@@ -9,6 +10,14 @@ export interface IPlace {
   deleted_at?: IDateTime;
   title: ITitle;
   description?: IDescription;
+}
+
+export interface IPlaceOverview {
+  stats: IPlaceStats
+}
+
+interface IPlaceStats {
+  tasks: ITasksStats
 }
 
 export interface IPlaceInit extends Pick<IPlace, "title" | "description"> {}
