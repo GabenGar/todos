@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";
@@ -7,22 +5,24 @@ import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { TaskStatus, getTasksStats } from "#entities/task";
 import { Link } from "#components/link";
 import type { ITranslatableProps } from "#components/types";
+import { IPlace } from "#entities/place";
 
 interface IProps extends ITranslatableProps {
   translation: ILocalization["stats_tasks"];
+  placeID?: IPlace["id"];
 }
 
-export function TasksStats({ commonTranslation, translation }: IProps) {
+export function TasksStats({ translation, placeID }: IProps) {
   const { status_values } = translation;
   const [stats, changeStats] =
     useState<Awaited<ReturnType<typeof getTasksStats>>>();
 
   useEffect(() => {
     (async () => {
-      const newStats = await getTasksStats();
+      const newStats = await getTasksStats(placeID);
       changeStats(newStats);
     })();
-  }, []);
+  }, [placeID]);
 
   return (
     <DescriptionList>
