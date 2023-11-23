@@ -11,9 +11,17 @@ import {
 } from "#entities/place";
 import { DetailsPlaceHolder } from "#components/details";
 
-interface IProps extends Pick<IPlaceDetailsProps, "translation"> {}
+interface IProps
+  extends Pick<
+    IPlaceDetailsProps,
+    "commonTranslation" | "translation" | "taskTranslation"
+  > {}
 
-export function Client({ translation }: IProps) {
+export function Client({
+  commonTranslation,
+  translation,
+  taskTranslation,
+}: IProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [place, changePlace] = useState<IPlace>();
@@ -34,6 +42,12 @@ export function Client({ translation }: IProps) {
   return !place ? (
     <DetailsPlaceHolder headingLevel={2} />
   ) : (
-    <PlaceDetails translation={translation} headingLevel={2} place={place} />
+    <PlaceDetails
+      commonTranslation={commonTranslation}
+      translation={translation}
+      taskTranslation={taskTranslation}
+      headingLevel={2}
+      place={place}
+    />
   );
 }

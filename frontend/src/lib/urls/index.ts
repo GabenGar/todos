@@ -13,6 +13,7 @@ interface ICreateTasksPageURLParams {
   page?: number;
   query?: string;
   status?: ITask["status"];
+  placeID?: IPlace["id"];
 }
 
 export function createTasksPageURL(
@@ -30,6 +31,10 @@ export function createTasksPageURL(
 
   if (searchParams?.status) {
     urlSearchParams.set("status", searchParams.status);
+  }
+
+  if (searchParams?.placeID) {
+    urlSearchParams.set("place_id", searchParams.placeID);
   }
 
   urlSearchParams.sort();

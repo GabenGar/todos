@@ -3,8 +3,13 @@ import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
 import { isSubstring } from "#lib/strings";
 import { getLocalStoreItem } from "#browser/local-storage";
-import { ITask, getAllTasks } from "#entities/task";
-import type { IPlace, IPlacesCategory, IPlacesStatsAll } from "../types";
+import { ITask, getAllTasks, getTasksStats } from "#entities/task";
+import type {
+  IPlace,
+  IPlaceOverview,
+  IPlacesCategory,
+  IPlacesStatsAll,
+} from "../types";
 
 interface IOptions {
   page?: number;
@@ -16,15 +21,26 @@ const defaultOptions = {} as const satisfies IOptions;
 
 const validatePlace = createValidator<IPlace>("/entities/place/entity");
 
-export async function getPlace(placeID: IPlace["id"]) {
-  const storedTasks = await getAllPlaces();
-  const task = storedTasks.find(({ id }) => id === placeID);
+export async function getPlace(placeID: IPlace["id"]): Promise<IPlace> {
+  const storedPlaces = await getAllPlaces();
+  const place = storedPlaces.find(({ id }) => id === placeID);
 
-  if (!task) {
+  if (!place) {
     throw new Error(`No place with ID "${placeID}" exists.`);
   }
 
-  return task;
+  return place;
+}
+
+export async function getPlaceStats(
+  placeID: IPlace["id"],
+): Promise<IPlaceOverview["stats"]> {
+  const tasksStats = await getTasksStats(placeID);
+  const stats: IPlaceOverview["stats"] = {
+    tasks: tasksStats,
+  };
+
+  return stats;
 }
 
 export async function getPlaces(

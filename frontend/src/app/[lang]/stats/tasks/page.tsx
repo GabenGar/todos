@@ -1,9 +1,9 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import type { IBasePageParams } from "#pages/types";
-import { TasksStats } from "./list";
 import { Details, DetailsHeader } from "#components/details";
+import type { IBasePageParams } from "#pages/types";
+import { Client } from "./client";
 
 interface IProps {
   params: IBasePageParams;
@@ -33,7 +33,7 @@ async function TasksStatsPage({ params }: IProps) {
       <Details headingLevel={2}>
         {(headingLevel) => (
           <DetailsHeader>
-            <TasksStats commonTranslation={common} translation={stats_tasks} />
+            <Client commonTranslation={common} translation={stats_tasks} />
           </DetailsHeader>
         )}
       </Details>

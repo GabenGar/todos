@@ -41,6 +41,9 @@ interface IProps
   id: string;
 }
 
+/**
+ * @TODO move the state out of the component
+ */
 export function TaskList({
   commonTranslation,
   translation,
@@ -58,17 +61,21 @@ export function TaskList({
   const query = !inputQuery ? undefined : inputQuery;
   const inputStatus = searchParams.get("status")?.trim();
   const status = !isTaskStatus(inputStatus) ? undefined : inputStatus;
-  const options: Parameters<typeof getTasks>[0] = {
+  const inputPlaceID = searchParams.get("place_id")?.trim();
+  const placeID = !inputPlaceID ? undefined : inputPlaceID;
+  const options: Required<Parameters<typeof getTasks>>[0] = {
     includeDeleted: false,
     page,
     query,
     status,
+    placeID,
   };
 
   useEffect(() => {
     (async () => {
       const newTasks = await getTasks(options);
 
+      // short circuit if nothing found
       if (newTasks.pagination.totalCount === 0) {
         changeTasks(newTasks);
         return;
@@ -77,8 +84,9 @@ export function TaskList({
       if (page !== newTasks.pagination.currentPage) {
         const newTasksURL = createTasksPageURL({
           page: newTasks.pagination.currentPage,
-          query,
-          status,
+          query: options.query,
+          placeID: options.placeID,
+          status: options.status,
         });
 
         router.replace(newTasksURL);
@@ -88,7 +96,7 @@ export function TaskList({
 
       changeTasks(newTasks);
     })();
-  }, [page, query, status]);
+  }, [page, query, status, placeID]);
 
   async function handleTaskCreation(init: ITaskInit) {
     await createTask(init);
@@ -96,9 +104,10 @@ export function TaskList({
 
     if (newTasks.pagination.totalPages !== tasks?.pagination.totalPages) {
       const newOptions = {
+        query: options.query,
+        placeID: options.placeID,
+        status: options.status,
         page: newTasks.pagination.totalPages,
-        query: options?.query,
-        status: options?.status,
       };
       const newURL = createTasksPageURL(newOptions);
       router.replace(newURL);
@@ -113,13 +122,13 @@ export function TaskList({
     const { pagination } = await getTasks({
       includeDeleted: false,
       query: newQuery.query,
-      status: newQuery?.status,
+      status: newQuery.status,
     });
 
     const newURL = createTasksPageURL({
       page: pagination.currentPage,
       query: newQuery.query,
-      status: newQuery?.status,
+      status: newQuery.status,
     });
 
     router.replace(newURL);
@@ -153,9 +162,8 @@ export function TaskList({
           pagination={tasks.pagination}
           buildURL={(page) => {
             const url = createTasksPageURL({
+              ...options,
               page,
-              query,
-              status,
             });
 
             return url;

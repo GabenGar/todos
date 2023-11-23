@@ -2,6 +2,9 @@ import { type ValidateFunction, type DefinedError } from "ajv/dist/2020";
 import { validateSchemaID, IValidSchemaID } from "./map";
 import { ajv } from "./init";
 
+/**
+ * @TODO return a type guard and a validator
+ */
 export function createValidator<InputType>(
   schemaID: IValidSchemaID,
 ): (data: unknown) => asserts data is InputType {

@@ -34,10 +34,10 @@ async function FrontPage({ params }: IProps) {
           <DetailsHeader>
             <ul>
               <li>
-                <Link href={taskStatsPageURL}>{home.link_tasks}</Link>
+                <Link href={statsPlacesPageURL}>{home.link_places}</Link>
               </li>
               <li>
-                <Link href={statsPlacesPageURL}>{home.link_places}</Link>
+                <Link href={taskStatsPageURL}>{home.link_tasks}</Link>
               </li>
               <li>
                 <Link href={qrCodeReaderURL}>{home.link_qr_code}</Link>
