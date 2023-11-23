@@ -29,7 +29,6 @@ export async function getPlace(placeID: IPlace["id"]): Promise<IPlace> {
     throw new Error(`No place with ID "${placeID}" exists.`);
   }
 
-
   return place;
 }
 

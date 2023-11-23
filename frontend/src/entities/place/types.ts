@@ -13,11 +13,11 @@ export interface IPlace {
 }
 
 export interface IPlaceOverview {
-  stats: IPlaceStats
+  stats: IPlaceStats;
 }
 
 interface IPlaceStats {
-  tasks: ITasksStats
+  tasks: ITasksStats;
 }
 
 export interface IPlaceInit extends Pick<IPlace, "title" | "description"> {}

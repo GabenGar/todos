@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";
-import { isNanoID } from "#lib/strings";
 import { Loading } from "components/loading";
 import { Button } from "#components/button";
 import { PreviewList } from "#components/preview";
@@ -63,7 +62,7 @@ export function TaskList({
   const inputStatus = searchParams.get("status")?.trim();
   const status = !isTaskStatus(inputStatus) ? undefined : inputStatus;
   const inputPlaceID = searchParams.get("place_id")?.trim();
-  const placeID = !isNanoID(inputPlaceID) ? undefined : inputPlaceID;
+  const placeID = !inputPlaceID ? undefined : inputPlaceID;
   const options: Required<Parameters<typeof getTasks>>[0] = {
     includeDeleted: false,
     page,

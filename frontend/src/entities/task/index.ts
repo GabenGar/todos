@@ -1,5 +1,5 @@
 export { TaskList } from "./list";
-export { TasksStats } from "./stats"
+export { TasksStats } from "./stats";
 export { TaskDetails } from "./details";
 export type { ITaskDetailsProps } from "./details";
 export { TaskStatus } from "./status";
