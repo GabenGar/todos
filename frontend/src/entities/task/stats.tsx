@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";
@@ -33,7 +35,7 @@ export function TasksStats({ translation, placeID }: IProps) {
           !stats ? (
             <Loading />
           ) : (
-            <Link href={createTasksPageURL({ place_id: placeID })}>
+            <Link href={createTasksPageURL({ placeID: placeID })}>
               {stats.all}
             </Link>
           )
@@ -52,7 +54,7 @@ export function TasksStats({ translation, placeID }: IProps) {
             <Link
               href={createTasksPageURL({
                 status: "in-progress",
-                place_id: placeID,
+                placeID: placeID,
               })}
             >
               {stats["in-progress"]}
@@ -73,7 +75,7 @@ export function TasksStats({ translation, placeID }: IProps) {
             <Link
               href={createTasksPageURL({
                 status: "pending",
-                place_id: placeID,
+                placeID: placeID,
               })}
             >
               {stats.pending}
@@ -94,7 +96,7 @@ export function TasksStats({ translation, placeID }: IProps) {
             <Link
               href={createTasksPageURL({
                 status: "finished",
-                place_id: placeID,
+                placeID: placeID,
               })}
             >
               {stats.finished}
@@ -113,7 +115,7 @@ export function TasksStats({ translation, placeID }: IProps) {
             <span>{stats.failed}</span>
           ) : (
             <Link
-              href={createTasksPageURL({ status: "failed", place_id: placeID })}
+              href={createTasksPageURL({ status: "failed", placeID: placeID })}
             >
               {stats.failed}
             </Link>

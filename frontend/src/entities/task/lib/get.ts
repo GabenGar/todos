@@ -14,6 +14,7 @@ interface IOptions {
   page?: number;
   query?: string;
   status?: ITask["status"];
+  placeID?: IPlace["id"];
 }
 
 let isMigrated = false;
@@ -125,10 +126,16 @@ export async function getTasks(
     }
   }
 
-  const { includeDeleted, page, query, status: searchStatus } = options;
+  const {
+    includeDeleted,
+    page,
+    query,
+    status: searchStatus,
+    placeID,
+  } = options;
   const storedTasks = await getAllTasks();
   const filteredTasks = storedTasks.filter(
-    ({ deleted_at, title, description, status }) => {
+    ({ deleted_at, title, description, status, place }) => {
       const isDeletedIncluded = includeDeleted ? true : !deleted_at;
 
       if (!isDeletedIncluded) {
@@ -140,8 +147,12 @@ export async function getTasks(
         : isSubstring(query, title) || isSubstring(query, description);
 
       const isMatchingStatus = !searchStatus ? true : status === searchStatus;
+      const isMatchingPlace = !placeID ? true : place === placeID;
       const isIncluded =
-        isDeletedIncluded && isMatchingQuery && isMatchingStatus;
+        isDeletedIncluded &&
+        isMatchingQuery &&
+        isMatchingStatus &&
+        isMatchingPlace;
 
       return isIncluded;
     },
