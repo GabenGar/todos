@@ -54,6 +54,10 @@
         "All": "All",
         "Eventless": "Eventless"
       }
+    },
+    "account": {
+      "title": "Account",
+      "heading": "Account"
     }
   },
   "home": {
