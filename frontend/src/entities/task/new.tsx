@@ -113,7 +113,7 @@ export function NewTaskForm({
                   [
                     FIELD.PLACE.label,
                     <Link key="place" href={createPlacePageURL(place.id)}>
-                      {place.title}
+                      {place.title} ({place.id})
                     </Link>,
                   ],
                 ]}

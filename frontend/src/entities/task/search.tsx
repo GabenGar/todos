@@ -1,8 +1,16 @@
 import { useState } from "react";
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
+import { createPlacePageURL } from "#lib/urls";
+import { DescriptionList } from "#components";
 import { Form, type IFormEvent } from "#components/form";
-import { InputSectionSelect, InputSectionText } from "#components/form/section";
-import { InputOption } from "#components/form/input";
+import {
+  InputSectionNanoID,
+  InputSectionSelect,
+  InputSectionText,
+} from "#components/form/section";
+import { InputHidden, InputOption } from "#components/form/input";
+import { Link } from "#components/link";
+import type { IPlace } from "#entities/place";
 import { ITask, isTaskStatus } from "./types";
 
 import statusStyles from "./status.module.scss";
@@ -10,6 +18,7 @@ import statusStyles from "./status.module.scss";
 export interface ITaskSearchQuery {
   query?: string;
   status?: ITask["status"];
+  place_id?: IPlace["id"];
 }
 
 export interface ISearchTasksFormProps {
@@ -19,6 +28,7 @@ export interface ISearchTasksFormProps {
   statusTranslation: ILocalization["stats_tasks"]["status_values"];
   defaultQuery?: ITaskSearchQuery;
   onSearch: (newSearchQuery: ITaskSearchQuery) => Promise<void>;
+  place?: IPlace;
 }
 
 export function SearchTasksForm({
@@ -27,6 +37,7 @@ export function SearchTasksForm({
   statusTranslation,
   id,
   defaultQuery,
+  place,
   onSearch,
 }: ISearchTasksFormProps) {
   const [oldQuery, changeOldQuery] = useState<ITaskSearchQuery | undefined>(
@@ -36,6 +47,7 @@ export function SearchTasksForm({
   const { status } = translation;
   const FIELD = {
     QUERY: { name: "query", label: query },
+    PLACE: { name: "place_id", label: translation.search_tasks["Place"] },
     STATUS: { name: "status", label: status },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
@@ -48,8 +60,14 @@ export function SearchTasksForm({
       inputStatus === "" || !isTaskStatus(inputStatus)
         ? undefined
         : inputStatus;
+    const place_id = formElements.place_id.value.trim();
 
-    if (oldQuery && query === oldQuery.query && status === oldQuery.status) {
+    if (
+      oldQuery &&
+      query === oldQuery.query &&
+      status === oldQuery.status &&
+      place_id === oldQuery.place_id
+    ) {
       return;
     }
 
@@ -82,45 +100,60 @@ export function SearchTasksForm({
             {FIELD.QUERY.label}
           </InputSectionText>
 
+          {place ? (
+            <>
+              <DescriptionList
+                sections={[
+                  [
+                    FIELD.PLACE.label,
+                    <Link key="place" href={createPlacePageURL(place.id)}>
+                      {place.title} ({place.id})
+                    </Link>,
+                  ],
+                ]}
+              />
+              <InputHidden
+                id={`${formID}-${FIELD.PLACE.name}`}
+                form={formID}
+                name={FIELD.PLACE.name}
+                defaultValue={place.id}
+              />
+            </>
+          ) : (
+            <InputSectionNanoID
+              id={`${formID}-${FIELD.PLACE.name}`}
+              form={formID}
+              name={FIELD.PLACE.name}
+            >
+              {FIELD.PLACE.label}
+            </InputSectionNanoID>
+          )}
+
           <InputSectionSelect
             label={FIELD.STATUS.label}
             id={`${formID}-${FIELD.STATUS.name}`}
             form={formID}
             name={FIELD.STATUS.name}
+            defaultValue={defaultQuery?.status ?? ""}
           >
-            <InputOption value="" selected={!defaultQuery?.status}>
-              {statusTranslation.all}
-            </InputOption>
+            <InputOption value="">{statusTranslation.all}</InputOption>
 
             <InputOption
               className={statusStyles["in-progress"]}
               value="in-progress"
-              selected={defaultQuery?.status === "in-progress"}
             >
               {statusTranslation["in-progress"]}
             </InputOption>
 
-            <InputOption
-              className={statusStyles.pending}
-              value="pending"
-              selected={defaultQuery?.status === "pending"}
-            >
+            <InputOption className={statusStyles.pending} value="pending">
               {statusTranslation.pending}
             </InputOption>
 
-            <InputOption
-              className={statusStyles.finished}
-              value="finished"
-              selected={defaultQuery?.status === "finished"}
-            >
+            <InputOption className={statusStyles.finished} value="finished">
               {statusTranslation.finished}
             </InputOption>
 
-            <InputOption
-              className={statusStyles.failed}
-              value="failed"
-              selected={defaultQuery?.status === "failed"}
-            >
+            <InputOption className={statusStyles.failed} value="failed">
               {statusTranslation.failed}
             </InputOption>
           </InputSectionSelect>

@@ -105,7 +105,7 @@ export function TaskList({
     const newTasks = await getTasks(options);
 
     if (newTasks.pagination.totalPages !== tasks?.pagination.totalPages) {
-      const newOptions = {
+      const newOptions: Required<Parameters<typeof createTasksPageURL>>[0] = {
         query: options.query,
         placeID: options.placeID,
         status: options.status,
@@ -125,12 +125,14 @@ export function TaskList({
       includeDeleted: false,
       query: newQuery.query,
       status: newQuery.status,
+      placeID: newQuery.place_id,
     });
 
     const newURL = createTasksPageURL({
       page: pagination.currentPage,
       query: newQuery.query,
       status: newQuery.status,
+      placeID: newQuery.place_id,
     });
 
     router.replace(newURL);
@@ -276,6 +278,7 @@ function Forms({
                   statusTranslation={statusTranslation}
                   id={searchFormID}
                   defaultQuery={{ query, status }}
+                  place={place}
                   onSearch={onSearch}
                 />
               )}

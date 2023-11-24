@@ -90,6 +90,7 @@
     "add": "Add",
     "search_tasks": {
       "query": "Query",
+      "Place": "Place",
       "search": "Search",
       "searching": "Searching..."
     },
