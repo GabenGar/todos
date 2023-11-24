@@ -22,6 +22,9 @@ interface IProps extends IPreviewProps {
   place: IPlace;
 }
 
+/**
+ * @TODO total tasks count
+ */
 export const PlacePreview = createBlockComponent(styles, Component);
 
 function Component({ translation, place, ...props }: IProps) {

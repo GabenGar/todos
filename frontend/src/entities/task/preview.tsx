@@ -23,6 +23,11 @@ interface IProps extends IPreviewProps {
   translation: ILocalization["task"];
 }
 
+/**
+ * @TODO
+ * allow to hide specific fields, i.e. no point
+ * showing place link in a list of tasks for the place.
+ */
 export const TaskPreview = createBlockComponent(styles, Component);
 
 function Component({ task, translation, ...props }: IProps) {

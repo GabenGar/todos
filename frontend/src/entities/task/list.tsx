@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
-import { createTasksPageURL } from "#lib/urls";
+import { createPlacePageURL, createTasksPageURL } from "#lib/urls";
 import { Loading } from "components/loading";
 import { Button } from "#components/button";
 import { PreviewList } from "#components/preview";
@@ -13,12 +13,14 @@ import {
   DetailsHeader,
   type IDetailsProps,
 } from "#components/details";
-import { ITranslatableProps } from "#components/types";
+import { type ITranslatableProps } from "#components/types";
+import { Link } from "#components/link";
 import {
   DataExportForm,
   type IImportDataExportFormProps,
   ImportDataExportForm,
 } from "#entities/data-export";
+import { IPlace, getPlace } from "#entities/place";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
 import {
   type ISearchTasksFormProps,
@@ -144,6 +146,7 @@ export function TaskList({
         id={id}
         query={query}
         status={status}
+        placeID={placeID}
         onNewTask={handleTaskCreation}
         onSearch={handleTaskSearch}
       />
@@ -208,8 +211,12 @@ interface IFormsProps
     Pick<ISearchTasksFormProps, "onSearch"> {
   query?: string;
   status?: ITask["status"];
+  placeID?: IPlace["id"];
 }
 
+/**
+ * @TODO switch to `<details>` component
+ */
 function Forms({
   commonTranslation,
   translation,
@@ -218,47 +225,78 @@ function Forms({
   id,
   query,
   status,
+  placeID,
   onNewTask,
   onSearch,
 }: IFormsProps) {
+  const [place, changePlace] = useState<Awaited<ReturnType<typeof getPlace>>>();
   const [isNewFormShown, switchNewForm] = useState(false);
   const [isSearchFormShown, switchSearchForm] = useState(Boolean(query));
   const { add, search } = translation;
   const newFormID = `${id}-task-list-new`;
   const searchFormID = `${id}-task-list-search`;
 
+  useEffect(() => {
+    // do not fetch new place if it's the same or undefined
+    if (!placeID) {
+      changePlace(undefined);
+      return;
+    }
+
+    (async () => {
+      const newPlace = await getPlace(placeID);
+      changePlace(newPlace);
+    })();
+  }, [placeID]);
+
   return (
     <Details headingLevel={headingLevel}>
       {() => (
-        <DetailsHeader>
-          <div className={styles.header}>
-            <Button onClick={() => switchSearchForm((old) => !old)}>
-              {search}
-            </Button>
-            {isSearchFormShown && (
-              <SearchTasksForm
-                commonTranslation={commonTranslation}
-                translation={translation}
-                statusTranslation={statusTranslation}
-                id={searchFormID}
-                defaultQuery={{ query, status }}
-                onSearch={onSearch}
-              />
-            )}
-          </div>
+        <>
+          {place && (
+            <DetailsHeader>
+              <ul>
+                <li>
+                  <Link href={createPlacePageURL(place.id)}>
+                    {translation.new_todo.place}
+                  </Link>
+                </li>
+              </ul>
+            </DetailsHeader>
+          )}
+          <DetailsBody>
+            <div className={styles.header}>
+              <Button onClick={() => switchSearchForm((old) => !old)}>
+                {search}
+              </Button>
+              {isSearchFormShown && (
+                <SearchTasksForm
+                  commonTranslation={commonTranslation}
+                  translation={translation}
+                  statusTranslation={statusTranslation}
+                  id={searchFormID}
+                  defaultQuery={{ query, status }}
+                  onSearch={onSearch}
+                />
+              )}
+            </div>
 
-          <div className={styles.header}>
-            <Button onClick={() => switchNewForm((old) => !old)}>{add}</Button>
-            {isNewFormShown && (
-              <NewTaskForm
-                commonTranslation={commonTranslation}
-                translation={translation}
-                id={newFormID}
-                onNewTask={onNewTask}
-              />
-            )}
-          </div>
-        </DetailsHeader>
+            <div className={styles.header}>
+              <Button onClick={() => switchNewForm((old) => !old)}>
+                {add}
+              </Button>
+              {isNewFormShown && (
+                <NewTaskForm
+                  commonTranslation={commonTranslation}
+                  translation={translation}
+                  id={newFormID}
+                  place={place}
+                  onNewTask={onNewTask}
+                />
+              )}
+            </div>
+          </DetailsBody>
+        </>
       )}
     </Details>
   );
