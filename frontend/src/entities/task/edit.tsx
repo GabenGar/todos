@@ -18,20 +18,28 @@ export interface IEditTaskFormProps extends ITranslatableProps {
   onTaskEdit: (taskUpdate: ITaskUpdate) => Promise<void>;
 }
 
+/**
+ * @TODO place edit form
+ */
 export function EditTaskForm({
   commonTranslation,
   translation,
-  currentTask,
   id,
+  currentTask,
   onTaskEdit,
 }: IEditTaskFormProps) {
-  const { title, description, status, place } = translation.new_todo;
+  const {
+    title,
+    description,
+    status,
+    place: placeTranslation,
+  } = translation.new_todo;
   const { status_values, editing, edit } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
     STATUS: { name: "status", label: status },
-    PLACE: { name: "place_id", label: place },
+    PLACE: { name: "place_id", label: placeTranslation },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 

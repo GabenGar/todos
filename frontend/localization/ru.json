@@ -91,6 +91,7 @@
     "search_tasks": {
       "query": "Запрос",
       "search": "Искать",
+      "Place": "Место",
       "searching": "Ищем..."
     },
     "edit": "Редактировать",

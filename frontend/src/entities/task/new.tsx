@@ -1,20 +1,25 @@
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import { InputOption } from "#components/form/input";
+import { InputHidden, InputOption } from "#components/form/input";
 import {
   InputSectionNanoID,
   InputSectionSelect,
   InputSectionText,
 } from "#components/form/section";
+import { type IPlace } from "#entities/place";
 import { type ITaskInit, isTaskStatus } from "./types";
 
 import styles from "./new.module.scss";
 import statusStyles from "./status.module.scss";
+import { DescriptionList } from "#components";
+import { Link } from "#components/link";
+import { createPlacePageURL } from "#lib/urls";
 
 export interface INewTaskFormProps {
   commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"];
   id: string;
+  place?: IPlace;
   onNewTask: (taskInit: ITaskInit) => Promise<void>;
 }
 
@@ -22,16 +27,23 @@ export function NewTaskForm({
   commonTranslation,
   translation,
   id,
+  place,
   onNewTask,
 }: INewTaskFormProps) {
-  const { title, description, add, adding, status, place } =
-    translation.new_todo;
+  const {
+    title,
+    description,
+    add,
+    adding,
+    status,
+    place: placeTranslation,
+  } = translation.new_todo;
   const { status_values } = translation;
   const FIELD = {
     TITLE: { name: "title", label: title },
     DESCRIPTION: { name: "description", label: description },
     STATUS: { name: "status", label: status },
-    PLACE: { name: "place_id", label: place },
+    PLACE: { name: "place_id", label: placeTranslation },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -94,19 +106,41 @@ export function NewTaskForm({
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
 
-          <InputSectionNanoID
-            id={`${formID}-${FIELD.PLACE.name}`}
-            form={formID}
-            name={FIELD.PLACE.name}
-          >
-            {FIELD.PLACE.label}
-          </InputSectionNanoID>
+          {place ? (
+            <>
+              <DescriptionList
+                sections={[
+                  [
+                    FIELD.PLACE.label,
+                    <Link key="place" href={createPlacePageURL(place.id)}>
+                      {place.title} ({place.id})
+                    </Link>,
+                  ],
+                ]}
+              />
+              <InputHidden
+                id={`${formID}-${FIELD.PLACE.name}`}
+                form={formID}
+                name={FIELD.PLACE.name}
+                defaultValue={place.id}
+              />
+            </>
+          ) : (
+            <InputSectionNanoID
+              id={`${formID}-${FIELD.PLACE.name}`}
+              form={formID}
+              name={FIELD.PLACE.name}
+            >
+              {FIELD.PLACE.label}
+            </InputSectionNanoID>
+          )}
 
           <InputSectionSelect
             label={FIELD.STATUS.label}
             id={`${formID}-${FIELD.STATUS.name}`}
             form={formID}
             name={FIELD.STATUS.name}
+            defaultValue="pending"
           >
             <InputOption
               className={statusStyles["in-progress"]}
@@ -115,11 +149,7 @@ export function NewTaskForm({
               {status_values["in-progress"]}
             </InputOption>
 
-            <InputOption
-              className={statusStyles.pending}
-              value="pending"
-              selected
-            >
+            <InputOption className={statusStyles.pending} value="pending">
               {status_values.pending}
             </InputOption>
 
