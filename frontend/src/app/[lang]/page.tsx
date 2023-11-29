@@ -46,7 +46,6 @@ async function FrontPage({ params }: IProps) {
               <li>
                 <Link href={accountPageURL}>{home.link_account}</Link>
               </li>
-
             </ul>
           </DetailsHeader>
         )}
