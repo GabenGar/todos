@@ -1,5 +1,6 @@
 import { SITE_TITLE } from "#environment";
 import {
+  accountPageURL,
   qrCodeReaderURL,
   statsPlacesPageURL,
   taskStatsPageURL,
@@ -41,6 +42,9 @@ async function FrontPage({ params }: IProps) {
               </li>
               <li>
                 <Link href={qrCodeReaderURL}>{home.link_qr_code}</Link>
+              </li>
+              <li>
+                <Link href={accountPageURL}>{home.link_account}</Link>
               </li>
             </ul>
           </DetailsHeader>

@@ -108,3 +108,5 @@ export function createPlaceEditPageURL(id: IPlace["id"]): Route {
 
   return url as Route;
 }
+
+export const accountPageURL = "/account";

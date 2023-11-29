@@ -8,6 +8,7 @@ import {
 import { useParams } from "next/navigation";
 import { DEFAULT_LOG_LEVEL } from "#environment";
 import { type ILogLevel, changeCurrentLogLevel } from "#lib/logs";
+import { isLocalStorageAvailable } from "#browser/local-storage";
 
 type IClientContext =
   | {
@@ -17,10 +18,15 @@ type IClientContext =
       isClient: true;
       locale: Intl.Locale;
       logLevel: ILogLevel;
+      compatibility: ICompatibility;
       changeLoglevel: (
         ...args: Parameters<typeof changeCurrentLogLevel>
       ) => void;
     };
+
+interface ICompatibility {
+  localStorage: boolean;
+}
 
 const defaultContext: IClientContext = {
   isClient: false,
@@ -33,6 +39,7 @@ export function ClientProvider({ children }: { children: ReactNode }) {
   const [isClient, switchIsClient] = useState(false);
   const [locale, changeLocale] = useState<Intl.Locale>();
   const [logLevel, changeLogLevel] = useState<ILogLevel>(DEFAULT_LOG_LEVEL);
+  const [compatibility, changeCompatiblity] = useState<ICompatibility>();
   const lang = Array.isArray(params.lang) ? params.lang[0] : params.lang;
 
   function switchLogLevel(...args: Parameters<typeof changeCurrentLogLevel>) {
@@ -41,8 +48,16 @@ export function ClientProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    const newLocale = new Intl.Locale(lang);
+    const newCompatibility: ICompatibility = {
+      localStorage: isLocalStorageAvailable(),
+    };
+
+    changeCompatiblity(newCompatibility);
     switchIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    const newLocale = new Intl.Locale(lang);
     changeLocale(newLocale);
   }, [lang]);
 
@@ -51,7 +66,13 @@ export function ClientProvider({ children }: { children: ReactNode }) {
       value={
         !isClient || !locale
           ? defaultContext
-          : { isClient, locale, logLevel, changeLoglevel: switchLogLevel }
+          : {
+              isClient,
+              locale,
+              logLevel,
+              changeLoglevel: switchLogLevel,
+              compatibility: compatibility!,
+            }
       }
     >
       {children}
