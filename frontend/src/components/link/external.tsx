@@ -10,8 +10,8 @@ export interface ILinkExternalProps
 
 export const LinkExternal = createBlockComponent(styles, Component);
 
-function Component({ href, ...props }: ILinkExternalProps) {
+function Component({ href, target, ...props }: ILinkExternalProps) {
   const urlString = href instanceof URL ? href.toString() : href;
 
-  return <a href={urlString} {...props} />;
+  return <a href={urlString} target={target ?? "_blank"} {...props} />;
 }
