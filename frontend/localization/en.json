@@ -57,7 +57,10 @@
     },
     "account": {
       "title": "Account",
-      "heading": "Account"
+      "heading": "Account",
+      "Compatibility": "Compatibility",
+      "Supported": "Supported",
+      "Not supported": "Not supported"
     }
   },
   "home": {
@@ -65,7 +68,8 @@
     "heading": "Welcome!",
     "link_tasks": "Tasks",
     "link_qr_code": "QR code reader",
-    "link_places": "Places"
+    "link_places": "Places",
+    "link_account": "Account"
   },
   "todos": {
     "title": "Tasks",

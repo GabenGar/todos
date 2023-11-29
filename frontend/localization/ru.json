@@ -57,7 +57,10 @@
     },
     "account": {
       "title": "Учётная запись",
-      "heading": "Учётная Запись"
+      "heading": "Учётная Запись",
+      "Compatibility": "Совместимость",
+      "Supported": "Поддерживается",
+      "Not supported": "Не поддерживается"
     }
   },
   "home": {
@@ -65,7 +68,8 @@
     "heading": "Добро пожаловать!",
     "link_tasks": "Задачи",
     "link_qr_code": "Считыватель QR кодов",
-    "link_places": "Места"
+    "link_places": "Места",
+    "link_account": "Учётная запись"
   },
   "todos": {
     "title": "Задачи",

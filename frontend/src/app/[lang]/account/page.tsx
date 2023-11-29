@@ -28,9 +28,7 @@ async function PlaceDetailsPage({ params }: IProps) {
 
   return (
     <Page heading={heading}>
-      <Client
-        commonTranslation={common}
-      />
+      <Client commonTranslation={common} translation={pages.account} />
     </Page>
   );
 }
