@@ -60,7 +60,14 @@
       "heading": "Учётная Запись",
       "Compatibility": "Совместимость",
       "Supported": "Поддерживается",
-      "Not supported": "Не поддерживается"
+      "Not supported": "Не поддерживается",
+      "Data": "Данные",
+      "Export": "Экспорт",
+      "Import": "Импорт",
+      "Export Data": "Экпортировать данные",
+      "Click to upload a file": "Кликните для загрузки файла",
+      "Import data": "Импортировать данные",
+      "Importing data...": "Импортируем данные..."
     }
   },
   "home": {
@@ -166,9 +173,9 @@
       "Applying changes...": "Применяем изменения..."
     },
     "search": {
-      "Query":"Запрос",
-      "Search":"Искать",
-      "Searching...":"Ищем..."
+      "Query": "Запрос",
+      "Search": "Искать",
+      "Searching...": "Ищем..."
     }
   }
 }

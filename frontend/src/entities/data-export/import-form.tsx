@@ -9,7 +9,7 @@ import styles from "./import-form.module.scss";
 
 export interface IImportDataExportFormProps {
   commonTranslation: ILocalizationCommon;
-  translation: ILocalization["todos"];
+  translation: ILocalization["pages"]["account"];
   id: string;
   onSuccess?: () => Promise<void>;
 }
@@ -20,9 +20,8 @@ export function ImportDataExportForm({
   id,
   onSuccess,
 }: IImportDataExportFormProps) {
-  const { click_to_file, import_tasks, importing_tasks } = translation;
   const FIELD = {
-    FILE: { name: "file", label: click_to_file },
+    FILE: { name: "file", label: translation["Click to upload a file"] },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -54,7 +53,9 @@ export function ImportDataExportForm({
       className={styles.block}
       submitButton={(formID, isSubmitting) => (
         <ButtonSubmit viewType="button" form={formID} disabled={isSubmitting}>
-          {!isSubmitting ? import_tasks : importing_tasks}
+          {!isSubmitting
+            ? translation["Import data"]
+            : translation["Importing data..."]}
         </ButtonSubmit>
       )}
       onSubmit={handleImportDataExport}

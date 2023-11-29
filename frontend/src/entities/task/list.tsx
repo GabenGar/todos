@@ -15,11 +15,6 @@ import {
 } from "#components/details";
 import { type ITranslatableProps } from "#components/types";
 import { Link } from "#components/link";
-import {
-  DataExportForm,
-  type IImportDataExportFormProps,
-  ImportDataExportForm,
-} from "#entities/data-export";
 import { IPlace, getPlace } from "#entities/place";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
 import {
@@ -185,17 +180,6 @@ export function TaskList({
           ))}
         </PreviewList>
       )}
-
-      <ImportForms
-        commonTranslation={commonTranslation}
-        translation={translation}
-        headingLevel={headingLevel}
-        id={id}
-        onSuccess={async () => {
-          const updatedTasks = await getTasks(options);
-          changeTasks(updatedTasks);
-        }}
-      />
     </>
   );
 }
@@ -300,46 +284,6 @@ function Forms({
             </div>
           </DetailsBody>
         </>
-      )}
-    </Details>
-  );
-}
-
-interface IImportFormsProps
-  extends Pick<
-      IProps,
-      "commonTranslation" | "translation" | "id" | "headingLevel"
-    >,
-    Pick<IImportDataExportFormProps, "onSuccess"> {}
-
-function ImportForms({
-  commonTranslation,
-  translation,
-  headingLevel,
-  id,
-  onSuccess,
-}: IImportFormsProps) {
-  const importFormID = `${id}-import-data-export`;
-
-  return (
-    <Details headingLevel={headingLevel}>
-      {() => (
-        <DetailsHeader>
-          <ul className={styles.buttons}>
-            <li>
-              <DataExportForm translation={translation} />
-            </li>
-
-            <li>
-              <ImportDataExportForm
-                commonTranslation={commonTranslation}
-                translation={translation}
-                id={importFormID}
-                onSuccess={onSuccess}
-              />
-            </li>
-          </ul>
-        </DetailsHeader>
       )}
     </Details>
   );

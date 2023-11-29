@@ -108,7 +108,7 @@ function Component({
       ) : (
         <ul>
           {currentFiles.map(({ name, size, type }, index) => (
-            <li key={index}>
+            <li key={index} className={styles.file}>
               {type} - {name} -{" "}
               {!client.isClient
                 ? size

@@ -19,14 +19,6 @@
   }
 }
 
-.buttons {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
 .header {
   display: grid;
   gap: $size-small;
