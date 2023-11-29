@@ -60,7 +60,14 @@
       "heading": "Account",
       "Compatibility": "Compatibility",
       "Supported": "Supported",
-      "Not supported": "Not supported"
+      "Not supported": "Not supported",
+      "Data": "Data",
+      "Export": "Export",
+      "Import": "Import",
+      "Export Data": "Export Data",
+      "Click to upload a file": "Click to upload a file",
+      "Import data": "Import data",
+      "Importing data...": "Importing data..."
     }
   },
   "home": {
@@ -166,9 +173,9 @@
       "Applying changes...": "Applying changes..."
     },
     "search": {
-      "Query":"Query",
-      "Search":"Search",
-      "Searching...":"Searching..."
+      "Query": "Query",
+      "Search": "Search",
+      "Searching...": "Searching..."
     }
   }
 }
