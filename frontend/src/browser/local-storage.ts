@@ -10,6 +10,7 @@ export const LOCAL_STORAGE_KEYS = {
   STORAGE_TEST: "__storage_test__",
   TODOS: "todos",
   PLACES: "places",
+  LOG_LEVEL:"log_level"
 } as const;
 
 export type ILocalStoreKey =
