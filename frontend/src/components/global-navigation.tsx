@@ -2,7 +2,7 @@
 
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
-import { parse as parseLocale } from "bcp-47";
+import { type Schema, parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
@@ -38,9 +38,13 @@ export function GlobalNavigation() {
 export function LocaleSwitcher() {
   const pathName = usePathname();
   const currentLocale = pathName.split("/")[1];
+  const language = parseLocale(currentLocale).language!;
 
   return (
-    <Details className={styles.locale} summary={currentLocale}>
+    <Details
+      className={styles.locale}
+      summary={<Language language={language} />}
+    >
       <ul className={styles.localeList}>
         {LOCALES.map((locale) => (
           <LocaleItem
@@ -67,14 +71,22 @@ function LocaleItem({ locale, currentLocale, pathName }: ILocaleItemsProps) {
   return (
     <li>
       {locale === currentLocale ? (
-        <span>{language}</span>
+          <Language language={language} />
       ) : (
-        <Link href={getRedirectedPathName(locale, pathName) as Route}>
-          {language} {iso6391.getNativeName(language)} (
-          {iso6391.getName(language)})
+        <Link className={styles.localeLink} href={getRedirectedPathName(locale, pathName) as Route}>
+          <Language language={language} />
         </Link>
       )}
     </li>
+  );
+}
+
+function Language({ language }: { language: string }) {
+  return (
+    <span>
+      <span className={styles.language}>{language}</span>{" "}
+      {iso6391.getNativeName(language)} ({iso6391.getName(language)})
+    </span>
   );
 }
 
