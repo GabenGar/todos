@@ -2,10 +2,13 @@
 
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
+import { type Schema, parse as parseLocale } from "bcp-47";
+import iso6391 from "iso-639-1";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { homePageURL } from "#lib/urls";
-import { Link } from "./link";
+import { Details } from "#components";
+import { Link } from "#components/link";
 
 import styles from "./global-navigation.module.scss";
 
@@ -34,21 +37,63 @@ export function GlobalNavigation() {
 
 export function LocaleSwitcher() {
   const pathName = usePathname();
+  const currentLocale = pathName.split("/")[1];
+  const language = parseLocale(currentLocale).language!;
 
   return (
-    <ul>
-      {LOCALES.map((locale) => (
-        <li key={locale}>
-          <Link href={redirectedPathName(locale, pathName) as Route}>
-            {locale}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <Details
+      className={styles.locale}
+      summary={<Language language={language} />}
+    >
+      <ul className={styles.localeList}>
+        {LOCALES.map((locale) => (
+          <LocaleItem
+            key={locale}
+            locale={locale}
+            currentLocale={currentLocale}
+            pathName={pathName}
+          />
+        ))}
+      </ul>
+    </Details>
   );
 }
 
-const redirectedPathName = (locale: string, pathName: string) => {
+interface ILocaleItemsProps {
+  locale: string;
+  currentLocale: string;
+  pathName: string;
+}
+
+function LocaleItem({ locale, currentLocale, pathName }: ILocaleItemsProps) {
+  const language = parseLocale(locale).language!;
+
+  return (
+    <li>
+      {locale === currentLocale ? (
+        <Language language={language} />
+      ) : (
+        <Link
+          className={styles.localeLink}
+          href={getRedirectedPathName(locale, pathName) as Route}
+        >
+          <Language language={language} />
+        </Link>
+      )}
+    </li>
+  );
+}
+
+function Language({ language }: { language: string }) {
+  return (
+    <span>
+      <span className={styles.language}>{language}</span>{" "}
+      {iso6391.getNativeName(language)} ({iso6391.getName(language)})
+    </span>
+  );
+}
+
+function getRedirectedPathName(locale: string, pathName: string) {
   if (!pathName) {
     return "/";
   }
@@ -57,4 +102,4 @@ const redirectedPathName = (locale: string, pathName: string) => {
   segments[1] = locale;
 
   return segments.join("/");
-};
+}

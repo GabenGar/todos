@@ -8,3 +8,4 @@ export {
   DescriptionTerm,
   DescriptionDetails,
 } from "./description-list";
+export { Details } from "./details";

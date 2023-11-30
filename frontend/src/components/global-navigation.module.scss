@@ -10,3 +10,27 @@
   align-items: center;
   gap: $size-normal;
 }
+
+.locale {
+  position: relative;
+}
+
+.localeList {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: $size-small;
+  width: 100%;
+  background-color: var(--colour-background-secondary);
+  padding: $size-normal;
+}
+
+.localeLink {
+  width: 100%;
+}
+
+.language {
+  font-weight: bold;
+  text-transform: uppercase;
+}
