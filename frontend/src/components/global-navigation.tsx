@@ -71,9 +71,12 @@ function LocaleItem({ locale, currentLocale, pathName }: ILocaleItemsProps) {
   return (
     <li>
       {locale === currentLocale ? (
-          <Language language={language} />
+        <Language language={language} />
       ) : (
-        <Link className={styles.localeLink} href={getRedirectedPathName(locale, pathName) as Route}>
+        <Link
+          className={styles.localeLink}
+          href={getRedirectedPathName(locale, pathName) as Route}
+        >
           <Language language={language} />
         </Link>
       )}
