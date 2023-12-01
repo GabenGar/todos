@@ -1,8 +1,7 @@
 "use client";
 import type { ILocalization } from "#lib/localization";
 import { useClient } from "#hooks";
-import { Loading } from "./loading";
-import { DescriptionList, DescriptionSection } from "./description-list";
+import { Loading, DescriptionList, DescriptionSection } from "#components";
 
 import styles from "./logger-switcher.module.scss";
 

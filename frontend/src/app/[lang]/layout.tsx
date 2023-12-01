@@ -4,7 +4,7 @@ import { REPOSITORY_URL, SITE_ORIGIN, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { getDictionary } from "#server";
 import { ClientProvider } from "#hooks";
-import { GlobalNavigation, LoggerSwitcher } from "#components";
+import { GlobalNavigation } from "#components";
 import { Link } from "#components/link";
 import type { IBasePageParams } from "#pages/types";
 
@@ -56,9 +56,6 @@ async function RootLayout({ children, params }: IProps) {
             <ul className={styles.list}>
               <li>
                 <Link href={REPOSITORY_URL}>{layout.source_code}</Link>
-              </li>
-              <li>
-                <LoggerSwitcher translation={layout} />
               </li>
             </ul>
           </footer>

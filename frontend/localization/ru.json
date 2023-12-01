@@ -76,7 +76,8 @@
       "Export Data": "Экпортировать данные",
       "Click to upload a file": "Кликните для загрузки файла",
       "Import data": "Импортировать данные",
-      "Importing data...": "Импортируем данные..."
+      "Importing data...": "Импортируем данные...",
+      "Settings": "Настройки"
     }
   },
   "home": {
