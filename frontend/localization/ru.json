@@ -2,7 +2,16 @@
   "layout": {
     "description": "Организовывайте задачи в браузере",
     "source_code": "Исходный код",
-    "log_level": "Уровень логов"
+    "logger": {
+      "Log level": "Уровень логов",
+      "levels": {
+        "Debug": "Отладка",
+        "Logs": "Сообщения",
+        "Information": "Информация",
+        "Warnings": "Предупреждения",
+        "Errors": "Ошибки"
+      }
+    }
   },
   "common": {
     "form": {

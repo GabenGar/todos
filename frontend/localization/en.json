@@ -2,7 +2,16 @@
   "layout": {
     "description": "Manage tasks in browser",
     "source_code": "Source Code",
-    "log_level": "Log level"
+    "logger": {
+      "Log level": "Log level",
+      "levels": {
+        "Debug": "Debug",
+        "Logs": "Logs",
+        "Information": "Information",
+        "Warnings": "Warnings",
+        "Errors": "Errors"
+      }
+    }
   },
   "common": {
     "form": {
