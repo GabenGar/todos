@@ -10,15 +10,15 @@ import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { Pre } from "#components/pre";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
-import { LoggerSwitcher } from "./logger-switcher";
+import { SettingsForm } from "./settings-form";
 
 interface IProps extends ITranslatableProps {
-  layoutTranslation: ILocalization["layout"]
   translation: ILocalizationPage["account"];
 }
 
-export function Client({ commonTranslation, layoutTranslation, translation }: IProps) {
+export function Client({ commonTranslation, translation }: IProps) {
   const router = useRouter();
+  const clientInfo = useClient();
 
   return (
     <>
@@ -90,7 +90,20 @@ export function Client({ commonTranslation, layoutTranslation, translation }: IP
               </Heading>
             </DetailsHeader>
             <DetailsBody>
-              <LoggerSwitcher translation={layoutTranslation} />
+              {!clientInfo.isClient ? (
+                <Loading />
+              ) : (
+                <SettingsForm
+                  key={clientInfo.logLevel}
+                  commonTranslation={commonTranslation}
+                  translation={translation}
+                  id="edit-account-settings"
+                  currentLogLevel={clientInfo.logLevel}
+                  onSettingsUpdate={async (settingsUpdate) => {
+                    clientInfo.changeLoglevel(settingsUpdate.log_level);
+                  }}
+                />
+              )}
             </DetailsBody>
           </>
         )}
@@ -110,7 +123,7 @@ function Compatibility({ translation }: ICompatibilityProps) {
         isHorizontal
         dKey={
           <Link href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">
-            <Pre>localeStorage</Pre>
+            <Pre>localStorage</Pre>
           </Link>
         }
         dValue={
