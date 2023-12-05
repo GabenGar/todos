@@ -29,7 +29,6 @@ const logLevelTranslation = {
   error: "Errors",
 } as const;
 
-
 /**
  * @TODO
  * Find a way to instantiate log level from the user setting on client.
