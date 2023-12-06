@@ -15,7 +15,7 @@
   --colour-background-tertiary: hsla(0, 0%, 80%);
   --colour-background-tertiary-transparent: hsla(0, 0%, 80%, 50%);
 
-  // button colours
+  // action colours
   --submit-colour-text-primary: hsl(240, 100%, 50%);
   --submit-colour-text-secondary: hsl(240, 70%, 50%);
   --submit-colour-text-tertiary: hsl(240, 60%, 60%);
@@ -29,6 +29,13 @@
   --positive-colour-background-primary: hsl(120, 100%, 75%);
   --positive-colour-background-secondary: hsl(120, 100%, 85%);
   --positive-colour-background-tertiary: hsl(120, 100%, 90%);
+
+  --warning-colour-text-primary: hsl(60, 100%, 35%);
+  --warning-colour-text-secondary: hsl(60, 80%, 40%);
+  --warning-colour-text-tertiary: hsl(60, 60%, 45%);
+  --warning-colour-background-primary: hsl(60, 100%, 80%);
+  --warning-colour-background-secondary: hsl(60, 100%, 85%);
+  --warning-colour-background-tertiary: hsl(60, 100%, 90%);
 
   --negative-colour-text-primary: hsl(0, 100%, 30%);
   --negative-colour-text-secondary: hsl(0, 100%, 35%);

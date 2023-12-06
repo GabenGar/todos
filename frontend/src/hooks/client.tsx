@@ -8,7 +8,11 @@ import {
 import { useParams } from "next/navigation";
 import { DEFAULT_LOG_LEVEL } from "#environment";
 import { type ILogLevel, changeCurrentLogLevel } from "#lib/logs";
-import { isLocalStorageAvailable } from "#browser/local-storage";
+import {
+  getLocalStoreItem,
+  isLocalStorageAvailable,
+  setLocalStoreItem,
+} from "#browser/local-storage";
 
 type IClientContext =
   | {
@@ -38,12 +42,14 @@ export function ClientProvider({ children }: { children: ReactNode }) {
   const params = useParams();
   const [isClient, switchIsClient] = useState(false);
   const [locale, changeLocale] = useState<Intl.Locale>();
-  const [logLevel, changeLogLevel] = useState<ILogLevel>(DEFAULT_LOG_LEVEL);
+  const [logLevel, changeLogLevel] = useState<ILogLevel>();
   const [compatibility, changeCompatiblity] = useState<ICompatibility>();
   const lang = Array.isArray(params.lang) ? params.lang[0] : params.lang;
 
   function switchLogLevel(...args: Parameters<typeof changeCurrentLogLevel>) {
     const newLevel = changeCurrentLogLevel(...args);
+
+    setLocalStoreItem<ILogLevel>("log_level", newLevel);
     changeLogLevel(newLevel);
   }
 
@@ -51,8 +57,13 @@ export function ClientProvider({ children }: { children: ReactNode }) {
     const newCompatibility: ICompatibility = {
       localStorage: isLocalStorageAvailable(),
     };
+    const newLogLevel = getLocalStoreItem<ILogLevel>(
+      "log_level",
+      DEFAULT_LOG_LEVEL,
+    );
 
     changeCompatiblity(newCompatibility);
+    changeLogLevel(newLogLevel);
     switchIsClient(true);
   }, []);
 
@@ -69,7 +80,7 @@ export function ClientProvider({ children }: { children: ReactNode }) {
           : {
               isClient,
               locale,
-              logLevel,
+              logLevel: logLevel!,
               changeLoglevel: switchLogLevel,
               compatibility: compatibility!,
             }

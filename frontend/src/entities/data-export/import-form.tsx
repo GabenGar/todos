@@ -51,13 +51,11 @@ export function ImportDataExportForm({
       commonTranslation={commonTranslation}
       id={id}
       className={styles.block}
-      submitButton={(formID, isSubmitting) => (
-        <ButtonSubmit viewType="button" form={formID} disabled={isSubmitting}>
-          {!isSubmitting
-            ? translation["Import data"]
-            : translation["Importing data..."]}
-        </ButtonSubmit>
-      )}
+      submitButton={(formID, isSubmitting) =>
+        !isSubmitting
+          ? translation["Import data"]
+          : translation["Importing data..."]
+      }
       onSubmit={handleImportDataExport}
     >
       {(formID) => (

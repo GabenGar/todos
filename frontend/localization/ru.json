@@ -1,8 +1,7 @@
 {
   "layout": {
     "description": "Организовывайте задачи в браузере",
-    "source_code": "Исходный код",
-    "log_level": "Уровень логов"
+    "source_code": "Исходный код"
   },
   "common": {
     "form": {
@@ -67,7 +66,20 @@
       "Export Data": "Экпортировать данные",
       "Click to upload a file": "Кликните для загрузки файла",
       "Import data": "Импортировать данные",
-      "Importing data...": "Импортируем данные..."
+      "Importing data...": "Импортируем данные...",
+      "Settings": "Настройки",
+      "Update": "Обновить",
+      "Updating...": "Обновляем...",
+      "logger": {
+        "Log level": "Уровень логов",
+        "levels": {
+          "Debug": "Отладка",
+          "Logs": "Сообщения",
+          "Information": "Информация",
+          "Warnings": "Предупреждения",
+          "Errors": "Ошибки"
+        }
+      }
     }
   },
   "home": {

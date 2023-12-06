@@ -1,8 +1,7 @@
 {
   "layout": {
     "description": "Manage tasks in browser",
-    "source_code": "Source Code",
-    "log_level": "Log level"
+    "source_code": "Source Code"
   },
   "common": {
     "form": {
@@ -67,7 +66,20 @@
       "Export Data": "Export Data",
       "Click to upload a file": "Click to upload a file",
       "Import data": "Import data",
-      "Importing data...": "Importing data..."
+      "Importing data...": "Importing data...",
+      "Settings": "Settings",
+      "Update": "Update",
+      "Updating...": "Updating...",
+      "logger": {
+        "Log level": "Log level",
+        "levels": {
+          "Debug": "Debug",
+          "Logs": "Logs",
+          "Information": "Information",
+          "Warnings": "Warnings",
+          "Errors": "Errors"
+        }
+      }
     }
   },
   "home": {
