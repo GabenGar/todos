@@ -25,6 +25,7 @@ import {
   type IDetailsProps,
 } from "#components/details";
 import { EntityID } from "#components/entities";
+import type { ITranslatableProps } from "#components/types";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
 import { removeTask } from "./lib/remove";
@@ -33,7 +34,7 @@ import type { ITask } from "./types";
 
 import styles from "./details.module.scss";
 
-export interface ITaskDetailsProps extends IDetailsProps {
+export interface ITaskDetailsProps extends ITranslatableProps, IDetailsProps {
   translation: ILocalization["task"];
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
@@ -42,6 +43,7 @@ export interface ITaskDetailsProps extends IDetailsProps {
 export const TaskDetails = createBlockComponent(styles, Component);
 
 function Component({
+  commonTranslation,
   translation,
   taskID,
   onEdit,
@@ -103,7 +105,7 @@ function Component({
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID>{id}</EntityID>
+            <EntityID commonTranslation={commonTranslation} entityID={id} />
           </DetailsHeader>
 
           <DetailsBody>

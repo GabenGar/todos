@@ -13,11 +13,12 @@ import {
 } from "#components/preview";
 import { DateTime } from "#components/date";
 import { Link } from "#components/link";
+import { ITranslatableProps } from "#components/types";
 import type { IPlace } from "./types";
 
 import styles from "./preview.module.scss";
 
-interface IProps extends IPreviewProps {
+interface IProps extends ITranslatableProps, IPreviewProps {
   translation: ILocalization["place"];
   place: IPlace;
 }
@@ -27,7 +28,12 @@ interface IProps extends IPreviewProps {
  */
 export const PlacePreview = createBlockComponent(styles, Component);
 
-function Component({ translation, place, ...props }: IProps) {
+function Component({
+  commonTranslation,
+  translation,
+  place,
+  ...props
+}: IProps) {
   const { id, title, description, created_at, updated_at } = place;
 
   return (
@@ -39,7 +45,7 @@ function Component({ translation, place, ...props }: IProps) {
           </PreviewHeader>
 
           <PreviewBody>
-            <EntityID>{id}</EntityID>
+            <EntityID commonTranslation={commonTranslation} entityID={id} />
 
             <DescriptionList
               sections={[
