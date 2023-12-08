@@ -40,7 +40,7 @@ function Component({
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID>{id}</EntityID>
+            <EntityID commonTranslation={commonTranslation} entityID={id} />
           </DetailsHeader>
 
           <DetailsBody>

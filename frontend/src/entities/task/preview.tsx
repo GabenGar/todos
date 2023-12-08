@@ -13,12 +13,13 @@ import {
 import { DateTime } from "#components/date";
 import { Link } from "#components/link";
 import { EntityID } from "#components/entities";
+import type { ITranslatableProps } from "#components/types";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
 
 import styles from "./preview.module.scss";
 
-interface IProps extends IPreviewProps {
+interface IProps extends ITranslatableProps, IPreviewProps {
   task: ITask;
   translation: ILocalization["task"];
 }
@@ -30,7 +31,7 @@ interface IProps extends IPreviewProps {
  */
 export const TaskPreview = createBlockComponent(styles, Component);
 
-function Component({ task, translation, ...props }: IProps) {
+function Component({ commonTranslation, translation, task, ...props }: IProps) {
   const { id, title, description, status, created_at, updated_at, place } =
     task;
 
@@ -43,7 +44,7 @@ function Component({ task, translation, ...props }: IProps) {
           </PreviewHeader>
 
           <PreviewBody>
-            <EntityID>{id}</EntityID>
+            <EntityID commonTranslation={commonTranslation} entityID={id} />
             <DescriptionList>
               <DescriptionSection
                 isHorizontal

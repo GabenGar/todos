@@ -173,6 +173,7 @@ export function TaskList({
           {tasks.items.map((task) => (
             <TaskPreview
               key={task.id}
+              commonTranslation={commonTranslation}
               headingLevel={headingLevel}
               translation={taskTranslation}
               task={task}

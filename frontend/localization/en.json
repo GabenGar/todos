@@ -18,6 +18,10 @@
     },
     "list": {
       "no_items": "No items found."
+    },
+    "entity": {
+      "Copy": "Copy",
+      "Copied": "Copied"
     }
   },
   "pages": {

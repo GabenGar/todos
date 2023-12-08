@@ -23,11 +23,11 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 async function TaskDetailsPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { task } = dict;
+  const { task, common } = dict;
 
   return (
     <Page heading={task.heading}>
-      <Client translation={task} />
+      <Client commonTranslation={common} translation={task} />
     </Page>
   );
 }

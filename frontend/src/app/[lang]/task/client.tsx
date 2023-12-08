@@ -1,11 +1,14 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { ITaskDetailsProps, TaskDetails } from "#entities/task";
+import { type ITranslatableProps } from "#components/types";
+import { type ITaskDetailsProps, TaskDetails } from "#entities/task";
 
-interface IProps extends Pick<ITaskDetailsProps, "translation"> {}
+interface IProps
+  extends ITranslatableProps,
+    Pick<ITaskDetailsProps, "translation"> {}
 
-export function Client({ translation }: IProps) {
+export function Client({ commonTranslation, translation }: IProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const taskID = searchParams.get("task_id")?.trim();
@@ -17,6 +20,11 @@ export function Client({ translation }: IProps) {
   }
 
   return (
-    <TaskDetails translation={translation} headingLevel={2} taskID={taskID} />
+    <TaskDetails
+      commonTranslation={commonTranslation}
+      translation={translation}
+      headingLevel={2}
+      taskID={taskID}
+    />
   );
 }
