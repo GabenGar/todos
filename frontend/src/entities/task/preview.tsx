@@ -44,7 +44,7 @@ function Component({ commonTranslation, translation, task, ...props }: IProps) {
           </PreviewHeader>
 
           <PreviewBody>
-            <EntityID commonTranslation={commonTranslation} entityID={id}/>
+            <EntityID commonTranslation={commonTranslation} entityID={id} />
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
