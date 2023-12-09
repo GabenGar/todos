@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { IEntityItem } from "#lib/entities";
+import { logError } from "#lib/logs";
 import { createBlockComponent } from "#components/meta";
 import { Button } from "#components/button";
 import { Pre } from "#components/pre";
@@ -28,11 +29,15 @@ function Component({ entityID, commonTranslation, ...props }: IProps) {
         className={styles.button}
         disabled={isCopied}
         onClick={async () => {
-          await navigator.clipboard.writeText(entityID);
-          switchCopiedStatus(true);
-          setTimeout(() => {
-            switchCopiedStatus(false);
-          }, 3000);
+          try {
+            await navigator.clipboard.writeText(entityID);
+            switchCopiedStatus(true);
+            setTimeout(() => {
+              switchCopiedStatus(false);
+            }, 3000);
+          } catch (error) {
+            logError(error);
+          }
         }}
       >
         {!isCopied

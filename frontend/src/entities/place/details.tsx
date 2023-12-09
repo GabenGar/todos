@@ -1,7 +1,7 @@
 import type { ILocalization } from "#lib/localization";
 import { createPlaceEditPageURL } from "#lib/urls";
 import { createBlockComponent } from "#components/meta";
-import { DescriptionList } from "#components";
+import { DescriptionList, DescriptionSection } from "#components";
 import { ITranslatableProps } from "#components/types";
 import { Heading, type IHeadingLevel } from "#components/heading";
 import { DateTime } from "#components/date";
@@ -53,18 +53,26 @@ function Component({
               ]}
             />
 
-            <DescriptionList
-              sections={[
-                [
-                  translation.created_at,
-                  <DateTime key="created_at" dateTime={created_at} />,
-                ],
-                [
-                  translation.updated_at,
-                  <DateTime key="updated_at" dateTime={updated_at} />,
-                ],
-              ]}
-            />
+            <DescriptionList>
+              <DescriptionSection
+                dKey={translation.created_at}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    dateTime={created_at}
+                  />
+                }
+              />
+              <DescriptionSection
+                dKey={translation.updated_at}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    dateTime={updated_at}
+                  />
+                }
+              />
+            </DescriptionList>
 
             <Heading level={(headinglevel + 1) as IHeadingLevel}>
               {translation["Tasks"]}
