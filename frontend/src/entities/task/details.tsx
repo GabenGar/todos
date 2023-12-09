@@ -105,7 +105,11 @@ function Component({
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID commonTranslation={commonTranslation} entityID={id} />
+            <EntityID
+              className={styles.id}
+              commonTranslation={commonTranslation}
+              entityID={id}
+            />
           </DetailsHeader>
 
           <DetailsBody>

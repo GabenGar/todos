@@ -23,7 +23,9 @@ export interface IPlaceDetailsProps extends IDetailsProps, ITranslatableProps {
   place: IPlace;
 }
 
-export const PlaceDetails = createBlockComponent(undefined, Component);
+import styles from "./details.module.scss";
+
+export const PlaceDetails = createBlockComponent(styles, Component);
 
 function Component({
   commonTranslation,
@@ -40,18 +42,20 @@ function Component({
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID commonTranslation={commonTranslation} entityID={id} />
+            <EntityID
+              className={styles.id}
+              commonTranslation={commonTranslation}
+              entityID={id}
+            />
           </DetailsHeader>
 
           <DetailsBody>
-            <DescriptionList
-              sections={[
-                [
-                  translation.description,
-                  description ?? translation.no_description,
-                ],
-              ]}
-            />
+            <DescriptionList>
+              <DescriptionSection
+                dKey={translation.description}
+                dValue={description ?? translation.no_description}
+              />
+            </DescriptionList>
 
             <DescriptionList>
               <DescriptionSection
