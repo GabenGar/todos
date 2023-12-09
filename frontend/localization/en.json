@@ -22,6 +22,10 @@
     "entity": {
       "Copy": "Copy",
       "Copied": "Copied"
+    },
+    "datetime": {
+      "Copy": "Copy",
+      "Copied": "Copied"
     }
   },
   "pages": {

@@ -105,7 +105,11 @@ function Component({
         <>
           <DetailsHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID commonTranslation={commonTranslation} entityID={id} />
+            <EntityID
+              className={styles.id}
+              commonTranslation={commonTranslation}
+              entityID={id}
+            />
           </DetailsHeader>
 
           <DetailsBody>
@@ -145,11 +149,21 @@ function Component({
             <DescriptionList>
               <DescriptionSection
                 dKey={translation.creation_date}
-                dValue={<DateTime dateTime={created_at} />}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    dateTime={created_at}
+                  />
+                }
               />
               <DescriptionSection
                 dKey={translation.last_updated}
-                dValue={<DateTime dateTime={updated_at} />}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    dateTime={updated_at}
+                  />
+                }
               />
             </DescriptionList>
           </DetailsBody>

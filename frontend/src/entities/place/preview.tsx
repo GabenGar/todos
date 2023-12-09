@@ -1,6 +1,6 @@
 import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL } from "#lib/urls";
-import { DescriptionList } from "#components";
+import { DescriptionList, DescriptionSection } from "#components";
 import { EntityID } from "#components/entities";
 import { Heading } from "#components/heading";
 import { createBlockComponent } from "#components/meta";
@@ -47,27 +47,35 @@ function Component({
           <PreviewBody>
             <EntityID commonTranslation={commonTranslation} entityID={id} />
 
-            <DescriptionList
-              sections={[
-                [
-                  translation.description,
-                  description ?? translation.no_description,
-                ],
-              ]}
-            />
+            <DescriptionList>
+              <DescriptionSection
+                dKey={translation.description}
+                dValue={description ?? translation.no_description}
+              />
+            </DescriptionList>
 
-            <DescriptionList
-              sections={[
-                [
-                  translation.created_at,
-                  <DateTime key="created_at" dateTime={created_at} />,
-                ],
-                [
-                  translation.updated_at,
-                  <DateTime key="updated_at" dateTime={updated_at} />,
-                ],
-              ]}
-            />
+            <DescriptionList>
+              <DescriptionSection
+                dKey={translation.created_at}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    key="created_at"
+                    dateTime={created_at}
+                  />
+                }
+              />
+              <DescriptionSection
+                dKey={translation.updated_at}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    key="updated_at"
+                    dateTime={updated_at}
+                  />
+                }
+              />
+            </DescriptionList>
           </PreviewBody>
 
           <PreviewFooter>
