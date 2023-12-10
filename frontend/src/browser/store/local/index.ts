@@ -1,7 +1,6 @@
 export {
   isLocalStorageAvailable,
   getLocalStoreItem,
-  setLocalStoreItem,
-  deleteLocaleStoreItem,
+  setLocalStoreItem
 } from "./local-storage";
 export type { ILocalStoreKey } from "./local-storage";
