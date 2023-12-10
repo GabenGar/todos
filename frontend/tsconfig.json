@@ -23,6 +23,9 @@
       "#browser/*": [
         "./browser/*"
       ],
+      "#store/*": [
+        "./browser/store/*/index.ts"
+      ],
       "#hooks": [
         "./hooks/index.ts"
       ],

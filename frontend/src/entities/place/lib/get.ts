@@ -2,7 +2,7 @@ import { createValidator } from "#lib/json/schema";
 import { IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
 import { isSubstring } from "#lib/strings";
-import { getLocalStoreItem } from "#browser/local-storage";
+import { getLocalStoreItem } from "#store/local";
 import { ITask, getAllTasks, getTasksStats } from "#entities/task";
 import type {
   IPlace,

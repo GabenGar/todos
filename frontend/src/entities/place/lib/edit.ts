@@ -1,6 +1,6 @@
 import { createValidator } from "#lib/json/schema";
 import { logDebug } from "#lib/logs";
-import { setLocalStoreItem } from "#browser/local-storage";
+import { setLocalStoreItem } from "#store/local";
 import { getAllPlaces } from "./get";
 import { type IPlaceUpdate, type IPlace } from "../types";
 import { now } from "#lib/dates";

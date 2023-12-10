@@ -12,7 +12,7 @@ import {
   getLocalStoreItem,
   isLocalStorageAvailable,
   setLocalStoreItem,
-} from "#browser/local-storage";
+} from "#store/local";
 
 type IClientContext =
   | {

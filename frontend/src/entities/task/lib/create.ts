@@ -3,7 +3,7 @@ import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
 import { toQuotedStrings } from "#lib/strings";
-import { setLocalStoreItem } from "#browser/local-storage";
+import { setLocalStoreItem } from "#store/local";
 import { type IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskInit, ITaskStore } from "../types";
 import { getAllTasks } from "./get";

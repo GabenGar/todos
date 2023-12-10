@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
-import { setLocalStoreItem } from "#browser/local-storage";
+import { setLocalStoreItem } from "#store/local";
 import { getAllTasks, type ITaskStore } from "#entities/task";
 import { type IPlace, getAllPlaces } from "#entities/place";
 import type { IDataExport } from "./types";

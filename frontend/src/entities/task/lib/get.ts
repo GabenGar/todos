@@ -3,7 +3,7 @@ import { type IPaginatedCollection, createPagination } from "#lib/pagination";
 import { isSubstring } from "#lib/strings";
 import { type IEntityItem } from "#lib/entities";
 import { createValidator } from "#lib/json/schema";
-import { getLocalStoreItem } from "#browser/local-storage";
+import { getLocalStoreItem } from "#store/local";
 import { IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITasksStats, ITaskStore } from "../types";
 import { migrateTasks } from "./migrate";

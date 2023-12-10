@@ -2,7 +2,7 @@ import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
 import { INanoidID, toQuotedStrings } from "#lib/strings";
-import { setLocalStoreItem } from "#browser/local-storage";
+import { setLocalStoreItem } from "#store/local";
 import { IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskStore, ITaskUpdate } from "../types";
 import { getAllTasks } from "./get";

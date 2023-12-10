@@ -1,6 +1,6 @@
 import { logInfo } from "#lib/logs";
 import { now } from "#lib/dates";
-import { setLocalStoreItem } from "#browser/local-storage";
+import { setLocalStoreItem } from "#store/local";
 import type { ITaskStore } from "../types";
 import { getAllTasks } from "./get";
 
