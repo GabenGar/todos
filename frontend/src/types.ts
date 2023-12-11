@@ -1,4 +1,4 @@
-export type IOneOrMany<Type> = Type | Type[];
+export type IOneOrMany<Type> = Type | readonly Type[];
 
 export type IPartialSome<Type, Key extends keyof Type> = Omit<Type, Key> &
   Pick<Partial<Type>, Key>;
@@ -11,4 +11,5 @@ export interface IFunction<
   ReturnType = unknown,
 > {
   (...args: ArgsType): ReturnType;
+  (...args: ArgsType): Promise<ReturnType>;
 }

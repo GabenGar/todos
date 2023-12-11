@@ -1,10 +1,11 @@
 import { logInfo } from "#lib/logs";
 import { now } from "#lib/dates";
-import { setLocalStoreItem } from "#store/local";
-import type { ITaskStore } from "../types";
-import { getAllTasks } from "./get";
+import type { ITaskStore } from "#entities/task";
+import { getLocalStoreItem } from "./get";
+import { setLocalStoreItem } from "./set";
+import { LOCAL_STORAGE_KEYS } from "./types";
 
-export async function migrateTasks() {
+export async function runMigrations() {
   logInfo(`Migrating tasks...`);
 
   await migrateV1();
@@ -14,7 +15,10 @@ export async function migrateTasks() {
 }
 
 async function migrateV1() {
-  const storedTasks = await getAllTasks();
+  const storedTasks = getLocalStoreItem<ITaskStore[]>(
+    LOCAL_STORAGE_KEYS.TODOS,
+    [],
+  );
   // remove `description` keys which are empty strings
   const legacyTasks = storedTasks.filter(
     ({ description, updated_at }) => description === "" || !updated_at,
@@ -47,7 +51,10 @@ async function migrateV1() {
 }
 
 async function migrateV2() {
-  const storedTasks = await getAllTasks();
+  const storedTasks = getLocalStoreItem<ITaskStore[]>(
+    LOCAL_STORAGE_KEYS.TODOS,
+    [],
+  );
 
   const legacyTasks = storedTasks.filter(({ status }) => !status);
 
