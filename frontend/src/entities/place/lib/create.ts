@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { createValidator } from "#lib/json/schema";
 import { logDebug } from "#lib/logs";
 import { now } from "#lib/dates";
-import { setLocalStoreItem } from "#store/local";
+import { setLocalStorePlaces } from "./storage";
 import { getAllPlaces } from "./get";
 import type { IPlace, IPlaceInit } from "../types";
 
@@ -34,7 +34,7 @@ async function createPlaces(inits: IPlaceInit[]): Promise<IPlace[]> {
   const currentPlaces = await getAllPlaces();
 
   const newPlaces = [...currentPlaces, ...incomingPlaces];
-  setLocalStoreItem("places", newPlaces);
+  await setLocalStorePlaces(newPlaces);
 
   logDebug(`Created ${inits.length} places.`);
 
