@@ -2,9 +2,16 @@ import { nanoid } from "nanoid";
 import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
-import { setLocalStoreItem } from "#store/local";
-import { getAllTasks, type ITaskStore } from "#entities/task";
-import { type IPlace, getAllPlaces } from "#entities/place";
+import {
+  getAllTasks,
+  setLocalStoreTasks,
+  type ITaskStore,
+} from "#entities/task";
+import {
+  type IPlace,
+  getAllPlaces,
+  setLocalStorePlaces,
+} from "#entities/place";
 import type { IDataExport } from "./types";
 
 const validateDataExport: ReturnType<typeof createValidator<IDataExport>> =
@@ -46,14 +53,14 @@ export async function importDataExport(dataExport: unknown) {
 
   if (data.tasks) {
     const updatedTasks = await importTasks(id, data.tasks);
-    setLocalStoreItem("todos", updatedTasks);
+    await setLocalStoreTasks(updatedTasks);
 
     logDebug(`Imported tasks of data export "${id}".`);
   }
 
   if (data.places) {
     const updatedPlaces = await importPlaces(id, data.places);
-    setLocalStoreItem("places", updatedPlaces);
+    await setLocalStorePlaces(updatedPlaces);
 
     logDebug(`Imported places of data export "${id}".`);
   }
