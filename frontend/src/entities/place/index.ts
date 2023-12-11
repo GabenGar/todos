@@ -6,6 +6,7 @@ export type { IPlaceSearchQuery } from "./forms/search";
 export { PlaceCreateForm } from "./forms/create";
 export { EditPlaceForm } from "./forms/edit";
 export type { IEditPlaceFormProps } from "./forms/edit";
+export { getLocalStorePlaces, setLocalStorePlaces } from "./lib/storage";
 export { createPlace } from "./lib/create";
 export {
   getPlaces,

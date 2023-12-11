@@ -2,9 +2,9 @@ import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
 import { INanoidID, toQuotedStrings } from "#lib/strings";
-import { setLocalStoreItem } from "#browser/local-storage";
 import { IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskStore, ITaskUpdate } from "../types";
+import { setLocalStoreTasks } from "./storage";
 import { getAllTasks } from "./get";
 import { toTasks } from "./to-tasks";
 
@@ -111,7 +111,7 @@ export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
     return updatedTask;
   });
 
-  setLocalStoreItem("todos", tasksWithUpdatedApplied);
+  await setLocalStoreTasks(tasksWithUpdatedApplied);
 
   const inputTasks = tasksWithUpdatedApplied.filter(({ id }) =>
     updateIDs.has(id),

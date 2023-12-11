@@ -3,9 +3,9 @@ import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
 import { toQuotedStrings } from "#lib/strings";
-import { setLocalStoreItem } from "#browser/local-storage";
 import { type IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskInit, ITaskStore } from "../types";
+import { setLocalStoreTasks } from "./storage";
 import { getAllTasks } from "./get";
 import { toTasks } from "./to-tasks";
 
@@ -77,7 +77,7 @@ async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
   const currentTasks = await getAllTasks();
 
   const newTasks = [...currentTasks, ...incomingTasks];
-  setLocalStoreItem("todos", newTasks);
+  await setLocalStoreTasks(newTasks);
   const createdTasks = await toTasks(incomingTasks);
 
   logDebug(`Created ${inits.length} tasks.`);

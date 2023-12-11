@@ -1,9 +1,9 @@
 import { createValidator } from "#lib/json/schema";
 import { logDebug } from "#lib/logs";
-import { setLocalStoreItem } from "#browser/local-storage";
+import { now } from "#lib/dates";
+import { setLocalStorePlaces } from "./storage";
 import { getAllPlaces } from "./get";
 import { type IPlaceUpdate, type IPlace } from "../types";
-import { now } from "#lib/dates";
 
 const validatePlaceUpdate = createValidator<IPlaceUpdate>(
   "/entities/place/update",
@@ -57,7 +57,7 @@ async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
     return updatedPlace;
   });
 
-  setLocalStoreItem("places", placesWithUpdatedApplied);
+  await setLocalStorePlaces(placesWithUpdatedApplied);
 
   const editedPlaces = placesWithUpdatedApplied.filter(({ id }) =>
     updateIDs.has(id),

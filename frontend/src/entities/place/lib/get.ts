@@ -1,15 +1,14 @@
-import { createValidator } from "#lib/json/schema";
-import { IPaginatedCollection, createPagination } from "#lib/pagination";
+import { type IPaginatedCollection, createPagination } from "#lib/pagination";
 import { logDebug } from "#lib/logs";
 import { isSubstring } from "#lib/strings";
-import { getLocalStoreItem } from "#browser/local-storage";
-import { ITask, getAllTasks, getTasksStats } from "#entities/task";
+import { type ITask, getAllTasks, getTasksStats } from "#entities/task";
 import type {
   IPlace,
   IPlaceOverview,
   IPlacesCategory,
   IPlacesStatsAll,
 } from "../types";
+import { getLocalStorePlaces } from "./storage";
 
 interface IOptions {
   page?: number;
@@ -18,8 +17,6 @@ interface IOptions {
 }
 
 const defaultOptions = {} as const satisfies IOptions;
-
-const validatePlace = createValidator<IPlace>("/entities/place/entity");
 
 export async function getPlace(placeID: IPlace["id"]): Promise<IPlace> {
   const storedPlaces = await getAllPlaces();
@@ -84,9 +81,7 @@ export async function getPlaces(
 }
 
 export async function getAllPlaces(): Promise<IPlace[]> {
-  const storedPlaces = getLocalStoreItem<IPlace[]>("places", []);
-
-  storedPlaces.forEach((place) => validatePlace(place));
+  const storedPlaces = await getLocalStorePlaces();
 
   return storedPlaces;
 }
