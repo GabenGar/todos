@@ -4,14 +4,14 @@ import { getLocalStoreItem } from "./get";
 import { setLocalStoreItem } from "./set";
 import type { ILocalStoreKey } from "./types";
 
-interface ILocalStorage<Type extends IEntityItem> {
+interface ILocalStorage<Type> {
   get: () => Promise<Type>;
   set: (value: Type) => Promise<void>;
 }
 
 let isMigrated = false;
 
-export function createLocalStorage<Type extends IEntityItem>(
+export function createLocalStorage<Type>(
   storageName: ILocalStoreKey,
   defaultValue: Type,
   validate: (input: unknown) => asserts input is Type,
