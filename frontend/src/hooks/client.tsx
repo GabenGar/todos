@@ -7,12 +7,12 @@ import {
 } from "react";
 import { useParams } from "next/navigation";
 import { DEFAULT_LOG_LEVEL } from "#environment";
-import { type ILogLevel, changeCurrentLogLevel } from "#lib/logs";
 import {
-  getLocalStoreItem,
-  isLocalStorageAvailable,
-  setLocalStoreItem,
-} from "#store/local";
+  type ILogLevel,
+  changeCurrentLogLevel,
+  validateLogLevel,
+} from "#lib/logs";
+import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 
 type IClientContext =
   | {
@@ -25,7 +25,7 @@ type IClientContext =
       compatibility: ICompatibility;
       changeLoglevel: (
         ...args: Parameters<typeof changeCurrentLogLevel>
-      ) => void;
+      ) => Promise<void>;
     };
 
 interface ICompatibility {
@@ -37,6 +37,8 @@ const defaultContext: IClientContext = {
 };
 
 const ClientContext = createContext<IClientContext>(defaultContext);
+const { get: getLocalStoreLogLevel, set: setLocalStoreLogLevel } =
+  createLocalStorage("log_level", DEFAULT_LOG_LEVEL, validateLogLevel);
 
 export function ClientProvider({ children }: { children: ReactNode }) {
   const params = useParams();
@@ -46,25 +48,25 @@ export function ClientProvider({ children }: { children: ReactNode }) {
   const [compatibility, changeCompatiblity] = useState<ICompatibility>();
   const lang = Array.isArray(params.lang) ? params.lang[0] : params.lang;
 
-  function switchLogLevel(...args: Parameters<typeof changeCurrentLogLevel>) {
+  async function switchLogLevel(
+    ...args: Parameters<typeof changeCurrentLogLevel>
+  ) {
     const newLevel = changeCurrentLogLevel(...args);
-
-    setLocalStoreItem<ILogLevel>("log_level", newLevel);
+    await setLocalStoreLogLevel(newLevel);
     changeLogLevel(newLevel);
   }
 
   useEffect(() => {
-    const newCompatibility: ICompatibility = {
-      localStorage: isLocalStorageAvailable(),
-    };
-    const newLogLevel = getLocalStoreItem<ILogLevel>(
-      "log_level",
-      DEFAULT_LOG_LEVEL,
-    );
+    (async () => {
+      const newCompatibility: ICompatibility = {
+        localStorage: isLocalStorageAvailable(),
+      };
+      const newLogLevel = await getLocalStoreLogLevel();
 
-    changeCompatiblity(newCompatibility);
-    changeLogLevel(newLogLevel);
-    switchIsClient(true);
+      changeCompatiblity(newCompatibility);
+      changeLogLevel(newLogLevel);
+      switchIsClient(true);
+    })();
   }, []);
 
   useEffect(() => {
