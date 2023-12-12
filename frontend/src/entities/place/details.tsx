@@ -14,16 +14,17 @@ import {
 } from "#components/details";
 import { EntityID } from "#components/entities";
 import { LinkButton } from "#components/link";
+import { List, ListItem } from "#components/list";
 import { TasksStats } from "#entities/task";
 import type { IPlace } from "./types";
+
+import styles from "./details.module.scss";
 
 export interface IPlaceDetailsProps extends IDetailsProps, ITranslatableProps {
   translation: ILocalization["place"];
   taskTranslation: ILocalization["stats_tasks"];
   place: IPlace;
 }
-
-import styles from "./details.module.scss";
 
 export const PlaceDetails = createBlockComponent(styles, Component);
 
@@ -89,13 +90,13 @@ function Component({
           </DetailsBody>
 
           <DetailsFooter>
-            <ul>
-              <li>
+            <List>
+              <ListItem>
                 <LinkButton href={createPlaceEditPageURL(id)}>
                   {translation["Edit"]}
                 </LinkButton>
-              </li>
-            </ul>
+              </ListItem>
+            </List>
           </DetailsFooter>
         </>
       )}

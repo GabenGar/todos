@@ -1,5 +1,6 @@
 import type { IPagination } from "#lib/pagination";
 import { createBlockComponent } from "#components/meta";
+import { List, ListItem } from "#components/list";
 import type {
   IBaseComponentProps,
   ITranslatableProps,
@@ -18,13 +19,13 @@ function Component({ commonTranslation, pagination, ...props }: IProps) {
   const { currentPage, currentMin, currentMax, totalCount } = pagination;
 
   return (
-    <ul {...props}>
-      <li>
+    <List {...props}>
+      <ListItem>
         {currentMin} - {currentMax} {out_of} {totalCount}
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         {current}: {currentPage}
-      </li>
-    </ul>
+      </ListItem>
+    </List>
   );
 }

@@ -10,6 +10,7 @@ import type { IStaticPageProps } from "#pages/types";
 import { Page } from "#components";
 import { Link } from "#components/link";
 import { Details, DetailsHeader } from "#components/details";
+import { List, ListItem } from "#components/list";
 
 interface IProps extends IStaticPageProps {}
 
@@ -33,20 +34,20 @@ async function FrontPage({ params }: IProps) {
       <Details headingLevel={2}>
         {() => (
           <DetailsHeader>
-            <ul>
-              <li>
+            <List>
+              <ListItem>
                 <Link href={statsPlacesPageURL}>{home.link_places}</Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href={taskStatsPageURL}>{home.link_tasks}</Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href={qrCodeReaderURL}>{home.link_qr_code}</Link>
-              </li>
-              <li>
+              </ListItem>
+              <ListItem>
                 <Link href={accountPageURL}>{home.link_account}</Link>
-              </li>
-            </ul>
+              </ListItem>
+            </List>
           </DetailsHeader>
         )}
       </Details>

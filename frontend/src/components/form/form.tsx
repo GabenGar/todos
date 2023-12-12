@@ -8,6 +8,7 @@ import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
 import { ButtonSubmit } from "#components/button";
 import { Pre } from "#components/pre";
+import { List, ListItem } from "#components/list";
 import { InputSection } from "./section";
 import type { IFormEvent } from "./types";
 
@@ -79,13 +80,13 @@ function Component<InputName extends string>({
     <div id={id} className={className}>
       {children?.(formID, isSubmitting)}
       {errors && (
-        <ol>
+        <List isOrdered>
           {errors.map((error, index) => (
-            <li key={index}>
+            <ListItem key={index}>
               <Pre>{isError(error) ? String(error) : error}</Pre>
-            </li>
+            </ListItem>
           ))}
-        </ol>
+        </List>
       )}
 
       {

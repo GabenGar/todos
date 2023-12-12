@@ -8,6 +8,7 @@ import { Loading } from "#components";
 import type { ITranslatableProps } from "#components/types";
 import { Details, DetailsBody, DetailsHeader } from "#components/details";
 import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
 import {
   EditTaskForm,
   editTask,
@@ -49,8 +50,8 @@ export function Client({
       {(headingLevel) => (
         <>
           <DetailsHeader>
-            <ul>
-              <li>
+            <List>
+              <ListItem>
                 {!currentTask ? (
                   <Loading />
                 ) : (
@@ -58,8 +59,8 @@ export function Client({
                     {pageTranslation.task}
                   </Link>
                 )}
-              </li>
-            </ul>
+              </ListItem>
+            </List>
           </DetailsHeader>
 
           <DetailsBody>

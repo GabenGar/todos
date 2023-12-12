@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useClient } from "#hooks";
 import { createBlockComponent } from "#components/meta";
+import { List, ListItem } from "#components/list";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
@@ -106,9 +107,9 @@ function Component({
           {children}
         </Label>
       ) : (
-        <ul>
+        <List>
           {currentFiles.map(({ name, size, type }, index) => (
-            <li key={index} className={styles.file}>
+            <ListItem key={index} className={styles.file}>
               {type} - {name} -{" "}
               {!client.isClient
                 ? size
@@ -117,9 +118,9 @@ function Component({
                     style: "unit",
                     unit: "byte",
                   }).format(size)}
-            </li>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       )}
     </InputSection>
   );
