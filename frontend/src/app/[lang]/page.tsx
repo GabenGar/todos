@@ -12,6 +12,8 @@ import { Link } from "#components/link";
 import { Details, DetailsHeader } from "#components/details";
 import { List, ListItem } from "#components/list";
 
+import styles from "./page.module.scss"
+
 interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps) {
@@ -24,6 +26,11 @@ export async function generateMetadata({ params }: IProps) {
   };
 }
 
+/**
+ * @TODO
+ * fix style specificity such as `styles.link` being declared
+ * before built-in `Link` styles.
+ */
 async function FrontPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
@@ -33,19 +40,19 @@ async function FrontPage({ params }: IProps) {
     <Page heading={home.heading}>
       <Details headingLevel={2}>
         {() => (
-          <DetailsHeader>
-            <List>
+          <DetailsHeader className={styles.header}>
+            <List className={styles.list}>
               <ListItem>
-                <Link href={statsPlacesPageURL}>{home.link_places}</Link>
+                <Link className={styles.link} href={statsPlacesPageURL}>{home.link_places}</Link>
               </ListItem>
               <ListItem>
-                <Link href={taskStatsPageURL}>{home.link_tasks}</Link>
+                <Link className={styles.link} href={taskStatsPageURL}>{home.link_tasks}</Link>
               </ListItem>
               <ListItem>
-                <Link href={qrCodeReaderURL}>{home.link_qr_code}</Link>
+                <Link className={styles.link} href={qrCodeReaderURL}>{home.link_qr_code}</Link>
               </ListItem>
               <ListItem>
-                <Link href={accountPageURL}>{home.link_account}</Link>
+                <Link className={styles.link} href={accountPageURL}>{home.link_account}</Link>
               </ListItem>
             </List>
           </DetailsHeader>

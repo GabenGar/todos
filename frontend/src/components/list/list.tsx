@@ -3,6 +3,8 @@ import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentProps } from "#components/types";
 import { ListItem } from "./item";
 
+import styles from "./list.module.scss";
+
 type IListProps =
   | IUnorderedListProps
   | ({ isOrdered: true } & IOrderedListProps);
@@ -12,18 +14,19 @@ type IUnorderedListProps = IBaseComponentProps<"ul"> &
 type IOrderedListProps = IBaseComponentProps<"ol"> &
   ({ children: ReactNode } | { items: ReactNode[] });
 
-export const List = createBlockComponent(undefined, ListComponent);
+export const List = createBlockComponent(styles, ListComponent);
 const UnorderedList = createBlockComponent(undefined, UnorderedListComponent);
 const OrderedList = createBlockComponent(undefined, OrderedListComponent);
 
 function ListComponent(props: IListProps) {
+
   if ("isOrdered" in props) {
     const { isOrdered, ...listProps } = props;
 
-    return <UnorderedList {...listProps} />;
+    return <OrderedList {...listProps} />;
   }
 
-  return <OrderedList {...props} />;
+  return <UnorderedList {...props} />;
 }
 
 function UnorderedListComponent(props: IUnorderedListProps) {

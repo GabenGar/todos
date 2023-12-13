@@ -1,0 +1,13 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.header {
+  justify-items: stretch;
+}
+
+.list {
+  align-items: stretch;
+}
+
+.link {
+  display: flex;
+}
