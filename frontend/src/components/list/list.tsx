@@ -19,7 +19,6 @@ const UnorderedList = createBlockComponent(undefined, UnorderedListComponent);
 const OrderedList = createBlockComponent(undefined, OrderedListComponent);
 
 function ListComponent(props: IListProps) {
-
   if ("isOrdered" in props) {
     const { isOrdered, ...listProps } = props;
 

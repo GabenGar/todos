@@ -12,7 +12,7 @@ import { Link } from "#components/link";
 import { Details, DetailsHeader } from "#components/details";
 import { List, ListItem } from "#components/list";
 
-import styles from "./page.module.scss"
+import styles from "./page.module.scss";
 
 interface IProps extends IStaticPageProps {}
 
@@ -43,16 +43,24 @@ async function FrontPage({ params }: IProps) {
           <DetailsHeader className={styles.header}>
             <List className={styles.list}>
               <ListItem>
-                <Link className={styles.link} href={statsPlacesPageURL}>{home.link_places}</Link>
+                <Link className={styles.link} href={statsPlacesPageURL}>
+                  {home.link_places}
+                </Link>
               </ListItem>
               <ListItem>
-                <Link className={styles.link} href={taskStatsPageURL}>{home.link_tasks}</Link>
+                <Link className={styles.link} href={taskStatsPageURL}>
+                  {home.link_tasks}
+                </Link>
               </ListItem>
               <ListItem>
-                <Link className={styles.link} href={qrCodeReaderURL}>{home.link_qr_code}</Link>
+                <Link className={styles.link} href={qrCodeReaderURL}>
+                  {home.link_qr_code}
+                </Link>
               </ListItem>
               <ListItem>
-                <Link className={styles.link} href={accountPageURL}>{home.link_account}</Link>
+                <Link className={styles.link} href={accountPageURL}>
+                  {home.link_account}
+                </Link>
               </ListItem>
             </List>
           </DetailsHeader>
