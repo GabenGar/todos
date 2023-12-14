@@ -36,7 +36,8 @@
       "**/.hg/store/**": true,
       "**/node_modules/*/**": true
     },
-    "typescript.referencesCodeLens.enabled": true
+    "typescript.referencesCodeLens.enabled": true,
+    "typescript.preferences.preferTypeOnlyAutoImports": true
   },
   "extensions": {
     "recommendations": [
