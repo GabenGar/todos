@@ -2,13 +2,14 @@
 
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
-import { type Schema, parse as parseLocale } from "bcp-47";
+import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { homePageURL } from "#lib/urls";
 import { Details } from "#components";
 import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
 
 import styles from "./global-navigation.module.scss";
 
@@ -18,19 +19,18 @@ export function GlobalNavigation() {
 
   return (
     <nav className={styles.block}>
-      <ul className={styles.list}>
-        <li>
+      <List className={styles.list}>
+        <ListItem>
           {!isActive ? (
             <Link href={homePageURL}>{SITE_TITLE}</Link>
           ) : (
             <span>{SITE_TITLE}</span>
           )}
-        </li>
-
-        <li>
+        </ListItem>
+        <ListItem>
           <LocaleSwitcher />
-        </li>
-      </ul>
+        </ListItem>
+      </List>
     </nav>
   );
 }
@@ -45,7 +45,7 @@ export function LocaleSwitcher() {
       className={styles.locale}
       summary={<Language language={language} />}
     >
-      <ul className={styles.localeList}>
+      <List className={styles.localeList}>
         {LOCALES.map((locale) => (
           <LocaleItem
             key={locale}
@@ -54,7 +54,7 @@ export function LocaleSwitcher() {
             pathName={pathName}
           />
         ))}
-      </ul>
+      </List>
     </Details>
   );
 }
@@ -69,7 +69,7 @@ function LocaleItem({ locale, currentLocale, pathName }: ILocaleItemsProps) {
   const language = parseLocale(locale).language!;
 
   return (
-    <li>
+    <ListItem>
       {locale === currentLocale ? (
         <Language language={language} />
       ) : (
@@ -80,7 +80,7 @@ function LocaleItem({ locale, currentLocale, pathName }: ILocaleItemsProps) {
           <Language language={language} />
         </Link>
       )}
-    </li>
+    </ListItem>
   );
 }
 

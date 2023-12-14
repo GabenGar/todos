@@ -13,6 +13,7 @@
 
 .actions {
   display: flex;
+  flex-flow: row nowrap;
   justify-content: space-between;
   gap: $size-normal;
   width: 100%;

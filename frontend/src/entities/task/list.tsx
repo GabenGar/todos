@@ -15,6 +15,7 @@ import {
 } from "#components/details";
 import { type ITranslatableProps } from "#components/types";
 import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
 import { IPlace, getPlace } from "#entities/place";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
 import {
@@ -242,13 +243,13 @@ function Forms({
         <>
           {place && (
             <DetailsHeader>
-              <ul>
-                <li>
+              <List>
+                <ListItem>
                   <Link href={createPlacePageURL(place.id)}>
                     {translation.new_todo.place}
                   </Link>
-                </li>
-              </ul>
+                </ListItem>
+              </List>
             </DetailsHeader>
           )}
           <DetailsBody>

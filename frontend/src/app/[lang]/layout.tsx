@@ -6,6 +6,7 @@ import { getDictionary } from "#server";
 import { ClientProvider } from "#hooks";
 import { GlobalNavigation } from "#components";
 import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
 import type { IBasePageParams } from "#pages/types";
 
 import "../../styles/global.scss";
@@ -53,11 +54,11 @@ async function RootLayout({ children, params }: IProps) {
           <main className={styles.main}>{children}</main>
 
           <footer className={styles.footer}>
-            <ul className={styles.list}>
-              <li>
+            <List className={styles.list}>
+              <ListItem>
                 <Link href={REPOSITORY_URL}>{layout.source_code}</Link>
-              </li>
-            </ul>
+              </ListItem>
+            </List>
           </footer>
         </ClientProvider>
       </body>

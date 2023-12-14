@@ -25,6 +25,7 @@ import {
   type IDetailsProps,
 } from "#components/details";
 import { EntityID } from "#components/entities";
+import { List, ListItem } from "#components/list";
 import type { ITranslatableProps } from "#components/types";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
@@ -170,8 +171,8 @@ function Component({
 
           <DetailsFooter className={styles.footer}>
             {/* @TODO two-layer group */}
-            <ul className={styles.actions}>
-              <li>
+            <List className={styles.actions}>
+              <ListItem>
                 <Button
                   className={styles.action}
                   viewType="reset"
@@ -187,8 +188,9 @@ function Component({
                 >
                   {translation.actions.delay}
                 </Button>
-              </li>
-              <li>
+              </ListItem>
+
+              <ListItem>
                 <Button
                   className={styles.action}
                   viewType="submit"
@@ -204,11 +206,11 @@ function Component({
                 >
                   {translation.actions.start}
                 </Button>
-              </li>
-            </ul>
+              </ListItem>
+            </List>
 
-            <ul className={styles.actions}>
-              <li>
+            <List className={styles.actions}>
+              <ListItem>
                 <Button
                   className={styles.action}
                   viewType="negative"
@@ -221,8 +223,9 @@ function Component({
                 >
                   {translation.actions.fail}
                 </Button>
-              </li>
-              <li>
+              </ListItem>
+
+              <ListItem>
                 <Button
                   className={styles.action}
                   viewType="positive"
@@ -238,23 +241,23 @@ function Component({
                 >
                   {translation.actions.complete}
                 </Button>
-              </li>
-            </ul>
+              </ListItem>
+            </List>
 
             <hr style={{ width: "100%" }} />
 
-            <ul>
-              <li>
+            <List>
+              <ListItem>
                 <LinkButton href={createTaskEditPageURL(id)}>
                   {translation.edit}
                 </LinkButton>
-              </li>
-            </ul>
+              </ListItem>
+            </List>
 
             <hr style={{ width: "100%" }} />
 
-            <ul className={styles.actions}>
-              <li className={styles.delete}>
+            <List className={styles.actions}>
+              <ListItem className={styles.delete}>
                 <Button
                   className={styles.action}
                   viewType="negative"
@@ -267,8 +270,8 @@ function Component({
                 >
                   {translation.delete}
                 </Button>
-              </li>
-            </ul>
+              </ListItem>
+            </List>
           </DetailsFooter>
         </>
       )}

@@ -6,6 +6,7 @@
 
 .list {
   display: flex;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   gap: $size-normal;
@@ -20,6 +21,7 @@
   z-index: 1;
   display: flex;
   flex-flow: column nowrap;
+  align-items: stretch;
   gap: $size-small;
   width: 100%;
   background-color: var(--colour-background-secondary);

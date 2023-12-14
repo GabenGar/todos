@@ -7,6 +7,7 @@ import { Loading } from "#components";
 import type { ITranslatableProps } from "#components/types";
 import { Details, DetailsBody, DetailsHeader } from "#components/details";
 import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
 import {
   EditPlaceForm,
   type IEditPlaceFormProps,
@@ -44,8 +45,8 @@ export function Client({ commonTranslation, translation }: IProps) {
       {(headingLevel) => (
         <>
           <DetailsHeader>
-            <ul>
-              <li>
+            <List>
+              <ListItem>
                 {!currentPlace ? (
                   <Loading />
                 ) : (
@@ -53,8 +54,8 @@ export function Client({ commonTranslation, translation }: IProps) {
                     {translation["Place"]}
                   </Link>
                 )}
-              </li>
-            </ul>
+              </ListItem>
+            </List>
           </DetailsHeader>
 
           <DetailsBody>
