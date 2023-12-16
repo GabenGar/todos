@@ -1,19 +1,15 @@
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import { InputHidden, InputOption } from "#components/form/input";
+import { InputOption } from "#components/form/input";
 import {
-  InputSectionNanoID,
   InputSectionSelect,
   InputSectionText,
 } from "#components/form/section";
-import { type IPlace } from "#entities/place";
+import { PlaceSection, type IPlace } from "#entities/place";
 import { type ITaskInit, isTaskStatus } from "./types";
 
 import styles from "./new.module.scss";
 import statusStyles from "./status.module.scss";
-import { DescriptionList } from "#components";
-import { Link } from "#components/link";
-import { createPlacePageURL } from "#lib/urls";
 
 export interface INewTaskFormProps {
   commonTranslation: ILocalizationCommon;
@@ -106,34 +102,15 @@ export function NewTaskForm({
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
 
-          {place ? (
-            <>
-              <DescriptionList
-                sections={[
-                  [
-                    FIELD.PLACE.label,
-                    <Link key="place" href={createPlacePageURL(place.id)}>
-                      {place.title} ({place.id})
-                    </Link>,
-                  ],
-                ]}
-              />
-              <InputHidden
-                id={`${formID}-${FIELD.PLACE.name}`}
-                form={formID}
-                name={FIELD.PLACE.name}
-                defaultValue={place.id}
-              />
-            </>
-          ) : (
-            <InputSectionNanoID
-              id={`${formID}-${FIELD.PLACE.name}`}
-              form={formID}
-              name={FIELD.PLACE.name}
-            >
-              {FIELD.PLACE.label}
-            </InputSectionNanoID>
-          )}
+          <PlaceSection
+            commonTranslation={commonTranslation}
+            id={`${formID}-${FIELD.PLACE.name}`}
+            form={formID}
+            name={FIELD.PLACE.name}
+            place={place}
+          >
+            {FIELD.PLACE.label}
+          </PlaceSection>
 
           <InputSectionSelect
             label={FIELD.STATUS.label}

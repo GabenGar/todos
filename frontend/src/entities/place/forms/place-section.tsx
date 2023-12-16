@@ -2,23 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { createPlacePageURL } from "#lib/urls";
-import type { ILocalization } from "#lib/localization";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { createBlockComponent } from "#components/meta";
 import { InputHidden } from "#components/form/input";
-import { IInputSectionProps, InputSection } from "#components/form/section";
+import {
+  type IInputSectionProps,
+  InputSection,
+} from "#components/form/section";
 import { Link } from "#components/link";
-import { List } from "#components/list";
+import { List, ListItem } from "#components/list";
 import { Button } from "#components/button";
+import type { ITranslatableProps } from "#components/types";
+import { Pre } from "#components/pre";
 import { getPlace, getPlaces } from "../lib/get";
 import { type IPlace } from "../types";
-import { ITranslatableProps } from "#components/types";
+
+import styles from "./place-section.module.scss";
 
 interface IProps extends ITranslatableProps, IInputSectionProps {
   place?: IPlace;
 }
 
-export const PlaceSection = createBlockComponent(undefined, Component);
+export const PlaceSection = createBlockComponent(styles, Component);
 
 function Component({
   commonTranslation,
@@ -30,37 +35,43 @@ function Component({
   children,
   ...props
 }: IProps) {
-  const [currentPlace, changeCurrentPlace] =
-    useState<Awaited<ReturnType<typeof getPlace>>>();
+  const [currentPlace, changeCurrentPlace] = useState<
+    Awaited<ReturnType<typeof getPlace>> | undefined
+  >(place);
 
   return (
     <InputSection {...props}>
-      {place ? (
+      {
         <DescriptionList>
           <DescriptionSection
             dKey={children}
             dValue={
-              <Link href={createPlacePageURL(place.id)} target="_blank">
-                {place.title} ({place.id})
-              </Link>
+              currentPlace ? (
+                <Link
+                  href={createPlacePageURL(currentPlace.id)}
+                  target="_blank"
+                >
+                  {currentPlace.title} ({currentPlace.id})
+                </Link>
+              ) : (
+                <PlaceSelector
+                  commonTranslation={commonTranslation}
+                  onSelect={async (newPlace) => {
+                    changeCurrentPlace(newPlace);
+                  }}
+                />
+              )
             }
           />
         </DescriptionList>
-      ) : (
-        <PlaceSelector
-          translation={translation}
-          onSelect={async (newPlace) => {
-            changeCurrentPlace(newPlace);
-          }}
-        />
-      )}
+      }
 
       <InputHidden
         id={id}
         form={form}
         name={name}
         required={required}
-        defaultValue={place?.id ?? currentPlace?.id}
+        defaultValue={currentPlace?.id}
       />
     </InputSection>
   );
@@ -96,13 +107,15 @@ function PlaceSelector({
       ) : places.pagination.totalCount === 0 ? (
         <p>{commonTranslation.list.no_items}</p>
       ) : (
-        <List
-          items={places.items.map((place) => (
-            <>
-              <span>
-                {place.title} ({place.id})
+        <List className={styles.list}>
+          {places.items.map((place) => (
+            <ListItem key={place.id} className={styles.item}>
+              <span className={styles.title}>{place.title}</span>
+              <span className={styles.id}>
+                (<Pre>{place.id}</Pre>)
               </span>
               <Button
+                className={styles.select}
                 disabled={selectedPlace?.id === place.id}
                 onClick={async () => {
                   if (selectedPlace?.id === place.id) {
@@ -114,9 +127,9 @@ function PlaceSelector({
               >
                 Select
               </Button>
-            </>
+            </ListItem>
           ))}
-        />
+        </List>
       )}
     </div>
   );
