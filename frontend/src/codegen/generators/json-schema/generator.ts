@@ -1,6 +1,7 @@
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import stringifyObject from "stringify-object";
+import { compile } from "json-schema-to-typescript";
 // @TODO import from a core lib once it's implemented
 import { reduceFolder } from "../../../../../codegen/dist/src/lib/fs/index.js";
 import type {
@@ -22,8 +23,7 @@ interface ISchema {
 
 async function generateJSONSchemas(): Promise<IGeneratedNestedModule> {
   const schemas = await getSchemas();
-
-  const moduleMap = toNestedModules(schemas);
+  const moduleMap = await toNestedModules(schemas);
 
   const nestedModule: IGeneratedNestedModule = {
     type: "nested",
@@ -60,19 +60,18 @@ async function getSchemas(): Promise<ISchemaMap> {
   return schemaMap;
 }
 
-function toNestedModules(
+async function toNestedModules(
   schemaMap: ISchemaMap,
-): IGeneratedNestedModule["moduleMap"] {
-  const moduleMap = Array.from(schemaMap.entries()).reduce<
-    IGeneratedNestedModule["moduleMap"]
-  >((moduleMap, [schemaPath, schema]) => {
+): Promise<IGeneratedNestedModule["moduleMap"]> {
+  const moduleMap: IGeneratedNestedModule["moduleMap"] = new Map();
+
+  for await (const [schemaPath, schema] of schemaMap) {
     const schemaModule = createSchemaModule(schema);
-    const moduleInfos: IModuleInfo[] = [schemaModule];
+    const schemaTypesModule = await createSchemaTypesModule(schema);
+    const moduleInfos: IModuleInfo[] = [schemaModule, schemaTypesModule];
 
     moduleMap.set(schemaPath, moduleInfos);
-
-    return moduleMap;
-  }, new Map());
+  }
 
   return moduleMap;
 }
@@ -85,6 +84,27 @@ function createSchemaModule(schema: ISchema): IModuleInfo {
 
   const moduleInfo: IModuleInfo = {
     name: "schema",
+    content,
+    exports: moduleExports,
+  };
+
+  return moduleInfo;
+}
+
+async function createSchemaTypesModule(schema: ISchema) {
+  const content = await compile(schema, "ISchema", {
+    format: false,
+    bannerComment: "",
+    cwd: schemaFolderPath,
+    enableConstEnums: false,
+  });
+
+  const moduleExports: IModuleInfo["exports"] = [
+    { name: "ISchema", type: "abstract" },
+  ];
+
+  const moduleInfo: IModuleInfo = {
+    name: "types",
     content,
     exports: moduleExports,
   };
