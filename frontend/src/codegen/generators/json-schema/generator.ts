@@ -64,10 +64,39 @@ async function toNestedModules(
   schemaMap: ISchemaMap,
 ): Promise<IGeneratedNestedModule["moduleMap"]> {
   const moduleMap: IGeneratedNestedModule["moduleMap"] = new Map();
+  const options: Parameters<typeof compile>["2"] = {
+    format: false,
+    bannerComment: "",
+    cwd: schemaFolderPath,
+    enableConstEnums: false,
+    declareExternallyReferenced: false,
+    $refOptions: {
+      resolve: {
+        http: false,
+        file: {
+          async read(file) {
+            const filePath = file.url;
+            // juggling the path around because the lib normalizes the ID,
+            // i.e. `/strings/nanoid` is resolved to `c:/strings/nanoid` on windows
+            // and passed as `file.url` to the function
+            const schemaID = filePath.slice(path.parse(filePath).root.length);
+            const schema = schemaMap.get(schemaID);
+
+            if (!schema) {
+              throw new Error(`No schema exists for ID "${schemaID}".`);
+            }
+
+            return schema;
+          },
+        },
+      },
+    },
+  };
 
   for await (const [schemaPath, schema] of schemaMap) {
+    console.log(JSON.stringify([schemaPath, schema.$id]));
     const schemaModule = createSchemaModule(schema);
-    const schemaTypesModule = await createSchemaTypesModule(schema);
+    const schemaTypesModule = await createSchemaTypesModule(schema, options);
     const moduleInfos: IModuleInfo[] = [schemaModule, schemaTypesModule];
 
     moduleMap.set(schemaPath, moduleInfos);
@@ -91,13 +120,11 @@ function createSchemaModule(schema: ISchema): IModuleInfo {
   return moduleInfo;
 }
 
-async function createSchemaTypesModule(schema: ISchema) {
-  const content = await compile(schema, "ISchema", {
-    format: false,
-    bannerComment: "",
-    cwd: schemaFolderPath,
-    enableConstEnums: false,
-  });
+async function createSchemaTypesModule(
+  schema: ISchema,
+  options: Parameters<typeof compile>["2"],
+) {
+  const content = await compile(schema, "ISchema", options);
 
   const moduleExports: IModuleInfo["exports"] = [
     { name: "ISchema", type: "abstract" },
