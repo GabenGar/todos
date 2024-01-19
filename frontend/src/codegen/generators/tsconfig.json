@@ -12,9 +12,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
   },
   "include": ["**/*.ts"],
   "exclude": [],
-  "references": [{ "path": "../../../../codegen/tsconfig.json" }]
+  "references": [{ "path": "../../../../codegen/tsconfig.json" }],
 }

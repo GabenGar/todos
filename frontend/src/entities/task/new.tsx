@@ -1,10 +1,7 @@
 import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import { InputOption } from "#components/form/input";
-import {
-  InputSectionSelect,
-  InputSectionText,
-} from "#components/form/section";
+import { InputSectionSelect, InputSectionText } from "#components/form/section";
 import { PlaceSection, type IPlace } from "#entities/place";
 import { type ITaskInit, isTaskStatus } from "./types";
 
