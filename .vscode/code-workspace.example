@@ -28,7 +28,8 @@
       "**/Thumbs.db": true,
       "codegen": true,
       "frontend": true,
-      "schema": true
+      "schema": true,
+      "**/.turbo": true
     },
     "files.watcherExclude": {
       "**/.git/objects/**": true,

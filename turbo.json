@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "lint": {},
+    "format": {},
+    "build": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "codegen": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
