@@ -1,5 +1,5 @@
 {
-  "name": "codegen",
+  "name": "@todos/codegen",
   "version": "0.7.0",
   "private": true,
   "type": "module",

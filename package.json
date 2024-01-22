@@ -1,37 +1,40 @@
 {
   "name": "todos",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The list of todos in NextJS.",
+  "keywords": [
+    "NextJS"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "private": true,
-  "scripts": {
-    "install-all": "npm install && npm run install-frontend && npm run install-codegen",
-    "install-frontend": "cd frontend && npm install",
-    "install-codegen": "cd codegen && npm install",
-    "build": "npm run build-frontend && npm run build-codegen",
-    "build-frontend": "cd frontend && npm run build",
-    "build-codegen": "cd codegen && npm run build",
-    "start": "cd frontend && npm start",
-    "lint": "npm run lint-frontend && npm run lint-codegen",
-    "lint-frontend": "cd frontend && npm run lint",
-    "lint-codegen": "cd codegen && npm run lint",
-    "format": "npm run format-frontend && npm run format-codegen",
-    "format-frontend": "cd frontend && npm run format",
-    "format-codegen": "cd codegen && npm run format",
-    "dev": "cd frontend && npm run dev",
-    "prep": "npm run install-all && npm run build && npm run format",
-    "codegen": "cd frontend && npm run codegen"
+  "author": "GabenGar",
+  "license": "MIT",
+  "homepage": "https://github.com/GabenGar/todos#readme",
+  "bugs": {
+    "url": "https://github.com/GabenGar/todos/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GabenGar/todos.git"
   },
-  "keywords": [
-    "NextJS"
+  "workspaces": [
+    "docs",
+    "apps/*",
+    "packages/*"
   ],
-  "author": "GabenGar",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/GabenGar/todos/issues"
+  "scripts": {
+    "build": "turbo build",
+    "start": "cd frontend && npm start",
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "dev": "turbo dev",
+    "prep": "npm install && npm run build && npm run format",
+    "codegen": "turbo codegen"
   },
-  "homepage": "https://github.com/GabenGar/todos#readme"
+  "devDependencies": {
+    "turbo": "1.11.3"
+  },
+  "packageManager": "npm@8.7.0"
 }

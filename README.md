@@ -16,11 +16,11 @@ NodeJS - 20.9+
 
 3. Install all dependencies:
     ```sh
-    npm run install-all
+    npm install
     ```
 4. Build the project:
     ```sh
-    npm run build
+    npx turbo build
     ```
 5. Start the server:
     ```sh
@@ -31,7 +31,7 @@ NodeJS - 20.9+
 ## Develop
 
 ```sh
-npm run dev
+turbo dev
 ```
 
 ### Prep the Workflow
