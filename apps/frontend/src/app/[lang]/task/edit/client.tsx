@@ -3,10 +3,15 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ILocalization } from "#lib/localization";
-import { createTaskPageURL } from "#lib/urls";
+import { createTaskPageURL, createTasksPageURL } from "#lib/urls";
 import { Loading } from "#components";
 import type { ITranslatableProps } from "#components/types";
-import { Details, DetailsBody, DetailsHeader } from "#components/details";
+import {
+  Details,
+  DetailsBody,
+  DetailsFooter,
+  DetailsHeader,
+} from "#components/details";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import {
@@ -14,7 +19,9 @@ import {
   editTask,
   type IEditTaskFormProps,
   getTask,
+  removeTask,
 } from "#entities/task";
+import { Button } from "#components/button";
 
 interface IProps
   extends ITranslatableProps,
@@ -80,6 +87,25 @@ export function Client({
               />
             )}
           </DetailsBody>
+
+          <DetailsFooter>
+            <List>
+              <ListItem>
+                {!currentTask ? <Loading/> : <Button
+                  viewType="negative"
+                  disabled={Boolean(currentTask.deleted_at)}
+                  onClick={async () => {
+                    await removeTask(currentTask.id);
+                    const url = createTasksPageURL();
+                    router.push(url);
+                  }}
+                >
+                  {pageTranslation["Delete"]}
+                </Button>}
+
+              </ListItem>
+            </List>
+          </DetailsFooter>
         </>
       )}
     </Details>

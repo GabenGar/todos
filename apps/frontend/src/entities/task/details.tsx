@@ -7,7 +7,6 @@ import type { ILocalization } from "#lib/localization";
 import {
   createPlacePageURL,
   createTaskEditPageURL,
-  createTasksPageURL,
 } from "#lib/urls";
 import { logError } from "#lib/logs";
 import { isError } from "#lib/errors";
@@ -29,7 +28,6 @@ import { List, ListItem } from "#components/list";
 import type { ITranslatableProps } from "#components/types";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
-import { removeTask } from "./lib/remove";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
 
@@ -251,25 +249,6 @@ function Component({
                 <LinkButton href={createTaskEditPageURL(id)}>
                   {translation.edit}
                 </LinkButton>
-              </ListItem>
-            </List>
-
-            <hr style={{ width: "100%" }} />
-
-            <List className={styles.actions}>
-              <ListItem className={styles.delete}>
-                <Button
-                  className={styles.action}
-                  viewType="negative"
-                  disabled={Boolean(deleted_at)}
-                  onClick={async () => {
-                    await removeTask(id);
-                    const url = createTasksPageURL();
-                    router.push(url);
-                  }}
-                >
-                  {translation.delete}
-                </Button>
               </ListItem>
             </List>
           </DetailsFooter>
