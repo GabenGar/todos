@@ -20,8 +20,9 @@
     "url": "git+https://github.com/GabenGar/todos.git"
   },
   "workspaces": [
-    "frontend",
-    "codegen"
+    "docs",
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "build": "turbo build",
