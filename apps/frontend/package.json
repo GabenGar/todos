@@ -1,5 +1,5 @@
 {
-  "name": "@todos/frontend",
+  "name": "frontend",
   "version": "0.34.0",
   "description": "NextJS frontend for todo list.",
   "private": true,
