@@ -18,14 +18,3 @@
     padding: $size-small;
   }
 }
-
-.header {
-  display: grid;
-  gap: $size-small;
-  justify-items: flex-start;
-  width: 100%;
-
-  & > *:nth-child(2) {
-    justify-self: center;
-  }
-}

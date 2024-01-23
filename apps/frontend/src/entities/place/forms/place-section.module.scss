@@ -3,6 +3,11 @@
 .block {
 }
 
+.section {
+  display: grid;
+  gap: $size-small;
+}
+
 .list {
   align-items: stretch;
 }
@@ -12,7 +17,7 @@
   grid-template:
     "title select" 1fr
     "id select" 1fr
-    / 100%;
+    / 1fr 6em;
 }
 
 .title {
@@ -21,6 +26,7 @@
 
 .id {
   grid-area: id;
+  display: inline-flex;
 }
 
 .select {

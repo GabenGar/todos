@@ -1,7 +1,7 @@
 @use "../styles/sass/variables.scss" as *;
 
 .block {
-  display: inline-grid;
+  display: grid;
   gap: $size-little;
 }
 

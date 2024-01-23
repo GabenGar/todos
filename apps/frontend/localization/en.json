@@ -17,7 +17,9 @@
       "out_of": "out of"
     },
     "list": {
-      "no_items": "No items found."
+      "no_items": "No items found.",
+      "Select": "Select",
+      "Reset": "Reset"
     },
     "entity": {
       "Copy": "Copy",

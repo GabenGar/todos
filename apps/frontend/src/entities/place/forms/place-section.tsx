@@ -44,15 +44,24 @@ function Component({
       {
         <DescriptionList>
           <DescriptionSection
+            className={styles.section}
             dKey={children}
             dValue={
               currentPlace ? (
-                <Link
-                  href={createPlacePageURL(currentPlace.id)}
-                  target="_blank"
-                >
-                  {currentPlace.title} ({currentPlace.id})
-                </Link>
+                <>
+                  <Link
+                    href={createPlacePageURL(currentPlace.id)}
+                    target="_blank"
+                  >
+                    {currentPlace.title} ({currentPlace.id})
+                  </Link>
+                  <Button
+                    disabled={!currentPlace}
+                    onClick={() => changeCurrentPlace(undefined)}
+                  >
+                    {commonTranslation.list["Reset"]}
+                  </Button>
+                </>
               ) : (
                 <PlaceSelector
                   commonTranslation={commonTranslation}
@@ -125,7 +134,7 @@ function PlaceSelector({
                   await onSelect(place);
                 }}
               >
-                Select
+                {commonTranslation.list["Select"]}
               </Button>
             </ListItem>
           ))}

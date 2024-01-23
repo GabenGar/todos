@@ -39,6 +39,9 @@ export interface ITaskDetailsProps extends ITranslatableProps, IDetailsProps {
   onEdit?: (editedTask: ITask) => Promise<void>;
 }
 
+/**
+ * @TODO move param logic out of it
+ */
 export const TaskDetails = createBlockComponent(styles, Component);
 
 function Component({

@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL, createTasksPageURL } from "#lib/urls";
 import { Loading } from "components/loading";
-import { Button } from "#components/button";
 import { PreviewList } from "#components/preview";
 import {
   Details,
@@ -218,8 +217,6 @@ function Forms({
   onSearch,
 }: IFormsProps) {
   const [place, changePlace] = useState<Awaited<ReturnType<typeof getPlace>>>();
-  const [isNewFormShown, switchNewForm] = useState(false);
-  const [isSearchFormShown, switchSearchForm] = useState(Boolean(query));
   const { add, search } = translation;
   const newFormID = `${id}-task-list-new`;
   const searchFormID = `${id}-task-list-search`;
@@ -252,38 +249,31 @@ function Forms({
               </List>
             </DetailsHeader>
           )}
-          <DetailsBody>
-            <div className={styles.header}>
-              <Button onClick={() => switchSearchForm((old) => !old)}>
-                {search}
-              </Button>
-              {isSearchFormShown && (
-                <SearchTasksForm
-                  commonTranslation={commonTranslation}
-                  translation={translation}
-                  statusTranslation={statusTranslation}
-                  id={searchFormID}
-                  defaultQuery={{ query, status }}
-                  place={place}
-                  onSearch={onSearch}
-                />
-              )}
-            </div>
 
-            <div className={styles.header}>
-              <Button onClick={() => switchNewForm((old) => !old)}>
-                {add}
-              </Button>
-              {isNewFormShown && (
-                <NewTaskForm
-                  commonTranslation={commonTranslation}
-                  translation={translation}
-                  id={newFormID}
-                  place={place}
-                  onNewTask={onNewTask}
-                />
-              )}
-            </div>
+          <DetailsBody>
+            <details>
+              <summary style={{ cursor: "pointer" }}>{search}</summary>
+              <SearchTasksForm
+                commonTranslation={commonTranslation}
+                translation={translation}
+                statusTranslation={statusTranslation}
+                id={searchFormID}
+                defaultQuery={{ query, status }}
+                place={place}
+                onSearch={onSearch}
+              />
+            </details>
+
+            <details>
+              <summary style={{ cursor: "pointer" }}>{add}</summary>
+              <NewTaskForm
+                commonTranslation={commonTranslation}
+                translation={translation}
+                id={newFormID}
+                place={place}
+                onNewTask={onNewTask}
+              />
+            </details>
           </DetailsBody>
         </>
       )}
