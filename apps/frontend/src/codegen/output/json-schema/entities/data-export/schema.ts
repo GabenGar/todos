@@ -26,14 +26,14 @@ export const schema = {
       properties: {
         tasks: {
           type: "array",
-          minLength: 1,
+          minItems: 1,
           items: {
             $ref: "/entities/task/entity",
           },
         },
         places: {
           type: "array",
-          minLength: 1,
+          minItems: 1,
           items: {
             $ref: "/entities/place/entity",
           },

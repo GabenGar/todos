@@ -9,6 +9,7 @@ import { schema as placeSchema } from "#json-schema/entities/place/entity";
 import { schema as placeInitSchema } from "#json-schema/entities/place/init";
 import { schema as placeUpdateSchema } from "#json-schema/entities/place/update";
 import { schema as nonNegativeIntegerSchema } from "#json-schema/numbers/non-negative-integer";
+import { schema as positiveIntegerSchema } from "#json-schema/numbers/positive-integer";
 import { schema as nanoidSchema } from "#json-schema/strings/nanoid";
 import { schema as titleSchema } from "#json-schema/strings/title";
 import { schema as descriptionSchema } from "#json-schema/strings/description";
@@ -23,6 +24,7 @@ export const schemas = [
   nanoidSchema,
   dateTimeSchema,
   nonNegativeIntegerSchema,
+  positiveIntegerSchema,
   taskStatsAllSchema,
   titleSchema,
   descriptionSchema,
