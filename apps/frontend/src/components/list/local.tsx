@@ -1,0 +1,46 @@
+import type { IPagination } from "#lib/pagination";
+import { createBlockComponent } from "#components/meta";
+import type {
+  IBaseComponentPropsWithChildren,
+  ITranslatableProps,
+} from "#components/types";
+import {
+  IPaginationLocalProps,
+  PaginationLocal,
+  PaginationOverview,
+} from "#components/pagination";
+import { List } from "./list";
+
+interface IListLocalProps
+  extends IBaseComponentPropsWithChildren<"div">,
+    ITranslatableProps,
+    Pick<IPaginationLocalProps, "onPageChange"> {
+  pagination: IPagination;
+}
+
+export const ListLocal = createBlockComponent(undefined, Component);
+
+function Component({
+  commonTranslation,
+  pagination,
+  onPageChange,
+  children,
+  ...props
+}: IListLocalProps) {
+  return (
+    <div {...props}>
+      <PaginationOverview
+        commonTranslation={commonTranslation}
+        pagination={pagination}
+      />
+
+      <List>{children}</List>
+
+      <PaginationLocal
+        commonTranslation={commonTranslation}
+        pagination={pagination}
+        onPageChange={onPageChange}
+      />
+    </div>
+  );
+}

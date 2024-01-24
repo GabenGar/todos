@@ -10,7 +10,7 @@ import {
   InputSection,
 } from "#components/form/section";
 import { Link } from "#components/link";
-import { List, ListItem } from "#components/list";
+import { List, ListItem, ListLocal } from "#components/list";
 import { Button } from "#components/button";
 import type { ITranslatableProps } from "#components/types";
 import { Pre } from "#components/pre";
@@ -116,7 +116,15 @@ function PlaceSelector({
       ) : places.pagination.totalCount === 0 ? (
         <p>{commonTranslation.list.no_items}</p>
       ) : (
-        <List className={styles.list}>
+        <ListLocal
+          className={styles.list}
+          commonTranslation={commonTranslation}
+          pagination={places.pagination}
+          onPageChange={async (page) => {
+            const newPlaces = await getPlaces({ page });
+            changePlaces(newPlaces);
+          }}
+        >
           {places.items.map((place) => (
             <ListItem key={place.id} className={styles.item}>
               <span className={styles.title}>{place.title}</span>
@@ -138,7 +146,7 @@ function PlaceSelector({
               </Button>
             </ListItem>
           ))}
-        </List>
+        </ListLocal>
       )}
     </div>
   );
