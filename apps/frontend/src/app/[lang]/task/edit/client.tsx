@@ -14,6 +14,7 @@ import {
 } from "#components/details";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
+import { Button } from "#components/button";
 import {
   EditTaskForm,
   editTask,
@@ -21,7 +22,6 @@ import {
   getTask,
   removeTask,
 } from "#entities/task";
-import { Button } from "#components/button";
 
 interface IProps
   extends ITranslatableProps,
@@ -91,18 +91,21 @@ export function Client({
           <DetailsFooter>
             <List>
               <ListItem>
-                {!currentTask ? <Loading/> : <Button
-                  viewType="negative"
-                  disabled={Boolean(currentTask.deleted_at)}
-                  onClick={async () => {
-                    await removeTask(currentTask.id);
-                    const url = createTasksPageURL();
-                    router.push(url);
-                  }}
-                >
-                  {pageTranslation["Delete"]}
-                </Button>}
-
+                {!currentTask ? (
+                  <Loading />
+                ) : (
+                  <Button
+                    viewType="negative"
+                    disabled={Boolean(currentTask.deleted_at)}
+                    onClick={async () => {
+                      await removeTask(currentTask.id);
+                      const url = createTasksPageURL();
+                      router.push(url);
+                    }}
+                  >
+                    {pageTranslation["Delete"]}
+                  </Button>
+                )}
               </ListItem>
             </List>
           </DetailsFooter>

@@ -4,11 +4,12 @@ import { type IUnorderedListProps, UnorderedList } from "./unordered";
 
 import styles from "./list.module.scss";
 
-type IListProps =
+export type IListProps =
   | IUnorderedListProps
   | ({ isOrdered: true } & IOrderedListProps);
 
 export const List = createBlockComponent(styles, ListComponent);
+
 function ListComponent(props: IListProps) {
   if ("isOrdered" in props) {
     const { isOrdered, ...listProps } = props;

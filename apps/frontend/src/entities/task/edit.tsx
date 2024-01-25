@@ -7,6 +7,7 @@ import {
 } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
 import { InputOption } from "#components/form/input";
+import { PlaceSection } from "#entities/place";
 import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
 
 import statusStyles from "./status.module.scss";
@@ -18,9 +19,6 @@ export interface IEditTaskFormProps extends ITranslatableProps {
   onTaskEdit: (taskUpdate: ITaskUpdate) => Promise<void>;
 }
 
-/**
- * @TODO place edit form
- */
 export function EditTaskForm({
   commonTranslation,
   translation,
@@ -110,14 +108,16 @@ export function EditTaskForm({
             {FIELD.DESCRIPTION.label}
           </InputSectionText>
 
-          <InputSectionNanoID
+          <PlaceSection
+            key={currentTask.place?.id}
+            commonTranslation={commonTranslation}
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}
             name={FIELD.PLACE.name}
-            defaultValue={currentTask.place?.id}
+            place={currentTask.place}
           >
             {FIELD.PLACE.label}
-          </InputSectionNanoID>
+          </PlaceSection>
 
           <InputSectionSelect
             label={FIELD.STATUS.label}

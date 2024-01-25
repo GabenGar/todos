@@ -1,9 +1,7 @@
 @use "../../styles/sass/variables.scss" as *;
 
-// different layout per resolution so the buttons
-// wouldn't fall out of boundaries
 .block {
-  display: inline-grid;
+  display: grid;
   grid:
     "current" auto
     "next" auto
@@ -72,14 +70,4 @@
 .button {
   width: 100%;
   justify-content: start;
-}
-
-.disabled {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: $size-small;
-  min-height: $min-button-height;
-  color: var(--colour-text-secondary);
-  padding: 0 $size-normal;
 }

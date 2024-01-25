@@ -4,10 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { INanoidID } from "#lib/strings";
 import type { ILocalization } from "#lib/localization";
-import {
-  createPlacePageURL,
-  createTaskEditPageURL,
-} from "#lib/urls";
+import { createPlacePageURL, createTaskEditPageURL } from "#lib/urls";
 import { logError } from "#lib/logs";
 import { isError } from "#lib/errors";
 import { createBlockComponent } from "#components/meta";
