@@ -30,7 +30,7 @@
     "lint": "turbo lint",
     "format": "turbo format",
     "dev": "turbo dev",
-    "prep": "npm install && npm run build && npm run format",
+    "prep": "npm install && npm run format && npm run build ",
     "codegen": "turbo codegen"
   },
   "devDependencies": {

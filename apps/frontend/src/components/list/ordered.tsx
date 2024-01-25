@@ -6,10 +6,7 @@ import { ListItem } from "./item";
 export type IOrderedListProps = IBaseComponentProps<"ol"> &
   ({ children: ReactNode } | { items: ReactNode[] });
 
-export const OrderedList = createBlockComponent(
-  undefined,
-  Component,
-);
+export const OrderedList = createBlockComponent(undefined, Component);
 
 function Component(props: IOrderedListProps) {
   if ("children" in props) {

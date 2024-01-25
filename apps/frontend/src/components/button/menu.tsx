@@ -25,7 +25,12 @@ function ItemComponent({
 }: IMenuItemProps) {
   return (
     <li {...props}>
-      <Button className={styles.button} viewType={viewType} disabled={disabled} onClick={onClick}>
+      <Button
+        className={styles.button}
+        viewType={viewType}
+        disabled={disabled}
+        onClick={onClick}
+      >
         {children}
       </Button>
     </li>

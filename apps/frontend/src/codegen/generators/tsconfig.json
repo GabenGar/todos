@@ -3,9 +3,7 @@
     "outDir": "./",
     "rootDir": "./",
     "target": "es2020",
-    "lib": [
-      "ES2020"
-    ],
+    "lib": ["ES2020"],
     "allowJs": false,
     "module": "Node16",
     "moduleResolution": "Node16",
@@ -16,13 +14,11 @@
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
   },
-  "include": [
-    "**/*.ts"
-  ],
+  "include": ["**/*.ts"],
   "exclude": [],
   "references": [
     {
-      "path": "../../../../../packages/codegen/tsconfig.json"
-    }
+      "path": "../../../../../packages/codegen/tsconfig.json",
+    },
   ],
 }
