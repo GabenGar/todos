@@ -1,0 +1,17 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+}
+
+.item {
+  flex: 0 0 6em;
+}
+
+.button {
+  width: 100%;
+}

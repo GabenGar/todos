@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPlacePageURL } from "#lib/urls";
+import { IEntityItem } from "#lib/entities";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { createBlockComponent } from "#components/meta";
 import { InputHidden } from "#components/form/input";
@@ -10,17 +11,18 @@ import {
   InputSection,
 } from "#components/form/section";
 import { Link } from "#components/link";
-import { List, ListItem, ListLocal } from "#components/list";
-import { Button } from "#components/button";
+import { ListItem, ListLocal } from "#components/list";
+import { Button, MenuButtons, MenuItem } from "#components/button";
 import type { ITranslatableProps } from "#components/types";
 import { Pre } from "#components/pre";
-import { getPlace, getPlaces } from "../lib/get";
+import { getPlaces } from "../lib/get";
 import { type IPlace } from "../types";
 
 import styles from "./place-section.module.scss";
 
 interface IProps extends ITranslatableProps, IInputSectionProps {
-  place?: IPlace;
+  place?: IEntityItem;
+  onPlaceChange?: (nextPlace: IEntityItem) => Promise<void>;
 }
 
 export const PlaceSection = createBlockComponent(styles, Component);
@@ -33,54 +35,56 @@ function Component({
   place,
   required,
   children,
+  onPlaceChange,
   ...props
 }: IProps) {
-  const [currentPlace, changeCurrentPlace] = useState<
-    Awaited<ReturnType<typeof getPlace>> | undefined
-  >(place);
+  const [selectedPlace, changeSelectedPlace] = useState(place);
 
   return (
     <InputSection {...props}>
-      {
-        <DescriptionList>
-          <DescriptionSection
-            className={styles.section}
-            dKey={children}
-            dValue={
-              currentPlace ? (
-                <>
-                  <Link
-                    href={createPlacePageURL(currentPlace.id)}
-                    target="_blank"
-                  >
-                    {currentPlace.title} ({currentPlace.id})
-                  </Link>
-                  <Button
-                    disabled={!currentPlace}
-                    onClick={() => changeCurrentPlace(undefined)}
+      <DescriptionList>
+        <DescriptionSection
+          className={styles.section}
+          dKey={children}
+          dValue={
+            selectedPlace ? (
+              <>
+                <Link
+                  href={createPlacePageURL(selectedPlace.id)}
+                  target="_blank"
+                >
+                  {selectedPlace.title} ({selectedPlace.id})
+                </Link>
+                <MenuButtons>
+                  <MenuItem onClick={() => changeSelectedPlace(undefined)}>
+                    {commonTranslation.list["Select"]}
+                  </MenuItem>
+                  <MenuItem
+                    disabled={selectedPlace.id === place?.id}
+                    onClick={() => changeSelectedPlace(place)}
                   >
                     {commonTranslation.list["Reset"]}
-                  </Button>
-                </>
-              ) : (
-                <PlaceSelector
-                  commonTranslation={commonTranslation}
-                  onSelect={async (newPlace) => {
-                    changeCurrentPlace(newPlace);
-                  }}
-                />
-              )
-            }
-          />
-        </DescriptionList>
-      }
+                  </MenuItem>
+                </MenuButtons>
+              </>
+            ) : (
+              <PlaceSelector
+                commonTranslation={commonTranslation}
+                onSelect={async (newPlace) => {
+                  changeSelectedPlace(newPlace);
+                }}
+              />
+            )
+          }
+        />
+      </DescriptionList>
 
       <InputHidden
         id={id}
         form={form}
         name={name}
         required={required}
-        defaultValue={currentPlace?.id}
+        defaultValue={selectedPlace?.id}
       />
     </InputSection>
   );
@@ -91,9 +95,6 @@ interface IPlaceSelectorProps extends Pick<IProps, "commonTranslation"> {
   onSelect: (place: IPlace) => Promise<void>;
 }
 
-/**
- * @TODO paginated list
- */
 function PlaceSelector({
   commonTranslation,
   selectedPlace,
