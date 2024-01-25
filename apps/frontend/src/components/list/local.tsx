@@ -11,6 +11,8 @@ import {
 } from "#components/pagination";
 import { List } from "./list";
 
+import styles from "./local.module.scss";
+
 interface IListLocalProps
   extends IBaseComponentPropsWithChildren<"div">,
     ITranslatableProps,
@@ -18,7 +20,7 @@ interface IListLocalProps
   pagination: IPagination;
 }
 
-export const ListLocal = createBlockComponent(undefined, Component);
+export const ListLocal = createBlockComponent(styles, Component);
 
 function Component({
   commonTranslation,
@@ -34,7 +36,7 @@ function Component({
         pagination={pagination}
       />
 
-      <List>{children}</List>
+      <List className={styles.list}>{children}</List>
 
       <PaginationLocal
         commonTranslation={commonTranslation}

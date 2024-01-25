@@ -1,7 +1,7 @@
 @use "../../styles/sass/variables.scss" as *;
 
 .block {
-  display: inline-grid;
+  display: grid;
   grid:
     "current" auto
     "next" auto
@@ -53,7 +53,7 @@
   justify-self: center;
 
   @media (min-width: $width-tablet) {
-    justify-self: end;
+    justify-self: flex-end;
   }
 }
 
@@ -63,6 +63,11 @@
   justify-self: center;
 
   @media (min-width: $width-tablet) {
-    justify-self: end;
+    justify-self: flex-end;
   }
+}
+
+.button {
+  width: 100%;
+  justify-content: start;
 }

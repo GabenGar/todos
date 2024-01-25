@@ -18,7 +18,7 @@ export interface IPaginationLocalProps
   onPageChange: (nextPage: IPositiveInteger) => Promise<void>;
 }
 
-export const PaginationLocal = createBlockComponent(undefined, Component);
+export const PaginationLocal = createBlockComponent(styles, Component);
 
 function Component({
   commonTranslation,
@@ -45,8 +45,9 @@ function Component({
       style={{ "--local-min-width": `${buttonWidth}em` } as CSSProperties}
       {...props}
     >
-      <ListItem>
+      <ListItem className={styles.first}>
         <Button
+          className={styles.button}
           disabled={currentPage === 1}
           onClick={async () => {
             await handlePageChange(1);
@@ -56,8 +57,9 @@ function Component({
         </Button>
       </ListItem>
 
-      <ListItem>
+      <ListItem className={styles.previous}>
         <Button
+          className={styles.button}
           disabled={currentPage - 1 <= 0}
           onClick={async () => {
             await handlePageChange(currentPage - 1);
@@ -67,8 +69,9 @@ function Component({
         </Button>
       </ListItem>
 
-      <ListItem>
+      <ListItem className={styles.next}>
         <Button
+          className={styles.button}
           disabled={currentPage + 1 >= totalPages + 1}
           onClick={async () => {
             await handlePageChange(currentPage + 1);
@@ -78,8 +81,9 @@ function Component({
         </Button>
       </ListItem>
 
-      <ListItem>
+      <ListItem className={styles.last}>
         <Button
+          className={styles.button}
           disabled={currentPage === totalPages}
           onClick={async () => {
             await handlePageChange(totalPages);
