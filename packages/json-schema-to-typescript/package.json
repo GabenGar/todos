@@ -1,17 +1,21 @@
 {
-  "name": "json-schema-to-typescript",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "test": "node scripts/test.js",
-    "lint": "biome lint ./ && tsc --noEmit",
-    "format": "biome check ./ --apply"
+	"name": "json-schema-to-typescript",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"imports": {
+    "#tests": "./dist/src/tests/index.js"
   },
-  "devDependencies": {
-    "@biomejs/biome": "1.5.2",
-    "@types/node": "^20.0.0",
-    "typescript": "^5.3.3"
-  }
+
+	"scripts": {
+		"build": "tsc",
+		"test": "biome check ./tests --apply && node /dist/scripts/test.js",
+		"lint": "biome lint ./ && tsc --noEmit",
+		"format": "biome check ./ --apply"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.5.2",
+		"@types/node": "^20.0.0",
+		"typescript": "^5.3.3"
+	}
 }

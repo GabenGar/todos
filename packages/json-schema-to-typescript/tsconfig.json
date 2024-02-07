@@ -6,8 +6,8 @@
     ],
     "module": "Node16",
     "moduleResolution": "Node16",
-    "rootDir": "./src",
-    "baseUrl": "./src",
+    "rootDir": ".",
+    "baseUrl": ".",
     "outDir": "./dist",
     // https://github.com/microsoft/TypeScript/wiki/Performance#controlling-types-inclusion
     "types": [
