@@ -4,4 +4,4 @@ import { runTests } from "#tests";
 
 const testsFolderPath = path.join(cwd(), "tests", "static");
 
-await runTests
+await runTests(testsFolderPath);

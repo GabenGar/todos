@@ -2,7 +2,9 @@ import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { ITestModule } from "./types.js";
+import type { ITestModule, ITestModuleOutput } from "./types.js";
+
+interface IOutputMap extends Map<string, ITestModuleOutput> {}
 
 const inputFolderName = "input";
 const outputFolderName = "output";
@@ -32,23 +34,44 @@ async function collectGenerators(folderPath: string): Promise<Dirent[]> {
 	return generatorEntries;
 }
 
-async function runGenerators(entries: Dirent[]) {
+async function runGenerators(entries: Dirent[]): Promise<IOutputMap> {
 	console.log(`Running ${entries.length} generators...`);
 
+	const outputMap: IOutputMap = new Map();
+
 	for await (const entry of entries) {
-		const generatorPath = path.join(
-			entry.path,
-			entry.name,
-			compiledGeneratorFilename,
-		);
-		const inputPath = path.join(entry.path, entry.name, inputFolderName);
-		const inputEntries = await fs.readdir(inputPath, {
+		const testModulePath = path.join(entry.path, entry.name);
+		const generatorFilePath = pathToFileURL(
+			path.join(testModulePath, compiledGeneratorFilename),
+		).toString();
+		const inputsFolderPath = path.join(testModulePath, inputFolderName);
+		const inputEntries = await fs.readdir(inputsFolderPath, {
 			encoding: "utf8",
 			withFileTypes: true,
 			recursive: true,
 		});
-		const testModule: ITestModule = await import(
-			pathToFileURL(generatorPath).toString()
-		);
+		const testModule: ITestModule = await import(generatorFilePath);
+
+		const outputs = await testModule.default(inputEntries);
+
+		outputMap.set(testModulePath, outputs);
+	}
+
+	return outputMap;
+}
+
+async function saveOutputs(outputs: IOutputMap) {
+	console.log(`Writing ${outputs.size} outputs...`);
+	const flatMap = Array.from(outputs).reduce((flatMap) => {
+		return flatMap;
+	}, new Map<string, string>());
+
+	for await (const [testModulePath, incomingOutputs] of outputs) {
+		const outputFolderPath = path.join(testModulePath, outputFolderName);
+
+		for await (const [relativeFilePath, content] of incomingOutputs) {
+		}
 	}
 }
+
+async function saveTestModuleOutputs() {}
