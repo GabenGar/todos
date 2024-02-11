@@ -62,16 +62,26 @@ async function runGenerators(entries: Dirent[]): Promise<IOutputMap> {
 
 async function saveOutputs(outputs: IOutputMap) {
 	console.log(`Writing ${outputs.size} outputs...`);
-	const flatMap = Array.from(outputs).reduce((flatMap) => {
-		return flatMap;
-	}, new Map<string, string>());
 
-	for await (const [testModulePath, incomingOutputs] of outputs) {
-		const outputFolderPath = path.join(testModulePath, outputFolderName);
+	/**
+	 * A mapping of file paths and their contents.
+	 */
+	const outputMap = Array.from(outputs).reduce(
+		(outputMap, [modulePath, moduleOutput]) => {
+			for (const [fileName, content] of moduleOutput) {
+				const filePath = path.join(modulePath, outputFolderName, fileName);
 
-		for await (const [relativeFilePath, content] of incomingOutputs) {
-		}
-	}
+				if (!outputMap.has(filePath)) {
+					throw new Error(`Output for path "${filePath}" already exists.`);
+				}
+
+				outputMap.set(filePath, content);
+			}
+
+			return outputMap;
+		},
+		new Map<string, string>(),
+	);
+
+
 }
-
-async function saveTestModuleOutputs() {}
