@@ -1,8 +1,13 @@
+import { cwd } from "node:process";
 import type { Dirent } from "node:fs";
-import fs from "node:fs/promises";
+import fs, { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import type { ITestModule, ITestModuleOutput } from "./types.js";
+import { execFile as oldExecFile } from "node:child_process";
+import { promisify } from "node:util";
+
+const execFile = promisify(oldExecFile);
 
 interface IOutputMap extends Map<string, ITestModuleOutput> {}
 
@@ -14,6 +19,8 @@ const compiledGeneratorFilename = "generator.js";
 export async function runTests(folderPath: string) {
 	const generators = await collectGenerators(folderPath);
 	const outputs = await runGenerators(generators);
+	await saveOutputs(outputs);
+	await formatTests(folderPath);
 }
 
 async function collectGenerators(folderPath: string): Promise<Dirent[]> {
@@ -83,5 +90,15 @@ async function saveOutputs(outputs: IOutputMap) {
 		new Map<string, string>(),
 	);
 
+	for await (const [filePath, content] of outputMap) {
+		await writeFile(filePath, content, { encoding: "utf8" });
+	}
+}
 
+async function formatTests(folderPath: string) {
+	const inputFolder = path.relative(cwd(), folderPath);
+
+	const result = await execFile("biome", ["check", inputFolder, "--apply"]);
+
+	return result;
 }
