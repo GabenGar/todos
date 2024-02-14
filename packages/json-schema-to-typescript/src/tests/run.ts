@@ -21,6 +21,7 @@ export async function runTests(folderPath: string) {
 	const outputs = await runGenerators(generators);
 	await saveOutputs(outputs);
 	await formatTests(folderPath);
+	await validateOutputs(folderPath);
 }
 
 async function collectGenerators(folderPath: string): Promise<Dirent[]> {
@@ -96,9 +97,47 @@ async function saveOutputs(outputs: IOutputMap) {
 }
 
 async function formatTests(folderPath: string) {
+	console.log("Formatting tests...");
+
 	const inputFolder = path.relative(cwd(), folderPath);
 
 	const result = await execFile("biome", ["check", inputFolder, "--apply"]);
 
 	return result;
+}
+
+async function validateOutputs(folderPath: string) {
+	console.log("Validatings test outputs...");
+
+	const testsFolder = await fs.opendir(folderPath);
+
+	for await (const dirEntry of testsFolder) {
+		if (!dirEntry.isDirectory()) {
+			console.debug(`"${dirEntry.name}" is not a folder, skipping.`);
+			continue;
+		}
+
+		await compareOutputs(dirEntry);
+	}
+}
+
+async function compareOutputs(testEntry: Dirent) {
+	const expectedOutputFolderPath = path.join(
+		testEntry.path,
+		testEntry.name,
+		expectedOutputFolderName,
+	);
+
+	const expectedOutputFolder = await fs.opendir(expectedOutputFolderPath, {
+		encoding: "utf8",
+		recursive: true,
+	});
+
+	for await (const entry of expectedOutputFolder) {
+		if (entry.isDirectory()) {
+			continue;
+		}
+		const entryPath = path.join(entry.path, entry.name);
+		const relativepath = path.relative(expectedOutputFolderPath, entryPath);
+	}
 }
