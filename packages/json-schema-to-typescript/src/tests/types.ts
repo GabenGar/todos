@@ -1,7 +1,11 @@
 import type { Dirent } from "node:fs";
 
+export interface ITestModuleGenerator {
+	(inputs: Dirent[]): Promise<ITestModuleOutput>;
+}
+
 export interface ITestModule {
-	default: (inputs: Dirent[]) => Promise<ITestModuleOutput>;
+	default: ITestModuleGenerator;
 }
 
 /**

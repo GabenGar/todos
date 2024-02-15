@@ -20,8 +20,15 @@
     "strict": true,
     "skipLibCheck": true,
     "incremental": true,
+    "verbatimModuleSyntax": true,
+
   },
   "files": [
     "static/01-primitives/generator.ts"
-  ]
+  ],
+  "references": [
+    {
+      "path": "../tsconfig.json",
+    },
+  ],
 }

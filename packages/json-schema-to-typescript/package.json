@@ -9,7 +9,7 @@
 
 	"scripts": {
 		"build": "tsc",
-		"test": "cd tests && npm run build && node /dist/scripts/test.js",
+		"test": "cd tests && npm run build && node ../dist/scripts/test.js",
 		"lint": "biome lint ./ && tsc --noEmit",
 		"format": "biome check ./ --apply"
 	},
