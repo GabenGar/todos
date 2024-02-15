@@ -20,7 +20,7 @@ NodeJS - 20.9+
     ```
 4. Build the project:
     ```sh
-    npx turbo build
+    npm run build
     ```
 5. Start the server:
     ```sh
@@ -54,3 +54,11 @@ turbo dev
    ```sh
    git remote set-url --push origin git@github.com:<username>/todos.git
    ```
+
+## Turborepo
+Turborepo claims that [the invocation from global install will invoke local install if applicable](https://turbo.build/repo/docs/installing#install-per-repository), so it can be installed globally:
+
+```sh
+npm install turbo --global
+```
+And then instead of `npm run ...` commands it can be used as `turbo ...`.
