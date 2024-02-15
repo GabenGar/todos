@@ -1,11 +1,12 @@
 import { cwd } from "node:process";
-import type { Dirent } from "node:fs";
+import { type Dirent, createReadStream } from "node:fs";
 import fs, { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import type { ITestModule, ITestModuleOutput } from "./types.js";
 import { execFile as oldExecFile } from "node:child_process";
 import { promisify } from "node:util";
+import { createHash } from "node:crypto";
 
 const execFile = promisify(oldExecFile);
 
@@ -122,9 +123,9 @@ async function validateOutputs(folderPath: string) {
 }
 
 async function compareOutputs(testEntry: Dirent) {
+	const testEntryPath = path.join(testEntry.path, testEntry.name);
 	const expectedOutputFolderPath = path.join(
-		testEntry.path,
-		testEntry.name,
+		testEntryPath,
 		expectedOutputFolderName,
 	);
 
@@ -137,7 +138,40 @@ async function compareOutputs(testEntry: Dirent) {
 		if (entry.isDirectory()) {
 			continue;
 		}
+
 		const entryPath = path.join(entry.path, entry.name);
 		const relativepath = path.relative(expectedOutputFolderPath, entryPath);
+		const outputPath = path.join(testEntryPath, outputFolderName, relativepath);
+		const expectedHash = await getFileSHA256Hash(entryPath);
+		const outputHash = await getFileSHA256Hash(outputPath);
+
+		if (expectedHash !== outputHash) {
+			throw new Error(
+				`Contents of "${entryPath}" and "${outputPath}" do not match.`,
+			);
+		}
 	}
+}
+
+async function getFileSHA256Hash(filePath: string): Promise<string> {
+	const hashValue = new Promise<string>((resolve, reject) => {
+		const fileStream = createReadStream(filePath);
+		const hash = createHash("sha256");
+
+		fileStream.on("data", (chunk) => {
+			hash.update(chunk);
+		});
+
+		fileStream.on("error", (error) => {
+			reject(error);
+		});
+
+		fileStream.on("end", () => {
+			const value = hash.digest("hex");
+
+			resolve(value);
+		});
+	});
+
+	return hashValue;
 }
