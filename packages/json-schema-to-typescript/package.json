@@ -4,9 +4,9 @@
 	"private": true,
 	"type": "module",
 	"imports": {
-    "#tests": "./dist/src/tests/index.js"
-  },
-
+		"#tests": "./dist/src/tests/index.js",
+		"#lib": "./dist/src/transform/index.js"
+	},
 	"scripts": {
 		"build": "tsc",
 		"test": "cd tests && npm run build && node ../dist/scripts/test.js",
@@ -17,5 +17,8 @@
 		"@biomejs/biome": "1.5.2",
 		"@types/node": "^20.0.0",
 		"typescript": "^5.3.3"
+	},
+	"dependencies": {
+		"@hyperjump/json-schema": "^1.7.2"
 	}
 }
