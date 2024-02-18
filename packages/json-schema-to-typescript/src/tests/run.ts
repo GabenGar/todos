@@ -1,14 +1,9 @@
-import { cwd } from "node:process";
 import { type Dirent, createReadStream } from "node:fs";
 import fs, { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import type { ITestModule, ITestModuleOutput } from "./types.js";
-import { execFile as oldExecFile } from "node:child_process";
-import { promisify } from "node:util";
 import { createHash } from "node:crypto";
-
-const execFile = promisify(oldExecFile);
 
 interface IOutputMap extends Map<string, ITestModuleOutput> {}
 
@@ -21,7 +16,6 @@ export async function runTests(folderPath: string) {
 	const generators = await collectGenerators(folderPath);
 	const outputs = await runGenerators(generators);
 	await saveOutputs(outputs);
-	await formatTests(folderPath);
 	await validateOutputs(folderPath);
 }
 
@@ -80,7 +74,7 @@ async function saveOutputs(outputs: IOutputMap) {
 			for (const [fileName, content] of moduleOutput) {
 				const filePath = path.join(modulePath, outputFolderName, fileName);
 
-				if (!outputMap.has(filePath)) {
+				if (outputMap.has(filePath)) {
 					throw new Error(`Output for path "${filePath}" already exists.`);
 				}
 
@@ -95,16 +89,6 @@ async function saveOutputs(outputs: IOutputMap) {
 	for await (const [filePath, content] of outputMap) {
 		await writeFile(filePath, content, { encoding: "utf8" });
 	}
-}
-
-async function formatTests(folderPath: string) {
-	console.log("Formatting tests...");
-
-	const inputFolder = path.relative(cwd(), folderPath);
-
-	const result = await execFile("biome", ["check", inputFolder, "--apply"]);
-
-	return result;
 }
 
 async function validateOutputs(folderPath: string) {
