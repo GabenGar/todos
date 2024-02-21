@@ -20,7 +20,7 @@ import {
   DetailsHeader,
   type IDetailsProps,
 } from "#components/details";
-import { EntityID } from "#components/entities";
+import { EntityDescription, EntityID } from "#components/entities";
 import { List, ListItem } from "#components/list";
 import type { ITranslatableProps } from "#components/types";
 import { getTask } from "./lib/get";
@@ -126,7 +126,11 @@ function Component({
 
               <DescriptionSection
                 dKey={translation.description}
-                dValue={description ?? translation.no_description}
+                dValue={
+                  <EntityDescription>
+                    {description ?? translation.no_description}
+                  </EntityDescription>
+                }
               />
 
               <DescriptionSection

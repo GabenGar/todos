@@ -3,7 +3,7 @@ import type { IBaseComponentPropsWithChildren } from "#components/types";
 
 import styles from "./pre.module.scss";
 
-interface IPreProps extends IBaseComponentPropsWithChildren<"pre"> {}
+export interface IPreProps extends IBaseComponentPropsWithChildren<"pre"> {}
 
 export const Pre = createBlockComponent(styles, Component);
 
