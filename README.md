@@ -1,5 +1,12 @@
 # TODOs
 
+## Table of Contents
+- [Requirements](#requrements)
+- [Installation](#installation)
+- [Develop](#develop)
+- [Turborepo](#turborepo)
+- [Troubleshooting](#troubleshooting)
+
 ## Requrements
 NodeJS - 20.9+
 
@@ -62,3 +69,8 @@ Turborepo claims that [the invocation from global install will invoke local inst
 npm install turbo --global
 ```
 And then instead of `npm run ...` commands it can be used as `turbo ...`.
+
+## Troubleshooting
+
+- **I get `npm ERR! code ENOWORKSPACES frontend:dev: npm ERR! This command does not support workspaces.` error when starting development.**
+  Run `cd apps/frontend && npx next telemetry disable`.
