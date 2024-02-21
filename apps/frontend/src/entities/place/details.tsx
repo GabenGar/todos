@@ -12,7 +12,7 @@ import {
   DetailsHeader,
   type IDetailsProps,
 } from "#components/details";
-import { EntityID } from "#components/entities";
+import { EntityDescription, EntityID } from "#components/entities";
 import { LinkButton } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { TasksStats } from "#entities/task";
@@ -54,7 +54,11 @@ function Component({
             <DescriptionList>
               <DescriptionSection
                 dKey={translation.description}
-                dValue={description ?? translation.no_description}
+                dValue={
+                  <EntityDescription>
+                    {description ?? translation.no_description}
+                  </EntityDescription>
+                }
               />
             </DescriptionList>
 
