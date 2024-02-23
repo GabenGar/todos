@@ -12,3 +12,8 @@ export interface ITestModule {
  * A map of relative file paths and their contents.
  */
 export interface ITestModuleOutput extends Map<string, string> {}
+
+export const inputFolderName = "input";
+export const outputFolderName = "output";
+export const expectedOutputFolderName = "expected-output";
+export const compiledGeneratorFilename = "generator.js";

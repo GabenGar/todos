@@ -9,11 +9,14 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"test": "npm run test-build && npm run test-format && node dist/scripts/test.js",
+		"test": "npm run test-build && npm run test-generate && npm run test-format && npm run test-validate",
 		"test-build": "cd tests && npm run build",
 		"test-format": "biome check ./tests --apply",
+		"test-generate": "node dist/scripts/test-generate.js",
+		"test-validate": "node dist/scripts/test-validate.js",
 		"lint": "biome lint ./ && tsc --noEmit",
-		"format": "biome check ./ --apply"
+		"format": "biome check ./ --apply",
+		"prep": "npm run build && npm run test"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.5.2",

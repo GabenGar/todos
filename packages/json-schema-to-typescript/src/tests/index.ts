@@ -1,1 +1,2 @@
-export { runTests } from "./run.js"
+export { generateTests } from "./generate.js";
+export { validateOutputs } from "./validate.js";

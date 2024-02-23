@@ -113,7 +113,7 @@ function toTypeBody(schema: IJSONSchemaDocument): string {
 }
 
 function guessSymbolKind(schema: IJSONSchemaDocument): "interface" | "type" {
-	if (schema.type === "object") {
+	if (schema.type === "object" || schema.type === "array") {
 		return "interface";
 	}
 
