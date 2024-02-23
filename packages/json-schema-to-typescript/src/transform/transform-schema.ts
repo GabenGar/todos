@@ -98,7 +98,7 @@ function toTypeBody(schema: IJSONSchemaDocument): string {
 			break;
 		}
 		case "array": {
-			body = "[]";
+			body = "extends Array<unknown> {}";
 			break;
 		}
 
