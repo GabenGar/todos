@@ -1,3 +1,5 @@
+import { createJSDoc } from "#codegen";
+import { NEWLINE } from "#strings";
 import type {
 	IJSONSchema,
 	IJSONSchemaDocument,
@@ -10,6 +12,7 @@ export function transformSchemaToInterface(
 	validateJSONSchemaDocument(schema);
 
 	const symbolName = `I${schema.title}`;
+	const jsDocComment = createSymbolJSDoc(schema);
 	const symbolBody = toTypeBody(schema);
 	const symbolKind = guessSymbolKind(schema);
 
@@ -17,11 +20,11 @@ export function transformSchemaToInterface(
 
 	switch (symbolKind) {
 		case "interface": {
-			moduleContent = `export interface ${symbolName} ${symbolBody};`;
+			moduleContent = `${!jsDocComment? "" : `${jsDocComment}${NEWLINE}`}export interface ${symbolName} ${symbolBody};`;
 			break;
 		}
 		case "type": {
-			moduleContent = `export type ${symbolName} = ${symbolBody};`;
+			moduleContent = `${!jsDocComment? "" : `${jsDocComment}${NEWLINE}`}export type ${symbolName} = ${symbolBody};`;
 			break;
 		}
 
@@ -67,6 +70,24 @@ function isJSONSchemaTypeString(input: unknown): input is IJSONSchemaType {
 	}
 
 	return true;
+}
+
+function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
+	const inputLines = [schema.description?.trim()];
+	const examples = schema.examples?.flatMap((example) => [
+		"@example",
+		"```json",
+		JSON.stringify(example, undefined, 2),
+		"```",
+	]);
+
+	if (examples) {
+		inputLines.push(...examples);
+	}
+
+	const jsdocComment = createJSDoc(...inputLines);
+
+	return jsdocComment;
 }
 
 function toTypeBody(schema: IJSONSchemaDocument): string {

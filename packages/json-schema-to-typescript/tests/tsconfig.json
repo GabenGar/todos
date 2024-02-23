@@ -24,7 +24,8 @@
 
   },
   "files": [
-    "static/01-primitives/generator.ts"
+    "static/01-primitives/generator.ts",
+    "static/02-strings/generator.ts",
   ],
   "references": [
     {

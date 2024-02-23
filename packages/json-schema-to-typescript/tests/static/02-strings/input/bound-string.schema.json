@@ -1,0 +1,10 @@
+{
+  "title": "BoundString",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 2048,
+  "examples": [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neutrum vero, inquit ille. Nunc haec primum fortasse audientis servire debemus.",
+    "Duo Reges: constructio interrete. Ergo instituto veterum, quo etiam Stoici utuntur, hinc capiamus exordium."
+  ]
+}
