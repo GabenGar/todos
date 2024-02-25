@@ -1,1 +1,3 @@
-export interface IObject {}
+export interface IObject {
+  [index: string]: unknown;
+}

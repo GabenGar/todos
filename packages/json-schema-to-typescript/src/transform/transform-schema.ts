@@ -160,6 +160,21 @@ function createObjectBody(schema: IJSONSchemaDocument) {
 		lines.push(...properties);
 	}
 
+	/**
+	 * As per [docs](https://json-schema.org/understanding-json-schema/reference/object#additionalproperties):
+	 * > By default any additional properties are allowed.
+	 */
+	const additionalProperties = schema.additionalProperties ?? true
+
+	if (additionalProperties) {
+		if (additionalProperties !== true) {
+			throw new Error(`Unsupported "additionalProperties" value.`)
+		}
+
+		lines.push("[index: string]: unknown;");
+	}
+
+
 	lines.push("}");
 
 	const body = createMultiLineString(...lines);
