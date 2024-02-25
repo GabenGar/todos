@@ -1,5 +1,5 @@
 import { createJSDoc } from "#codegen";
-import { NEWLINE } from "#strings";
+import { NEWLINE, createMultiLineString } from "#strings";
 import type {
 	IJSONSchema,
 	IJSONSchemaDocument,
@@ -20,11 +20,15 @@ export function transformSchemaToInterface(
 
 	switch (symbolKind) {
 		case "interface": {
-			moduleContent = `${!jsDocComment? "" : `${jsDocComment}${NEWLINE}`}export interface ${symbolName} ${symbolBody};`;
+			moduleContent = `${
+				!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
+			}export interface ${symbolName} ${symbolBody};`;
 			break;
 		}
 		case "type": {
-			moduleContent = `${!jsDocComment? "" : `${jsDocComment}${NEWLINE}`}export type ${symbolName} = ${symbolBody};`;
+			moduleContent = `${
+				!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
+			}export type ${symbolName} = ${symbolBody};`;
 			break;
 		}
 
@@ -115,7 +119,7 @@ function toTypeBody(schema: IJSONSchemaDocument): string {
 			break;
 		}
 		case "object": {
-			body = "{}";
+			body = createObjectBody(schema);
 			break;
 		}
 		case "array": {
@@ -139,4 +143,26 @@ function guessSymbolKind(schema: IJSONSchemaDocument): "interface" | "type" {
 	}
 
 	return "type";
+}
+
+function createObjectBody(schema: IJSONSchemaDocument) {
+	const lines = ["{"];
+	const properties =
+		schema.properties &&
+		Object.entries(schema.properties).map<string>(
+			([propertyName, propertySchema]) => {
+				// @ts-expect-error fix the underlying schema type
+				return `${propertyName}?: ${toTypeBody(propertySchema)};`;
+			},
+		);
+
+	if (properties) {
+		lines.push(...properties);
+	}
+
+	lines.push("}");
+
+	const body = createMultiLineString(...lines);
+
+	return body;
 }

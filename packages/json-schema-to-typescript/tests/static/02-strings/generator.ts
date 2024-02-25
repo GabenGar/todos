@@ -1,5 +1,5 @@
-import path from "path";
-import fs from "fs/promises";
+import fs from "node:fs/promises";
+import path from "node:path";
 import { transformSchemaToInterface } from "../../../dist/src/transform/index.js";
 import type { ITestModuleGenerator } from "../../../src/tests/types.js";
 

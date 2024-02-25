@@ -7,6 +7,7 @@
 		"#tests": "./dist/src/tests/index.js",
 		"#lib": "./dist/src/transform/index.js",
 		"#codegen": "./dist/src/codegen/index.js",
+		"#codegen/*": "./dist/src/codegen/*/index.js",
 		"#strings": "./dist/src/strings/index.js"
 	},
 	"scripts": {

@@ -27,6 +27,7 @@
     "static/01-primitives/generator.ts",
     "static/02-strings/generator.ts",
     "static/03-numbers/generator.ts",
+    "static/04-objects/generator.ts",
   ],
   "references": [
     {
