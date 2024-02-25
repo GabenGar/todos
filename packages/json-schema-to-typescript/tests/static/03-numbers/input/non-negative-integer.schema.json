@@ -1,5 +1,5 @@
 {
-	"title": "NonNegativeInteger",
-	"type": "integer",
-	"minimum": 0
+  "title": "NonNegativeInteger",
+  "type": "integer",
+  "minimum": 0
 }
