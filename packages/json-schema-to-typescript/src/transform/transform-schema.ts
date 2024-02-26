@@ -94,6 +94,9 @@ function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
 	return jsdocComment;
 }
 
+/**
+ * @TODO separate schema type for subschemas
+ */
 function toTypeBody(schema: IJSONSchemaDocument): string {
 	let body: string;
 
@@ -146,7 +149,7 @@ function guessSymbolKind(schema: IJSONSchemaDocument): "interface" | "type" {
 }
 
 function createObjectBody(schema: IJSONSchemaDocument) {
-	const lines = ["{"];
+
 	const properties =
 		schema.properties &&
 		Object.entries(schema.properties).map<string>(
@@ -156,25 +159,24 @@ function createObjectBody(schema: IJSONSchemaDocument) {
 			},
 		);
 
-	if (properties) {
-		lines.push(...properties);
-	}
-
 	/**
 	 * As per [docs](https://json-schema.org/understanding-json-schema/reference/object#additionalproperties):
 	 * > By default any additional properties are allowed.
 	 */
-	const additionalProperties = schema.additionalProperties ?? true
+	const additionalProperties = schema.additionalProperties ?? true;
+
+	const lines = ["{"];
+	if (properties) {
+		lines.push(...properties);
+	}
 
 	if (additionalProperties) {
 		if (additionalProperties !== true) {
-			throw new Error(`Unsupported "additionalProperties" value.`)
+			throw new Error(`Unsupported "additionalProperties" value.`);
 		}
 
 		lines.push("[index: string]: unknown;");
 	}
-
-
 	lines.push("}");
 
 	const body = createMultiLineString(...lines);
