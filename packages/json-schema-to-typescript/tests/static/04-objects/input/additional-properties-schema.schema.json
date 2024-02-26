@@ -1,0 +1,15 @@
+{
+  "title": "AdditionalPropertiesSchema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "boolean"
+  }
+}
