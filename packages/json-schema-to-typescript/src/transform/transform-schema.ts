@@ -149,13 +149,17 @@ function guessSymbolKind(schema: IJSONSchemaDocument): "interface" | "type" {
 }
 
 function createObjectBody(schema: IJSONSchemaDocument) {
+	const requiredProperties = schema.required;
 
 	const properties =
 		schema.properties &&
 		Object.entries(schema.properties).map<string>(
 			([propertyName, propertySchema]) => {
+				const fieldName = requiredProperties?.includes(propertyName)
+					? propertyName
+					: `${propertyName}?`;
 				// @ts-expect-error fix the underlying schema type
-				return `${propertyName}?: ${toTypeBody(propertySchema)};`;
+				return `${fieldName}: ${toTypeBody(propertySchema)};`;
 			},
 		);
 
