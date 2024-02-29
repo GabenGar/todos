@@ -126,7 +126,7 @@ function toTypeBody(schema: IJSONSchemaDocument): string {
 			break;
 		}
 		case "array": {
-			body = "extends Array<unknown> {}";
+			body = createArrayBody(schema);
 			break;
 		}
 
@@ -184,6 +184,20 @@ function createObjectBody(schema: IJSONSchemaDocument) {
 	lines.push("}");
 
 	const body = createMultiLineString(...lines);
+
+	return body;
+}
+
+function createArrayBody(schema: IJSONSchemaDocument) {
+	const itemsSchema = schema.items;
+	let itemType = "unknown"
+
+	if (itemsSchema && itemsSchema !== true) {
+		// @ts-expect-error fix the underlying schema type
+		itemType = toTypeBody(itemsSchema)
+	}
+
+	const body = `extends Array<${itemType}> {}`;
 
 	return body;
 }

@@ -1,0 +1,5 @@
+{
+	"title": "PrefixItems",
+	"type": "array",
+	"prefixItems": [{ "type": null }]
+}
