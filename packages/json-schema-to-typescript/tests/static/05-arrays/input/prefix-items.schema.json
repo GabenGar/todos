@@ -1,5 +1,13 @@
 {
-	"title": "PrefixItems",
-	"type": "array",
-	"prefixItems": [{ "type": null }]
+  "title": "PrefixItems",
+  "type": "array",
+  "prefixItems": [
+    { "type": "null" },
+    { "type": "boolean" },
+    { "type": "integer" },
+    { "type": "number" },
+    { "type": "string" },
+    { "type": "object" },
+    { "type": "array" }
+  ]
 }

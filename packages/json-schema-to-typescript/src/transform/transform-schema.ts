@@ -141,7 +141,10 @@ function toTypeBody(schema: IJSONSchemaDocument): string {
 }
 
 function guessSymbolKind(schema: IJSONSchemaDocument): "interface" | "type" {
-	if (schema.type === "object" || schema.type === "array") {
+	if (
+		schema.type === "object" ||
+		(schema.type === "array" && !schema.prefixItems)
+	) {
 		return "interface";
 	}
 
@@ -190,11 +193,26 @@ function createObjectBody(schema: IJSONSchemaDocument) {
 
 function createArrayBody(schema: IJSONSchemaDocument) {
 	const itemsSchema = schema.items;
-	let itemType = "unknown"
+	const prefixItems = schema.prefixItems;
+	let itemType = "unknown";
+
+	if (prefixItems) {
+		const types = prefixItems
+			.map((schema) => {
+				// @ts-expect-error fix the underlying schema type
+				const typeBody = schema === true ? "unknown" : toTypeBody(schema);
+
+				return typeBody;
+			})
+			.join(",");
+		const body = `[${types}]`;
+
+		return body;
+	}
 
 	if (itemsSchema && itemsSchema !== true) {
 		// @ts-expect-error fix the underlying schema type
-		itemType = toTypeBody(itemsSchema)
+		itemType = toTypeBody(itemsSchema);
 	}
 
 	const body = `extends Array<${itemType}> {}`;
