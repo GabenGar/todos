@@ -1,3 +1,1 @@
-export interface IAdditionalProperties {
-  [index: string]: unknown;
-}
+export interface IAdditionalProperties extends Record<string, unknown> {}

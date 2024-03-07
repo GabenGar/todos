@@ -13,7 +13,7 @@ export function transformSchemaToInterface(
 
 	const symbolName = `I${schema.title}`;
 	const jsDocComment = createSymbolJSDoc(schema);
-	const symbolBody = toTypeBody(schema);
+	const symbolBody = toTypeBody(schema, true);
 	const symbolKind = guessSymbolKind(schema);
 
 	let moduleContent: string;
@@ -97,7 +97,10 @@ function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
 /**
  * @TODO separate schema type for subschemas
  */
-function toTypeBody(schema: IJSONSchemaDocument): string {
+function toTypeBody(
+	schema: IJSONSchemaDocument,
+	isSymbolDeclaration = false,
+): string {
 	let body: string;
 
 	switch (schema.type) {
@@ -122,11 +125,11 @@ function toTypeBody(schema: IJSONSchemaDocument): string {
 			break;
 		}
 		case "object": {
-			body = createObjectBody(schema);
+			body = createObjectBody(schema, isSymbolDeclaration);
 			break;
 		}
 		case "array": {
-			body = createArrayBody(schema);
+			body = createArrayBody(schema, isSymbolDeclaration);
 			break;
 		}
 
@@ -151,7 +154,10 @@ function guessSymbolKind(schema: IJSONSchemaDocument): "interface" | "type" {
 	return "type";
 }
 
-function createObjectBody(schema: IJSONSchemaDocument) {
+export function createObjectBody(
+	schema: IJSONSchemaDocument,
+	isSymbolDeclaration = false,
+) {
 	const requiredProperties = schema.required;
 
 	const properties =
@@ -171,8 +177,16 @@ function createObjectBody(schema: IJSONSchemaDocument) {
 	 * > By default any additional properties are allowed.
 	 */
 	const additionalProperties = schema.additionalProperties ?? true;
+	const isRecordSchema = additionalProperties && !properties;
+
+	if (isRecordSchema) {
+		const body = createRecordBody(isSymbolDeclaration);
+
+		return body;
+	}
 
 	const lines = ["{"];
+
 	if (properties) {
 		lines.push(...properties);
 	}
@@ -182,8 +196,13 @@ function createObjectBody(schema: IJSONSchemaDocument) {
 			throw new Error(`Unsupported "additionalProperties" value.`);
 		}
 
-		lines.push("[index: string]: unknown;");
+		if (isSymbolDeclaration) {
+			lines.unshift("extends Record<string, unknown>");
+		} else {
+			lines.push("[index: string]: unknown;");
+		}
 	}
+
 	lines.push("}");
 
 	const body = createMultiLineString(...lines);
@@ -191,7 +210,16 @@ function createObjectBody(schema: IJSONSchemaDocument) {
 	return body;
 }
 
-function createArrayBody(schema: IJSONSchemaDocument) {
+function createRecordBody(isSymbolDeclaration = false) {
+	return isSymbolDeclaration
+		? "extends Record<string, unknown> {}"
+		: "Record<string, unknown>";
+}
+
+function createArrayBody(
+	schema: IJSONSchemaDocument,
+	isSymbolDeclaration = false,
+): string {
 	const itemsSchema = schema.items;
 	const prefixItems = schema.prefixItems;
 	let itemType = "unknown";
@@ -215,7 +243,9 @@ function createArrayBody(schema: IJSONSchemaDocument) {
 		itemType = toTypeBody(itemsSchema);
 	}
 
-	const body = `extends Array<${itemType}> {}`;
+	const body = isSymbolDeclaration
+		? `extends Array<${itemType}> {}`
+		: `Array<${itemType}>`;
 
 	return body;
 }
