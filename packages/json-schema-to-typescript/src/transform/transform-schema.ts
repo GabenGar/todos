@@ -1,5 +1,5 @@
-import { createJSDoc } from "#codegen";
 import { NEWLINE, createMultiLineString } from "#strings";
+import { createSymbolJSDoc } from "./jsdoc.js";
 import type {
 	IJSONSchema,
 	IJSONSchemaDocument,
@@ -34,7 +34,7 @@ export function transformSchemaToInterface(
 
 		default: {
 			throw new Error(
-				`Unreachable path for value "${symbolKind satisfies never}"`,
+				`Unreachable path for symbol kind "${symbolKind satisfies never}"`,
 			);
 		}
 	}
@@ -45,16 +45,20 @@ export function transformSchemaToInterface(
 function validateJSONSchemaDocument(
 	schema: IJSONSchema,
 ): asserts schema is IJSONSchemaDocument {
-	if (
-		!("title" in schema) ||
-		typeof schema.title !== "string" ||
-		schema.title.trim().length === 0
-	) {
+	const isValidTitle =
+		"title" in schema &&
+		typeof schema.title === "string" &&
+		schema.title.trim().length !== 0;
+
+	if (!isValidTitle) {
 		throw new Error("Schema document must have a non-empty title.");
 	}
+	const isValidType = "type" in schema && isJSONSchemaTypeString(schema.type);
+	const isEnum = "enum" in schema && Array.isArray(schema.enum);
+	const isValidShape = isValidType || isEnum;
 
-	if (!("type" in schema) || !isJSONSchemaTypeString(schema.type)) {
-		throw new Error("Schema document must have a known type.");
+	if (!isValidShape) {
+		throw new Error("Schema document must have a known type or be a enum.");
 	}
 }
 
@@ -74,47 +78,6 @@ function isJSONSchemaTypeString(input: unknown): input is IJSONSchemaType {
 	}
 
 	return true;
-}
-
-function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
-	const deprecated = schema.deprecated;
-	const readOnly = schema.readOnly;
-	const inputLines = [schema.description?.trim()];
-	const examples = schema.examples?.flatMap((example) => [
-		"@example",
-		"```json",
-		JSON.stringify(example, undefined, 2),
-		"```",
-	]);
-	const defaultValue =
-		schema.default === undefined
-			? undefined
-			: createMultiLineString(
-					"@default",
-					"```json",
-					JSON.stringify(schema.default, undefined, 2),
-					"```",
-			  );
-
-	if (deprecated) {
-		inputLines.push("@deprecated");
-	}
-
-	if (readOnly) {
-		inputLines.push("@readonly");
-	}
-
-	if (examples) {
-		inputLines.push(...examples);
-	}
-
-	if (defaultValue) {
-		inputLines.push(defaultValue);
-	}
-
-	const jsdocComment = createJSDoc(...inputLines);
-
-	return jsdocComment;
 }
 
 /**
@@ -158,7 +121,7 @@ function toTypeBody(
 
 		default: {
 			throw new Error(
-				`Unreachable path for value "${schema.type satisfies never}"`,
+				`Unreachable path for type "${schema.type satisfies never}"`,
 			);
 		}
 	}
@@ -287,3 +250,8 @@ function createArrayBody(
 
 	return body;
 }
+
+function createEnumBody(
+	schema: IJSONSchemaDocument,
+	isSymbolDeclaration = false,
+) {}
