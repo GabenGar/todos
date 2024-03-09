@@ -84,9 +84,22 @@ function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
 		JSON.stringify(example, undefined, 2),
 		"```",
 	]);
+	const defaultValue =
+		schema.default === undefined
+			? undefined
+			: createMultiLineString(
+					"@default",
+					"```json",
+					JSON.stringify(schema.default, undefined, 2),
+					"```",
+			  );
 
 	if (examples) {
 		inputLines.push(...examples);
+	}
+
+	if (defaultValue) {
+		inputLines.push(defaultValue);
 	}
 
 	const jsdocComment = createJSDoc(...inputLines);
