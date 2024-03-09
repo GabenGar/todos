@@ -1,9 +1,10 @@
-import { createMultiLineString } from "#strings";
+import { createMultiLineString, NEWLINE } from "#strings";
 
 export function createJSDoc(...inputLines: (string | undefined)[]): string {
-	const jsDocLines = inputLines.reduce<string[]>((filteredLines, line) => {
-		if (line) {
-			filteredLines.push(` * ${line}`);
+	const jsDocLines = inputLines.reduce<string[]>((filteredLines, inputLine) => {
+		if (inputLine) {
+			const moreLines = inputLine.split(NEWLINE).map((line) => ` * ${line}`);
+			filteredLines.push(...moreLines);
 		}
 
 		return filteredLines;
