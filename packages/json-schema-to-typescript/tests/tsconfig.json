@@ -29,6 +29,7 @@
     "static/03-numbers/generator.ts",
     "static/04-objects/generator.ts",
     "static/05-arrays/generator.ts",
+    "static/06-generic-keywords/generator.ts",
   ],
   "references": [
     {
