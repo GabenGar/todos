@@ -77,7 +77,8 @@ function isJSONSchemaTypeString(input: unknown): input is IJSONSchemaType {
 }
 
 function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
-	const readOnly = schema.readOnly
+	const deprecated = schema.deprecated;
+	const readOnly = schema.readOnly;
 	const inputLines = [schema.description?.trim()];
 	const examples = schema.examples?.flatMap((example) => [
 		"@example",
@@ -94,6 +95,10 @@ function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
 					JSON.stringify(schema.default, undefined, 2),
 					"```",
 			  );
+
+	if (deprecated) {
+		inputLines.push("@deprecated");
+	}
 
 	if (readOnly) {
 		inputLines.push("@readonly");
