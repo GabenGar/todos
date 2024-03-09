@@ -1,0 +1,5 @@
+{
+  "title": "ReadOnly",
+  "type": "boolean",
+  "readOnly": true
+}

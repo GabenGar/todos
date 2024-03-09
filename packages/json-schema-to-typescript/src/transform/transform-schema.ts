@@ -77,6 +77,7 @@ function isJSONSchemaTypeString(input: unknown): input is IJSONSchemaType {
 }
 
 function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
+	const readOnly = schema.readOnly
 	const inputLines = [schema.description?.trim()];
 	const examples = schema.examples?.flatMap((example) => [
 		"@example",
@@ -93,6 +94,10 @@ function createSymbolJSDoc(schema: IJSONSchemaDocument): string | undefined {
 					JSON.stringify(schema.default, undefined, 2),
 					"```",
 			  );
+
+	if (readOnly) {
+		inputLines.push("@readonly");
+	}
 
 	if (examples) {
 		inputLines.push(...examples);
