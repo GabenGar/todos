@@ -222,6 +222,10 @@ function createArrayBody(
 ): string {
 	const itemsSchema = schema.items;
 	const prefixItems = schema.prefixItems;
+	const contains = schema.contains;
+	const containsType =
+		// @ts-expect-error fix the underlying schema type
+		contains && (contains === true ? "unknown" : toTypeBody(contains));
 	let itemType = "unknown";
 
 	if (prefixItems) {
@@ -250,7 +254,8 @@ function createArrayBody(
 
 	if (itemsSchema && itemsSchema !== true) {
 		// @ts-expect-error fix the underlying schema type
-		itemType = toTypeBody(itemsSchema);
+		const typeBody = toTypeBody(itemsSchema);
+		itemType = !containsType ? typeBody : `${typeBody} | ${containsType}`;
 	}
 
 	const body = isSymbolDeclaration
