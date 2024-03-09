@@ -1,0 +1,16 @@
+{
+  "title": "SchemaItems",
+  "type": "array",
+  "prefixItems": [
+    { "type": "null" },
+    { "type": "boolean" },
+    { "type": "integer" },
+    { "type": "number" },
+    { "type": "string" },
+    { "type": "object" },
+    { "type": "array" }
+  ],
+  "items": {
+    "type": "boolean"
+  }
+}

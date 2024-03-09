@@ -225,15 +225,25 @@ function createArrayBody(
 	let itemType = "unknown";
 
 	if (prefixItems) {
-		const types = prefixItems
-			.map((schema) => {
-				// @ts-expect-error fix the underlying schema type
-				const typeBody = schema === true ? "unknown" : toTypeBody(schema);
+		const types = prefixItems.map((schema) => {
+			// @ts-expect-error fix the underlying schema type
+			const typeBody = schema === true ? "unknown" : toTypeBody(schema);
 
-				return typeBody;
-			})
-			.join(",");
-		const body = `[${types}]`;
+			return typeBody;
+		});
+
+		const extraItems = schema.items ?? true;
+
+		if (extraItems) {
+			if (extraItems === true) {
+				types.push("...unknown[]");
+			} else {
+				// @ts-expect-error fix the underlying schema type
+				types.push(`...(${toTypeBody(extraItems)})[]`);
+			}
+		}
+
+		const body = `[${types.join(",")}]`;
 
 		return body;
 	}

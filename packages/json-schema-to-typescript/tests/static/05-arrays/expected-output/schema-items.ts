@@ -1,4 +1,4 @@
-export type IPrefixItems = [
+export type ISchemaItems = [
   null,
   boolean,
   number,
@@ -6,5 +6,5 @@ export type IPrefixItems = [
   string,
   Record<string, unknown>,
   Array<unknown>,
-  ...unknown[],
+  ...boolean[],
 ];
