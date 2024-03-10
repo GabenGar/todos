@@ -55,10 +55,13 @@ function validateJSONSchemaDocument(
 	}
 	const isValidType = "type" in schema && isJSONSchemaTypeString(schema.type);
 	const isEnum = "enum" in schema && Array.isArray(schema.enum);
-	const isValidShape = isValidType || isEnum;
+	const isConst = "const" in schema;
+	const isValidShape = isValidType || isEnum || isConst;
 
 	if (!isValidShape) {
-		throw new Error("Schema document must have a known type or be a enum.");
+		throw new Error(
+			"Schema document must have a known type or be a enum or a const.",
+		);
 	}
 }
 
@@ -120,13 +123,19 @@ function toTypeBody(
 		}
 
 		default: {
-			if (!schema.enum) {
-				throw new Error(
-					`Schemas without type "${schema.type satisfies never}"`,
-				);
+			if (schema.enum) {
+				body = createEnumBody(schema.enum, isSymbolDeclaration);
+				break;
 			}
 
-			body = createEnumBody(schema.enum, isSymbolDeclaration)
+			if (schema.const) {
+				body = createConstBody(schema.const, isSymbolDeclaration);
+				break;
+			}
+
+			throw new Error(
+				`Schemas without type must have "enum" or "const" keyword`,
+			);
 		}
 	}
 
@@ -259,8 +268,17 @@ function createEnumBody(
 	enumValue: Required<IJSONSchemaDocument>["enum"],
 	isSymbolDeclaration = false,
 ) {
-	const bodyLiterals = enumValue.map((value) => JSON.stringify(value))
-	const body = bodyLiterals.join("|")
+	const bodyLiterals = enumValue.map((value) => JSON.stringify(value));
+	const body = bodyLiterals.join("|");
 
-	return body
+	return body;
+}
+
+function createConstBody(
+	constValue: Required<IJSONSchemaDocument>["const"],
+	isSymbolDeclaration = false,
+) {
+	const body = JSON.stringify(constValue);
+
+	return body;
 }
