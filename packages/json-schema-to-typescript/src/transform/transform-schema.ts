@@ -57,7 +57,9 @@ function validateJSONSchemaDocument(
 	const isValidType = "type" in schema && isJSONSchemaTypeString(schema.type);
 	const isEnum = "enum" in schema && Array.isArray(schema.enum);
 	const isConst = "const" in schema;
-	const isComposite = "allOf" in schema && Array.isArray(schema.allOf);
+	const isComposite =
+		("allOf" in schema && Array.isArray(schema.allOf)) ||
+		("anyOf" in schema && Array.isArray(schema.anyOf));
 	const isValidShape = isValidType || isEnum || isConst || isComposite;
 
 	if (!isValidShape) {
@@ -140,8 +142,13 @@ function toTypeBody(
 				break;
 			}
 
+			if (schema.anyOf) {
+				body = createAnyOfBody(schema.anyOf, isSymbolDeclaration);
+				break;
+			}
+
 			throw new Error(
-				`Schemas without type must have "enum" or "const" keyword`,
+				`Schemas without type must be composite or have "enum" or "const" keyword`,
 			);
 		}
 	}
@@ -301,6 +308,21 @@ function createAllOfBody(
 		return body;
 	});
 	const body = types.join("&");
+
+	return body;
+}
+
+function createAnyOfBody(
+	anyOf: Required<IJSONSchemaDocument>["anyOf"],
+	isSymbolDeclaration = false,
+) {
+	const types = anyOf.map((schema) => {
+		// @ts-expect-error fix the underlying schema type
+		const body = schema === true ? "unknown" : toTypeBody(schema);
+
+		return body;
+	});
+	const body = types.join("|");
 
 	return body;
 }
