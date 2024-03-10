@@ -53,10 +53,12 @@ function validateJSONSchemaDocument(
 	if (!isValidTitle) {
 		throw new Error("Schema document must have a non-empty title.");
 	}
+
 	const isValidType = "type" in schema && isJSONSchemaTypeString(schema.type);
 	const isEnum = "enum" in schema && Array.isArray(schema.enum);
 	const isConst = "const" in schema;
-	const isValidShape = isValidType || isEnum || isConst;
+	const isComposite = "allOf" in schema && Array.isArray(schema.allOf);
+	const isValidShape = isValidType || isEnum || isConst || isComposite;
 
 	if (!isValidShape) {
 		throw new Error(
@@ -130,6 +132,11 @@ function toTypeBody(
 
 			if (schema.const) {
 				body = createConstBody(schema.const, isSymbolDeclaration);
+				break;
+			}
+
+			if (schema.allOf) {
+				body = createAllOfBody(schema.allOf, isSymbolDeclaration);
 				break;
 			}
 
@@ -279,6 +286,21 @@ function createConstBody(
 	isSymbolDeclaration = false,
 ) {
 	const body = JSON.stringify(constValue);
+
+	return body;
+}
+
+function createAllOfBody(
+	allOf: Required<IJSONSchemaDocument>["allOf"],
+	isSymbolDeclaration = false,
+) {
+	const types = allOf.map((schema) => {
+		// @ts-expect-error fix the underlying schema type
+		const body = schema === true ? "unknown" : toTypeBody(schema);
+
+		return body;
+	});
+	const body = types.join("&");
 
 	return body;
 }

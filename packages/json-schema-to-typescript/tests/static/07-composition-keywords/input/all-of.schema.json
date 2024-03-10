@@ -1,0 +1,21 @@
+{
+  "title": "AllOf",
+  "allOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lorem"],
+      "properties": { "lorem": { "const": "ipsum" } }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "ipsum": { "const": "lorem" } }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "dolorem": { "type": "string" } }
+    }
+  ]
+}
