@@ -14,7 +14,7 @@
 		"build": "tsc",
 		"test": "npm run test-build && npm run test-generate && npm run test-format && npm run test-validate",
 		"test-build": "cd tests && npm run build",
-		"test-format": "biome check ./tests --apply",
+		"test-format": "biome check ./tests --apply-unsafe",
 		"test-generate": "node dist/scripts/test-generate.js",
 		"test-validate": "node dist/scripts/test-validate.js",
 		"lint": "biome lint ./ && tsc --noEmit",

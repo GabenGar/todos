@@ -120,9 +120,13 @@ function toTypeBody(
 		}
 
 		default: {
-			throw new Error(
-				`Unreachable path for type "${schema.type satisfies never}"`,
-			);
+			if (!schema.enum) {
+				throw new Error(
+					`Schemas without type "${schema.type satisfies never}"`,
+				);
+			}
+
+			body = createEnumBody(schema.enum, isSymbolDeclaration)
 		}
 	}
 
@@ -252,6 +256,11 @@ function createArrayBody(
 }
 
 function createEnumBody(
-	schema: IJSONSchemaDocument,
+	enumValue: Required<IJSONSchemaDocument>["enum"],
 	isSymbolDeclaration = false,
-) {}
+) {
+	const bodyLiterals = enumValue.map((value) => JSON.stringify(value))
+	const body = bodyLiterals.join("|")
+
+	return body
+}
