@@ -59,7 +59,8 @@ function validateJSONSchemaDocument(
 	const isConst = "const" in schema;
 	const isComposite =
 		("allOf" in schema && Array.isArray(schema.allOf)) ||
-		("anyOf" in schema && Array.isArray(schema.anyOf));
+		("anyOf" in schema && Array.isArray(schema.anyOf)) ||
+		("oneOf" in schema && Array.isArray(schema.oneOf));
 	const isValidShape = isValidType || isEnum || isConst || isComposite;
 
 	if (!isValidShape) {
@@ -144,6 +145,11 @@ function toTypeBody(
 
 			if (schema.anyOf) {
 				body = createAnyOfBody(schema.anyOf, isSymbolDeclaration);
+				break;
+			}
+
+			if (schema.oneOf) {
+				body = createOneOfBody(schema.oneOf, isSymbolDeclaration);
 				break;
 			}
 
@@ -317,6 +323,21 @@ function createAnyOfBody(
 	isSymbolDeclaration = false,
 ) {
 	const types = anyOf.map((schema) => {
+		// @ts-expect-error fix the underlying schema type
+		const body = schema === true ? "unknown" : toTypeBody(schema);
+
+		return body;
+	});
+	const body = types.join("|");
+
+	return body;
+}
+
+function createOneOfBody(
+	oneOf: Required<IJSONSchemaDocument>["oneOf"],
+	isSymbolDeclaration = false,
+) {
+	const types = oneOf.map((schema) => {
 		// @ts-expect-error fix the underlying schema type
 		const body = schema === true ? "unknown" : toTypeBody(schema);
 
