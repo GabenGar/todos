@@ -8,7 +8,27 @@ export type IJSONSchemaType = Exclude<
 	Array<any> | undefined
 >;
 
-export type IJSONSchemaDocument = Omit<IJSONSchema, "title" | "type"> &
+export type IJSONSchemaDocument = Omit<IJSONSchema, "$id" | "title" | "type"> &
 	Pick<Required<IJSONSchema>, "title"> & {
 		type: IJSONSchemaType;
 	};
+
+const schemaTypes = [
+	"string",
+	"number",
+	"boolean",
+	"object",
+	"array",
+	"null",
+	"integer",
+] as const satisfies IJSONSchemaType[];
+
+export function isJSONSchemaTypeString(
+	input: unknown,
+): input is IJSONSchemaType {
+	if (!schemaTypes.includes(input as IJSONSchemaType)) {
+		return false;
+	}
+
+	return true;
+}

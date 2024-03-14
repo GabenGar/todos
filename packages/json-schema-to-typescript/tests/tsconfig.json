@@ -31,6 +31,7 @@
     "static/05-arrays/generator.ts",
     "static/06-generic-keywords/generator.ts",
     "static/07-composition-keywords/generator.ts",
+    "static/08-ref/generator.ts",
   ],
   "references": [
     {

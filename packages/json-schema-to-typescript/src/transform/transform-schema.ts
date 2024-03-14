@@ -1,10 +1,6 @@
 import { NEWLINE, createMultiLineString } from "#strings";
 import { createSymbolJSDoc } from "./jsdoc.js";
-import type {
-	IJSONSchema,
-	IJSONSchemaDocument,
-	IJSONSchemaType,
-} from "./types.js";
+import type { IJSONSchema, IJSONSchemaDocument } from "./types.js";
 
 export function transformSchemaToInterface(
 	schema: Readonly<IJSONSchema>,
@@ -40,52 +36,6 @@ export function transformSchemaToInterface(
 	}
 
 	return moduleContent;
-}
-
-function validateJSONSchemaDocument(
-	schema: IJSONSchema,
-): asserts schema is IJSONSchemaDocument {
-	const isValidTitle =
-		"title" in schema &&
-		typeof schema.title === "string" &&
-		schema.title.trim().length !== 0;
-
-	if (!isValidTitle) {
-		throw new Error("Schema document must have a non-empty title.");
-	}
-
-	const isValidType = "type" in schema && isJSONSchemaTypeString(schema.type);
-	const isEnum = "enum" in schema && Array.isArray(schema.enum);
-	const isConst = "const" in schema;
-	const isComposite =
-		("allOf" in schema && Array.isArray(schema.allOf)) ||
-		("anyOf" in schema && Array.isArray(schema.anyOf)) ||
-		("oneOf" in schema && Array.isArray(schema.oneOf));
-	const isValidShape = isValidType || isEnum || isConst || isComposite;
-
-	if (!isValidShape) {
-		throw new Error(
-			"Schema document must have a known type or be a enum or a const.",
-		);
-	}
-}
-
-const schemaTypes = [
-	"string",
-	"number",
-	"boolean",
-	"object",
-	"array",
-	"null",
-	"integer",
-] as const satisfies IJSONSchemaType[];
-
-function isJSONSchemaTypeString(input: unknown): input is IJSONSchemaType {
-	if (!schemaTypes.includes(input as IJSONSchemaType)) {
-		return false;
-	}
-
-	return true;
 }
 
 /**
