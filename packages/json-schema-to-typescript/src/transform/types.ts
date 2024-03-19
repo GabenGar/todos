@@ -1,17 +1,29 @@
 import { JsonSchemaDraft202012 } from "@hyperjump/json-schema/draft-2020-12";
 
-export type IJSONSchema = Exclude<JsonSchemaDraft202012, boolean>;
+export type IJSONSchemaObject = Exclude<JsonSchemaDraft202012, boolean>;
 
 export type IJSONSchemaType = Exclude<
-	IJSONSchema["type"],
+	IJSONSchemaObject["type"],
 	// biome-ignore lint/suspicious/noExplicitAny: doesn't matter for this exclusion
 	Array<any> | undefined
 >;
 
-export type IJSONSchemaDocument = Omit<IJSONSchema, "$id" | "title" | "type"> &
-	Pick<Required<IJSONSchema>, "title"> & {
-		type: IJSONSchemaType;
-	};
+export type IJSONSchemaDocument = Omit<IJSONSchemaObject, "$id" | "title" | "type"> &
+	Pick<Required<IJSONSchemaObject>, "$id" | "title"> &
+	(
+		| {
+				type: IJSONSchemaType;
+		  }
+		| Pick<Required<IJSONSchemaObject>, "enum">
+		| Pick<Required<IJSONSchemaObject>, "const">
+		| Pick<Required<IJSONSchemaObject>, "oneOf">
+		| Pick<Required<IJSONSchemaObject>, "anyOf">
+		| Pick<Required<IJSONSchemaObject>, "allOf">
+	);
+
+export interface IGetSchemaDocument {
+	(ref: string): IJSONSchemaDocument;
+}
 
 const schemaTypes = [
 	"string",

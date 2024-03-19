@@ -1,9 +1,10 @@
 import { NEWLINE, createMultiLineString } from "#strings";
+import { validateJSONSchemaDocument } from "./document.js";
 import { createSymbolJSDoc } from "./jsdoc.js";
-import type { IJSONSchema, IJSONSchemaDocument } from "./types.js";
+import type { IJSONSchemaObject, IJSONSchemaDocument } from "./types.js";
 
 export function transformSchemaToInterface(
-	schema: Readonly<IJSONSchema>,
+	schema: Readonly<IJSONSchemaObject>,
 ): string {
 	validateJSONSchemaDocument(schema);
 
