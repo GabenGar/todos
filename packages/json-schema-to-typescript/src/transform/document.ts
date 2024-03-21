@@ -123,9 +123,23 @@ function createRefMapping(
 				`The ref "${ref}" at schema document "${schemaDocument.$id}" does not point to schema object.`,
 			);
 		}
-		const isValidTitle = "title" in schema && typeof schema.title === "string" && schema.title.trim().length !== 0;
 
-		const symbolName = isValidTitle ? `I${schema.title.trim()}`
+		const parsedTitle =
+			"title" in schema &&
+			typeof schema.title === "string" &&
+			schema.title.trim().length !== 0
+				? schema.title.trim()
+				: undefined;
+
+		if (!parsedTitle) {
+			throw new Error(
+				`The ref "${ref}" at schema document "${schemaDocument.$id}" does not have a "title" property.`,
+			);
+		}
+
+		const symbolName = `I${parsedTitle}`;
+
+		refMap.set(ref, symbolName);
 	}
 
 	return refMap;
