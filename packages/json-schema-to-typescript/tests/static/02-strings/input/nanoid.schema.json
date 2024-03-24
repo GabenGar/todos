@@ -1,4 +1,5 @@
 {
+  "$id": "/nanoid",
   "title": "NanoID",
   "type": "string",
   "pattern": "[\\w_-]",

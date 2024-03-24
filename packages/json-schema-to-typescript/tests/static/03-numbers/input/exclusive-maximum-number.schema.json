@@ -1,4 +1,5 @@
 {
+  "$id": "/exclusive-maximum-number",
   "title": "ExclusiveMaximumNumber",
   "type": "number",
   "exclusiveMaximum": 2.5

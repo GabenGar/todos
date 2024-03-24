@@ -1,4 +1,5 @@
 {
+  "$id": "/contains",
   "title": "Contains",
   "type": "array",
   "items": {

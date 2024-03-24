@@ -1,4 +1,5 @@
 {
+  "$id": "/deprecated",
   "title": "Deprecated",
   "type": "boolean",
   "deprecated": true

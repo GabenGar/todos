@@ -1,4 +1,5 @@
 {
+  "$id": "/enum",
   "title": "Enum",
   "enum": [
     null,

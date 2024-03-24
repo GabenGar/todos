@@ -1,4 +1,5 @@
 {
+  "$id": "/all-of",
   "title": "AllOf",
   "allOf": [
     {

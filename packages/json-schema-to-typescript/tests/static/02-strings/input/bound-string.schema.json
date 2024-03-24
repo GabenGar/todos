@@ -1,4 +1,5 @@
 {
+  "$id": "/bound-string",
   "title": "BoundString",
   "type": "string",
   "minLength": 1,

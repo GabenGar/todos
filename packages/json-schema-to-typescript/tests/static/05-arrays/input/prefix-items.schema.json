@@ -1,4 +1,5 @@
 {
+  "$id": "/prefix-items",
   "title": "PrefixItems",
   "type": "array",
   "prefixItems": [

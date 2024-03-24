@@ -1,4 +1,5 @@
 {
+  "$id": "/one-of",
   "title": "OneOf",
   "oneOf": [
     {

@@ -1,4 +1,5 @@
 {
+  "$id": "/upper-bound-string",
   "title": "UpperBoundString",
   "type": "string",
   "maxLength": 2048,

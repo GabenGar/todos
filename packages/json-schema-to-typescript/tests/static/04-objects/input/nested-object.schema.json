@@ -1,4 +1,5 @@
 {
+  "$id": "/nested-object",
   "title": "NestedObject",
   "type": "object",
   "required": ["id"],

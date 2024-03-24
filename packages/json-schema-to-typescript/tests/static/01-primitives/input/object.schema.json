@@ -1,4 +1,5 @@
 {
+  "$id": "/object",
   "title": "Object",
   "type": "object"
 }

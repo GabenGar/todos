@@ -1,4 +1,5 @@
 {
+  "$id": "/examples",
   "title": "Examples",
   "type": "string",
   "minLength": 1,

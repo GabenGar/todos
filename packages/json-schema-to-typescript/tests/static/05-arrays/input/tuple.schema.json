@@ -1,4 +1,5 @@
 {
+  "$id": "/tuple",
   "title": "Tuple",
   "type": "array",
   "prefixItems": [

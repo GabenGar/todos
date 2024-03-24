@@ -1,4 +1,5 @@
 {
+  "$id": "/required-properties",
   "title": "RequiredProperties",
   "type": "object",
   "required": ["id", "created_at"],

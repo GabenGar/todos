@@ -1,4 +1,5 @@
 {
+  "$id": "/string",
   "title": "String",
   "type": "string"
 }

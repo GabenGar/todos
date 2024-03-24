@@ -1,4 +1,5 @@
 {
+  "$id": "/schema-items",
   "title": "SchemaItems",
   "type": "array",
   "prefixItems": [

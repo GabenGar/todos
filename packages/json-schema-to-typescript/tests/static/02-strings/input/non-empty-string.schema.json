@@ -1,4 +1,5 @@
 {
+  "$id": "/non-empty-string",
   "title": "NonEmptyString",
   "type": "string",
   "minLength": 1,

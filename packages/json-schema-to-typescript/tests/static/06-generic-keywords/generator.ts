@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { transformSchemaToInterface } from "../../../dist/src/transform/index.js";
+import { transformSchemaDocumentToModule } from "../../../dist/src/transform/index.js";
 import type { ITestModuleGenerator } from "../../../src/tests/types.js";
 
 const generate: ITestModuleGenerator = async (inputs) => {
@@ -9,10 +9,10 @@ const generate: ITestModuleGenerator = async (inputs) => {
   for await (const dirent of inputs) {
     const filePath = path.join(dirent.path, dirent.name);
     const content = await fs.readFile(filePath, { encoding: "utf8" });
-    const schema: Parameters<typeof transformSchemaToInterface>[0] =
+    const schema: Parameters<typeof transformSchemaDocumentToModule>[0] =
       JSON.parse(content);
 
-    const schemaInterface = transformSchemaToInterface(schema);
+    const schemaInterface = transformSchemaDocumentToModule(schema);
     const outputFilename = dirent.name.replace(".schema.json", ".ts");
 
     outputs.set(outputFilename, schemaInterface);

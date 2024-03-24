@@ -1,4 +1,5 @@
 {
+  "$id": "/boolean",
   "title": "Boolean",
   "type": "boolean"
 }

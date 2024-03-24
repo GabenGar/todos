@@ -1,4 +1,5 @@
 {
+  "$id": "/no-additional-properties.",
   "title": "NoAdditionalProperties",
   "type": "object",
   "additionalProperties": false,
