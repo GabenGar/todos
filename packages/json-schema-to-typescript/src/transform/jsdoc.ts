@@ -1,9 +1,9 @@
 import { createMultiLineString } from "#strings";
 import { createJSDoc } from "#codegen";
-import type { IJSONSchemaDocument } from "./types.js";
+import type { IJSONSchemaObject } from "./types.js";
 
 export function createSymbolJSDoc(
-	schema: IJSONSchemaDocument,
+	schema: IJSONSchemaObject,
 ): string | undefined {
 	const deprecated = schema.deprecated;
 	const readOnly = schema.readOnly;

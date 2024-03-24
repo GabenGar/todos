@@ -1,49 +1,8 @@
-import { NEWLINE, createMultiLineString } from "#strings";
-import { validateJSONSchemaDocument } from "./document.js";
-import { createSymbolJSDoc } from "./jsdoc.js";
-import type { IJSONSchemaObject, IJSONSchemaDocument } from "./types.js";
+import { createMultiLineString } from "#strings";
+import type { IJSONSchemaObject } from "./types.js";
 
-export function transformSchemaToInterface(
-	schema: Readonly<IJSONSchemaObject>,
-): string {
-	validateJSONSchemaDocument(schema);
-
-	const symbolName = `I${schema.title}`;
-	const jsDocComment = createSymbolJSDoc(schema);
-	const symbolBody = toTypeBody(schema, true);
-	const symbolKind = guessSymbolKind(schema);
-
-	let moduleContent: string;
-
-	switch (symbolKind) {
-		case "interface": {
-			moduleContent = `${
-				!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
-			}export interface ${symbolName} ${symbolBody};`;
-			break;
-		}
-		case "type": {
-			moduleContent = `${
-				!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
-			}export type ${symbolName} = ${symbolBody};`;
-			break;
-		}
-
-		default: {
-			throw new Error(
-				`Unreachable path for symbol kind "${symbolKind satisfies never}"`,
-			);
-		}
-	}
-
-	return moduleContent;
-}
-
-/**
- * @TODO separate schema type for subschemas
- */
-function toTypeBody(
-	schema: IJSONSchemaDocument,
+export function toTypeBody(
+	schema: IJSONSchemaObject,
 	isSymbolDeclaration = false,
 ): string {
 	let body: string;
@@ -113,19 +72,8 @@ function toTypeBody(
 	return body;
 }
 
-function guessSymbolKind(schema: IJSONSchemaDocument): "interface" | "type" {
-	if (
-		schema.type === "object" ||
-		(schema.type === "array" && !schema.prefixItems)
-	) {
-		return "interface";
-	}
-
-	return "type";
-}
-
 export function createObjectBody(
-	schema: IJSONSchemaDocument,
+	schema: IJSONSchemaObject,
 	isSymbolDeclaration = false,
 ) {
 	const requiredProperties = schema.required;
@@ -187,14 +135,13 @@ function createRecordBody(isSymbolDeclaration = false) {
 }
 
 function createArrayBody(
-	schema: IJSONSchemaDocument,
+	schema: IJSONSchemaObject,
 	isSymbolDeclaration = false,
 ): string {
 	const itemsSchema = schema.items;
 	const prefixItems = schema.prefixItems;
 	const contains = schema.contains;
 	const containsType =
-		// @ts-expect-error fix the underlying schema type
 		contains && (contains === true ? "unknown" : toTypeBody(contains));
 	let itemType = "unknown";
 
@@ -212,7 +159,6 @@ function createArrayBody(
 			if (extraItems === true) {
 				types.push("...unknown[]");
 			} else {
-				// @ts-expect-error fix the underlying schema type
 				types.push(`...(${toTypeBody(extraItems)})[]`);
 			}
 		}
@@ -223,7 +169,6 @@ function createArrayBody(
 	}
 
 	if (itemsSchema && itemsSchema !== true) {
-		// @ts-expect-error fix the underlying schema type
 		const typeBody = toTypeBody(itemsSchema);
 		itemType = !containsType ? typeBody : `${typeBody} | ${containsType}`;
 	}
@@ -236,7 +181,7 @@ function createArrayBody(
 }
 
 function createEnumBody(
-	enumValue: Required<IJSONSchemaDocument>["enum"],
+	enumValue: Required<IJSONSchemaObject>["enum"],
 	isSymbolDeclaration = false,
 ) {
 	const bodyLiterals = enumValue.map((value) => JSON.stringify(value));
@@ -246,7 +191,7 @@ function createEnumBody(
 }
 
 function createConstBody(
-	constValue: Required<IJSONSchemaDocument>["const"],
+	constValue: Required<IJSONSchemaObject>["const"],
 	isSymbolDeclaration = false,
 ) {
 	const body = JSON.stringify(constValue);
@@ -255,7 +200,7 @@ function createConstBody(
 }
 
 function createAllOfBody(
-	allOf: Required<IJSONSchemaDocument>["allOf"],
+	allOf: Required<IJSONSchemaObject>["allOf"],
 	isSymbolDeclaration = false,
 ) {
 	const types = allOf.map((schema) => {
@@ -270,7 +215,7 @@ function createAllOfBody(
 }
 
 function createAnyOfBody(
-	anyOf: Required<IJSONSchemaDocument>["anyOf"],
+	anyOf: Required<IJSONSchemaObject>["anyOf"],
 	isSymbolDeclaration = false,
 ) {
 	const types = anyOf.map((schema) => {
@@ -285,7 +230,7 @@ function createAnyOfBody(
 }
 
 function createOneOfBody(
-	oneOf: Required<IJSONSchemaDocument>["oneOf"],
+	oneOf: Required<IJSONSchemaObject>["oneOf"],
 	isSymbolDeclaration = false,
 ) {
 	const types = oneOf.map((schema) => {

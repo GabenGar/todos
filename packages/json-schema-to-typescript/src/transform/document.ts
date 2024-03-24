@@ -1,64 +1,31 @@
 import { get as getValueFromPointer } from "@hyperjump/json-pointer";
+import { NEWLINE, createMultiLineString } from "#strings";
 import {
-	isJSONSchemaTypeString,
-	type IJSONSchemaObject,
-	type IJSONSchemaDocument,
-} from "./types.js";
+	validateJSONSchemaDocument,
+	validateJSONSchemaObject,
+} from "./validate.js";
+import { type IJSONSchemaObject, type IJSONSchemaDocument } from "./types.js";
+import { createSymbolJSDoc } from "./jsdoc.js";
+import { toTypeBody } from "./transform-schema.js";
 
 type ISchemaRef = Required<IJSONSchemaDocument>["$ref"];
 interface IDocumentRefs extends Set<ISchemaRef> {}
 /**
- * A mapping of `"$ref"`s and the symbol names.
+ * A mapping of `"$ref"`s and schemas with their symbol names.
  */
-interface IRefMap extends Map<ISchemaRef, string> {}
+interface IRefMap
+	extends Map<ISchemaRef, { symbolName: string; schema: IJSONSchemaObject }> {}
 
-export function transformSchemaDocumentToType(
-	schemaDocument: Readonly<IJSONSchemaObject>,
+export function transformSchemaDocumentToModule(
+	schemaDocument: Readonly<IJSONSchemaDocument>,
 ): string {
 	validateJSONSchemaDocument(schemaDocument);
 
 	const documentRefs = collectDocumentRefs(schemaDocument);
 	const refMap = createRefMapping(schemaDocument, documentRefs);
-}
+	const symbols = createDocumentSymbols(schemaDocument, refMap);
 
-/**
- * @TODO unexport it
- */
-export function validateJSONSchemaDocument(
-	schema: IJSONSchemaObject,
-): asserts schema is IJSONSchemaDocument {
-	const isValidSchemaID =
-		"$id" in schema &&
-		typeof schema.title === "string" &&
-		schema.title.trim().length !== 0;
-
-	if (!isValidSchemaID) {
-		throw new Error(`Schema document must have a non-empty "$id".`);
-	}
-
-	const isValidTitle =
-		"title" in schema &&
-		typeof schema.title === "string" &&
-		schema.title.trim().length !== 0;
-
-	if (!isValidTitle) {
-		throw new Error(`Schema document must have a non-empty "title".`);
-	}
-
-	const isValidType = "type" in schema && isJSONSchemaTypeString(schema.type);
-	const isEnum = "enum" in schema && Array.isArray(schema.enum);
-	const isConst = "const" in schema;
-	const isComposite =
-		("allOf" in schema && Array.isArray(schema.allOf)) ||
-		("anyOf" in schema && Array.isArray(schema.anyOf)) ||
-		("oneOf" in schema && Array.isArray(schema.oneOf));
-	const isValidShape = isValidType || isEnum || isConst || isComposite;
-
-	if (!isValidShape) {
-		throw new Error(
-			"Schema document must have a known type or a enum or a const or a composite.",
-		);
-	}
+	return createMultiLineString(...symbols);
 }
 
 function collectDocumentRefs(
@@ -116,20 +83,9 @@ function createRefMapping(
 
 	for (const ref of documentRefs) {
 		const schema = getValueFromPointer(ref, schemaDocument);
-		const isValidSchema = typeof schema === "object" && schema !== null;
+		validateJSONSchemaObject(schema);
 
-		if (!isValidSchema) {
-			throw new Error(
-				`The ref "${ref}" at schema document "${schemaDocument.$id}" does not point to schema object.`,
-			);
-		}
-
-		const parsedTitle =
-			"title" in schema &&
-			typeof schema.title === "string" &&
-			schema.title.trim().length !== 0
-				? schema.title.trim()
-				: undefined;
+		const parsedTitle = schema.title?.trim();
 
 		if (!parsedTitle) {
 			throw new Error(
@@ -139,8 +95,43 @@ function createRefMapping(
 
 		const symbolName = `I${parsedTitle}`;
 
-		refMap.set(ref, symbolName);
+		refMap.set(ref, { symbolName, schema });
 	}
 
 	return refMap;
+}
+
+function createDocumentSymbols(
+	schemaDocument: Readonly<IJSONSchemaDocument>,
+	refMap: IRefMap,
+): string[] {
+	const documentSymbolDeclaration = createSymbolDeclaration(schemaDocument);
+	const symbols: string[] = [documentSymbolDeclaration];
+
+	for (const [ref, { symbolName, schema }] of refMap) {
+		const declaraton = createSymbolDeclaration(schema);
+
+		symbols.push(declaraton);
+	}
+
+	return symbols;
+}
+
+function createSymbolDeclaration(schema: IJSONSchemaObject): string {
+	const name = `I${schema.title}`;
+	const jsDocComment = createSymbolJSDoc(schema);
+	const isInterface =
+		schema.type === "object" ||
+		(schema.type === "array" && !schema.prefixItems);
+	const body = toTypeBody(schema, true);
+
+	if (isInterface) {
+		return `${
+			!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
+		}export interface ${name} ${body};`;
+	}
+
+	return `${
+		!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
+	}export type ${name} = ${body};`;
 }

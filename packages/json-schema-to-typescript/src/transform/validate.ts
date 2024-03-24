@@ -11,11 +11,9 @@ import {
 
 const ajv = new AJV.default();
 
-const validateSchema: ValidateFunction<IJSONSchemaObject> =
+const validateSchema: ValidateFunction<unknown> =
 	// biome-ignore lint/style/noNonNullAssertion: ajv knows how to validate its own metashema
-	ajv.getSchema<IJSONSchemaObject>(
-		"https://json-schema.org/draft/2020-12/schema",
-	)!;
+	ajv.getSchema<unknown>("https://json-schema.org/draft/2020-12/schema")!;
 
 if (!validateSchema) {
 	throw new Error(
@@ -23,7 +21,7 @@ if (!validateSchema) {
 	);
 }
 
-export function isSchemaObject(input: unknown): input is IJSONSchemaObject {
+export function isJSONSchemaObject(input: unknown): input is IJSONSchemaObject {
 	if (typeof input === "boolean") {
 		return false;
 	}
@@ -31,7 +29,7 @@ export function isSchemaObject(input: unknown): input is IJSONSchemaObject {
 	return validateSchema(input);
 }
 
-export function validateSchemaObject(
+export function validateJSONSchemaObject(
 	input: unknown,
 ): asserts input is IJSONSchemaObject {
 	if (typeof input === "boolean") {
@@ -50,8 +48,8 @@ export function validateSchemaObject(
 	}
 }
 
-export function isSchemaDocument(input: unknown): input is IJSONSchemaDocument {
-	if (!isSchemaObject(input)) {
+export function isJSONSchemaDocument(input: unknown): input is IJSONSchemaDocument {
+	if (!isJSONSchemaObject(input)) {
 		return false;
 	}
 
@@ -60,48 +58,43 @@ export function isSchemaDocument(input: unknown): input is IJSONSchemaDocument {
 	const isValidType = isJSONSchemaTypeString(input.type);
 	const isEnum = Boolean(input.enum && input.enum.length !== 0);
 	const isConst = Boolean(input.const);
-	const isComposite =
-		("allOf" in input && Array.isArray(input.allOf)) ||
-		("anyOf" in input && Array.isArray(input.anyOf)) ||
-		("oneOf" in input && Array.isArray(input.oneOf));
+	const isComposite = Boolean(
+		(input.allOf && input.allOf.length !== 0) ||
+			(input.anyOf && input.anyOf.length !== 0) ||
+			(input.oneOf && input.oneOf.length !== 0),
+	);
 	const isValidShape = isValidType || isEnum || isConst || isComposite;
 	const isValid = isValidSchemaID && isValidTitle && isValidShape;
 
 	return isValid;
 }
 
-export function validateSchemaDocument(
-	input: unknown,
-): asserts input is IJSONSchemaDocument {}
-
 export function validateJSONSchemaDocument(
-	schema: IJSONSchemaObject,
-): asserts schema is IJSONSchemaDocument {
-	const isValidSchemaID =
-		"$id" in schema &&
-		typeof schema.$id === "string" &&
-		schema.$id.trim().length !== 0;
+	input: unknown,
+): asserts input is IJSONSchemaDocument {
+	validateJSONSchemaObject(input);
+
+	const isValidSchemaID = Boolean(input.$id && input.$id.trim().length !== 0);
 
 	if (!isValidSchemaID) {
 		throw new Error(`Schema document must have a non-empty "$id".`);
 	}
 
-	const isValidTitle =
-		"title" in schema &&
-		typeof schema.title === "string" &&
-		schema.title.trim().length !== 0;
+	const isValidTitle = Boolean(input.title && input.title.trim().length !== 0);
 
 	if (!isValidTitle) {
 		throw new Error(`Schema document must have a non-empty "title".`);
 	}
 
-	const isValidType = "type" in schema && isJSONSchemaTypeString(schema.type);
-	const isEnum = "enum" in schema && Array.isArray(schema.enum);
-	const isConst = "const" in schema;
-	const isComposite =
-		("allOf" in schema && Array.isArray(schema.allOf)) ||
-		("anyOf" in schema && Array.isArray(schema.anyOf)) ||
-		("oneOf" in schema && Array.isArray(schema.oneOf));
+	const isValidType = isJSONSchemaTypeString(input.type);
+	const isEnum = Boolean(input.enum && input.enum.length !== 0);
+	const isConst = Boolean(input.const);
+	const isComposite = Boolean(
+		(input.allOf && input.allOf.length !== 0) ||
+			(input.anyOf && input.anyOf.length !== 0) ||
+			(input.oneOf && input.oneOf.length !== 0),
+	);
+
 	const isValidShape = isValidType || isEnum || isConst || isComposite;
 
 	if (!isValidShape) {
