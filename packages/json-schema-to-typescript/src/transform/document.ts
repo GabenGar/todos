@@ -4,17 +4,16 @@ import {
 	validateJSONSchemaDocument,
 	validateJSONSchemaObject,
 } from "./validate.js";
-import { type IJSONSchemaObject, type IJSONSchemaDocument } from "./types.js";
+import {
+	type IJSONSchemaObject,
+	type IJSONSchemaDocument,
+	type ISchemaRef,
+	type IRefMap,
+} from "./types.js";
 import { createSymbolJSDoc } from "./jsdoc.js";
 import { toTypeBody } from "./transform-schema.js";
 
-type ISchemaRef = Required<IJSONSchemaDocument>["$ref"];
 interface IDocumentRefs extends Set<ISchemaRef> {}
-/**
- * A mapping of `"$ref"`s and schemas with their symbol names.
- */
-interface IRefMap
-	extends Map<ISchemaRef, { symbolName: string; schema: IJSONSchemaObject }> {}
 
 export function transformSchemaDocumentToModule(
 	schemaDocument: Readonly<IJSONSchemaDocument>,
@@ -40,8 +39,7 @@ function collectDocumentRefs(
 			throw new Error(`External \`"$ref"\` "${ref}" is not supported.`);
 		}
 
-		const isValidLocalRef = ref.startsWith("/$defs");
-
+		const isValidLocalRef = ref.startsWith("#/$defs");
 		if (!isValidLocalRef) {
 			throw new Error(`Local \`"$ref"\` "${ref}" is not valid.`);
 		}
@@ -82,7 +80,9 @@ function createRefMapping(
 	const refMap: IRefMap = new Map();
 
 	for (const ref of documentRefs) {
-		const schema = getValueFromPointer(ref, schemaDocument);
+		// console.log(`Ref: "${ref}" of "${schemaDocument.$id}".`);
+		const preppedRef = ref.startsWith("#/") ? ref.slice(1) : ref;
+		const schema = getValueFromPointer(preppedRef, schemaDocument);
 		validateJSONSchemaObject(schema);
 
 		const parsedTitle = schema.title?.trim();
@@ -105,11 +105,17 @@ function createDocumentSymbols(
 	schemaDocument: Readonly<IJSONSchemaDocument>,
 	refMap: IRefMap,
 ): string[] {
-	const documentSymbolDeclaration = createSymbolDeclaration(schemaDocument);
-	const symbols: string[] = [documentSymbolDeclaration];
+	const documentSymbolDeclaration = createSymbolDeclaration(
+		schemaDocument,
+		refMap,
+		true,
+	);
+	// a dirty hack to retain an extra newline between
+	// core export and internal symbols
+	const symbols: string[] = [documentSymbolDeclaration, NEWLINE];
 
 	for (const [ref, { symbolName, schema }] of refMap) {
-		const declaraton = createSymbolDeclaration(schema);
+		const declaraton = createSymbolDeclaration(schema, refMap, false);
 
 		symbols.push(declaraton);
 	}
@@ -117,21 +123,26 @@ function createDocumentSymbols(
 	return symbols;
 }
 
-function createSymbolDeclaration(schema: IJSONSchemaObject): string {
+function createSymbolDeclaration(
+	schema: IJSONSchemaObject,
+	refMap: IRefMap,
+	isExportable: boolean,
+): string {
 	const name = `I${schema.title}`;
 	const jsDocComment = createSymbolJSDoc(schema);
 	const isInterface =
 		schema.type === "object" ||
 		(schema.type === "array" && !schema.prefixItems);
-	const body = toTypeBody(schema, true);
+	const body = toTypeBody(schema, refMap, true);
+	const exportKeyword = isExportable ? "export" : "";
 
 	if (isInterface) {
 		return `${
 			!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
-		}export interface ${name} ${body};`;
+		}${exportKeyword} interface ${name} ${body};`;
 	}
 
 	return `${
 		!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
-	}export type ${name} = ${body};`;
+	}${exportKeyword} type ${name} = ${body};`;
 }

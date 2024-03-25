@@ -8,7 +8,10 @@ export type IJSONSchemaType = Exclude<
 	Array<any> | undefined
 >;
 
-export type IJSONSchemaDocument = Omit<IJSONSchemaObject, "$id" | "title" | "type"> &
+export type IJSONSchemaDocument = Omit<
+	IJSONSchemaObject,
+	"$id" | "title" | "type"
+> &
 	Pick<Required<IJSONSchemaObject>, "$id" | "title"> &
 	(
 		| {
@@ -24,6 +27,14 @@ export type IJSONSchemaDocument = Omit<IJSONSchemaObject, "$id" | "title" | "typ
 export interface IGetSchemaDocument {
 	(ref: string): IJSONSchemaDocument;
 }
+
+/**
+ * A mapping of `"$ref"`s and schemas with their symbol names.
+ */
+export interface IRefMap
+	extends Map<ISchemaRef, { symbolName: string; schema: IJSONSchemaObject }> {}
+
+export type ISchemaRef = Required<IJSONSchemaDocument>["$ref"];
 
 const schemaTypes = [
 	"string",

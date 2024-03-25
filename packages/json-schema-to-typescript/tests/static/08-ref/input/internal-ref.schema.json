@@ -1,0 +1,37 @@
+{
+  "$id": "/internalRef",
+  "title": "InternalRef",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id"],
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "title": {
+      "$ref": "#/$defs/title"
+    },
+    "description": {
+      "$ref": "#/$defs/description"
+    }
+  },
+  "$defs": {
+    "id": {
+      "title": "ID",
+      "type": "integer",
+      "minimum": 1
+    },
+    "title": {
+      "title": "Title",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    }
+  }
+}

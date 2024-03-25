@@ -1,11 +1,24 @@
 import { createMultiLineString } from "#strings";
-import type { IJSONSchemaObject } from "./types.js";
+import type { IJSONSchemaObject, IRefMap } from "./types.js";
 
 export function toTypeBody(
 	schema: IJSONSchemaObject,
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ): string {
 	let body: string;
+
+	if (schema.$ref) {
+		const symbolData = refMap.get(schema.$ref);
+
+		if (!symbolData) {
+			throw new Error(`Unknown \`"$ref"\` "${schema.$ref}".`);
+		}
+
+		body = symbolData.symbolName;
+
+		return body;
+	}
 
 	switch (schema.type) {
 		case "null": {
@@ -29,37 +42,37 @@ export function toTypeBody(
 			break;
 		}
 		case "object": {
-			body = createObjectBody(schema, isSymbolDeclaration);
+			body = createObjectBody(schema, refMap, isSymbolDeclaration);
 			break;
 		}
 		case "array": {
-			body = createArrayBody(schema, isSymbolDeclaration);
+			body = createArrayBody(schema, refMap, isSymbolDeclaration);
 			break;
 		}
 
 		default: {
 			if (schema.enum) {
-				body = createEnumBody(schema.enum, isSymbolDeclaration);
+				body = createEnumBody(schema.enum, refMap, isSymbolDeclaration);
 				break;
 			}
 
 			if (schema.const) {
-				body = createConstBody(schema.const, isSymbolDeclaration);
+				body = createConstBody(schema.const, refMap, isSymbolDeclaration);
 				break;
 			}
 
 			if (schema.allOf) {
-				body = createAllOfBody(schema.allOf, isSymbolDeclaration);
+				body = createAllOfBody(schema.allOf, refMap, isSymbolDeclaration);
 				break;
 			}
 
 			if (schema.anyOf) {
-				body = createAnyOfBody(schema.anyOf, isSymbolDeclaration);
+				body = createAnyOfBody(schema.anyOf, refMap, isSymbolDeclaration);
 				break;
 			}
 
 			if (schema.oneOf) {
-				body = createOneOfBody(schema.oneOf, isSymbolDeclaration);
+				body = createOneOfBody(schema.oneOf, refMap, isSymbolDeclaration);
 				break;
 			}
 
@@ -74,6 +87,7 @@ export function toTypeBody(
 
 export function createObjectBody(
 	schema: IJSONSchemaObject,
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ) {
 	const requiredProperties = schema.required;
@@ -85,8 +99,14 @@ export function createObjectBody(
 				const fieldName = requiredProperties?.includes(propertyName)
 					? propertyName
 					: `${propertyName}?`;
-				// @ts-expect-error fix the underlying schema type
-				return `${fieldName}: ${toTypeBody(propertySchema)};`;
+				const body =
+					typeof propertySchema !== "boolean"
+						? toTypeBody(propertySchema, refMap)
+						: propertySchema === true
+						  ? "unknown"
+						  : "never";
+
+				return `${fieldName}: ${body};`;
 			},
 		);
 
@@ -136,19 +156,24 @@ function createRecordBody(isSymbolDeclaration = false) {
 
 function createArrayBody(
 	schema: IJSONSchemaObject,
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ): string {
 	const itemsSchema = schema.items;
 	const prefixItems = schema.prefixItems;
 	const contains = schema.contains;
 	const containsType =
-		contains && (contains === true ? "unknown" : toTypeBody(contains));
+		contains && (contains === true ? "unknown" : toTypeBody(contains, refMap));
 	let itemType = "unknown";
 
 	if (prefixItems) {
 		const types = prefixItems.map((schema) => {
-			// @ts-expect-error fix the underlying schema type
-			const typeBody = schema === true ? "unknown" : toTypeBody(schema);
+			const typeBody =
+				typeof schema !== "boolean"
+					? toTypeBody(schema, refMap)
+					: schema === true
+					  ? "unknown"
+					  : "never";
 
 			return typeBody;
 		});
@@ -159,7 +184,7 @@ function createArrayBody(
 			if (extraItems === true) {
 				types.push("...unknown[]");
 			} else {
-				types.push(`...(${toTypeBody(extraItems)})[]`);
+				types.push(`...(${toTypeBody(extraItems, refMap)})[]`);
 			}
 		}
 
@@ -169,7 +194,7 @@ function createArrayBody(
 	}
 
 	if (itemsSchema && itemsSchema !== true) {
-		const typeBody = toTypeBody(itemsSchema);
+		const typeBody = toTypeBody(itemsSchema, refMap);
 		itemType = !containsType ? typeBody : `${typeBody} | ${containsType}`;
 	}
 
@@ -182,6 +207,7 @@ function createArrayBody(
 
 function createEnumBody(
 	enumValue: Required<IJSONSchemaObject>["enum"],
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ) {
 	const bodyLiterals = enumValue.map((value) => JSON.stringify(value));
@@ -192,6 +218,7 @@ function createEnumBody(
 
 function createConstBody(
 	constValue: Required<IJSONSchemaObject>["const"],
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ) {
 	const body = JSON.stringify(constValue);
@@ -201,11 +228,16 @@ function createConstBody(
 
 function createAllOfBody(
 	allOf: Required<IJSONSchemaObject>["allOf"],
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ) {
 	const types = allOf.map((schema) => {
-		// @ts-expect-error fix the underlying schema type
-		const body = schema === true ? "unknown" : toTypeBody(schema);
+		const body =
+			typeof schema !== "boolean"
+				? toTypeBody(schema, refMap)
+				: schema === true
+				  ? "unknown"
+				  : "never";
 
 		return body;
 	});
@@ -216,11 +248,16 @@ function createAllOfBody(
 
 function createAnyOfBody(
 	anyOf: Required<IJSONSchemaObject>["anyOf"],
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ) {
 	const types = anyOf.map((schema) => {
-		// @ts-expect-error fix the underlying schema type
-		const body = schema === true ? "unknown" : toTypeBody(schema);
+		const body =
+			typeof schema !== "boolean"
+				? toTypeBody(schema, refMap)
+				: schema === true
+				  ? "unknown"
+				  : "never";
 
 		return body;
 	});
@@ -231,11 +268,16 @@ function createAnyOfBody(
 
 function createOneOfBody(
 	oneOf: Required<IJSONSchemaObject>["oneOf"],
+	refMap: IRefMap,
 	isSymbolDeclaration = false,
 ) {
 	const types = oneOf.map((schema) => {
-		// @ts-expect-error fix the underlying schema type
-		const body = schema === true ? "unknown" : toTypeBody(schema);
+		const body =
+			typeof schema !== "boolean"
+				? toTypeBody(schema, refMap)
+				: schema === true
+				  ? "unknown"
+				  : "never";
 
 		return body;
 	});
