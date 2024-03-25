@@ -1,19 +1,13 @@
-import { get as getValueFromPointer } from "@hyperjump/json-pointer";
 import { NEWLINE, createMultiLineString } from "#strings";
-import {
-	validateJSONSchemaDocument,
-	validateJSONSchemaObject,
-} from "./validate.js";
-import {
-	type IJSONSchemaObject,
-	type IJSONSchemaDocument,
-	type ISchemaRef,
-	type IRefMap,
-} from "./types.js";
+import { validateJSONSchemaDocument } from "./validate.js";
 import { createSymbolJSDoc } from "./jsdoc.js";
 import { toTypeBody } from "./transform-schema.js";
-
-interface IDocumentRefs extends Set<ISchemaRef> {}
+import { collectDocumentRefs, createRefMapping } from "./refs.js";
+import type {
+	IJSONSchemaObject,
+	IJSONSchemaDocument,
+	IRefMap,
+} from "./types.js";
 
 export function transformSchemaDocumentToModule(
 	schemaDocument: Readonly<IJSONSchemaDocument>,
@@ -25,80 +19,6 @@ export function transformSchemaDocumentToModule(
 	const symbols = createDocumentSymbols(schemaDocument, refMap);
 
 	return createMultiLineString(...symbols);
-}
-
-function collectDocumentRefs(
-	schemaDocument: IJSONSchemaDocument,
-): IDocumentRefs {
-	const documentRefs = collectSchemaRefs(schemaDocument, new Set<ISchemaRef>());
-
-	// validate refs
-	documentRefs.forEach((ref) => {
-		const isLocalRef = ref.startsWith("#");
-		if (!isLocalRef) {
-			throw new Error(`External \`"$ref"\` "${ref}" is not supported.`);
-		}
-
-		const isValidLocalRef = ref.startsWith("#/$defs");
-		if (!isValidLocalRef) {
-			throw new Error(`Local \`"$ref"\` "${ref}" is not valid.`);
-		}
-	});
-
-	return documentRefs;
-}
-
-function collectSchemaRefs(
-	schema: IJSONSchemaObject,
-	documentRefs: IDocumentRefs,
-): IDocumentRefs {
-	if (schema.$ref) {
-		documentRefs.add(schema.$ref);
-	}
-
-	if (schema.properties) {
-		Object.values(schema.properties).forEach((schema) => {
-			if (typeof schema === "boolean") {
-				return;
-			}
-
-			collectSchemaRefs(schema, documentRefs);
-		});
-	}
-
-	if (schema.items && schema.items !== true) {
-		collectSchemaRefs(schema.items, documentRefs);
-	}
-
-	return documentRefs;
-}
-
-function createRefMapping(
-	schemaDocument: IJSONSchemaDocument,
-	documentRefs: IDocumentRefs,
-): IRefMap {
-	const refMap: IRefMap = new Map();
-
-	for (const ref of documentRefs) {
-		// console.log(`Ref: "${ref}" of "${schemaDocument.$id}".`);
-		const preppedRef = ref.startsWith("#/") ? ref.slice(1) : ref;
-		const schema = getValueFromPointer(preppedRef, schemaDocument);
-		validateJSONSchemaObject(schema);
-
-		const parsedTitle = schema.title?.trim();
-
-		if (!parsedTitle) {
-			throw new Error(
-				`The ref "${ref}" at schema document "${schemaDocument.$id}" does not have a "title" property.`,
-			);
-		}
-
-		const symbolName = `I${parsedTitle}`;
-
-		refMap.set(ref, { symbolName, schema });
-	}
-
-	return refMap;
 }
 
 function createDocumentSymbols(

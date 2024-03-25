@@ -31,8 +31,11 @@ export interface IGetSchemaDocument {
 /**
  * A mapping of `"$ref"`s and schemas with their symbol names.
  */
-export interface IRefMap
-	extends Map<ISchemaRef, { symbolName: string; schema: IJSONSchemaObject }> {}
+export interface IRefMap extends Map<ISchemaRef, IRefData> {}
+
+export type IRefData = { symbolName: string; schema: IJSONSchemaObject };
+
+export interface IDocumentRefs extends Set<ISchemaRef> {}
 
 export type ISchemaRef = Required<IJSONSchemaDocument>["$ref"];
 
@@ -49,9 +52,5 @@ const schemaTypes = [
 export function isJSONSchemaTypeString(
 	input: unknown,
 ): input is IJSONSchemaType {
-	if (!schemaTypes.includes(input as IJSONSchemaType)) {
-		return false;
-	}
-
-	return true;
+	return schemaTypes.includes(input as IJSONSchemaType);
 }
