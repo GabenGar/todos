@@ -24,6 +24,9 @@ export type IJSONSchemaDocument = Omit<
 		| Pick<Required<IJSONSchemaObject>, "allOf">
 	);
 
+/**
+ * Retrieves a schema document from the ref.
+ */
 export interface IGetSchemaDocument {
 	(ref: string): IJSONSchemaDocument;
 }

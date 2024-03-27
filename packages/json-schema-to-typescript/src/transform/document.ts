@@ -7,15 +7,25 @@ import type {
 	IJSONSchemaObject,
 	IJSONSchemaDocument,
 	IRefMap,
+	IGetSchemaDocument,
 } from "./types.js";
 
 export function transformSchemaDocumentToModule(
 	schemaDocument: Readonly<IJSONSchemaDocument>,
+	getExternalDocument?: IGetSchemaDocument,
 ): string {
 	validateJSONSchemaDocument(schemaDocument);
 
-	const documentRefs = collectDocumentRefs(schemaDocument);
-	const refMap = createRefMapping(schemaDocument, documentRefs);
+	const documentRefs = collectDocumentRefs(
+		schemaDocument,
+		getExternalDocument !== undefined,
+	);
+	const refMap = createRefMapping(
+		schemaDocument,
+		new Set(...documentRefs.local, ...documentRefs.external),
+		getExternalDocument,
+	);
+
 	const symbols = createDocumentSymbols(schemaDocument, refMap);
 
 	return createMultiLineString(...symbols);
@@ -35,6 +45,10 @@ function createDocumentSymbols(
 	const symbols: string[] = [documentSymbolDeclaration, NEWLINE];
 
 	for (const [ref, { symbolName, schema }] of refMap) {
+		if (!ref.startsWith("#")) {
+			continue;
+		}
+
 		const declaraton = createSymbolDeclaration(schema, refMap, false);
 
 		symbols.push(declaraton);
