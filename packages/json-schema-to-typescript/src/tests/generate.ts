@@ -42,6 +42,9 @@ async function runGenerators(entries: Dirent[]): Promise<IOutputMap> {
 	const outputMap: IOutputMap = new Map();
 
 	for await (const entry of entries) {
+		const generatorName = entry.name;
+		console.debug(`Running generator "${generatorName}"...`);
+
 		const testModulePath = path.join(entry.path, entry.name);
 		const generatorFilePath = pathToFileURL(
 			path.join(testModulePath, compiledGeneratorFilename),
@@ -54,9 +57,21 @@ async function runGenerators(entries: Dirent[]): Promise<IOutputMap> {
 		});
 		const testModule: ITestModule = await import(generatorFilePath);
 
-		const outputs = await testModule.default(inputEntries);
+		try {
+			const outputs = await testModule.default(inputEntries);
 
-		outputMap.set(testModulePath, outputs);
+			outputMap.set(testModulePath, outputs);
+		} catch (error) {
+			if (!(error instanceof Error)) {
+				throw error;
+			}
+
+			throw new Error(
+				`Failed to generate outputs for generator "${generatorName}"`,
+				// @ts-expect-error Typescript version disagreement
+				{ cause: error },
+			);
+		}
 	}
 
 	return outputMap;

@@ -20,9 +20,12 @@ export function transformSchemaDocumentToModule(
 		schemaDocument,
 		getExternalDocument !== undefined,
 	);
+
+	const mergedRefs = union(documentRefs.local, documentRefs.external);
+
 	const refMap = createRefMapping(
 		schemaDocument,
-		new Set(...documentRefs.local, ...documentRefs.external),
+		mergedRefs,
 		getExternalDocument,
 	);
 
@@ -79,4 +82,21 @@ function createSymbolDeclaration(
 	return `${
 		!jsDocComment ? "" : `${jsDocComment}${NEWLINE}`
 	}${exportKeyword} type ${name} = ${body};`;
+}
+
+/**
+ * Stolen from
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#implementing_basic_set_operations
+ */
+function union<AType, BType>(
+	setA: Set<AType>,
+	setB: Set<BType>,
+): Set<AType | BType> {
+	const result: Set<AType | BType> = new Set(setA);
+
+	for (const elem of setB) {
+		result.add(elem);
+	}
+
+	return result;
 }

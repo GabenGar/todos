@@ -1,7 +1,10 @@
 import path from "node:path";
-import { cwd } from "node:process";
+import { cwd, exit } from "node:process";
 import { generateTests } from "#tests";
 
 const testsFolderPath = path.join(cwd(), "tests", "static");
 
-await generateTests(testsFolderPath);
+await generateTests(testsFolderPath).catch((error) => {
+	console.error(error);
+	exit(1);
+});

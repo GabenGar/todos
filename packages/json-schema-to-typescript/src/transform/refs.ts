@@ -67,6 +67,7 @@ export function collectSchemaRefs(
 	schema: IJSONSchemaObject,
 	documentRefs: IDocumentRefs,
 ): IDocumentRefs {
+
 	if (schema.$ref) {
 		documentRefs.add(schema.$ref);
 	}

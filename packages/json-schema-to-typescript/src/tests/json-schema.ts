@@ -45,13 +45,25 @@ export async function generateJSONSchemaTests(
 	}
 
 	for (const [id, { fullPath, fileName, schema }] of schemaDataMap) {
-		const schemaInterface = transformSchemaDocumentToModule(
-			schema,
-			getSchemaDocument,
-		);
-		const outputFilename = fileName.replace(".schema.json", ".ts");
+		try {
+			const schemaInterface = transformSchemaDocumentToModule(
+				schema,
+				getSchemaDocument,
+			);
+			const outputFilename = fileName.replace(".schema.json", ".ts");
 
-		outputs.set(outputFilename, schemaInterface);
+			outputs.set(outputFilename, schemaInterface);
+		} catch (error) {
+			if (!(error instanceof Error)) {
+				throw error;
+			}
+
+			throw new Error(
+				`Failed to transform schema "${id}" at "${fullPath}" into typescript module.`,
+				// @ts-expect-error Typescript version disagreement
+				{ cause: error },
+			);
+		}
 	}
 
 	return outputs;
