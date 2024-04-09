@@ -8,11 +8,14 @@ import type {
 	IJSONSchemaDocument,
 	IRefMap,
 	IGetSchemaDocument,
+	IDocumentRefs,
+	IGetModuleData,
 } from "./types.js";
 
 export function transformSchemaDocumentToModule(
 	schemaDocument: Readonly<IJSONSchemaDocument>,
 	getExternalDocument?: IGetSchemaDocument,
+	getModuleData?: IGetModuleData,
 ): string {
 	validateJSONSchemaDocument(schemaDocument);
 
@@ -29,9 +32,38 @@ export function transformSchemaDocumentToModule(
 		getExternalDocument,
 	);
 
+	const moduleImports = createModuleImports(
+		schemaDocument,
+		documentRefs.external,
+		getModuleData,
+	);
 	const symbols = createDocumentSymbols(schemaDocument, refMap);
 
-	return createMultiLineString(...symbols);
+	return createMultiLineString(...moduleImports, NEWLINE, ...symbols);
+}
+
+function createModuleImports(
+	schemaDocument: Readonly<IJSONSchemaDocument>,
+	externalRefs: IDocumentRefs,
+	getModuleData?: IGetModuleData,
+): string[] {
+	if (externalRefs.size !== 0 && !getModuleData) {
+		throw new Error(
+			`Schema document "${schemaDocument.$id}" has external references but no module resolution function was provided.`,
+		);
+	}
+
+	const moduleImports: string[] = [];
+
+	for (const ref of externalRefs) {
+		// biome-ignore lint/style/noNonNullAssertion: it just works
+		const { symbolName, modulePath } = getModuleData!(schemaDocument.$id, ref);
+		const importStatement = `import type {${symbolName}} from "${modulePath}";`;
+
+		moduleImports.push(importStatement);
+	}
+
+	return moduleImports;
 }
 
 function createDocumentSymbols(

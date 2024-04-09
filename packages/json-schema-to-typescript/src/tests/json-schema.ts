@@ -5,6 +5,7 @@ import {
 	transformSchemaDocumentToModule,
 	validateJSONSchemaDocument,
 	type IGetSchemaDocument,
+	type IGetModuleData,
 } from "#lib";
 
 interface schemaData {
@@ -29,6 +30,38 @@ export async function generateJSONSchemaTests(
 		}
 		return data.schema;
 	};
+	const getModuleData: IGetModuleData = (schemaDocumentID, ref) => {
+		const documentData = schemaDataMap.get(schemaDocumentID);
+		const refData = schemaDataMap.get(ref);
+
+		if (!documentData) {
+			throw new Error(
+				`Schema Document ID "${schemaDocumentID}" does not exist.`,
+			);
+		}
+
+		if (!refData) {
+			throw new Error(`Schema at ref "${ref}" does not exist.`);
+		}
+
+		const modulePath = path
+			.relative(
+				path.dirname(documentData.fullPath),
+				path.join(
+					path.dirname(refData.fullPath),
+					refData.fileName.replace(".schema.json", ""),
+				),
+			)
+			.replace("\\", "/");
+
+		const result: ReturnType<IGetModuleData> = {
+			// prepend `./` if it's missing
+			modulePath: modulePath.startsWith(".") ? modulePath : `./${modulePath}`,
+			symbolName: `I${refData.schema.title}`,
+		};
+
+		return result;
+	};
 
 	for await (const dirent of inputs) {
 		const filePath = path.join(dirent.path, dirent.name);
@@ -49,6 +82,7 @@ export async function generateJSONSchemaTests(
 			const schemaInterface = transformSchemaDocumentToModule(
 				schema,
 				getSchemaDocument,
+				getModuleData,
 			);
 			const outputFilename = fileName.replace(".schema.json", ".ts");
 

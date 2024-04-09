@@ -31,6 +31,10 @@ export interface IGetSchemaDocument {
 	(ref: string): IJSONSchemaDocument;
 }
 
+export interface IGetModuleData {
+	(schemaDocumentID: string, ref: string): { symbolName: string, modulePath: string };
+}
+
 /**
  * A mapping of `"$ref"`s and schemas with their symbol names.
  */

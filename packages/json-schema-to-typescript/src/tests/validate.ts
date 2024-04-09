@@ -15,6 +15,7 @@ export async function validateOutputs(folderPath: string) {
 			continue;
 		}
 
+		console.log(`Validating output of test "${dirEntry.name}"...`);
 		await compareOutputs(dirEntry);
 	}
 }
