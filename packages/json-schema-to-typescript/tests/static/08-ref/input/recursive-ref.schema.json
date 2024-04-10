@@ -1,0 +1,17 @@
+{
+  "$id": "/recursive-ref",
+  "title": "RecursiveRef",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "parent": {
+      "$ref": "#"
+    },
+    "children": {
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
+    }
+  }
+}

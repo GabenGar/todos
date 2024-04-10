@@ -58,7 +58,9 @@ function validateExternalRef(ref: ISchemaRef, isExternalsAllowed: boolean) {
 	}
 }
 function validateLocalRef(ref: ISchemaRef) {
-	if (!ref.startsWith("#/$defs")) {
+	const isValidRef = ref === "#" || ref.startsWith("#/$defs");
+
+	if (!isValidRef) {
 		throw new Error(`Local \`"$ref"\` "${ref}" is not valid.`);
 	}
 }
@@ -67,7 +69,6 @@ export function collectSchemaRefs(
 	schema: IJSONSchemaObject,
 	documentRefs: IDocumentRefs,
 ): IDocumentRefs {
-
 	if (schema.$ref) {
 		documentRefs.add(schema.$ref);
 	}

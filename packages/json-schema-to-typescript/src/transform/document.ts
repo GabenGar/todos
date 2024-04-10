@@ -80,7 +80,7 @@ function createDocumentSymbols(
 	const symbols: string[] = [documentSymbolDeclaration, NEWLINE];
 
 	for (const [ref, { symbolName, schema }] of refMap) {
-		if (!ref.startsWith("#")) {
+		if (!ref.startsWith("#") || ref === "#") {
 			continue;
 		}
 

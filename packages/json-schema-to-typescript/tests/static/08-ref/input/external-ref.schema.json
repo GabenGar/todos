@@ -1,6 +1,6 @@
 {
   "$id": "/external-ref",
-  "title": "ExternaRef",
+  "title": "ExternalRef",
   "type": "array",
   "items": {
     "$ref": "/internal-ref"
