@@ -61,3 +61,5 @@ export function isJSONSchemaTypeString(
 ): input is IJSONSchemaType {
 	return schemaTypes.includes(input as IJSONSchemaType);
 }
+
+export const defaultJSONSchemaFileExtension = ".schema.json"
