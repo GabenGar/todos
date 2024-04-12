@@ -1,7 +1,7 @@
 import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL } from "#lib/urls";
 import { DescriptionList, DescriptionSection } from "#components";
-import { EntityID } from "#components/entities";
+import { EntityDescription, EntityID } from "#components/entities";
 import { Heading } from "#components/heading";
 import { createBlockComponent } from "#components/meta";
 import {
@@ -50,7 +50,11 @@ function Component({
             <DescriptionList>
               <DescriptionSection
                 dKey={translation.description}
-                dValue={description ?? translation.no_description}
+                dValue={
+                  <EntityDescription>
+                    {description ?? translation.no_description}
+                  </EntityDescription>
+                }
               />
             </DescriptionList>
 

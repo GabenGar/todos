@@ -12,7 +12,7 @@ import {
 } from "#components/preview";
 import { DateTime } from "#components/date";
 import { Link } from "#components/link";
-import { EntityID } from "#components/entities";
+import { EntityDescription, EntityID } from "#components/entities";
 import type { ITranslatableProps } from "#components/types";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
@@ -59,7 +59,11 @@ function Component({ commonTranslation, translation, task, ...props }: IProps) {
 
               <DescriptionSection
                 dKey={translation.description}
-                dValue={description ?? translation.no_description}
+                dValue={
+                  <EntityDescription>
+                    {description ?? translation.no_description}
+                  </EntityDescription>
+                }
               />
 
               <DescriptionSection
