@@ -90,6 +90,10 @@
           "Errors": "Errors"
         }
       }
+    },
+    "url-viewer": {
+      "title": "URL Viewer",
+      "heading": "URL Viewer"
     }
   },
   "home": {
