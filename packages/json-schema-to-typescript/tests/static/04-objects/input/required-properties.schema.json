@@ -1,0 +1,17 @@
+{
+  "$id": "/required-properties",
+  "title": "RequiredProperties",
+  "type": "object",
+  "required": ["id", "created_at"],
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

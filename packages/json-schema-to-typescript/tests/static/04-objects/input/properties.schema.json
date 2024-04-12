@@ -1,0 +1,13 @@
+{
+  "$id": "/properties",
+  "title": "Properties",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  }
+}
