@@ -1,5 +1,10 @@
 import type { ILocalizationPage } from "#lib/localization";
-import { DescriptionList, DescriptionSection } from "#components";
+import {
+  DescriptionDetails,
+  DescriptionList,
+  DescriptionSection,
+  DescriptionTerm,
+} from "#components";
 import { Pre } from "#components/pre";
 
 interface IURLViewerProps {
@@ -22,6 +27,16 @@ export function URLViewer({ translation, url }: IURLViewerProps) {
     searchParams,
     hash,
   } = url;
+  const explicitPort =
+    port.length !== 0
+      ? port
+      : protocol === "http:"
+        ? "80"
+        : protocol === "https:"
+          ? "443"
+          : undefined;
+  const explicitSearchParams =
+    searchParams.size === 0 ? undefined : Array.from(searchParams);
 
   return (
     <>
@@ -78,12 +93,14 @@ export function URLViewer({ translation, url }: IURLViewerProps) {
         />
       </DescriptionList>
 
-      <DescriptionList>
-        <DescriptionSection
-          dKey={translation["Port"]}
-          dValue={<Pre>{port}</Pre>}
-        />
-      </DescriptionList>
+      {explicitPort && (
+        <DescriptionList>
+          <DescriptionSection
+            dKey={translation["Port"]}
+            dValue={<Pre>{explicitPort}</Pre>}
+          />
+        </DescriptionList>
+      )}
 
       <DescriptionList>
         <DescriptionSection
@@ -92,11 +109,33 @@ export function URLViewer({ translation, url }: IURLViewerProps) {
         />
       </DescriptionList>
 
-      {searchParams.size === 0 ? undefined : (
+      {explicitSearchParams && (
         <DescriptionList>
           <DescriptionSection
             dKey={translation["Search"]}
             dValue={<Pre>{search}</Pre>}
+          />
+        </DescriptionList>
+      )}
+
+      {explicitSearchParams && (
+        <DescriptionList>
+          <DescriptionSection
+            dKey={translation["Search parameters"]}
+            dValue={
+              <DescriptionList>
+                {explicitSearchParams.map(([key, value]) => (
+                  <DescriptionSection key={key}>
+                    <DescriptionTerm>
+                      <Pre>{key}:</Pre>
+                    </DescriptionTerm>
+                    <DescriptionDetails>
+                      <Pre>{value}</Pre>
+                    </DescriptionDetails>
+                  </DescriptionSection>
+                ))}
+              </DescriptionList>
+            }
           />
         </DescriptionList>
       )}

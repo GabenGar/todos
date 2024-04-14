@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Details, DetailsBody, DetailsHeader } from "#components/details";
 import { type ITranslatableProps } from "#components/types";
 import type { ILocalizationPage } from "#lib/localization";
+import { URLViewerForm } from "./form";
 import { URLViewer } from "./viewer";
 
 interface IProps extends ITranslatableProps {
@@ -13,15 +14,20 @@ interface IProps extends ITranslatableProps {
 export function Client({ commonTranslation, translation }: IProps) {
   const [currentURL, changeCurrentURL] = useState<URL>();
 
-  useEffect(() => {
-    changeCurrentURL(new URL(location.href))
-  }, [])
-
   return (
     <Details headingLevel={2}>
       {() => (
         <>
-          <DetailsHeader></DetailsHeader>
+          <DetailsHeader>
+            <URLViewerForm
+              commonTranslation={commonTranslation}
+              translation={translation}
+              id="url-viewer"
+              onNewURL={async (newURL) => {
+                changeCurrentURL(newURL);
+              }}
+            />
+          </DetailsHeader>
 
           <DetailsBody>
             {!currentURL ? (

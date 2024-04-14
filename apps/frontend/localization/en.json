@@ -94,6 +94,9 @@
     "url-viewer": {
       "title": "URL Viewer",
       "heading": "URL Viewer",
+      "URL": "URL",
+      "Parse": "Parse",
+      "Parsing...": "Parsing...",
       "No URL selected.": "No URL selected.",
       "Full URL": "Full URL",
       "Origin": "Origin",
@@ -105,6 +108,7 @@
       "Port": "Port",
       "Pathname": "Pathname",
       "Search": "Search",
+      "Search parameters": "Search parameters",
       "Hash": "Hash"
     }
   },
