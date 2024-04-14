@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
@@ -27,7 +28,9 @@ async function TaskDetailsPage({ params }: IProps) {
 
   return (
     <Page heading={task.heading}>
-      <Client commonTranslation={common} translation={task} />
+      <Suspense>
+        <Client commonTranslation={common} translation={task} />
+      </Suspense>
     </Page>
   );
 }

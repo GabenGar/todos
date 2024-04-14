@@ -13,6 +13,6 @@ export interface IInputTextAreaProps
 
 export const InputTextArea = createBlockComponent(styles, Component);
 
-function Component({ rows = 3, ...props }: IInputTextAreaProps) {
+function Component({ rows = 2, ...props }: IInputTextAreaProps) {
   return <textarea rows={rows} {...props} />;
 }

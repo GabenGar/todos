@@ -90,6 +90,26 @@
           "Errors": "Errors"
         }
       }
+    },
+    "url-viewer": {
+      "title": "URL Viewer",
+      "heading": "URL Viewer",
+      "URL": "URL",
+      "Parse": "Parse",
+      "Parsing...": "Parsing...",
+      "No URL selected.": "No URL selected.",
+      "Full URL": "Full URL",
+      "Origin": "Origin",
+      "Protocol": "Protocol",
+      "Username": "Username",
+      "Password": "Password",
+      "Host": "Host",
+      "Hostname": "Hostname",
+      "Port": "Port",
+      "Pathname": "Pathname",
+      "Search": "Search",
+      "Search parameters": "Search parameters",
+      "Hash": "Hash"
     }
   },
   "home": {
@@ -98,6 +118,7 @@
     "link_tasks": "Tasks",
     "link_qr_code": "QR code reader",
     "link_places": "Places",
+    "link_url_viewer": "URL Viewer",
     "link_account": "Account"
   },
   "todos": {

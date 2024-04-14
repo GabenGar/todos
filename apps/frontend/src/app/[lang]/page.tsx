@@ -4,6 +4,7 @@ import {
   qrCodeReaderURL,
   statsPlacesPageURL,
   taskStatsPageURL,
+  urlViewerPageURL,
 } from "#lib/urls";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
@@ -55,6 +56,11 @@ async function FrontPage({ params }: IProps) {
               <ListItem>
                 <Link className={styles.link} href={qrCodeReaderURL}>
                   {home.link_qr_code}
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link className={styles.link} href={urlViewerPageURL}>
+                  {home.link_url_viewer}
                 </Link>
               </ListItem>
               <ListItem>

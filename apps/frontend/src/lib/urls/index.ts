@@ -110,3 +110,4 @@ export function createPlaceEditPageURL(id: IPlace["id"]): Route {
 }
 
 export const accountPageURL = "/account";
+export const urlViewerPageURL = "/url-viewer";

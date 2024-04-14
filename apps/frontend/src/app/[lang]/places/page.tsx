@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { type Metadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
@@ -28,7 +29,9 @@ async function PlacesPage({ params }: IProps) {
 
   return (
     <Page heading={places.heading}>
-      <Client commonTranslation={common} translation={place} />
+      <Suspense>
+        <Client commonTranslation={common} translation={place} />
+      </Suspense>
     </Page>
   );
 }

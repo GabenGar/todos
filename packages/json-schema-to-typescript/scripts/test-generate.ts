@@ -5,6 +5,6 @@ import { generateTests } from "#tests";
 const testsFolderPath = path.join(cwd(), "tests", "static");
 
 await generateTests(testsFolderPath).catch((error) => {
-	console.error(error);
-	exit(1);
+  console.error(error);
+  exit(1);
 });

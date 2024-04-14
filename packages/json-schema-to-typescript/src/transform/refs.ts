@@ -1,139 +1,139 @@
 import { get as getValueFromPointer } from "@hyperjump/json-pointer";
-import { validateJSONSchemaObject } from "./validate.js";
 import type {
-	IDocumentRefs,
-	IGetSchemaDocument,
-	IJSONSchemaDocument,
-	IJSONSchemaObject,
-	IRefMap,
-	ISchemaRef,
+  IDocumentRefs,
+  IGetSchemaDocument,
+  IJSONSchemaDocument,
+  IJSONSchemaObject,
+  IRefMap,
+  ISchemaRef,
 } from "./types.js";
+import { validateJSONSchemaObject } from "./validate.js";
 
 export function collectDocumentRefs(
-	schemaDocument: IJSONSchemaDocument,
-	isExternalsAllowed = false,
+  schemaDocument: IJSONSchemaDocument,
+  isExternalsAllowed = false,
 ): { local: IDocumentRefs; external: IDocumentRefs } {
-	const documentRefs = collectSchemaRefs(schemaDocument, new Set<ISchemaRef>());
-	const localRefs: IDocumentRefs = new Set();
-	const externalRefs: IDocumentRefs = new Set();
+  const documentRefs = collectSchemaRefs(schemaDocument, new Set<ISchemaRef>());
+  const localRefs: IDocumentRefs = new Set();
+  const externalRefs: IDocumentRefs = new Set();
 
-	for (const ref of documentRefs) {
-		const refType = guessRefType(ref, isExternalsAllowed);
+  for (const ref of documentRefs) {
+    const refType = guessRefType(ref, isExternalsAllowed);
 
-		if (refType === "external") {
-			externalRefs.add(ref);
-		} else {
-			localRefs.add(ref);
-		}
-	}
+    if (refType === "external") {
+      externalRefs.add(ref);
+    } else {
+      localRefs.add(ref);
+    }
+  }
 
-	return { external: externalRefs, local: localRefs };
+  return { external: externalRefs, local: localRefs };
 }
 
 function guessRefType(
-	ref: ISchemaRef,
-	isExternalsAllowed: boolean,
+  ref: ISchemaRef,
+  isExternalsAllowed: boolean,
 ): "local" | "external" {
-	const isLocalRef = ref.startsWith("#");
+  const isLocalRef = ref.startsWith("#");
 
-	if (!isLocalRef) {
-		validateExternalRef(ref, isExternalsAllowed);
+  if (!isLocalRef) {
+    validateExternalRef(ref, isExternalsAllowed);
 
-		return "external";
-	}
+    return "external";
+  }
 
-	validateLocalRef(ref);
+  validateLocalRef(ref);
 
-	return "local";
+  return "local";
 }
 
 function validateExternalRef(ref: ISchemaRef, isExternalsAllowed: boolean) {
-	const isValidRef =
-		isExternalsAllowed && (!ref.includes("#") || ref.endsWith("#"));
+  const isValidRef =
+    isExternalsAllowed && (!ref.includes("#") || ref.endsWith("#"));
 
-	if (!isValidRef) {
-		throw new Error(
-			`External \`"$ref"\` "${ref}" must not have any symbols after "pound me" ("#") sign.`,
-		);
-	}
+  if (!isValidRef) {
+    throw new Error(
+      `External \`"$ref"\` "${ref}" must not have any symbols after "pound me" ("#") sign.`,
+    );
+  }
 }
 function validateLocalRef(ref: ISchemaRef) {
-	const isValidRef = ref === "#" || ref.startsWith("#/$defs");
+  const isValidRef = ref === "#" || ref.startsWith("#/$defs");
 
-	if (!isValidRef) {
-		throw new Error(`Local \`"$ref"\` "${ref}" is not valid.`);
-	}
+  if (!isValidRef) {
+    throw new Error(`Local \`"$ref"\` "${ref}" is not valid.`);
+  }
 }
 
 export function collectSchemaRefs(
-	schema: IJSONSchemaObject,
-	documentRefs: IDocumentRefs,
+  schema: IJSONSchemaObject,
+  documentRefs: IDocumentRefs,
 ): IDocumentRefs {
-	if (schema.$ref) {
-		documentRefs.add(schema.$ref);
-	}
+  if (schema.$ref) {
+    documentRefs.add(schema.$ref);
+  }
 
-	if (schema.properties) {
-		Object.values(schema.properties).forEach((schema) => {
-			if (typeof schema === "boolean") {
-				return;
-			}
+  if (schema.properties) {
+    Object.values(schema.properties).forEach((schema) => {
+      if (typeof schema === "boolean") {
+        return;
+      }
 
-			collectSchemaRefs(schema, documentRefs);
-		});
-	}
+      collectSchemaRefs(schema, documentRefs);
+    });
+  }
 
-	if (schema.items && schema.items !== true) {
-		collectSchemaRefs(schema.items, documentRefs);
-	}
+  if (schema.items && schema.items !== true) {
+    collectSchemaRefs(schema.items, documentRefs);
+  }
 
-	return documentRefs;
+  return documentRefs;
 }
 
 export function createRefMapping(
-	schemaDocument: IJSONSchemaDocument,
-	documentRefs: IDocumentRefs,
-	getExternalDocument?: IGetSchemaDocument,
+  schemaDocument: IJSONSchemaDocument,
+  documentRefs: IDocumentRefs,
+  getExternalDocument?: IGetSchemaDocument,
 ): IRefMap {
-	const refMap: IRefMap = new Map();
+  const refMap: IRefMap = new Map();
 
-	for (const ref of documentRefs) {
-		const isLocalRef = ref.startsWith("#");
-		let schema: unknown;
+  for (const ref of documentRefs) {
+    const isLocalRef = ref.startsWith("#");
+    let schema: unknown;
 
-		if (!isLocalRef) {
-			if (!getExternalDocument) {
-				throw new Error(
-					`External \`"$ref"\` "${ref}" at schema document "${schemaDocument.$id}" cannot be resolved because the resolving function was not provided.`,
-				);
-			}
+    if (!isLocalRef) {
+      if (!getExternalDocument) {
+        throw new Error(
+          `External \`"$ref"\` "${ref}" at schema document "${schemaDocument.$id}" cannot be resolved because the resolving function was not provided.`,
+        );
+      }
 
-			const [documentRef, jsonPointer] = ref.split("#");
-			const externalSchemaDocument = getExternalDocument(documentRef);
-			schema = !jsonPointer
-				? externalSchemaDocument
-				: getValueFromPointer(jsonPointer, externalSchemaDocument);
-		} else {
-			// remove `pound me` sign because `json-pointer` doesn't like it
-			const preppedRef = ref.startsWith("#") ? ref.slice(1) : ref;
-			schema = getValueFromPointer(preppedRef, schemaDocument);
-		}
+      const [documentRef, jsonPointer] = ref.split("#");
+      const externalSchemaDocument = getExternalDocument(documentRef);
+      schema = !jsonPointer
+        ? externalSchemaDocument
+        : getValueFromPointer(jsonPointer, externalSchemaDocument);
+    } else {
+      // remove `pound me` sign because `json-pointer` doesn't like it
+      const preppedRef = ref.startsWith("#") ? ref.slice(1) : ref;
+      schema = getValueFromPointer(preppedRef, schemaDocument);
+    }
 
-		validateJSONSchemaObject(schema);
+    validateJSONSchemaObject(schema);
 
-		const parsedTitle = schema.title?.trim();
+    const parsedTitle = schema.title?.trim();
 
-		// @TODO infer from key name in case of missing title
-		if (!parsedTitle) {
-			throw new Error(
-				`The \`"$ref"\` "${ref}" at schema document "${schemaDocument.$id}" does not have a "title" property.`,
-			);
-		}
+    // @TODO infer from key name in case of missing title
+    if (!parsedTitle) {
+      throw new Error(
+        `The \`"$ref"\` "${ref}" at schema document "${schemaDocument.$id}" does not have a "title" property.`,
+      );
+    }
 
-		const symbolName = `I${parsedTitle}`;
+    const symbolName = `I${parsedTitle}`;
 
-		refMap.set(ref, { symbolName, schema });
-	}
+    refMap.set(ref, { symbolName, schema });
+  }
 
-	return refMap;
+  return refMap;
 }
