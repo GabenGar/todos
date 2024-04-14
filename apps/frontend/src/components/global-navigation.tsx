@@ -1,7 +1,10 @@
 "use client";
 
-import type { Route } from "next";
-import { usePathname } from "next/navigation";
+import {
+  usePathname,
+  useSearchParams,
+  type ReadonlyURLSearchParams,
+} from "next/navigation";
 import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
 import { SITE_TITLE } from "#environment";
@@ -14,8 +17,9 @@ import { List, ListItem } from "#components/list";
 import styles from "./global-navigation.module.scss";
 
 export function GlobalNavigation() {
-  const pathname = usePathname();
-  const isActive = pathname === homePageURL;
+  const pathName = usePathname();
+  // @TODO rethink how it works when locale resolution moved to client
+  const isActive = pathName === homePageURL;
 
   return (
     <nav className={styles.block}>
@@ -37,6 +41,7 @@ export function GlobalNavigation() {
 
 export function LocaleSwitcher() {
   const pathName = usePathname();
+  const searchParams = useSearchParams();
   const currentLocale = pathName.split("/")[1];
   const language = parseLocale(currentLocale).language!;
 
@@ -52,6 +57,7 @@ export function LocaleSwitcher() {
             locale={locale}
             currentLocale={currentLocale}
             pathName={pathName}
+            searchParams={searchParams}
           />
         ))}
       </List>
@@ -63,20 +69,26 @@ interface ILocaleItemsProps {
   locale: string;
   currentLocale: string;
   pathName: string;
+  searchParams: ReadonlyURLSearchParams;
 }
 
-function LocaleItem({ locale, currentLocale, pathName }: ILocaleItemsProps) {
+function LocaleItem({
+  locale,
+  currentLocale,
+  pathName,
+  searchParams,
+}: ILocaleItemsProps) {
   const language = parseLocale(locale).language!;
+  const serializedParams =
+    searchParams.size === 0 ? "" : `?${String(searchParams)}`;
+  const href = `${getRedirectedPathName(locale, pathName)}${serializedParams}`;
 
   return (
     <ListItem>
       {locale === currentLocale ? (
         <Language language={language} />
       ) : (
-        <Link
-          className={styles.localeLink}
-          href={getRedirectedPathName(locale, pathName) as Route}
-        >
+        <Link className={styles.localeLink} href={href}>
           <Language language={language} />
         </Link>
       )}

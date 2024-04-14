@@ -93,7 +93,19 @@
     },
     "url-viewer": {
       "title": "URL Viewer",
-      "heading": "URL Viewer"
+      "heading": "URL Viewer",
+      "No URL selected.": "No URL selected.",
+      "Full URL": "Full URL",
+      "Origin": "Origin",
+      "Protocol": "Protocol",
+      "Username": "Username",
+      "Password": "Password",
+      "Host": "Host",
+      "Hostname": "Hostname",
+      "Port": "Port",
+      "Pathname": "Pathname",
+      "Search": "Search",
+      "Hash": "Hash"
     }
   },
   "home": {
@@ -102,6 +114,7 @@
     "link_tasks": "Tasks",
     "link_qr_code": "QR code reader",
     "link_places": "Places",
+    "link_url_viewer": "URL Viewer",
     "link_account": "Account"
   },
   "todos": {

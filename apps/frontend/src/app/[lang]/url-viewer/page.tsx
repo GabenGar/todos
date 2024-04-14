@@ -13,7 +13,7 @@ interface IProps {
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { title }  = dict.pages["url-viewer"];
+  const { title } = dict.pages["url-viewer"];
 
   return {
     title: `${title}`,
@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 async function URLViewerPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { common } = dict;
-  const { heading } = dict.pages["url-viewer"]
+  const { common, pages } = dict;
+  const { heading } = dict.pages["url-viewer"];
 
   return (
     <Page heading={heading}>
-      <Client commonTranslation={common}/>
+      <Client commonTranslation={common} translation={pages["url-viewer"]} />
     </Page>
   );
 }
