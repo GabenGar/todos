@@ -1,20 +1,20 @@
-import { createMultiLineString, NEWLINE } from "#strings";
+import { NEWLINE, createMultiLineString } from "#strings";
 
 export function createJSDoc(...inputLines: (string | undefined)[]): string {
-	const jsDocLines = inputLines.reduce<string[]>((filteredLines, inputLine) => {
-		if (inputLine) {
-			const moreLines = inputLine.split(NEWLINE).map((line) => ` * ${line}`);
-			filteredLines.push(...moreLines);
-		}
+  const jsDocLines = inputLines.reduce<string[]>((filteredLines, inputLine) => {
+    if (inputLine) {
+      const moreLines = inputLine.split(NEWLINE).map((line) => ` * ${line}`);
+      filteredLines.push(...moreLines);
+    }
 
-		return filteredLines;
-	}, []);
+    return filteredLines;
+  }, []);
 
-	if (jsDocLines.length === 0) {
-		return "";
-	}
+  if (jsDocLines.length === 0) {
+    return "";
+  }
 
-	const annotation = createMultiLineString("/**", ...jsDocLines, "*/");
+  const annotation = createMultiLineString("/**", ...jsDocLines, "*/");
 
-	return annotation;
+  return annotation;
 }

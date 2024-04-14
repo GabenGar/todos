@@ -25,13 +25,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo run build",
     "start": "cd frontend && npm start",
-    "lint": "turbo lint",
-    "format": "turbo format",
-    "dev": "turbo dev",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "dev": "turbo run dev",
     "prep": "npm install && npm run format && npm run build",
-    "codegen": "turbo codegen"
+    "codegen": "turbo run codegen"
   },
   "devDependencies": {
     "turbo": "1.11.3"

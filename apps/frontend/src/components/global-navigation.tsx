@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import {
   usePathname,
   useSearchParams,
@@ -32,7 +33,9 @@ export function GlobalNavigation() {
           )}
         </ListItem>
         <ListItem>
-          <LocaleSwitcher />
+          <Suspense>
+            <LocaleSwitcher />
+          </Suspense>
         </ListItem>
       </List>
     </nav>

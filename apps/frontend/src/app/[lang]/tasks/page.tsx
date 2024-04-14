@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getDictionary } from "#server";
 import { TaskList } from "#entities/task";
 import { Page } from "#components";
@@ -24,14 +25,16 @@ async function TodosPage({ params }: IProps) {
 
   return (
     <Page heading={todos.heading}>
-      <TaskList
-        headingLevel={2}
-        commonTranslation={common}
-        taskTranslation={task}
-        statusTranslation={stats_tasks.status_values}
-        translation={todos}
-        id={"tasks"}
-      />
+      <Suspense>
+        <TaskList
+          headingLevel={2}
+          commonTranslation={common}
+          taskTranslation={task}
+          statusTranslation={stats_tasks.status_values}
+          translation={todos}
+          id={"tasks"}
+        />
+      </Suspense>
     </Page>
   );
 }

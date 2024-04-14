@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
@@ -29,11 +30,13 @@ async function TaskEditPage({ params }: IProps) {
 
   return (
     <Page heading={task_edit.heading}>
-      <Client
-        commonTranslation={common}
-        translation={todos}
-        pageTranslation={task_edit}
-      />
+      <Suspense>
+        <Client
+          commonTranslation={common}
+          translation={todos}
+          pageTranslation={task_edit}
+        />
+      </Suspense>
     </Page>
   );
 }

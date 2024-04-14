@@ -4,7 +4,7 @@ import {
   qrCodeReaderURL,
   statsPlacesPageURL,
   taskStatsPageURL,
-  urlViewerPageURL
+  urlViewerPageURL,
 } from "#lib/urls";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
