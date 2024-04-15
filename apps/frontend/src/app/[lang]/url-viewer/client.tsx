@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import type { ILocalizationPage } from "#lib/localization";
 import { Details, DetailsBody, DetailsHeader } from "#components/details";
 import { type ITranslatableProps } from "#components/types";
-import type { ILocalizationPage } from "#lib/localization";
 import { URLViewerForm } from "./form";
 import { URLViewer } from "./viewer";
 
@@ -16,7 +16,7 @@ export function Client({ commonTranslation, translation }: IProps) {
 
   return (
     <Details headingLevel={2}>
-      {() => (
+      {(headingLevel) => (
         <>
           <DetailsHeader>
             <URLViewerForm
@@ -33,7 +33,11 @@ export function Client({ commonTranslation, translation }: IProps) {
             {!currentURL ? (
               translation["No URL selected."]
             ) : (
-              <URLViewer translation={translation} url={currentURL} />
+              <URLViewer
+                translation={translation}
+                headingLevel={headingLevel}
+                url={currentURL}
+              />
             )}
           </DetailsBody>
         </>
