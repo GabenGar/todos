@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "eamodio.gitlens",
-    "dotenv.dotenv-vscode"
+    "dotenv.dotenv-vscode",
+    "biomejs.biome"
   ]
 }
