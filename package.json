@@ -34,7 +34,7 @@
     "codegen": "turbo run codegen"
   },
   "devDependencies": {
-    "turbo": "1.11.3"
+    "turbo": "1.13.2"
   },
   "packageManager": "npm@8.7.0"
 }
