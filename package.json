@@ -1,6 +1,6 @@
 {
   "name": "todos",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "The list of todos in NextJS.",
   "keywords": [
     "NextJS"
@@ -34,7 +34,7 @@
     "codegen": "turbo run codegen"
   },
   "devDependencies": {
-    "turbo": "1.11.3"
+    "turbo": "1.13.2"
   },
   "packageManager": "npm@8.7.0"
 }

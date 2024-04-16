@@ -1,5 +1,5 @@
 import path from "node:path";
-import { ParseArgsConfig, parseArgs } from "node:util";
+import { type ParseArgsConfig, parseArgs } from "node:util";
 import { runCodegen } from "#codegen";
 
 const options: ParseArgsConfig = {
