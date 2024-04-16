@@ -1,4 +1,4 @@
-import { JsonSchemaDraft202012 } from "@hyperjump/json-schema/draft-2020-12";
+import type { JsonSchemaDraft202012 } from "@hyperjump/json-schema/draft-2020-12";
 
 export type IJSONSchemaObject = Exclude<JsonSchemaDraft202012, boolean>;
 

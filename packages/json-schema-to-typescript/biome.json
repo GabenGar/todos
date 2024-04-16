@@ -14,9 +14,11 @@
   },
   "linter": {
     "enabled": true,
-
     "rules": {
       "recommended": true,
+      "style": {
+        "useShorthandFunctionType": "off"
+      },
       "suspicious": {
         "noEmptyInterface": "off"
       }

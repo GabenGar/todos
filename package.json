@@ -1,6 +1,6 @@
 {
   "name": "todos",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "The list of todos in NextJS.",
   "keywords": [
     "NextJS"
