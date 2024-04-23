@@ -218,6 +218,7 @@
     "Place": "Место",
     "Edit": "Редактировать",
     "Tasks": "Задачи",
+    "No places found": "Места не найдены",
     "edit": {
       "Confirm changes": "Применить изменения",
       "Applying changes...": "Применяем изменения..."

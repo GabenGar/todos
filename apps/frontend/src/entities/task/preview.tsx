@@ -60,9 +60,11 @@ function Component({ commonTranslation, translation, task, ...props }: IProps) {
               <DescriptionSection
                 dKey={translation.description}
                 dValue={
-                  <EntityDescription>
-                    {description ?? translation.no_description}
-                  </EntityDescription>
+                  !description ? (
+                    translation.no_description
+                  ) : (
+                    <EntityDescription>{description}</EntityDescription>
+                  )
                 }
               />
 
