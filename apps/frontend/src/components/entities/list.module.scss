@@ -1,0 +1,10 @@
+@use "../../styles/sass/variables.scss" as *;
+
+.block {
+  display: grid;
+  gap: $size-small;
+}
+
+.list {
+  align-items: stretch;
+}
