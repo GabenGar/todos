@@ -19,6 +19,7 @@ import { getPlaces } from "../lib/get";
 import { type IPlace } from "../types";
 
 import styles from "./place-section.module.scss";
+import { EntityList } from "#components/entities";
 
 interface IProps extends ITranslatableProps, IInputSectionProps {
   place?: IEntityItem;
@@ -100,55 +101,93 @@ function PlaceSelector({
   selectedPlace,
   onSelect,
 }: IPlaceSelectorProps) {
-  const [places, changePlaces] =
-    useState<Awaited<ReturnType<typeof getPlaces>>>();
-
-  useEffect(() => {
-    (async () => {
-      const newPlaces = await getPlaces();
-      changePlaces(newPlaces);
-    })();
-  }, []);
-
   return (
-    <div>
-      {!places ? (
-        <Loading />
-      ) : places.pagination.totalCount === 0 ? (
-        <p>{commonTranslation.list.no_items}</p>
-      ) : (
-        <ListLocal
-          className={styles.list}
-          commonTranslation={commonTranslation}
-          pagination={places.pagination}
-          onPageChange={async (page) => {
-            const newPlaces = await getPlaces({ page });
-            changePlaces(newPlaces);
-          }}
-        >
-          {places.items.map((place) => (
-            <ListItem key={place.id} className={styles.item}>
-              <span className={styles.title}>{place.title}</span>
-              <span className={styles.id}>
-                (<Pre>{place.id}</Pre>)
-              </span>
-              <Button
-                className={styles.select}
-                disabled={selectedPlace?.id === place.id}
-                onClick={async () => {
-                  if (selectedPlace?.id === place.id) {
-                    return;
-                  }
+    <>
+      <EntityList<IPlace>
+        className={styles.list}
+        commonTranslation={commonTranslation}
+        fetchEntities={async (page) => await getPlaces({ page })}
+        mapEntity={(place) => (
+          <ListItem key={place.id} className={styles.item}>
+            <span className={styles.title}>{place.title}</span>
+            <span className={styles.id}>
+              <Pre>({place.id})</Pre>
+            </span>
+            <Button
+              className={styles.select}
+              disabled={selectedPlace?.id === place.id}
+              onClick={async () => {
+                if (selectedPlace?.id === place.id) {
+                  return;
+                }
 
-                  await onSelect(place);
-                }}
-              >
-                {commonTranslation.list["Select"]}
-              </Button>
-            </ListItem>
-          ))}
-        </ListLocal>
-      )}
-    </div>
+                await onSelect(place);
+              }}
+            >
+              {commonTranslation.list["Select"]}
+            </Button>
+          </ListItem>
+        )}
+      />
+      <div></div>
+    </>
   );
 }
+
+// function PlaceSelector({
+//   commonTranslation,
+//   selectedPlace,
+//   onSelect,
+// }: IPlaceSelectorProps) {
+//   const [places, changePlaces] =
+//     useState<Awaited<ReturnType<typeof getPlaces>>>();
+
+//   useEffect(() => {
+//     (async () => {
+//       const newPlaces = await getPlaces();
+//       changePlaces(newPlaces);
+//     })();
+//   }, []);
+
+//   return (
+//     <div>
+//       {!places ? (
+//         <Loading />
+//       ) : places.pagination.totalCount === 0 ? (
+//         <p>{commonTranslation.list.no_items}</p>
+//       ) : (
+//         <ListLocal
+//           className={styles.list}
+//           commonTranslation={commonTranslation}
+//           pagination={places.pagination}
+//           onPageChange={async (page) => {
+//             const newPlaces = await getPlaces({ page });
+//             changePlaces(newPlaces);
+//           }}
+//         >
+//           {places.items.map((place) => (
+//             <ListItem key={place.id} className={styles.item}>
+//               <span className={styles.title}>{place.title}</span>
+//               <span className={styles.id}>
+//                 <Pre>({place.id})</Pre>
+//               </span>
+//               <Button
+//                 className={styles.select}
+//                 disabled={selectedPlace?.id === place.id}
+//                 onClick={async () => {
+//                   if (selectedPlace?.id === place.id) {
+//                     return;
+//                   }
+
+//                   await onSelect(place);
+//                 }}
+//               >
+//                 {commonTranslation.list["Select"]}
+//               </Button>
+//             </ListItem>
+//           ))}
+//         </ListLocal>
+//       )}
+//     </div>
+//   );
+// }

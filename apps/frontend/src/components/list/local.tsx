@@ -13,7 +13,7 @@ import { List } from "./list";
 
 import styles from "./local.module.scss";
 
-interface IListLocalProps
+export interface IListLocalProps
   extends IBaseComponentPropsWithChildren<"div">,
     ITranslatableProps,
     Pick<IPaginationLocalProps, "onPageChange"> {

@@ -32,3 +32,37 @@ export function createPagination(
 
   return pagination;
 }
+
+export function createClientPagination(
+  totalCount: number,
+  limit: number,
+  page?: number,
+): IPagination {
+  const totalPages = Math.ceil(totalCount / limit);
+  const currentPage = page ?? totalPages;
+
+  if (currentPage > totalPages) {
+    throw new Error(
+      `Current page ${page} of total count ${totalCount} and limit ${limit} is greater than ${totalPages}.`,
+    );
+  }
+
+  const offset = (currentPage - 1) * limit;
+  const currentMin = totalCount === 0 ? 0 : offset + 1;
+  const currentMax =
+    offset + limit > totalCount
+      ? totalCount
+      : offset + limit;
+
+  const pagination: IPagination = {
+    totalCount,
+    totalPages,
+    currentPage,
+    limit,
+    offset,
+    currentMin,
+    currentMax,
+  };
+
+  return pagination;
+}
