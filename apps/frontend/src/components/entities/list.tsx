@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { IEntityItem } from "#lib/entities";
 import {
+  PAGINATION_LIMIT,
   createClientPagination,
   type IPaginatedCollection,
 } from "#lib/pagination";
@@ -51,18 +52,31 @@ function Component<IEntityType extends IEntityItem>({
       };
       changeEntityData(clientData);
     });
-  }, [limit]);
+  }, [limit, fetchEntities]);
 
   async function handlePageChange(clientPage: number) {
     if (!entityData) {
       return;
     }
 
+    // construct client pagination
     const clientPagination = createClientPagination(
       entityData.pagination.totalCount,
       limit,
-      1,
+      clientPage,
     );
+
+    // figure server pages for it
+    const { offset, currentMax } = clientPagination;
+    const minServerPage = Math.floor(offset / PAGINATION_LIMIT);
+    const maxServerPage = Math.ceil(currentMax / PAGINATION_LIMIT);
+
+    if (minServerPage === maxServerPage) {
+      const pageCollection = await fetchEntities(minServerPage);
+    } else {
+      const leftCollection = await fetchEntities(minServerPage);
+      const rightCollection = await fetchEntities(maxServerPage);
+    }
   }
 
   return (
