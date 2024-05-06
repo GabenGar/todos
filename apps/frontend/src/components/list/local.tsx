@@ -36,7 +36,7 @@ function Component({
         pagination={pagination}
       />
 
-      <List className={styles.list}>{children}</List>
+      <List className={styles.list} isAlternating>{children}</List>
 
       <PaginationLocal
         commonTranslation={commonTranslation}

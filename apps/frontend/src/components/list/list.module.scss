@@ -6,4 +6,19 @@
   justify-content: center;
   align-items: flex-start;
   gap: $size-small;
+
+
+}
+
+.alternating {
+  & > * {
+    &:nth-child(odd) {
+      background-color: var(--colour-background-secondary-transparent);
+    }
+
+    &:nth-child(even) {
+      background-color: var(--colour-background-tertiary-transparent);
+    }
+
+  }
 }
