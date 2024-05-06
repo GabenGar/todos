@@ -47,7 +47,10 @@ export function Client({ commonTranslation, translation }: IProps) {
     (async () => {
       const newPlaces = await getPlaces(options);
 
-      if (page !== newPlaces.pagination.currentPage) {
+      if (
+        newPlaces.pagination.currentPage !== 0 &&
+        page !== newPlaces.pagination.currentPage
+      ) {
         const url = createPlacesPageURL({
           ...options,
           page: newPlaces.pagination.currentPage,
@@ -125,6 +128,12 @@ export function Client({ commonTranslation, translation }: IProps) {
 
       {!places ? (
         <Loading />
+      ) : places.pagination.totalCount === 0 ? (
+        <Details headingLevel={2}>
+          {() => (
+            <DetailsHeader>{translation["No places found"]}</DetailsHeader>
+          )}
+        </Details>
       ) : (
         <PreviewList
           pagination={places.pagination}

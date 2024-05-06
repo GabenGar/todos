@@ -1,9 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPlacePageURL } from "#lib/urls";
 import { IEntityItem } from "#lib/entities";
-import { DescriptionList, DescriptionSection, Loading } from "#components";
+import {
+  DescriptionDetails,
+  DescriptionList,
+  DescriptionSection,
+  DescriptionTerm,
+  Loading,
+} from "#components";
 import { createBlockComponent } from "#components/meta";
 import { InputHidden } from "#components/form/input";
 import {
@@ -11,7 +17,7 @@ import {
   InputSection,
 } from "#components/form/section";
 import { Link } from "#components/link";
-import { ListItem, ListLocal } from "#components/list";
+import { ListItem } from "#components/list";
 import { Button, MenuButtons, MenuItem } from "#components/button";
 import type { ITranslatableProps } from "#components/types";
 import { Pre } from "#components/pre";
@@ -19,6 +25,7 @@ import { getPlaces } from "../lib/get";
 import { type IPlace } from "../types";
 
 import styles from "./place-section.module.scss";
+import { EntityList } from "#components/entities";
 
 interface IProps extends ITranslatableProps, IInputSectionProps {
   place?: IEntityItem;
@@ -43,11 +50,10 @@ function Component({
   return (
     <InputSection {...props}>
       <DescriptionList>
-        <DescriptionSection
-          className={styles.section}
-          dKey={children}
-          dValue={
-            selectedPlace ? (
+        <DescriptionSection className={styles.section}>
+          <DescriptionTerm>{children}</DescriptionTerm>
+          <DescriptionDetails className={styles.details}>
+            {selectedPlace ? (
               <>
                 <Link
                   href={createPlacePageURL(selectedPlace.id)}
@@ -73,10 +79,11 @@ function Component({
                 onSelect={async (newPlace) => {
                   changeSelectedPlace(newPlace);
                 }}
+                selectedPlace={selectedPlace}
               />
-            )
-          }
-        />
+            )}
+          </DescriptionDetails>
+        </DescriptionSection>
       </DescriptionList>
 
       <InputHidden
@@ -100,55 +107,32 @@ function PlaceSelector({
   selectedPlace,
   onSelect,
 }: IPlaceSelectorProps) {
-  const [places, changePlaces] =
-    useState<Awaited<ReturnType<typeof getPlaces>>>();
-
-  useEffect(() => {
-    (async () => {
-      const newPlaces = await getPlaces();
-      changePlaces(newPlaces);
-    })();
-  }, []);
-
   return (
-    <div>
-      {!places ? (
-        <Loading />
-      ) : places.pagination.totalCount === 0 ? (
-        <p>{commonTranslation.list.no_items}</p>
-      ) : (
-        <ListLocal
-          className={styles.list}
-          commonTranslation={commonTranslation}
-          pagination={places.pagination}
-          onPageChange={async (page) => {
-            const newPlaces = await getPlaces({ page });
-            changePlaces(newPlaces);
-          }}
-        >
-          {places.items.map((place) => (
-            <ListItem key={place.id} className={styles.item}>
-              <span className={styles.title}>{place.title}</span>
-              <span className={styles.id}>
-                (<Pre>{place.id}</Pre>)
-              </span>
-              <Button
-                className={styles.select}
-                disabled={selectedPlace?.id === place.id}
-                onClick={async () => {
-                  if (selectedPlace?.id === place.id) {
-                    return;
-                  }
+    <EntityList<IPlace>
+      className={styles.list}
+      commonTranslation={commonTranslation}
+      fetchEntities={async (page) => await getPlaces({ page })}
+      mapEntity={(place) => (
+        <ListItem key={place.id} className={styles.item}>
+          <span className={styles.title}>{place.title}</span>
+          <span className={styles.id}>
+            <Pre>({place.id})</Pre>
+          </span>
+          <Button
+            className={styles.select}
+            disabled={selectedPlace?.id === place.id}
+            onClick={async () => {
+              if (selectedPlace?.id === place.id) {
+                return;
+              }
 
-                  await onSelect(place);
-                }}
-              >
-                {commonTranslation.list["Select"]}
-              </Button>
-            </ListItem>
-          ))}
-        </ListLocal>
+              await onSelect(place);
+            }}
+          >
+            {commonTranslation.list["Select"]}
+          </Button>
+        </ListItem>
       )}
-    </div>
+    />
   );
 }

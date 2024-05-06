@@ -8,6 +8,11 @@
   gap: $size-small;
 }
 
+.details {
+  display: grid;
+  gap: $size-small;
+}
+
 .list {
   align-items: stretch;
 }
@@ -22,6 +27,7 @@
 
 .title {
   grid-area: title;
+  align-self: flex-end;
 }
 
 .id {

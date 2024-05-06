@@ -218,6 +218,7 @@
     "Place": "Place",
     "Edit": "Edit",
     "Tasks": "Tasks",
+    "No places found": "No places found",
     "edit": {
       "Confirm changes": "Confirm changes",
       "Applying changes...": "Applying changes..."
