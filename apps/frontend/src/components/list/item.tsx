@@ -1,7 +1,7 @@
 import { createBlockComponent } from "#components/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 
-import styles from "./item.module.scss"
+import styles from "./item.module.scss";
 
 interface IProps extends IBaseComponentPropsWithChildren<"li"> {}
 

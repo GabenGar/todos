@@ -47,7 +47,6 @@ function Component({
 }: IProps) {
   const [selectedPlace, changeSelectedPlace] = useState(place);
 
-
   return (
     <InputSection {...props}>
       <DescriptionList>

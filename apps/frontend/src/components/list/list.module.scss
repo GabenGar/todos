@@ -6,8 +6,6 @@
   justify-content: center;
   align-items: flex-start;
   gap: $size-small;
-
-
 }
 
 .alternating {
@@ -19,6 +17,5 @@
     &:nth-child(even) {
       background-color: var(--colour-background-tertiary-transparent);
     }
-
   }
 }

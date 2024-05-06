@@ -69,7 +69,7 @@ function Component<IEntityType extends IEntityItem>({
 
     // figure server pages for it
     const { offset, currentMax } = clientPagination;
-    const minPage = Math.floor(offset / PAGINATION_LIMIT)
+    const minPage = Math.floor(offset / PAGINATION_LIMIT);
     const minServerPage = minPage === 0 ? 1 : minPage;
     const maxServerPage = Math.ceil(currentMax / PAGINATION_LIMIT);
     let clientCollection: IPaginatedCollection<IEntityType>;
