@@ -100,6 +100,7 @@ export function SearchTasksForm({
             {FIELD.QUERY.label}
           </InputSectionText>
 
+          {/* @TODO replace with place selector component */}
           {place ? (
             <>
               <DescriptionList

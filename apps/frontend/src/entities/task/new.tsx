@@ -100,6 +100,8 @@ export function NewTaskForm({
           </InputSectionText>
 
           <PlaceSection
+            // a dirty hack to force update on the component state
+            key={place?.id}
             commonTranslation={commonTranslation}
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}

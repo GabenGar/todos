@@ -14,20 +14,14 @@ export const List = createBlockComponent(styles, ListComponent);
 
 function ListComponent(props: IListProps) {
   if ("isOrdered" in props) {
-    const { isOrdered, className, ...listProps } = props;
-    const finalClassName = clsx(
-      className,
-      props.isAlternating && styles.alternating,
-    );
+    const { isOrdered, isAlternating, className, ...listProps } = props;
+    const finalClassName = clsx(className, isAlternating && styles.alternating);
 
     return <OrderedList className={finalClassName} {...listProps} />;
   }
 
-  const { className, ...listProps } = props;
-  const finalClassName = clsx(
-    className,
-    props.isAlternating && styles.alternating,
-  );
+  const { className, isAlternating, ...listProps } = props;
+  const finalClassName = clsx(className, isAlternating && styles.alternating);
 
   return <UnorderedList className={finalClassName} {...listProps} />;
 }

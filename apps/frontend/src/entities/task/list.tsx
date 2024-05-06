@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL, createTasksPageURL } from "#lib/urls";
-import { Loading } from "components/loading";
+import { Loading } from "#components";
 import { PreviewList } from "#components/preview";
 import {
   Details,

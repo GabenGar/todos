@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPlacePageURL } from "#lib/urls";
 import { IEntityItem } from "#lib/entities";
 import {
@@ -17,7 +17,7 @@ import {
   InputSection,
 } from "#components/form/section";
 import { Link } from "#components/link";
-import { ListItem, ListLocal } from "#components/list";
+import { ListItem } from "#components/list";
 import { Button, MenuButtons, MenuItem } from "#components/button";
 import type { ITranslatableProps } from "#components/types";
 import { Pre } from "#components/pre";
@@ -46,6 +46,7 @@ function Component({
   ...props
 }: IProps) {
   const [selectedPlace, changeSelectedPlace] = useState(place);
+
 
   return (
     <InputSection {...props}>
@@ -79,6 +80,7 @@ function Component({
                 onSelect={async (newPlace) => {
                   changeSelectedPlace(newPlace);
                 }}
+                selectedPlace={selectedPlace}
               />
             )}
           </DescriptionDetails>
@@ -107,33 +109,31 @@ function PlaceSelector({
   onSelect,
 }: IPlaceSelectorProps) {
   return (
-    <>
-      <EntityList<IPlace>
-        className={styles.list}
-        commonTranslation={commonTranslation}
-        fetchEntities={async (page) => await getPlaces({ page })}
-        mapEntity={(place) => (
-          <ListItem key={place.id} className={styles.item}>
-            <span className={styles.title}>{place.title}</span>
-            <span className={styles.id}>
-              <Pre>({place.id})</Pre>
-            </span>
-            <Button
-              className={styles.select}
-              disabled={selectedPlace?.id === place.id}
-              onClick={async () => {
-                if (selectedPlace?.id === place.id) {
-                  return;
-                }
+    <EntityList<IPlace>
+      className={styles.list}
+      commonTranslation={commonTranslation}
+      fetchEntities={async (page) => await getPlaces({ page })}
+      mapEntity={(place) => (
+        <ListItem key={place.id} className={styles.item}>
+          <span className={styles.title}>{place.title}</span>
+          <span className={styles.id}>
+            <Pre>({place.id})</Pre>
+          </span>
+          <Button
+            className={styles.select}
+            disabled={selectedPlace?.id === place.id}
+            onClick={async () => {
+              if (selectedPlace?.id === place.id) {
+                return;
+              }
 
-                await onSelect(place);
-              }}
-            >
-              {commonTranslation.list["Select"]}
-            </Button>
-          </ListItem>
-        )}
-      />
-    </>
+              await onSelect(place);
+            }}
+          >
+            {commonTranslation.list["Select"]}
+          </Button>
+        </ListItem>
+      )}
+    />
   );
 }
