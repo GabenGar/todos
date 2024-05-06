@@ -14,6 +14,7 @@ import type {
   ITranslatableProps,
 } from "#components/types";
 import { Loading } from "components/loading";
+import { toJSONPretty } from "#lib/json";
 
 interface IProps<IEntityType extends IEntityItem>
   extends IBaseComponentProps<"div">,
@@ -68,15 +69,43 @@ function Component<IEntityType extends IEntityItem>({
 
     // figure server pages for it
     const { offset, currentMax } = clientPagination;
-    const minServerPage = Math.floor(offset / PAGINATION_LIMIT);
+    const minPage = Math.floor(offset / PAGINATION_LIMIT)
+    const minServerPage = minPage === 0 ? 1 : minPage;
     const maxServerPage = Math.ceil(currentMax / PAGINATION_LIMIT);
+    let clientCollection: IPaginatedCollection<IEntityType>;
 
     if (minServerPage === maxServerPage) {
+      // create collection off a single server page
       const pageCollection = await fetchEntities(minServerPage);
+      const minimumBoundary = offset - pageCollection.pagination.offset;
+      const maximumBoundary = minimumBoundary + limit;
+      const clientItems = pageCollection.items.slice(
+        minimumBoundary,
+        maximumBoundary,
+      );
+
+      clientCollection = {
+        pagination: clientPagination,
+        items: clientItems,
+      };
     } else {
+      // create collection off 2 server pages
       const leftCollection = await fetchEntities(minServerPage);
       const rightCollection = await fetchEntities(maxServerPage);
+      const minimumBoundary = offset - leftCollection.pagination.offset;
+      const maximumBoundary =
+        rightCollection.pagination.currentMax - currentMax;
+
+      const leftItems = leftCollection.items.slice(minimumBoundary);
+      const rightItems = rightCollection.items.slice(0, maximumBoundary);
+
+      clientCollection = {
+        pagination: clientPagination,
+        items: [...leftItems, ...rightItems],
+      };
     }
+
+    changeEntityData(clientCollection);
   }
 
   return (
