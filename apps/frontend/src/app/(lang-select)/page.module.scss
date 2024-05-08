@@ -1,13 +1,17 @@
 @use "../../styles/sass/variables.scss" as *;
 
-.header {
-  justify-items: stretch;
-}
-
 .list {
   align-items: stretch;
 }
 
+.item {
+  padding: $size-small;
+}
+
 .link {
-  display: flex;
+  width: 100%;
+}
+
+.language {
+  font-weight: bold;
 }

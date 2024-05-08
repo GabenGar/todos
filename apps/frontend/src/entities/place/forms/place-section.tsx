@@ -8,7 +8,6 @@ import {
   DescriptionList,
   DescriptionSection,
   DescriptionTerm,
-  Loading,
 } from "#components";
 import { createBlockComponent } from "#components/meta";
 import { InputHidden } from "#components/form/input";
@@ -21,11 +20,11 @@ import { ListItem } from "#components/list";
 import { Button, MenuButtons, MenuItem } from "#components/button";
 import type { ITranslatableProps } from "#components/types";
 import { Pre } from "#components/pre";
+import { EntityList } from "#components/entities";
 import { getPlaces } from "../lib/get";
 import { type IPlace } from "../types";
 
 import styles from "./place-section.module.scss";
-import { EntityList } from "#components/entities";
 
 interface IProps extends ITranslatableProps, IInputSectionProps {
   place?: IEntityItem;

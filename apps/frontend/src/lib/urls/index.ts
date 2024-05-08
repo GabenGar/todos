@@ -1,8 +1,11 @@
 import type { Route } from "next";
+import type { ILocale } from "#lib/internationalization";
 import type { ITask } from "#entities/task";
 import type { IPlace, IPlacesCategory } from "#entities/place";
 
-export const homePageURL = "/" as Route;
+export function createHomePageURL(language: ILocale): Route {
+  return `/${language}` as Route;
+}
 
 export const notFoundURL = "/404" as Route;
 

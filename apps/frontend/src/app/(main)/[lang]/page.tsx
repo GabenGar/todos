@@ -27,11 +27,6 @@ export async function generateMetadata({ params }: IProps) {
   };
 }
 
-/**
- * @TODO
- * fix style specificity such as `styles.link` being declared
- * before built-in `Link` styles.
- */
 async function FrontPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
