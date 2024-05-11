@@ -5,14 +5,18 @@ import type { ILocalizationPage } from "#lib/localization";
 import { createPlacesPageURL } from "#lib/urls";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Link } from "#components/link";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { getPlacesStats } from "#entities/place";
 
-interface IProps extends ITranslatableProps {
+interface IProps extends ILocalizableProps, ITranslatableProps {
   translation: ILocalizationPage["stats_places"];
 }
 
-export function PlacesStats({ commonTranslation, translation }: IProps) {
+export function PlacesStats({
+  language,
+  commonTranslation,
+  translation,
+}: IProps) {
   const [stats, changeStats] =
     useState<Awaited<ReturnType<typeof getPlacesStats>>>();
   useEffect(() => {
@@ -31,7 +35,7 @@ export function PlacesStats({ commonTranslation, translation }: IProps) {
           !stats ? (
             <Loading />
           ) : (
-            <Link href={createPlacesPageURL()}>{stats.all}</Link>
+            <Link href={createPlacesPageURL(language)}>{stats.all}</Link>
           )
         }
       />
@@ -44,7 +48,9 @@ export function PlacesStats({ commonTranslation, translation }: IProps) {
           ) : stats.eventless === 0 ? (
             <span>{stats.eventless}</span>
           ) : (
-            <Link href={createPlacesPageURL({ category: "eventless" })}>
+            <Link
+              href={createPlacesPageURL(language, { category: "eventless" })}
+            >
               {stats.eventless}
             </Link>
           )

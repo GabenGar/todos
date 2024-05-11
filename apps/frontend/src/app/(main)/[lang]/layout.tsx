@@ -48,7 +48,7 @@ async function RootLayout({ children, params }: IProps) {
       <body>
         <ClientProvider>
           <header className={styles.header}>
-            <GlobalNavigation />
+            <GlobalNavigation language={lang} />
           </header>
 
           <main className={styles.main}>{children}</main>

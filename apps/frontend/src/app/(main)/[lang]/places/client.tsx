@@ -7,7 +7,7 @@ import { createPlacesPageURL } from "#lib/urls";
 import { Loading } from "#components";
 import { Details, DetailsHeader } from "#components/details";
 import { PreviewList } from "#components/preview";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
   type IPlaceInit,
   PlaceCreateForm,
@@ -19,11 +19,11 @@ import {
   type IPlaceSearchQuery,
 } from "#entities/place";
 
-interface IProps extends ITranslatableProps {
+interface IProps extends ILocalizableProps, ITranslatableProps {
   translation: ILocalization["place"];
 }
 
-export function Client({ commonTranslation, translation }: IProps) {
+export function Client({ language, commonTranslation, translation }: IProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [places, changePlaces] =
@@ -51,7 +51,7 @@ export function Client({ commonTranslation, translation }: IProps) {
         newPlaces.pagination.currentPage !== 0 &&
         page !== newPlaces.pagination.currentPage
       ) {
-        const url = createPlacesPageURL({
+        const url = createPlacesPageURL(language, {
           ...options,
           page: newPlaces.pagination.currentPage,
         });
@@ -69,7 +69,7 @@ export function Client({ commonTranslation, translation }: IProps) {
     const newPlaces = await getPlaces(options);
 
     if (places?.pagination.totalPages !== newPlaces.pagination.totalPages) {
-      const url = createPlacesPageURL({
+      const url = createPlacesPageURL(language, {
         page: newPlaces.pagination.totalPages,
       });
       router.replace(url);
@@ -86,7 +86,7 @@ export function Client({ commonTranslation, translation }: IProps) {
       page: undefined,
     });
 
-    const newURL = createPlacesPageURL({
+    const newURL = createPlacesPageURL(language, {
       ...options,
       page: pagination.currentPage,
       query,
@@ -139,7 +139,9 @@ export function Client({ commonTranslation, translation }: IProps) {
           pagination={places.pagination}
           commonTranslation={commonTranslation}
           sortingOrder="descending"
-          buildURL={(page) => createPlacesPageURL({ ...options, page })}
+          buildURL={(page) =>
+            createPlacesPageURL(language, { ...options, page })
+          }
         >
           {places.items.map((place) => (
             <PlacePreview

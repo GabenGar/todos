@@ -2,7 +2,7 @@ import type { ILocalization } from "#lib/localization";
 import { createPlaceEditPageURL } from "#lib/urls";
 import { createBlockComponent } from "#components/meta";
 import { DescriptionList, DescriptionSection } from "#components";
-import { ITranslatableProps } from "#components/types";
+import { ITranslatableProps, type ILocalizableProps } from "#components/types";
 import { Heading, type IHeadingLevel } from "#components/heading";
 import { DateTime } from "#components/date";
 import {
@@ -20,7 +20,10 @@ import type { IPlace } from "./types";
 
 import styles from "./details.module.scss";
 
-export interface IPlaceDetailsProps extends IDetailsProps, ITranslatableProps {
+export interface IPlaceDetailsProps
+  extends IDetailsProps,
+    ILocalizableProps,
+    ITranslatableProps {
   translation: ILocalization["place"];
   taskTranslation: ILocalization["stats_tasks"];
   place: IPlace;
@@ -29,6 +32,7 @@ export interface IPlaceDetailsProps extends IDetailsProps, ITranslatableProps {
 export const PlaceDetails = createBlockComponent(styles, Component);
 
 function Component({
+  language,
   commonTranslation,
   translation,
   taskTranslation,
@@ -96,7 +100,7 @@ function Component({
           <DetailsFooter>
             <List>
               <ListItem>
-                <LinkButton href={createPlaceEditPageURL(id)}>
+                <LinkButton href={createPlaceEditPageURL(language, id)}>
                   {translation["Edit"]}
                 </LinkButton>
               </ListItem>

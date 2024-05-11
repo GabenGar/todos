@@ -1,10 +1,10 @@
 import { SITE_TITLE } from "#environment";
 import {
-  accountPageURL,
-  qrCodeReaderURL,
-  statsPlacesPageURL,
-  taskStatsPageURL,
-  urlViewerPageURL,
+  creatQRCodeReaderURL,
+  createAccountPageURL,
+  createStatsPlacesPageURL,
+  createTaskStatsPageURL,
+  createURLViewerPageURL,
 } from "#lib/urls";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
@@ -39,27 +39,36 @@ async function FrontPage({ params }: IProps) {
           <DetailsHeader className={styles.header}>
             <List className={styles.list}>
               <ListItem>
-                <Link className={styles.link} href={statsPlacesPageURL}>
+                <Link
+                  className={styles.link}
+                  href={createStatsPlacesPageURL(lang)}
+                >
                   {home.link_places}
                 </Link>
               </ListItem>
               <ListItem>
-                <Link className={styles.link} href={taskStatsPageURL}>
+                <Link
+                  className={styles.link}
+                  href={createTaskStatsPageURL(lang)}
+                >
                   {home.link_tasks}
                 </Link>
               </ListItem>
               <ListItem>
-                <Link className={styles.link} href={qrCodeReaderURL}>
+                <Link className={styles.link} href={creatQRCodeReaderURL(lang)}>
                   {home.link_qr_code}
                 </Link>
               </ListItem>
               <ListItem>
-                <Link className={styles.link} href={urlViewerPageURL}>
+                <Link
+                  className={styles.link}
+                  href={createURLViewerPageURL(lang)}
+                >
                   {home.link_url_viewer}
                 </Link>
               </ListItem>
               <ListItem>
-                <Link className={styles.link} href={accountPageURL}>
+                <Link className={styles.link} href={createAccountPageURL(lang)}>
                   {home.link_account}
                 </Link>
               </ListItem>

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createPlacePageURL } from "#lib/urls";
 import { Loading } from "#components";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { Details, DetailsBody, DetailsHeader } from "#components/details";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
@@ -17,9 +17,10 @@ import {
 
 interface IProps
   extends ITranslatableProps,
+    ILocalizableProps,
     Pick<IEditPlaceFormProps, "translation"> {}
 
-export function Client({ commonTranslation, translation }: IProps) {
+export function Client({ language, commonTranslation, translation }: IProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [currentPlace, changePlace] =
@@ -50,7 +51,7 @@ export function Client({ commonTranslation, translation }: IProps) {
                 {!currentPlace ? (
                   <Loading />
                 ) : (
-                  <Link href={createPlacePageURL(currentPlace.id)}>
+                  <Link href={createPlacePageURL(language, currentPlace.id)}>
                     {translation["Place"]}
                   </Link>
                 )}

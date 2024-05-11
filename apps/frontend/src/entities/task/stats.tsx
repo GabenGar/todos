@@ -6,15 +6,15 @@ import { createTasksPageURL } from "#lib/urls";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { TaskStatus, getTasksStats } from "#entities/task";
 import { Link } from "#components/link";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import type { IPlace } from "#entities/place";
 
-interface IProps extends ITranslatableProps {
+interface IProps extends ILocalizableProps, ITranslatableProps {
   translation: ILocalization["stats_tasks"];
   placeID?: IPlace["id"];
 }
 
-export function TasksStats({ translation, placeID }: IProps) {
+export function TasksStats({ language, translation, placeID }: IProps) {
   const { status_values } = translation;
   const [stats, changeStats] =
     useState<Awaited<ReturnType<typeof getTasksStats>>>();
@@ -35,7 +35,7 @@ export function TasksStats({ translation, placeID }: IProps) {
           !stats ? (
             <Loading />
           ) : (
-            <Link href={createTasksPageURL({ placeID: placeID })}>
+            <Link href={createTasksPageURL(language, { placeID: placeID })}>
               {stats.all}
             </Link>
           )
@@ -52,7 +52,7 @@ export function TasksStats({ translation, placeID }: IProps) {
             <span>{stats["in-progress"]}</span>
           ) : (
             <Link
-              href={createTasksPageURL({
+              href={createTasksPageURL(language, {
                 status: "in-progress",
                 placeID: placeID,
               })}
@@ -73,7 +73,7 @@ export function TasksStats({ translation, placeID }: IProps) {
             <span>{stats.pending}</span>
           ) : (
             <Link
-              href={createTasksPageURL({
+              href={createTasksPageURL(language, {
                 status: "pending",
                 placeID: placeID,
               })}
@@ -94,7 +94,7 @@ export function TasksStats({ translation, placeID }: IProps) {
             <span>{stats.finished}</span>
           ) : (
             <Link
-              href={createTasksPageURL({
+              href={createTasksPageURL(language, {
                 status: "finished",
                 placeID: placeID,
               })}
@@ -115,7 +115,10 @@ export function TasksStats({ translation, placeID }: IProps) {
             <span>{stats.failed}</span>
           ) : (
             <Link
-              href={createTasksPageURL({ status: "failed", placeID: placeID })}
+              href={createTasksPageURL(language, {
+                status: "failed",
+                placeID: placeID,
+              })}
             >
               {stats.failed}
             </Link>

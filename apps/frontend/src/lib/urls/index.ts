@@ -9,8 +9,13 @@ export function createHomePageURL(language: ILocale): Route {
 
 export const notFoundURL = "/404" as Route;
 
-export const taskStatsPageURL = "/stats/tasks";
-export const statsPlacesPageURL = "/stats/places";
+export function createTaskStatsPageURL(language: ILocale): Route {
+  return `/${language}/stats/tasks` as Route;
+}
+
+export function createStatsPlacesPageURL(language: ILocale): Route {
+  return `/${language}/stats/places` as Route;
+}
 
 interface ICreateTasksPageURLParams {
   page?: number;
@@ -20,6 +25,7 @@ interface ICreateTasksPageURLParams {
 }
 
 export function createTasksPageURL(
+  language: ILocale,
   searchParams?: ICreateTasksPageURLParams,
 ): Route {
   const urlSearchParams = new URLSearchParams();
@@ -43,27 +49,32 @@ export function createTasksPageURL(
   urlSearchParams.sort();
 
   const url = !urlSearchParams.size
-    ? "/tasks"
-    : `/tasks?${urlSearchParams.toString()}`;
+    ? `/${language}/tasks`
+    : `/${language}/tasks?${urlSearchParams.toString()}`;
 
   return url as Route;
 }
 
-export function createTaskPageURL(id: ITask["id"]): Route {
+export function createTaskPageURL(language: ILocale, id: ITask["id"]): Route {
   const urlSearchParams = new URLSearchParams([["task_id", id]]).toString();
-  const url = `/task?${urlSearchParams}`;
+  const url = `/${language}/task?${urlSearchParams}`;
 
-  return url as Route;
+  return url;
 }
 
-export function createTaskEditPageURL(id: ITask["id"]): Route {
+export function createTaskEditPageURL(
+  language: ILocale,
+  id: ITask["id"],
+): Route {
   const urlSearchParams = new URLSearchParams([["task_id", id]]).toString();
-  const url = `/task/edit?${urlSearchParams}`;
+  const url = `/${language}/task/edit?${urlSearchParams}`;
 
   return url as Route;
 }
 
-export const qrCodeReaderURL = "/qr-code-reader";
+export function creatQRCodeReaderURL(language: ILocale): Route {
+  return `/${language}/qr-code-reader` as Route;
+}
 
 interface ICreatePlacesPageURLParams {
   page?: number;
@@ -71,6 +82,7 @@ interface ICreatePlacesPageURLParams {
   query?: string;
 }
 export function createPlacesPageURL(
+  language: ILocale,
   searchParams?: ICreatePlacesPageURLParams,
 ): Route {
   const urlSearchParams = new URLSearchParams();
@@ -90,27 +102,34 @@ export function createPlacesPageURL(
   urlSearchParams.sort();
 
   const url = !urlSearchParams.size
-    ? "/places"
-    : `/places?${urlSearchParams.toString()}`;
+    ? `/${language}/places`
+    : `/${language}/places?${urlSearchParams.toString()}`;
 
   return url as Route;
 }
 
-export function createPlacePageURL(id: IPlace["id"]): Route {
+export function createPlacePageURL(language: ILocale, id: IPlace["id"]): Route {
   const urlSearchParams = new URLSearchParams([["place_id", id]]).toString();
 
-  const url = `/place?${urlSearchParams}`;
+  const url = `/${language}/place?${urlSearchParams}`;
 
   return url as Route;
 }
 
-export function createPlaceEditPageURL(id: IPlace["id"]): Route {
+export function createPlaceEditPageURL(
+  language: ILocale,
+  id: IPlace["id"],
+): Route {
   const urlSearchParams = new URLSearchParams([["place_id", id]]).toString();
 
-  const url = `/place/edit?${urlSearchParams}`;
+  const url = `/${language}/place/edit?${urlSearchParams}`;
 
   return url as Route;
 }
 
-export const accountPageURL = "/account";
-export const urlViewerPageURL = "/url-viewer";
+export function createAccountPageURL(language: ILocale): Route {
+  return `/${language}/account` as Route;
+}
+export function createURLViewerPageURL(language: ILocale) {
+  return `/${language}/url-viewer` as Route;
+}

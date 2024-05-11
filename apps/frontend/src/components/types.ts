@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import type { ILocalizationCommon } from "#lib/localization";
+import type { ILocale } from "#lib/internationalization";
 
 /**
  * Base props for components.
@@ -15,4 +16,8 @@ export type IBaseComponentPropsWithChildren<
 
 export interface ITranslatableProps {
   commonTranslation: ILocalizationCommon;
+}
+
+export interface ILocalizableProps {
+  language: ILocale
 }

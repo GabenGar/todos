@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ILocalization } from "#lib/localization";
 import { createTaskPageURL, createTasksPageURL } from "#lib/urls";
 import { Loading } from "#components";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
   Details,
   DetailsBody,
@@ -24,12 +24,14 @@ import {
 } from "#entities/task";
 
 interface IProps
-  extends ITranslatableProps,
+  extends ILocalizableProps,
+    ITranslatableProps,
     Pick<IEditTaskFormProps, "translation"> {
   pageTranslation: ILocalization["task_edit"];
 }
 
 export function Client({
+  language,
   commonTranslation,
   translation,
   pageTranslation,
@@ -62,7 +64,7 @@ export function Client({
                 {!currentTask ? (
                   <Loading />
                 ) : (
-                  <Link href={createTaskPageURL(currentTask.id)}>
+                  <Link href={createTaskPageURL(language, currentTask.id)}>
                     {pageTranslation.task}
                   </Link>
                 )}
@@ -99,7 +101,7 @@ export function Client({
                     disabled={Boolean(currentTask.deleted_at)}
                     onClick={async () => {
                       await removeTask(currentTask.id);
-                      const url = createTasksPageURL();
+                      const url = createTasksPageURL(language);
                       router.push(url);
                     }}
                   >

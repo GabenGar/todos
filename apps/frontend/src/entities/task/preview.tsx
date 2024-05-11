@@ -13,13 +13,13 @@ import {
 import { DateTime } from "#components/date";
 import { Link } from "#components/link";
 import { EntityDescription, EntityID } from "#components/entities";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
 
 import styles from "./preview.module.scss";
 
-interface IProps extends ITranslatableProps, IPreviewProps {
+interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
   task: ITask;
   translation: ILocalization["task"];
 }
@@ -31,7 +31,13 @@ interface IProps extends ITranslatableProps, IPreviewProps {
  */
 export const TaskPreview = createBlockComponent(styles, Component);
 
-function Component({ commonTranslation, translation, task, ...props }: IProps) {
+function Component({
+  language,
+  commonTranslation,
+  translation,
+  task,
+  ...props
+}: IProps) {
   const { id, title, description, status, created_at, updated_at, place } =
     task;
 
@@ -74,7 +80,10 @@ function Component({ commonTranslation, translation, task, ...props }: IProps) {
                   !place ? (
                     translation.place_unknown
                   ) : (
-                    <Link href={createPlacePageURL(place.id)} target="_blank">
+                    <Link
+                      href={createPlacePageURL(language, place.id)}
+                      target="_blank"
+                    >
                       {place.title ?? translation.place_unknown} ({place.id})
                     </Link>
                   )
@@ -106,7 +115,10 @@ function Component({ commonTranslation, translation, task, ...props }: IProps) {
           </PreviewBody>
 
           <PreviewFooter>
-            <Link className={styles.link} href={createTaskPageURL(id)}>
+            <Link
+              className={styles.link}
+              href={createTaskPageURL(language, id)}
+            >
               {translation.details}
             </Link>
           </PreviewFooter>

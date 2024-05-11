@@ -10,6 +10,7 @@ import {
 } from "#components/form/section";
 import { InputHidden, InputOption } from "#components/form/input";
 import { Link } from "#components/link";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import type { IPlace } from "#entities/place";
 import { ITask, isTaskStatus } from "./types";
 
@@ -21,9 +22,8 @@ export interface ITaskSearchQuery {
   place_id?: IPlace["id"];
 }
 
-export interface ISearchTasksFormProps {
+export interface ISearchTasksFormProps extends ILocalizableProps, ITranslatableProps {
   id: string;
-  commonTranslation: ILocalizationCommon;
   translation: ILocalization["todos"];
   statusTranslation: ILocalization["stats_tasks"]["status_values"];
   defaultQuery?: ITaskSearchQuery;
@@ -32,6 +32,7 @@ export interface ISearchTasksFormProps {
 }
 
 export function SearchTasksForm({
+  language,
   commonTranslation,
   translation,
   statusTranslation,
@@ -107,7 +108,7 @@ export function SearchTasksForm({
                 sections={[
                   [
                     FIELD.PLACE.label,
-                    <Link key="place" href={createPlacePageURL(place.id)}>
+                    <Link key="place" href={createPlacePageURL(language, place.id)}>
                       {place.title} ({place.id})
                     </Link>,
                   ],

@@ -10,16 +10,17 @@ import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
-import { homePageURL } from "#lib/urls";
+import { createHomePageURL } from "#lib/urls";
 import { Details } from "#components";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
+import type { ILocalizableProps } from "./types";
 
 import styles from "./global-navigation.module.scss";
 
-export function GlobalNavigation() {
+export function GlobalNavigation({ language }: ILocalizableProps) {
   const pathName = usePathname();
-  // @TODO rethink how it works when locale resolution moved to client
+  const homePageURL = createHomePageURL(language);
   const isActive = pathName === homePageURL;
 
   return (
@@ -109,10 +110,6 @@ function Language({ language }: { language: string }) {
 }
 
 function getRedirectedPathName(locale: string, pathName: string) {
-  if (!pathName) {
-    return "/";
-  }
-
   const segments = pathName.split("/");
   segments[1] = locale;
 
