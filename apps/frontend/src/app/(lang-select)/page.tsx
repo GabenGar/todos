@@ -8,7 +8,7 @@ import { List, ListItem } from "#components/list";
 import { LinkButton } from "#components/link";
 import { Details, DetailsBody } from "#components/details";
 
-import styles from "./page.module.scss"
+import styles from "./page.module.scss";
 
 export async function generateMetadata() {
   return {
@@ -49,8 +49,8 @@ function LocaleLink({ locale }: ILocalLinkProps) {
   return (
     <LinkButton className={styles.link} href={createHomePageURL(locale)}>
       <span>
-        <span className={styles.language}>{language}</span> {iso6391.getNativeName(language)} (
-        {iso6391.getName(language)})
+        <span className={styles.language}>{language}</span>{" "}
+        {iso6391.getNativeName(language)} ({iso6391.getName(language)})
       </span>
     </LinkButton>
   );

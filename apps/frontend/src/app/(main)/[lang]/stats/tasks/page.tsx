@@ -33,7 +33,11 @@ async function TasksStatsPage({ params }: IProps) {
       <Details headingLevel={2}>
         {(headingLevel) => (
           <DetailsHeader>
-            <Client language={lang} commonTranslation={common} translation={stats_tasks} />
+            <Client
+              language={lang}
+              commonTranslation={common}
+              translation={stats_tasks}
+            />
           </DetailsHeader>
         )}
       </Details>

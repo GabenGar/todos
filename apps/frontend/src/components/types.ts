@@ -19,5 +19,5 @@ export interface ITranslatableProps {
 }
 
 export interface ILocalizableProps {
-  language: ILocale
+  language: ILocale;
 }

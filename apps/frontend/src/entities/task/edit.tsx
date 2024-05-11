@@ -12,7 +12,9 @@ import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
 
 import statusStyles from "./status.module.scss";
 
-export interface IEditTaskFormProps extends  ILocalizableProps, ITranslatableProps {
+export interface IEditTaskFormProps
+  extends ILocalizableProps,
+    ITranslatableProps {
   translation: ILocalization["todos"];
   id: string;
   currentTask: ITask;

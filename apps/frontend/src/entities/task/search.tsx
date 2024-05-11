@@ -22,7 +22,9 @@ export interface ITaskSearchQuery {
   place_id?: IPlace["id"];
 }
 
-export interface ISearchTasksFormProps extends ILocalizableProps, ITranslatableProps {
+export interface ISearchTasksFormProps
+  extends ILocalizableProps,
+    ITranslatableProps {
   id: string;
   translation: ILocalization["todos"];
   statusTranslation: ILocalization["stats_tasks"]["status_values"];
@@ -108,7 +110,10 @@ export function SearchTasksForm({
                 sections={[
                   [
                     FIELD.PLACE.label,
-                    <Link key="place" href={createPlacePageURL(language, place.id)}>
+                    <Link
+                      key="place"
+                      href={createPlacePageURL(language, place.id)}
+                    >
                       {place.title} ({place.id})
                     </Link>,
                   ],

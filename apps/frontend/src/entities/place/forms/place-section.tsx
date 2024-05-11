@@ -26,7 +26,10 @@ import { type IPlace } from "../types";
 
 import styles from "./place-section.module.scss";
 
-interface IProps extends ILocalizableProps, ITranslatableProps, IInputSectionProps {
+interface IProps
+  extends ILocalizableProps,
+    ITranslatableProps,
+    IInputSectionProps {
   place?: IEntityItem;
   onPlaceChange?: (nextPlace: IEntityItem) => Promise<void>;
 }
