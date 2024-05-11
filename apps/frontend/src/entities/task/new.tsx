@@ -1,15 +1,17 @@
-import type { ILocalization, ILocalizationCommon } from "#lib/localization";
+import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import { InputOption } from "#components/form/input";
 import { InputSectionSelect, InputSectionText } from "#components/form/section";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { PlaceSection, type IPlace } from "#entities/place";
 import { type ITaskInit, isTaskStatus } from "./types";
 
 import styles from "./new.module.scss";
 import statusStyles from "./status.module.scss";
 
-export interface INewTaskFormProps {
-  commonTranslation: ILocalizationCommon;
+export interface INewTaskFormProps
+  extends ILocalizableProps,
+    ITranslatableProps {
   translation: ILocalization["todos"];
   id: string;
   place?: IPlace;
@@ -17,6 +19,7 @@ export interface INewTaskFormProps {
 }
 
 export function NewTaskForm({
+  language,
   commonTranslation,
   translation,
   id,
@@ -102,6 +105,7 @@ export function NewTaskForm({
           <PlaceSection
             // a dirty hack to force update on the component state
             key={place?.id}
+            language={language}
             commonTranslation={commonTranslation}
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}

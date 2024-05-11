@@ -12,7 +12,10 @@ import {
   DetailsHeader,
   type IDetailsProps,
 } from "#components/details";
-import { type ITranslatableProps } from "#components/types";
+import {
+  type ILocalizableProps,
+  type ITranslatableProps,
+} from "#components/types";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { IPlace, getPlace } from "#entities/place";
@@ -30,7 +33,8 @@ import { isTaskStatus, type ITask, type ITaskInit } from "./types";
 import styles from "./list.module.scss";
 
 interface IProps
-  extends ITranslatableProps,
+  extends ILocalizableProps,
+    ITranslatableProps,
     Pick<IDetailsProps, "headingLevel"> {
   translation: ILocalization["todos"];
   taskTranslation: ILocalization["task"];
@@ -42,6 +46,7 @@ interface IProps
  * @TODO move the state out of the component
  */
 export function TaskList({
+  language,
   commonTranslation,
   translation,
   taskTranslation,
@@ -79,7 +84,7 @@ export function TaskList({
       }
 
       if (page !== newTasks.pagination.currentPage) {
-        const newTasksURL = createTasksPageURL({
+        const newTasksURL = createTasksPageURL(language, {
           page: newTasks.pagination.currentPage,
           query: options.query,
           placeID: options.placeID,
@@ -100,13 +105,13 @@ export function TaskList({
     const newTasks = await getTasks(options);
 
     if (newTasks.pagination.totalPages !== tasks?.pagination.totalPages) {
-      const newOptions: Required<Parameters<typeof createTasksPageURL>>[0] = {
+      const newOptions: Required<Parameters<typeof createTasksPageURL>>[1] = {
         query: options.query,
         placeID: options.placeID,
         status: options.status,
         page: newTasks.pagination.totalPages,
       };
-      const newURL = createTasksPageURL(newOptions);
+      const newURL = createTasksPageURL(language, newOptions);
       router.replace(newURL);
 
       return;
@@ -123,7 +128,7 @@ export function TaskList({
       placeID: newQuery.place_id,
     });
 
-    const newURL = createTasksPageURL({
+    const newURL = createTasksPageURL(language, {
       page: pagination.currentPage,
       query: newQuery.query,
       status: newQuery.status,
@@ -136,6 +141,7 @@ export function TaskList({
   return (
     <>
       <Forms
+        language={language}
         commonTranslation={commonTranslation}
         translation={translation}
         statusTranslation={statusTranslation}
@@ -161,7 +167,7 @@ export function TaskList({
           commonTranslation={commonTranslation}
           pagination={tasks.pagination}
           buildURL={(page) => {
-            const url = createTasksPageURL({
+            const url = createTasksPageURL(language, {
               ...options,
               page,
             });
@@ -173,6 +179,7 @@ export function TaskList({
           {tasks.items.map((task) => (
             <TaskPreview
               key={task.id}
+              language={language}
               commonTranslation={commonTranslation}
               headingLevel={headingLevel}
               translation={taskTranslation}
@@ -188,6 +195,7 @@ export function TaskList({
 interface IFormsProps
   extends Pick<
       IProps,
+      | "language"
       | "commonTranslation"
       | "translation"
       | "statusTranslation"
@@ -205,6 +213,7 @@ interface IFormsProps
  * @TODO switch to `<details>` component
  */
 function Forms({
+  language,
   commonTranslation,
   translation,
   statusTranslation,
@@ -242,7 +251,7 @@ function Forms({
             <DetailsHeader>
               <List>
                 <ListItem>
-                  <Link href={createPlacePageURL(place.id)}>
+                  <Link href={createPlacePageURL(language, place.id)}>
                     {translation.new_todo.place}
                   </Link>
                 </ListItem>
@@ -254,6 +263,7 @@ function Forms({
             <details>
               <summary style={{ cursor: "pointer" }}>{search}</summary>
               <SearchTasksForm
+                language={language}
                 commonTranslation={commonTranslation}
                 translation={translation}
                 statusTranslation={statusTranslation}
@@ -267,6 +277,7 @@ function Forms({
             <details>
               <summary style={{ cursor: "pointer" }}>{add}</summary>
               <NewTaskForm
+                language={language}
                 commonTranslation={commonTranslation}
                 translation={translation}
                 id={newFormID}

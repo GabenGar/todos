@@ -22,7 +22,7 @@ import {
 } from "#components/details";
 import { EntityDescription, EntityID } from "#components/entities";
 import { List, ListItem } from "#components/list";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
 import { TaskStatus } from "./status";
@@ -30,7 +30,10 @@ import type { ITask } from "./types";
 
 import styles from "./details.module.scss";
 
-export interface ITaskDetailsProps extends ITranslatableProps, IDetailsProps {
+export interface ITaskDetailsProps
+  extends ILocalizableProps,
+    ITranslatableProps,
+    IDetailsProps {
   translation: ILocalization["task"];
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
@@ -42,6 +45,7 @@ export interface ITaskDetailsProps extends ITranslatableProps, IDetailsProps {
 export const TaskDetails = createBlockComponent(styles, Component);
 
 function Component({
+  language,
   commonTranslation,
   translation,
   taskID,
@@ -139,7 +143,10 @@ function Component({
                   !place ? (
                     translation.place_unknown
                   ) : (
-                    <Link href={createPlacePageURL(place.id)} target="_blank">
+                    <Link
+                      href={createPlacePageURL(language, place.id)}
+                      target="_blank"
+                    >
                       {place.title ?? translation.place_unknown} ({place.id})
                     </Link>
                   )
@@ -250,7 +257,7 @@ function Component({
 
             <List>
               <ListItem>
-                <LinkButton href={createTaskEditPageURL(id)}>
+                <LinkButton href={createTaskEditPageURL(language, id)}>
                   {translation.edit}
                 </LinkButton>
               </ListItem>

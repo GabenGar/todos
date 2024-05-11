@@ -13,12 +13,12 @@ import {
 } from "#components/preview";
 import { DateTime } from "#components/date";
 import { Link } from "#components/link";
-import { ITranslatableProps } from "#components/types";
+import { ITranslatableProps, type ILocalizableProps } from "#components/types";
 import type { IPlace } from "./types";
 
 import styles from "./preview.module.scss";
 
-interface IProps extends ITranslatableProps, IPreviewProps {
+interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
   translation: ILocalization["place"];
   place: IPlace;
 }
@@ -29,6 +29,7 @@ interface IProps extends ITranslatableProps, IPreviewProps {
 export const PlacePreview = createBlockComponent(styles, Component);
 
 function Component({
+  language,
   commonTranslation,
   translation,
   place,
@@ -83,7 +84,10 @@ function Component({
           </PreviewBody>
 
           <PreviewFooter>
-            <Link className={styles.link} href={createPlacePageURL(id)}>
+            <Link
+              className={styles.link}
+              href={createPlacePageURL(language, id)}
+            >
               {translation.details}
             </Link>
           </PreviewFooter>

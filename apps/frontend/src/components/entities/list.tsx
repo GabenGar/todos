@@ -14,7 +14,6 @@ import type {
   ITranslatableProps,
 } from "#components/types";
 import { Loading } from "components/loading";
-import { toJSONPretty } from "#lib/json";
 
 interface IProps<IEntityType extends IEntityItem>
   extends IBaseComponentProps<"div">,
