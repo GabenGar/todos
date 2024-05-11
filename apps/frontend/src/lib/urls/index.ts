@@ -59,7 +59,7 @@ export function createTaskPageURL(language: ILocale, id: ITask["id"]): Route {
   const urlSearchParams = new URLSearchParams([["task_id", id]]).toString();
   const url = `/${language}/task?${urlSearchParams}`;
 
-  return url;
+  return url as Route;
 }
 
 export function createTaskEditPageURL(

@@ -5,14 +5,14 @@ import {
   InputSectionSelect,
   InputSectionText,
 } from "#components/form/section";
-import type { ITranslatableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { InputOption } from "#components/form/input";
 import { PlaceSection } from "#entities/place";
 import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
 
 import statusStyles from "./status.module.scss";
 
-export interface IEditTaskFormProps extends ITranslatableProps {
+export interface IEditTaskFormProps extends  ILocalizableProps, ITranslatableProps {
   translation: ILocalization["todos"];
   id: string;
   currentTask: ITask;
@@ -20,6 +20,7 @@ export interface IEditTaskFormProps extends ITranslatableProps {
 }
 
 export function EditTaskForm({
+  language,
   commonTranslation,
   translation,
   id,
@@ -110,6 +111,7 @@ export function EditTaskForm({
 
           <PlaceSection
             key={currentTask.place?.id}
+            language={language}
             commonTranslation={commonTranslation}
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}

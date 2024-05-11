@@ -30,7 +30,11 @@ async function PlacesPage({ params }: IProps) {
   return (
     <Page heading={places.heading}>
       <Suspense>
-        <Client commonTranslation={common} translation={place} />
+        <Client
+          language={lang}
+          commonTranslation={common}
+          translation={place}
+        />
       </Suspense>
     </Page>
   );

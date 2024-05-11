@@ -32,7 +32,11 @@ async function PlaceEditPage({ params }: IProps) {
   return (
     <Page heading={heading}>
       <Suspense>
-        <Client commonTranslation={common} translation={place} />
+        <Client
+          language={lang}
+          commonTranslation={common}
+          translation={place}
+        />
       </Suspense>
     </Page>
   );

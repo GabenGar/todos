@@ -145,6 +145,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         >
           {places.items.map((place) => (
             <PlacePreview
+              language={language}
               commonTranslation={commonTranslation}
               translation={translation}
               headingLevel={2}

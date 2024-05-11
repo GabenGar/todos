@@ -77,6 +77,7 @@ export function Client({
               <Loading />
             ) : (
               <EditTaskForm
+                language={language}
                 commonTranslation={commonTranslation}
                 translation={translation}
                 id="edit-task"

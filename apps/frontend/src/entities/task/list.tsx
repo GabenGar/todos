@@ -179,6 +179,7 @@ export function TaskList({
           {tasks.items.map((task) => (
             <TaskPreview
               key={task.id}
+              language={language}
               commonTranslation={commonTranslation}
               headingLevel={headingLevel}
               translation={taskTranslation}
@@ -262,6 +263,7 @@ function Forms({
             <details>
               <summary style={{ cursor: "pointer" }}>{search}</summary>
               <SearchTasksForm
+                language={language}
                 commonTranslation={commonTranslation}
                 translation={translation}
                 statusTranslation={statusTranslation}
@@ -275,6 +277,7 @@ function Forms({
             <details>
               <summary style={{ cursor: "pointer" }}>{add}</summary>
               <NewTaskForm
+                language={language}
                 commonTranslation={commonTranslation}
                 translation={translation}
                 id={newFormID}

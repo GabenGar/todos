@@ -32,6 +32,7 @@ async function TaskEditPage({ params }: IProps) {
     <Page heading={task_edit.heading}>
       <Suspense>
         <Client
+          language={lang}
           commonTranslation={common}
           translation={todos}
           pageTranslation={task_edit}

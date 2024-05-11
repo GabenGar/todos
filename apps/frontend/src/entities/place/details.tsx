@@ -91,6 +91,7 @@ function Component({
               {translation["Tasks"]}
             </Heading>
             <TasksStats
+              language={language}
               commonTranslation={commonTranslation}
               translation={taskTranslation}
               placeID={place.id}

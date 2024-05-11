@@ -30,6 +30,7 @@ async function PlaceDetailsPage({ params }: IProps) {
     <Page heading={pages.place.heading}>
       <Suspense>
         <Client
+          language={lang}
           commonTranslation={common}
           translation={place}
           taskTranslation={stats_tasks}

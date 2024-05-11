@@ -14,10 +14,11 @@ import { DetailsPlaceHolder } from "#components/details";
 interface IProps
   extends Pick<
     IPlaceDetailsProps,
-    "commonTranslation" | "translation" | "taskTranslation"
+    "language" | "commonTranslation" | "translation" | "taskTranslation"
   > {}
 
 export function Client({
+  language,
   commonTranslation,
   translation,
   taskTranslation,
@@ -43,6 +44,7 @@ export function Client({
     <DetailsPlaceHolder headingLevel={2} />
   ) : (
     <PlaceDetails
+      language={language}
       commonTranslation={commonTranslation}
       translation={translation}
       taskTranslation={taskTranslation}

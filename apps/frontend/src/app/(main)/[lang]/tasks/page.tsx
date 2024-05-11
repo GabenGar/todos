@@ -27,12 +27,13 @@ async function TodosPage({ params }: IProps) {
     <Page heading={todos.heading}>
       <Suspense>
         <TaskList
-          headingLevel={2}
+          language={lang}
           commonTranslation={common}
+          headingLevel={2}
           taskTranslation={task}
           statusTranslation={stats_tasks.status_values}
           translation={todos}
-          id={"tasks"}
+          id="tasks"
         />
       </Suspense>
     </Page>

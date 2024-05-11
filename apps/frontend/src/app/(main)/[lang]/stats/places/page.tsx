@@ -35,6 +35,7 @@ async function PlacesStatsPage({ params }: IProps) {
         {(headingLevel) => (
           <DetailsHeader>
             <PlacesStats
+              language={lang}
               commonTranslation={common}
               translation={stats_places}
             />

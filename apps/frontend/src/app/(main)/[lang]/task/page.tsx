@@ -29,7 +29,7 @@ async function TaskDetailsPage({ params }: IProps) {
   return (
     <Page heading={task.heading}>
       <Suspense>
-        <Client commonTranslation={common} translation={task} />
+        <Client language={lang} commonTranslation={common} translation={task} />
       </Suspense>
     </Page>
   );

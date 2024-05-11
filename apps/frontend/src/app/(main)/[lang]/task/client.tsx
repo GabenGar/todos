@@ -1,14 +1,18 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { type ITranslatableProps } from "#components/types";
+import {
+  type ILocalizableProps,
+  type ITranslatableProps,
+} from "#components/types";
 import { type ITaskDetailsProps, TaskDetails } from "#entities/task";
 
 interface IProps
-  extends ITranslatableProps,
+  extends ILocalizableProps,
+    ITranslatableProps,
     Pick<ITaskDetailsProps, "translation"> {}
 
-export function Client({ commonTranslation, translation }: IProps) {
+export function Client({ language, commonTranslation, translation }: IProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const taskID = searchParams.get("task_id")?.trim();
@@ -21,6 +25,7 @@ export function Client({ commonTranslation, translation }: IProps) {
 
   return (
     <TaskDetails
+      language={language}
       commonTranslation={commonTranslation}
       translation={translation}
       headingLevel={2}

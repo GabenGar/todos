@@ -4,6 +4,9 @@
 import { useEffect } from "react";
 import { logError } from "#lib/logs";
 
+/**
+ * @TODO multilang
+ */
 function PageError({ error, reset }: { error: Error; reset: () => void }) {
   useEffect(() => {
     // Log the error to an error reporting service
