@@ -19,7 +19,7 @@ import {
   DetailsFooter,
   DetailsHeader,
   type IDetailsProps,
-} from "#components/details";
+} from "#components/overview";
 import { EntityDescription, EntityID } from "#components/entities";
 import { List, ListItem } from "#components/list";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";

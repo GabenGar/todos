@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import { Details, DetailsHeader } from "#components/details";
+import { Details, DetailsHeader } from "#components/overview";
 import type { IBasePageParams } from "#pages/types";
 import { PlacesStats } from "./list";
 

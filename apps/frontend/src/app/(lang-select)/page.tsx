@@ -6,7 +6,7 @@ import { createHomePageURL } from "#lib/urls";
 import { Page } from "#components";
 import { List, ListItem } from "#components/list";
 import { LinkButton } from "#components/link";
-import { Details, DetailsBody } from "#components/details";
+import { Details, DetailsBody } from "#components/overview";
 
 import styles from "./page.module.scss";
 

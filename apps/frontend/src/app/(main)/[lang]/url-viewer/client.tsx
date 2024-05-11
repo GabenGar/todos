@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ILocalizationPage } from "#lib/localization";
-import { Details, DetailsBody, DetailsHeader } from "#components/details";
+import { Details, DetailsBody, DetailsHeader } from "#components/overview";
 import { type ITranslatableProps } from "#components/types";
 import { URLViewerForm } from "./form";
 import { URLViewer } from "./viewer";

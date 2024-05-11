@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { ILocalization } from "#lib/localization";
 import { DescriptionList, DescriptionSection } from "#components";
-import { Details, DetailsBody, DetailsHeader } from "#components/details";
+import { Details, DetailsBody, DetailsHeader } from "#components/overview";
 import type { ITranslatableProps } from "#components/types";
 import { QRCodeReaderForm } from "./form";
 

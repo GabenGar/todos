@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
 import { createPlacesPageURL } from "#lib/urls";
 import { Loading } from "#components";
-import { Details, DetailsHeader } from "#components/details";
+import { Details, DetailsHeader } from "#components/overview";
 import { PreviewList } from "#components/preview";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {

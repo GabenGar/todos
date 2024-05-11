@@ -11,7 +11,7 @@ import {
   DetailsBody,
   DetailsHeader,
   type IDetailsProps,
-} from "#components/details";
+} from "#components/overview";
 import {
   type ILocalizableProps,
   type ITranslatableProps,

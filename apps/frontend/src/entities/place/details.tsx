@@ -11,7 +11,7 @@ import {
   DetailsFooter,
   DetailsHeader,
   type IDetailsProps,
-} from "#components/details";
+} from "#components/overview";
 import { EntityDescription, EntityID } from "#components/entities";
 import { LinkButton } from "#components/link";
 import { List, ListItem } from "#components/list";

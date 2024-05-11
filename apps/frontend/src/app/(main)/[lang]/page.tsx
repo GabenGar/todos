@@ -10,7 +10,7 @@ import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
 import { Page } from "#components";
 import { Link } from "#components/link";
-import { Details, DetailsHeader } from "#components/details";
+import { Details, DetailsHeader } from "#components/overview";
 import { List, ListItem } from "#components/list";
 
 import styles from "./page.module.scss";

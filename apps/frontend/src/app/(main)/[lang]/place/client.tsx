@@ -9,7 +9,7 @@ import {
   IPlace,
   getPlace,
 } from "#entities/place";
-import { DetailsPlaceHolder } from "#components/details";
+import { DetailsPlaceHolder } from "#components/overview";
 
 interface IProps
   extends Pick<

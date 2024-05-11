@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import type { ILocalization, ILocalizationPage } from "#lib/localization";
 import { useClient } from "#hooks";
 import type { ITranslatableProps } from "#components/types";
-import { Details, DetailsBody, DetailsHeader } from "#components/details";
+import { Details, DetailsBody, DetailsHeader } from "#components/overview";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";

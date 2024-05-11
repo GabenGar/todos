@@ -11,7 +11,7 @@ import {
   DetailsBody,
   DetailsFooter,
   DetailsHeader,
-} from "#components/details";
+} from "#components/overview";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { Button } from "#components/button";
