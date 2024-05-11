@@ -1,33 +1,33 @@
 import { Loading } from "#components";
 import { Heading } from "#components/heading";
 import {
-  Details,
-  DetailsBody,
-  DetailsFooter,
-  DetailsHeader,
-  IDetailsProps,
-} from "./details";
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+  IOverviewProps,
+} from "./overview";
 
-interface IProps extends Pick<IDetailsProps, "headingLevel"> {}
+interface IProps extends Pick<IOverviewProps, "headingLevel"> {}
 
-export function DetailsPlaceHolder({ ...props }: IProps) {
+export function OverviewPlaceHolder({ ...props }: IProps) {
   return (
-    <Details {...props}>
+    <Overview {...props}>
       {(headinglevel) => (
         <>
-          <DetailsHeader>
+          <OverviewHeader>
             <Heading level={headinglevel}>
               <Loading />
             </Heading>
-          </DetailsHeader>
-          <DetailsBody>
+          </OverviewHeader>
+          <OverviewBody>
             <Loading />
-          </DetailsBody>
-          <DetailsFooter>
+          </OverviewBody>
+          <OverviewFooter>
             <Loading />
-          </DetailsFooter>
+          </OverviewFooter>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }
