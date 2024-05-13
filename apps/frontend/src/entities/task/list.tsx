@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL, createTasksPageURL } from "#lib/urls";
-import { Loading } from "#components";
+import { Details, Loading } from "#components";
 import { PreviewList } from "#components/preview";
 import {
-  Details,
-  DetailsBody,
-  DetailsHeader,
-  type IDetailsProps,
+  Overview,
+  OverviewBody,
+  OverviewHeader,
+  type IOverviewProps,
 } from "#components/overview";
 import {
   type ILocalizableProps,
@@ -35,7 +35,7 @@ import styles from "./list.module.scss";
 interface IProps
   extends ILocalizableProps,
     ITranslatableProps,
-    Pick<IDetailsProps, "headingLevel"> {
+    Pick<IOverviewProps, "headingLevel"> {
   translation: ILocalization["todos"];
   taskTranslation: ILocalization["task"];
   statusTranslation: ILocalization["stats_tasks"]["status_values"];
@@ -155,13 +155,13 @@ export function TaskList({
       />
 
       {!tasks ? (
-        <Details headingLevel={headingLevel}>
+        <Overview headingLevel={headingLevel}>
           {() => (
-            <DetailsBody>
+            <OverviewHeader>
               <Loading />
-            </DetailsBody>
+            </OverviewHeader>
           )}
-        </Details>
+        </Overview>
       ) : (
         <PreviewList
           commonTranslation={commonTranslation}
@@ -209,9 +209,6 @@ interface IFormsProps
   placeID?: IPlace["id"];
 }
 
-/**
- * @TODO switch to `<details>` component
- */
 function Forms({
   language,
   commonTranslation,
@@ -244,11 +241,11 @@ function Forms({
   }, [placeID]);
 
   return (
-    <Details headingLevel={headingLevel}>
+    <Overview headingLevel={headingLevel}>
       {() => (
         <>
           {place && (
-            <DetailsHeader>
+            <OverviewHeader>
               <List>
                 <ListItem>
                   <Link href={createPlacePageURL(language, place.id)}>
@@ -256,12 +253,11 @@ function Forms({
                   </Link>
                 </ListItem>
               </List>
-            </DetailsHeader>
+            </OverviewHeader>
           )}
 
-          <DetailsBody>
-            <details>
-              <summary style={{ cursor: "pointer" }}>{search}</summary>
+          <OverviewBody>
+            <Details summary={search}>
               <SearchTasksForm
                 language={language}
                 commonTranslation={commonTranslation}
@@ -272,10 +268,9 @@ function Forms({
                 place={place}
                 onSearch={onSearch}
               />
-            </details>
+            </Details>
 
-            <details>
-              <summary style={{ cursor: "pointer" }}>{add}</summary>
+            <Details summary={add}>
               <NewTaskForm
                 language={language}
                 commonTranslation={commonTranslation}
@@ -284,10 +279,10 @@ function Forms({
                 place={place}
                 onNewTask={onNewTask}
               />
-            </details>
-          </DetailsBody>
+            </Details>
+          </OverviewBody>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }

@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
 import { createPlacesPageURL } from "#lib/urls";
-import { Loading } from "#components";
-import { Details, DetailsHeader } from "#components/overview";
+import { Details, Loading } from "#components";
+import { Overview, OverviewHeader } from "#components/overview";
 import { PreviewList } from "#components/preview";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
@@ -97,23 +97,19 @@ export function Client({ language, commonTranslation, translation }: IProps) {
 
   return (
     <>
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {(headingLevel) => (
-          <DetailsHeader>
-            <details style={{ width: "100%" }}>
-              <summary style={{ cursor: "pointer" }}>{translation.add}</summary>
+          <OverviewHeader>
+            <Details summary={translation.add} >
               <PlaceCreateForm
                 commonTranslation={commonTranslation}
                 translation={translation}
                 id="create-place"
                 onNewPlace={handlePlaceCreation}
               />
-            </details>
+            </Details>
 
-            <details style={{ width: "100%" }} open={Boolean(query)}>
-              <summary style={{ cursor: "pointer" }}>
-                {translation.search["Search"]}
-              </summary>
+            <Details summary={translation.search["Search"]} open={Boolean(query)}>
               <SearchPlacesForm
                 commonTranslation={commonTranslation}
                 translation={translation}
@@ -121,19 +117,19 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 defaultQuery={options}
                 onSearch={handlePlaceSearch}
               />
-            </details>
-          </DetailsHeader>
+            </Details>
+          </OverviewHeader>
         )}
-      </Details>
+      </Overview>
 
       {!places ? (
         <Loading />
       ) : places.pagination.totalCount === 0 ? (
-        <Details headingLevel={2}>
+        <Overview headingLevel={2}>
           {() => (
-            <DetailsHeader>{translation["No places found"]}</DetailsHeader>
+            <OverviewHeader>{translation["No places found"]}</OverviewHeader>
           )}
-        </Details>
+        </Overview>
       ) : (
         <PreviewList
           pagination={places.pagination}
