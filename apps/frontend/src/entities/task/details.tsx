@@ -14,12 +14,12 @@ import { Link, LinkButton } from "#components/link";
 import { DateTime } from "#components/date";
 import { Button } from "#components/button";
 import {
-  Details,
-  DetailsBody,
-  DetailsFooter,
-  DetailsHeader,
-  type IDetailsProps,
-} from "#components/details";
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+  type IOverviewProps,
+} from "#components/overview";
 import { EntityDescription, EntityID } from "#components/entities";
 import { List, ListItem } from "#components/list";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
@@ -30,10 +30,10 @@ import type { ITask } from "./types";
 
 import styles from "./details.module.scss";
 
-export interface ITaskDetailsProps
+export interface ITaskOverviewProps
   extends ILocalizableProps,
     ITranslatableProps,
-    IDetailsProps {
+    IOverviewProps {
   translation: ILocalization["task"];
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
@@ -42,7 +42,7 @@ export interface ITaskDetailsProps
 /**
  * @TODO move param logic out of it
  */
-export const TaskDetails = createBlockComponent(styles, Component);
+export const TaskOverview = createBlockComponent(styles, Component);
 
 function Component({
   language,
@@ -51,7 +51,7 @@ function Component({
   taskID,
   onEdit,
   ...props
-}: ITaskDetailsProps) {
+}: ITaskOverviewProps) {
   const router = useRouter();
   const [task, changeTask] = useState<Awaited<ReturnType<typeof getTask>>>();
 
@@ -73,21 +73,21 @@ function Component({
 
   if (!task) {
     return (
-      <Details {...props}>
+      <Overview {...props}>
         {(headinglevel) => (
           <>
-            <DetailsHeader>
+            <OverviewHeader>
               <Loading />
-            </DetailsHeader>
-            <DetailsBody>
+            </OverviewHeader>
+            <OverviewBody>
               <Loading />
-            </DetailsBody>
-            <DetailsFooter>
+            </OverviewBody>
+            <OverviewFooter>
               <Loading />
-            </DetailsFooter>
+            </OverviewFooter>
           </>
         )}
-      </Details>
+      </Overview>
     );
   }
 
@@ -103,19 +103,19 @@ function Component({
   } = task;
 
   return (
-    <Details {...props}>
+    <Overview {...props}>
       {(headinglevel) => (
         <>
-          <DetailsHeader>
+          <OverviewHeader>
             <Heading level={headinglevel}>{title}</Heading>
             <EntityID
               className={styles.id}
               commonTranslation={commonTranslation}
               entityID={id}
             />
-          </DetailsHeader>
+          </OverviewHeader>
 
-          <DetailsBody>
+          <OverviewBody>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
@@ -176,9 +176,9 @@ function Component({
                 }
               />
             </DescriptionList>
-          </DetailsBody>
+          </OverviewBody>
 
-          <DetailsFooter className={styles.footer}>
+          <OverviewFooter className={styles.footer}>
             {/* @TODO two-layer group */}
             <List className={styles.actions}>
               <ListItem>
@@ -262,9 +262,9 @@ function Component({
                 </LinkButton>
               </ListItem>
             </List>
-          </DetailsFooter>
+          </OverviewFooter>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }

@@ -3,17 +3,17 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { notFoundURL } from "#lib/urls";
+import { OverviewPlaceHolder } from "#components/overview";
 import {
-  type IPlaceDetailsProps,
-  PlaceDetails,
-  IPlace,
+  type IPlaceOverviewProps,
+  PlaceOverview,
+  type IPlace,
   getPlace,
 } from "#entities/place";
-import { DetailsPlaceHolder } from "#components/details";
 
 interface IProps
   extends Pick<
-    IPlaceDetailsProps,
+    IPlaceOverviewProps,
     "language" | "commonTranslation" | "translation" | "taskTranslation"
   > {}
 
@@ -41,9 +41,9 @@ export function Client({
   }, [placeID]);
 
   return !place ? (
-    <DetailsPlaceHolder headingLevel={2} />
+    <OverviewPlaceHolder headingLevel={2} />
   ) : (
-    <PlaceDetails
+    <PlaceOverview
       language={language}
       commonTranslation={commonTranslation}
       translation={translation}

@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import { Details, DetailsHeader } from "#components/details";
+import { Overview, OverviewHeader } from "#components/overview";
 import type { IBasePageParams } from "#pages/types";
 import { Client } from "./client";
 
@@ -30,17 +30,17 @@ async function TasksStatsPage({ params }: IProps) {
 
   return (
     <Page heading={stats_tasks.heading}>
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {(headingLevel) => (
-          <DetailsHeader>
+          <OverviewHeader>
             <Client
               language={lang}
               commonTranslation={common}
               translation={stats_tasks}
             />
-          </DetailsHeader>
+          </OverviewHeader>
         )}
-      </Details>
+      </Overview>
     </Page>
   );
 }

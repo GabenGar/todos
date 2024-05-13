@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { createPlacePageURL } from "#lib/urls";
 import { Loading } from "#components";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import { Details, DetailsBody, DetailsHeader } from "#components/details";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import {
@@ -42,10 +42,10 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   }, [placeID]);
 
   return (
-    <Details headingLevel={2}>
+    <Overview headingLevel={2}>
       {(headingLevel) => (
         <>
-          <DetailsHeader>
+          <OverviewHeader>
             <List>
               <ListItem>
                 {!currentPlace ? (
@@ -57,9 +57,9 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 )}
               </ListItem>
             </List>
-          </DetailsHeader>
+          </OverviewHeader>
 
-          <DetailsBody>
+          <OverviewBody>
             {!currentPlace ? (
               <Loading />
             ) : (
@@ -75,9 +75,9 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 }}
               />
             )}
-          </DetailsBody>
+          </OverviewBody>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }

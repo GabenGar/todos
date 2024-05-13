@@ -1,3 +1,5 @@
+import "../../../styles/global.scss";
+
 import type { ReactNode } from "react";
 import { type Metadata } from "next";
 import { REPOSITORY_URL, SITE_ORIGIN, SITE_TITLE } from "#environment";
@@ -9,7 +11,6 @@ import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import type { IBasePageParams } from "#pages/types";
 
-import "../../../styles/global.scss";
 import styles from "./layout.module.scss";
 
 interface IProps {

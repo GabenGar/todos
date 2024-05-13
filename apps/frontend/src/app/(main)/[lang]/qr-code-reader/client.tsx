@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { ILocalization } from "#lib/localization";
 import { DescriptionList, DescriptionSection } from "#components";
-import { Details, DetailsBody, DetailsHeader } from "#components/details";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import type { ITranslatableProps } from "#components/types";
 import { QRCodeReaderForm } from "./form";
 
@@ -15,28 +15,28 @@ export function Client({ commonTranslation, translation }: IProps) {
   const [content, changeContent] = useState<string>();
 
   return (
-    <Details headingLevel={2}>
+    <Overview headingLevel={2}>
       {() => (
         <>
-          <DetailsHeader>
+          <OverviewHeader>
             <QRCodeReaderForm
               commonTranslation={commonTranslation}
               translation={translation}
               id="qr-code-reader"
               onSuccessfulScan={async (result) => changeContent(result)}
             />
-          </DetailsHeader>
+          </OverviewHeader>
 
-          <DetailsBody>
+          <OverviewBody>
             <DescriptionList>
               <DescriptionSection
                 dKey={translation.result}
                 dValue={content ?? translation.no_result}
               />
             </DescriptionList>
-          </DetailsBody>
+          </OverviewBody>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }

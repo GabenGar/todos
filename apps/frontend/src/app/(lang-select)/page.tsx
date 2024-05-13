@@ -6,7 +6,7 @@ import { createHomePageURL } from "#lib/urls";
 import { Page } from "#components";
 import { List, ListItem } from "#components/list";
 import { LinkButton } from "#components/link";
-import { Details, DetailsBody } from "#components/details";
+import { Overview, OverviewBody } from "#components/overview";
 
 import styles from "./page.module.scss";
 
@@ -23,9 +23,9 @@ export async function generateMetadata() {
 async function FrontPage() {
   return (
     <Page heading={SITE_TITLE}>
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {(headingLevel) => (
-          <DetailsBody>
+          <OverviewBody>
             <List className={styles.list}>
               {LOCALES.map((locale) => (
                 <ListItem key={locale} className={styles.item}>
@@ -33,9 +33,9 @@ async function FrontPage() {
                 </ListItem>
               ))}
             </List>
-          </DetailsBody>
+          </OverviewBody>
         )}
-      </Details>
+      </Overview>
     </Page>
   );
 }
