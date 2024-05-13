@@ -5,12 +5,12 @@ import {
   type ILocalizableProps,
   type ITranslatableProps,
 } from "#components/types";
-import { type ITaskDetailsProps, TaskDetails } from "#entities/task";
+import { type ITaskOverviewProps, TaskOverview } from "#entities/task";
 
 interface IProps
   extends ILocalizableProps,
     ITranslatableProps,
-    Pick<ITaskDetailsProps, "translation"> {}
+    Pick<ITaskOverviewProps, "translation"> {}
 
 export function Client({ language, commonTranslation, translation }: IProps) {
   const searchParams = useSearchParams();
@@ -24,7 +24,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   }
 
   return (
-    <TaskDetails
+    <TaskOverview
       language={language}
       commonTranslation={commonTranslation}
       translation={translation}

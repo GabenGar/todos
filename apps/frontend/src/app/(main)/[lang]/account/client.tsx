@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { ILocalization, ILocalizationPage } from "#lib/localization";
+import type { ILocalizationPage } from "#lib/localization";
 import { useClient } from "#hooks";
 import type { ITranslatableProps } from "#components/types";
-import { Details, DetailsBody, DetailsHeader } from "#components/overview";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
@@ -22,19 +22,19 @@ export function Client({ commonTranslation, translation }: IProps) {
 
   return (
     <>
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
-            <DetailsHeader>
+            <OverviewHeader>
               <Heading
                 // @ts-expect-error type widening
                 level={headingLevel + 1}
               >
                 {translation["Data"]}
               </Heading>
-            </DetailsHeader>
+            </OverviewHeader>
 
-            <DetailsBody>
+            <OverviewBody>
               <Heading
                 // @ts-expect-error type widening
                 level={headingLevel + 2}
@@ -55,41 +55,41 @@ export function Client({ commonTranslation, translation }: IProps) {
                 id="import-data-export"
                 onSuccess={async () => router.refresh()}
               />
-            </DetailsBody>
+            </OverviewBody>
           </>
         )}
-      </Details>
+      </Overview>
 
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
-            <DetailsHeader>
+            <OverviewHeader>
               <Heading
                 // @ts-expect-error type widening
                 level={headingLevel + 1}
               >
                 {translation["Compatibility"]}
               </Heading>
-            </DetailsHeader>
-            <DetailsBody>
+            </OverviewHeader>
+            <OverviewBody>
               <Compatibility translation={translation} />
-            </DetailsBody>
+            </OverviewBody>
           </>
         )}
-      </Details>
+      </Overview>
 
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
-            <DetailsHeader>
+            <OverviewHeader>
               <Heading
                 // @ts-expect-error type widening
                 level={headingLevel + 1}
               >
                 {translation["Settings"]}
               </Heading>
-            </DetailsHeader>
-            <DetailsBody>
+            </OverviewHeader>
+            <OverviewBody>
               {!clientInfo.isClient ? (
                 <Loading />
               ) : (
@@ -104,10 +104,10 @@ export function Client({ commonTranslation, translation }: IProps) {
                   }}
                 />
               )}
-            </DetailsBody>
+            </OverviewBody>
           </>
         )}
-      </Details>
+      </Overview>
     </>
   );
 }

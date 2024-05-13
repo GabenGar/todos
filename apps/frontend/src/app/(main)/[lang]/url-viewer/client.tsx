@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ILocalizationPage } from "#lib/localization";
-import { Details, DetailsBody, DetailsHeader } from "#components/overview";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { type ITranslatableProps } from "#components/types";
 import { URLViewerForm } from "./form";
 import { URLViewer } from "./viewer";
@@ -15,10 +15,10 @@ export function Client({ commonTranslation, translation }: IProps) {
   const [currentURL, changeCurrentURL] = useState<URL>();
 
   return (
-    <Details headingLevel={2}>
+    <Overview headingLevel={2}>
       {(headingLevel) => (
         <>
-          <DetailsHeader>
+          <OverviewHeader>
             <URLViewerForm
               commonTranslation={commonTranslation}
               translation={translation}
@@ -27,9 +27,9 @@ export function Client({ commonTranslation, translation }: IProps) {
                 changeCurrentURL(newURL);
               }}
             />
-          </DetailsHeader>
+          </OverviewHeader>
 
-          <DetailsBody>
+          <OverviewBody>
             {!currentURL ? (
               translation["No URL selected."]
             ) : (
@@ -39,9 +39,9 @@ export function Client({ commonTranslation, translation }: IProps) {
                 url={currentURL}
               />
             )}
-          </DetailsBody>
+          </OverviewBody>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }

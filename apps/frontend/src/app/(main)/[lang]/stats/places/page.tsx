@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import { Details, DetailsHeader } from "#components/overview";
+import { Overview, OverviewHeader } from "#components/overview";
 import type { IBasePageParams } from "#pages/types";
 import { PlacesStats } from "./list";
 
@@ -31,17 +31,17 @@ async function PlacesStatsPage({ params }: IProps) {
 
   return (
     <Page heading={stats_places.heading}>
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {(headingLevel) => (
-          <DetailsHeader>
+          <OverviewHeader>
             <PlacesStats
               language={lang}
               commonTranslation={common}
               translation={stats_places}
             />
-          </DetailsHeader>
+          </OverviewHeader>
         )}
-      </Details>
+      </Overview>
     </Page>
   );
 }

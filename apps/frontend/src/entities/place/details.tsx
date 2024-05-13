@@ -6,11 +6,11 @@ import { ITranslatableProps, type ILocalizableProps } from "#components/types";
 import { Heading, type IHeadingLevel } from "#components/heading";
 import { DateTime } from "#components/date";
 import {
-  Details,
-  DetailsBody,
-  DetailsFooter,
-  DetailsHeader,
-  type IDetailsProps,
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+  type IOverviewProps,
 } from "#components/overview";
 import { EntityDescription, EntityID } from "#components/entities";
 import { LinkButton } from "#components/link";
@@ -20,8 +20,8 @@ import type { IPlace } from "./types";
 
 import styles from "./details.module.scss";
 
-export interface IPlaceDetailsProps
-  extends IDetailsProps,
+export interface IPlaceOverviewProps
+  extends IOverviewProps,
     ILocalizableProps,
     ITranslatableProps {
   translation: ILocalization["place"];
@@ -29,7 +29,7 @@ export interface IPlaceDetailsProps
   place: IPlace;
 }
 
-export const PlaceDetails = createBlockComponent(styles, Component);
+export const PlaceOverview = createBlockComponent(styles, Component);
 
 function Component({
   language,
@@ -38,23 +38,23 @@ function Component({
   taskTranslation,
   place,
   ...props
-}: IPlaceDetailsProps) {
+}: IPlaceOverviewProps) {
   const { id, title, description, created_at, updated_at } = place;
 
   return (
-    <Details {...props}>
+    <Overview {...props}>
       {(headinglevel) => (
         <>
-          <DetailsHeader>
+          <OverviewHeader>
             <Heading level={headinglevel}>{title}</Heading>
             <EntityID
               className={styles.id}
               commonTranslation={commonTranslation}
               entityID={id}
             />
-          </DetailsHeader>
+          </OverviewHeader>
 
-          <DetailsBody>
+          <OverviewBody>
             <DescriptionList>
               <DescriptionSection
                 dKey={translation.description}
@@ -96,9 +96,9 @@ function Component({
               translation={taskTranslation}
               placeID={place.id}
             />
-          </DetailsBody>
+          </OverviewBody>
 
-          <DetailsFooter>
+          <OverviewFooter>
             <List>
               <ListItem>
                 <LinkButton href={createPlaceEditPageURL(language, id)}>
@@ -106,9 +106,9 @@ function Component({
                 </LinkButton>
               </ListItem>
             </List>
-          </DetailsFooter>
+          </OverviewFooter>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }

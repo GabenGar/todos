@@ -7,10 +7,10 @@ import { createTaskPageURL, createTasksPageURL } from "#lib/urls";
 import { Loading } from "#components";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
-  Details,
-  DetailsBody,
-  DetailsFooter,
-  DetailsHeader,
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
 } from "#components/overview";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
@@ -55,10 +55,10 @@ export function Client({
   }, [taskID]);
 
   return (
-    <Details headingLevel={2}>
+    <Overview headingLevel={2}>
       {(headingLevel) => (
         <>
-          <DetailsHeader>
+          <OverviewHeader>
             <List>
               <ListItem>
                 {!currentTask ? (
@@ -70,9 +70,9 @@ export function Client({
                 )}
               </ListItem>
             </List>
-          </DetailsHeader>
+          </OverviewHeader>
 
-          <DetailsBody>
+          <OverviewBody>
             {!currentTask ? (
               <Loading />
             ) : (
@@ -89,9 +89,9 @@ export function Client({
                 }}
               />
             )}
-          </DetailsBody>
+          </OverviewBody>
 
-          <DetailsFooter>
+          <OverviewFooter>
             <List>
               <ListItem>
                 {!currentTask ? (
@@ -111,9 +111,9 @@ export function Client({
                 )}
               </ListItem>
             </List>
-          </DetailsFooter>
+          </OverviewFooter>
         </>
       )}
-    </Details>
+    </Overview>
   );
 }

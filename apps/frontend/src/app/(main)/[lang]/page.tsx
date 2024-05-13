@@ -10,7 +10,7 @@ import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
 import { Page } from "#components";
 import { Link } from "#components/link";
-import { Details, DetailsHeader } from "#components/overview";
+import { Overview, OverviewHeader } from "#components/overview";
 import { List, ListItem } from "#components/list";
 
 import styles from "./page.module.scss";
@@ -34,9 +34,9 @@ async function FrontPage({ params }: IProps) {
 
   return (
     <Page heading={home.heading}>
-      <Details headingLevel={2}>
+      <Overview headingLevel={2}>
         {() => (
-          <DetailsHeader className={styles.header}>
+          <OverviewHeader className={styles.header}>
             <List className={styles.list}>
               <ListItem>
                 <Link
@@ -73,9 +73,9 @@ async function FrontPage({ params }: IProps) {
                 </Link>
               </ListItem>
             </List>
-          </DetailsHeader>
+          </OverviewHeader>
         )}
-      </Details>
+      </Overview>
     </Page>
   );
 }
