@@ -100,7 +100,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <OverviewHeader>
-            <Details summary={translation.add} >
+            <Details summary={translation.add}>
               <PlaceCreateForm
                 commonTranslation={commonTranslation}
                 translation={translation}
@@ -109,7 +109,10 @@ export function Client({ language, commonTranslation, translation }: IProps) {
               />
             </Details>
 
-            <Details summary={translation.search["Search"]} open={Boolean(query)}>
+            <Details
+              summary={translation.search["Search"]}
+              open={Boolean(query)}
+            >
               <SearchPlacesForm
                 commonTranslation={commonTranslation}
                 translation={translation}

@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "start": "cd frontend && npm start",
+    "start": "cd apps/frontend && npm start",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "dev": "turbo run dev",

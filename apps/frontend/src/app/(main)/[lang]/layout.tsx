@@ -11,7 +11,6 @@ import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import type { IBasePageParams } from "#pages/types";
 
-
 import styles from "./layout.module.scss";
 
 interface IProps {

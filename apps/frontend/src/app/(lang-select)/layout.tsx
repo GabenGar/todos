@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 import { type Metadata } from "next";
 import { SITE_ORIGIN, SITE_TITLE } from "#environment";
 
-
 import styles from "./layout.module.scss";
 
 interface IProps {
