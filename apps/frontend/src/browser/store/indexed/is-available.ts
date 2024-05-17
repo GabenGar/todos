@@ -18,7 +18,10 @@ export async function isIndexedDBAvailable(): Promise<boolean> {
     idbRequest.onsuccess = (event) => {
       resolve(true);
     };
-  }).catch((error) => false);
+  }).catch((error) => {
+    console.error(error);
+    return false;
+  });
 
   return isAvailable;
 }

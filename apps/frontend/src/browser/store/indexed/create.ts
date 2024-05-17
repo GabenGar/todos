@@ -1,4 +1,4 @@
-import { getOne } from "./get";
+import { getOneIndexedDBItem } from "./get";
 import { getTransaction } from "./get-transaction";
 
 // interesting note for multi-inserts:
@@ -22,7 +22,7 @@ export async function createOneIndexedDBItem<InitType, Type>(
     });
   });
 
-  const newItem = await getOne(storeName, newKey, validate);
+  const newItem = await getOneIndexedDBItem(storeName, newKey, validate);
 
   return newItem;
 }
