@@ -13,6 +13,7 @@ import {
   validateLogLevel,
 } from "#lib/logs";
 import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
+import { isIndexedDBAvailable } from "#store/indexed";
 
 type IClientContext =
   | {
@@ -30,6 +31,7 @@ type IClientContext =
 
 interface ICompatibility {
   localStorage: boolean;
+  indexedDB: boolean;
 }
 
 const defaultContext: IClientContext = {
@@ -58,8 +60,11 @@ export function ClientProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     (async () => {
+      const localStorage = isLocalStorageAvailable();
+      const indexedDB = await isIndexedDBAvailable();
       const newCompatibility: ICompatibility = {
-        localStorage: isLocalStorageAvailable(),
+        localStorage,
+        indexedDB,
       };
       const newLogLevel = await getLocalStoreLogLevel();
 

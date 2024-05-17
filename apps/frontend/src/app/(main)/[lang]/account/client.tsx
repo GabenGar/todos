@@ -114,6 +114,9 @@ export function Client({ commonTranslation, translation }: IProps) {
 
 interface ICompatibilityProps extends Pick<IProps, "translation"> {}
 
+/**
+ * @TODO colouring
+ */
 function Compatibility({ translation }: ICompatibilityProps) {
   const clientInfo = useClient();
 
@@ -129,7 +132,25 @@ function Compatibility({ translation }: ICompatibilityProps) {
         dValue={
           !clientInfo.isClient ? (
             <Loading />
-          ) : clientInfo.compatibility ? (
+          ) : clientInfo.compatibility.localStorage ? (
+            translation["Supported"]
+          ) : (
+            translation["Not supported"]
+          )
+        }
+      />
+
+      <DescriptionSection
+        isHorizontal
+        dKey={
+          <Link href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">
+            <Pre>IndexedDB</Pre>
+          </Link>
+        }
+        dValue={
+          !clientInfo.isClient ? (
+            <Loading />
+          ) : clientInfo.compatibility.indexedDB ? (
             translation["Supported"]
           ) : (
             translation["Not supported"]
