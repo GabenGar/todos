@@ -11,7 +11,7 @@ export const schema = {
   minProperties: 2,
   properties: {
     id: {
-      $ref: "/strings/nanoid",
+      $ref: "/numbers/non-negative-integer",
     },
     title: {
       $ref: "/strings/title",

@@ -104,7 +104,7 @@
       "Fragment Details": "Детали Фрагмента",
       "No URL selected.": "Ссылка не выбрана.",
       "Full URL": "Полная ссылка",
-      "Transformed URL":"Изменённая ссылка",
+      "Transformed URL": "Изменённая ссылка",
       "Origin": "Источник",
       "Protocol": "Протокол",
       "Username": "Имя пользователя",
@@ -116,6 +116,19 @@
       "Search": "Поиск",
       "Search parameters": "Поисковые параметры",
       "Hash": "Идентификатор фрагмента"
+    }
+  },
+  "entities": {
+    "planned_event": {
+      "Planned event": "Планируемое событие",
+      "Title": "Заглавие",
+      "Description": "Описание",
+      "No description provided": "Без описания",
+      "Date of creation": "Дата создания",
+      "Last updated": "Последнее обновление",
+      "Details": "Детали",
+      "Add planned event": "Добавить планируемое событие",
+      "Adding planned event...": "Добавляем планируемое событие..."
     }
   },
   "home": {

@@ -104,7 +104,7 @@
       "Fragment Details": "Fragment Details",
       "No URL selected.": "No URL selected.",
       "Full URL": "Full URL",
-      "Transformed URL":"Transformed URL",
+      "Transformed URL": "Transformed URL",
       "Origin": "Origin",
       "Protocol": "Protocol",
       "Username": "Username",
@@ -116,6 +116,19 @@
       "Search": "Search",
       "Search parameters": "Search parameters",
       "Hash": "Hash"
+    }
+  },
+  "entities": {
+    "planned_event": {
+      "Planned event": "Planned event",
+      "Title": "Title",
+      "Description": "Description",
+      "No description provided": "No description provided",
+      "Date of creation": "Date of creation",
+      "Last updated": "Last updated",
+      "Details": "Details",
+      "Add planned event": "Add planned event",
+      "Adding planned event...": "Adding planned event..."
     }
   },
   "home": {

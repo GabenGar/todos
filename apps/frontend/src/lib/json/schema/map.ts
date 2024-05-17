@@ -8,6 +8,9 @@ import { schema as taskStatsAllSchema } from "#json-schema/entities/task/stats";
 import { schema as placeSchema } from "#json-schema/entities/place/entity";
 import { schema as placeInitSchema } from "#json-schema/entities/place/init";
 import { schema as placeUpdateSchema } from "#json-schema/entities/place/update";
+import { schema as plannedEventSchema } from "#json-schema/entities/planned-event/entity";
+import { schema as plannedEventInitSchema } from "#json-schema/entities/planned-event/init";
+import { schema as plannedEventUpdateSchema } from "#json-schema/entities/planned-event/update";
 import { schema as nonNegativeIntegerSchema } from "#json-schema/numbers/non-negative-integer";
 import { schema as positiveIntegerSchema } from "#json-schema/numbers/positive-integer";
 import { schema as nanoidSchema } from "#json-schema/strings/nanoid";
@@ -32,6 +35,9 @@ export const schemas = [
   placeSchema,
   placeUpdateSchema,
   entityItemSchema,
+  plannedEventSchema,
+  plannedEventInitSchema,
+  plannedEventUpdateSchema,
 ] as const;
 const validIDs = schemas.map((schema) => schema.$id);
 

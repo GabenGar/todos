@@ -10,7 +10,7 @@ export const schema = {
   required: ["id", "created_at", "updated_at", "title"],
   properties: {
     id: {
-      $ref: "/strings/nanoid",
+      $ref: "/numbers/non-negative-integer",
     },
     created_at: {
       $ref: "/dates/datetime",
