@@ -2,6 +2,7 @@ import type { Route } from "next";
 import type { ILocale } from "#lib/internationalization";
 import type { ITask } from "#entities/task";
 import type { IPlace, IPlacesCategory } from "#entities/place";
+import type { IPlannedEvent } from "#entities/planned-event";
 
 export function createHomePageURL(language: ILocale): Route {
   return `/${language}` as Route;
@@ -72,7 +73,7 @@ export function createTaskEditPageURL(
   return url as Route;
 }
 
-export function creatQRCodeReaderURL(language: ILocale): Route {
+export function createQRCodeReaderURL(language: ILocale): Route {
   return `/${language}/qr-code-reader` as Route;
 }
 
@@ -130,6 +131,21 @@ export function createPlaceEditPageURL(
 export function createAccountPageURL(language: ILocale): Route {
   return `/${language}/account` as Route;
 }
-export function createURLViewerPageURL(language: ILocale) {
+export function createURLViewerPageURL(language: ILocale): Route {
   return `/${language}/url-viewer` as Route;
+}
+
+export function createPlannedEventsPageURL(language: ILocale): Route {
+  return `/${language}/planned-events` as Route;
+}
+
+export function createPlannedEventPageURL(
+  language: ILocale,
+  id: IPlannedEvent["id"],
+): Route {
+  const urlSearchParams = new URLSearchParams([
+    ["planned_event_id", String(id)],
+  ]).toString();
+
+  return `/${language}/planned-event?${urlSearchParams}` as Route;
 }

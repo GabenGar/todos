@@ -1,7 +1,8 @@
 import { SITE_TITLE } from "#environment";
 import {
-  creatQRCodeReaderURL,
+  createQRCodeReaderURL,
   createAccountPageURL,
+  createPlannedEventsPageURL,
   createStatsPlacesPageURL,
   createTaskStatsPageURL,
   createURLViewerPageURL,
@@ -20,7 +21,7 @@ interface IProps extends IStaticPageProps {}
 export async function generateMetadata({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { home } = dict;
+  const { home } = dict.pages;
 
   return {
     title: `${home.title} | ${SITE_TITLE}`,
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: IProps) {
 async function FrontPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { home } = dict;
+  const { home } = dict.pages;
 
   return (
     <Page heading={home.heading}>
@@ -41,35 +42,51 @@ async function FrontPage({ params }: IProps) {
               <ListItem>
                 <Link
                   className={styles.link}
-                  href={createStatsPlacesPageURL(lang)}
+                  href={createPlannedEventsPageURL(lang)}
                 >
-                  {home.link_places}
+                  {home["Planned events"]}
                 </Link>
               </ListItem>
+
+              <ListItem>
+                <Link
+                  className={styles.link}
+                  href={createStatsPlacesPageURL(lang)}
+                >
+                  {home["Places"]}
+                </Link>
+              </ListItem>
+
               <ListItem>
                 <Link
                   className={styles.link}
                   href={createTaskStatsPageURL(lang)}
                 >
-                  {home.link_tasks}
+                  {home["Tasks"]}
                 </Link>
               </ListItem>
+
               <ListItem>
-                <Link className={styles.link} href={creatQRCodeReaderURL(lang)}>
-                  {home.link_qr_code}
+                <Link
+                  className={styles.link}
+                  href={createQRCodeReaderURL(lang)}
+                >
+                  {home["QR code reader"]}
                 </Link>
               </ListItem>
+
               <ListItem>
                 <Link
                   className={styles.link}
                   href={createURLViewerPageURL(lang)}
                 >
-                  {home.link_url_viewer}
+                  {home["URL Viewer"]}
                 </Link>
               </ListItem>
+
               <ListItem>
                 <Link className={styles.link} href={createAccountPageURL(lang)}>
-                  {home.link_account}
+                  {home["Account"]}
                 </Link>
               </ListItem>
             </List>

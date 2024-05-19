@@ -31,6 +31,16 @@
     }
   },
   "pages": {
+    "home": {
+      "title": "Welcome!",
+      "heading": "Welcome!",
+      "Tasks": "Tasks",
+      "QR code reader": "QR code reader",
+      "Places": "Places",
+      "URL Viewer": "URL Viewer",
+      "Account": "Account",
+      "Planned events": "Planned events"
+    },
     "qr_code_reader": {
       "title": "QR code reader",
       "heading": "QR Code Reader",
@@ -104,7 +114,7 @@
       "Fragment Details": "Fragment Details",
       "No URL selected.": "No URL selected.",
       "Full URL": "Full URL",
-      "Transformed URL":"Transformed URL",
+      "Transformed URL": "Transformed URL",
       "Origin": "Origin",
       "Protocol": "Protocol",
       "Username": "Username",
@@ -116,17 +126,31 @@
       "Search": "Search",
       "Search parameters": "Search parameters",
       "Hash": "Hash"
+    },
+    "planned-events": {
+      "title": "Planned events",
+      "heading": "Planned Events"
+    },
+    "planned-event": {
+      "title": "Planned event",
+      "heading": "Planned Event"
     }
   },
-  "home": {
-    "title": "Welcome!",
-    "heading": "Welcome!",
-    "link_tasks": "Tasks",
-    "link_qr_code": "QR code reader",
-    "link_places": "Places",
-    "link_url_viewer": "URL Viewer",
-    "link_account": "Account"
+  "entities": {
+    "planned_event": {
+      "Planned event": "Planned event",
+      "Title": "Title",
+      "Description": "Description",
+      "No description provided": "No description provided",
+      "Date of creation": "Date of creation",
+      "Last updated": "Last updated",
+      "Details": "Details",
+      "Add planned event": "Add planned event",
+      "Adding planned event...": "Adding planned event...",
+      "No planned events found": "No planned events found"
+    }
   },
+
   "todos": {
     "title": "Tasks",
     "heading": "Tasks",

@@ -1,3 +1,5 @@
+import { logInfo } from "#lib/logs";
+
 const databaseName = "public";
 const databaseVersion = 1;
 
@@ -24,6 +26,14 @@ export async function getDatabase(): Promise<IDBDatabase> {
     idbRequest.onupgradeneeded = (event) => {
       const { oldVersion, newVersion } = event;
       const database = (event.target as IDBOpenDBRequest).result;
+      logInfo(
+        `IndexedDB: migrating database "${databaseName}" from version ${oldVersion} to ${newVersion}.`,
+      );
+
+      const store = database.createObjectStore("planned_events", {
+        keyPath: "id",
+        autoIncrement: true,
+      });
     };
 
     idbRequest.onsuccess = (event) => {
@@ -57,3 +67,5 @@ export async function getDatabase(): Promise<IDBDatabase> {
 
   return result;
 }
+
+// jsut a rando comment for merge
