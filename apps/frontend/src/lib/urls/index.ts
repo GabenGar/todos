@@ -73,7 +73,7 @@ export function createTaskEditPageURL(
   return url as Route;
 }
 
-export function creatQRCodeReaderURL(language: ILocale): Route {
+export function createQRCodeReaderURL(language: ILocale): Route {
   return `/${language}/qr-code-reader` as Route;
 }
 

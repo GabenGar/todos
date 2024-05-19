@@ -31,6 +31,16 @@
     }
   },
   "pages": {
+    "home": {
+      "title": "Добро пожаловать!",
+      "heading": "Добро пожаловать!",
+      "Tasks": "Задачи",
+      "QR code reader": "Считыватель QR кодов",
+      "Places": "Места",
+      "URL Viewer": "Просмотрщик ссылок",
+      "Account": "Учётная запись",
+      "Planned events": "Планируемые события"
+    },
     "qr_code_reader": {
       "title": "Считыватель QR кодов",
       "heading": "Считыватель QR Кодов",
@@ -116,6 +126,10 @@
       "Search": "Поиск",
       "Search parameters": "Поисковые параметры",
       "Hash": "Идентификатор фрагмента"
+    },
+    "planned-events": {
+      "title": "Планируемые события",
+      "heading": "Планируемые События"
     }
   },
   "entities": {
@@ -128,17 +142,9 @@
       "Last updated": "Последнее обновление",
       "Details": "Детали",
       "Add planned event": "Добавить планируемое событие",
-      "Adding planned event...": "Добавляем планируемое событие..."
+      "Adding planned event...": "Добавляем планируемое событие...",
+      "No planned events found": "Планируемые события не найдены"
     }
-  },
-  "home": {
-    "title": "Добро пожаловать!",
-    "heading": "Добро пожаловать!",
-    "link_tasks": "Задачи",
-    "link_qr_code": "Считыватель QR кодов",
-    "link_places": "Места",
-    "link_url_viewer": "Просмотрщик ссылок",
-    "link_account": "Учётная запись"
   },
   "todos": {
     "title": "Задачи",

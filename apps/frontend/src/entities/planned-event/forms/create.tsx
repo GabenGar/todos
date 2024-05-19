@@ -3,17 +3,18 @@ import { Form, IFormEvent, type IFormComponentProps } from "#components/form";
 import { InputSectionText } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
 import type { IPlannedEventInit } from "../types";
+import { validatePlannedEventInit } from "../lib/validate";
 
 interface IProps extends IFormComponentProps, ITranslatableProps {
   translation: ILocalizationEntities["planned_event"];
   onNewPlannedEvent: (init: IPlannedEventInit) => Promise<void>;
 }
 
-export function PlaceCreateForm({
+export function PlannedEventCreateForm({
   commonTranslation,
   translation,
   id,
-  onNewPlannedEvent: onNewPlace,
+  onNewPlannedEvent,
 }: IProps) {
   const FIELD = {
     TITLE: { name: "title", label: translation["Title"] },
@@ -34,7 +35,8 @@ export function PlaceCreateForm({
       init.description = description;
     }
 
-    await onNewPlace(init);
+    validatePlannedEventInit(init)
+    await onNewPlannedEvent(init);
   }
 
   return (
