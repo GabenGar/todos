@@ -37,14 +37,13 @@ function Component({
         <>
           <PreviewHeader>
             <Heading level={headingLevel}>{title}</Heading>
-          </PreviewHeader>
-
-          <PreviewBody>
             <EntityID
               commonTranslation={commonTranslation}
               entityID={String(id)}
             />
+          </PreviewHeader>
 
+          <PreviewBody>
             <DescriptionList>
               <DescriptionSection
                 dKey={translation["Description"]}

@@ -130,6 +130,10 @@
     "planned-events": {
       "title": "Planned events",
       "heading": "Planned Events"
+    },
+    "planned-event": {
+      "title": "Planned event",
+      "heading": "Planned Event"
     }
   },
   "entities": {
