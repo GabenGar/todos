@@ -1,11 +1,12 @@
 import { getOneIndexedDBItem } from "./get";
 import { getTransaction } from "./get-transaction";
+import type { IStorageName } from "./types";
 
 // interesting note for multi-inserts:
 // https://stackoverflow.com/a/52555073/14481500
 
 export async function createOneIndexedDBItem<InitType, Type>(
-  storeName: string,
+  storeName: IStorageName,
   init: InitType,
   validate: (input: unknown) => asserts input is Type,
 ): Promise<Type> {

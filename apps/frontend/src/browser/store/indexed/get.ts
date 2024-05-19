@@ -1,7 +1,8 @@
 import { getTransaction } from "./get-transaction";
+import type { IStorageName } from "./types";
 
 export async function getOneIndexedDBItem<Type>(
-  storeName: string,
+  storeName: IStorageName,
   query: IDBValidKey,
   validate: (input: unknown) => asserts input is Type,
 ): Promise<Type> {
@@ -27,7 +28,7 @@ export async function getOneIndexedDBItem<Type>(
  * @TODO pagination
  */
 export async function getManyIndexedDBItems<Type>(
-  storeName: string,
+  storeName: IStorageName,
   validate: (input: unknown) => asserts input is Type,
 ): Promise<Type[]> {
   const results = await new Promise<Type[]>((resolve) => {
