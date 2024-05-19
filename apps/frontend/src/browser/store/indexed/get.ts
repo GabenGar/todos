@@ -43,8 +43,8 @@ export async function getManyIndexedDBItems<Type>(
       };
 
       request.onerror = (event) => {
-        reject(event)
-      }
+        reject(event);
+      };
     });
   });
 

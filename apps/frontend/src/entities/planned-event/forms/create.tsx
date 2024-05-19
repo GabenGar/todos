@@ -35,7 +35,7 @@ export function PlannedEventCreateForm({
       init.description = description;
     }
 
-    validatePlannedEventInit(init)
+    validatePlannedEventInit(init);
     await onNewPlannedEvent(init);
   }
 

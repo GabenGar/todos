@@ -22,8 +22,8 @@ export async function createOneIndexedDBItem<InitType, Type>(
       };
 
       request.onerror = (event) => {
-        reject(event)
-      }
+        reject(event);
+      };
     });
   });
 
