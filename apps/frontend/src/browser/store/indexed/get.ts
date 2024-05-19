@@ -6,7 +6,7 @@ export async function getOneIndexedDBItem<Type>(
   query: IDBValidKey,
   validate: (input: unknown) => asserts input is Type,
 ): Promise<Type> {
-  const result = await new Promise((resolve) => {
+  const result = await new Promise((resolve, reject) => {
     getTransaction([storeName], "readonly").then((transaction) => {
       const objectStore = transaction.objectStore(storeName);
       const request = objectStore.get(query);
@@ -31,7 +31,7 @@ export async function getManyIndexedDBItems<Type>(
   storeName: IStorageName,
   validate: (input: unknown) => asserts input is Type,
 ): Promise<Type[]> {
-  const results = await new Promise<Type[]>((resolve) => {
+  const results = await new Promise<Type[]>((resolve, reject) => {
     getTransaction([storeName], "readonly").then((transaction) => {
       const objectStore = transaction.objectStore(storeName);
       const request = objectStore.getAll();
@@ -41,6 +41,10 @@ export async function getManyIndexedDBItems<Type>(
 
         resolve(items);
       };
+
+      request.onerror = (event) => {
+        reject(event)
+      }
     });
   });
 

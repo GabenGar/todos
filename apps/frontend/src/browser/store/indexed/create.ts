@@ -10,7 +10,7 @@ export async function createOneIndexedDBItem<InitType, Type>(
   init: InitType,
   validate: (input: unknown) => asserts input is Type,
 ): Promise<Type> {
-  const newKey = await new Promise<IDBValidKey>((resolve) => {
+  const newKey = await new Promise<IDBValidKey>((resolve, reject) => {
     getTransaction([storeName], "readwrite").then((transaction) => {
       const objectStore = transaction.objectStore(storeName);
 
@@ -20,6 +20,10 @@ export async function createOneIndexedDBItem<InitType, Type>(
 
         resolve(newKey);
       };
+
+      request.onerror = (event) => {
+        reject(event)
+      }
     });
   });
 

@@ -147,5 +147,5 @@ export function createPlannedEventPageURL(
     ["planned_event_id", String(id)],
   ]).toString();
 
-  return `/${language}/planned-event${urlSearchParams}` as Route;
+  return `/${language}/planned-event?${urlSearchParams}` as Route;
 }
