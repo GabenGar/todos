@@ -6,7 +6,9 @@
   "common": {
     "form": {
       "submit": "Submit",
-      "submitting": "Submitting..."
+      "submitting": "Submitting...",
+      "Confirm changes": "Confirm changes",
+      "Applying changes...": "Applying changes..."
     },
     "pagination": {
       "first": "First",
@@ -134,6 +136,10 @@
     "planned-event": {
       "title": "Planned event",
       "heading": "Planned Event"
+    },
+    "planned-event_edit": {
+      "title": "Edit planned event",
+      "heading": "Edit Planned Event"
     }
   },
   "entities": {
