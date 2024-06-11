@@ -1,7 +1,7 @@
+import { now } from "#lib/dates";
 import { getOneIndexedDBItem, updateOneIndexedDBItem } from "#store/indexed";
 import { validatePlannedEvent, validatePlannedEventUpdate } from "./validate";
 import type { IPlannedEvent, IPlannedEventUpdate } from "../types";
-import { now } from "#lib/dates";
 
 export async function editPlannedEvent(
   update: IPlannedEventUpdate,
@@ -25,7 +25,6 @@ export async function editPlannedEvent(
 
   const updatedEvent = await updateOneIndexedDBItem(
     "planned_events",
-    id,
     incomingUpdate,
     validatePlannedEvent,
   );

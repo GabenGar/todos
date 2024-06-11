@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getDictionary } from "#server";
-import { Page } from "#components";
+import { Loading, Page } from "#components";
 import type { IBasePageParams } from "#pages/types";
 import { Client } from "./client";
 
@@ -30,7 +30,7 @@ async function PlannedEventPage({ params }: IProps) {
 
   return (
     <Page heading={page.heading}>
-      <Suspense>
+      <Suspense fallback={<Loading />}>
         <Client
           language={lang}
           commonTranslation={common}

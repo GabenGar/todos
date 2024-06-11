@@ -2,44 +2,40 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createPlacePageURL } from "#lib/urls";
+import {  createPlannedEventPageURL } from "#lib/urls";
+import type { ILocalizationEntities } from "#lib/localization";
 import { Loading } from "#components";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
-import {
-  EditPlaceForm,
-  type IEditPlaceFormProps,
-  editPlace,
-  getPlace,
-} from "#entities/place";
+import { EditPlannedEventForm, getPlannedEvent } from "#entities/planned-event";
+import { editPlannedEvent } from "entities/planned-event";
 
-interface IProps
-  extends ITranslatableProps,
-    ILocalizableProps,
-    Pick<IEditPlaceFormProps, "translation"> {}
+interface IProps extends ITranslatableProps, ILocalizableProps {
+  translation: ILocalizationEntities["planned_event"]
+}
 
 export function Client({ language, commonTranslation, translation }: IProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [currentPlace, changePlace] =
-    useState<Awaited<ReturnType<typeof getPlace>>>();
-  const inputPlaceID = searchParams.get("place_id")?.trim();
+  const [currentPlannedEvent, changePlannedEvent] =
+    useState<Awaited<ReturnType<typeof getPlannedEvent>>>();
+  const inputID = searchParams.get("planned_event_id")?.trim();
   // consider an empty string as `undefined`
-  const placeID = !inputPlaceID?.length ? undefined : inputPlaceID;
+  const parsedID = !inputID?.length ? undefined : Number.parseInt(inputID, 10);
 
   useEffect(() => {
-    if (!placeID) {
+    if (!parsedID) {
       router.replace("/404");
       return;
     }
 
     (async () => {
-      const task = await getPlace(placeID);
-      changePlace(task);
+      const plannedEvent = await getPlannedEvent(parsedID);
+      changePlannedEvent(plannedEvent);
     })();
-  }, [placeID]);
+  }, [parsedID]);
 
   return (
     <Overview headingLevel={2}>
@@ -48,11 +44,13 @@ export function Client({ language, commonTranslation, translation }: IProps) {
           <OverviewHeader>
             <List>
               <ListItem>
-                {!currentPlace ? (
+                {!currentPlannedEvent ? (
                   <Loading />
                 ) : (
-                  <Link href={createPlacePageURL(language, currentPlace.id)}>
-                    {translation["Place"]}
+                  <Link
+                    href={createPlannedEventPageURL(language, currentPlannedEvent.id)}
+                  >
+                    {translation["Planned event"]}
                   </Link>
                 )}
               </ListItem>
@@ -60,18 +58,18 @@ export function Client({ language, commonTranslation, translation }: IProps) {
           </OverviewHeader>
 
           <OverviewBody>
-            {!currentPlace ? (
+            {!currentPlannedEvent ? (
               <Loading />
             ) : (
-              <EditPlaceForm
+              <EditPlannedEventForm
                 commonTranslation={commonTranslation}
                 translation={translation}
-                id={`edit-place-${currentPlace.id}`}
-                currentPlace={currentPlace}
-                onPlaceEdit={async (placeUpdate) => {
-                  const editedTask = await editPlace(placeUpdate);
+                id={`edit-planned-event-${currentPlannedEvent.id}`}
+                currentPlannedEvent={currentPlannedEvent}
+                onPlannedEventEdit={async (update) => {
+                  const editedPlannedEvent = await editPlannedEvent(update);
 
-                  changePlace(editedTask);
+                  changePlannedEvent(editedPlannedEvent);
                 }}
               />
             )}

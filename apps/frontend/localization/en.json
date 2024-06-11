@@ -25,7 +25,8 @@
     },
     "entity": {
       "Copy": "Copy",
-      "Copied": "Copied"
+      "Copied": "Copied",
+      "Edit": "Edit"
     },
     "datetime": {
       "Copy": "Copy",

@@ -4,9 +4,9 @@ import type { IStorageName } from "./types";
 
 export async function updateOneIndexedDBItem<UpdateType, Type>(
   storeName: IStorageName,
-  id: string | number,
   update: UpdateType,
   validateOutput: (input: unknown) => asserts input is Type,
+  id?: string | number,
 ): Promise<Type> {
   const newKey = await new Promise<IDBValidKey>((resolve, reject) => {
     getTransaction([storeName], "readwrite").then((transaction) => {

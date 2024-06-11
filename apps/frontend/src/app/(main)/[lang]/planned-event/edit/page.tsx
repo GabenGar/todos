@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getDictionary } from "#server";
-import { Page } from "#components";
+import { Loading, Page } from "#components";
 import type { IBasePageParams } from "#pages/types";
 import { Client } from "./client";
 
@@ -23,23 +23,23 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   return metaData;
 }
 
-async function PlaceEditPage({ params }: IProps) {
+async function PlannedEventEditPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { common, pages, place } = dict;
+  const { common, pages, entities } = dict;
   const { heading } = pages["planned-event_edit"];
 
   return (
     <Page heading={heading}>
-      <Suspense>
+      <Suspense fallback={<Loading />}>
         <Client
           language={lang}
           commonTranslation={common}
-          translation={place}
+          translation={entities.planned_event}
         />
       </Suspense>
     </Page>
   );
 }
 
-export default PlaceEditPage;
+export default PlannedEventEditPage;
