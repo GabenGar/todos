@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import {  createPlannedEventPageURL } from "#lib/urls";
+import { createPlannedEventPageURL } from "#lib/urls";
 import type { ILocalizationEntities } from "#lib/localization";
 import { Loading } from "#components";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
@@ -13,7 +13,7 @@ import { EditPlannedEventForm, getPlannedEvent } from "#entities/planned-event";
 import { editPlannedEvent } from "entities/planned-event";
 
 interface IProps extends ITranslatableProps, ILocalizableProps {
-  translation: ILocalizationEntities["planned_event"]
+  translation: ILocalizationEntities["planned_event"];
 }
 
 export function Client({ language, commonTranslation, translation }: IProps) {
@@ -48,7 +48,10 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                   <Loading />
                 ) : (
                   <Link
-                    href={createPlannedEventPageURL(language, currentPlannedEvent.id)}
+                    href={createPlannedEventPageURL(
+                      language,
+                      currentPlannedEvent.id,
+                    )}
                   >
                     {translation["Planned event"]}
                   </Link>
