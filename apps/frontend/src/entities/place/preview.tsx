@@ -35,7 +35,7 @@ function Component({
   place,
   ...props
 }: IProps) {
-  const { id, title, description, created_at, updated_at } = place;
+  const { id, title, description } = place;
 
   return (
     <Preview {...props}>
@@ -55,29 +55,6 @@ function Component({
                   <EntityDescription>
                     {description ?? translation.no_description}
                   </EntityDescription>
-                }
-              />
-            </DescriptionList>
-
-            <DescriptionList>
-              <DescriptionSection
-                dKey={translation.created_at}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    key="created_at"
-                    dateTime={created_at}
-                  />
-                }
-              />
-              <DescriptionSection
-                dKey={translation.updated_at}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    key="updated_at"
-                    dateTime={updated_at}
-                  />
                 }
               />
             </DescriptionList>

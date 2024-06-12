@@ -9,16 +9,14 @@ export async function deleteOneIndexedDBItem<Type>(
 ): Promise<Type> {
   const deletedItem = await getOneIndexedDBItem(storeName, id, validateOutput);
 
-  await new Promise<IDBValidKey>((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     getTransaction([storeName], "readwrite").then((transaction) => {
       const objectStore = transaction.objectStore(storeName);
 
-      const request = objectStore.get(id);
+      const request = objectStore.delete(id);
 
       request.onsuccess = (event) => {
-        const updatedKey = (event.target as typeof request).result;
-
-        resolve(updatedKey);
+        resolve();
       };
 
       request.onerror = (event) => {
