@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { getDictionary } from "#server";
 import { TaskList } from "#entities/task";
-import { Page } from "#components";
+import { Loading, Page } from "#components";
 import type { IBasePageParams } from "#pages/types";
 
 interface IProps {
@@ -25,7 +25,7 @@ async function TodosPage({ params }: IProps) {
 
   return (
     <Page heading={todos.heading}>
-      <Suspense>
+      <Suspense fallback={<Loading />}>
         <TaskList
           language={lang}
           commonTranslation={common}

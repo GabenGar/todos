@@ -2,14 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createPlannedEventPageURL } from "#lib/urls";
+import {
+  createPlannedEventPageURL,
+  createPlannedEventsPageURL,
+} from "#lib/urls";
 import type { ILocalizationEntities } from "#lib/localization";
 import { Loading } from "#components";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
+import {
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+} from "#components/overview";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
-import { EditPlannedEventForm, getPlannedEvent } from "#entities/planned-event";
+import { MenuButtons, MenuItem } from "#components/button";
+import {
+  EditPlannedEventForm,
+  deletePlannedEvent,
+  getPlannedEvent,
+} from "#entities/planned-event";
 import { editPlannedEvent } from "entities/planned-event";
 
 interface IProps extends ITranslatableProps, ILocalizableProps {
@@ -77,6 +90,25 @@ export function Client({ language, commonTranslation, translation }: IProps) {
               />
             )}
           </OverviewBody>
+
+          <OverviewFooter>
+            {!currentPlannedEvent ? (
+              <Loading />
+            ) : (
+              <MenuButtons>
+                <MenuItem
+                  viewType="negative"
+                  onClick={async () => {
+                    await deletePlannedEvent(currentPlannedEvent.id);
+
+                    router.replace(createPlannedEventsPageURL(language));
+                  }}
+                >
+                  {commonTranslation.entity["Delete"]}
+                </MenuItem>
+              </MenuButtons>
+            )}
+          </OverviewFooter>
         </>
       )}
     </Overview>

@@ -11,7 +11,7 @@ import iso6391 from "iso-639-1";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { createHomePageURL } from "#lib/urls";
-import { Details } from "#components";
+import { Details, Loading } from "#components";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import type { ILocalizableProps } from "./types";
@@ -34,7 +34,7 @@ export function GlobalNavigation({ language }: ILocalizableProps) {
           )}
         </ListItem>
         <ListItem>
-          <Suspense>
+          <Suspense fallback={<Loading />}>
             <LocaleSwitcher />
           </Suspense>
         </ListItem>
