@@ -14,31 +14,32 @@ interface IProps {
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const page = dict.pages["planned-event"];
+  const { title } = dict.pages["planned-event_edit"];
 
-  return {
-    title: `${page.title}`,
+  const metaData: Metadata = {
+    title,
   };
+
+  return metaData;
 }
 
-async function PlannedEventPage({ params }: IProps) {
+async function PlannedEventEditPage({ params }: IProps) {
   const { lang } = params;
   const dict = await getDictionary(lang);
-  const { pages, common, entities } = dict;
-  const page = pages["planned-event"];
-  const entity = entities.planned_event;
+  const { common, pages, entities } = dict;
+  const { heading } = pages["planned-event_edit"];
 
   return (
-    <Page heading={page.heading}>
+    <Page heading={heading}>
       <Suspense fallback={<Loading />}>
         <Client
           language={lang}
           commonTranslation={common}
-          translation={entity}
+          translation={entities.planned_event}
         />
       </Suspense>
     </Page>
   );
 }
 
-export default PlannedEventPage;
+export default PlannedEventEditPage;

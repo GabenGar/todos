@@ -149,3 +149,14 @@ export function createPlannedEventPageURL(
 
   return `/${language}/planned-event?${urlSearchParams}` as Route;
 }
+
+export function createPlannedEventEditPageURL(
+  language: ILocale,
+  id: IPlannedEvent["id"],
+): Route {
+  const urlSearchParams = new URLSearchParams([
+    ["planned_event_id", String(id)],
+  ]).toString();
+
+  return `/${language}/planned-event/edit?${urlSearchParams}` as Route;
+}

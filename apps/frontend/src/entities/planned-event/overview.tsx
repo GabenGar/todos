@@ -1,4 +1,5 @@
 import type { ILocalizationEntities } from "#lib/localization";
+import { createPlannedEventEditPageURL } from "#lib/urls";
 import { createBlockComponent } from "#components/meta";
 import { DescriptionList, DescriptionSection } from "#components";
 import { ITranslatableProps, type ILocalizableProps } from "#components/types";
@@ -7,10 +8,13 @@ import { DateTime } from "#components/date";
 import {
   Overview,
   OverviewBody,
+  OverviewFooter,
   OverviewHeader,
   type IOverviewProps,
 } from "#components/overview";
 import { EntityDescription, EntityID } from "#components/entities";
+import { List, ListItem } from "#components/list";
+import { LinkButton } from "#components/link";
 import type { IPlannedEvent } from "./types";
 
 interface IProps extends IOverviewProps, ILocalizableProps, ITranslatableProps {
@@ -76,6 +80,16 @@ function Component({
               />
             </DescriptionList>
           </OverviewBody>
+
+          <OverviewFooter>
+            <List>
+              <ListItem>
+                <LinkButton href={createPlannedEventEditPageURL(language, id)}>
+                  {commonTranslation.entity["Edit"]}
+                </LinkButton>
+              </ListItem>
+            </List>
+          </OverviewFooter>
         </>
       )}
     </Overview>

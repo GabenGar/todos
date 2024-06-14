@@ -1,11 +1,13 @@
 import { createOneIndexedDBItem } from "#store/indexed";
-import { validatePlannedEvent } from "./validate";
+import { validatePlannedEvent, validatePlannedEventInit } from "./validate";
 import type { IPlannedEvent, IPlannedEventInit } from "../types";
 import { now } from "#lib/dates";
 
 export async function createPlannedEvent(
   init: IPlannedEventInit,
 ): Promise<IPlannedEvent> {
+  validatePlannedEventInit(init);
+
   const timestamp = now();
   const anotherInit: Omit<IPlannedEvent, "id"> = {
     ...init,

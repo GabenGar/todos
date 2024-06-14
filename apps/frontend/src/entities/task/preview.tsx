@@ -10,7 +10,6 @@ import {
   PreviewBody,
   PreviewFooter,
 } from "#components/preview";
-import { DateTime } from "#components/date";
 import { Link } from "#components/link";
 import { EntityDescription, EntityID } from "#components/entities";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
@@ -38,7 +37,7 @@ function Component({
   task,
   ...props
 }: IProps) {
-  const { id, title, description, status, created_at, updated_at, place } =
+  const { id, title, description, status, place } =
     task;
 
   return (
@@ -87,28 +86,6 @@ function Component({
                       {place.title ?? translation.place_unknown} ({place.id})
                     </Link>
                   )
-                }
-              />
-            </DescriptionList>
-
-            <DescriptionList>
-              <DescriptionSection
-                dKey={translation.creation_date}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={created_at}
-                  />
-                }
-              />
-
-              <DescriptionSection
-                dKey={translation.last_updated}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={updated_at}
-                  />
                 }
               />
             </DescriptionList>
