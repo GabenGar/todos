@@ -3,6 +3,7 @@ import type { ILocale } from "#lib/internationalization";
 import type { ITask } from "#entities/task";
 import type { IPlace, IPlacesCategory } from "#entities/place";
 import type { IPlannedEvent } from "#entities/planned-event";
+import type { IMultiPageParams } from "./types";
 
 export function createHomePageURL(language: ILocale): Route {
   return `/${language}` as Route;
@@ -135,8 +136,21 @@ export function createURLViewerPageURL(language: ILocale): Route {
   return `/${language}/url-viewer` as Route;
 }
 
-export function createPlannedEventsPageURL(language: ILocale): Route {
-  return `/${language}/planned-events` as Route;
+export function createPlannedEventsPageURL(
+  language: ILocale,
+  params?: IMultiPageParams,
+): Route {
+  const urlSearchParams = new URLSearchParams();
+
+  if (params?.page) {
+    urlSearchParams.set("page", String(params.page));
+  }
+
+  const url = !urlSearchParams.size
+    ? `/${language}/planned-events`
+    : `/${language}/planned-events?${urlSearchParams.toString()}`;
+
+  return url as Route;
 }
 
 export function createPlannedEventPageURL(

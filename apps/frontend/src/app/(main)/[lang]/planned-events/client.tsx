@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalizationEntities } from "#lib/localization";
 import { createPlannedEventsPageURL } from "#lib/urls";
 import { Details, Loading } from "#components";
@@ -20,16 +21,29 @@ interface IProps extends ILocalizableProps, ITranslatableProps {
 }
 
 export function Client({ language, commonTranslation, translation }: IProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [plannedEvents, changePlannedEvents] =
     useState<Awaited<ReturnType<typeof getPlannedEvents>>>();
+  const inputPage = searchParams.get("page")?.trim();
+  const page = !inputPage ? undefined : parseInt(inputPage, 10);
 
   useEffect(() => {
     (async () => {
-      const newPlannedEvents = await getPlannedEvents();
+      const newPlannedEvents = await getPlannedEvents(page);
+
+      if (!page) {
+        const url = createPlannedEventsPageURL(language, {
+          page: newPlannedEvents.pagination.totalPages,
+        });
+        router.replace(url);
+
+        return;
+      }
 
       changePlannedEvents(newPlannedEvents);
     })();
-  }, []);
+  }, [page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {
     await createPlannedEvent(init);
@@ -58,7 +72,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
 
       {!plannedEvents ? (
         <Loading />
-      ) : plannedEvents.length === 0 ? (
+      ) : plannedEvents.pagination.totalCount === 0 ? (
         <Overview headingLevel={2}>
           {() => (
             <OverviewHeader>
@@ -68,27 +82,19 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         </Overview>
       ) : (
         <PreviewList
-          pagination={{
-            totalCount: plannedEvents.length,
-            limit: plannedEvents.length,
-            totalPages: 1,
-            currentPage: 1,
-            offset: 0,
-            currentMin: 1,
-            currentMax: plannedEvents.length,
-          }}
+          pagination={plannedEvents.pagination}
           commonTranslation={commonTranslation}
           sortingOrder="descending"
-          buildURL={(page) => createPlannedEventsPageURL(language)}
+          buildURL={(page) => createPlannedEventsPageURL(language, { page })}
         >
-          {plannedEvents.map((place) => (
+          {plannedEvents.items.map((plannedEvent) => (
             <PlannedEventPreview
               language={language}
               commonTranslation={commonTranslation}
               translation={translation}
               headingLevel={2}
-              key={place.id}
-              plannedEvent={place}
+              key={plannedEvent.id}
+              plannedEvent={plannedEvent}
             />
           ))}
         </PreviewList>
