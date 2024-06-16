@@ -1,3 +1,3 @@
 export interface IMultiPageParams {
-  page?: number
+  page?: number;
 }

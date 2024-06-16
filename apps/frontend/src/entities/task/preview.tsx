@@ -37,8 +37,7 @@ function Component({
   task,
   ...props
 }: IProps) {
-  const { id, title, description, status, place } =
-    task;
+  const { id, title, description, status, place } = task;
 
   return (
     <Preview {...props}>
