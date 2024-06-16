@@ -52,21 +52,27 @@ export async function getManyIndexedDBItems<Type>(
         countRequest.onsuccess = (event) => {
           const count = (event.target as typeof countRequest).result;
           const pagination = createClientPagination(count, limit, page);
-          const keysRequest = (objectStore.getAllKeys(
-            undefined,
-            limit,
-          ).onsuccess = (event) => {
+          // collecting all keys is kinda cringe
+          // but better than getting all values
+          // or iterating with cursor one-by-one
+          const keysRequest = objectStore.getAllKeys();
+
+          keysRequest.onsuccess = (event) => {
             const keys = (
               event.target as ReturnType<typeof objectStore.getAllKeys>
             ).result;
-            const keyRange = IDBKeyRange
-          });
-          const collectionRequest = objectStore.getAll(keyRangeValue, limit);
+            const inputKeys = keys.slice(
+              pagination.offset,
+              pagination.offset + limit,
+            );
+            const keyRange = IDBKeyRange.bound(inputKeys[0], inputKeys.at(-1));
+            const collectionRequest = objectStore.getAll(keyRange);
 
-          collectionRequest.onsuccess = (event) => {
-            const items = (event.target as typeof collectionRequest).result;
+            collectionRequest.onsuccess = (event) => {
+              const items = (event.target as typeof collectionRequest).result;
 
-            resolve({ pagination, items });
+              resolve({ pagination, items });
+            };
           };
         };
       });
