@@ -6,3 +6,5 @@ export { InputSectionSelect } from "./select";
 export { InputSectionNanoID } from "./text/nanoid";
 export { InputSectionTitle } from "./text/title";
 export { InputSectionDescription } from "./text/description";
+export { InputSectionInteger } from "./number/integer";
+export { InputSectionCheckbox } from "./checkbox";

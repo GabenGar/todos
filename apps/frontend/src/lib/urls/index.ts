@@ -174,3 +174,7 @@ export function createPlannedEventEditPageURL(
 
   return `/${language}/planned-event/edit?${urlSearchParams}` as Route;
 }
+
+export function createDiceStatsPageURL(language: ILocale): Route {
+  return `/${language}/dice-stats` as Route
+}

@@ -43,7 +43,8 @@
       "Places": "Places",
       "URL Viewer": "URL Viewer",
       "Account": "Account",
-      "Planned events": "Planned events"
+      "Planned events": "Planned events",
+      "Dice stats": "Dice stats"
     },
     "qr_code_reader": {
       "title": "QR code reader",
@@ -142,6 +143,15 @@
     "planned-event_edit": {
       "title": "Edit planned event",
       "heading": "Edit Planned Event"
+    },
+    "dice-stats": {
+      "title": "Dice stats",
+      "heading": "Dice Stats",
+      "Calculate stats": "Calculate stats",
+      "Calculating stats...": "Calculating stats...",
+      "Faces": "Faces",
+      "Count": "Count",
+      "Reroll on duplicates": "Reroll on duplicates"
     }
   },
   "entities": {

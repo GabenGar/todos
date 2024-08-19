@@ -14,3 +14,8 @@ export type { IInputTextAreaProps } from "./text/text-area";
 export { InputNanoID } from "./text/nanoid";
 export { InputHidden } from "./hidden";
 export type { IInputHiddenProps } from "./hidden";
+export { InputNumber } from "./number/number";
+export { InputInteger } from "./number/integer";
+export type { IInputIntegerProps } from "./number/integer";
+export { InputCheckbox } from "./checkbox";
+export type { IInputCheckboxProps } from "./checkbox";

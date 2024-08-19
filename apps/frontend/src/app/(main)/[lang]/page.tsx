@@ -6,6 +6,7 @@ import {
   createStatsPlacesPageURL,
   createTaskStatsPageURL,
   createURLViewerPageURL,
+  createDiceStatsPageURL,
 } from "#lib/urls";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
@@ -81,6 +82,15 @@ async function FrontPage({ params }: IProps) {
                   href={createURLViewerPageURL(lang)}
                 >
                   {home["URL Viewer"]}
+                </Link>
+              </ListItem>
+
+              <ListItem>
+                <Link
+                  className={styles.link}
+                  href={createDiceStatsPageURL(lang)}
+                >
+                  {home["Dice stats"]}
                 </Link>
               </ListItem>
 
