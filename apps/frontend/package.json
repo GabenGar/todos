@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint && prettier --log-level=warn ./src --check",
     "format": "prettier --log-level=warn ./src --write",
-    "dev": "next dev",
+    "dev": "next dev --port 8001",
     "codegen": "npm run build-codegen && cd ../../packages/codegen && npm start -- ../../apps/frontend/src/codegen/generators ../../apps/frontend/src/codegen/output && cd ../../apps/frontend && prettier --log-level=warn ./src/codegen/output --write"
   },
   "dependencies": {

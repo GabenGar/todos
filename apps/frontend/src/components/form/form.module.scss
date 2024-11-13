@@ -1,13 +1,14 @@
 @use "../../styles/sass/variables.scss" as *;
 
 .block {
+  justify-self: center;
   display: grid;
   gap: $size-small;
   max-width: $width-phone;
+  width: 100%;
   border-radius: $radius-normal;
   border: $size-thin solid var(--colour-text-primary);
   padding: $size-normal;
-  margin: 0 auto;
 
   transition-property: border;
   transition-duration: var(--duration-global);

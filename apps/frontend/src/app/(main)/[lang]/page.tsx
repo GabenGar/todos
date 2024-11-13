@@ -6,6 +6,7 @@ import {
   createStatsPlacesPageURL,
   createTaskStatsPageURL,
   createURLViewerPageURL,
+  createYTDLPConfigPage,
 } from "#lib/urls";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
@@ -13,6 +14,7 @@ import { Page } from "#components";
 import { Link } from "#components/link";
 import { Overview, OverviewHeader } from "#components/overview";
 import { List, ListItem } from "#components/list";
+import { Heading } from "#components/heading";
 
 import styles from "./page.module.scss";
 
@@ -36,8 +38,9 @@ async function FrontPage({ params }: IProps) {
   return (
     <Page heading={home.heading}>
       <Overview headingLevel={2}>
-        {() => (
+        {(headinglevel) => (
           <OverviewHeader className={styles.header}>
+            <Heading level={headinglevel + 1}>{home["Tools"]}</Heading>
             <List className={styles.list}>
               <ListItem>
                 <Link
@@ -87,6 +90,18 @@ async function FrontPage({ params }: IProps) {
               <ListItem>
                 <Link className={styles.link} href={createAccountPageURL(lang)}>
                   {home["Account"]}
+                </Link>
+              </ListItem>
+            </List>
+
+            <Heading level={headinglevel + 1}>{home["Miscellaneous"]}</Heading>
+            <List className={styles.list}>
+              <ListItem>
+                <Link
+                  className={styles.link}
+                  href={createYTDLPConfigPage(lang)}
+                >
+                  {home["YT-DLP configs"]}
                 </Link>
               </ListItem>
             </List>
