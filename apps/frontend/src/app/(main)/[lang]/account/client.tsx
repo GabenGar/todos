@@ -26,27 +26,16 @@ export function Client({ commonTranslation, translation }: IProps) {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading
-                // @ts-expect-error type widening
-                level={headingLevel + 1}
-              >
-                {translation["Data"]}
-              </Heading>
+              <Heading level={headingLevel + 1}>{translation["Data"]}</Heading>
             </OverviewHeader>
 
             <OverviewBody>
-              <Heading
-                // @ts-expect-error type widening
-                level={headingLevel + 2}
-              >
+              <Heading level={headingLevel + 2}>
                 {translation["Export"]}
               </Heading>
               <DataExportForm translation={translation} />
 
-              <Heading
-                // @ts-expect-error type widening
-                level={headingLevel + 2}
-              >
+              <Heading level={headingLevel + 2}>
                 {translation["Import"]}
               </Heading>
               <ImportDataExportForm
@@ -64,10 +53,7 @@ export function Client({ commonTranslation, translation }: IProps) {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading
-                // @ts-expect-error type widening
-                level={headingLevel + 1}
-              >
+              <Heading level={headingLevel + 1}>
                 {translation["Compatibility"]}
               </Heading>
             </OverviewHeader>
@@ -82,10 +68,7 @@ export function Client({ commonTranslation, translation }: IProps) {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading
-                // @ts-expect-error type widening
-                level={headingLevel + 1}
-              >
+              <Heading level={headingLevel + 1}>
                 {translation["Settings"]}
               </Heading>
             </OverviewHeader>
