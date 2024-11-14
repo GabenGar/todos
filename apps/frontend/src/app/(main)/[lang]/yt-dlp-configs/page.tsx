@@ -29,6 +29,10 @@ async function YTDLPConfigsPage({ params }: IProps) {
     process.cwd() + "/src/app/(main)/[lang]/yt-dlp-configs/windows.conf",
     "utf8",
   );
+  const linuxConfig = await fs.readFile(
+    process.cwd() + "/src/app/(main)/[lang]/yt-dlp-configs/linux.conf",
+    "utf8",
+  );
 
   return (
     <Page heading={heading}>
@@ -41,6 +45,8 @@ async function YTDLPConfigsPage({ params }: IProps) {
             </OverviewHeader>
             <OverviewBody>
               <Heading level={headingLevel + 1}>Linux</Heading>
+              <Pre isCode>{linuxConfig}</Pre>
+
               <Heading level={headingLevel + 1}>Windows</Heading>
               <Pre isCode>{windowsConfig}</Pre>
             </OverviewBody>
