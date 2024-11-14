@@ -9,6 +9,10 @@
       "path": "apps/frontend"
     },
     {
+			"name": "link-overwatch",
+			"path": "apps/extension"
+		},
+    {
       "name": "codegen",
       "path": "packages/codegen"
     },
