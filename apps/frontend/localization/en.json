@@ -38,12 +38,15 @@
     "home": {
       "title": "Welcome!",
       "heading": "Welcome!",
+      "Tools": "Tools",
       "Tasks": "Tasks",
       "QR code reader": "QR code reader",
       "Places": "Places",
       "URL Viewer": "URL Viewer",
       "Account": "Account",
-      "Planned events": "Planned events"
+      "Planned events": "Planned events",
+      "Miscellaneous": "Miscellaneous",
+      "YT-DLP configs": "YT-DLP configs"
     },
     "qr_code_reader": {
       "title": "QR code reader",
@@ -142,6 +145,10 @@
     "planned-event_edit": {
       "title": "Edit planned event",
       "heading": "Edit Planned Event"
+    },
+    "yt-dlp-configs": {
+      "title": "YT-DLP configs",
+      "heading": "YT-DLP Configs"
     }
   },
   "entities": {

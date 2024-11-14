@@ -11,13 +11,15 @@ interface IProps
   extends IBaseComponentPropsWithChildren<
     "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
   > {
-  level: IHeadingLevel;
+  level: IHeadingLevel | (number & {});
 }
 
 export const Heading = createBlockComponent(styles, Component);
 
 function Component({ level, className, ...props }: IProps) {
   const finalClassName = clsx(styles[`h${level}`], className);
+
+  validateHeadinglevel(level);
 
   switch (level) {
     case 1: {

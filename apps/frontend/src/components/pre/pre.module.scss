@@ -5,3 +5,8 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+.code {
+  background-color: var(--colour-background-secondary-transparent);
+  padding: $size-small;
+}
