@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import browser from "webextension-polyfill";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import CopyIcon from "../icons/copy.svg";
-import "../styles/CopyButton.scss";
+
+import "./CopyButton.scss";
 
 export default class CopyButton extends Component {
   constructor(props) {

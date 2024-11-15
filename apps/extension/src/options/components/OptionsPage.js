@@ -5,7 +5,8 @@ import { initSettings, getSettings } from "../../settings/settings";
 import SideBar from "./SideBar";
 import ContentsArea from "./ContentsArea";
 import ScrollToTop from "./ScrollToTop";
-import "../styles/OptionsPage.scss";
+
+import "./OptionsPage.scss";
 
 const setupTheme = async () => {
   await initSettings();

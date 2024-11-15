@@ -1,7 +1,8 @@
 import React from "react";
 import browser from "webextension-polyfill";
 import { getSettings } from "src/settings/settings";
-import "../styles/TranslateButton.scss";
+
+import "./TranslateButton.scss";
 
 const calcPosition = () => {
   const buttonSize = parseInt(getSettings("buttonSize"));

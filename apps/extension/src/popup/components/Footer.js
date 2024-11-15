@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import browser from "webextension-polyfill";
 import openUrl from "src/common/openUrl";
-import "../styles/Footer.scss";
 import { getSettings } from "../../settings/settings";
+
+import "./Footer.scss";
 
 export default class Footer extends Component {
   constructor(props) {

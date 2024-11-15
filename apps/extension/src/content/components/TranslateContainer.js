@@ -3,7 +3,8 @@ import browser from "webextension-polyfill";
 import { getSettings } from "src/settings/settings";
 import TranslateButton from "./TranslateButton";
 import TranslatePanel from "./TranslatePanel";
-import "../styles/TranslateContainer.scss";
+
+import "./TranslateContainer.scss";
 
 const translateText = async (text, targetLang = getSettings("targetLang")) => {
   const result = await browser.runtime.sendMessage({

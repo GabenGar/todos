@@ -2,7 +2,8 @@ import React from "react";
 import browser from "webextension-polyfill";
 import { setSettings } from "src/settings/settings";
 import KeyboardShortcutForm from "./KeyboardShortcutForm";
-import "../styles/OptionContainer.scss";
+
+import "./OptionContainer.scss";
 
 export default props => {
   const { title, captions, type, id, children, currentValue } = props;

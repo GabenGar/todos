@@ -2,8 +2,9 @@ import browser from "webextension-polyfill";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { getSettings } from "src/settings/settings";
-import "../styles/TranslatePanel.scss";
 import { getBackgroundColor, getCandidateFontColor, getResultFontColor } from "../../settings/defaultColors";
+
+import "./TranslatePanel.scss";
 
 const splitLine = text => {
   const regex = /(\n)/g;

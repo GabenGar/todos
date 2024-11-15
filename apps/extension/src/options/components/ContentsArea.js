@@ -4,7 +4,8 @@ import browserInfo from "browser-info";
 import SettingsPage from "./SettingsPage";
 import KeyboardShortcutsPage from "./KeyboardShortcutsPage";
 import InformationPage from "./InformationPage";
-import "../styles/ContentsArea.scss";
+
+import "./ContentsArea.scss";
 
 const isValidShortcuts = browserInfo().name == "Firefox" && browserInfo().version >= 60;
 

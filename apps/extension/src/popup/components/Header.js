@@ -5,8 +5,9 @@ import { patreonLink } from "src/common/personalUrls";
 import HeartIcon from "../icons/heart.svg";
 import SettingsIcon from "../icons/settings.svg";
 import Toggle from "react-toggle";
+
 import "react-toggle/style.css";
-import "../styles/Header.scss";
+import "./Header.scss";
 
 const openPatreon = () => {
   openUrl(patreonLink);

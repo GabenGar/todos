@@ -8,8 +8,9 @@ import Header from "./Header";
 import InputArea from "./InputArea";
 import ResultArea from "./ResultArea";
 import Footer from "./Footer";
-import "../styles/PopupPage.scss";
 import { getBackgroundColor } from "../../settings/defaultColors";
+
+import "./PopupPage.scss";
 
 const logDir = "popup/PopupPage";
 

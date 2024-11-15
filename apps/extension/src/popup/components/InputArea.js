@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import browser from "webextension-polyfill";
 import ListenButton from "./ListenButton";
-import "../styles/InputArea.scss";
+
+import "./InputArea.scss";
 
 export default class InputArea extends Component {
   resizeTextArea = () => {

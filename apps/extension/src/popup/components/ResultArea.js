@@ -4,7 +4,8 @@ import { getSettings } from "src/settings/settings";
 import openUrl from "src/common/openUrl";
 import CopyButton from "./CopyButton";
 import ListenButton from "./ListenButton";
-import "../styles/ResultArea.scss";
+
+import "./ResultArea.scss";
 
 const splitLine = text => {
   const regex = /(\n)/g;
