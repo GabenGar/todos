@@ -20,6 +20,7 @@ const generalConfig = {
   watch: true,
   devtool: "inline-source-map",
   resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
       src: path.resolve(__dirname, "src/"),
       "webextension-polyfill":
@@ -29,12 +30,9 @@ const generalConfig = {
   module: {
     rules: [
       {
-        loader: "babel-loader",
+        test: /\.(tsx|ts|js|jsx)$/,
         exclude: /node_modules/,
-        test: /\.(js|jsx)$/,
-        resolve: {
-          extensions: [".js", ".jsx"],
-        },
+        use: ["ts-loader"],
       },
       {
         test: /\.(scss|css)$/,
