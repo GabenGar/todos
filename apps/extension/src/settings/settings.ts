@@ -1,6 +1,7 @@
 import browser from "webextension-polyfill";
 import log from "loglevel";
 import defaultSettings from "./defaultSettings";
+import type { ISettingID } from "./types";
 
 const logDir = "settings/settings";
 let currentSettings = {};
@@ -26,7 +27,7 @@ export const initSettings = async () => {
       category.elements.forEach((optionElement) => {
         pushSettings(optionElement);
 
-        if (optionElement.childElements) {
+        if ("childElements" in optionElement) {
           optionElement.childElements.forEach((childElement) => {
             pushSettings(childElement);
           });
@@ -48,7 +49,7 @@ export const setSettings = async (id, value) => {
   await browser.storage.local.set({ Settings: currentSettings });
 };
 
-export const getSettings = (id) => {
+export const getSettings = (id: ISettingID) => {
   return currentSettings[id];
 };
 
@@ -94,11 +95,11 @@ export const exportSettings = async () => {
   URL.revokeObjectURL(downloadUrl);
 };
 
-export const importSettings = async (e) => {
+export async function importSettings(event: InputEvent) {
   const reader = new FileReader();
 
   reader.onload = async () => {
-    const importedSettings = JSON.parse(reader.result);
+    const importedSettings = JSON.parse(reader.result as string);
     const settingsIds = getSettingsIds();
 
     for (const id of settingsIds) {
@@ -106,26 +107,32 @@ export const importSettings = async (e) => {
         await setSettings(id, importedSettings[id]);
     }
 
+    // @ts-expect-error No idea which location interface
     location.reload(true);
   };
 
-  const file = e.target.files[0];
+  const file = (event.target as HTMLInputElement).files[0];
   reader.readAsText(file);
-};
+}
 
-const getSettingsIds = () => {
-  let settingsIds = [];
+function getSettingsIds() {
+  let settingsIds: ISettingID[] = [];
+
   defaultSettings.forEach((category) => {
     category.elements.forEach((optionElement) => {
-      if (optionElement.id && optionElement.default !== undefined)
+      if (optionElement.id && optionElement.default !== undefined) {
         settingsIds.push(optionElement.id);
+      }
+
       if (optionElement.childElements) {
         optionElement.childElements.forEach((childElement) => {
-          if (childElement.id && childElement.default !== undefined)
+          if (childElement.id && childElement.default !== undefined) {
             settingsIds.push(childElement.id);
+          }
         });
       }
     });
   });
+
   return settingsIds;
-};
+}

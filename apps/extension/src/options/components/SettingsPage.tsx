@@ -24,7 +24,7 @@ export default class SettingsPage extends Component<IProps, IState> {
     super(props);
     this.state = {
       isInit: false,
-      currentValues: {},
+      currentValues: {} as ReturnType<typeof getAllSettings>,
     };
     this.init();
   }
