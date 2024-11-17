@@ -2,6 +2,7 @@ import React from "react";
 import browser from "webextension-polyfill";
 import { Link, withRouter } from "react-router-dom";
 import browserInfo from "browser-info";
+import clsx from "clsx";
 
 import "./SideBar.scss";
 
@@ -10,17 +11,17 @@ const sideBar = withRouter(function SideBar(props) {
     <div className="sideBar">
       <div className="titleContainer">
         <img src="/icons/64.png" className="logo" />
-        <span className="logoTitle">Simple Translate</span>
+        <span className="logoTitle">Link Overwatch</span>
       </div>
+
       <ul>
         <li
-          className={`sideBarItem ${
+          className={clsx(
+            "sideBarItem",
             ["/shortcuts", "/information"].every(
               (path) => path != props.location.pathname
-            )
-              ? "selected"
-              : ""
-          }`}
+            ) && "selected"
+          )}
         >
           <Link to="/settings">{browser.i18n.getMessage("settingsLabel")}</Link>
         </li>

@@ -9,6 +9,8 @@
     "noImplicitAny": true,
     "allowJs": true,
     "allowSyntheticDefaultImports" : true,
-    "esModuleInterop" : true
-  }
+    "esModuleInterop" : true,
+    "resolveJsonModule": true
+  },
+  "exclude": ["./dev", "./dist", "./temp"]
 }
