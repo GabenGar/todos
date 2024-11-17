@@ -10,8 +10,11 @@ export const initSettings = async () => {
   currentSettings = response.Settings || {};
   let shouldSave = false;
 
-  const pushSettings = element => {
-    if (element.id == undefined || element.default == undefined) return;
+  const pushSettings = (element) => {
+    if (element.id == undefined || element.default == undefined) {
+      return;
+    }
+
     if (currentSettings[element.id] == undefined) {
       currentSettings[element.id] = element.default;
       shouldSave = true;
@@ -19,11 +22,12 @@ export const initSettings = async () => {
   };
 
   const fetchDefaultSettings = () => {
-    defaultSettings.forEach(category => {
-      category.elements.forEach(optionElement => {
+    defaultSettings.forEach((category) => {
+      category.elements.forEach((optionElement) => {
         pushSettings(optionElement);
+
         if (optionElement.childElements) {
-          optionElement.childElements.forEach(childElement => {
+          optionElement.childElements.forEach((childElement) => {
             pushSettings(childElement);
           });
         }
@@ -32,7 +36,10 @@ export const initSettings = async () => {
   };
 
   fetchDefaultSettings();
-  if (shouldSave) await browser.storage.local.set({ Settings: currentSettings });
+
+  if (shouldSave) {
+    await browser.storage.local.set({ Settings: currentSettings });
+  }
 };
 
 export const setSettings = async (id, value) => {
@@ -41,7 +48,7 @@ export const setSettings = async (id, value) => {
   await browser.storage.local.set({ Settings: currentSettings });
 };
 
-export const getSettings = id => {
+export const getSettings = (id) => {
   return currentSettings[id];
 };
 
@@ -74,7 +81,7 @@ export const exportSettings = async () => {
 
   const downloadUrl = URL.createObjectURL(
     new Blob([JSON.stringify(settingsObj, null, "  ")], {
-      type: "aplication/json"
+      type: "aplication/json",
     })
   );
 
@@ -87,7 +94,7 @@ export const exportSettings = async () => {
   URL.revokeObjectURL(downloadUrl);
 };
 
-export const importSettings = async e => {
+export const importSettings = async (e) => {
   const reader = new FileReader();
 
   reader.onload = async () => {
@@ -95,7 +102,8 @@ export const importSettings = async e => {
     const settingsIds = getSettingsIds();
 
     for (const id of settingsIds) {
-      if (importedSettings[id] !== undefined) await setSettings(id, importedSettings[id]);
+      if (importedSettings[id] !== undefined)
+        await setSettings(id, importedSettings[id]);
     }
 
     location.reload(true);
@@ -107,12 +115,14 @@ export const importSettings = async e => {
 
 const getSettingsIds = () => {
   let settingsIds = [];
-  defaultSettings.forEach(category => {
-    category.elements.forEach(optionElement => {
-      if (optionElement.id && optionElement.default !== undefined) settingsIds.push(optionElement.id);
+  defaultSettings.forEach((category) => {
+    category.elements.forEach((optionElement) => {
+      if (optionElement.id && optionElement.default !== undefined)
+        settingsIds.push(optionElement.id);
       if (optionElement.childElements) {
-        optionElement.childElements.forEach(childElement => {
-          if (childElement.id && childElement.default !== undefined) settingsIds.push(childElement.id);
+        optionElement.childElements.forEach((childElement) => {
+          if (childElement.id && childElement.default !== undefined)
+            settingsIds.push(childElement.id);
         });
       }
     });

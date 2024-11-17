@@ -1,6 +1,7 @@
 import React from "react";
 import browser from "webextension-polyfill";
 import { Link, withRouter } from "react-router-dom";
+// @ts-expect-error no types for this one
 import browserInfo from "browser-info";
 import clsx from "clsx";
 
@@ -10,7 +11,7 @@ const sideBar = withRouter(function SideBar(props) {
   return (
     <div className="sideBar">
       <div className="titleContainer">
-        <img src="/icons/64.png" className="logo" />
+        <img src="/icons/logo/64.png" className="logo" />
         <span className="logoTitle">Link Overwatch</span>
       </div>
 

@@ -1,16 +1,30 @@
 import React, { Component } from "react";
 import browser from "webextension-polyfill";
-import { updateLogLevel, overWriteLogLevel } from "src/common/log";
-import { initSettings, getAllSettings, resetAllSettings, exportSettings, importSettings, handleSettingsChange } from "src/settings/settings";
-import defaultSettings from "src/settings/defaultSettings";
+import { updateLogLevel, overWriteLogLevel } from "../../common/log";
+import {
+  initSettings,
+  getAllSettings,
+  resetAllSettings,
+  exportSettings,
+  importSettings,
+  handleSettingsChange,
+} from "../../settings/settings";
+import defaultSettings from "../../settings/defaultSettings";
 import CategoryContainer from "./CategoryContainer";
 
-export default class SettingsPage extends Component {
-  constructor(props) {
+interface IProps {}
+
+interface IState {
+  isInit: boolean;
+  currentValues: ReturnType<typeof getAllSettings>;
+}
+
+export default class SettingsPage extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       isInit: false,
-      currentValues: {}
+      currentValues: {},
     };
     this.init();
   }
@@ -19,9 +33,12 @@ export default class SettingsPage extends Component {
     await initSettings();
     overWriteLogLevel();
     updateLogLevel();
+
     this.setState({ isInit: true, currentValues: getAllSettings() });
-    browser.storage.local.onChanged.addListener(changes => {
+
+    browser.storage.local.onChanged.addListener((changes) => {
       const newSettings = handleSettingsChange(changes);
+
       if (newSettings) this.setState({ currentValues: newSettings });
     });
   }
@@ -31,15 +48,24 @@ export default class SettingsPage extends Component {
     const settingsContent = (
       <ul>
         {defaultSettings.map((category, index) => (
-          <CategoryContainer {...category} key={index} currentValues={currentValues} />
+          <CategoryContainer
+            {...category}
+            key={index}
+            currentValues={currentValues}
+          />
         ))}
-        <CategoryContainer {...additionalCategory} currentValues={currentValues} />
+        <CategoryContainer
+          {...additionalCategory}
+          currentValues={currentValues}
+        />
       </ul>
     );
 
     return (
       <div>
-        <p className="contentTitle">{browser.i18n.getMessage("settingsLabel")}</p>
+        <p className="contentTitle">
+          {browser.i18n.getMessage("settingsLabel")}
+        </p>
         <hr />
         {isInit ? settingsContent : ""}
       </div>
@@ -57,7 +83,7 @@ const additionalCategory = {
       type: "file",
       accept: ".json",
       value: "importButtonLabel",
-      onChange: importSettings
+      onChange: importSettings,
     },
     {
       id: "exportSettings",
@@ -67,7 +93,7 @@ const additionalCategory = {
       value: "exportButtonLabel",
       onClick: async () => {
         await exportSettings();
-      }
+      },
     },
     {
       id: "resetSettings",
@@ -77,8 +103,9 @@ const additionalCategory = {
       value: "resetSettingsButtonLabel",
       onClick: async () => {
         await resetAllSettings();
+        // @ts-expect-error no idea which `Location` object it is
         location.reload(true);
-      }
-    }
-  ]
+      },
+    },
+  ],
 };

@@ -13,11 +13,11 @@
     "open_in_tab": true
   },
   "icons": {
-    "512": "icons/512.png",
-    "128": "icons/128.png",
-    "64": "icons/64.png",
-    "48": "icons/48.png",
-    "32": "icons/32.png"
+    "512": "icons/logo/512.png",
+    "128": "icons/logo/128.png",
+    "64": "icons/logo/64.png",
+    "48": "icons/logo/48.png",
+    "32": "icons/logo/32.png"
   },
   "background": {
     "service_worker": "background/background.js",
@@ -25,14 +25,14 @@
   },
   "action": {
     "default_icon": {
-      "512": "icons/512.png",
-      "128": "icons/128.png",
-      "64": "icons/64.png",
-      "48": "icons/48.png",
-      "38": "icons/38.png",
-      "32": "icons/32.png",
-      "19": "icons/19.png",
-      "16": "icons/16.png"
+      "512": "icons/logo/512.png",
+      "128": "icons/logo/128.png",
+      "64": "icons/logo/64.png",
+      "48": "icons/logo/48.png",
+      "38": "icons/logo/38.png",
+      "32": "icons/logo/32.png",
+      "19": "icons/logo/19.png",
+      "16": "icons/logo/16.png"
     },
     "default_popup": "popup/index.html"
   },
@@ -55,7 +55,7 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "icons/512.png"
+        "icons/logo/512.png"
       ],
       "matches": [
         "*://*/*"
