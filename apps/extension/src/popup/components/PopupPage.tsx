@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, type ChangeEventHandler } from "react";
 import browser from "webextension-polyfill";
 import log from "loglevel";
 import {
@@ -17,48 +17,31 @@ import "./PopupPage.scss";
 
 const logDir = "popup/PopupPage";
 
-const getTabInfo = async () => {
-  try {
-    const tab = (
-      await browser.tabs.query({ currentWindow: true, active: true })
-    )[0];
-    const tabUrl = browser.tabs.sendMessage(tab.id, { message: "getTabUrl" });
-    const selectedText = browser.tabs.sendMessage(tab.id, {
-      message: "getSelectedText",
-    });
-    const isEnabledOnPage = browser.tabs.sendMessage(tab.id, {
-      message: "getEnabled",
-    });
-
-    const tabInfo = await Promise.all([tabUrl, selectedText, isEnabledOnPage]);
-
-    return {
-      isConnected: true,
-      url: tabInfo[0],
-      selectedText: tabInfo[1],
-      isEnabledOnPage: tabInfo[2],
-    };
-  } catch (e) {
-    return {
-      isConnected: false,
-      url: "",
-      selectedText: "",
-      isEnabledOnPage: false,
-    };
-  }
-};
-
 const UILanguage = browser.i18n.getUILanguage();
 const rtlLanguage = ["he", "ar"].includes(UILanguage);
 const rtlLanguageClassName = rtlLanguage ? "popup-page-rtl-language" : "";
 
 interface IProps {}
 
-interface IState {}
+interface IState {
+  targetLang: string;
+  inputText: string;
+  resultText: string;
+  candidateText: string;
+  sourceLang: string;
+  isError: boolean;
+  isConnected: boolean;
+  isEnabledOnPage: boolean;
+  errorMessage: string;
+  tabUrl: string;
+  langList: unknown[];
+  langHistory: unknown[];
+}
 
 export default class PopupPage extends Component<IProps, IState> {
   isSwitchedSecondLang: boolean;
-  themeClass: string
+  themeClass: string;
+  inputTimer: ReturnType<typeof setTimeout>;
 
   constructor(props: IProps) {
     super(props);
@@ -115,18 +98,20 @@ export default class PopupPage extends Component<IProps, IState> {
     document.body.style.width = "348px";
   };
 
-  handleInputText = (inputText) => {
+  handleInputText = (inputText: string) => {
     this.setState({ inputText: inputText });
 
     const waitTime = getSettings("waitTime");
     clearTimeout(this.inputTimer);
+
     this.inputTimer = setTimeout(async () => {
       const result = await this.translateText(inputText, this.state.targetLang);
+      // @ts-expect-error wtf
       this.switchSecondLang(result);
     }, waitTime);
   };
 
-  setLangHistory = (lang) => {
+  setLangHistory = (lang: string) => {
     let langHistory = getSettings("langHistory") || [];
     langHistory.push(lang);
     if (langHistory.length > 30) langHistory = langHistory.slice(-30);
@@ -134,22 +119,26 @@ export default class PopupPage extends Component<IProps, IState> {
     this.setState({ langHistory: langHistory });
   };
 
-  handleLangChange = (lang) => {
+  handleLangChange = (lang: string) => {
     log.info(logDir, "handleLangChange()", lang);
     this.setState({ targetLang: lang });
     const inputText = this.state.inputText;
+
     if (inputText !== "") this.translateText(inputText, lang);
     this.setLangHistory(lang);
   };
 
-  translateText = async (text, targetLang) => {
+  translateText = async (text: string, targetLang: string) => {
     log.info(logDir, "translateText()", text, targetLang);
-    const result = await browser.runtime.sendMessage({
+    const result = (await browser.runtime.sendMessage({
       message: "translate",
       text: text,
       sourceLang: "auto",
       targetLang: targetLang,
-    });
+    })) as Pick<
+      IState,
+      "resultText" | "candidateText" | "isError" | "errorMessage"
+    > & { sourceLanguage: string };
     this.setState({
       resultText: result.resultText,
       candidateText: result.candidateText,
@@ -160,12 +149,20 @@ export default class PopupPage extends Component<IProps, IState> {
     return result;
   };
 
-  switchSecondLang = (result) => {
-    if (!getSettings("ifChangeSecondLang")) return;
+  switchSecondLang = (result: {
+    sourceLanguage: string;
+    percentage: number;
+  }) => {
+    if (!getSettings("ifChangeSecondLang")) {
+      return;
+    }
 
     const defaultTargetLang = getSettings("targetLang");
     const secondLang = getSettings("secondTargetLang");
-    if (defaultTargetLang === secondLang) return;
+
+    if (defaultTargetLang === secondLang) {
+      return;
+    }
 
     const equalsSourceAndTarget =
       result.sourceLanguage.split("-")[0] ===
@@ -190,8 +187,10 @@ export default class PopupPage extends Component<IProps, IState> {
     }
   };
 
-  toggleEnabledOnPage = async (e) => {
-    const isEnabled = e.target.checked;
+  toggleEnabledOnPage = async (
+    event: Parameters<ChangeEventHandler<HTMLInputElement>>[0]
+  ) => {
+    const isEnabled = event.target.checked;
     this.setState({ isEnabledOnPage: isEnabled });
     try {
       const tab = (
@@ -235,5 +234,47 @@ export default class PopupPage extends Component<IProps, IState> {
         />
       </div>
     );
+  }
+}
+
+interface ITabInfo {
+  isConnected: boolean;
+  url: string;
+  selectedText: string;
+  isEnabledOnPage: boolean;
+}
+
+async function getTabInfo(): Promise<ITabInfo> {
+  try {
+    const tab = (
+      await browser.tabs.query({ currentWindow: true, active: true })
+    )[0];
+    const tabUrl = browser.tabs.sendMessage(tab.id, { message: "getTabUrl" });
+    const selectedText = browser.tabs.sendMessage(tab.id, {
+      message: "getSelectedText",
+    });
+    const isEnabledOnPage = browser.tabs.sendMessage(tab.id, {
+      message: "getEnabled",
+    });
+
+    const tabInfo = (await Promise.all([
+      tabUrl,
+      selectedText,
+      isEnabledOnPage,
+    ])) as [string, string, boolean];
+
+    return {
+      isConnected: true,
+      url: tabInfo[0],
+      selectedText: tabInfo[1],
+      isEnabledOnPage: tabInfo[2],
+    };
+  } catch (e) {
+    return {
+      isConnected: false,
+      url: "",
+      selectedText: "",
+      isEnabledOnPage: false,
+    };
   }
 }
