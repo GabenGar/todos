@@ -5,18 +5,26 @@ import CopyIcon from "../icons/copy.svg";
 
 import "./CopyButton.scss";
 
-export default class CopyButton extends Component {
-  constructor(props) {
+interface IProps {
+  text: string;
+}
+
+interface IState {
+  isCopied: boolean;
+}
+
+class CopyButton extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = { isCopied: false };
   }
 
-  handleCopy = (copiedText) => {
+  handleCopy = (copiedText: string) => {
     navigator.clipboard.writeText(copiedText);
     this.setState({ isCopied: true });
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: IProps) {
     if (this.props.text !== nextProps.text) this.setState({ isCopied: false });
   }
 
@@ -27,10 +35,15 @@ export default class CopyButton extends Component {
     return (
       <div className="copy">
         {this.state.isCopied && (
-          <span className="copiedText">{browser.i18n.getMessage("copiedLabel")}</span>
+          <span className="copiedText">
+            {browser.i18n.getMessage("copiedLabel")}
+          </span>
         )}
         <CopyToClipboard text={text} onCopy={this.handleCopy}>
-          <button className="copyButton" title={browser.i18n.getMessage("copyLabel")}>
+          <button
+            className="copyButton"
+            title={browser.i18n.getMessage("copyLabel")}
+          >
             <CopyIcon />
           </button>
         </CopyToClipboard>
@@ -38,3 +51,5 @@ export default class CopyButton extends Component {
     );
   }
 }
+
+export default CopyButton;
