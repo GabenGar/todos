@@ -1,12 +1,22 @@
-import React, { Component } from "react";
+import React, { Component, type ChangeEvent } from "react";
 import browser from "webextension-polyfill";
-import openUrl from "src/common/openUrl";
+import openUrl from "../../common/openUrl";
 import { getSettings } from "../../settings/settings";
 
 import "./Footer.scss";
 
-export default class Footer extends Component {
-  constructor(props) {
+interface IProps {
+  tabUrl: string;
+  targetLang: string;
+  langHistory: string[];
+  langList: { name: string; value: string }[];
+  handleLangChange: (lang: string) => void;
+}
+
+interface IState {}
+
+class Footer extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
   }
 
@@ -18,8 +28,8 @@ export default class Footer extends Component {
     openUrl(translateUrl, isCurrentTab);
   };
 
-  handleChange = e => {
-    const lang = e.target.value;
+  handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const lang = event.target.value;
     this.props.handleLangChange(lang);
   };
 
@@ -29,8 +39,13 @@ export default class Footer extends Component {
     return (
       <div id="footer">
         <div className="translateLink">
-          {tabUrl && <a onClick={this.handleLinkClick}>{browser.i18n.getMessage("showLink")}</a>}
+          {tabUrl && (
+            <a onClick={this.handleLinkClick}>
+              {browser.i18n.getMessage("showLink")}
+            </a>
+          )}
         </div>
+
         <div className="selectWrap">
           <select
             id="langList"
@@ -38,17 +53,18 @@ export default class Footer extends Component {
             onChange={this.handleChange}
             title={browser.i18n.getMessage("targetLangLabel")}
           >
-
             <optgroup label={browser.i18n.getMessage("recentLangLabel")}>
-              {langList.filter(option => langHistory.includes(option.value))
-                .map(option => (
+              {langList
+                .filter((option) => langHistory.includes(option.value))
+                .map((option) => (
                   <option value={option.value} key={option.value}>
                     {option.name}
                   </option>
                 ))}
             </optgroup>
+
             <optgroup label={browser.i18n.getMessage("allLangLabel")}>
-              {langList.map(option => (
+              {langList.map((option) => (
                 <option value={option.value} key={option.value}>
                   {option.name}
                 </option>
@@ -60,3 +76,5 @@ export default class Footer extends Component {
     );
   }
 }
+
+export default Footer;
