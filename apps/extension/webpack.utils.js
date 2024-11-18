@@ -28,10 +28,10 @@ const getOutput = (browserDir, outputDir = "dev") => {
 
 const getEntry = (sourceDir = "src") => {
   return {
-    popup: path.resolve(__dirname, `${sourceDir}/popup/index.js`),
+    popup: path.resolve(__dirname, `${sourceDir}/popup/index.tsx`),
     options: path.resolve(__dirname, `${sourceDir}/options/index.tsx`),
-    content: path.resolve(__dirname, `${sourceDir}/content/index.js`),
-    background: path.resolve(__dirname, `${sourceDir}/background/background.js`)
+    content: path.resolve(__dirname, `${sourceDir}/content/index.tsx`),
+    background: path.resolve(__dirname, `${sourceDir}/background/background.ts`)
   };
 };
 

@@ -5,11 +5,20 @@ import {
   initSettings,
   getSettings,
   handleSettingsChange,
-} from "src/settings/settings";
-import { updateLogLevel, overWriteLogLevel } from "src/common/log";
+} from "../settings/settings";
+import { updateLogLevel, overWriteLogLevel } from "../common/log";
 import TranslateContainer from "./components/TranslateContainer";
 
-const init = async () => {
+interface IPosition {
+  x: number;
+  y: number;
+}
+
+init();
+
+let prevSelectedText = "";
+
+async function init() {
   await initSettings();
   document.addEventListener("mouseup", handleMouseUp);
   document.addEventListener("keydown", handleKeyDown);
@@ -19,91 +28,129 @@ const init = async () => {
   overWriteLogLevel();
   updateLogLevel();
   disableExtensionByUrlList();
-};
-init();
+}
 
-let prevSelectedText = "";
-const handleMouseUp = async (e) => {
+async function handleMouseUp(event: MouseEvent) {
   await waitTime(10);
 
-  const isLeftClick = e.button === 0;
-  if (!isLeftClick) return;
+  const isLeftClick = event.button === 0;
 
+  if (!isLeftClick) {
+    return;
+  }
+
+  const element = event.target as HTMLElement;
   const isInPasswordField =
-    e.target.tagName === "INPUT" && e.target.type === "password";
-  if (isInPasswordField) return;
+    element.tagName === "INPUT" &&
+    "type" in element &&
+    element.type === "password";
+
+  if (isInPasswordField) {
+    return;
+  }
 
   const inCodeElement =
-    e.target.tagName === "CODE" ||
-    (!!e.target.closest && !!e.target.closest("code"));
-  if (inCodeElement && getSettings("isDisabledInCodeElement")) return;
+    element.tagName === "CODE" ||
+    (!!element.closest && !!element.closest("code"));
+
+  if (inCodeElement && getSettings("isDisabledInCodeElement")) {
+    return;
+  }
 
   const isInThisElement =
     document.querySelector("#simple-translate") &&
-    document.querySelector("#simple-translate").contains(e.target);
-  if (isInThisElement) return;
+    document.querySelector("#simple-translate").contains(element);
+
+  if (isInThisElement) {
+    return;
+  }
 
   removeTranslatecontainer();
 
-  const ignoredDocumentLang = getSettings("ignoredDocumentLang")
+  const ignoredDocumentLang = (getSettings("ignoredDocumentLang") as string)
     .split(",")
-    .map((s) => s.trim())
-    .filter((s) => !!s);
+    .map((str) => str.trim())
+    .filter((str) => !!str);
+
   if (ignoredDocumentLang.length) {
     const ignoredLangSelector = ignoredDocumentLang
       .map((lang) => `[lang="${lang}"]`)
       .join(",");
-    if (!!e.target.closest && !!e.target.closest(ignoredLangSelector)) return;
+
+    if (!!element.closest && !!element.closest(ignoredLangSelector)) {
+      return;
+    }
   }
 
   const selectedText = getSelectedText();
   prevSelectedText = selectedText;
-  if (selectedText.length === 0) return;
+
+  if (selectedText.length === 0) {
+    return;
+  }
 
   if (getSettings("isDisabledInTextFields")) {
-    if (isInContentEditable()) return;
+    if (isInContentEditable()) {
+      return;
+    }
   }
 
   if (getSettings("ifOnlyTranslateWhenModifierKeyPressed")) {
     const modifierKey = getSettings("modifierKey");
+
     switch (modifierKey) {
       case "shift":
-        if (!e.shiftKey) return;
+        if (!event.shiftKey) {
+          return;
+        }
         break;
       case "alt":
-        if (!e.altKey) return;
+        if (!event.altKey) {
+          return;
+        }
         break;
       case "ctrl":
-        if (!e.ctrlKey) return;
+        if (!event.ctrlKey) {
+          return;
+        }
         break;
       case "cmd":
-        if (!e.metaKey) return;
+        if (!event.metaKey) {
+          return;
+        }
         break;
       default:
         break;
     }
   }
 
-  const clickedPosition = { x: e.clientX, y: e.clientY };
+  const clickedPosition = { x: event.clientX, y: event.clientY };
   const selectedPosition = getSelectedPosition();
   showTranslateContainer(selectedText, selectedPosition, clickedPosition);
-};
+}
 
-const waitTime = (time) => {
-  return new Promise((resolve) => setTimeout(() => resolve(), time));
+const waitTime = (time: number) => {
+  const result = new Promise<void>((resolve) =>
+    setTimeout(() => resolve(), time)
+  );
+
+  return result;
 };
 
 const getSelectedText = () => {
-  const element = document.activeElement;
+  const element = document.activeElement as
+    | HTMLInputElement
+    | HTMLTextAreaElement;
   const isInTextField =
     element.tagName === "INPUT" || element.tagName === "TEXTAREA";
   const selectedText = isInTextField
     ? element.value.substring(element.selectionStart, element.selectionEnd)
     : window.getSelection()?.toString() ?? "";
+
   return selectedText;
 };
 
-const getSelectedPosition = () => {
+function getSelectedPosition(): IPosition {
   const element = document.activeElement;
   const isInTextField =
     element.tagName === "INPUT" || element.tagName === "TEXTAREA";
@@ -113,34 +160,45 @@ const getSelectedPosition = () => {
 
   let selectedPosition;
   const panelReferencePoint = getSettings("panelReferencePoint");
+
   switch (panelReferencePoint) {
-    case "topSelectedText":
+    case "topSelectedText": {
       selectedPosition = {
         x: selectedRect.left + selectedRect.width / 2,
         y: selectedRect.top,
       };
       break;
+    }
+
     case "bottomSelectedText":
-    default:
+    default: {
       selectedPosition = {
         x: selectedRect.left + selectedRect.width / 2,
         y: selectedRect.bottom,
       };
       break;
+    }
   }
+
   return selectedPosition;
-};
+}
 
 const isInContentEditable = () => {
-  const element = document.activeElement;
-  if (element.tagName === "INPUT" || element.tagName === "TEXTAREA")
+  const element = document.activeElement as HTMLElement;
+
+  if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
     return true;
-  if (element.contentEditable === "true") return true;
+  }
+
+  if (element.contentEditable === "true") {
+    return true;
+  }
+
   return false;
 };
 
-const handleKeyDown = (e) => {
-  if (e.key === "Escape") {
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (event.key === "Escape") {
     removeTranslatecontainer();
   }
 };
@@ -154,7 +212,7 @@ const handleVisibilityChange = () => {
 };
 
 let isEnabled = true;
-const handleMessage = async (request) => {
+const handleMessage = async (request: { message: string }) => {
   const empty = new Promise((resolve) => {
     setTimeout(() => {
       return resolve("");
@@ -163,25 +221,45 @@ const handleMessage = async (request) => {
 
   switch (request.message) {
     case "getTabUrl": {
-      if (!isEnabled) return empty;
-      if (window == window.parent) return location.href;
-      else return empty;
+      if (!isEnabled) {
+        return empty;
+      }
+
+      if (window == window.parent) {
+        return location.href;
+      } else {
+        return empty;
+      }
     }
 
     case "getSelectedText": {
-      if (!isEnabled) return empty;
-      if (prevSelectedText.length === 0) return empty;
-      else return prevSelectedText;
+      if (!isEnabled) {
+        return empty;
+      }
+
+      if (prevSelectedText.length === 0) {
+        return empty;
+      } else {
+        return prevSelectedText;
+      }
     }
 
     case "translateSelectedText": {
       {
-        if (!isEnabled) return empty;
+        if (!isEnabled) {
+          return empty;
+        }
+
         const selectedText = getSelectedText();
-        if (selectedText.length === 0) return;
+
+        if (selectedText.length === 0) {
+          return;
+        }
+
         const selectedPosition = getSelectedPosition();
         removeTranslatecontainer();
         showTranslateContainer(selectedText, selectedPosition, null, true);
+
         break;
       }
     }
@@ -209,6 +287,7 @@ const handleMessage = async (request) => {
 
 const disableExtensionByUrlList = () => {
   const disableUrls = getSettings("disableUrlList").split("\n");
+
   let pageUrl;
   try {
     pageUrl = top.location.href;
@@ -216,7 +295,7 @@ const disableExtensionByUrlList = () => {
     pageUrl = document.referrer;
   }
 
-  const matchesPageUrl = (urlPattern) => {
+  const matchesPageUrl = (urlPattern: string) => {
     const pattern = urlPattern
       .trim()
       .replace(/[-[\]{}()*+?.,\\^$|#\s]/g, (match) =>
@@ -238,15 +317,21 @@ const removeTranslatecontainer = async () => {
   element.parentNode.removeChild(element);
 };
 
-const showTranslateContainer = (
-  selectedText,
-  selectedPosition,
-  clickedPosition = null,
-  shouldTranslate = false
-) => {
+function showTranslateContainer(
+  selectedText: string,
+  selectedPosition: IPosition,
+  clickedPosition: IPosition = null,
+  shouldTranslate: boolean = false
+) {
   const element = document.getElementById("simple-translate");
-  if (element) return;
-  if (!isEnabled) return;
+
+  if (element) {
+    return;
+  }
+
+  if (!isEnabled) {
+    return;
+  }
 
   const themeClass = "simple-translate-" + getSettings("theme") + "-theme";
 
@@ -254,6 +339,7 @@ const showTranslateContainer = (
     "beforeend",
     `<div id="simple-translate" class="${themeClass}"></div>`
   );
+
   ReactDOM.render(
     <TranslateContainer
       removeContainer={removeTranslatecontainer}
@@ -264,4 +350,4 @@ const showTranslateContainer = (
     />,
     document.getElementById("simple-translate")
   );
-};
+}
