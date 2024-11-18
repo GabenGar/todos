@@ -15,7 +15,9 @@ export function getResultFontColor() {
 
   if (!isOverrideColors) return undefined;
 
-  return { color: getSettings("resultFontColor") };
+  const fontColor = { color: getSettings("resultFontColor") };
+
+  return fontColor;
 }
 
 /**
@@ -26,7 +28,9 @@ export function getCandidateFontColor() {
 
   if (!isOverrideColors) return undefined;
 
-  return { color: getSettings("candidateFontColor") };
+  const fontColor = { color: getSettings("candidateFontColor") };
+
+  return fontColor;
 }
 
 /**
@@ -37,5 +41,7 @@ export function getBackgroundColor() {
 
   if (!isOverrideColors) return undefined;
 
-  return { backgroundColor: getSettings("bgColor") };
+  const backgroundColor = { backgroundColor: getSettings("bgColor") };
+
+  return backgroundColor;
 }
