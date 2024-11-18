@@ -4,8 +4,18 @@ import OptionContainer from "./OptionContainer";
 
 import "./CategoryContainer.scss";
 
-export default props => {
-  const { category, elements, currentValues = {} } = props;
+interface IProps {
+  category: string;
+  elements: IOption[];
+  currentValues?: Record<string, unknown>;
+}
+
+interface IOption {
+  id: string;
+  childElements: IOption[];
+}
+
+function CategoryContainer({ category, elements, currentValues = {} }: IProps) {
   return (
     <li className="categoryContainer">
       <fieldset>
@@ -14,14 +24,24 @@ export default props => {
             {category !== "" ? browser.i18n.getMessage(category) : ""}
           </p>
         </legend>
+
         <ul className="categoryElements">
           {elements.map((option, index) => (
             <div key={index}>
-              <OptionContainer {...option} currentValue={currentValues[option.id]}>
+              {/* @ts-expect-error too generic */}
+              <OptionContainer
+                {...option}
+                currentValue={String(currentValues[option.id])}
+              >
                 {option.hasOwnProperty("childElements") && (
                   <ul className="childElements">
                     {option.childElements.map((option, index) => (
-                      <OptionContainer {...option} currentValue={currentValues[option.id]} key={index} />
+                      // @ts-expect-error too generic
+                      <OptionContainer
+                        {...option}
+                        currentValue={String(currentValues[option.id])}
+                        key={index}
+                      />
                     ))}
                   </ul>
                 )}
@@ -33,4 +53,6 @@ export default props => {
       </fieldset>
     </li>
   );
-};
+}
+
+export default CategoryContainer;
