@@ -1,23 +1,33 @@
-import React, { Component } from "react";
+import React, { Component, type ChangeEvent } from "react";
 import ReactDOM from "react-dom";
 import browser from "webextension-polyfill";
 import ListenButton from "./ListenButton";
 
 import "./InputArea.scss";
 
-export default class InputArea extends Component {
+interface IProps {
+  inputText: string;
+  sourceLang: string;
+  handleInputText: (text: string) => void;
+}
+
+interface IState {}
+
+class InputArea extends Component<IProps, IState> {
   resizeTextArea = () => {
-    const textarea = ReactDOM.findDOMNode(this.refs.textarea);
+    const textarea = ReactDOM.findDOMNode(
+      this.refs.textarea
+    ) as HTMLTextAreaElement;
     textarea.style.height = "1px";
     textarea.style.height = `${textarea.scrollHeight + 2}px`;
   };
 
-  handleInputText = e => {
-    const inputText = e.target.value;
+  handleInputText = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const inputText = event.target.value;
     this.props.handleInputText(inputText);
   };
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: IProps) {
     const shouldUpdate =
       this.props.inputText !== nextProps.inputText ||
       this.props.sourceLang !== nextProps.sourceLang;
@@ -48,3 +58,5 @@ export default class InputArea extends Component {
     );
   }
 }
+
+export default InputArea;
