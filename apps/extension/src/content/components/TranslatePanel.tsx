@@ -20,6 +20,7 @@ interface IProps {
   currentLang: string;
   isError: boolean;
   errorMessage: string;
+  hidePanel: () => void
 }
 
 interface IState {

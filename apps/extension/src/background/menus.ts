@@ -1,7 +1,8 @@
-import browser from "webextension-polyfill";
+import browser, { type Menus, type Tabs } from "webextension-polyfill";
+// @ts-expect-error no type info
 import browserInfo from "browser-info";
 import log from "loglevel";
-import { getSettings } from "src/settings/settings";
+import { getSettings } from "../settings/settings";
 
 const logDir = "background/menus";
 
@@ -12,7 +13,10 @@ export const showMenus = () => {
   } else removeMenus();
 };
 
-export const onMenusShownListener = (info, tab) => {
+export const onMenusShownListener = (
+  info: Menus.OnShownInfoType,
+  tab: Tabs.Tab | undefined
+) => {
   //テキストまたはリンクの選択時はページ翻訳を非表示にする
   if (info.contexts.includes("selection") || info.contexts.includes("link")) {
     browser.contextMenus.update("translatePage", { visible: false });
@@ -22,29 +26,37 @@ export const onMenusShownListener = (info, tab) => {
   browser.contextMenus.refresh();
 };
 
-export const onMenusClickedListener = (info, tab) => {
+export const onMenusClickedListener = (
+  info: Menus.OnClickData,
+  tab: Tabs.Tab | undefined
+) => {
   log.log(logDir, "onMenusClickedListener()", info, tab);
+
   switch (info.menuItemId) {
     case "translatePage":
-    case "translatePageOnTab":
+    case "translatePageOnTab": {
       translatePage(info, tab);
       break;
-    case "translateText":
+    }
+    case "translateText": {
       translateText(tab);
       break;
-    case "translateLink":
+    }
+    case "translateLink": {
       translateLink(info, tab);
       break;
+    }
   }
 };
 
 function createMenus() {
-  const isValidContextsTypeTab = browserInfo().name === "Firefox" && browserInfo().version >= 53;
+  const isValidContextsTypeTab =
+    browserInfo().name === "Firefox" && browserInfo().version >= 53;
   if (isValidContextsTypeTab) {
     browser.contextMenus.create({
       id: "translatePageOnTab",
       title: browser.i18n.getMessage("translatePageMenu"),
-      contexts: ["tab"]
+      contexts: ["tab"],
     });
   }
 
@@ -52,19 +64,19 @@ function createMenus() {
     id: "translatePage",
     title: browser.i18n.getMessage("translatePageMenu"),
     contexts: ["all"],
-    visible: true
+    visible: true,
   });
 
   browser.contextMenus.create({
     id: "translateText",
     title: browser.i18n.getMessage("translateTextMenu"),
-    contexts: ["selection"]
+    contexts: ["selection"],
   });
 
   browser.contextMenus.create({
     id: "translateLink",
     title: browser.i18n.getMessage("translateLinkMenu"),
-    contexts: ["link"]
+    contexts: ["link"],
   });
 }
 
@@ -72,13 +84,13 @@ function removeMenus() {
   browser.contextMenus.removeAll();
 }
 
-function translateText(tab) {
+function translateText(tab: Tabs.Tab) {
   browser.tabs.sendMessage(tab.id, {
-    message: "translateSelectedText"
+    message: "translateSelectedText",
   });
 }
 
-function translatePage(info, tab) {
+function translatePage(info: Menus.OnClickData, tab: Tabs.Tab) {
   const targetLang = getSettings("targetLang");
   const encodedPageUrl = encodeURIComponent(info.pageUrl);
   const translationUrl = `https://translate.google.com/translate?hl=${targetLang}&tl=${targetLang}&sl=auto&u=${encodedPageUrl}`;
@@ -86,18 +98,18 @@ function translatePage(info, tab) {
 
   if (isCurrentTab) {
     browser.tabs.update(tab.id, {
-      url: translationUrl
+      url: translationUrl,
     });
   } else {
     browser.tabs.create({
       url: translationUrl,
       active: true,
-      index: tab.index + 1
+      index: tab.index + 1,
     });
   }
 }
 
-function translateLink(info, tab) {
+function translateLink(info: Menus.OnClickData, tab: Tabs.Tab) {
   const targetLang = getSettings("targetLang");
   const encodedLinkUrl = encodeURIComponent(info.linkUrl);
   const translationUrl = `https://translate.google.com/translate?hl=${targetLang}&tl=${targetLang}&sl=auto&u=${encodedLinkUrl}`;
@@ -105,6 +117,6 @@ function translateLink(info, tab) {
   browser.tabs.create({
     url: translationUrl,
     active: true,
-    index: tab.index + 1
+    index: tab.index + 1,
   });
 }

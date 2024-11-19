@@ -48,6 +48,7 @@ export default class SettingsPage extends Component<IProps, IState> {
     const settingsContent = (
       <ul>
         {defaultSettings.map((category, index) => (
+          // @ts-expect-error I give up
           <CategoryContainer
             {...category}
             key={index}

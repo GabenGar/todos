@@ -1,27 +1,34 @@
 import browser from "webextension-polyfill";
+// @ts-expect-error no type info
 import browserInfo from "browser-info";
 import log from "loglevel";
-import { getSettings, setSettings } from "src/settings/settings";
-import getShortcut from "src/common/getShortcut";
-import manifest from "src/manifest-chrome.json";
+import { getSettings, setSettings } from "../settings/settings";
+import getShortcut from "../common/getShortcut";
+import manifest from "../manifest-chrome.json";
 import openUrl from "../common/openUrl";
 import { initSettings } from "../settings/settings";
 
 const logDir = "background/keyboardShortcuts";
 
 export const initShortcuts = async () => {
-  const isValidShortcuts = browserInfo().name == "Firefox" && browserInfo().version >= 60;
+  const isValidShortcuts =
+    browserInfo().name == "Firefox" && browserInfo().version >= 60;
   if (!isValidShortcuts) return;
   log.info(logDir, "initShortcuts()");
 
   let initedShortcuts = getSettings("initedShortcuts") || [];
 
-  const commands = manifest.commands;
+  const commands = "commands" in manifest ? manifest.commands : [];
   for (const commandId of Object.keys(commands)) {
-    if (initedShortcuts.includes(commandId)) continue;
+    if (initedShortcuts.includes(commandId)) {
+      continue;
+    }
 
     try {
-      await browser.commands.update({ name: commandId, shortcut: getShortcut(commandId) });
+      await browser.commands.update({
+        name: commandId,
+        shortcut: getShortcut(commandId),
+      });
       initedShortcuts.push(commandId);
     } catch (e) {
       log.error(logDir, "initShortcuts()", e);
@@ -30,7 +37,7 @@ export const initShortcuts = async () => {
   setSettings("initedShortcuts", initedShortcuts);
 };
 
-export const onCommandListener = async command => {
+export const onCommandListener = async (command: string) => {
   log.log(logDir, "onCommandListener()", command);
   await initSettings();
   switch (command) {
@@ -46,14 +53,20 @@ export const onCommandListener = async command => {
 };
 
 const translateSelectedText = async () => {
-  const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+  const tab = (
+    await browser.tabs.query({ active: true, currentWindow: true })
+  )[0];
   browser.tabs.sendMessage(tab.id, {
-    message: "translateSelectedText"
+    message: "translateSelectedText",
   });
 };
 const translatePage = async () => {
-  const tab = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
-  const tabUrl = await browser.tabs.sendMessage(tab.id, { message: "getTabUrl" });
+  const tab = (
+    await browser.tabs.query({ active: true, currentWindow: true })
+  )[0];
+  const tabUrl: string = await browser.tabs.sendMessage(tab.id, {
+    message: "getTabUrl",
+  });
 
   const targetLang = getSettings("targetLang");
   const encodedPageUrl = encodeURIComponent(tabUrl);

@@ -12,9 +12,9 @@ import clsx from "clsx";
 
 interface IProps {
   title: string;
-  useRawTitle: boolean;
-  captions: [];
-  useRawCaptions: boolean;
+  useRawTitle?: boolean;
+  captions: string[];
+  useRawCaptions?: boolean;
   extraCaption?: ReactNode;
   type:
     | "number"
@@ -28,27 +28,27 @@ interface IProps {
     | "file"
     | "keyboard-shortcut"
     | "none";
-  id: string;
+  id?: string;
   children?: ReactNode;
-  currentValue: string | boolean;
-  min: string;
-  max: string;
-  step: string;
-  default: string;
-  value: string;
+  currentValue?: string | boolean;
+  min?: string;
+  max?: string;
+  step?: string;
+  default?: string;
+  value?: string;
   placeholder?: string;
-  options: IOption[] | (() => IOption[]);
+  options?: IOption[] | (() => IOption[]);
   useRawOptionName?: boolean;
   accept?: string;
   multiple?: boolean;
-  shortcut: string;
-  updated: boolean;
-  new: boolean;
+  shortcut?: string;
+  updated?: boolean;
+  new?: boolean;
   shouldShow?: boolean | (() => boolean);
-  hr: boolean;
-  handleChange: () => void;
-  onClick: (event: ReactMouseEvent<HTMLInputElement, MouseEvent>) => void;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  hr?: boolean;
+  handleChange?: () => void;
+  onClick?: (event: ReactMouseEvent<HTMLInputElement, MouseEvent>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface IOption {

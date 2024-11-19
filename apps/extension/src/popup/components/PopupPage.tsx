@@ -7,7 +7,9 @@ import {
   setSettings,
 } from "../../settings/settings";
 import { updateLogLevel, overWriteLogLevel } from "../../common/log";
-import generateLangOptions from "../../common/generateLangOptions";
+import generateLangOptions, {
+  type ILangOption,
+} from "../../common/generateLangOptions";
 import Header from "./Header";
 import InputArea from "./InputArea";
 import ResultArea from "./ResultArea";
@@ -34,8 +36,8 @@ interface IState {
   isEnabledOnPage: boolean;
   errorMessage: string;
   tabUrl: string;
-  langList: unknown[];
-  langHistory: unknown[];
+  langList: ILangOption[];
+  langHistory: string[];
 }
 
 export default class PopupPage extends Component<IProps, IState> {
@@ -45,6 +47,7 @@ export default class PopupPage extends Component<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
+
     this.state = {
       targetLang: "",
       inputText: "",

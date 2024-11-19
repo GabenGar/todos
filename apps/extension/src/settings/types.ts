@@ -1,4 +1,4 @@
-import type React from "react";
+import type { DetailedReactHTMLElement } from "react";
 
 export type ISettings = [
   IGeneralLabelSettings,
@@ -32,7 +32,7 @@ interface IGeneralLabelSettings {
           id: "translationApi";
           title: "deeplApiLabel";
           captions: ["deeplApiCaptionLabel"];
-          extraCaption: React.DetailedReactHTMLElement<
+          extraCaption: DetailedReactHTMLElement<
             {
               className: string;
             },

@@ -26,5 +26,5 @@ export function useAdditionalPermission() {
     checkPermission();
   }, []);
 
-  return [hasPermission, requestPermission];
+  return [hasPermission, requestPermission] as const;
 }

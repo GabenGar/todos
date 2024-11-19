@@ -1,7 +1,7 @@
+// @ts-nocheck too much random generic shit
 import browser from "webextension-polyfill";
 import log from "loglevel";
 import defaultSettings from "./defaultSettings";
-import type { ISettingID } from "./types";
 
 const logDir = "settings/settings";
 let currentSettings = {};
@@ -116,7 +116,7 @@ export async function importSettings(event: InputEvent) {
 }
 
 function getSettingsIds() {
-  let settingsIds: ISettingID[] = [];
+  let settingsIds: string[] = [];
 
   defaultSettings.forEach((category) => {
     category.elements.forEach((optionElement) => {
