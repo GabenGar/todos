@@ -12,7 +12,7 @@ interface IProps {
 
 interface IOption {
   id: string;
-  childElements: IOption[];
+  childElements?: IOption[];
 }
 
 function CategoryContainer({ category, elements, currentValues = {} }: IProps) {

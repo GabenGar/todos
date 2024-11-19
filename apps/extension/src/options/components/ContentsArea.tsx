@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+// @ts-expect-error no type info for this
 import browserInfo from "browser-info";
 import SettingsPage from "./SettingsPage";
 import KeyboardShortcutsPage from "./KeyboardShortcutsPage";

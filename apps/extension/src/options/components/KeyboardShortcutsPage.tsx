@@ -1,14 +1,21 @@
 import React, { Component } from "react";
-import browser from "webextension-polyfill";
-import getShortcut from "src/common/getShortcut";
+import browser, { Commands } from "webextension-polyfill";
+import getShortcut from "../../common/getShortcut";
 import CategoryContainer from "./CategoryContainer";
 
-export default class KeyboardShortcutPage extends Component {
-  constructor(props) {
+interface IProps {}
+
+interface IState {
+  commands: Commands.Command[];
+  isInit: boolean;
+}
+
+class KeyboardShortcutPage extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       commands: [],
-      isInit: false
+      isInit: false,
     };
     this.initCommands();
   }
@@ -16,10 +23,14 @@ export default class KeyboardShortcutPage extends Component {
   async initCommands() {
     const commands = await browser.commands.getAll();
     const rawDescription = /^__MSG_(.*)__$/;
-    const convertedCommands = commands.map(command => {
+    const convertedCommands = commands.map((command) => {
       const isRawDescription = rawDescription.test(command.description);
+
       if (isRawDescription)
-        command.description = browser.i18n.getMessage(command.description.match(rawDescription)[1]);
+        command.description = browser.i18n.getMessage(
+          command.description.match(rawDescription)[1]
+        );
+
       return command;
     });
 
@@ -27,14 +38,14 @@ export default class KeyboardShortcutPage extends Component {
   }
 
   render() {
-    const commandElements = this.state.commands.map(command => ({
+    const commandElements = this.state.commands.map((command) => ({
       id: command.name,
       title: command.description,
       useRawTitle: true,
       captions: [],
       type: "keyboard-shortcut",
       shortcut: command.shortcut || "",
-      defaultValue: getShortcut(command.name)
+      defaultValue: getShortcut(command.name),
     }));
 
     const shortcutCategory = {
@@ -45,17 +56,23 @@ export default class KeyboardShortcutPage extends Component {
           title: "keyboardShortcutsLabel",
           captions: ["setKeyboardShortCutsMessage"],
           type: "none",
-          childElements: commandElements
-        }
-      ]
+          childElements: commandElements,
+        },
+      ],
     };
 
     return (
       <div>
-        <p className="contentTitle">{browser.i18n.getMessage("keyboardShortcutsLabel")}</p>
+        <p className="contentTitle">
+          {browser.i18n.getMessage("keyboardShortcutsLabel")}
+        </p>
         <hr />
-        {this.state.isInit && <ul>{<CategoryContainer {...shortcutCategory} />}</ul>}
+        {this.state.isInit && (
+          <ul>{<CategoryContainer {...shortcutCategory} />}</ul>
+        )}
       </div>
     );
   }
 }
+
+export default KeyboardShortcutPage;
