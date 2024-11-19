@@ -1,25 +1,52 @@
 import browser from "webextension-polyfill";
-import React, { Component } from "react";
+import React, { Component, type CSSProperties } from "react";
 import ReactDOM from "react-dom";
-import { getSettings } from "src/settings/settings";
-import { getBackgroundColor, getCandidateFontColor, getResultFontColor } from "../../settings/defaultColors";
+import clsx from "clsx";
+import { getSettings } from "../../settings/settings";
+import {
+  getBackgroundColor,
+  getCandidateFontColor,
+  getResultFontColor,
+} from "../../settings/defaultColors";
 
 import "./TranslatePanel.scss";
 
-const splitLine = text => {
-  const regex = /(\n)/g;
-  return text.split(regex).map((line, i) => (line.match(regex) ? <br key={i} /> : line));
-};
+interface IProps {
+  position: IPosition;
+  resultText: string;
+  candidateText: string;
+  shouldShow: boolean;
+  selectedText: string;
+  currentLang: string;
+  isError: boolean;
+  errorMessage: string;
+}
 
-export default class TranslatePanel extends Component {
-  constructor(props) {
+interface IState {
+  panelPosition: IPosition;
+  panelWidth: number;
+  panelHeight: number;
+  shouldResize: boolean;
+  isOverflow: boolean;
+}
+
+interface IPosition {
+  x: number;
+  y: number;
+}
+
+class TranslatePanel extends Component<IProps, IState> {
+  dragOffsets: IPosition;
+  isDragging: boolean;
+
+  constructor(props: IProps) {
     super(props);
     this.state = {
       panelPosition: { x: 0, y: 0 },
       panelWidth: 0,
       panelHeight: 0,
       shouldResize: true,
-      isOverflow: false
+      isOverflow: false,
     };
 
     this.dragOffsets = { x: 0, y: 0 };
@@ -38,40 +65,52 @@ export default class TranslatePanel extends Component {
     document.removeEventListener("drop", this.handleDrop);
   };
 
-  handleDragStart = e => {
-    if (e.target.className !== "simple-translate-move") return;
+  handleDragStart = (event: DragEvent) => {
+    if ((event.target as HTMLElement).className !== "simple-translate-move") {
+      return;
+    }
+
     this.isDragging = true;
 
-    const rect = document.querySelector(".simple-translate-panel").getBoundingClientRect();
+    const rect = document
+      .querySelector(".simple-translate-panel")
+      .getBoundingClientRect();
     this.dragOffsets = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
     };
-    e.dataTransfer.setData("text/plain", "");
+    event.dataTransfer.setData("text/plain", "");
   };
 
-  handleDragOver = e => {
+  handleDragOver = (event: DragEvent) => {
     if (!this.isDragging) return;
-    e.preventDefault();
-    const panel = document.querySelector(".simple-translate-panel");
-    panel.style.top = `${e.clientY - this.dragOffsets.y}px`;
-    panel.style.left = `${e.clientX - this.dragOffsets.x}px`;
+    event.preventDefault();
+    const panel = document.querySelector<HTMLDivElement>(
+      ".simple-translate-panel"
+    );
+    panel.style.top = `${event.clientY - this.dragOffsets.y}px`;
+    panel.style.left = `${event.clientX - this.dragOffsets.x}px`;
   };
 
-  handleDrop = e => {
-    if (!this.isDragging) return;
-    e.preventDefault();
+  handleDrop = (event: DragEvent) => {
+    if (!this.isDragging) {
+      return;
+    }
+
+    event.preventDefault();
     this.isDragging = false;
 
-    const panel = document.querySelector(".simple-translate-panel");
-    panel.style.top = `${e.clientY - this.dragOffsets.y}px`;
-    panel.style.left = `${e.clientX - this.dragOffsets.x}px`;
+    const panel = document.querySelector<HTMLDivElement>(
+      ".simple-translate-panel"
+    );
+    panel.style.top = `${event.clientY - this.dragOffsets.y}px`;
+    panel.style.left = `${event.clientX - this.dragOffsets.x}px`;
   };
 
   calcPosition = () => {
     const maxWidth = parseInt(getSettings("width"));
     const maxHeight = parseInt(getSettings("height"));
-    const wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
+    const wrapper = ReactDOM.findDOMNode(this.refs.wrapper) as Element;
     const panelWidth = Math.min(wrapper.clientWidth, maxWidth);
     const panelHeight = Math.min(wrapper.clientHeight, maxHeight);
     const windowWidth = document.documentElement.clientWidth;
@@ -81,6 +120,7 @@ export default class TranslatePanel extends Component {
 
     let position = { x: 0, y: 0 };
     const panelDirection = getSettings("panelDirection");
+
     switch (panelDirection) {
       case "top":
         position.x = referencePosition.x - panelWidth / 2;
@@ -119,33 +159,41 @@ export default class TranslatePanel extends Component {
     if (position.x + panelWidth > windowWidth - offset) {
       position.x = windowWidth - panelWidth - offset;
     }
+
     if (position.y + panelHeight > windowHeight - offset) {
       position.y = windowHeight - panelHeight - offset;
     }
+
     if (position.x < 0 + offset) {
       position.x = offset;
     }
+
     if (position.y < 0 + offset) {
       position.y = offset;
     }
+
     return position;
   };
 
   calcSize = () => {
     const maxWidth = parseInt(getSettings("width"));
-    const wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
-    const wrapperWidth = wrapper.clientWidth < maxWidth ? wrapper.clientWidth + 1 : maxWidth;
+    const wrapper = ReactDOM.findDOMNode(this.refs.wrapper) as Element;
+    const wrapperWidth =
+      wrapper.clientWidth < maxWidth ? wrapper.clientWidth + 1 : maxWidth;
     const wrapperHeight = wrapper.clientHeight;
-    return { panelWidth: wrapperWidth, panelHeight: wrapperHeight };
+    const sizes = { panelWidth: wrapperWidth, panelHeight: wrapperHeight };
+
+    return sizes;
   };
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps = (nextProps: IProps) => {
     const isChangedContents =
       this.props.resultText !== nextProps.resultText ||
       this.props.candidateText !== nextProps.candidateText ||
       this.props.position !== nextProps.position;
 
-    if (isChangedContents && nextProps.shouldShow) this.setState({ shouldResize: true });
+    if (isChangedContents && nextProps.shouldShow)
+      this.setState({ shouldResize: true });
   };
 
   componentDidUpdate = () => {
@@ -159,17 +207,29 @@ export default class TranslatePanel extends Component {
       panelPosition: panelPosition,
       panelWidth: panelWidth,
       panelHeight: panelHeight,
-      isOverflow: isOverflow
+      isOverflow: isOverflow,
     });
   };
 
   render = () => {
-    const { shouldShow, selectedText, currentLang, resultText, candidateText, isError, errorMessage } = this.props;
+    const {
+      shouldShow,
+      selectedText,
+      currentLang,
+      resultText,
+      candidateText,
+      isError,
+      errorMessage,
+    } = this.props;
+
     const { width, height } = this.state.shouldResize
-      ? { width: parseInt(getSettings("width")), height: parseInt(getSettings("height")) }
+      ? {
+          width: parseInt(getSettings("width")),
+          height: parseInt(getSettings("height")),
+        }
       : { width: this.state.panelWidth, height: this.state.panelHeight };
 
-    const panelStyles = {
+    const panelStyles: CSSProperties = {
       width: width,
       height: height,
       top: this.state.panelPosition.y,
@@ -177,44 +237,68 @@ export default class TranslatePanel extends Component {
       fontSize: parseInt(getSettings("fontSize")),
     };
 
-    const backgroundColor = getBackgroundColor()
+    const backgroundColor = getBackgroundColor();
+
     if (backgroundColor) {
-      panelStyles.backgroundColor = backgroundColor.backgroundColor
+      panelStyles.backgroundColor = backgroundColor.backgroundColor;
     }
 
     const wrapperStyles = {
-      overflow: this.state.isOverflow ? "auto" : "hidden"
+      overflow: this.state.isOverflow ? "auto" : "hidden",
     };
 
     const translationApi = getSettings("translationApi");
 
     return (
       <div
-        className={`simple-translate-panel ${shouldShow ? "isShow" : ""}`}
+        className={clsx("simple-translate-panel", shouldShow && "isShow")}
         ref="panel"
         style={panelStyles}
       >
-        <div className="simple-translate-result-wrapper" ref="wrapper" style={wrapperStyles}>
-          <div className="simple-translate-move" draggable="true" ref="move"></div>
+        <div
+          className="simple-translate-result-wrapper"
+          ref="wrapper"
+          style={wrapperStyles}
+        >
+          <div
+            className="simple-translate-move"
+            draggable="true"
+            ref="move"
+          ></div>
           <div className="simple-translate-result-contents">
-            <p className="simple-translate-result" style={getResultFontColor()} dir="auto">
+            <p
+              className="simple-translate-result"
+              style={getResultFontColor()}
+              dir="auto"
+            >
               {splitLine(resultText)}
             </p>
-            <p className="simple-translate-candidate" style={getCandidateFontColor()} dir="auto">
+            <p
+              className="simple-translate-candidate"
+              style={getCandidateFontColor()}
+              dir="auto"
+            >
               {splitLine(candidateText)}
             </p>
             {isError && (
               <p className="simple-translate-error">
                 {errorMessage}
                 <br />
-                <a href={translationApi === "google" ?
-                  `https://translate.google.com/?sl=auto&tl=${currentLang}&text=${encodeURIComponent(selectedText)}` :
-                  `https://www.deepl.com/translator#auto/${currentLang}/${encodeURIComponent(selectedText)}`
-                }
-                  target="_blank">
-                  {translationApi === "google" ?
-                    browser.i18n.getMessage("openInGoogleLabel") :
-                    browser.i18n.getMessage("openInDeeplLabel")}
+                <a
+                  href={
+                    translationApi === "google"
+                      ? `https://translate.google.com/?sl=auto&tl=${currentLang}&text=${encodeURIComponent(
+                          selectedText
+                        )}`
+                      : `https://www.deepl.com/translator#auto/${currentLang}/${encodeURIComponent(
+                          selectedText
+                        )}`
+                  }
+                  target="_blank"
+                >
+                  {translationApi === "google"
+                    ? browser.i18n.getMessage("openInGoogleLabel")
+                    : browser.i18n.getMessage("openInDeeplLabel")}
                 </a>
               </p>
             )}
@@ -224,3 +308,14 @@ export default class TranslatePanel extends Component {
     );
   };
 }
+
+function splitLine(text: string) {
+  const regex = /(\n)/g;
+  const result = text
+    .split(regex)
+    .map((line, i) => (line.match(regex) ? <br key={i} /> : line));
+
+  return result;
+}
+
+export default TranslatePanel;
