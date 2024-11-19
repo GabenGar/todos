@@ -1,0 +1,16 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["**/*.schema.json"],
+      "url": "https://json-schema.org/draft/2020-12/schema"
+    },
+    {
+      "fileMatch": ["src/manifest-firefox.json"],
+      "url": "./src/manifest-firefox.schema.json"
+    },
+    {
+      "fileMatch": ["src/manifest-chrome.json"],
+      "url": "./src/manifest-chrome.schema.json"
+    }
+  ]
+}

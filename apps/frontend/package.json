@@ -22,15 +22,15 @@
     "nanoid": "^5.0.7",
     "negotiator": "^0.6.3",
     "next": "^14.2.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "server-only": "^0.0.1",
     "stringify-object": "^5.0.0"
   },
   "devDependencies": {
     "@types/negotiator": "^0.6.3",
     "@types/node": "^20.12.7",
-    "@types/react": "^18.2.79",
+    "@types/react": "^18.3.12",
     "@types/stringify-object": "^4.0.5",
     "eslint": "8.56.0",
     "eslint-config-next": "14.2.2",

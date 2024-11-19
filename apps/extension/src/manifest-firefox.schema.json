@@ -1,0 +1,151 @@
+{
+  "$id": "firefox-manifest",
+  "title": "WebExtensionManifestFirefox",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "manifest_version": {
+      "const": 3
+    },
+    "version": {
+      "type": "string"
+    },
+    "name": {
+      "const": "__MSG_extName__"
+    },
+    "description": {
+      "const": "__MSG_extDescription__"
+    },
+    "default_locale": {
+      "const": "en"
+    },
+    "browser_specific_settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gecko": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "anyOf": [{ "const": "storage" }, { "const": "contextMenus" }]
+      }
+    },
+    "options_ui": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string"
+        },
+        "open_in_tab": {
+          "type": "boolean"
+        }
+      }
+    },
+    "icons": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "512": { "type": "string" },
+        "128": { "type": "string" },
+        "64": { "type": "string" },
+        "48": { "type": "string" },
+        "32": { "type": "string" }
+      }
+    },
+    "background": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scripts": { "type": "array", "items": { "type": "string" } },
+
+        "type": { "const": "module" }
+      }
+    },
+    "action": {
+      "description": "An action is a button that your extension adds to the browser's toolbar. The button has an icon, and may optionally have a popup whose content is specified using HTML, CSS, and JavaScript.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_icon": {
+          "anyOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "512": { "type": "string" },
+                "128": { "type": "string" },
+                "64": { "type": "string" },
+                "48": { "type": "string" },
+                "38": { "type": "string" },
+                "32": { "type": "string" },
+                "19": { "type": "string" },
+                "16": { "type": "string" }
+              }
+            }
+          ]
+        },
+        "default_popup": {
+          "type": "string"
+        }
+      }
+    },
+    "content_scripts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "all_frames": {
+            "type": "boolean"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "js": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "css": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "web_accessible_resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resources": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "matches": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

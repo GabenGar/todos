@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "module": "es6",
+    "target": "ES2021",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "noImplicitAny": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports" : true,
+    "esModuleInterop" : true,
+    "resolveJsonModule": true
+  },
+  "exclude": ["./dev", "./dist", "./temp"]
+}
