@@ -23,7 +23,7 @@ import {
   deletePlannedEvent,
   getPlannedEvent,
 } from "#entities/planned-event";
-import { editPlannedEvent } from "entities/planned-event";
+import { editPlannedEvent } from "#entities/planned-event";
 
 interface IProps extends ITranslatableProps, ILocalizableProps {
   translation: ILocalizationEntities["planned_event"];
