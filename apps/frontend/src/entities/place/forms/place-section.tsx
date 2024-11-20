@@ -9,7 +9,7 @@ import {
   DescriptionSection,
   DescriptionTerm,
 } from "#components";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { InputHidden } from "#components/form/input";
 import {
   type IInputSectionProps,

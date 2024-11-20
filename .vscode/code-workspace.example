@@ -1,7 +1,7 @@
 {
   "folders": [
     {
-      "name": "todos",
+      "name": "root (todos)",
       "path": "."
     },
     {
@@ -9,9 +9,13 @@
       "path": "apps/frontend"
     },
     {
-			"name": "link-overwatch",
-			"path": "apps/extension"
-		},
+      "name": "link-overwatch",
+      "path": "apps/extension"
+    },
+    {
+      "name": "@repo/ui",
+      "path": "packages/ui"
+    },
     {
       "name": "codegen",
       "path": "packages/codegen"
@@ -33,8 +37,9 @@
       "codegen": true,
       "frontend": true,
       "schema": true,
-      "**/.turbo": true
-      // "**/.vscode": true
+      "**/.turbo": true,
+      // "**/.vscode": true,
+      "**/.next": true
     },
     "files.watcherExclude": {
       "**/.git/objects/**": true,
@@ -46,13 +51,14 @@
       "*code-workspace.example": "jsonc",
       ".env.*": ".env"
     },
+    "typescript.preferences.autoImportFileExcludePatterns": [
+      "**/frontend/src/app"
+    ],
     "typescript.referencesCodeLens.enabled": true,
-    "typescript.preferences.preferTypeOnlyAutoImports": true
+    "typescript.preferences.preferTypeOnlyAutoImports": true,
+    "typescript.preferences.jsxAttributeCompletionStyle": "braces"
   },
   "extensions": {
-    "recommendations": [
-      "eamodio.gitlens",
-      "dotenv.dotenv-vscode"
-    ]
+    "recommendations": ["eamodio.gitlens", "dotenv.dotenv-vscode"]
   }
 }

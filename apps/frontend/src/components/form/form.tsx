@@ -4,7 +4,7 @@ import { type ReactNode, useState } from "react";
 import { logError } from "#lib/logs";
 import { isError, validateError } from "#lib/errors";
 import type { ILocalizationCommon } from "#lib/localization";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentProps } from "#components/types";
 import { ButtonSubmit } from "#components/button";
 import { Pre } from "#components/pre";

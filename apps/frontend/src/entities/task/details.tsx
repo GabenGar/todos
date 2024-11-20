@@ -7,7 +7,7 @@ import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL, createTaskEditPageURL } from "#lib/urls";
 import { logError } from "#lib/logs";
 import { isError } from "#lib/errors";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
 import { Link, LinkButton } from "#components/link";

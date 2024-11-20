@@ -40,8 +40,8 @@ async function YTDLPConfigsPage({ params }: IProps) {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              Full-ish `yt-dlp` configs because I always have to look up its docs
-              to reproduce.
+              Full-ish `yt-dlp` configs because I always have to look up its
+              docs to reproduce.
             </OverviewHeader>
             <OverviewBody>
               <Heading level={headingLevel + 1}>Linux</Heading>

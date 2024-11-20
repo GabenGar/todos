@@ -8,7 +8,7 @@ import {
   type IPaginatedCollection,
 } from "#lib/pagination";
 import { ListLocal } from "#components/list";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import type {
   IBaseComponentProps,
   ITranslatableProps,

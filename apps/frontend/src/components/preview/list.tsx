@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import {
   type IPaginationProps,
   PaginationOverview,

@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import clsx from "clsx";
+import { createBlockComponent } from "@repo/ui/meta";
 import type {
   IBaseComponentProps,
   IBaseComponentPropsWithChildren,
 } from "#components/types";
-import { createBlockComponent } from "./meta";
 
 import styles from "./description-list.module.scss";
 

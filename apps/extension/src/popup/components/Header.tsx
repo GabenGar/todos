@@ -29,6 +29,7 @@ function Header({ isEnabledOnPage, isConnected, toggleEnabledOnPage }: IProps) {
             disabled={!isConnected}
           />
         </div>
+
         <button
           className={"settingsButton"}
           onClick={openSettings}

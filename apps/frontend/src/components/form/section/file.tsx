@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { useClient } from "#hooks";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { List, ListItem } from "#components/list";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";

@@ -1,4 +1,4 @@
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { InputNanoID } from "../../input";
 import { Label } from "../../label";
 import { type IInputSectionProps, InputSection } from "../section";

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { IEntityItem } from "#lib/entities";
 import { logError } from "#lib/logs";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { Button } from "#components/button";
 import { Pre } from "#components/pre";
 import type {
