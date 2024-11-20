@@ -3,7 +3,7 @@ import type { IPositiveInteger } from "#lib/numbers";
 import type { IPagination } from "#lib/pagination";
 import { Button } from "#components/button";
 import { List, ListItem } from "#components/list";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import type {
   IBaseComponentProps,
   ITranslatableProps,

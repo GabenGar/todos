@@ -4,7 +4,7 @@ import { useState } from "react";
 import { formatDateTime } from "#lib/dates";
 import { logError } from "#lib/logs";
 import { useClient } from "#hooks";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { Button } from "#components/button";
 import type {
   IBaseComponentPropsWithChildren,

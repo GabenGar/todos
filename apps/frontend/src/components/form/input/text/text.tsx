@@ -1,4 +1,4 @@
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { Input, type IInputProps } from "../input";
 
 export interface IInputTextProps extends IInputProps {}

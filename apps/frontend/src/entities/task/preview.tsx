@@ -2,7 +2,7 @@ import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL, createTaskPageURL } from "#lib/urls";
 import { DescriptionList, DescriptionSection } from "#components";
 import { Heading } from "#components/heading";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import {
   Preview,
   type IPreviewProps,

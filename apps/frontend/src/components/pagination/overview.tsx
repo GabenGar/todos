@@ -1,5 +1,5 @@
 import type { IPagination } from "#lib/pagination";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { List, ListItem } from "#components/list";
 import type {
   IBaseComponentProps,

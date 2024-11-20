@@ -1,4 +1,4 @@
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { InputText, IInputTextProps } from "./text";
 
 interface IInputNanoIDProps

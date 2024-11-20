@@ -13,6 +13,7 @@
     "codegen": "npm run build-codegen && cd ../../packages/codegen && npm start -- ../../apps/frontend/src/codegen/generators ../../apps/frontend/src/codegen/output && cd ../../apps/frontend && prettier --log-level=warn ./src/codegen/output --write"
   },
   "dependencies": {
+    "@repo/ui": "*",
     "@hyperjump/json-schema": "^1.8.0",
     "ajv": "^8.12.0",
     "bcp-47": "^2.1.0",

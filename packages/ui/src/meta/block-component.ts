@@ -2,6 +2,7 @@ import clsx from "clsx";
 
 export type IFuncComponent<PropsType> = (
   props: PropsType,
+  // biome-ignore lint/suspicious/noExplicitAny: refs are annoying
   ref?: any,
 ) => JSX.Element;
 
@@ -37,7 +38,7 @@ interface IBlockStyles {
  * With decorator:
  * ```tsx
  * import type { ComponentPropsWithoutRef } from "react";
- * import { createBlockComponent } from "#components/meta";
+ * import { createBlockComponent } from "@repo/ui/meta";
  *
  * import styles from "./base.module.scss";
  *
@@ -57,7 +58,7 @@ export function createBlockComponent<Props extends IBaseProps = IBaseProps>(
   return (...args: Parameters<typeof functionComponent>) => {
     const [props, ref] = args;
     const baseClassName =
-      typeof blockClassName == "string"
+      typeof blockClassName === "string"
         ? blockClassName
         : blockClassName?.block;
     const className = clsx(baseClassName, props.className);

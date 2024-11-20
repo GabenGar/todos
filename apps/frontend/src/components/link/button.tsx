@@ -1,4 +1,4 @@
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { Link, type ILinkProps } from "./link";
 
 import styles from "./button.module.scss";

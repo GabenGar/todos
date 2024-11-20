@@ -1,4 +1,4 @@
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { type IInputTextProps, InputText, InputTextArea } from "../../input";
 import { IInputTextAreaProps } from "../../input/text/text-area";
 import { Label } from "../../label";

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { createBlockComponent } from "./meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { Heading } from "./heading";
 import type { IBaseComponentPropsWithChildren } from "./types";
 

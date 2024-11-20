@@ -1,6 +1,6 @@
 import type { ILocalization } from "#lib/localization";
 import { createPlaceEditPageURL } from "#lib/urls";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection } from "#components";
 import { ITranslatableProps, type ILocalizableProps } from "#components/types";
 import { Heading, type IHeadingLevel } from "#components/heading";

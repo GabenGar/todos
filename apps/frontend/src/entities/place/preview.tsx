@@ -3,7 +3,7 @@ import { createPlacePageURL } from "#lib/urls";
 import { DescriptionList, DescriptionSection } from "#components";
 import { EntityDescription, EntityID } from "#components/entities";
 import { Heading } from "#components/heading";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import {
   type IPreviewProps,
   Preview,

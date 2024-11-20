@@ -1,5 +1,5 @@
 import { forwardRef, type Ref } from "react";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 import { Input, IInputProps } from "./input";
 
 export interface IInputFileProps extends IInputProps {}

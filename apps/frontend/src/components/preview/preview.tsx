@@ -9,7 +9,7 @@ import {
   type IArticleHeaderProps,
   type IArticleProps,
 } from "#components/article";
-import { createBlockComponent } from "#components/meta";
+import { createBlockComponent } from "@repo/ui/meta";
 
 import styles from "./preview.module.scss";
 
