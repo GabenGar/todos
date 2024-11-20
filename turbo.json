@@ -3,6 +3,7 @@
   "pipeline": {
     "lint": {},
     "format": {},
+    "check": {},
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
