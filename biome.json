@@ -3,6 +3,12 @@
   "files": {
     "ignore": ["apps/frontend", "apps/extension", "node_modules"]
   },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space"
+    }
+  },
   "linter": {
     "enabled": true,
 
@@ -18,5 +24,9 @@
         "noForEach": "off"
       }
     }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
   }
 }
