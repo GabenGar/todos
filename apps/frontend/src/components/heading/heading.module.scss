@@ -1,4 +1,4 @@
-@use "../../styles/sass/variables.scss" as *;
+@use "@repo/ui/styles/sass/variables" as *;
 
 .block {
   // ensure the header will never overflow its parent

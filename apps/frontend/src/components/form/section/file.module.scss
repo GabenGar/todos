@@ -1,5 +1,6 @@
-@use "../../../styles/sass/variables.scss" as *;
-@use "../../../styles/sass/mixins.scss" as mixins;
+@use "@repo/ui/styles/sass/variables" as *;
+@use "@repo/ui/styles/sass/mixins" as mixins;
+
 .block {
   position: relative;
   display: grid;

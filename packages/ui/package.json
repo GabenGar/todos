@@ -3,10 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "exports": {
-    "./meta": "./src/meta/index.ts"
+    "./meta": "./src/meta/index.ts",
+    "./types": "./src/types/index.ts",
+    "./styles/global": "./src/styles/global.scss",
+    "./styles/variables": "./src/styles/variables.scss",
+    "./styles/sass/variables": "./src/styles/sass/variables.scss",
+    "./styles/sass/mixins": "./src/styles/sass/mixins.scss"
   },
   "imports": {
-    "#meta": "./src/meta/index.ts"
+    "#meta": "./src/meta/index.ts",
+    "#types": "./src/types/index.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit"

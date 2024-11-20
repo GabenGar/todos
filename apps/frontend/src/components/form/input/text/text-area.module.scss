@@ -1,5 +1,5 @@
-@use "../../../../styles/sass/variables.scss" as *;
-@use "../../../../styles/sass/mixins.scss" as mixin;
+@use "@repo/ui/styles/sass/variables" as *;
+@use "@repo/ui/styles/sass/mixins" as mixin;
 
 .block {
   @include mixin.input();
