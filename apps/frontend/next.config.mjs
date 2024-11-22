@@ -15,6 +15,8 @@ async function createNextConfig() {
   const basePath =
     !basePathname || basePathname === "/" ? undefined : basePathname;
 
+  console.log(basePath);
+
   /** @type {import('next').NextConfig} */
   const nextConfig = {
     assetPrefix: basePath,
