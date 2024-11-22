@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "build-codegen": "cd ./src/codegen/generators && npm run build",
-    "start": "next start",
+    "start": "next start --port 9001",
     "lint": "next lint && prettier --log-level=warn ./src --check",
     "format": "prettier --log-level=warn ./src --write",
     "dev": "next dev --port 8001",
