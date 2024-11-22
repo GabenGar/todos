@@ -15,7 +15,7 @@ async function createNextConfig() {
   const basePath =
     !basePathname || basePathname === "/" ? undefined : basePathname;
 
-  console.log(basePath);
+  console.log([process.env.NEXT_PUBLIC_SITE_BASE_URL, baseURL, basePath]);
 
   /** @type {import('next').NextConfig} */
   const nextConfig = {
