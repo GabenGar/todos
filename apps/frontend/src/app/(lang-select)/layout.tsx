@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { type Metadata } from "next";
-import { SITE_ORIGIN, SITE_TITLE } from "#environment";
+import { SITE_BASE_URL, SITE_TITLE } from "#environment";
 
 import "@repo/ui/styles/global";
 import styles from "./layout.module.scss";
@@ -11,7 +11,7 @@ interface IProps {
 
 export async function generateMetadata({}: IProps): Promise<Metadata> {
   const metadata: Metadata = {
-    metadataBase: new URL(SITE_ORIGIN),
+    metadataBase: new URL(SITE_BASE_URL),
     title: { template: `%s | ${SITE_TITLE}`, default: SITE_TITLE },
     generator: "Next.js",
     openGraph: {

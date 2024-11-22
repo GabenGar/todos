@@ -3,11 +3,11 @@ import { NEXT_PUBLIC_VERCEL_URL } from "./vercel";
 
 export const NODE_ENV = process.env.NODE_ENV;
 
-export const SITE_ORIGIN =
-  NEXT_PUBLIC_VERCEL_URL ?? process.env.NEXT_PUBLIC_ORIGIN!;
+export const SITE_BASE_URL =
+  NEXT_PUBLIC_VERCEL_URL ?? process.env.NEXT_PUBLIC_SITE_BASE_URL!;
 
-if (!SITE_ORIGIN) {
-  throw new Error(`"SITE_ORIGIN" is not set.`);
+if (!SITE_BASE_URL) {
+  throw new Error(`"SITE_BASE_URL" is not set.`);
 }
 
 export const SITE_TITLE = process.env.NEXT_PUBLIC_SITE_TITLE!;

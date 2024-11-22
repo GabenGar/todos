@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { type Metadata } from "next";
-import { REPOSITORY_URL, SITE_ORIGIN, SITE_TITLE } from "#environment";
+import { REPOSITORY_URL, SITE_BASE_URL, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { getDictionary } from "#server";
 import { ClientProvider } from "#hooks";
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { layout } = dict;
 
   const metadata: Metadata = {
-    metadataBase: new URL(SITE_ORIGIN),
+    metadataBase: new URL(SITE_BASE_URL),
     title: { template: `%s | ${SITE_TITLE}`, default: SITE_TITLE },
     description: layout.description,
     generator: "Next.js",
