@@ -2,18 +2,16 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
 import { Overview, OverviewHeader } from "#components/overview";
-import type { IBasePageParams } from "#pages/types";
+import type { IStaticPageProps } from "#pages/types";
 import { PlacesStats } from "./list";
 
-interface IProps {
-  params: IBasePageParams;
-}
+interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata(
   { params }: IProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { title, description } = dict.pages.stats_places;
 
@@ -24,7 +22,7 @@ export async function generateMetadata(
 }
 
 async function PlacesStatsPage({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { common, pages } = dict;
   const { stats_places } = pages;

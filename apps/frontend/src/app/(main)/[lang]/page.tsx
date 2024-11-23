@@ -21,7 +21,7 @@ import styles from "./page.module.scss";
 interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { home } = dict.pages;
 
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: IProps) {
 }
 
 async function FrontPage({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { home } = dict.pages;
 

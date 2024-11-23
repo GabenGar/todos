@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import type { IBasePageParams } from "#pages/types";
+import type { IStaticPageProps } from "#pages/types";
 import { Client } from "./client";
 
-interface IParams extends IBasePageParams {}
-
-interface IProps {
-  params: IParams;
-}
+interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { title } = dict.pages["url-viewer"];
 
@@ -21,7 +17,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 }
 
 async function URLViewerPage({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { common, pages } = dict;
   const { heading } = dict.pages["url-viewer"];

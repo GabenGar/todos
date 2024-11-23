@@ -1,11 +1,11 @@
 import type { ILocale } from "#lib/internationalization";
 
 export interface IStaticPageProps {
-  params: IBasePageParams;
+  params: Promise<IBasePageParams>;
 }
 
 export interface IDynamicPageProps {
-  params: IBasePageParams;
+  params: Promise<IBasePageParams>;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
