@@ -1,17 +1,15 @@
 import { promises as fs } from "node:fs";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import type { IBasePageParams } from "#pages/types";
+import type { IStaticPageProps } from "#pages/types";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { Heading } from "#components/heading";
 import { Pre } from "#components/pre";
 
-interface IProps {
-  params: IBasePageParams;
-}
+interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { title } = dict.pages["yt-dlp-configs"];
 
@@ -21,7 +19,7 @@ export async function generateMetadata({ params }: IProps) {
 }
 
 async function YTDLPConfigsPage({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { common, pages } = dict;
   const { heading } = pages["yt-dlp-configs"];

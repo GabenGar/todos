@@ -249,7 +249,7 @@ textarea::placeholder {
   // Reset the default placeholder opacity in Firefox.
   opacity: 1;
   // Set the default placeholder color.
-  color: hsl(100, 100, 100);
+  color: hsl(100, 100%, 100%);
 }
 
 // Set the default cursor for buttons.

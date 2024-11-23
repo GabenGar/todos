@@ -17,9 +17,7 @@ function OptionsPage() {
   setupTheme();
 
   return (
-    // @ts-expect-error old react types
-    // which implicitly assume `children` propd
-    <HashRouter hashType="noslash">
+    <HashRouter>
       <ScrollToTop>
         <div className={optionsPageClassName}>
           <SideBar />

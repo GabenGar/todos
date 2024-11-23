@@ -14,11 +14,11 @@ import styles from "./layout.module.scss";
 
 interface IProps {
   children: ReactNode;
-  params: IBasePageParams;
+  params: Promise<IBasePageParams>;
 }
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { layout } = dict;
 
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 }
 
 async function RootLayout({ children, params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { layout } = dict;
 

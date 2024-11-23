@@ -43,12 +43,12 @@ const { get: getLocalStoreLogLevel, set: setLocalStoreLogLevel } =
   createLocalStorage("log_level", DEFAULT_LOG_LEVEL, validateLogLevel);
 
 export function ClientProvider({ children }: { children: ReactNode }) {
-  const params = useParams();
+  const params = useParams<{ lang: string }>();
   const [isClient, switchIsClient] = useState(false);
   const [locale, changeLocale] = useState<Intl.Locale>();
   const [logLevel, changeLogLevel] = useState<ILogLevel>();
   const [compatibility, changeCompatiblity] = useState<ICompatibility>();
-  const lang = Array.isArray(params.lang) ? params.lang[0] : params.lang;
+  const lang = params.lang;
 
   async function switchLogLevel(
     ...args: Parameters<typeof changeCurrentLogLevel>

@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import type { IBasePageParams } from "#pages/types";
+import type { IStaticPageProps } from "#pages/types";
 import { Client } from "./client";
 
-interface IProps {
-  params: IParams;
-}
-
-interface IParams extends IBasePageParams {}
+interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { pages } = dict;
   const { qr_code_reader } = pages;
@@ -25,7 +21,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 }
 
 async function QRCodeReaderPage({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { common, pages } = dict;
   const { qr_code_reader } = pages;

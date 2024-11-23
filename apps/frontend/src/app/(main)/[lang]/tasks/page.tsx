@@ -2,14 +2,12 @@ import { Suspense } from "react";
 import { getDictionary } from "#server";
 import { TaskList } from "#entities/task";
 import { Loading, Page } from "#components";
-import type { IBasePageParams } from "#pages/types";
+import type { IStaticPageProps } from "#pages/types";
 
-interface IProps {
-  params: IBasePageParams;
-}
+interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { todos } = dict;
 
@@ -19,7 +17,7 @@ export async function generateMetadata({ params }: IProps) {
 }
 
 async function TodosPage({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { common, todos, task, stats_tasks } = dict;
 

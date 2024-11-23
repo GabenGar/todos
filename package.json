@@ -32,7 +32,7 @@
     "codegen": "turbo run codegen"
   },
   "devDependencies": {
-    "turbo": "2.3.0"
+    "turbo": "2.3.1"
   },
   "packageManager": "npm@8.7.0"
 }

@@ -1,22 +1,18 @@
-import { Component, type ReactNode } from "react";
-import { withRouter, type RouteComponentProps } from "react-router-dom";
+import { useEffect, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 
-interface IProps extends RouteComponentProps {
+interface IProps {
   children?: ReactNode;
 }
 
-interface IState {}
+function ScrollToTop({ children }: IProps) {
+  const location = useLocation();
 
-class ScrollToTop extends Component<IProps, IState> {
-  componentDidUpdate(prevProps: IProps) {
-    if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
-    }
-  }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
-  render() {
-    return this.props.children;
-  }
+  return children;
 }
 
-export default withRouter(ScrollToTop);
+export default ScrollToTop;

@@ -1,13 +1,15 @@
 import React from "react";
 import browser from "webextension-polyfill";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // @ts-expect-error no types for this one
 import browserInfo from "browser-info";
 import clsx from "clsx";
 
 import "./SideBar.scss";
 
-const sideBar = withRouter(function SideBar(props) {
+function SideBar() {
+  const location = useLocation();
+
   return (
     <div className="sideBar">
       <div className="titleContainer">
@@ -20,7 +22,7 @@ const sideBar = withRouter(function SideBar(props) {
           className={clsx(
             "sideBarItem",
             ["/shortcuts", "/information"].every(
-              (path) => path != props.location.pathname
+              (path) => path != location.pathname
             ) && "selected"
           )}
         >
@@ -30,7 +32,7 @@ const sideBar = withRouter(function SideBar(props) {
         {isValidShortcuts && (
           <li
             className={`sideBarItem ${
-              props.location.pathname == "/shortcuts" ? "selected" : ""
+              location.pathname == "/shortcuts" ? "selected" : ""
             }`}
           >
             <Link to="/shortcuts">
@@ -41,7 +43,7 @@ const sideBar = withRouter(function SideBar(props) {
 
         <li
           className={`sideBarItem ${
-            props.location.pathname == "/information" ? "selected" : ""
+            location.pathname == "/information" ? "selected" : ""
           }`}
         >
           <Link to="/information">
@@ -51,10 +53,10 @@ const sideBar = withRouter(function SideBar(props) {
       </ul>
     </div>
   );
-});
+}
 
 function isValidShortcuts() {
   return browserInfo().name == "Firefox" && browserInfo().version >= 60;
 }
 
-export default sideBar;
+export default SideBar;

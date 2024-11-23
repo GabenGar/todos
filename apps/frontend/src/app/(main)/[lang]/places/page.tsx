@@ -2,15 +2,13 @@ import { Suspense } from "react";
 import { type Metadata } from "next";
 import { getDictionary } from "#server";
 import { Loading, Page } from "#components";
-import type { IBasePageParams } from "#pages/types";
+import type { IStaticPageProps } from "#pages/types";
 import { Client } from "./client";
 
-interface IProps {
-  params: IBasePageParams;
-}
+interface IProps extends IStaticPageProps {}
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { places } = dict.pages;
 
@@ -22,7 +20,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 }
 
 async function PlacesPage({ params }: IProps) {
-  const { lang } = params;
+  const { lang } = await params;
   const dict = await getDictionary(lang);
   const { pages, common, place } = dict;
   const { places } = pages;

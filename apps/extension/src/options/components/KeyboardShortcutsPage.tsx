@@ -42,7 +42,8 @@ class KeyboardShortcutPage extends Component<IProps, IState> {
       id: command.name,
       title: command.description,
       useRawTitle: true,
-      captions: [],
+      // no idea why typescript doesn't like it
+      captions: [] as any[],
       type: "keyboard-shortcut",
       shortcut: command.shortcut || "",
       defaultValue: getShortcut(command.name),
