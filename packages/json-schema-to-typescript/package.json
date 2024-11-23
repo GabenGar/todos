@@ -25,12 +25,12 @@
     "prep": "npm run build && npm run test"
   },
   "dependencies": {
-    "@hyperjump/json-pointer": "^1.0.1",
-    "@hyperjump/json-schema": "^1.8.0"
+    "@hyperjump/json-pointer": "^1.1.0",
+    "@hyperjump/json-schema": "^1.9.9"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.0",
+    "@biomejs/biome": "1.9.4",
     "@types/node": "^20.12.7",
-    "typescript": "^5.4.5"
+    "typescript": "^5.7.2"
   }
 }
