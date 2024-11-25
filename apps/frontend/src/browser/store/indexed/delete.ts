@@ -1,4 +1,4 @@
-import { getOneIndexedDBItem } from "./get";
+import { getOneIndexedDBItem } from "./one";
 import { getTransaction } from "./get-transaction";
 import type { IStorageName } from "./types";
 
