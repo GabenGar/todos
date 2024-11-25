@@ -1,30 +1,23 @@
-import React from "react";
 import browser from "webextension-polyfill";
-import { HashRouter } from "react-router-dom";
 import { initSettings, getSettings } from "../../settings/settings";
-import SideBar from "./SideBar";
-import ContentsArea from "./ContentsArea";
-import ScrollToTop from "./ScrollToTop";
+import SideBar from "../components/SideBar";
+import ContentsArea from "../components/ContentsArea";
 
-import "./OptionsPage.scss";
+import "./options.scss";
 
 const UILanguage = browser.i18n.getUILanguage();
 const isRTLLanguage = ["he", "ar"].includes(UILanguage);
 const optionsPageClassName =
   "optionsPage" + (isRTLLanguage ? " rtl-language" : "");
 
-function OptionsPage() {
+export function OptionsPage() {
   setupTheme();
 
   return (
-    <HashRouter>
-      <ScrollToTop>
-        <div className={optionsPageClassName}>
-          <SideBar />
-          <ContentsArea />
-        </div>
-      </ScrollToTop>
-    </HashRouter>
+    <div className={optionsPageClassName}>
+      <SideBar />
+      <ContentsArea />
+    </div>
   );
 }
 
@@ -51,5 +44,3 @@ async function setupTheme() {
     );
   });
 }
-
-export default OptionsPage;

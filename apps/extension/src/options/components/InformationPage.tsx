@@ -3,6 +3,7 @@ import browser from "webextension-polyfill";
 // @ts-expect-error there are no types
 import browserInfo from "browser-info";
 import queryString from "query-string";
+import { useLocation } from "react-router";
 import OptionsContainer from "./OptionContainer";
 import {
   email,
@@ -12,16 +13,13 @@ import {
 import manifest from "../../manifest-chrome.json";
 import { useAdditionalPermission } from "../hooks/use-permission";
 
-interface IProps {
-  location: Location
-}
+function InformationPage() {
+  const location = useLocation()
+  const [hasPermission, requestPermission] = useAdditionalPermission();
 
-function InformationPage(props: IProps) {
-
-  const query = queryString.parse(props.location.search);
+  const query = queryString.parse(location.search);
   const extensionVersion = manifest.version;
 
-  const [hasPermission, requestPermission] = useAdditionalPermission();
 
   return (
     <div>

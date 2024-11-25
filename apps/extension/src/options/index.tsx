@@ -1,12 +1,21 @@
-import React, { StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import OptionsPage from "./components/OptionsPage";
+import { HashRouter } from "react-router";
+import { RouterConfig } from "./routes";
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement!);
+const rootID = "root";
+const rootElement = document.getElementById(rootID);
+
+if (!rootElement) {
+  throw new Error(`No root element exists for ID "${rootID}".`);
+}
+
+const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <OptionsPage />
+    <HashRouter>
+      <RouterConfig />
+    </HashRouter>
   </StrictMode>
 );
