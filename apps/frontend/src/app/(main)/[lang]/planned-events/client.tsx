@@ -11,6 +11,7 @@ import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
   PlannedEventCreateForm,
   PlannedEventPreview,
+  countPlannedEvents,
   createPlannedEvent,
   getPlannedEvents,
   type IPlannedEventInit,
@@ -25,23 +26,35 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   const searchParams = useSearchParams();
   const [plannedEvents, changePlannedEvents] =
     useState<Awaited<ReturnType<typeof getPlannedEvents>>>();
+  const [isLoading, switchLoading] = useState(true);
   const inputPage = searchParams.get("page")?.trim();
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
 
   useEffect(() => {
     (async () => {
-      const newPlannedEvents = await getPlannedEvents(page);
+      try {
+        switchLoading(true);
+        const count = await countPlannedEvents();
 
-      if (!page) {
-        const url = createPlannedEventsPageURL(language, {
-          page: newPlannedEvents.pagination.totalPages,
-        });
-        router.replace(url);
+        if (count === 0) {
+          return;
+        }
 
-        return;
+        const newPlannedEvents = await getPlannedEvents(page);
+
+        if (!page) {
+          const url = createPlannedEventsPageURL(language, {
+            page: newPlannedEvents.pagination.totalPages,
+          });
+          router.replace(url);
+
+          return;
+        }
+
+        changePlannedEvents(newPlannedEvents);
+      } finally {
+        switchLoading(false);
       }
-
-      changePlannedEvents(newPlannedEvents);
     })();
   }, [page]);
 
@@ -70,9 +83,9 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         )}
       </Overview>
 
-      {!plannedEvents ? (
+      {isLoading ? (
         <Loading />
-      ) : plannedEvents.pagination.totalCount === 0 ? (
+      ) : !plannedEvents ? (
         <Overview headingLevel={2}>
           {() => (
             <OverviewHeader>

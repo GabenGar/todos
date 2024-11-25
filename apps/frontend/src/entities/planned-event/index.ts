@@ -1,5 +1,9 @@
 export { createPlannedEvent } from "./lib/create";
-export { getPlannedEvents, getPlannedEvent } from "./lib/get";
+export {
+  countPlannedEvents,
+  getPlannedEvents,
+  getPlannedEvent,
+} from "./lib/get";
 export { editPlannedEvent } from "./lib/edit";
 export { deletePlannedEvent } from "./lib/delete";
 export { PlannedEventCreateForm } from "./forms/create";

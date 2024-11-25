@@ -1,10 +1,17 @@
 import {
   getManyIndexedDBItems,
   getOneIndexedDBItem,
+  countIndexedDBItems,
 } from "#browser/store/indexed";
 import type { IPaginatedCollection } from "#lib/pagination";
 import type { IPlannedEvent } from "../types";
 import { validatePlannedEvent } from "./validate";
+
+export async function countPlannedEvents(): Promise<number> {
+  const count = await countIndexedDBItems("planned_events");
+
+  return count;
+}
 
 export async function getPlannedEvents(
   page?: number,
