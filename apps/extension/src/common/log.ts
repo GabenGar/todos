@@ -1,8 +1,8 @@
 import log from "loglevel";
-import { getSettings } from "src/settings/settings";
+import { getSettings } from "../settings/settings";
 
 let isInited = false;
-export const overWriteLogLevel = () => {
+export function overWriteLogLevel() {
   if (isInited) return;
   isInited = true;
 
@@ -14,10 +14,14 @@ export const overWriteLogLevel = () => {
       rawMethod(`[${methodName}]`, `${logDir}:`, ...args);
     };
   };
-};
+}
 
-export const updateLogLevel = () => {
+export function updateLogLevel() {
   const isDebugMode = getSettings("isDebugMode");
-  if (isDebugMode) log.enableAll(false);
-  else log.disableAll(false);
-};
+
+  if (isDebugMode) {
+    log.enableAll(false);
+  } else {
+    log.disableAll(false);
+  }
+}

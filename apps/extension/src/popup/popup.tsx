@@ -1,21 +1,21 @@
-import React, { Component, type ChangeEventHandler } from "react";
+import { Component, type ChangeEventHandler } from "react";
 import browser from "webextension-polyfill";
 import log from "loglevel";
 import {
   initSettings,
   getSettings,
   setSettings,
-} from "../../settings/settings";
-import { updateLogLevel, overWriteLogLevel } from "../../common/log";
+} from "../settings/settings";
+import { updateLogLevel, overWriteLogLevel } from "../common/log";
 import generateLangOptions, {
   type ILangOption,
-} from "../../common/generateLangOptions";
-import Header from "./Header";
-import InputArea from "./InputArea";
-import ResultArea from "./ResultArea";
-import Footer from "./Footer";
+} from "../common/generateLangOptions";
+import Header from "./components/Header";
+import InputArea from "./components/InputArea";
+import ResultArea from "./components/ResultArea";
+import Footer from "./components/Footer";
 
-import "./PopupPage.scss";
+import "./popup.scss";
 
 const logDir = "popup/PopupPage";
 

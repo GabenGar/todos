@@ -1,11 +1,17 @@
+// @ts-expect-error no types
 import browserInfo from "browser-info";
-import manifest from "src/manifest-chrome.json";
+import manifest from "../manifest-chrome.json";
 
-export default commandId => {
-  const suggestedKeys = manifest.commands[commandId].suggested_key || null;
-  if (!suggestedKeys) return null;
+function getShortcut(commandId: string) {
+  // @ts-expect-error no type for manifest
+  const suggestedKeys = manifest?.commands[commandId].suggested_key || null;
+
+  if (!suggestedKeys) {
+    return null;
+  }
 
   const os = browserInfo().os;
+
   switch (os) {
     case "Windows":
       return suggestedKeys.windows || suggestedKeys.default;
@@ -20,4 +26,6 @@ export default commandId => {
     default:
       return suggestedKeys.default || null;
   }
-};
+}
+
+export default getShortcut;
