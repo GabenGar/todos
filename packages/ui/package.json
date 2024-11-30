@@ -9,6 +9,8 @@
   },
   "exports": {
     "./meta": "./src/meta/index.ts",
+    "./articles": "./src/articles/index.ts",
+    "./headings": "./src/headings/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
     "./styles/variables": "./src/styles/variables.scss",
@@ -17,6 +19,7 @@
   },
   "imports": {
     "#meta": "./src/meta/index.ts",
+    "#headings": "./src/headings/index.ts",
     "#types": "./src/types/index.ts"
   },
   "dependencies": {
