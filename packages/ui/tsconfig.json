@@ -19,6 +19,6 @@
 		"strict": true,
 		"jsx": "react-jsx"
 	},
-	"include": ["src"],
+	"include": ["custom.d.ts", "src"],
 	"exclude": ["node_modules", "dist"]
 }

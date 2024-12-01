@@ -1,12 +1,26 @@
+import browser from "webextension-polyfill";
 import { Outlet } from "react-router";
+import { Button } from "@repo/ui/buttons"
 
-import "@repo/ui/styles/global";
 import styles from "./layout.module.scss";
 
 export function Layout() {
   return (
     <>
-      <header className={styles.header}>Link overwatch</header>
+      <header className={styles.header}>
+        <nav>
+          <ul>
+            <li>Link overwatch</li>
+            <li>
+              <Button
+                onClick={() => browser.runtime.openOptionsPage()}
+              >
+                Options
+              </Button>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
       <main className={styles.main}>
         <Outlet />

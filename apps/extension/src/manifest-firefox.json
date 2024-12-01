@@ -9,7 +9,7 @@
       "id": "link-overwatch@gabengar"
     }
   },
-  "permissions": ["storage", "contextMenus"],
+  "permissions": [],
   "options_ui": {
     "page": "options/index.html",
     "open_in_tab": true
@@ -36,6 +36,7 @@
       "19": "assets/icons/logo/19.png",
       "16": "assets/icons/logo/16.png"
     },
+    "default_title": "__MSG_extName__",
     "default_popup": "popup/index.html"
   }
 }

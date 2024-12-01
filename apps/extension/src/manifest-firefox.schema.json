@@ -95,6 +95,9 @@
             }
           ]
         },
+        "default_title": {
+          "type": "string"
+        },
         "default_popup": {
           "type": "string"
         }

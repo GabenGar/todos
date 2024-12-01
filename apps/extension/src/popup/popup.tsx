@@ -4,7 +4,7 @@ import { MemoryRouter, Routes, Route } from "react-router";
 import { Layout } from "./components/layouts";
 import { HomePage } from "./pages/home";
 
-import "@repo/ui/styles/global";
+import "@repo/ui/styles/global/extension/popup";
 
 export function Popup() {
   return (
