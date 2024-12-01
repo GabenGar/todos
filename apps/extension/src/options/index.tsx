@@ -1,7 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { HashRouter } from "react-router";
-import { RouterConfig } from "./routes";
+import { HashRouter, Route, Routes } from "react-router";
+import { Layout } from "./components/layouts";
+import { HomePage } from "./pages/home";
 
 const rootID = "root";
 const rootElement = document.getElementById(rootID);
@@ -15,7 +16,11 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <HashRouter>
-      <RouterConfig />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<HomePage />} />
+        </Route>
+      </Routes>
     </HashRouter>
   </StrictMode>
 );

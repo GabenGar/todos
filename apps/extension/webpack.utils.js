@@ -39,8 +39,8 @@ const getCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src") => [
   new CopyWebpackPlugin({
     patterns: [
       {
-        from: `${sourceDir}/icons`,
-        to: path.resolve(__dirname, `${outputDir}/${browserDir}/icons`)
+        from: `${sourceDir}/assets/icons`,
+        to: path.resolve(__dirname, `${outputDir}/${browserDir}/assets/icons`)
       },
       {
         from: `${sourceDir}/_locales`,
@@ -58,8 +58,8 @@ const getFirefoxCopyPlugins = (browserDir, outputDir = "dev", sourceDir = "src")
   new CopyWebpackPlugin({
     patterns: [
       {
-        from: `${sourceDir}/icons`,
-        to: path.resolve(__dirname, `${outputDir}/${browserDir}/icons`)
+        from: `${sourceDir}/assets/icons`,
+        to: path.resolve(__dirname, `${outputDir}/${browserDir}/assets/icons`)
       },
       {
         from: `${sourceDir}/_locales`,

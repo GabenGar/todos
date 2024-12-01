@@ -17,6 +17,10 @@
 		"dev": "webpack --config webpack.dev.js",
 		"open-analyzer": "opener http://127.0.0.1:8888/"
 	},
+	"imports": {
+		"#popup/*": "./src/popup/*/index.ts",
+		"#options/*": "./src/options/*/index.ts"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/GabenGar/todos.git"
