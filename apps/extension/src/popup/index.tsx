@@ -1,14 +1,12 @@
+import "webextension-polyfill";
 import "@repo/ui/styles/global/extension/popup";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import browser from "webextension-polyfill";
 import log from "loglevel";
 import { MemoryRouter, Routes, Route } from "react-router";
-import { Layout } from "./components/layouts";
-import { HomePage } from "./pages/home";
-
-
+import { Layout } from "#popup/components/layouts";
+import { HomePage } from "#popup/pages/home";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
