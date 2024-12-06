@@ -1,0 +1,7 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.block {
+  display: inline-block;
+  padding: $size-small 0;
+  cursor: pointer;
+}

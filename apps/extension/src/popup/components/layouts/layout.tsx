@@ -1,12 +1,12 @@
-
 import { Outlet } from "react-router";
+import { ClientProvider } from "#popup/hooks";
 import { LayoutHeader } from "./header";
 
 import styles from "./layout.module.scss";
 
 export function Layout() {
   return (
-    <>
+    <ClientProvider>
       <LayoutHeader className={styles.header} />
 
       <main className={styles.main}>
@@ -26,6 +26,6 @@ export function Layout() {
           </li>
         </ul>
       </footer>
-    </>
+    </ClientProvider>
   );
 }
