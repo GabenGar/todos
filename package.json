@@ -20,14 +20,10 @@
   "workspaces": ["docs", "apps/*", "packages/*"],
   "scripts": {
     "build": "turbo run build",
-    "build-frontend": "turbo run build --filter=frontend",
-    "build-extension": "turbo run build --filter=\"link-overwatch\"",
-    "start": "turbo run start --filter=frontend",
+    "start": "turbo run start",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "dev": "turbo run dev",
-    "dev-frontend": "turbo run dev --filter=frontend",
-    "dev-extension": "turbo run dev --filter=\"link-overwatch\"",
     "prep": "npm install && npm run format && npm run build",
     "codegen": "turbo run codegen"
   },

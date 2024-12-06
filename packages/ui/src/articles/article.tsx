@@ -20,15 +20,15 @@ export interface IArticleFooterProps
 export const Article = createBlockComponent(undefined, ArticleComponent);
 export const ArticleHeader = createBlockComponent(
   undefined,
-  ArticleHeaderComponent
+  ArticleHeaderComponent,
 );
 export const ArticleBody = createBlockComponent(
   undefined,
-  ArticleBodyComponent
+  ArticleBodyComponent,
 );
 export const ArticleFooter = createBlockComponent(
   undefined,
-  ArticleFooterComponent
+  ArticleFooterComponent,
 );
 
 function ArticleComponent({ headingLevel, children, ...props }: IArticleProps) {

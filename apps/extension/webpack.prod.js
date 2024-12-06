@@ -24,11 +24,6 @@ const generalConfig = {
   mode: "production",
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
-    alias: {
-      src: path.resolve(__dirname, "src/"),
-      "webextension-polyfill":
-        "webextension-polyfill/dist/browser-polyfill.min.js",
-    },
   },
   module: {
     rules: [

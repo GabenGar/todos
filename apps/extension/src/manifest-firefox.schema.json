@@ -29,6 +29,9 @@
           "properties": {
             "id": {
               "type": "string"
+            },
+            "strict_min_version": {
+              "type": "string"
             }
           }
         }
