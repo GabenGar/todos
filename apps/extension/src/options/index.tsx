@@ -4,6 +4,8 @@ import { HashRouter, Route, Routes } from "react-router";
 import { Layout } from "./components/layouts";
 import { HomePage } from "./pages/home";
 
+import "@repo/ui/styles/global/extension/options";
+
 const rootID = "root";
 const rootElement = document.getElementById(rootID);
 

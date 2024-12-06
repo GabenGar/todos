@@ -14,6 +14,7 @@
     "./buttons": "./src/buttons/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
+    "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
     "./styles/global/extension/popup": "./src/styles/global/extension/popup.scss",
     "./styles/variables": "./src/styles/variables.scss",
     "./styles/sass/variables": "./src/styles/sass/variables.scss",

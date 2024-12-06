@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 
-import "@repo/ui/styles/global";
+
 import styles from "./layout.module.scss";
 
 export function Layout() {
