@@ -12,6 +12,8 @@
     "./articles": "./src/articles/index.ts",
     "./headings": "./src/headings/index.ts",
     "./buttons": "./src/buttons/index.ts",
+    "./pages": "./src/pages/index.ts",
+    "./loading": "./src/loading/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
     "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
@@ -24,6 +26,7 @@
     "#meta": "./src/meta/index.ts",
     "#headings": "./src/headings/index.ts",
     "#buttons": "./src/buttons/index.ts",
+    "#loading": "./src/loading/index.ts",
     "#types": "./src/types/index.ts"
   },
   "dependencies": {

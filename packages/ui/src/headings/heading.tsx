@@ -1,6 +1,8 @@
 import clsx from "clsx";
-import { createBlockComponent } from "@repo/ui/meta";
-import type { IBaseComponentPropsWithChildren } from "#components/types";
+import {
+  createBlockComponent,
+  type IBaseComponentPropsWithChildren,
+} from "#meta";
 
 import styles from "./heading.module.scss";
 
@@ -48,7 +50,7 @@ function Component({ level, className, ...props }: IProps) {
 }
 
 export function validateHeadinglevel(
-  inputLevel: unknown,
+  inputLevel: unknown
 ): asserts inputLevel is IHeadingLevel {
   if (!HEADING_LEVELS.includes(inputLevel as IHeadingLevel)) {
     throw new Error(`Unknown heading level "${inputLevel}".`);
