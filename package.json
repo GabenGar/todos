@@ -20,6 +20,7 @@
   "workspaces": ["docs", "apps/*", "packages/*"],
   "scripts": {
     "build": "turbo run build",
+    "build-frontend": "turbo run build --filter=frontend",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "format": "turbo run format",
