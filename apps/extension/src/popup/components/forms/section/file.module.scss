@@ -1,0 +1,33 @@
+@use "@repo/ui/styles/sass/variables" as *;
+@use "@repo/ui/styles/sass/mixins" as mixins;
+
+.block {
+  position: relative;
+  display: grid;
+}
+
+.label {
+  @include mixins.button();
+  // display: block;
+  // padding: 0 $size-small;
+}
+
+.input {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  opacity: 0;
+
+  &:focus,
+  &::focus-within {
+    & + .label {
+      outline: thin dotted;
+    }
+  }
+}
+
+.file {
+  word-break: break-word;
+}

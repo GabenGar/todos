@@ -20,12 +20,7 @@ const generalConfig = {
   watch: true,
   devtool: "inline-source-map",
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
-    alias: {
-      src: path.resolve(__dirname, "src/"),
-      "webextension-polyfill":
-        "webextension-polyfill/dist/browser-polyfill.min.js",
-    },
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   module: {
     rules: [

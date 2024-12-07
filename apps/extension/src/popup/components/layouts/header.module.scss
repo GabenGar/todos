@@ -1,0 +1,14 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.nav {
+  width: 100%;
+}
+
+.list {
+
+  display: flex;
+  flex-flow: row nowrap;
+  gap: $size-normal;
+  justify-content: space-between;
+  align-items: center;
+}

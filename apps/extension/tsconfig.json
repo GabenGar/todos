@@ -4,13 +4,13 @@
     "sourceMap": true,
     "module": "es6",
     "target": "ES2021",
-    "moduleResolution": "node",
-    "jsx": "react",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
     "noImplicitAny": true,
     "allowJs": true,
-    "allowSyntheticDefaultImports" : true,
-    "esModuleInterop" : true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "exclude": ["./dev", "./dist", "./temp"]
+  "exclude": ["./dev", "./build", "./dist", "./temp"]
 }

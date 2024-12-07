@@ -29,6 +29,9 @@
           "properties": {
             "id": {
               "type": "string"
+            },
+            "strict_min_version": {
+              "type": "string"
             }
           }
         }
@@ -94,6 +97,9 @@
               }
             }
           ]
+        },
+        "default_title": {
+          "type": "string"
         },
         "default_popup": {
           "type": "string"

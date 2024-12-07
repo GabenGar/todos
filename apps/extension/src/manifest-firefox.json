@@ -6,67 +6,38 @@
   "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
-      "id": "link-overwatch@gabengar"
+      "id": "link-overwatch@gabengar",
+      "strict_min_version": "78.0"
     }
   },
-  "permissions": [
-    "storage",
-    "contextMenus"
-  ],
+  "permissions": [],
   "options_ui": {
     "page": "options/index.html",
     "open_in_tab": true
   },
   "icons": {
-    "512": "icons/logo/512.png",
-    "128": "icons/logo/128.png",
-    "64": "icons/logo/64.png",
-    "48": "icons/logo/48.png",
-    "32": "icons/logo/32.png"
+    "512": "assets/icons/logo/512.png",
+    "128": "assets/icons/logo/128.png",
+    "64": "assets/icons/logo/64.png",
+    "48": "assets/icons/logo/48.png",
+    "32": "assets/icons/logo/32.png"
   },
   "background": {
-    "scripts": [
-      "background/background.js"
-    ],
+    "scripts": ["background/background.js"],
     "type": "module"
   },
   "action": {
     "default_icon": {
-      "512": "icons/logo/512.png",
-      "128": "icons/logo/128.png",
-      "64": "icons/logo/64.png",
-      "48": "icons/logo/48.png",
-      "38": "icons/logo/38.png",
-      "32": "icons/logo/32.png",
-      "19": "icons/logo/19.png",
-      "16": "icons/logo/16.png"
+      "512": "assets/icons/logo/512.png",
+      "128": "assets/icons/logo/128.png",
+      "64": "assets/icons/logo/64.png",
+      "48": "assets/icons/logo/48.png",
+      "38": "assets/icons/logo/38.png",
+      "32": "assets/icons/logo/32.png",
+      "19": "assets/icons/logo/19.png",
+      "16": "assets/icons/logo/16.png"
     },
+    "default_title": "__MSG_extName__",
     "default_popup": "popup/index.html"
-  },
-  "content_scripts": [
-    {
-      "all_frames": true,
-      "matches": [
-        "http://*/*",
-        "https://*/*",
-        "<all_urls>"
-      ],
-      "js": [
-        "content/content.js"
-      ],
-      "css": [
-        "content/content.css"
-      ]
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "icons/logo/512.png"
-      ],
-      "matches": [
-        "*://*/*"
-      ]
-    }
-  ]
+  }
 }

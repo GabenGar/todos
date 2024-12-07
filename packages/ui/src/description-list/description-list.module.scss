@@ -1,0 +1,44 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.block {
+  display: grid;
+  gap: $size-little;
+}
+
+.section {
+  border-radius: $radius-normal;
+
+  &_keyValue {
+    display: inline-grid;
+    grid:
+      "key" auto
+      "value" auto
+      / 100%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: $size-little;
+  }
+
+  &_horizontal {
+    grid:
+      "key value" auto
+      / auto;
+    gap: $size-normal;
+  }
+}
+
+.key {
+  grid-area: key;
+}
+
+.value {
+  grid-area: value;
+  word-break: break-word;
+}
+
+.term {
+  font-weight: bold;
+}
+
+.details {
+}

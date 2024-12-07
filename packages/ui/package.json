@@ -9,14 +9,28 @@
   },
   "exports": {
     "./meta": "./src/meta/index.ts",
+    "./articles": "./src/articles/index.ts",
+    "./headings": "./src/headings/index.ts",
+    "./buttons": "./src/buttons/index.ts",
+    "./pages": "./src/pages/index.ts",
+    "./loading": "./src/loading/index.ts",
+    "./formatting": "./src/formatting/index.ts",
+    "./description-list": "./src/description-list/index.ts",
+    "./links": "./src/links/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
+    "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
+    "./styles/global/extension/popup": "./src/styles/global/extension/popup.scss",
     "./styles/variables": "./src/styles/variables.scss",
     "./styles/sass/variables": "./src/styles/sass/variables.scss",
     "./styles/sass/mixins": "./src/styles/sass/mixins.scss"
   },
   "imports": {
     "#meta": "./src/meta/index.ts",
+    "#headings": "./src/headings/index.ts",
+    "#buttons": "./src/buttons/index.ts",
+    "#loading": "./src/loading/index.ts",
+    "#formatting": "./src/formatting/index.ts",
     "#types": "./src/types/index.ts"
   },
   "dependencies": {
