@@ -1,4 +1,5 @@
-import { Outlet } from "react-router";
+import { Outlet, ScrollRestoration } from "react-router";
+import { LinkExternal } from "@repo/ui/links";
 import { ClientProvider } from "#popup/hooks";
 import { LayoutHeader } from "./header";
 
@@ -16,16 +17,18 @@ export function Layout() {
       <footer className={styles.footer}>
         <ul>
           <li>
-            <a
+            <LinkExternal
               href={
                 "https://github.com/GabenGar/todos/tree/master/apps/extension"
               }
             >
               Source code
-            </a>
+            </LinkExternal>
           </li>
         </ul>
       </footer>
+
+      <ScrollRestoration />
     </ClientProvider>
   );
 }

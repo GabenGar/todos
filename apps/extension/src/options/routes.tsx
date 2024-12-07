@@ -1,14 +1,14 @@
 import {
-  createMemoryRouter,
+  createHashRouter,
   isRouteErrorResponse,
   useRouteError,
 } from "react-router";
 import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { Layout } from "#popup/components/layouts";
-import { HomePage, HomePageAction } from "#popup/pages/home";
+import { Layout } from "#options/components/layouts";
+import { HomePage } from "./pages/home";
 
-export const routes = createMemoryRouter([
+export const router = createHashRouter([
   {
     element: <Layout />,
     errorElement: <RootError />,
@@ -16,7 +16,6 @@ export const routes = createMemoryRouter([
       {
         index: true,
         element: <HomePage />,
-        action: HomePageAction,
       },
     ],
   },

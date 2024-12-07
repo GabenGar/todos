@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-
+import { LinkExternal } from "@repo/ui/links";
 
 import styles from "./layout.module.scss";
 
@@ -15,7 +15,13 @@ export function Layout() {
       <footer className={styles.footer}>
         <ul>
           <li>
-            <a href={"https://github.com/GabenGar/todos/tree/master/apps/extension"}>Source code</a>
+            <LinkExternal
+              href={
+                "https://github.com/GabenGar/todos/tree/master/apps/extension"
+              }
+            >
+              Source code
+            </LinkExternal>
           </li>
         </ul>
       </footer>

@@ -2,9 +2,8 @@ import "@repo/ui/styles/global/extension/options";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { HashRouter, Route, Routes } from "react-router";
-import { Layout } from "./components/layouts";
-import { HomePage } from "./pages/home";
+import { RouterProvider } from "react-router";
+import { router } from "./routes";
 
 const rootID = "root";
 const rootElement = document.getElementById(rootID);
@@ -17,12 +16,6 @@ const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <HashRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<HomePage />} />
-        </Route>
-      </Routes>
-    </HashRouter>
+    <RouterProvider router={router} />
   </StrictMode>
 );
