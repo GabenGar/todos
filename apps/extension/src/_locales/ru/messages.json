@@ -45,6 +45,9 @@
   "Options": {
     "message": "Настройки"
   },
+  "There are no options currently.": {
+    "message": "На данный момент нету доступных настроек."
+  },
   "Source code": {
     "message": "Исходный код"
   },
@@ -69,49 +72,49 @@
   "Decoded URL": {
     "message": "Раскодированная ссылка"
   },
-  "Origin Details":{
+  "Origin Details": {
     "message": "Детали Источника"
   },
-  "Origin":{
+  "Origin": {
     "message": "Источник"
   },
-  "Protocol":{
+  "Protocol": {
     "message": "Протокол"
   },
   "Username": {
     "message": "Имя пользователя"
   },
-  "Password":{
+  "Password": {
     "message": "Пароль"
   },
-  "Host":{
+  "Host": {
     "message": "Домен"
   },
-  "Hostname":{
+  "Hostname": {
     "message": "Доменное имя"
   },
-  "Port":{
+  "Port": {
     "message": "Порт"
   },
-  "Pathname Details":{
+  "Pathname Details": {
     "message": "Детали Пути"
   },
-  "Pathname":{
+  "Pathname": {
     "message": "Путь"
   },
-  "Search Parameters Details":{
+  "Search Parameters Details": {
     "message": "Детали Поисковых Параметров"
   },
-  "Search":{
+  "Search": {
     "message": "Поисковая строка"
   },
-  "Search parameters":{
+  "Search parameters": {
     "message": "Поисковые параметры"
   },
-  "Fragment Details":{
+  "Fragment Details": {
     "message": "Детали Фрагмента"
   },
-  "Hash":{
+  "Hash": {
     "message": "Идентификатор фрагмента"
   }
 }

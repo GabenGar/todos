@@ -40,7 +40,10 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
         : protocol === "https:"
           ? "443"
           : undefined;
-  const explicitHost = port.length !== 0 ? host : `${host}:${explicitPort}`
+  const explicitHost =
+    (port.length !== 0 && !explicitPort) || !host
+      ? host
+      : `${host}:${explicitPort}`;
   const transformedSearchParams = transformSearchparams(searchParams);
   const transformedURL = transformURL(url);
   const decodedURL = decodeURIComponent(String(transformedURL));
@@ -62,52 +65,60 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
         )}
       </DescriptionList>
 
-      <Heading level={headingLevel}>
-        {getLocalizedMessage("Origin Details")}
-      </Heading>
+      {origin && (
+        <>
+          <Heading level={headingLevel}>
+            {getLocalizedMessage("Origin Details")}
+          </Heading>
 
-      <DescriptionList>
-        <DescriptionSection
-          dKey={getLocalizedMessage("Origin")}
-          dValue={<Preformatted>{origin}</Preformatted>}
-        />
+          <DescriptionList>
+            <DescriptionSection
+              dKey={getLocalizedMessage("Origin")}
+              dValue={<Preformatted>{origin}</Preformatted>}
+            />
 
-        <DescriptionSection
-          dKey={getLocalizedMessage("Protocol")}
-          dValue={<Preformatted>{protocol}</Preformatted>}
-        />
+            <DescriptionSection
+              dKey={getLocalizedMessage("Protocol")}
+              dValue={<Preformatted>{protocol}</Preformatted>}
+            />
 
-        {username.length === 0 ? undefined : (
-          <DescriptionSection
-            dKey={getLocalizedMessage("Username")}
-            dValue={<Preformatted>{username}</Preformatted>}
-          />
-        )}
+            {username.length === 0 ? undefined : (
+              <DescriptionSection
+                dKey={getLocalizedMessage("Username")}
+                dValue={<Preformatted>{username}</Preformatted>}
+              />
+            )}
 
-        {password.length === 0 ? undefined : (
-          <DescriptionSection
-            dKey={getLocalizedMessage("Password")}
-            dValue={<Preformatted>{password}</Preformatted>}
-          />
-        )}
+            {password.length === 0 ? undefined : (
+              <DescriptionSection
+                dKey={getLocalizedMessage("Password")}
+                dValue={<Preformatted>{password}</Preformatted>}
+              />
+            )}
 
-        <DescriptionSection
-          dKey={getLocalizedMessage("Host")}
-          dValue={<Preformatted>{explicitHost}</Preformatted>}
-        />
+            {explicitHost && (
+              <DescriptionSection
+                dKey={getLocalizedMessage("Host")}
+                dValue={<Preformatted>{explicitHost}</Preformatted>}
+              />
+            )}
 
-        <DescriptionSection
-          dKey={getLocalizedMessage("Hostname")}
-          dValue={<Preformatted>{hostname}</Preformatted>}
-        />
+            {hostname && (
+              <DescriptionSection
+                dKey={getLocalizedMessage("Hostname")}
+                dValue={<Preformatted>{hostname}</Preformatted>}
+              />
+            )}
 
-        {explicitPort && (
-          <DescriptionSection
-            dKey={getLocalizedMessage("Port")}
-            dValue={<Preformatted>{explicitPort}</Preformatted>}
-          />
-        )}
-      </DescriptionList>
+            {explicitPort && (
+              <DescriptionSection
+                dKey={getLocalizedMessage("Port")}
+                dValue={<Preformatted>{explicitPort}</Preformatted>}
+              />
+            )}
+          </DescriptionList>
+        </>
+      )}
 
       <Heading level={headingLevel}>
         {getLocalizedMessage("Pathname Details")}

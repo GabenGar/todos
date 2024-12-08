@@ -1,12 +1,15 @@
 import { Outlet } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
+import { getLocalizedMessage } from "#lib/localization";
 
 import styles from "./layout.module.scss";
 
 export function Layout() {
   return (
     <>
-      <header className={styles.header}>Link overwatch</header>
+      <header className={styles.header}>
+        {getLocalizedMessage("extension_title")}
+      </header>
 
       <main className={styles.main}>
         <Outlet />
@@ -20,7 +23,7 @@ export function Layout() {
                 "https://github.com/GabenGar/todos/tree/master/apps/extension"
               }
             >
-              Source code
+              {getLocalizedMessage("Source code")}
             </LinkExternal>
           </li>
         </ul>

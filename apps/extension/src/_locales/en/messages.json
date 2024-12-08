@@ -45,6 +45,9 @@
   "Options": {
     "message": "Options"
   },
+  "There are no options currently.": {
+    "message": "There are no options currently."
+  },
   "Source code": {
     "message": "Source code"
   },
