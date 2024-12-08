@@ -1,8 +1,117 @@
 {
-  "Link Overwatch": {
+  "extension_title": {
     "message": "Link Overwatch"
   },
-  "Watch over your links.": {
+  "extension_description": {
     "message": "Watch over your links."
+  },
+  "Status": {
+    "message": "Status"
+  },
+  "Message": {
+    "message": "Message"
+  },
+  "Data": { "message": "Data" },
+  "Name": {
+    "message": "Name"
+  },
+  "Unknown Error": {
+    "message": "Unknown Error"
+  },
+  "URL parser": {
+    "message": "URL parser"
+  },
+  "URL": {
+    "message": "URL"
+  },
+  "Analyze": {
+    "message": "Analyze"
+  },
+  "No URL is selected.": {
+    "message": "No URL is selected."
+  },
+  "Unknown method $METHOD$": {
+    "message": "Unknown method \"$METHOD$\".",
+    "placeholders": {
+      "method": {
+        "content": "$1",
+        "example": "POST"
+      }
+    }
+  },
+  "URL is required.": {
+    "message": "URL is required."
+  },
+  "Options": {
+    "message": "Options"
+  },
+  "Source code": {
+    "message": "Source code"
+  },
+  "Initializing...": {
+    "message": "Initializing..."
+  },
+  "Submitting...": {
+    "message": "Submitting..."
+  },
+  "Ready to submit.": {
+    "message": "Ready to submit."
+  },
+  "Submit": {
+    "message": "Submit"
+  },
+  "URLs": {
+    "message": "URLs"
+  },
+  "Full URL": {
+    "message": "Full URL"
+  },
+  "Decoded URL": {
+    "message": "Decoded URL"
+  },
+  "Origin Details":{
+    "message": "Origin Details"
+  },
+  "Origin":{
+    "message": "Origin"
+  },
+  "Protocol":{
+    "message": "Protocol"
+  },
+  "Username": {
+    "message": "Username"
+  },
+  "Password":{
+    "message": "Password"
+  },
+  "Host":{
+    "message": "Host"
+  },
+  "Hostname":{
+    "message": "Hostname"
+  },
+  "Port":{
+    "message": "Port"
+  },
+  "Pathname Details":{
+    "message": "Pathname Details"
+  },
+  "Pathname":{
+    "message": "Pathname"
+  },
+  "Search Parameters Details":{
+    "message": "Search Parameters Details"
+  },
+  "Search":{
+    "message": "Search"
+  },
+  "Search parameters":{
+    "message": "Search parameters"
+  },
+  "Fragment Details":{
+    "message": "Fragment Details"
+  },
+  "Hash":{
+    "message": "Hash"
   }
 }

@@ -4,8 +4,8 @@ import type { IPredefinedMessage } from "./predefined-messages";
 
 type IMessage = keyof typeof messages | IPredefinedMessage;
 
-export function getLocalizedMessage(message: IMessage) {
-  return browser.i18n.getMessage(message);
+export function getLocalizedMessage(message: IMessage, ...substitutions: string[]) {
+  return browser.i18n.getMessage(message, substitutions);
 }
 
 export function getCurrentLocale() {

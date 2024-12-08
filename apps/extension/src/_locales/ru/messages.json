@@ -1,8 +1,117 @@
 {
-  "Link Overwatch": {
+  "extension_title": {
     "message": "Ссылконадзиратель"
   },
-  "Watch over your links.": {
+  "extension_description": {
     "message": "Надзирайте над вашими ссылками."
+  },
+  "Status": {
+    "message": "Статус"
+  },
+  "Message": {
+    "message": "Сообщение"
+  },
+  "Data": { "message": "Данные" },
+  "Name": {
+    "message": "Название"
+  },
+  "Unknown Error": {
+    "message": "Неизвестная Ошибка"
+  },
+  "URL parser": {
+    "message": "Просмотрщик Ссылок"
+  },
+  "URL": {
+    "message": "Ссылка"
+  },
+  "Analyze": {
+    "message": "Анализировать"
+  },
+  "No URL is selected.": {
+    "message": "Ссылка не выбрана."
+  },
+  "Unknown method $METHOD$": {
+    "message": "Неизвестный метод \"$METHOD$\".",
+    "placeholders": {
+      "method": {
+        "content": "$1",
+        "example": "POST"
+      }
+    }
+  },
+  "URL is required.": {
+    "message": "Ссылка обязательна."
+  },
+  "Options": {
+    "message": "Настройки"
+  },
+  "Source code": {
+    "message": "Исходный код"
+  },
+  "Initializing...": {
+    "message": "Инициализирем..."
+  },
+  "Submitting...": {
+    "message": "Обрабатываем..."
+  },
+  "Ready to submit.": {
+    "message": "Готово к отправке."
+  },
+  "Submit": {
+    "message": "Отправить"
+  },
+  "URLs": {
+    "message": "Ссылки"
+  },
+  "Full URL": {
+    "message": "Полная ссылка"
+  },
+  "Decoded URL": {
+    "message": "Раскодированная ссылка"
+  },
+  "Origin Details":{
+    "message": "Детали Источника"
+  },
+  "Origin":{
+    "message": "Источник"
+  },
+  "Protocol":{
+    "message": "Протокол"
+  },
+  "Username": {
+    "message": "Имя пользователя"
+  },
+  "Password":{
+    "message": "Пароль"
+  },
+  "Host":{
+    "message": "Домен"
+  },
+  "Hostname":{
+    "message": "Доменное имя"
+  },
+  "Port":{
+    "message": "Порт"
+  },
+  "Pathname Details":{
+    "message": "Детали Пути"
+  },
+  "Pathname":{
+    "message": "Путь"
+  },
+  "Search Parameters Details":{
+    "message": "Детали Поисковых Параметров"
+  },
+  "Search":{
+    "message": "Поисковая строка"
+  },
+  "Search parameters":{
+    "message": "Поисковые параметры"
+  },
+  "Fragment Details":{
+    "message": "Детали Фрагмента"
+  },
+  "Hash":{
+    "message": "Идентификатор фрагмента"
   }
 }
