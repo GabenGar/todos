@@ -17,11 +17,13 @@
     "build": "webpack --config webpack.prod.js && web-ext build --no-config-discovery --config=web-ext-config.mjs",
     "dev": "node scripts/dev.mjs",
     "lint": "web-ext lint --output=json --pretty",
+    "validate": "node scripts/validate.mjs",
     "open-analyzer": "opener http://127.0.0.1:8888/"
   },
   "imports": {
     "#popup/*": "./src/popup/*/index.ts",
-    "#options/*": "./src/options/*/index.ts"
+    "#options/*": "./src/options/*/index.ts",
+    "#*": "./src/*/index.ts"
   },
   "repository": {
     "type": "git",
