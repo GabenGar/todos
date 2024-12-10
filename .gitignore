@@ -4,5 +4,9 @@
 # VSCode workspace file
 *.code-workspace
 
+# `turborepo prune` output
+# https://turbo.build/repo/docs/reference/prune
+/dist
+
 # Dependency directories
 node_modules/
