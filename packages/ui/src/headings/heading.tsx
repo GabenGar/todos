@@ -50,7 +50,7 @@ function Component({ level, className, ...props }: IProps) {
 }
 
 export function validateHeadinglevel(
-  inputLevel: unknown
+  inputLevel: unknown,
 ): asserts inputLevel is IHeadingLevel {
   if (!HEADING_LEVELS.includes(inputLevel as IHeadingLevel)) {
     throw new Error(`Unknown heading level "${inputLevel}".`);

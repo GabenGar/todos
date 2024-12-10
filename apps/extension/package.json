@@ -14,9 +14,9 @@
   ],
   "scripts": {
     "start": "web-ext run --no-config-discovery --config=web-ext-config.mjs",
-    "build": "webpack --config webpack.prod.js && web-ext build --no-config-discovery --config=web-ext-config.mjs --source-dir=build/firefox --artifacts-dir=dist/firefox",
+    "build": "webpack --config webpack.prod.mjs && web-ext build --no-config-discovery --config=web-ext-config.mjs --source-dir=build --artifacts-dir=dist",
     "dev": "node scripts/dev.mjs",
-    "lint": "web-ext lint --output=json --pretty",
+    "lint": "web-ext lint",
     "validate": "node scripts/validate.mjs",
     "open-analyzer": "opener http://127.0.0.1:8888/"
   },
@@ -68,7 +68,7 @@
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
-    "node-sass": "^9.0.0",
+    "sass": "^1.82.0",
     "opener": "^1.5.2",
     "sass-loader": "^16.0.3",
     "ts-loader": "^9.5.1",
@@ -78,8 +78,6 @@
     "webpack": "^5.96.1",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
-    "webpack-merge": "^6.0.1",
-    "webpack-sources": "^3.2.3",
-    "zip-webpack-plugin": "^4.0.2"
+    "webpack-merge": "^6.0.1"
   }
 }

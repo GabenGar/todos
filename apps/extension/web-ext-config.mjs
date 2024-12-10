@@ -11,6 +11,11 @@ const config = {
       "http://localhost:8001",
     ],
   },
+  lint: {
+    output: "json",
+    pretty: true,
+    metadata: true
+  },
   build: {
     overwriteDest: true,
   },

@@ -3,14 +3,6 @@ import CopyWebpackPlugin from "copy-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
-//@ts-ignore
-import chromeManifest from "./src/manifest-chrome.json" assert { type: "json" };
-//@ts-ignore
-import firefoxManifest from "./src/manifest-firefox.json" assert { type: "json" };
-
-const extVersion = chromeManifest.version;
-const ffExtVersion = firefoxManifest.version;
-
 /**
  * @type {import("webpack").Configuration}
  */
@@ -42,15 +34,15 @@ const commonConfiguration = {
       patterns: [
         {
           from: "./src/assets/icons",
-          to: "./dist/firefox/assets/icons",
+          to: "./assets/icons",
         },
         {
           from: "./src/_locales",
-          to: "./dist/firefox/_locales",
+          to: "./_locales",
         },
         {
           from: "./src/manifest-firefox.json",
-          to: "./dist/firefox/manifest.json",
+          to: "./manifest.json",
         },
       ],
     }),
@@ -69,7 +61,17 @@ const commonConfiguration = {
       },
       {
         test: /\.(s[ac]|c)ss$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              esModule: false,
+            },
+          },
+          ,
+          "sass-loader",
+        ],
       },
       {
         test: /\.svg$/,
@@ -83,10 +85,7 @@ const commonConfiguration = {
   cache: {
     type: "filesystem",
   },
-  output: {
-    path: `./dist/firefox`,
-    filename: "[name]/[name].js",
-  },
+
 };
 
 export default commonConfiguration;
