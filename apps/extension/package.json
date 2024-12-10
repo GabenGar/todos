@@ -16,7 +16,7 @@
     "start": "web-ext run --no-config-discovery --config=web-ext-config.mjs --source-dir=build",
     "build": "webpack --config webpack.prod.mjs && web-ext build --no-config-discovery --config=web-ext-config.mjs --source-dir=build --artifacts-dir=dist",
     "dev": "node scripts/dev.mjs",
-    "lint": "web-ext lint",
+    "lint": "web-ext lint --no-config-discovery --config=web-ext-config.mjs --source-dir=build",
     "validate": "node scripts/validate.mjs",
     "open-analyzer": "opener http://127.0.0.1:8888/"
   },

@@ -22,10 +22,6 @@
     "48": "assets/icons/logo/48.png",
     "32": "assets/icons/logo/32.png"
   },
-  "background": {
-    "scripts": ["background/background.js"],
-    "type": "module"
-  },
   "action": {
     "default_icon": {
       "512": "assets/icons/logo/512.png",
