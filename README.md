@@ -10,6 +10,33 @@
 ## Requrements
 NodeJS - 20.9+
 
+## Link Overwatch Extension
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/GabenGar/todos.git
+   ```
+2. Switch to the repo:
+   ```sh
+   cd ./todos
+   ```
+3. Create a [pruned output](https://turbo.build/repo/docs/reference/prune) for the extension package:
+   ```sh
+   npx turbo prune "link-overwatch" --out-dir "./dist"
+   ```
+4. Switch into it
+   ```sh
+   cd dist
+   ```
+5. Install dependencies:
+   ```sh
+   npm install
+   ```
+6. Build extension:
+   ```sh
+   npm run build
+   ```
+7. The extension archive will be located in `/apps/extension/dist`.
+
 ## Installation
 
 1. Clone the repo:
@@ -38,7 +65,7 @@ NodeJS - 20.9+
 ## Develop
 
 ```sh
-turbo dev
+npm run dev
 ```
 
 ### Prep the Workflow
@@ -68,7 +95,7 @@ Turborepo claims that [the invocation from global install will invoke local inst
 ```sh
 npm install turbo --global
 ```
-And then instead of `npm run ...` commands it can be used as `turbo ...`.
+And then instead of `npm run ...` commands it can be used as `turbo run ...`.
 
 ## Troubleshooting
 
