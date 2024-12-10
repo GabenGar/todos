@@ -7,11 +7,11 @@ async function develop() {
     [
       {
         name: "web-ext",
-        command: "web-ext run --no-config-discovery --config=web-ext-config.mjs",
+        command: "web-ext run --no-config-discovery --config=web-ext-config.mjs --source-dir=dev/firefox",
       },
       {
         name: "extension",
-        command: "webpack --config webpack.dev.js --watch",
+        command: "webpack --config webpack.dev.mjs",
       },
     ],
     {

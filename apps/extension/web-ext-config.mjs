@@ -4,8 +4,6 @@
  * @type {import("./web-ext-config").IWebExtConfig}
  */
 const config = {
-  sourceDir: "dev/firefox",
-  artifactsDir: "dev/firefox",
   ignoreFiles: ["node_modules", "web-ext-config.js"],
   run: {
     startUrl: [
