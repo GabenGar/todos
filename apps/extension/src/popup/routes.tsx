@@ -7,6 +7,7 @@ import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Layout } from "#popup/components/layouts";
 import { HomePage, HomePageAction } from "#popup/pages/home";
+import { getLocalizedMessage } from "#lib/localization";
 
 export const routes = createMemoryRouter([
   {
@@ -31,15 +32,15 @@ function RootError() {
     return (
       <DescriptionList>
         <DescriptionSection
-          dKey="Status"
+          dKey={getLocalizedMessage("Status")}
           dValue={<Preformatted>{status}</Preformatted>}
         />
         <DescriptionSection
-          dKey="Message"
+          dKey={getLocalizedMessage("Message")}
           dValue={<Preformatted>{statusText}</Preformatted>}
         />
         <DescriptionSection
-          dKey="Data"
+          dKey={getLocalizedMessage("Data")}
           dValue={<Preformatted>{String(data)}</Preformatted>}
         />
       </DescriptionList>
@@ -52,11 +53,11 @@ function RootError() {
     return (
       <DescriptionList>
         <DescriptionSection
-          dKey="Name"
+          dKey={getLocalizedMessage("Name")}
           dValue={<Preformatted>{name}</Preformatted>}
         />
         <DescriptionSection
-          dKey="Message"
+          dKey={getLocalizedMessage("Message")}
           dValue={<Preformatted>{message}</Preformatted>}
         />
       </DescriptionList>
@@ -66,11 +67,13 @@ function RootError() {
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey="name"
-        dValue={<Preformatted>Unknown Error</Preformatted>}
+        dKey={getLocalizedMessage("Name")}
+        dValue={
+          <Preformatted>{getLocalizedMessage("Unknown Error")}</Preformatted>
+        }
       />
       <DescriptionSection
-        dKey="Message"
+        dKey={getLocalizedMessage("Message")}
         dValue={<Preformatted>{String(error)}</Preformatted>}
       />
     </DescriptionList>

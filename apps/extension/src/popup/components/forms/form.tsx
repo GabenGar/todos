@@ -1,28 +1,38 @@
 import type { ReactNode } from "react";
 import {
   Form as RouterForm,
-  FormProps,
+  type FormProps,
   type FormMethod,
   useActionData,
   useNavigation,
+  type Navigation,
 } from "react-router";
 import { createBlockComponent } from "@repo/ui/meta";
 import { ButtonSubmit } from "@repo/ui/buttons";
+import { Preformatted } from "@repo/ui/formatting";
+import { getLocalizedMessage } from "#lib/localization";
 import { InputSection } from "./section";
 
 import styles from "./form.module.scss";
-import { Preformatted } from "@repo/ui/formatting";
 
 export interface IFormProps extends Omit<FormProps, "children" | "method"> {
   id: string;
   method?: FormMethod;
   children?: (formID: string) => ReactNode;
+  submitButton?: (state: Navigation["state"]) => ReactNode;
 }
 
 export const Form = createBlockComponent(styles, Component);
 
-function Component({ id, className, children, ...props }: IFormProps) {
+function Component({
+  id,
+  className,
+  submitButton,
+  children,
+  ...props
+}: IFormProps) {
   const navigation = useNavigation();
+  navigation.state;
   const data = useActionData<unknown>();
   const formID = `${id}-form`;
 
@@ -32,9 +42,9 @@ function Component({ id, className, children, ...props }: IFormProps) {
 
       <InputSection>
         {navigation.state === "loading" ? (
-          <>Initializing...</>
+          getLocalizedMessage("Initializing...")
         ) : navigation.state === "submitting" ? (
-          <>Submitting...</>
+          getLocalizedMessage("Submitting...")
         ) : data instanceof Error ? (
           <ol>
             <li>
@@ -42,13 +52,15 @@ function Component({ id, className, children, ...props }: IFormProps) {
             </li>
           </ol>
         ) : (
-          <>Ready to submit.</>
+          getLocalizedMessage("Ready to submit.")
         )}
       </InputSection>
 
       <InputSection>
         <ButtonSubmit form={formID} disabled={navigation.state !== "idle"}>
-          Submit
+          {!submitButton
+            ? getLocalizedMessage("Submit")
+            : submitButton(navigation.state)}
         </ButtonSubmit>
       </InputSection>
 

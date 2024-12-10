@@ -1,13 +1,14 @@
 import { useActionData, type ActionFunctionArgs } from "react-router";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
+import { getLocalizedMessage } from "#lib/localization";
 import { Form } from "#popup/components/forms";
 import { InputSectionText } from "#popup/components/forms/section";
 import { URLViewer } from "./viewer";
 
 export function HomePage() {
   const url = useActionData<Awaited<ReturnType<typeof action>>>();
-  const heading = "URL parser";
+  const heading = getLocalizedMessage("URL parser");
   const formID = "input-url";
 
   return (
@@ -16,7 +17,7 @@ export function HomePage() {
         {() => (
           <>
             <OverviewHeader>
-              <Form id={formID} method="POST">
+              <Form id={formID} method="POST" submitButton={() => getLocalizedMessage("Analyze")}>
                 {(formID) => (
                   <>
                     <InputSectionText
@@ -24,7 +25,7 @@ export function HomePage() {
                       id={`${formID}-url`}
                       form={formID}
                     >
-                      URL
+                      {getLocalizedMessage("URL")}
                     </InputSectionText>
                   </>
                 )}
@@ -32,7 +33,7 @@ export function HomePage() {
             </OverviewHeader>
             <OverviewBody>
               {!url || !(url instanceof URL) ? (
-                <>No URL is selected.</>
+                getLocalizedMessage("No URL is selected.")
               ) : (
                 <URLViewer headingLevel={2} url={url} />
               )}
@@ -49,7 +50,9 @@ export async function action({
 }: ActionFunctionArgs): Promise<Error | URL> {
   try {
     if (request.method !== "POST") {
-      throw new Error(`Unknown method "${request.method}".`);
+      throw new Error(
+        getLocalizedMessage("Unknown method $METHOD$", request.method)
+      );
     }
 
     const data = await request.formData();
@@ -57,7 +60,7 @@ export async function action({
     const inputURL = data.get("url") as string | null;
 
     if (!inputURL) {
-      throw new Error("URL is required.");
+      throw new Error(getLocalizedMessage("URL is required."));
     }
 
     const url = new URL(inputURL);

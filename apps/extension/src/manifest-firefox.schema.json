@@ -11,10 +11,10 @@
       "type": "string"
     },
     "name": {
-      "const": "__MSG_extName__"
+      "type": "string"
     },
     "description": {
-      "const": "__MSG_extDescription__"
+      "type": "string"
     },
     "default_locale": {
       "const": "en"

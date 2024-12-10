@@ -11,6 +11,10 @@
     {
       "fileMatch": ["src/manifest-chrome.json"],
       "url": "./src/manifest-chrome.schema.json"
+    },
+    {
+      "fileMatch": ["src/_locales/*/messages.json"],
+      "url": "./src/_locales.schema.json"
     }
   ]
 }
