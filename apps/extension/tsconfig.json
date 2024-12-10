@@ -5,6 +5,11 @@
     "module": "es6",
     "target": "ES2021",
     "moduleResolution": "bundler",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "allowJs": true,
@@ -12,5 +17,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "exclude": ["./dev", "./build", "./dist", "./temp"]
+  "exclude": ["./dev", "./build", "./dist",]
 }

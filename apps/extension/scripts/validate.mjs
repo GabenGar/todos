@@ -21,7 +21,6 @@ async function validate() {
       withFileTypes: true,
     });
   } catch (error) {
-    // @ts-expect-error
     throw new Error(`Failed to read locales folder "${localesPath}".`, {
       cause: error,
     });
@@ -47,7 +46,6 @@ async function validate() {
       const entryPath = path.join(dirEntry.path, dirEntry.name);
       contents = await readFile(entryPath, { encoding: "utf8" });
     } catch (error) {
-      // @ts-expect-error
       throw new Error(`Failed to read locale file "${dirEntry.path}".`, {
         cause: error,
       });

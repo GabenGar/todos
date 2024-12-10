@@ -6,7 +6,8 @@ import {
 
 import styles from "./pre.module.scss";
 
-export interface IPreformattedProps extends IBaseComponentPropsWithChildren<"pre"> {
+export interface IPreformattedProps
+  extends IBaseComponentPropsWithChildren<"pre"> {
   isCode?: boolean;
 }
 
