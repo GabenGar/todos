@@ -12,6 +12,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  */
 const prodConfig = {
   mode: "production",
+  devtool: "source-map",
+  optimization: {
+    moduleIds: "deterministic",
+    minimize: false,
+    runtimeChunk: false,
+  },
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "[name]/[name].js",

@@ -33,15 +33,15 @@ const commonConfiguration = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: "./src/assets/icons",
-          to: "./assets/icons",
+          from: "./src/assets",
+          to: "./assets",
         },
         {
           from: "./src/_locales",
           to: "./_locales",
         },
         {
-          from: "./src/manifest-firefox.json",
+          from: "./src/manifest.json",
           to: "./manifest.json",
         },
       ],
@@ -85,7 +85,6 @@ const commonConfiguration = {
   cache: {
     type: "filesystem",
   },
-
 };
 
 export default commonConfiguration;
