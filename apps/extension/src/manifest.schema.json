@@ -13,6 +13,9 @@
     "name": {
       "type": "string"
     },
+    "short_name": {
+      "description": "Short name for the extension. If given, this will be used in contexts where the `name` field is too long. It's recommended that the short name should not exceed 12 characters. If the short name field is not included in manifest.json, then name will be used instead and may be truncated."
+    },
     "description": {
       "type": "string"
     },
@@ -40,7 +43,14 @@
     "permissions": {
       "type": "array",
       "items": {
-        "anyOf": [{ "const": "storage" }, { "const": "contextMenus" }]
+        "anyOf": [{ "const": "activeTab" }]
+      }
+    },
+    "optional_permissions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "anyOf": [{ "const": "activeTab" }]
       }
     },
     "options_ui": {
@@ -152,6 +162,37 @@
           }
         }
       }
+    },
+    "page_action": {
+      "description": "A page action is an icon that your extension adds inside the browser's URL bar.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_icon": {
+          "description": "Use this to specify an icon for the action.",
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "propertyNames": { "enum": ["19", "38"] }
+        },
+        "default_title": {
+          "description": "Tooltip for the icon, displayed when the user moves their mouse over it.",
+          "type": "string"
+        },
+        "default_popup": {
+          "description": "The path to an HTML file containing the specification of the popup.",
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "default_icon": {
+            "19": "button/geo-19.png",
+            "38": "button/geo-38.png"
+          },
+          "default_title": "Whereami?",
+          "default_popup": "popup/geo.html"
+        }
+      ]
     }
   }
 }

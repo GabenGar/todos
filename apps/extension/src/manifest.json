@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "name": "__MSG_extension_title__",
+  "short_name": "__MSG_extension_short_title__",
   "description": "__MSG_extension_description__",
   "default_locale": "en",
   "browser_specific_settings": {
@@ -10,7 +11,7 @@
       "strict_min_version": "110.0"
     }
   },
-  "permissions": [],
+  "optional_permissions": ["activeTab"],
   "options_ui": {
     "page": "options/index.html",
     "open_in_tab": true
@@ -32,6 +33,14 @@
       "32": "assets/icons/logo/32.png",
       "19": "assets/icons/logo/19.png",
       "16": "assets/icons/logo/16.png"
+    },
+    "default_title": "__MSG_extension_title__",
+    "default_popup": "popup/index.html"
+  },
+  "page_action": {
+    "default_icon": {
+      "38": "assets/icons/logo/38.png",
+      "19": "assets/icons/logo/19.png"
     },
     "default_title": "__MSG_extension_title__",
     "default_popup": "popup/index.html"

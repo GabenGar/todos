@@ -2,6 +2,9 @@
   "extension_title": {
     "message": "Link Overwatch"
   },
+  "extension_short_title": {
+    "message": "Link Cop"
+  },
   "extension_description": {
     "message": "Watch over your links."
   },
