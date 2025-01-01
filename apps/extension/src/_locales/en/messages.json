@@ -119,5 +119,14 @@
   },
   "Hash":{
     "message": "Hash"
+  },
+  "Browser Permissions": {
+    "message": "Browser Permissions"
+  },
+  "Loading...": {
+    "message": "Loading..."
+  },
+  "No permissions are granted.": {
+    "message": "No permissions are granted."
   }
 }
