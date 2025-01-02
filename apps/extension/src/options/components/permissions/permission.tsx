@@ -1,7 +1,11 @@
 import { Details } from "@repo/ui/details";
 import { MenuButtons, MenuItem } from "@repo/ui/buttons";
 import { getLocalizedMessage } from "#lib/localization";
-import { requestPermission, revokePermission, type IPermission } from "#permissions";
+import {
+  requestPermission,
+  revokePermission,
+  type IPermission,
+} from "#lib/permissions";
 import { Loading } from "#components/loading";
 import { usePermissions } from "#options/hooks";
 
@@ -35,15 +39,23 @@ export function Permission({ permission }: IProps) {
       }
     >
       <MenuButtons>
-        <MenuItem disabled={!isEnabled} onClick={async () => {
-          await revokePermission(permission)
-        }}>
+        <MenuItem
+          viewType="negative"
+          disabled={!isEnabled}
+          onClick={async () => {
+            await revokePermission(permission);
+          }}
+        >
           {getLocalizedMessage("Disable")}
         </MenuItem>
 
-        <MenuItem disabled={isEnabled} onClick={async () => {
-          await requestPermission(permission)
-        }}>
+        <MenuItem
+          viewType="positive"
+          disabled={isEnabled}
+          onClick={async () => {
+            await requestPermission(permission);
+          }}
+        >
           {getLocalizedMessage("Enable")}
         </MenuItem>
       </MenuButtons>

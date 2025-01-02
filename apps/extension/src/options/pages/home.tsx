@@ -3,10 +3,11 @@ import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { getLocalizedMessage } from "#lib/localization";
 import { usePermissions } from "#options/hooks";
-import { availablePermissions } from "#permissions";
-import { settings } from "#settings";
-import { Permission } from "#components/permissions";
+import { availablePermissions } from "#lib/permissions";
+import { settingKeys } from "#lib/settings";
 import { Loading } from "#components/loading";
+import { Permission } from "#options/components/permissions";
+import { Setting } from "#options/components/settings";
 
 export function HomePage() {
   const permissions = usePermissions();
@@ -19,17 +20,20 @@ export function HomePage() {
           <>
             <OverviewHeader>
               <ul>
-                {Object.entries(settings).map(([key, message]) => (
-                  <li key={key}>{getLocalizedMessage(message)}</li>
+                {settingKeys.map((key) => (
+                  <li key={key}>
+                    <Setting setting={key}></Setting>
+                  </li>
                 ))}
               </ul>
             </OverviewHeader>
+
             <OverviewBody>
               <Heading level={headingLevel + 1}>
                 {getLocalizedMessage("Browser Permissions")}
               </Heading>
               {!permissions ? (
-                <Loading/>
+                <Loading />
               ) : (
                 <ul>
                   {availablePermissions.map((perm) => (

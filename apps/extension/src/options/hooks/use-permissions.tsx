@@ -4,7 +4,7 @@ import {
   onPermissionAdded,
   onPermissionRemoved,
   type IPermission,
-} from "#permissions";
+} from "#lib/permissions";
 
 export function usePermissions() {
   const [permissions, changePermissions] = useState<Set<IPermission>>();
