@@ -76,13 +76,44 @@
       }
     },
     "background": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "scripts": { "type": "array", "items": { "type": "string" } },
-
-        "type": { "const": "module" }
-      }
+      "description": "Use the background key to include one or more `background` scripts, a background page, or a Service worker in your extension.",
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scripts"],
+          "properties": {
+            "scripts": {
+              "description": "An Array of Strings, each of which is a path to a JavaScript source. The path is relative to the manifest.json file itself. These are the scripts that are executed in the extension's background page.\n\nThe scripts share the same window global context.\n\nThe scripts are loaded in the order they appear in the array.",
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "type": {
+              "description": "Determines whether the scripts specified in \"scripts\" are loaded as ES modules.",
+              "anyOf": [
+                {
+                  "description": "Indicates the background scripts or service workers are included as an ES Module. This enables the background page or service worker to import code.",
+                  "const": "module"
+                },
+                {
+                  "description": "Indicates the background scripts or service workers are not included as an ES Module.",
+                  "const": "classic"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["page"],
+          "properties": {
+            "page": {
+              "description": "If you need specific content in the background page, you can define a page using the page property. This is a `String` representing a path relative to the manifest.json file to an HTML document included in your extension bundle."
+            }
+          }
+        }
+      ]
     },
     "action": {
       "description": "An action is a button that your extension adds to the browser's toolbar. The button has an icon, and may optionally have a popup whose content is specified using HTML, CSS, and JavaScript.",

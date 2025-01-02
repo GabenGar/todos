@@ -12,16 +12,20 @@
     }
   },
   "optional_permissions": ["activeTab"],
-  "options_ui": {
-    "page": "options/index.html",
-    "open_in_tab": true
-  },
   "icons": {
     "512": "assets/icons/logo/512.png",
     "128": "assets/icons/logo/128.png",
     "64": "assets/icons/logo/64.png",
     "48": "assets/icons/logo/48.png",
     "32": "assets/icons/logo/32.png"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "type": "module",
+    "scripts": ["background/index.js"]
   },
   "action": {
     "default_icon": {

@@ -75,49 +75,49 @@
   "Decoded URL": {
     "message": "Decoded URL"
   },
-  "Origin Details":{
+  "Origin Details": {
     "message": "Origin Details"
   },
-  "Origin":{
+  "Origin": {
     "message": "Origin"
   },
-  "Protocol":{
+  "Protocol": {
     "message": "Protocol"
   },
   "Username": {
     "message": "Username"
   },
-  "Password":{
+  "Password": {
     "message": "Password"
   },
-  "Host":{
+  "Host": {
     "message": "Host"
   },
-  "Hostname":{
+  "Hostname": {
     "message": "Hostname"
   },
-  "Port":{
+  "Port": {
     "message": "Port"
   },
-  "Pathname Details":{
+  "Pathname Details": {
     "message": "Pathname Details"
   },
-  "Pathname":{
+  "Pathname": {
     "message": "Pathname"
   },
-  "Search Parameters Details":{
+  "Search Parameters Details": {
     "message": "Search Parameters Details"
   },
-  "Search":{
+  "Search": {
     "message": "Search"
   },
-  "Search parameters":{
+  "Search parameters": {
     "message": "Search parameters"
   },
-  "Fragment Details":{
+  "Fragment Details": {
     "message": "Fragment Details"
   },
-  "Hash":{
+  "Hash": {
     "message": "Hash"
   },
   "Browser Permissions": {
@@ -126,7 +126,19 @@
   "Loading...": {
     "message": "Loading..."
   },
-  "No permissions are granted.": {
-    "message": "No permissions are granted."
+  "Address bar button": {
+    "message": "Address bar button"
+  },
+  "enabled": {
+    "message": "enabled"
+  },
+  "disabled": {
+    "message": "disabled"
+  },
+  "Enable": {
+    "message": "Enable"
+  },
+  "Disable": {
+    "message": "Disable"
   }
 }

@@ -17,7 +17,11 @@ export function HomePage() {
         {() => (
           <>
             <OverviewHeader>
-              <Form id={formID} method="POST" submitButton={() => getLocalizedMessage("Analyze")}>
+              <Form
+                id={formID}
+                method="POST"
+                submitButton={() => getLocalizedMessage("Analyze")}
+              >
                 {(formID) => (
                   <>
                     <InputSectionText
@@ -67,6 +71,9 @@ export async function action({
 
     return url;
   } catch (error) {
+    if (!(error instanceof Error)) {
+      throw error;
+    }
     return error;
   }
 }

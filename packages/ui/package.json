@@ -17,6 +17,7 @@
     "./formatting": "./src/formatting/index.ts",
     "./description-list": "./src/description-list/index.ts",
     "./links": "./src/links/index.ts",
+    "./details": "./src/details/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
     "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
@@ -31,6 +32,7 @@
     "#buttons": "./src/buttons/index.ts",
     "#loading": "./src/loading/index.ts",
     "#formatting": "./src/formatting/index.ts",
+    "#details": "./src/details/index.ts",
     "#types": "./src/types/index.ts"
   },
   "dependencies": {

@@ -5,4 +5,4 @@ export {
   onPermissionAdded,
   onPermissionRemoved,
 } from "./lib";
-export type { IPermission } from "./types";
+export { availablePermissions, type IPermission } from "./types";

@@ -12,7 +12,7 @@ const commonConfiguration = {
     popup: "./src/popup/index.tsx",
     options: "./src/options/index.tsx",
     // content: "./src/content/index.tsx",
-    // background: "./src/background/background.ts",
+    background: "./src/background/index.ts",
   },
   plugins: [
     new MiniCssExtractPlugin({

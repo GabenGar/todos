@@ -7,10 +7,15 @@ import { RouterProvider } from "react-router";
 import { routes } from "./routes";
 
 const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+  throw new Error(`Root element not foudn at ID "root"`);
+}
+
 const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <RouterProvider router={routes}/>
+    <RouterProvider router={routes} />
   </StrictMode>
 );
