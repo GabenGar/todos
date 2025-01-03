@@ -50,7 +50,7 @@
       "type": "array",
       "uniqueItems": true,
       "items": {
-        "anyOf": [{ "const": "activeTab" }]
+        "anyOf": [{ "const": "activeTab" }, { "const": "storage" }]
       }
     },
     "options_ui": {

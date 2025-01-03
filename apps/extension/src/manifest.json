@@ -11,7 +11,7 @@
       "strict_min_version": "110.0"
     }
   },
-  "optional_permissions": ["activeTab"],
+  "optional_permissions": ["activeTab", "storage"],
   "icons": {
     "512": "assets/icons/logo/512.png",
     "128": "assets/icons/logo/128.png",
