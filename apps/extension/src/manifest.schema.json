@@ -1,16 +1,21 @@
 {
   "$id": "firefox-manifest",
+  "$comment": "Required properties:\nhttps://developer.chrome.com/docs/extensions/reference/manifest#required-platform",
   "title": "WebExtensionManifestFirefox",
   "type": "object",
   "additionalProperties": false,
+  "required": ["manifest_version", "name", "version"],
   "properties": {
     "manifest_version": {
+      "description": "An integer specifying the version of the manifest file format that your extension uses.",
       "const": 3
     },
     "version": {
+      "description": "A string that identifies the extension's version number.",
       "type": "string"
     },
     "name": {
+      "description": "A string that identifies the extension in the Chrome Web Store, the install dialog, and the user's Chrome Extensions page (chrome://extensions).",
       "type": "string"
     },
     "short_name": {
@@ -43,14 +48,14 @@
     "permissions": {
       "type": "array",
       "items": {
-        "anyOf": [{ "const": "activeTab" }]
+        "anyOf": [{ "const": "activeTab" }, { "const": "storage" }]
       }
     },
     "optional_permissions": {
       "type": "array",
       "uniqueItems": true,
       "items": {
-        "anyOf": [{ "const": "activeTab" }, { "const": "storage" }]
+        "anyOf": [{ "const": "activeTab" }]
       }
     },
     "options_ui": {

@@ -1,5 +1,6 @@
 export {
   getAllpermissions,
+  validatePermission,
   requestPermission,
   revokePermission,
   onPermissionAdded,

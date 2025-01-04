@@ -1,6 +1,8 @@
 import { Details } from "@repo/ui/details";
+import { MenuButtons, MenuItem } from "@repo/ui/buttons";
 import { getLocalizedMessage } from "#lib/localization";
-import { settings, type ISettingKey } from "#lib/settings";
+import { settings, updateSetting, type ISettingKey } from "#lib/settings";
+import { useSetting } from "#options/hooks";
 
 import styles from "./setting.module.scss";
 
@@ -9,8 +11,9 @@ interface IProps {
 }
 
 export function Setting({ setting }: IProps) {
-  const isEnabled = false;
-  const message = getLocalizedMessage(settings[setting]);
+  const value = useSetting(setting);
+  const isEnabled = Boolean(value);
+  const message = getLocalizedMessage(settings[setting].message);
 
   return (
     <Details
@@ -28,6 +31,28 @@ export function Setting({ setting }: IProps) {
           )}
         </>
       }
-    ></Details>
+    >
+      <MenuButtons>
+        <MenuItem
+          viewType="negative"
+          disabled={!isEnabled}
+          onClick={async () => {
+            await updateSetting(setting, false);
+          }}
+        >
+          {getLocalizedMessage("Disable")}
+        </MenuItem>
+
+        <MenuItem
+          viewType="positive"
+          disabled={isEnabled}
+          onClick={async () => {
+            await updateSetting(setting, true);
+          }}
+        >
+          {getLocalizedMessage("Enable")}
+        </MenuItem>
+      </MenuButtons>
+    </Details>
   );
 }

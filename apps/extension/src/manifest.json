@@ -11,7 +11,8 @@
       "strict_min_version": "110.0"
     }
   },
-  "optional_permissions": ["activeTab", "storage"],
+  "permissions": ["storage"],
+  "optional_permissions": ["activeTab"],
   "icons": {
     "512": "assets/icons/logo/512.png",
     "128": "assets/icons/logo/128.png",
@@ -25,7 +26,7 @@
   },
   "background": {
     "type": "module",
-    "scripts": ["background/index.js"]
+    "scripts": ["background/background.js"]
   },
   "action": {
     "default_icon": {

@@ -7,6 +7,16 @@ export async function getAllpermissions(): Promise<IPermission[]> {
   return (result.permissions ?? []) as IPermission[];
 }
 
+export async function validatePermission(permission: IPermission) {
+  const isPermitted = await browser.permissions.contains({
+    permissions: [permission],
+  });
+
+  if (!isPermitted) {
+    throw new Error(`Permission "${permission}" is not enabled.`);
+  }
+}
+
 export async function requestPermission(permission: IPermission) {
   return browser.permissions.request({ permissions: [permission] });
 }

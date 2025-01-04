@@ -1,4 +1,4 @@
-export { getSetting } from "./lib";
+export { getSetting, updateSetting } from "./lib";
 export {
   settings,
   settingKeys,
