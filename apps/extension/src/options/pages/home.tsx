@@ -2,10 +2,10 @@ import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { getLocalizedMessage } from "#lib/localization";
-import { usePermissions } from "#options/hooks";
 import { availablePermissions } from "#lib/permissions";
 import { settingKeys } from "#lib/settings";
 import { Loading } from "#components/loading";
+import { usePermissions } from "#options/hooks";
 import { Permission } from "#options/components/permissions";
 import { Setting } from "#options/components/settings";
 
