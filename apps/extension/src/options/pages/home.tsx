@@ -22,7 +22,7 @@ export function HomePage() {
               <ul>
                 {settingKeys.map((key) => (
                   <li key={key}>
-                    <Setting setting={key}></Setting>
+                    <Setting setting={key} />
                   </li>
                 ))}
               </ul>

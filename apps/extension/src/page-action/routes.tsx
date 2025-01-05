@@ -5,9 +5,9 @@ import {
 } from "react-router";
 import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Layout } from "#page-action/components/layouts";
+import { HomePage, HomePageLoader } from "#page-action/pages/home";
 import { getLocalizedMessage } from "#lib/localization";
-import { Layout } from "#popup/components/layouts";
-import { HomePage, HomePageAction } from "#popup/pages/home";
 
 export const routes = createMemoryRouter([
   {
@@ -17,7 +17,7 @@ export const routes = createMemoryRouter([
       {
         index: true,
         element: <HomePage />,
-        action: HomePageAction,
+        loader: HomePageLoader,
       },
     ],
   },

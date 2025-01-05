@@ -48,6 +48,6 @@
       "19": "assets/icons/logo/19.png"
     },
     "default_title": "__MSG_extension_title__",
-    "default_popup": "popup/index.html"
+    "default_popup": "page-action/index.html"
   }
 }

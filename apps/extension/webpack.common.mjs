@@ -13,6 +13,7 @@ const commonConfiguration = {
     options: "./src/options/index.tsx",
     // content: "./src/content/index.tsx",
     background: "./src/background/index.ts",
+    "page-action": "./src/page-action/index.tsx",
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -29,6 +30,12 @@ const commonConfiguration = {
       filename: "options/index.html",
       template: "./src/options/index.html",
       chunks: ["options"],
+    }),
+    new HtmlWebpackPlugin({
+      title: "URL details",
+      filename: "page-action/index.html",
+      template: "./src/page-action/index.html",
+      chunks: ["page-action"],
     }),
     new CopyWebpackPlugin({
       patterns: [

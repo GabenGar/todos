@@ -1,0 +1,1 @@
+export { getActiveTab } from "./lib";
