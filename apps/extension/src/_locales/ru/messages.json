@@ -116,5 +116,44 @@
   },
   "Hash": {
     "message": "Идентификатор фрагмента"
+  },
+  "Browser Permissions": {
+    "message": "Полномочия расширения"
+  },
+  "Loading...": {
+    "message": "Загружаем..."
+  },
+  "Address bar button": {
+    "message": "Кнопка адресной строки"
+  },
+  "enabled": {
+    "message": "включено"
+  },
+  "disabled": {
+    "message": "отключено"
+  },
+  "Enable": {
+    "message": "Включить"
+  },
+  "Disable": {
+    "message": "Отключить"
+  },
+  "Permission \"$PERMISSION$\" is not enabled.": {
+    "message": "Полномочие \"$PERMISSION$\" не дано.",
+    "placeholders": {
+      "permission": {
+        "content": "$1",
+        "example": "activeTab"
+      }
+    }
+  },
+  "Permissions $PERMISSIONS$ are not enabled.": {
+    "message": "Полномочия \"$PERMISSIONS$\" не даны.",
+    "placeholders": {
+      "permissions": {
+        "content": "$1",
+        "example": "\"activeTab\", \"storage\""
+      }
+    }
   }
 }
