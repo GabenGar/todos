@@ -1,6 +1,6 @@
 {
   "name": "link-overwatch",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Gabengar",
   "license": "MPL-2.0",
   "description": "An extension to watch out for the URLs.",
@@ -17,8 +17,7 @@
     "build": "webpack --config webpack.prod.mjs && web-ext build --no-config-discovery --config=web-ext-config.mjs --source-dir=build --artifacts-dir=dist",
     "dev": "node scripts/dev.mjs",
     "lint": "web-ext lint --no-config-discovery --config=web-ext-config.mjs --source-dir=build",
-    "validate": "node scripts/validate.mjs",
-    "open-analyzer": "opener http://127.0.0.1:8888/"
+    "validate": "node scripts/validate.mjs"
   },
   "imports": {
     "#popup/*": "./src/popup/*/index.ts",
@@ -37,8 +36,7 @@
     "clsx": "^2.1.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router": "^7.1.1",
-    "react-router-dom": "^7.1.1"
+    "react-router": "^7.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

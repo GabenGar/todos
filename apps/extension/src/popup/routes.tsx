@@ -21,7 +21,11 @@ export const routes = createMemoryRouter([
       },
     ],
   },
-]);
+], {
+  future: {
+    v7_partialHydration: true,
+  },
+});
 
 function RootError() {
   const error = useRouteError();

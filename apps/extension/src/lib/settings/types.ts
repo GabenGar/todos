@@ -5,6 +5,7 @@ export interface ISettings {
 export const settings = {
   page_action: {
     message: "Address bar button",
+    defaultValue: false,
     requiredPermissions: ["activeTab"],
   },
 } as const;

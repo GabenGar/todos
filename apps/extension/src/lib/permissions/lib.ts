@@ -1,4 +1,5 @@
 import browser from "webextension-polyfill";
+import { getLocalizedMessage } from "#lib/localization";
 import type { IPermission } from "./types";
 
 export async function getAllpermissions(): Promise<IPermission[]> {
@@ -7,13 +8,44 @@ export async function getAllpermissions(): Promise<IPermission[]> {
   return (result.permissions ?? []) as IPermission[];
 }
 
+export async function validatePermissions(permissions: readonly IPermission[]) {
+  const isPermitted = await browser.permissions.contains({
+    // @ts-expect-error lib types
+    permissions,
+  });
+
+  if (!isPermitted) {
+    const allPerms = await getAllpermissions();
+    const missingPerms = permissions.filter((perm) => !allPerms.includes(perm));
+    const message =
+      missingPerms.length === 1
+        ? getLocalizedMessage(
+            'Permission "$PERMISSION$" is not enabled.',
+            missingPerms[0]
+          )
+        : getLocalizedMessage(
+            "Permissions $PERMISSIONS$ are not enabled.",
+            missingPerms
+              .sort()
+              .map((perm) => `"${perm}"`)
+              .join(",")
+          );
+
+    throw new Error(message);
+  }
+}
+
 export async function validatePermission(permission: IPermission) {
   const isPermitted = await browser.permissions.contains({
     permissions: [permission],
   });
 
   if (!isPermitted) {
-    throw new Error(`Permission "${permission}" is not enabled.`);
+    const message = getLocalizedMessage(
+      'Permission "$PERMISSION$" is not enabled.',
+      permission
+    );
+    throw new Error(message);
   }
 }
 

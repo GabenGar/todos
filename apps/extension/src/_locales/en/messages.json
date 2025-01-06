@@ -140,5 +140,23 @@
   },
   "Disable": {
     "message": "Disable"
+  },
+  "Permission \"$PERMISSION$\" is not enabled.": {
+    "message": "Permission \"$PERMISSION$\" is not enabled.",
+    "placeholders": {
+      "permission": {
+        "content": "$1",
+        "example": "activeTab"
+      }
+    }
+  },
+  "Permissions $PERMISSIONS$ are not enabled.": {
+    "message": "Permissions \"$PERMISSIONS$\" are not enabled.",
+    "placeholders": {
+      "permissions": {
+        "content": "$1",
+        "example": "\"activeTab\", \"storage\""
+      }
+    }
   }
 }
