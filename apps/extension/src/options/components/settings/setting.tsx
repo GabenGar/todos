@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Details } from "@repo/ui/details";
 import { MenuButtons, MenuItem } from "@repo/ui/buttons";
+import { Preformatted } from "@repo/ui/formatting";
 import { getLocalizedMessage } from "#lib/localization";
 import { settings, updateSetting, type ISettingKey } from "#lib/settings";
 import { useSetting } from "#options/hooks";
@@ -11,6 +13,7 @@ interface IProps {
 }
 
 export function Setting({ setting }: IProps) {
+  const [error, changeError] = useState<Error>();
   const value = useSetting(setting);
   const isEnabled = Boolean(value);
   const message = getLocalizedMessage(settings[setting].message);
@@ -37,7 +40,13 @@ export function Setting({ setting }: IProps) {
           viewType="negative"
           disabled={!isEnabled}
           onClick={async () => {
-            await updateSetting(setting, false);
+            try {
+              await updateSetting(setting, false);
+              changeError(undefined);
+            } catch (error) {
+              // @ts-expect-error
+              changeError(error);
+            }
           }}
         >
           {getLocalizedMessage("Disable")}
@@ -47,12 +56,20 @@ export function Setting({ setting }: IProps) {
           viewType="positive"
           disabled={isEnabled}
           onClick={async () => {
-            await updateSetting(setting, true);
+            try {
+              await updateSetting(setting, true);
+              changeError(undefined);
+            } catch (error) {
+              // @ts-expect-error
+              changeError(error);
+            }
           }}
         >
           {getLocalizedMessage("Enable")}
         </MenuItem>
       </MenuButtons>
+
+      {error && <Preformatted>{String(error)}</Preformatted>}
     </Details>
   );
 }

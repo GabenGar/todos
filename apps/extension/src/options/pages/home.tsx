@@ -1,6 +1,7 @@
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
+import { List } from "@repo/ui/lists";
 import { getLocalizedMessage } from "#lib/localization";
 import { availablePermissions } from "#lib/permissions";
 import { settingKeys } from "#lib/settings";
@@ -19,13 +20,13 @@ export function HomePage() {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <ul>
+              <List>
                 {settingKeys.map((key) => (
                   <li key={key}>
                     <Setting setting={key} />
                   </li>
                 ))}
-              </ul>
+              </List>
             </OverviewHeader>
 
             <OverviewBody>
@@ -35,13 +36,13 @@ export function HomePage() {
               {!permissions ? (
                 <Loading />
               ) : (
-                <ul>
+                <List>
                   {availablePermissions.map((perm) => (
                     <li key={perm}>
                       <Permission permission={perm} />
                     </li>
                   ))}
-                </ul>
+                </List>
               )}
             </OverviewBody>
           </>

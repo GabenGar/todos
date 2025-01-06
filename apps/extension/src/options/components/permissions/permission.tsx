@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Details } from "@repo/ui/details";
 import { MenuButtons, MenuItem } from "@repo/ui/buttons";
+import { Preformatted } from "@repo/ui/formatting";
 import { getLocalizedMessage } from "#lib/localization";
 import {
   requestPermission,
@@ -16,6 +18,7 @@ interface IProps {
 }
 
 export function Permission({ permission }: IProps) {
+  const [error, changeError] = useState();
   const permissions = usePermissions();
   const isEnabled = permissions?.has(permission);
 
@@ -43,7 +46,13 @@ export function Permission({ permission }: IProps) {
           viewType="negative"
           disabled={!isEnabled}
           onClick={async () => {
-            await revokePermission(permission);
+            try {
+              await revokePermission(permission);
+              changeError(undefined);
+            } catch (error) {
+              // @ts-expect-error
+              changeError(error);
+            }
           }}
         >
           {getLocalizedMessage("Disable")}
@@ -53,12 +62,20 @@ export function Permission({ permission }: IProps) {
           viewType="positive"
           disabled={isEnabled}
           onClick={async () => {
-            await requestPermission(permission);
+            try {
+              await requestPermission(permission);
+              changeError(undefined);
+            } catch (error) {
+              // @ts-expect-error
+              changeError(error);
+            }
           }}
         >
           {getLocalizedMessage("Enable")}
         </MenuItem>
       </MenuButtons>
+
+      {error && <Preformatted>{String(error)}</Preformatted>}
     </Details>
   );
 }

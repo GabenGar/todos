@@ -15,6 +15,7 @@
     "./pages": "./src/pages/index.ts",
     "./loading": "./src/loading/index.ts",
     "./formatting": "./src/formatting/index.ts",
+    "./lists": "./src/lists/index.ts",
     "./description-list": "./src/description-list/index.ts",
     "./links": "./src/links/index.ts",
     "./details": "./src/details/index.ts",
@@ -32,6 +33,7 @@
     "#buttons": "./src/buttons/index.ts",
     "#loading": "./src/loading/index.ts",
     "#formatting": "./src/formatting/index.ts",
+    "#lists": "./src/lists/index.ts",
     "#details": "./src/details/index.ts",
     "#types": "./src/types/index.ts"
   },

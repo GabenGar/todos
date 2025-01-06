@@ -1,0 +1,13 @@
+@use "../styles/sass/variables.scss" as *;
+
+.block {
+  padding-left: $size-normal;
+}
+
+.unordered {
+  list-style-type: disc;
+}
+
+.ordered {
+  list-style-type: decimal-leading-zero;
+}
