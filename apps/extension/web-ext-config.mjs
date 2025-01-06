@@ -4,7 +4,13 @@
  * @type {import("./web-ext-config").IWebExtConfig}
  */
 const config = {
-  ignoreFiles: ["node_modules", "web-ext-config.js"],
+  ignoreFiles: [
+    "node_modules",
+    "web-ext-config.js",
+    "build",
+    "dist",
+    "report.html",
+  ],
   run: {
     startUrl: [
       "about:debugging#/runtime/this-firefox",

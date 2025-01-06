@@ -2,6 +2,9 @@
   "extension_title": {
     "message": "Ссылконадзиратель"
   },
+  "extension_short_title": {
+    "message": "Ссылкомент"
+  },
   "extension_description": {
     "message": "Надзирайте над вашими ссылками."
   },
