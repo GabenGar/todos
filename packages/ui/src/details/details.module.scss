@@ -1,0 +1,9 @@
+@use "../styles/sass/variables" as *;
+
+.block {
+}
+
+.summary {
+  cursor: pointer;
+  padding: $size-small 0;
+}

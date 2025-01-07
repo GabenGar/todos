@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import {
+  useNavigation,
+  type Navigation,
   Form as RouterForm,
   type FormProps,
   type FormMethod,
   useActionData,
-  useNavigation,
-  type Navigation,
-} from "react-router";
+} from "react-router-dom";
 import { createBlockComponent } from "@repo/ui/meta";
 import { ButtonSubmit } from "@repo/ui/buttons";
 import { Preformatted } from "@repo/ui/formatting";
@@ -17,7 +17,7 @@ import styles from "./form.module.scss";
 
 export interface IFormProps extends Omit<FormProps, "children" | "method"> {
   id: string;
-  method?: FormMethod;
+  method?: Uppercase<FormMethod>;
   children?: (formID: string) => ReactNode;
   submitButton?: (state: Navigation["state"]) => ReactNode;
 }
@@ -33,7 +33,7 @@ function Component({
 }: IFormProps) {
   const navigation = useNavigation();
   navigation.state;
-  const data = useActionData<unknown>();
+  const data = useActionData() as unknown;
   const formID = `${id}-form`;
 
   return (

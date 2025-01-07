@@ -2,6 +2,9 @@
   "extension_title": {
     "message": "Link Overwatch"
   },
+  "extension_short_title": {
+    "message": "Link Cop"
+  },
   "extension_description": {
     "message": "Watch over your links."
   },
@@ -72,49 +75,88 @@
   "Decoded URL": {
     "message": "Decoded URL"
   },
-  "Origin Details":{
+  "Origin Details": {
     "message": "Origin Details"
   },
-  "Origin":{
+  "Origin": {
     "message": "Origin"
   },
-  "Protocol":{
+  "Protocol": {
     "message": "Protocol"
   },
   "Username": {
     "message": "Username"
   },
-  "Password":{
+  "Password": {
     "message": "Password"
   },
-  "Host":{
+  "Host": {
     "message": "Host"
   },
-  "Hostname":{
+  "Hostname": {
     "message": "Hostname"
   },
-  "Port":{
+  "Port": {
     "message": "Port"
   },
-  "Pathname Details":{
+  "Pathname Details": {
     "message": "Pathname Details"
   },
-  "Pathname":{
+  "Pathname": {
     "message": "Pathname"
   },
-  "Search Parameters Details":{
+  "Search Parameters Details": {
     "message": "Search Parameters Details"
   },
-  "Search":{
+  "Search": {
     "message": "Search"
   },
-  "Search parameters":{
+  "Search parameters": {
     "message": "Search parameters"
   },
-  "Fragment Details":{
+  "Fragment Details": {
     "message": "Fragment Details"
   },
-  "Hash":{
+  "Hash": {
     "message": "Hash"
+  },
+  "Browser Permissions": {
+    "message": "Browser Permissions"
+  },
+  "Loading...": {
+    "message": "Loading..."
+  },
+  "Address bar button": {
+    "message": "Address bar button"
+  },
+  "enabled": {
+    "message": "enabled"
+  },
+  "disabled": {
+    "message": "disabled"
+  },
+  "Enable": {
+    "message": "Enable"
+  },
+  "Disable": {
+    "message": "Disable"
+  },
+  "Permission \"$PERMISSION$\" is not enabled.": {
+    "message": "Permission \"$PERMISSION$\" is not enabled.",
+    "placeholders": {
+      "permission": {
+        "content": "$1",
+        "example": "activeTab"
+      }
+    }
+  },
+  "Permissions $PERMISSIONS$ are not enabled.": {
+    "message": "Permissions \"$PERMISSIONS$\" are not enabled.",
+    "placeholders": {
+      "permissions": {
+        "content": "$1",
+        "example": "\"activeTab\", \"storage\""
+      }
+    }
   }
 }
