@@ -2,7 +2,7 @@ import {
   createMemoryRouter,
   isRouteErrorResponse,
   useRouteError,
-} from "react-router";
+} from "react-router-dom";
 import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Layout } from "#page-action/components/layouts";
@@ -23,6 +23,7 @@ export const routes = createMemoryRouter([
   },
 ], {
   future: {
+    v7_normalizeFormMethod: true,
     v7_partialHydration: true,
   },
 });

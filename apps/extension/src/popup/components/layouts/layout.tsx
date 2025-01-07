@@ -1,4 +1,4 @@
-import { Outlet, ScrollRestoration } from "react-router";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import { LinkExternal } from "@repo/ui/links";
 import { ClientProvider } from "#popup/hooks";
 import { getLocalizedMessage } from "#lib/localization";

@@ -1,4 +1,4 @@
-import { useActionData, type ActionFunctionArgs } from "react-router";
+import { useActionData, type ActionFunctionArgs } from "react-router-dom";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { getLocalizedMessage } from "#lib/localization";
@@ -7,7 +7,7 @@ import { Form } from "#popup/components/forms";
 import { InputSectionText } from "#popup/components/forms/section";
 
 export function HomePage() {
-  const url = useActionData<Awaited<ReturnType<typeof action>>>();
+  const url = useActionData() as Awaited<ReturnType<typeof action>>;
   const heading = getLocalizedMessage("URL parser");
   const formID = "input-url";
 

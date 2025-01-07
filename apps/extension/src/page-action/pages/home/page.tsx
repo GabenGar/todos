@@ -1,4 +1,4 @@
-import { useLoaderData, type LoaderFunctionArgs } from "react-router";
+import { useLoaderData, type LoaderFunctionArgs } from "react-router-dom";
 import { Overview, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { getLocalizedMessage } from "#lib/localization";
@@ -8,7 +8,7 @@ import { URLViewer } from "#components/urls";
 import styles from "./page.module.scss";
 
 export function HomePage() {
-  const url = useLoaderData<URL | undefined>();
+  const url = useLoaderData() as URL | undefined;
 
   return (
     <Page>
