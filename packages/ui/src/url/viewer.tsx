@@ -1,25 +1,44 @@
-import type { ILocalizationPage } from "#lib/localization";
+import type { ITranslatableProps } from "#meta";
 import {
   DescriptionDetails,
   DescriptionList,
   DescriptionSection,
   DescriptionTerm,
-} from "#components";
-import { Pre } from "#components/pre";
-import { Heading, type IHeadingLevel } from "#components/heading";
-import { List } from "#components/list";
+} from "#description-list";
+import { Preformatted } from "#formatting";
+import { Heading, type IHeadingLevel } from "#headings";
+import { List } from "#lists";
 
 import styles from "./viewer.module.scss";
 
-interface IURLViewerProps {
-  translation: ILocalizationPage["url-viewer"];
+interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
   url: URL;
   headingLevel: IHeadingLevel;
 }
 
+type ITranslationKey =
+  | "URLs"
+  | "Full URL"
+  | "Transformed URL"
+  | "Origin Details"
+  | "Origin"
+  | "Protocol"
+  | "Username"
+  | "Password"
+  | "Host"
+  | "Hostname"
+  | "Port"
+  | "Pathname Details"
+  | "Pathname"
+  | "Search Parameters Details"
+  | "Search"
+  | "Search parameters"
+  | "Fragment Details"
+  | "Hash";
+
 interface ITransformedSearchParams extends Map<string, string | Set<string>> {}
 
-export function URLViewer({ translation, headingLevel, url }: IURLViewerProps) {
+export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
   const {
     href,
     origin,
@@ -47,86 +66,90 @@ export function URLViewer({ translation, headingLevel, url }: IURLViewerProps) {
 
   return (
     <>
-      <Heading level={headingLevel}>{translation["URLs"]}</Heading>
+      <Heading level={headingLevel}>{t("URLs")}</Heading>
       <DescriptionList>
         <DescriptionSection
-          dKey={translation["Full URL"]}
-          dValue={<Pre>{href}</Pre>}
+          dKey={t("Full URL")}
+          dValue={<Preformatted>{href}</Preformatted>}
         />
         <DescriptionSection
-          dKey={translation["Transformed URL"]}
-          dValue={<Pre>{decodeURIComponent(String(transformedURL))}</Pre>}
+          dKey={t("Transformed URL")}
+          dValue={
+            <Preformatted>
+              {decodeURIComponent(String(transformedURL))}
+            </Preformatted>
+          }
         />
       </DescriptionList>
 
-      <Heading level={headingLevel}>{translation["Origin Details"]}</Heading>
+      <Heading level={headingLevel}>{t("Origin Details")}</Heading>
 
       <DescriptionList>
         <DescriptionSection
-          dKey={translation["Origin"]}
-          dValue={<Pre>{origin}</Pre>}
+          dKey={t("Origin")}
+          dValue={<Preformatted>{origin}</Preformatted>}
         />
 
         <DescriptionSection
-          dKey={translation["Protocol"]}
-          dValue={<Pre>{protocol}</Pre>}
+          dKey={t("Protocol")}
+          dValue={<Preformatted>{protocol}</Preformatted>}
         />
 
         {username.length === 0 ? undefined : (
           <DescriptionSection
-            dKey={translation["Username"]}
-            dValue={<Pre>{username}</Pre>}
+            dKey={t("Username")}
+            dValue={<Preformatted>{username}</Preformatted>}
           />
         )}
 
         {password.length === 0 ? undefined : (
           <DescriptionSection
-            dKey={translation["Password"]}
-            dValue={<Pre>{password}</Pre>}
+            dKey={t("Password")}
+            dValue={<Preformatted>{password}</Preformatted>}
           />
         )}
 
         <DescriptionSection
-          dKey={translation["Host"]}
-          dValue={<Pre>{host}</Pre>}
+          dKey={t("Host")}
+          dValue={<Preformatted>{host}</Preformatted>}
         />
 
         <DescriptionSection
-          dKey={translation["Hostname"]}
-          dValue={<Pre>{hostname}</Pre>}
+          dKey={t("Hostname")}
+          dValue={<Preformatted>{hostname}</Preformatted>}
         />
 
         {explicitPort && (
           <DescriptionSection
-            dKey={translation["Port"]}
-            dValue={<Pre>{explicitPort}</Pre>}
+            dKey={t("Port")}
+            dValue={<Preformatted>{explicitPort}</Preformatted>}
           />
         )}
       </DescriptionList>
 
-      <Heading level={headingLevel}>{translation["Pathname Details"]}</Heading>
+      <Heading level={headingLevel}>{t("Pathname Details")}</Heading>
 
       <DescriptionList>
         <DescriptionSection
-          dKey={translation["Pathname"]}
-          dValue={<Pre>{pathname}</Pre>}
+          dKey={t("Pathname")}
+          dValue={<Preformatted>{pathname}</Preformatted>}
         />
       </DescriptionList>
 
       {transformedSearchParams.size === 0 ? undefined : (
         <>
           <Heading level={headingLevel}>
-            {translation["Search Parameters Details"]}
+            {t("Search Parameters Details")}
           </Heading>
 
           <DescriptionList>
             <DescriptionSection
-              dKey={translation["Search"]}
-              dValue={<Pre>{search}</Pre>}
+              dKey={t("Search")}
+              dValue={<Preformatted>{search}</Preformatted>}
             />
 
             <DescriptionSection
-              dKey={translation["Search parameters"]}
+              dKey={t("Search parameters")}
               dValue={
                 <TransformedSearchParams params={transformedSearchParams} />
               }
@@ -137,13 +160,11 @@ export function URLViewer({ translation, headingLevel, url }: IURLViewerProps) {
 
       {hash.length === 0 ? undefined : (
         <>
-          <Heading level={headingLevel}>
-            {translation["Fragment Details"]}
-          </Heading>
+          <Heading level={headingLevel}>{t("Fragment Details")}</Heading>
           <DescriptionList>
             <DescriptionSection
-              dKey={translation["Hash"]}
-              dValue={<Pre>{hash}</Pre>}
+              dKey={t("Hash")}
+              dValue={<Preformatted>{hash}</Preformatted>}
             />
           </DescriptionList>
         </>
@@ -162,16 +183,16 @@ function TransformedSearchParams({ params }: ITransformedSearchParamsProps) {
       {Array.from(params).map(([key, value]) => (
         <DescriptionSection key={key}>
           <DescriptionTerm>
-            <Pre>{key}:</Pre>
+            <Preformatted>{key}:</Preformatted>
           </DescriptionTerm>
           <DescriptionDetails className={styles.params}>
             {typeof value === "string" ? (
-              <Pre>{value}</Pre>
+              <Preformatted>{value}</Preformatted>
             ) : (
               <List
                 isOrdered
                 items={Array.from(value).map((value, index) => (
-                  <Pre key={index}>{value}</Pre>
+                  <Preformatted key={index}>{value}</Preformatted>
                 ))}
               />
             )}
@@ -191,7 +212,7 @@ function transformURL(url: URL) {
 }
 
 function transformSearchparams(
-  searchParams: URLSearchParams,
+  searchParams: URLSearchParams
 ): ITransformedSearchParams {
   const sortedParams = new URLSearchParams(searchParams);
   const transformedSearchParams: ITransformedSearchParams = new Map();

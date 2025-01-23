@@ -11,3 +11,7 @@ export type IBaseComponentPropsWithChildren<
 > = IBaseComponentProps<HTMLTag> & {
   children?: ReactNode;
 };
+
+export interface ITranslatableProps<TranslationKey extends string> {
+  t: (translationKey: TranslationKey) => ReactNode;
+}
