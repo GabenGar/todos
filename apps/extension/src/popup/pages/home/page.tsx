@@ -1,8 +1,8 @@
 import { useActionData, type ActionFunctionArgs } from "react-router-dom";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
+import { URLViewer } from "@repo/ui/url";
 import { getLocalizedMessage } from "#lib/localization";
-import { URLViewer } from "#components/urls";
 import { Form } from "#popup/components/forms";
 import { InputSectionText } from "#popup/components/forms/section";
 
@@ -39,7 +39,7 @@ export function HomePage() {
               {!url || !(url instanceof URL) ? (
                 getLocalizedMessage("No URL is selected.")
               ) : (
-                <URLViewer headingLevel={2} url={url} />
+                <URLViewer t={getLocalizedMessage} headingLevel={2} url={url} />
               )}
             </OverviewBody>
           </>

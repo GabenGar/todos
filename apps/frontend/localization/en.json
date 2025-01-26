@@ -112,6 +112,7 @@
       "title": "URL Viewer",
       "heading": "URL Viewer",
       "URL": "URL",
+      "Decoded URL": "Decoded URL",
       "Parse": "Parse",
       "Parsing...": "Parsing...",
       "URLs": "URLs",

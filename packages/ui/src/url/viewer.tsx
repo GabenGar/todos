@@ -7,7 +7,7 @@ import {
 } from "#description-list";
 import { Preformatted } from "#formatting";
 import { Heading, type IHeadingLevel } from "#headings";
-import { List } from "#lists";
+import { List, ListItem } from "#lists";
 
 import styles from "./viewer.module.scss";
 
@@ -19,7 +19,7 @@ interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
 type ITranslationKey =
   | "URLs"
   | "Full URL"
-  | "Transformed URL"
+  | "Decoded URL"
   | "Origin Details"
   | "Origin"
   | "Protocol"
@@ -39,30 +39,10 @@ type ITranslationKey =
 interface ITransformedSearchParams extends Map<string, string | Set<string>> {}
 
 export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
-  const {
-    href,
-    origin,
-    protocol,
-    username,
-    password,
-    host,
-    hostname,
-    port,
-    pathname,
-    search,
-    searchParams,
-    hash,
-  } = url;
-  const explicitPort =
-    port.length !== 0
-      ? port
-      : protocol === "http:"
-        ? "80"
-        : protocol === "https:"
-          ? "443"
-          : undefined;
+  const { href, origin, pathname, search, searchParams, hash } = url;
   const transformedSearchParams = transformSearchparams(searchParams);
   const transformedURL = transformURL(url);
+  const decodedURL = decodeURIComponent(String(transformedURL));
 
   return (
     <>
@@ -72,60 +52,23 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
           dKey={t("Full URL")}
           dValue={<Preformatted>{href}</Preformatted>}
         />
-        <DescriptionSection
-          dKey={t("Transformed URL")}
-          dValue={
-            <Preformatted>
-              {decodeURIComponent(String(transformedURL))}
-            </Preformatted>
-          }
-        />
+        {href !== decodedURL && (
+          <DescriptionSection
+            dKey={t("Decoded URL")}
+            dValue={<Preformatted>{decodedURL}</Preformatted>}
+          />
+        )}
       </DescriptionList>
 
       <Heading level={headingLevel}>{t("Origin Details")}</Heading>
 
-      <DescriptionList>
-        <DescriptionSection
-          dKey={t("Origin")}
-          dValue={<Preformatted>{origin}</Preformatted>}
-        />
+      {origin && (
+        <>
+          <Heading level={headingLevel}>{t("Origin Details")}</Heading>
 
-        <DescriptionSection
-          dKey={t("Protocol")}
-          dValue={<Preformatted>{protocol}</Preformatted>}
-        />
-
-        {username.length === 0 ? undefined : (
-          <DescriptionSection
-            dKey={t("Username")}
-            dValue={<Preformatted>{username}</Preformatted>}
-          />
-        )}
-
-        {password.length === 0 ? undefined : (
-          <DescriptionSection
-            dKey={t("Password")}
-            dValue={<Preformatted>{password}</Preformatted>}
-          />
-        )}
-
-        <DescriptionSection
-          dKey={t("Host")}
-          dValue={<Preformatted>{host}</Preformatted>}
-        />
-
-        <DescriptionSection
-          dKey={t("Hostname")}
-          dValue={<Preformatted>{hostname}</Preformatted>}
-        />
-
-        {explicitPort && (
-          <DescriptionSection
-            dKey={t("Port")}
-            dValue={<Preformatted>{explicitPort}</Preformatted>}
-          />
-        )}
-      </DescriptionList>
+          <Origin t={t} url={url} />
+        </>
+      )}
 
       <Heading level={headingLevel}>{t("Pathname Details")}</Heading>
 
@@ -173,6 +116,84 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
   );
 }
 
+interface IOriginProps extends Pick<IURLViewerProps, "t" | "url"> {}
+
+function Origin({ t, url }: IOriginProps) {
+  const { origin, protocol, username, password, host, hostname, port } = url;
+  const explicitOrigin = !origin
+    ? origin
+    : port
+      ? origin
+      : protocol === "http:"
+        ? `${origin}:80`
+        : protocol === "https:"
+          ? `${origin}:443`
+          : origin;
+  const explicitPort = port
+    ? port
+    : protocol === "http:"
+      ? "80"
+      : protocol === "https:"
+        ? "443"
+        : port;
+  const explicitHost = port
+    ? host
+    : protocol === "http:"
+      ? `${host}:80`
+      : protocol === "https:"
+        ? `${host}:443`
+        : host;
+
+  return (
+    <DescriptionList>
+      <DescriptionSection
+        dKey={t("Origin")}
+        dValue={<Preformatted>{explicitOrigin}</Preformatted>}
+      />
+
+      <DescriptionSection
+        dKey={t("Protocol")}
+        dValue={<Preformatted>{protocol}</Preformatted>}
+      />
+
+      {username.length === 0 ? undefined : (
+        <DescriptionSection
+          dKey={t("Username")}
+          dValue={<Preformatted>{username}</Preformatted>}
+        />
+      )}
+
+      {password.length === 0 ? undefined : (
+        <DescriptionSection
+          dKey={t("Password")}
+          dValue={<Preformatted>{password}</Preformatted>}
+        />
+      )}
+
+      {host && (
+        <DescriptionSection
+          dKey={t("Host")}
+          dValue={<Preformatted>{explicitHost}</Preformatted>}
+        />
+      )}
+
+      {hostname && (
+        <DescriptionSection
+          dKey={t("Hostname")}
+          dValue={<Preformatted>{hostname}</Preformatted>}
+        />
+      )}
+
+      {explicitPort && (
+        <DescriptionSection
+          dKey={t("Port")}
+          dValue={<Preformatted>{explicitPort}</Preformatted>}
+        />
+      )}
+    </DescriptionList>
+  );
+}
+
 interface ITransformedSearchParamsProps {
   params: ITransformedSearchParams;
 }
@@ -191,14 +212,14 @@ function TransformedSearchParams({ params }: ITransformedSearchParamsProps) {
             ) : (
               <List isOrdered>
                 {Array.from(value).map((value, index) => (
-                  <Preformatted
+                  <ListItem
                     key={`${value}-${
                       // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
                       index
                     }`}
                   >
-                    {value}
-                  </Preformatted>
+                    <Preformatted>{value}</Preformatted>
+                  </ListItem>
                 ))}
               </List>
             )}
@@ -228,7 +249,6 @@ function transformSearchparams(
   for (const key of sortedParams.keys()) {
     const values = sortedParams.getAll(key);
     const value = values.length === 1 ? values[0] : new Set(values);
-    // @ts-expect-error typescript being overtly autistic again
     transformedSearchParams.set(key, value);
   }
 
