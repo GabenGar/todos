@@ -13,12 +13,15 @@ interface IUnorderedListProps extends IBaseComponentPropsWithChildren<"ul"> {}
 
 interface IOrderedListProps extends IBaseComponentPropsWithChildren<"ol"> {}
 
+interface IListItemProps extends IBaseComponentPropsWithChildren<"li"> {}
+
 export const List = createBlockComponent(styles.block, ListComponent);
 const ListUnordered = createBlockComponent(
   styles.unordered,
   ListUnorderedComponent
 );
 const ListOrdered = createBlockComponent(styles.ordered, ListOrderedComponent);
+export const ListItem = createBlockComponent(styles.item, ListItemComponent);
 
 function ListComponent({ ...props }: IListProps) {
   if (props.isOrdered) {
@@ -36,4 +39,8 @@ function ListUnorderedComponent({ ...props }: IUnorderedListProps) {
 }
 function ListOrderedComponent({ ...props }: IOrderedListProps) {
   return <ol {...props} />;
+}
+
+function ListItemComponent({ ...props }: IListItemProps) {
+  return <li {...props} />;
 }

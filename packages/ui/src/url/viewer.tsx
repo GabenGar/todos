@@ -189,12 +189,18 @@ function TransformedSearchParams({ params }: ITransformedSearchParamsProps) {
             {typeof value === "string" ? (
               <Preformatted>{value}</Preformatted>
             ) : (
-              <List
-                isOrdered
-                items={Array.from(value).map((value, index) => (
-                  <Preformatted key={index}>{value}</Preformatted>
+              <List isOrdered>
+                {Array.from(value).map((value, index) => (
+                  <Preformatted
+                    key={`${value}-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
+                      index
+                    }`}
+                  >
+                    {value}
+                  </Preformatted>
                 ))}
-              />
+              </List>
             )}
           </DescriptionDetails>
         </DescriptionSection>
@@ -222,6 +228,7 @@ function transformSearchparams(
   for (const key of sortedParams.keys()) {
     const values = sortedParams.getAll(key);
     const value = values.length === 1 ? values[0] : new Set(values);
+    // @ts-expect-error typescript being overtly autistic again
     transformedSearchParams.set(key, value);
   }
 
