@@ -1,9 +1,9 @@
 import { useLoaderData, type LoaderFunctionArgs } from "react-router-dom";
 import { Overview, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
+import { URLViewer } from "@repo/ui/url";
 import { getLocalizedMessage } from "#lib/localization";
 import { getActiveTab } from "#lib/tabs";
-import { URLViewer } from "#components/urls";
 
 import styles from "./page.module.scss";
 
@@ -19,7 +19,7 @@ export function HomePage() {
               {!url || !(url instanceof URL) ? (
                 getLocalizedMessage("No URL is selected.")
               ) : (
-                <URLViewer headingLevel={2} url={url} />
+                <URLViewer t={getLocalizedMessage} headingLevel={2} url={url} />
               )}
             </OverviewBody>
           </>

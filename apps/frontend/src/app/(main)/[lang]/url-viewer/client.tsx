@@ -1,11 +1,11 @@
 "use client";
 
+import { URLViewer } from "@repo/ui/url";
 import { useState } from "react";
 import type { ILocalizationPage } from "#lib/localization";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
-import { type ITranslatableProps } from "#components/types";
+import type { ITranslatableProps } from "#components/types";
 import { URLViewerForm } from "./form";
-import { URLViewer } from "./viewer";
 
 interface IProps extends ITranslatableProps {
   translation: ILocalizationPage["url-viewer"];
@@ -13,6 +13,9 @@ interface IProps extends ITranslatableProps {
 
 export function Client({ commonTranslation, translation }: IProps) {
   const [currentURL, changeCurrentURL] = useState<URL>();
+  function t(key: keyof typeof translation) {
+    return translation[key];
+  }
 
   return (
     <Overview headingLevel={2}>
@@ -23,9 +26,7 @@ export function Client({ commonTranslation, translation }: IProps) {
               commonTranslation={commonTranslation}
               translation={translation}
               id="url-viewer"
-              onNewURL={async (newURL) => {
-                changeCurrentURL(newURL);
-              }}
+              onNewURL={async (newURL) => changeCurrentURL(newURL)}
             />
           </OverviewHeader>
 
@@ -33,11 +34,7 @@ export function Client({ commonTranslation, translation }: IProps) {
             {!currentURL ? (
               translation["No URL selected."]
             ) : (
-              <URLViewer
-                translation={translation}
-                headingLevel={headingLevel}
-                url={currentURL}
-              />
+              <URLViewer t={t} headingLevel={headingLevel} url={currentURL} />
             )}
           </OverviewBody>
         </>

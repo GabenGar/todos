@@ -1,23 +1,44 @@
+import type { ITranslatableProps } from "#meta";
 import {
   DescriptionDetails,
   DescriptionList,
   DescriptionSection,
   DescriptionTerm,
-} from "@repo/ui/description-list";
-import { Preformatted } from "@repo/ui/formatting";
-import { Heading, type IHeadingLevel } from "@repo/ui/headings";
-import { getLocalizedMessage } from "#lib/localization";
+} from "#description-list";
+import { Preformatted } from "#formatting";
+import { Heading, type IHeadingLevel } from "#headings";
+import { List, ListItem } from "#lists";
 
 import styles from "./viewer.module.scss";
 
-interface IURLViewerProps {
+interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
   url: URL;
   headingLevel: IHeadingLevel;
 }
 
+type ITranslationKey =
+  | "URLs"
+  | "Full URL"
+  | "Decoded URL"
+  | "Origin Details"
+  | "Origin"
+  | "Protocol"
+  | "Username"
+  | "Password"
+  | "Host"
+  | "Hostname"
+  | "Port"
+  | "Pathname Details"
+  | "Pathname"
+  | "Search Parameters Details"
+  | "Search"
+  | "Search parameters"
+  | "Fragment Details"
+  | "Hash";
+
 interface ITransformedSearchParams extends Map<string, string | Set<string>> {}
 
-export function URLViewer({ headingLevel, url }: IURLViewerProps) {
+export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
   const { href, origin, pathname, search, searchParams, hash } = url;
   const transformedSearchParams = transformSearchparams(searchParams);
   const transformedURL = transformURL(url);
@@ -25,38 +46,35 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
 
   return (
     <>
-      <Heading level={headingLevel}>{getLocalizedMessage("URLs")}</Heading>
+      <Heading level={headingLevel}>{t("URLs")}</Heading>
       <DescriptionList>
         <DescriptionSection
-          dKey={getLocalizedMessage("Full URL")}
+          dKey={t("Full URL")}
           dValue={<Preformatted>{href}</Preformatted>}
         />
-
         {href !== decodedURL && (
           <DescriptionSection
-            dKey={getLocalizedMessage("Decoded URL")}
+            dKey={t("Decoded URL")}
             dValue={<Preformatted>{decodedURL}</Preformatted>}
           />
         )}
       </DescriptionList>
 
+      <Heading level={headingLevel}>{t("Origin Details")}</Heading>
+
       {origin && (
         <>
-          <Heading level={headingLevel}>
-            {getLocalizedMessage("Origin Details")}
-          </Heading>
+          <Heading level={headingLevel}>{t("Origin Details")}</Heading>
 
-          <Origin url={url} />
+          <Origin t={t} url={url} />
         </>
       )}
 
-      <Heading level={headingLevel}>
-        {getLocalizedMessage("Pathname Details")}
-      </Heading>
+      <Heading level={headingLevel}>{t("Pathname Details")}</Heading>
 
       <DescriptionList>
         <DescriptionSection
-          dKey={getLocalizedMessage("Pathname")}
+          dKey={t("Pathname")}
           dValue={<Preformatted>{pathname}</Preformatted>}
         />
       </DescriptionList>
@@ -64,17 +82,17 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
       {transformedSearchParams.size === 0 ? undefined : (
         <>
           <Heading level={headingLevel}>
-            {getLocalizedMessage("Search Parameters Details")}
+            {t("Search Parameters Details")}
           </Heading>
 
           <DescriptionList>
             <DescriptionSection
-              dKey={getLocalizedMessage("Search")}
+              dKey={t("Search")}
               dValue={<Preformatted>{search}</Preformatted>}
             />
 
             <DescriptionSection
-              dKey={getLocalizedMessage("Search parameters")}
+              dKey={t("Search parameters")}
               dValue={
                 <TransformedSearchParams params={transformedSearchParams} />
               }
@@ -85,12 +103,10 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
 
       {hash.length === 0 ? undefined : (
         <>
-          <Heading level={headingLevel}>
-            {getLocalizedMessage("Fragment Details")}
-          </Heading>
+          <Heading level={headingLevel}>{t("Fragment Details")}</Heading>
           <DescriptionList>
             <DescriptionSection
-              dKey={getLocalizedMessage("Hash")}
+              dKey={t("Hash")}
               dValue={<Preformatted>{hash}</Preformatted>}
             />
           </DescriptionList>
@@ -100,19 +116,19 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
   );
 }
 
-interface IOriginProps {
-  url: URL;
-}
+interface IOriginProps extends Pick<IURLViewerProps, "t" | "url"> {}
 
-function Origin({ url }: IOriginProps) {
+function Origin({ t, url }: IOriginProps) {
   const { origin, protocol, username, password, host, hostname, port } = url;
-  const explicitOrigin = !origin ? origin : port
+  const explicitOrigin = !origin
     ? origin
-    : protocol === "http:"
-      ? `${origin}:80`
-      : protocol === "https:"
-        ? `${origin}:443`
-        : origin;
+    : port
+      ? origin
+      : protocol === "http:"
+        ? `${origin}:80`
+        : protocol === "https:"
+          ? `${origin}:443`
+          : origin;
   const explicitPort = port
     ? port
     : protocol === "http:"
@@ -131,46 +147,46 @@ function Origin({ url }: IOriginProps) {
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={getLocalizedMessage("Origin")}
+        dKey={t("Origin")}
         dValue={<Preformatted>{explicitOrigin}</Preformatted>}
       />
 
       <DescriptionSection
-        dKey={getLocalizedMessage("Protocol")}
+        dKey={t("Protocol")}
         dValue={<Preformatted>{protocol}</Preformatted>}
       />
 
       {username.length === 0 ? undefined : (
         <DescriptionSection
-          dKey={getLocalizedMessage("Username")}
+          dKey={t("Username")}
           dValue={<Preformatted>{username}</Preformatted>}
         />
       )}
 
       {password.length === 0 ? undefined : (
         <DescriptionSection
-          dKey={getLocalizedMessage("Password")}
+          dKey={t("Password")}
           dValue={<Preformatted>{password}</Preformatted>}
         />
       )}
 
       {host && (
         <DescriptionSection
-          dKey={getLocalizedMessage("Host")}
+          dKey={t("Host")}
           dValue={<Preformatted>{explicitHost}</Preformatted>}
         />
       )}
 
       {hostname && (
         <DescriptionSection
-          dKey={getLocalizedMessage("Hostname")}
+          dKey={t("Hostname")}
           dValue={<Preformatted>{hostname}</Preformatted>}
         />
       )}
 
       {explicitPort && (
         <DescriptionSection
-          dKey={getLocalizedMessage("Port")}
+          dKey={t("Port")}
           dValue={<Preformatted>{explicitPort}</Preformatted>}
         />
       )}
@@ -194,18 +210,18 @@ function TransformedSearchParams({ params }: ITransformedSearchParamsProps) {
             {typeof value === "string" ? (
               <Preformatted>{value}</Preformatted>
             ) : (
-              <ol>
+              <List isOrdered>
                 {Array.from(value).map((value, index) => (
-                  <li
-                    key={`${key}${value}${
+                  <ListItem
+                    key={`${value}-${
                       // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
                       index
                     }`}
                   >
                     <Preformatted>{value}</Preformatted>
-                  </li>
+                  </ListItem>
                 ))}
-              </ol>
+              </List>
             )}
           </DescriptionDetails>
         </DescriptionSection>
