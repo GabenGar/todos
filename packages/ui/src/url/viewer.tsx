@@ -60,8 +60,6 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
         )}
       </DescriptionList>
 
-      <Heading level={headingLevel}>{t("Origin Details")}</Heading>
-
       {origin && (
         <>
           <Heading level={headingLevel}>{t("Origin Details")}</Heading>
