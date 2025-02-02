@@ -1,9 +1,24 @@
 @use "../styles/sass/variables" as *;
 
 .block {
+  border: $size-thin solid var(--colour-background-tertiary);
+
+  &[open] {
+    .summary {
+      border-bottom: $size-thin solid var(--colour-background-tertiary);
+    }
+  }
 }
 
 .summary {
+  padding: $size-small;
   cursor: pointer;
-  padding: $size-small 0;
+
+  & > * {
+    display: inline;
+  }
+}
+
+.content {
+  padding: $size-small;
 }

@@ -8,10 +8,13 @@ import {
 import { Preformatted } from "#formatting";
 import { Heading, type IHeadingLevel } from "#headings";
 import { List, ListItem } from "#lists";
+import { Details } from "#details";
+import { Origin } from "./origin";
+import { Pathname } from "./pathname";
 
 import styles from "./viewer.module.scss";
 
-interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
+export interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
   url: URL;
   headingLevel: IHeadingLevel;
 }
@@ -61,23 +64,22 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
       </DescriptionList>
 
       {origin && (
-        <>
-          <Heading level={headingLevel}>{t("Origin Details")}</Heading>
-
+        <Details
+          summary={
+            <Heading level={headingLevel}>{t("Origin Details")}</Heading>
+          }
+        >
           <Origin t={t} url={url} />
-        </>
+        </Details>
       )}
 
-      <Heading level={headingLevel}>{t("Pathname Details")}</Heading>
+      <Details
+        summary={<Heading level={headingLevel}>{t("Pathname Details")}</Heading>}
+      >
+        <Pathname t={t} pathname={pathname} />
+      </Details>
 
-      <DescriptionList>
-        <DescriptionSection
-          dKey={t("Pathname")}
-          dValue={<Preformatted>{pathname}</Preformatted>}
-        />
-      </DescriptionList>
-
-      {transformedSearchParams.size === 0 ? undefined : (
+      {transformedSearchParams.size !== 0  && (
         <>
           <Heading level={headingLevel}>
             {t("Search Parameters Details")}
@@ -111,84 +113,6 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
         </>
       )}
     </>
-  );
-}
-
-interface IOriginProps extends Pick<IURLViewerProps, "t" | "url"> {}
-
-function Origin({ t, url }: IOriginProps) {
-  const { origin, protocol, username, password, host, hostname, port } = url;
-  const explicitOrigin = !origin
-    ? origin
-    : port
-      ? origin
-      : protocol === "http:"
-        ? `${origin}:80`
-        : protocol === "https:"
-          ? `${origin}:443`
-          : origin;
-  const explicitPort = port
-    ? port
-    : protocol === "http:"
-      ? "80"
-      : protocol === "https:"
-        ? "443"
-        : port;
-  const explicitHost = port
-    ? host
-    : protocol === "http:"
-      ? `${host}:80`
-      : protocol === "https:"
-        ? `${host}:443`
-        : host;
-
-  return (
-    <DescriptionList>
-      <DescriptionSection
-        dKey={t("Origin")}
-        dValue={<Preformatted>{explicitOrigin}</Preformatted>}
-      />
-
-      <DescriptionSection
-        dKey={t("Protocol")}
-        dValue={<Preformatted>{protocol}</Preformatted>}
-      />
-
-      {username.length === 0 ? undefined : (
-        <DescriptionSection
-          dKey={t("Username")}
-          dValue={<Preformatted>{username}</Preformatted>}
-        />
-      )}
-
-      {password.length === 0 ? undefined : (
-        <DescriptionSection
-          dKey={t("Password")}
-          dValue={<Preformatted>{password}</Preformatted>}
-        />
-      )}
-
-      {host && (
-        <DescriptionSection
-          dKey={t("Host")}
-          dValue={<Preformatted>{explicitHost}</Preformatted>}
-        />
-      )}
-
-      {hostname && (
-        <DescriptionSection
-          dKey={t("Hostname")}
-          dValue={<Preformatted>{hostname}</Preformatted>}
-        />
-      )}
-
-      {explicitPort && (
-        <DescriptionSection
-          dKey={t("Port")}
-          dValue={<Preformatted>{explicitPort}</Preformatted>}
-        />
-      )}
-    </DescriptionList>
   );
 }
 
@@ -247,6 +171,7 @@ function transformSearchparams(
   for (const key of sortedParams.keys()) {
     const values = sortedParams.getAll(key);
     const value = values.length === 1 ? values[0] : new Set(values);
+    // @ts-ignore
     transformedSearchParams.set(key, value);
   }
 

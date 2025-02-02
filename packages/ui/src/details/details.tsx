@@ -16,7 +16,7 @@ function Component({ summary, children, ...props }: IProps) {
   return (
     <details {...props}>
       <summary className={styles.summary}>{summary}</summary>
-      {children}
+      <div className={styles.content}>{children}</div>
     </details>
   );
 }
