@@ -131,6 +131,7 @@
       "Hostname": "Hostname",
       "Port": "Port",
       "Pathname": "Pathname",
+      "Segments": "Segments",
       "Search": "Search",
       "Search parameters": "Search parameters",
       "Hash": "Hash"

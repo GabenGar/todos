@@ -1,18 +1,14 @@
 import type { ITranslatableProps } from "#meta";
-import {
-  DescriptionDetails,
-  DescriptionList,
-  DescriptionSection,
-  DescriptionTerm,
-} from "#description-list";
+import { DescriptionList, DescriptionSection } from "#description-list";
 import { Preformatted } from "#formatting";
 import { Heading, type IHeadingLevel } from "#headings";
-import { List, ListItem } from "#lists";
 import { Details } from "#details";
 import { Origin } from "./origin";
 import { Pathname } from "./pathname";
-
-import styles from "./viewer.module.scss";
+import {
+  TransformedSearchParams,
+  type ITransformedSearchParams,
+} from "./params";
 
 export interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
   url: URL;
@@ -33,13 +29,12 @@ type ITranslationKey =
   | "Port"
   | "Pathname Details"
   | "Pathname"
+  | "Segments"
   | "Search Parameters Details"
   | "Search"
   | "Search parameters"
   | "Fragment Details"
   | "Hash";
-
-interface ITransformedSearchParams extends Map<string, string | Set<string>> {}
 
 export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
   const { href, origin, pathname, search, searchParams, hash } = url;
@@ -74,12 +69,14 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
       )}
 
       <Details
-        summary={<Heading level={headingLevel}>{t("Pathname Details")}</Heading>}
+        summary={
+          <Heading level={headingLevel}>{t("Pathname Details")}</Heading>
+        }
       >
         <Pathname t={t} pathname={pathname} />
       </Details>
 
-      {transformedSearchParams.size !== 0  && (
+      {transformedSearchParams.size !== 0 && (
         <>
           <Heading level={headingLevel}>
             {t("Search Parameters Details")}
@@ -113,42 +110,6 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
         </>
       )}
     </>
-  );
-}
-
-interface ITransformedSearchParamsProps {
-  params: ITransformedSearchParams;
-}
-
-function TransformedSearchParams({ params }: ITransformedSearchParamsProps) {
-  return (
-    <DescriptionList>
-      {Array.from(params).map(([key, value]) => (
-        <DescriptionSection key={key}>
-          <DescriptionTerm>
-            <Preformatted>{key}:</Preformatted>
-          </DescriptionTerm>
-          <DescriptionDetails className={styles.params}>
-            {typeof value === "string" ? (
-              <Preformatted>{value}</Preformatted>
-            ) : (
-              <List isOrdered>
-                {Array.from(value).map((value, index) => (
-                  <ListItem
-                    key={`${value}-${
-                      // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
-                      index
-                    }`}
-                  >
-                    <Preformatted>{value}</Preformatted>
-                  </ListItem>
-                ))}
-              </List>
-            )}
-          </DescriptionDetails>
-        </DescriptionSection>
-      ))}
-    </DescriptionList>
   );
 }
 
