@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   isRouteErrorResponse,
   Links,
@@ -9,20 +10,13 @@ import {
 
 import type { Route } from "./+types/root";
 
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-];
+interface IProps {
+  children: ReactNode;
+}
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const links: Route.LinksFunction = () => [];
+
+export function Layout({ children }: IProps) {
   return (
     <html lang="en">
       <head>
@@ -40,7 +34,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+function App() {
+  // @ts-expect-error possibly caused by extension app using an older version of `react-router`
   return <Outlet />;
 }
 
@@ -72,3 +67,5 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     </main>
   );
 }
+
+export default App;
