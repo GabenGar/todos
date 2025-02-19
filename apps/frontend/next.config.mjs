@@ -30,6 +30,7 @@ async function createNextConfig() {
       // https://github.com/vercel/next.js/issues/71638#issuecomment-2454463904
       silenceDeprecations: ["legacy-js-api"],
     },
+    transpilePackages: ["@repo/ui"],
     experimental: {
       typedRoutes: true,
     },
