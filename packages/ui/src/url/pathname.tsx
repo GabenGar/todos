@@ -1,6 +1,7 @@
 import { DescriptionList, DescriptionSection } from "#description-list";
 import { Details } from "#details";
 import { Preformatted } from "#formatting";
+import { List, ListItem } from "#lists";
 import type { IURLViewerProps } from "./viewer";
 
 interface IProps extends Pick<IURLViewerProps, "t"> {
@@ -27,9 +28,20 @@ export function Pathname({ t, pathname }: IProps) {
         <DescriptionSection
           dKey={t("Segments")}
           dValue={
-            <Details
-              summary={<Preformatted>{totalSegments}</Preformatted>}
-            ><></></Details>
+            <Details summary={<Preformatted>{totalSegments}</Preformatted>}>
+              <List>
+                {segments.map((segment, index) => (
+                  <ListItem
+                    key={`${segment}${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
+                      index
+                    }`}
+                  >
+                    <Preformatted>/{segment}</Preformatted>
+                  </ListItem>
+                ))}
+              </List>
+            </Details>
           }
         />
       )}
