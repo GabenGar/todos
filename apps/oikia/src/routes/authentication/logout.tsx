@@ -1,4 +1,4 @@
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/authentication/logout";
 
 export function meta({ error }: Route.MetaArgs) {
   return [
@@ -7,6 +7,8 @@ export function meta({ error }: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
+function LogoutPage() {
   return <>Hello World</>;
 }
+
+export default LogoutPage;
