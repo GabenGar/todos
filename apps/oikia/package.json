@@ -5,16 +5,20 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "react-router dev",
+    "dev": "react-router dev --port 8002",
     "start": "react-router-serve ./build/server/index.js",
     "check": "react-router typegen && tsc",
     "lint": "biome lint --write ./src",
     "format": "biome format --write ./src"
   },
+  "imports": {
+    "#components/*": "./src/components/*/index.ts"
+  },
   "dependencies": {
     "@react-router/node": "^7.2.0",
     "@react-router/serve": "^7.2.0",
     "@repo/ui": "*",
+    "clsx": "^2.1.1",
     "isbot": "^5.1.17",
     "react": "18.3.1",
     "react-dom": "18.3.1",

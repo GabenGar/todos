@@ -7,8 +7,15 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { LinkExternal } from "@repo/ui/links";
+import { Page } from "@repo/ui/pages";
+import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 
 import type { Route } from "./+types/root";
+
+import "@repo/ui/styles/global";
+import styles from "./root.module.scss";
+import { LinkInternal } from "#components/link";
 
 interface IProps {
   children: ReactNode;
@@ -35,11 +42,31 @@ export function Layout({ children }: IProps) {
 }
 
 function App() {
-  // @ts-expect-error possibly caused by extension app using an older version of `react-router`
-  return <Outlet />;
+  return (
+    <>
+      <header className={styles.header}><LinkInternal href={"/"}>Oikia</LinkInternal></header>
+
+      <main className={styles.main}>
+        <Outlet />
+      </main>
+
+      <footer className={styles.footer}>
+        <ul>
+          <li>
+            <LinkExternal
+              href={"https://github.com/GabenGar/todos/tree/master/apps/oikia"}
+            >
+              Source Code
+            </LinkExternal>
+          </li>
+        </ul>
+      </footer>
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  const heading = "Error";
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
@@ -56,15 +83,23 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <Page heading={heading}>
+      <Overview headingLevel={2}>
+        {(headingLevel) => (
+          <>
+            <OverviewHeader>{message}</OverviewHeader>
+            <OverviewBody>
+              <p>{details}</p>
+              {stack && (
+                <pre className="w-full p-4 overflow-x-auto">
+                  <code>{stack}</code>
+                </pre>
+              )}
+            </OverviewBody>
+          </>
+        )}
+      </Overview>
+    </Page>
   );
 }
 
