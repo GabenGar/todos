@@ -1,0 +1,23 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.block {
+  justify-self: center;
+  display: grid;
+  gap: $size-small;
+  max-width: $width-phone;
+  width: 100%;
+  border-radius: $radius-normal;
+  border: $size-thin solid var(--colour-text-primary);
+  padding: $size-normal;
+
+  transition-property: border;
+  transition-duration: var(--duration-global);
+
+  @media (min-width: $width-laptop) {
+    max-width: calc(#{$width-phone} * 1.1);
+  }
+}
+
+.form {
+  display: none;
+}
