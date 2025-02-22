@@ -12,7 +12,10 @@
     "format": "biome format --write ./src"
   },
   "imports": {
-    "#components/*": "./src/components/*/index.ts"
+    "#components/*": "./src/components/*/index.ts",
+    "#entities/*": "./src/entities/*/index.ts",
+    "#server/*": "./src/.server/*/index.ts",
+    "#client/*": "./src/.client/*/index.ts"
   },
   "dependencies": {
     "@react-router/node": "^7.2.0",

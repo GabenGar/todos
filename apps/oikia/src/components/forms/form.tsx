@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { ReactNode } from "react";
 import {
   useNavigation,
@@ -7,12 +8,11 @@ import {
   type FormMethod,
   useActionData,
 } from "react-router";
-import { createBlockComponent } from "@repo/ui/meta";
 import { ButtonSubmit } from "@repo/ui/buttons";
 import { Preformatted } from "@repo/ui/formatting";
-import { InputSection } from "./section";
-
-import styles from "./form.module.scss";
+import { baseFormStyles } from "@repo/ui/forms";
+import { InputSection } from "@repo/ui/forms/sections";
+import { List, ListItem } from "@repo/ui/lists";
 
 export interface IFormProps extends Omit<FormProps, "children" | "method"> {
   id: string;
@@ -21,9 +21,7 @@ export interface IFormProps extends Omit<FormProps, "children" | "method"> {
   submitButton?: (state: Navigation["state"]) => ReactNode;
 }
 
-export const Form = createBlockComponent(styles, Component);
-
-function Component({
+export function Form({
   id,
   className,
   submitButton,
@@ -36,7 +34,14 @@ function Component({
   const formID = `${id}-form`;
 
   return (
-    <div id={id} className={className}>
+    <div
+      id={id}
+      className={clsx(
+        // @ts-expect-error css modules issue
+        baseFormStyles.block,
+        className
+      )}
+    >
       {children?.(formID)}
 
       <InputSection>
@@ -45,11 +50,11 @@ function Component({
         ) : navigation.state === "submitting" ? (
           "Submitting..."
         ) : data instanceof Error ? (
-          <ol>
-            <li>
+          <List isOrdered>
+            <ListItem>
               <Preformatted>{String(data)}</Preformatted>
-            </li>
-          </ol>
+            </ListItem>
+          </List>
         ) : (
           "Ready to submit."
         )}
@@ -57,9 +62,7 @@ function Component({
 
       <InputSection>
         <ButtonSubmit form={formID} disabled={navigation.state !== "idle"}>
-          {!submitButton
-            ? "Submit"
-            : submitButton(navigation.state)}
+          {!submitButton ? "Submit" : submitButton(navigation.state)}
         </ButtonSubmit>
       </InputSection>
 
