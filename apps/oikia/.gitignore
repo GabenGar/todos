@@ -1,3 +1,7 @@
+# configs
+/config/server.development.json
+/config/server.json
+
 .DS_Store
 /node_modules/
 
