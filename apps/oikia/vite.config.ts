@@ -1,13 +1,26 @@
 import { reactRouter } from "@react-router/dev/vite";
-import { defineConfig } from "vite";
+import { defineConfig, type UserConfig } from "vite";
 
-export default defineConfig({
-  plugins: [reactRouter()],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: "modern",
+const config = defineConfig(({ isSsrBuild }) => {
+  const finalConfig: UserConfig = {
+    plugins: [reactRouter()],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern",
+        },
       },
     },
-  },
+    build: {
+      rollupOptions: isSsrBuild
+        ? {
+            input: "./server/app.ts",
+          }
+        : undefined,
+    },
+  };
+
+  return finalConfig;
 });
+
+export default config;

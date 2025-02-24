@@ -6,7 +6,7 @@
         "config/server.development.json",
         "config/server.example.json"
       ],
-      "url": "./config.schema.json"
+      "url": "./config/server.schema.json"
     }
   ]
 }
