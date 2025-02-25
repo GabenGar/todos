@@ -1,6 +1,7 @@
 import path from "node:path";
 import { cwd } from "node:process";
 import fs from "node:fs/promises";
+import { parseArgs } from "node:util";
 import compression from "compression";
 import express from "express";
 import morgan from "morgan";
@@ -18,7 +19,26 @@ import { lint, parser } from "@exodus/schemasafe";
 
 // Short-circuit the type-checking of the built output.
 const BUILD_PATH = "./build/server/index.js";
-const isDevelopment = process.env.NODE_ENV === "development";
+/**
+ * @type {import("node:util").ParseArgsConfig}
+ */
+const cliOptions = {
+  options: {
+    environment: {
+      type: "string",
+    },
+  },
+};
+const parsedArgs = parseArgs(cliOptions);
+const environment = parsedArgs.values.environment;
+
+if (environment !== "development" && environment !== "production") {
+  throw new Error("Invalid value for option `--environment`.");
+}
+
+process.env.NODE_ENV = environment;
+
+const isDevelopment = environment === "development";
 const config = await parseConfig(isDevelopment);
 const PORT = config.server.port;
 
@@ -43,7 +63,7 @@ app.listen(PORT, () => {
  * @param {express.Express} app
  */
 async function runDevelopmentServer(app) {
-  console.log("Starting development server..");
+  console.log("Starting development server...");
 
   const viteDevServer = await import("vite").then((vite) =>
     vite.createServer({
@@ -55,8 +75,9 @@ async function runDevelopmentServer(app) {
   app.use(async (req, res, next) => {
     try {
       const source = await viteDevServer.ssrLoadModule("./server/app.ts");
+      const app = await source.app;
 
-      return await source.app(req, res, next);
+      return await app(req, res, next);
     } catch (error) {
       if (typeof error === "object" && error instanceof Error) {
         viteDevServer.ssrFixStacktrace(error);
@@ -126,6 +147,10 @@ async function parseConfig(isDevelopment) {
    */
   // @ts-expect-error just generic shit
   const config = result.value;
+
+  const configSymbol = Symbol.for("server-config");
+  // @ts-expect-error
+  globalThis[configSymbol] = config;
 
   return config;
 }

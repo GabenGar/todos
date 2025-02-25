@@ -21,32 +21,31 @@
   },
   "definitions": {
     "database": {
-      "anyOf": [
-        { "description": "PostgreSQL connection string.", "type": "string" },
-        {
-          "description": "PostgreSQL connection object.",
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["user", "host", "port", "database"],
-          "properties": {
-            "user": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
-            },
-            "host": {
-              "type": "string"
-            },
-            "port": {
-              "type": "integer"
-            },
-            "database": {
-              "type": "string"
-            }
-          }
+      "description": "PostgreSQL connection object.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user", "host", "port", "database"],
+      "properties": {
+        "user": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
+        },
+        "password": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
+        },
+        "host": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "database": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
         }
-      ]
+      }
     }
   }
 }
