@@ -9,7 +9,7 @@ interface IProps extends IBaseComponentPropsWithChildren<"label"> {}
 
 export const Label = createBlockComponent(styles, Component);
 
-function Component({ ...props }: IProps) {
+function Component({ children, ...props }: IProps) {
   // biome-ignore lint/a11y/noLabelWithoutControl: no explanation
-  return <label {...props} />;
+  return <label {...props}>{children}:</label>;
 }

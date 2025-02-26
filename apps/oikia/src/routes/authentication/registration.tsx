@@ -1,7 +1,7 @@
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
-import { InputSectionText } from "@repo/ui/forms/sections";
+import { InputSectionPassword, InputSectionText } from "@repo/ui/forms/sections";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountInit } from "#entities/account";
@@ -43,14 +43,17 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       Login
                     </InputSectionText>
 
-                    <InputSectionText
+                    <InputSectionPassword
                       id={`${formID}-password`}
                       form={formID}
                       name="password"
+                      autoComplete="new-password"
+                      minLength={8}
+                      maxLength={32}
                       required
                     >
                       Password
-                    </InputSectionText>
+                    </InputSectionPassword>
 
                     <InputSectionText
                       id={`${formID}-invitation`}

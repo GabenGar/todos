@@ -6,15 +6,26 @@ import compression from "compression";
 import express from "express";
 import morgan from "morgan";
 import { lint, parser } from "@exodus/schemasafe";
+import { runner as runMigrations } from "node-pg-migrate"
 
 /**
  * @typedef IConfiguration
  * @property {IServerConfiguration} server
+ * @property {IDatabaseConfiguration} database
  */
 
 /**
  * @typedef IServerConfiguration
  * @property {number} port
+ */
+
+/**
+ * @typedef IDatabaseConfiguration
+ * @property {string} user
+ * @property {string} host
+ * @property {number} port
+ * @property {string} database
+ * @property {string} [password]
  */
 
 // Short-circuit the type-checking of the built output.
@@ -41,6 +52,8 @@ process.env.NODE_ENV = environment;
 const isDevelopment = environment === "development";
 const config = await parseConfig(isDevelopment);
 const PORT = config.server.port;
+
+await migrateDatabase(config.database)
 
 const app = express();
 
@@ -153,4 +166,21 @@ async function parseConfig(isDevelopment) {
   globalThis[configSymbol] = config;
 
   return config;
+}
+
+/**
+ * @param {IDatabaseConfiguration} connectionData
+ */
+async function migrateDatabase(connectionData) {
+  /**
+   * @type {import("node-pg-migrate").RunnerOption}
+   */
+  const options = {
+    databaseUrl: connectionData,
+    dir: "./src/.server/database/migrations",
+    direction: "up",
+    migrationsTable: "migrations",
+    checkOrder: true
+  };
+  const migrations = await runMigrations(options);
 }

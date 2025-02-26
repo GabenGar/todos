@@ -14,3 +14,4 @@ export type { IInputTextAreaProps } from "./text/text-area";
 export { InputNanoID } from "./text/nanoid";
 export { InputHidden } from "./hidden";
 export type { IInputHiddenProps } from "./hidden";
+export { InputPassword, type IInputPasswordProps } from "./password";

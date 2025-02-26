@@ -3,12 +3,12 @@
 .block {
   justify-self: center;
   display: grid;
-  gap: $size-small;
+  gap: $size-normal;
   max-width: $width-phone;
   width: 100%;
   border-radius: $radius-normal;
   border: $size-thin solid var(--colour-text-primary);
-  padding: $size-normal;
+  padding: $size-small $size-normal;
 
   transition-property: border;
   transition-duration: var(--duration-global);
