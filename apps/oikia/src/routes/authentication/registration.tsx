@@ -1,7 +1,11 @@
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
-import { InputSectionPassword, InputSectionText } from "@repo/ui/forms/sections";
+import {
+  InputSectionNanoID,
+  InputSectionPassword,
+  InputSectionText,
+} from "@repo/ui/forms/sections";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountInit } from "#entities/account";
@@ -38,6 +42,8 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       id={`${formID}-login`}
                       form={formID}
                       name="login"
+                      minLength={5}
+                      maxLength={20}
                       required
                     >
                       Login
@@ -55,19 +61,21 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       Password
                     </InputSectionPassword>
 
-                    <InputSectionText
+                    <InputSectionNanoID
                       id={`${formID}-invitation`}
                       form={formID}
                       name="invitation"
                       required
                     >
                       Invitation code
-                    </InputSectionText>
+                    </InputSectionNanoID>
 
                     <InputSectionText
                       id={`${formID}-name`}
                       form={formID}
                       name="name"
+                      minLength={8}
+                      maxLength={128}
                     >
                       Display name
                     </InputSectionText>
@@ -96,6 +104,10 @@ export async function action({ request }: Route.ActionArgs) {
             throw new Error("Login is required.");
           }
 
+          if (value.length < 5 && value.length > 20) {
+            throw new Error("Invalid login length.");
+          }
+
           login = value;
         }
 
@@ -105,6 +117,10 @@ export async function action({ request }: Route.ActionArgs) {
 
           if (!value) {
             throw new Error("Password is required.");
+          }
+
+          if (value.length < 8 && value.length > 32) {
+            throw new Error("Invalid password length.");
           }
 
           password = value;
@@ -118,10 +134,16 @@ export async function action({ request }: Route.ActionArgs) {
             throw new Error("Invitation code is required.");
           }
 
+          if (value.length !== 21) {
+            throw new Error("Invalid invitation code length.");
+          }
+
           invitation = value;
         }
 
         const name = parseStringValueFromFormData(formData, "name");
+
+
 
         const accountInit: IAccountInit = {
           login,

@@ -1,11 +1,15 @@
 export interface IAccountInit {
   login: string;
   password: string;
-  invitation: string;
+  invitation_code: string;
   name?: string;
 }
 
 export interface IAccountLogin {
   login: string;
   password: string;
+}
+
+export interface IAccount {
+  id: string
 }
