@@ -1,3 +1,4 @@
+import { data } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
@@ -6,6 +7,8 @@ import {
   InputSectionPassword,
   InputSectionText,
 } from "@repo/ui/forms/sections";
+import { runTransaction } from "#database";
+import { registerAccount } from "#server/entities/accounts";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountInit } from "#entities/account";
@@ -16,7 +19,7 @@ export function meta({ error }: Route.MetaArgs) {
   return [{ title: "Registration" }];
 }
 
-function RegistrationPage({ loaderData }: Route.ComponentProps) {
+function RegistrationPage({ actionData }: Route.ComponentProps) {
   const heading = "Registration";
   const formID = "registration";
 
@@ -55,16 +58,17 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       name="password"
                       autoComplete="new-password"
                       minLength={8}
-                      maxLength={32}
+                      // https://security.stackexchange.com/q/39849
+                      maxLength={49}
                       required
                     >
                       Password
                     </InputSectionPassword>
 
                     <InputSectionNanoID
-                      id={`${formID}-invitation`}
+                      id={`${formID}-invitation-code`}
                       form={formID}
-                      name="invitation"
+                      name="invitation_code"
                       required
                     >
                       Invitation code
@@ -119,16 +123,19 @@ export async function action({ request }: Route.ActionArgs) {
             throw new Error("Password is required.");
           }
 
-          if (value.length < 8 && value.length > 32) {
+          if (value.length < 8 && value.length > 49) {
             throw new Error("Invalid password length.");
           }
 
           password = value;
         }
 
-        let invitation: string | undefined = undefined;
+        let invitation_code: string | undefined = undefined;
         {
-          const value = parseStringValueFromFormData(formData, "invitation");
+          const value = parseStringValueFromFormData(
+            formData,
+            "invitation_code"
+          );
 
           if (!value) {
             throw new Error("Invitation code is required.");
@@ -138,21 +145,23 @@ export async function action({ request }: Route.ActionArgs) {
             throw new Error("Invalid invitation code length.");
           }
 
-          invitation = value;
+          invitation_code = value;
         }
 
         const name = parseStringValueFromFormData(formData, "name");
 
-
-
         const accountInit: IAccountInit = {
           login,
           password,
-          invitation,
+          invitation_code,
           name,
         };
 
-        throw new Error("Not Implemented.");
+        const account = await runTransaction(async (transaction) =>
+          registerAccount(transaction, accountInit)
+        );
+
+        return account
       }
 
       default: {

@@ -3,6 +3,7 @@ CREATE TABLE accounts (
   created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   login text UNIQUE NOT NULL,
+  auth_id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid (),
   password text NOT NULL,
   role text NOT NULL,
   name text

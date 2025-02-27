@@ -11,5 +11,7 @@ export interface IAccountLogin {
 }
 
 export interface IAccount {
-  id: string
+  role: IAccountRole;
 }
+
+export type IAccountRole = "user"

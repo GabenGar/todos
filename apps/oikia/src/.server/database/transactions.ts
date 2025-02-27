@@ -1,5 +1,5 @@
 import { database, pgPromise } from "./database";
-import type { ITransactionFunction } from "./types";
+import type { ITransaction } from "./types";
 
 const { TransactionMode, isolationLevel } = pgPromise.txMode;
 
@@ -15,8 +15,8 @@ export const strictTransactionMode = new TransactionMode({
 });
 
 export async function runTransaction<ReturnShape>(
-  dbFunction: ITransactionFunction<ReturnShape>
-) {
+  dbFunction: (transaction: ITransaction) => Promise<ReturnShape>
+): ReturnType<typeof dbFunction> {
   const result = await database.tx(dbFunction);
 
   return result;

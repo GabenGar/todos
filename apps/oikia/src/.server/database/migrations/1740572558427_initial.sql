@@ -20,6 +20,7 @@ CREATE TABLE accounts (
   id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  auth_id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid (),
   login text UNIQUE NOT NULL,
   password text NOT NULL,
   role text NOT NULL,
