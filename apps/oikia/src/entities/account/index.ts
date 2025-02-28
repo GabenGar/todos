@@ -1,1 +1,6 @@
-export type { IAccountInit, IAccountLogin, IAccount } from "./types";
+export type {
+  IAccountInit,
+  IAccountLogin,
+  IAccount,
+  IAccountRole,
+} from "./types";

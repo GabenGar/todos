@@ -12,6 +12,7 @@
     "format": "biome format --write ./src"
   },
   "imports": {
+    "#lib/*": "./src/lib/*/index.ts",
     "#components/*": "./src/components/*/index.ts",
     "#entities/*": "./src/entities/*/index.ts",
     "#database": "./src/.server/database/index.ts",

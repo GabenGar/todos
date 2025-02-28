@@ -1,7 +1,7 @@
 import { getQueryFile, type ITransaction } from "#database";
 import type { IAccountDB } from "./types";
 
-const query = getQueryFile("accounts", "insert.sql");
+const query = getQueryFile("accounts", "entities.sql");
 
 export async function selectAccountEntities(
   transaction: ITransaction,

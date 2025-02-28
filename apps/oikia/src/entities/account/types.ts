@@ -14,4 +14,4 @@ export interface IAccount {
   role: IAccountRole;
 }
 
-export type IAccountRole = "user"
+export type IAccountRole = "user" | "administrator"

@@ -7,6 +7,10 @@ import {
   InputSectionPassword,
   InputSectionText,
 } from "@repo/ui/forms/sections";
+import {
+  createFailedAPIResponse,
+  createSuccessfullAPIResponse,
+} from "#server/lib/api";
 import { runTransaction } from "#database";
 import { registerAccount } from "#server/entities/accounts";
 import { LinkInternal } from "#components/link";
@@ -38,7 +42,12 @@ function RegistrationPage({ actionData }: Route.ComponentProps) {
             </OverviewHeader>
 
             <OverviewBody>
-              <Form id={formID} method="POST" submitButton={() => "Register"}>
+              <Form<Route.ComponentProps["actionData"]>
+                id={formID}
+                method="POST"
+                submitButton={() => "Register"}
+                successElement={(formID, data) => <></>}
+              >
                 {(formID) => (
                   <>
                     <InputSectionText
@@ -157,11 +166,13 @@ export async function action({ request }: Route.ActionArgs) {
           name,
         };
 
-        const account = await runTransaction(async (transaction) =>
-          registerAccount(transaction, accountInit)
-        );
+        // await runTransaction(async (transaction) =>
+        //   registerAccount(transaction, accountInit)
+        // );
 
-        return account
+        const response = createSuccessfullAPIResponse(true);
+
+        return response
       }
 
       default: {
@@ -169,7 +180,7 @@ export async function action({ request }: Route.ActionArgs) {
       }
     }
   } catch (error) {
-    return error;
+    return createFailedAPIResponse(error as Error);
   }
 }
 

@@ -2,6 +2,7 @@ export interface IServerConfiguration {
   server: {
     port: number;
     secret_key: string;
+    admin_invitation_code: string;
   };
   database: {
     user: string;
