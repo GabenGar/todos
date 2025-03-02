@@ -13,6 +13,8 @@ import { Preformatted } from "@repo/ui/formatting";
 import { baseFormStyles } from "@repo/ui/forms";
 import { InputSection } from "@repo/ui/forms/sections";
 import { List, ListItem } from "@repo/ui/lists";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { isFailedAPIResponse } from "#lib/api";
 
 export interface IFormProps<ActionData>
   extends Omit<FormProps, "children" | "method"> {
@@ -20,6 +22,9 @@ export interface IFormProps<ActionData>
   method?: Uppercase<FormMethod>;
   children?: (formID: string) => ReactNode;
   submitButton?: (state: Navigation["state"]) => ReactNode;
+  resetButton?:
+    | null
+    | ((formID: string, state: Navigation["state"]) => ReactNode);
   successElement?: (formID: string, data: ActionData) => ReactNode;
 }
 
@@ -27,6 +32,7 @@ export function Form<ActionData>({
   id,
   className,
   submitButton,
+  resetButton,
   successElement,
   children,
   ...props
@@ -35,6 +41,8 @@ export function Form<ActionData>({
   navigation.state;
   const data = useActionData<ActionData>();
   const formID = `${id}-form`;
+  const isSuccessElementVisible =
+    successElement && data && !isFailedAPIResponse(data);
 
   return (
     <div
@@ -45,18 +53,24 @@ export function Form<ActionData>({
         className
       )}
     >
-      {successElement && data ? (
+      {isSuccessElementVisible ? (
         <>
-          {/*  */}
           <InputSection>
             {
               // @ts-expect-error @TODO better data typing
               successElement(formID, data)
             }
           </InputSection>
-          <InputSection>
-            <ButtonReset form={formID}>Reset</ButtonReset>
-          </InputSection>
+
+          {resetButton === null ? undefined : resetButton ? (
+            resetButton(formID, navigation.state)
+          ) : (
+            <InputSection>
+              <ButtonReset disabled={navigation.state !== "idle"} form={formID}>
+                Reset
+              </ButtonReset>
+            </InputSection>
+          )}
         </>
       ) : (
         <>
@@ -72,6 +86,26 @@ export function Form<ActionData>({
                 <ListItem>
                   <Preformatted>{String(data)}</Preformatted>
                 </ListItem>
+              </List>
+            ) : isFailedAPIResponse(data) ? (
+              <List isOrdered>
+                {data.errors.map(({ name, message }, index) => (
+                  <ListItem key={`${index}-${name}-${message}`}>
+                    <DescriptionList>
+                      <DescriptionSection
+                        dKey="Name"
+                        dValue={<Preformatted>{name}</Preformatted>}
+                        isHorizontal
+                      />
+
+                      <DescriptionSection
+                        dKey="Message"
+                        dValue={<Preformatted>{message}</Preformatted>}
+                        isHorizontal
+                      />
+                    </DescriptionList>
+                  </ListItem>
+                ))}
               </List>
             ) : (
               "Ready to submit."

@@ -3,6 +3,7 @@ import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
 import {
+  InputSection,
   InputSectionNanoID,
   InputSectionPassword,
   InputSectionText,
@@ -11,8 +12,8 @@ import {
   createFailedAPIResponse,
   createSuccessfullAPIResponse,
 } from "#server/lib/api";
-import { runTransaction } from "#database";
-import { registerAccount } from "#server/entities/accounts";
+// import { runTransaction } from "#database";
+// import { registerAccount } from "#server/entities/accounts";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountInit } from "#entities/account";
@@ -36,7 +37,7 @@ function RegistrationPage({ actionData }: Route.ComponentProps) {
               <p>
                 Already registered?{" "}
                 <LinkInternal href={"/authentication/login"}>
-                  Login.
+                  Log in.
                 </LinkInternal>
               </p>
             </OverviewHeader>
@@ -46,7 +47,18 @@ function RegistrationPage({ actionData }: Route.ComponentProps) {
                 id={formID}
                 method="POST"
                 submitButton={() => "Register"}
-                successElement={(formID, data) => <></>}
+                resetButton={null}
+                successElement={(formID, data) => (
+                  <>
+                    <p>
+                      You have successfully created an account, now you can{" "}
+                      <LinkInternal href={"/authentication/login"}>
+                        log in
+                      </LinkInternal>
+                      .
+                    </p>
+                  </>
+                )}
               >
                 {(formID) => (
                   <>
@@ -87,8 +99,8 @@ function RegistrationPage({ actionData }: Route.ComponentProps) {
                       id={`${formID}-name`}
                       form={formID}
                       name="name"
-                      minLength={8}
-                      maxLength={128}
+                      // minLength={1}
+                      // maxLength={128}
                     >
                       Display name
                     </InputSectionText>
@@ -159,6 +171,10 @@ export async function action({ request }: Route.ActionArgs) {
 
         const name = parseStringValueFromFormData(formData, "name");
 
+        if (name && (name.length < 1 || name.length > 128)) {
+          throw new Error("Invalid display name length.");
+        }
+
         const accountInit: IAccountInit = {
           login,
           password,
@@ -172,7 +188,7 @@ export async function action({ request }: Route.ActionArgs) {
 
         const response = createSuccessfullAPIResponse(true);
 
-        return response
+        return response;
       }
 
       default: {
@@ -180,7 +196,10 @@ export async function action({ request }: Route.ActionArgs) {
       }
     }
   } catch (error) {
-    return createFailedAPIResponse(error as Error);
+    return data(createFailedAPIResponse(error as Error), {
+      headers: new Headers([["Content-Type", "application/json"]]),
+      status: 400
+    });
   }
 }
 

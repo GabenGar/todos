@@ -2,7 +2,7 @@ import type {
   IAPIError,
   IFailedAPIResponse,
   ISuccessfulAPIResponse,
-} from "./types";
+} from "#lib/api";
 
 export function createSuccessfullAPIResponse<DataShape>(
   data: DataShape

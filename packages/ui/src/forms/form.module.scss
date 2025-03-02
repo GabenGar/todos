@@ -1,6 +1,7 @@
 @use "@repo/ui/styles/sass/variables" as *;
 
 .block {
+  position: relative;
   justify-self: center;
   display: grid;
   gap: $size-normal;
@@ -19,5 +20,6 @@
 }
 
 .form {
+  position: absolute;
   display: none;
 }
