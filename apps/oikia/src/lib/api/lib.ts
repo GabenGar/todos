@@ -1,5 +1,5 @@
 import { isObject } from "#lib/objects";
-import { isEmptyString } from "#lib/strings";
+import { isNonEmptyString } from "#lib/strings";
 import type { IAPIError, IFailedAPIResponse } from "./types";
 
 export function isFailedAPIResponse(
@@ -31,9 +31,9 @@ export function isAPIError(input: unknown): input is IAPIError {
   const isValid =
     isObject(input) &&
     "name" in input &&
-    !isEmptyString(input.name) &&
+    isNonEmptyString(input.name) &&
     "message" in input &&
-    !isEmptyString(input.message);
+    isNonEmptyString(input.message);
 
   return isValid;
 }

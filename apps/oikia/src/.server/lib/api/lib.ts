@@ -7,12 +7,12 @@ import type {
 export function createSuccessfullAPIResponse<DataShape>(
   data: DataShape
 ): ISuccessfulAPIResponse<DataShape> {
-  return { is_successfull: true, data };
+  return { is_successful: true, data };
 }
 
 export function createFailedAPIResponse(error: Error): IFailedAPIResponse {
   return {
-    is_successfull: false,
+    is_successful: false,
     errors: [createAPIError(error.name, error.message)],
   };
 }

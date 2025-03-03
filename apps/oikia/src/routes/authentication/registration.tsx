@@ -3,7 +3,6 @@ import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
 import {
-  InputSection,
   InputSectionNanoID,
   InputSectionPassword,
   InputSectionText,
@@ -12,8 +11,8 @@ import {
   createFailedAPIResponse,
   createSuccessfullAPIResponse,
 } from "#server/lib/api";
-// import { runTransaction } from "#database";
-// import { registerAccount } from "#server/entities/accounts";
+import { runTransaction } from "#database";
+import { registerAccount } from "#server/entities/accounts";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountInit } from "#entities/account";
@@ -99,8 +98,8 @@ function RegistrationPage({ actionData }: Route.ComponentProps) {
                       id={`${formID}-name`}
                       form={formID}
                       name="name"
-                      // minLength={1}
-                      // maxLength={128}
+                      minLength={1}
+                      maxLength={128}
                     >
                       Display name
                     </InputSectionText>
@@ -182,9 +181,9 @@ export async function action({ request }: Route.ActionArgs) {
           name,
         };
 
-        // await runTransaction(async (transaction) =>
-        //   registerAccount(transaction, accountInit)
-        // );
+        await runTransaction(async (transaction) =>
+          registerAccount(transaction, accountInit)
+        );
 
         const response = createSuccessfullAPIResponse(true);
 
@@ -198,7 +197,7 @@ export async function action({ request }: Route.ActionArgs) {
   } catch (error) {
     return data(createFailedAPIResponse(error as Error), {
       headers: new Headers([["Content-Type", "application/json"]]),
-      status: 400
+      status: 400,
     });
   }
 }

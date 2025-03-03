@@ -1,4 +1,4 @@
-export function isEmptyString(input: unknown): input is string {
+export function isNonEmptyString(input: unknown): input is string {
   if (typeof input !== "string") {
     return false;
   }

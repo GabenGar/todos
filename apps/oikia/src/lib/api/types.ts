@@ -3,12 +3,12 @@ export type IAPIResponse<DataShape> =
   | IFailedAPIResponse;
 
 export interface ISuccessfulAPIResponse<DataShape> {
-  is_successfull: true;
+  is_successful: true;
   data: DataShape;
 }
 
 export interface IFailedAPIResponse {
-  is_successfull: false;
+  is_successful: false;
   errors: IAPIError[];
 }
 

@@ -1,7 +1,7 @@
 WITH inits AS (
   SELECT
-    login
-    password
+    login,
+    password,
     role,
     name
   FROM
@@ -11,7 +11,7 @@ WITH inits AS (
       role text,
       name text
     )
-),
+)
 INSERT INTO accounts
   (
     login,
