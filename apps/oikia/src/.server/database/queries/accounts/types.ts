@@ -8,4 +8,6 @@ export interface IAccountDBInit extends IAccountInit, Pick<IAccount, "role"> {}
 
 export interface IAccountDBAuthData
   extends IAccountLogin,
-    Pick<IAccountDB, "id"> {}
+    Pick<IAccountDB, "id"> {
+  auth_id: string;
+}

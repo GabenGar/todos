@@ -4,12 +4,22 @@ import type { IAccountDBAuthData } from "./types";
 
 const query = getQueryFile("accounts", "auth.sql");
 
+interface IFilter {
+  login?: IAccountLogin["login"];
+  auth_id?: IAccountDBAuthData["auth_id"];
+}
+
 export async function selectAccountAuth(
   transaction: ITransaction,
-  login: IAccountLogin["login"]
+  filter: IFilter
 ) {
+  if (!filter.login && !filter.auth_id) {
+    throw new Error("Login or auth ID is required by neither was provided.");
+  }
+
   const params = {
-    login,
+    login: filter.login,
+    auth_id: filter.auth_id,
   };
 
   const auth = await transaction.one<IAccountDBAuthData>(query, params);

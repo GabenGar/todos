@@ -1,3 +1,4 @@
+import { data } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
@@ -7,6 +8,8 @@ import {
 } from "@repo/ui/forms/sections";
 import { runTransaction } from "#database";
 import { createServerAction } from "#server/lib/router";
+import { loginAccount } from "#server/entities/accounts";
+import { commitSession, getSession } from "#server/lib/sessions";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountLogin } from "#entities/account";
@@ -130,11 +133,21 @@ export const action = createServerAction(
           password,
         };
 
-        await runTransaction(async (transaction) =>
+        const { auth_id } = await runTransaction(async (transaction) =>
           loginAccount(transaction, accountLogin)
         );
 
-        return true;
+        const session = await getSession(request.headers.get("Cookie"));
+
+        session.set("auth_id", auth_id);
+
+        const headers = new Headers([
+          ["Set-Cookie", await commitSession(session)],
+        ]);
+
+        return data(true, {
+          headers,
+        });
       }
 
       default: {
