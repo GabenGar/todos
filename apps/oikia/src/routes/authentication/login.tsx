@@ -42,7 +42,7 @@ function LoginPage() {
               <Form<Route.ComponentProps["actionData"]>
                 id={formID}
                 method="POST"
-                submitButton={() => "Register"}
+                submitButton={() => "Login"}
                 resetButton={null}
                 successElement={(formID, data) => (
                   <>

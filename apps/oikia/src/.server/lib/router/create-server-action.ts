@@ -24,7 +24,7 @@ export function createServerAction<
     } catch (error) {
       return data(createFailedAPIResponse(error as Error), {
         headers: new Headers([["Content-Type", "application/json"]]),
-        status: 400,
+        status: 500,
       });
     }
   }

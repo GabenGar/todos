@@ -5,12 +5,14 @@ type SessionData = {
   auth_id: string;
 };
 
+const maxAge = 60 * 60 * 24 * 30;
+
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage<SessionData>({
     cookie: {
       name: "__session",
       httpOnly: true,
-      maxAge: 60,
+      maxAge,
       path: "/",
       sameSite: "strict",
       secrets: [SESSION_SECRET_KEY],
