@@ -1,11 +1,17 @@
 import { Page } from "@repo/ui/pages";
-import type { Route } from "./+types/home";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import { createServerLoader } from "#server/lib/router";
+import { getSession } from "#server/lib/sessions";
+
+import type { Route } from "./+types/home";
 
 export function meta({ error }: Route.MetaArgs) {
   return [{ title: "Account" }];
 }
 
+/**
+ * @TODO client render
+ */
 function RegistrationPage({ loaderData }: Route.ComponentProps) {
   const heading = "Account";
 
@@ -23,8 +29,22 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  throw new Error("Not Implemented.")
-}
+export const loader = createServerLoader(
+  async ({ request }: Route.LoaderArgs) => {
+    const session = await getSession(
+      request.headers.get("Cookie")
+    );
+
+    const authID = session.get("auth_id")
+
+    if (!authID) {
+      throw new Error("Not Authorized.")
+    }
+
+
+
+    throw new Error("Not Implemented.");
+  }
+);
 
 export default RegistrationPage;
