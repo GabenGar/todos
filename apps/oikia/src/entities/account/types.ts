@@ -10,7 +10,7 @@ export interface IAccountLogin {
   password: string;
 }
 
-export interface IAccount {
+export interface IAccount extends Pick<IAccountInit, "name"> {
   role: IAccountRole;
 }
 

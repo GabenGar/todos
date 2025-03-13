@@ -20,7 +20,7 @@ export function meta({ error }: Route.MetaArgs) {
   return [{ title: "Login" }];
 }
 
-function LoginPage() {
+function LoginPage({ matches }: Route.ComponentProps) {
   const heading = "Login";
   const formID = "login";
 

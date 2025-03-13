@@ -13,7 +13,8 @@ WITH input_accounts AS (
 )
 SELECT
   id,
-  role
+  role,
+  name
 FROM
   input_accounts
 ORDER BY
