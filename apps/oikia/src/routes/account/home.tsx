@@ -1,5 +1,7 @@
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Heading } from "@repo/ui/headings";
 import { createServerLoader } from "#server/lib/router";
 import { getSession } from "#server/lib/sessions";
 import { runTransaction } from "#database";
@@ -9,7 +11,6 @@ import {
 } from "#database/queries/accounts";
 
 import type { Route } from "./+types/home";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 
 export function meta({ error }: Route.MetaArgs) {
   return [{ title: "Account" }];
@@ -29,17 +30,22 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
     throw new Error(`${error.name}: ${error.message}`);
   }
 
-  const { name, role } = loaderData.data;
+  const { name, role, created_at } = loaderData.data;
 
   return (
     <Page heading={heading}>
       <Overview headingLevel={2}>
-        {() => (
+        {(headingLevel) => (
           <>
-            <OverviewHeader>{name}</OverviewHeader>
+            <OverviewHeader>
+              <Heading level={headingLevel + 1}>{name}</Heading>
+            </OverviewHeader>
+
             <OverviewBody>
               <DescriptionList>
-                <DescriptionSection dKey="Role" dValue={role} />
+                <DescriptionSection dKey="Role" dValue={role} isHorizontal />
+
+                <DescriptionSection dKey="Joined" dValue={created_at} />
               </DescriptionList>
             </OverviewBody>
           </>
@@ -52,7 +58,6 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
 export const loader = createServerLoader(
   async ({ request }: Route.LoaderArgs) => {
     const session = await getSession(request.headers.get("Cookie"));
-
     const authID = session.get("auth_id");
 
     if (!authID) {

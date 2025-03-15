@@ -20,7 +20,7 @@ export function createServerAction<
     try {
       const data = await actionFunc(...args);
 
-      return createSuccessfullAPIResponse(data);
+      return data;
     } catch (error) {
       return data(createFailedAPIResponse(error as Error), {
         headers: new Headers([["Content-Type", "application/json"]]),

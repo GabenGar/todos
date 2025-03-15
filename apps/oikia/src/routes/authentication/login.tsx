@@ -10,6 +10,7 @@ import { runTransaction } from "#database";
 import { createServerAction } from "#server/lib/router";
 import { loginAccount } from "#server/entities/accounts";
 import { commitSession, getSession } from "#server/lib/sessions";
+import { createSuccessfullAPIResponse } from "#server/lib/api";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountLogin } from "#entities/account";
@@ -18,6 +19,10 @@ import type { Route } from "./+types/login";
 
 export function meta({ error }: Route.MetaArgs) {
   return [{ title: "Login" }];
+}
+
+export function headers({ actionHeaders, loaderHeaders }: Route.HeadersArgs) {
+  return loaderHeaders ? loaderHeaders : actionHeaders;
 }
 
 function LoginPage({ matches }: Route.ComponentProps) {
@@ -145,9 +150,11 @@ export const action = createServerAction(
           ["Set-Cookie", await commitSession(session)],
         ]);
 
-        return data(true, {
+        const response = data(createSuccessfullAPIResponse(true), {
           headers,
         });
+
+        return response;
       }
 
       default: {

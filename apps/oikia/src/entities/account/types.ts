@@ -11,7 +11,8 @@ export interface IAccountLogin {
 }
 
 export interface IAccount extends Pick<IAccountInit, "name"> {
+  created_at: string;
   role: IAccountRole;
 }
 
-export type IAccountRole = "user" | "administrator"
+export type IAccountRole = "user" | "administrator";

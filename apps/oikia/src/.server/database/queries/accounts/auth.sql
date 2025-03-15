@@ -15,6 +15,6 @@ WHERE
   (
     ${auth_id} IS NULL
     OR
-    login = ${auth_id}
+    auth_id = ${auth_id}
   )
 ;
