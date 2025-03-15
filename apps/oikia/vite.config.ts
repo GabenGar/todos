@@ -12,11 +12,25 @@ const config = defineConfig(({ isSsrBuild }) => {
       },
     },
     build: {
-      rollupOptions: isSsrBuild
-        ? {
-            input: "./server/app.ts",
+      sourcemap: true,
+      rollupOptions: {
+        /**
+         * Shut down messages in build log
+         * https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
+         */
+        onLog(level, log, handler) {
+          if (
+            log.cause &&
+            // @ts-expect-error generic lib types
+            log.cause.message === `Can't resolve original location of error.`
+          ) {
+            return;
           }
-        : undefined,
+
+          handler(level, log);
+        },
+        input: isSsrBuild ? "./server/app.ts" : undefined,
+      },
     },
   };
 
