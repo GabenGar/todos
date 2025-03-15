@@ -1,17 +1,16 @@
-import type { IAccountInit } from "#entities/account";
 import {
   getQueryFile,
   toEntityIDs,
   type IEntityRow,
   type ITransaction,
 } from "#database";
-import type { IAccountDB } from "./types";
+import type { IAccountDB, IAccountDBInit } from "./types";
 
 const query = getQueryFile("accounts", "insert.sql");
 
 export async function insertAccounts(
   transaction: ITransaction,
-  inits: IAccountInit[]
+  inits: IAccountDBInit[]
 ): Promise<IAccountDB["id"][]> {
   const params = { inits };
 

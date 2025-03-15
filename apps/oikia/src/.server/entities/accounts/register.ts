@@ -38,14 +38,16 @@ export async function registerAccount(
   const hashedPassword = await hashPassword(password, salt);
   const realInit: IAccountDBInit = {
     ...init,
-    role: isAdminInvitation ? "user" :"user",
+    role: isAdminInvitation ? "administrator" : "user",
     password: hashedPassword,
   };
 
   const [id] = await insertAccounts(transaction, [realInit]);
   const [accountDB] = await selectAccountEntities(transaction, [id]);
   const account: IAccount = {
+    created_at: accountDB.created_at,
     role: accountDB.role,
+    name: accountDB.name,
   };
 
   return account;
