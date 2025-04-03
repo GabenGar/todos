@@ -1,9 +1,5 @@
 import { data } from "react-router";
-import {
-  createFailedAPIResponse,
-  createSuccessfullAPIResponse,
-} from "#server/lib/api";
-import type { ISuccessfulAPIResponse } from "#lib/api";
+import { createFailedAPIResponse } from "#server/lib/api";
 
 export function createServerAction<
   // biome-ignore lint/suspicious/noExplicitAny: functions require `any` for generics to be useful
@@ -13,7 +9,7 @@ export function createServerAction<
     ...args: Parameters<typeof actionFunc>
   ): Promise<
     Awaited<
-      | ISuccessfulAPIResponse<ReturnType<typeof actionFunc>>
+      | ReturnType<typeof actionFunc>
       | ReturnType<typeof data<ReturnType<typeof createFailedAPIResponse>>>
     >
   > {
