@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ServerConfiguration",
+  "description": "Configuration for the server.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["server", "database"],
+  "properties": {
+    "server": {
+      "description": "Server options.",
+      "type": "object",
+      "required": ["port", "secret_key", "admin_invitation_code"],
+      "additionalProperties": false,
+      "properties": {
+        "port": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "secret_key": {
+          "description": "A key used to sign session cookies.",
+          "type": "string",
+          "pattern": "^[\\s\\S]*$",
+          "minLength": 8,
+          "maxLength": 32
+        },
+        "admin_invitation_code": {
+          "$ref": "#/definitions/nanoid"
+        }
+      }
+    },
+    "database": {
+      "$ref": "#/definitions/database"
+    }
+  },
+  "definitions": {
+    "database": {
+      "description": "PostgreSQL connection object.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user", "host", "port", "database"],
+      "properties": {
+        "user": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
+        },
+        "password": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
+        },
+        "host": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "database": {
+          "type": "string",
+          "pattern": "^[\\s\\S]*$"
+        }
+      }
+    },
+    "nanoid": {
+      "title": "NanoID",
+      "description": "[`nanoid`](https://github.com/ai/nanoid) string with default parameters.\nThe pattern is package author's [advice](https://github.com/ai/nanoid/issues/405#issuecomment-1397709000).",
+      "type": "string",
+      "minLength": 21,
+      "maxLength": 21,
+      "pattern": "^[\\w_-]*$"
+    }
+  }
+}
