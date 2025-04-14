@@ -14,6 +14,7 @@ import {
 } from "#lib/logs";
 import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 import { isIndexedDBAvailable } from "#store/indexed";
+import { IndexedDBProvider } from "./indexed-db";
 
 type IClientContext =
   | {
@@ -93,7 +94,7 @@ export function ClientProvider({ children }: { children: ReactNode }) {
             }
       }
     >
-      {children}
+      <IndexedDBProvider>{children}</IndexedDBProvider>
     </ClientContext.Provider>
   );
 }

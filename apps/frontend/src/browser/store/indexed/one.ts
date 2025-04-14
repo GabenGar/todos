@@ -1,4 +1,4 @@
-import { getTransaction } from "./get-transaction";
+import { getTransaction } from "./transactions";
 import type { IStorageName } from "./types";
 
 export async function getOneIndexedDBItem<Type>(

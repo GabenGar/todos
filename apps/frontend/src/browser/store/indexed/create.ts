@@ -1,5 +1,5 @@
 import { getOneIndexedDBItem } from "./one";
-import { getTransaction } from "./get-transaction";
+import { getTransaction } from "./transactions";
 import type { IStorageName } from "./types";
 
 // interesting note for multi-inserts:
