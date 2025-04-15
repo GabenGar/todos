@@ -7,4 +7,10 @@ export { createOneIndexedDBItem } from "./create";
 export { updateOneIndexedDBItem } from "./update";
 export { deleteOneIndexedDBItem } from "./delete";
 export { isIndexedDBAvailable } from "./is-available";
-export type { IStorageName, IIDBTransaction } from "./types";
+export { toIDBBoolean, fromIDBBoolean, toIDBNull, fromIDBNull } from "./types";
+export type {
+  IStorageName,
+  IIDBTransaction,
+  IIDBBoolean,
+  IIDBNull,
+} from "./types";

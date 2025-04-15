@@ -1,38 +1,49 @@
+import { type IIDBTransaction } from "#browser/store/indexed";
 import {
-  getManyIndexedDBItems,
-  getOneIndexedDBItem,
-  countIndexedDBItems,
-} from "#browser/store/indexed";
-import type { IPaginatedCollection } from "#lib/pagination";
+  selectPlannedEventCount,
+  selectPlannedEventEntities,
+  selectPlannedEventIDs,
+} from "#browser/store/indexed/queries/planned-events";
+import {
+  createClientPagination,
+  type IPaginatedCollection,
+} from "#lib/pagination";
 import type { IPlannedEvent } from "../types";
-import { validatePlannedEvent } from "./validate";
 
-export async function countPlannedEvents(): Promise<number> {
-  const count = await countIndexedDBItems("planned_events");
-
-  return count;
+export function countPlannedEvents(
+  transaction: IIDBTransaction<"planned_events">,
+  onSuccess: (count: number) => void,
+): void {
+  selectPlannedEventCount(transaction, onSuccess);
 }
 
-export async function getPlannedEvents(
-  page?: number,
-): Promise<IPaginatedCollection<IPlannedEvent>> {
-  const plannedEvents = await getManyIndexedDBItems(
-    "planned_events",
-    validatePlannedEvent,
-    page,
-  );
+export function getPlannedEvents(
+  transaction: IIDBTransaction<"planned_events">,
+  page: number,
+  onSuccess: (plannedEvents: IPaginatedCollection<IPlannedEvent>) => void,
+): void {
+  selectPlannedEventCount(transaction, (count) => {
+    const pagination = createClientPagination(count, page);
 
-  return plannedEvents;
+    selectPlannedEventIDs(transaction, pagination, (ids) => {
+      selectPlannedEventEntities(transaction, ids, (plannedEvents) => {
+        const result: IPaginatedCollection<IPlannedEvent> = {
+          pagination,
+          items: plannedEvents,
+        };
+
+        onSuccess(result);
+      });
+    });
+  });
 }
 
-export async function getPlannedEvent(
+export function getPlannedEvent(
+  transaction: IIDBTransaction<"planned_events">,
   id: IPlannedEvent["id"],
-): Promise<IPlannedEvent> {
-  const plannedEvent = await getOneIndexedDBItem(
-    "planned_events",
-    id,
-    validatePlannedEvent,
+  onSuccess: (plannedEvent: IPlannedEvent) => void,
+): void {
+  selectPlannedEventEntities(transaction, [id], ([plannedEvent]) =>
+    onSuccess(plannedEvent),
   );
-
-  return plannedEvent;
 }
