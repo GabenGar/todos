@@ -3,7 +3,7 @@ import { getTransaction } from "./transactions";
 import type { IStorageName } from "./types";
 
 // interesting note for multi-inserts:
-// https://stackoverflow.com/a/52555073/14481500
+// https://stackoverflow.com/a/52555073
 
 export async function createOneIndexedDBItem<InitType, Type>(
   storeName: IStorageName,

@@ -1,11 +1,17 @@
-import { createOneIndexedDBItem } from "#store/indexed";
-import { validatePlannedEvent, validatePlannedEventInit } from "./validate";
-import type { IPlannedEvent, IPlannedEventInit } from "../types";
 import { now } from "#lib/dates";
+import { type IIDBTransaction } from "#store/indexed";
+import { validatePlannedEventInit } from "./validate";
+import type { IPlannedEvent, IPlannedEventInit } from "../types";
+import {
+  insertPlannedEvents,
+  selectPlannedEventEntities,
+} from "#browser/store/indexed/queries/planned-events";
 
-export async function createPlannedEvent(
+export function createPlannedEvent(
+  transaction: IIDBTransaction<"planned_events">,
   init: IPlannedEventInit,
-): Promise<IPlannedEvent> {
+  onSuccess: (plannedEvent: IPlannedEvent) => void,
+): void {
   validatePlannedEventInit(init);
 
   const timestamp = now();
@@ -15,11 +21,9 @@ export async function createPlannedEvent(
     updated_at: timestamp,
   };
 
-  const plannedEvent = await createOneIndexedDBItem(
-    "planned_events",
-    anotherInit,
-    validatePlannedEvent,
-  );
-
-  return plannedEvent;
+  insertPlannedEvents(transaction, [anotherInit], ([id]) => {
+    selectPlannedEventEntities(transaction, [id], ([plannedEvent]) => {
+      onSuccess(plannedEvent);
+    });
+  });
 }
