@@ -24,7 +24,7 @@ export function selectPlannedEventEntities(
       }
 
       if (plannedEvents.length !== ids.length) {
-        throw new Error("Amount of IDs and found events do not match.");
+        throw new Error("Amount of IDs and found planned events do not match.");
       }
 
       onSuccess(plannedEvents);

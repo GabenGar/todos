@@ -10,4 +10,8 @@ export { PlannedEventCreateForm } from "./forms/create";
 export { EditPlannedEventForm } from "./forms/edit";
 export { PlannedEventPreview } from "./preview";
 export { PlannetEventOverview } from "./overview";
-export type { IPlannedEvent, IPlannedEventInit } from "./types";
+export type {
+  IPlannedEvent,
+  IPlannedEventInit,
+  IPlannedEventUpdate,
+} from "./types";

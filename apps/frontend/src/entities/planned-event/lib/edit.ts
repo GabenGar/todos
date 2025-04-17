@@ -1,33 +1,23 @@
-import { now } from "#lib/dates";
-import { getOneIndexedDBItem, updateOneIndexedDBItem } from "#store/indexed";
-import { validatePlannedEvent, validatePlannedEventUpdate } from "./validate";
+import { type IIDBTransaction } from "#store/indexed";
+import { updatePlannedEvents } from "#store/indexed/queries/planned-events";
 import type { IPlannedEvent, IPlannedEventUpdate } from "../types";
+import { validatePlannedEventUpdate } from "./validate";
+import { getPlannedEvent } from "./get";
 
-export async function editPlannedEvent(
+export function editPlannedEvent(
+  transaction: IIDBTransaction<"planned_events">,
   update: IPlannedEventUpdate,
-): Promise<IPlannedEvent> {
+  onSuccess: (updatedEvent: IPlannedEvent) => void,
+): void {
   validatePlannedEventUpdate(update);
 
-  const { id, ...updateBody } = update;
-  const timestamp = now();
+  const id = update.id;
 
-  const currentEvent = await getOneIndexedDBItem(
-    "planned_events",
-    id,
-    validatePlannedEvent,
-  );
-
-  const incomingUpdate: IPlannedEvent = {
-    ...currentEvent,
-    ...updateBody,
-    updated_at: timestamp,
-  };
-
-  const updatedEvent = await updateOneIndexedDBItem(
-    "planned_events",
-    incomingUpdate,
-    validatePlannedEvent,
-  );
-
-  return updatedEvent;
+  getPlannedEvent(transaction, id, (currentEvent) => {
+    updatePlannedEvents(transaction, [update], ([updatedEventID]) => {
+      getPlannedEvent(transaction, updatedEventID, (updatedEvent) => {
+        onSuccess(updatedEvent);
+      });
+    });
+  });
 }
