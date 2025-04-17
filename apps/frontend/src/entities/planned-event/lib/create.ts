@@ -1,4 +1,3 @@
-import { now } from "#lib/dates";
 import { type IIDBTransaction } from "#store/indexed";
 import { validatePlannedEventInit } from "./validate";
 import type { IPlannedEvent, IPlannedEventInit } from "../types";
@@ -14,14 +13,7 @@ export function createPlannedEvent(
 ): void {
   validatePlannedEventInit(init);
 
-  const timestamp = now();
-  const anotherInit: Omit<IPlannedEvent, "id"> = {
-    ...init,
-    created_at: timestamp,
-    updated_at: timestamp,
-  };
-
-  insertPlannedEvents(transaction, [anotherInit], ([id]) => {
+  insertPlannedEvents(transaction, [init], ([id]) => {
     selectPlannedEventEntities(transaction, [id], ([plannedEvent]) => {
       onSuccess(plannedEvent);
     });

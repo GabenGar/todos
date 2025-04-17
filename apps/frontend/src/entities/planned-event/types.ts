@@ -5,6 +5,8 @@ export interface IPlannedEvent {
   id: number;
   created_at: IDateTime;
   updated_at: IDateTime;
+  parsed_created_at: Date;
+  parsed_updated_at: Date;
   title: ITitle;
   description?: IDescription;
 }
