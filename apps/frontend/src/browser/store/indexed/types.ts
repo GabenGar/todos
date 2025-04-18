@@ -1,13 +1,35 @@
+export interface IIDBSchema {
+  public: {
+    planned_events: ["recently_created", "recently_updated"];
+  };
+}
 export const databaseName = "public";
-export const databaseVersion = 1;
-export const storageNames = ["planned_events"] as const;
+export const databaseVersion = 2;
+export const storageNames = [
+  "planned_events",
+] as const satisfies (keyof IIDBSchema["public"])[];
 
 export type IStorageName = (typeof storageNames)[number];
 
 export interface IIDBTransaction<StoreName extends IStorageName = IStorageName>
-  extends IDBTransaction {
+  extends Omit<IDBTransaction, "objectStore"> {
   objectStoreNames: IStoreNameStringList<StoreName>;
-  objectStore(name: StoreName): IDBObjectStore;
+  objectStore(name: StoreName): IIDBObjectStore<StoreName>;
+}
+
+interface IIDBObjectStore<StoreName extends IStorageName = IStorageName>
+  extends Omit<
+    IDBObjectStore,
+    "createIndex" | "deleteIndex" | "index" | "transaction"
+  > {
+  transaction: IIDBTransaction<StoreName>;
+  createIndex(
+    name: IIDBSchema["public"][StoreName][number],
+    keyPath: string | string[],
+    options?: IDBIndexParameters,
+  ): IDBIndex;
+  deleteIndex(name: IIDBSchema["public"][StoreName][number]): void;
+  index(name: IIDBSchema["public"][StoreName][number]): IDBIndex;
 }
 
 interface IStoreNameStringList<StoreName extends IStorageName>
