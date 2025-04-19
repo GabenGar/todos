@@ -20,11 +20,11 @@
       "#server/*": [
         "./server/*/index.ts"
       ],
-      "#browser/*": [
-        "./browser/*"
-      ],
       "#store/*": [
         "./browser/store/*/index.ts"
+      ],
+      "#browser/*": [
+        "./browser/*"
       ],
       "#hooks": [
         "./hooks/index.ts"

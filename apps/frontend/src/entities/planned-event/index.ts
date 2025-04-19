@@ -5,7 +5,7 @@ export {
   getPlannedEvent,
 } from "./lib/get";
 export { editPlannedEvent } from "./lib/edit";
-export { deletePlannedEvent } from "./lib/delete";
+export { removePlannedEvent } from "./lib/remove";
 export { PlannedEventCreateForm } from "./forms/create";
 export { EditPlannedEventForm } from "./forms/edit";
 export { PlannedEventPreview } from "./preview";

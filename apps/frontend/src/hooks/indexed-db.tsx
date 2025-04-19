@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import {
   getDatabase,
   getTransaction,
@@ -18,7 +12,7 @@ type IIndexedDBContext = undefined | IIDBTransactionRunner;
 interface IIDBTransactionRunner<StoreName extends IStorageName = IStorageName> {
   (
     storeNames: StoreName | StoreName[] | Iterable<StoreName>,
-    mode: IDBTransactionMode,
+    mode: Exclude<IDBTransactionMode, "versionchange">,
     onError: (event: Event) => void,
     run: (transaction: IIDBTransaction<StoreName>) => void,
   ): void;
@@ -37,27 +31,29 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
     onError: (event: Event) => void,
     run: (transaction: IIDBTransaction<StoreName>) => void,
   ) {
-    const transaction = getTransaction(database!, storeNames, mode);
+    if (!database) {
+      getDatabase(
+        (error) => {
+          throw error;
+        },
+        (db) => {
+          changeDatabase(db);
 
-    transaction.onerror = onError;
+          const transaction = getTransaction(db, storeNames, mode);
 
-    run(transaction);
+          transaction.onerror = onError;
+
+          run(transaction);
+        },
+      );
+    } else {
+      const transaction = getTransaction(database, storeNames, mode);
+
+      transaction.onerror = onError;
+
+      run(transaction);
+    }
   }
-
-  useEffect(() => {
-    getDatabase(
-      (error) => {
-        throw error;
-      },
-      (db) => {
-        changeDatabase(db);
-      },
-    );
-
-    return () => {
-      database?.close();
-    };
-  }, []);
 
   return (
     <IndexedDBContext.Provider

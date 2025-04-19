@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalizationEntities } from "#lib/localization";
 import { createPlannedEventsPageURL } from "#lib/urls";
+import type { IPaginatedCollection } from "#lib/pagination";
+import { useIndexedDB } from "#hooks";
 import { Details, Loading } from "#components";
 import { Overview, OverviewHeader } from "#components/overview";
 import { PreviewList } from "#components/preview";
@@ -14,6 +16,7 @@ import {
   countPlannedEvents,
   createPlannedEvent,
   getPlannedEvents,
+  type IPlannedEvent,
   type IPlannedEventInit,
 } from "#entities/planned-event";
 
@@ -24,46 +27,64 @@ interface IProps extends ILocalizableProps, ITranslatableProps {
 export function Client({ language, commonTranslation, translation }: IProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const runTransaction = useIndexedDB();
   const [plannedEvents, changePlannedEvents] =
-    useState<Awaited<ReturnType<typeof getPlannedEvents>>>();
+    useState<IPaginatedCollection<IPlannedEvent>>();
   const [isLoading, switchLoading] = useState(true);
   const inputPage = searchParams.get("page")?.trim();
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
 
   useEffect(() => {
-    (async () => {
-      try {
-        switchLoading(true);
-        const count = await countPlannedEvents();
+    switchLoading(true);
 
-        if (count === 0) {
-          return;
-        }
-
-        const newPlannedEvents = await getPlannedEvents(page);
-
-        if (!page) {
-          const url = createPlannedEventsPageURL(language, {
-            page: newPlannedEvents.pagination.totalPages,
-          });
-          router.replace(url);
-
-          return;
-        }
-
-        changePlannedEvents(newPlannedEvents);
-      } finally {
+    runTransaction?.(
+      "planned_events",
+      "readonly",
+      (event) => {
         switchLoading(false);
-      }
-    })();
+        throw new Error(String(event));
+      },
+      (transaction) => {
+        countPlannedEvents(transaction, (count) => {
+          switchLoading(false);
+
+          if (count === 0) {
+            return;
+          }
+
+          getPlannedEvents(transaction, page!, (plannedEvents) => {
+            if (!page) {
+              const url = createPlannedEventsPageURL(language, {
+                page: plannedEvents.pagination.totalPages,
+              });
+              router.replace(url);
+
+              switchLoading(false);
+              return;
+            }
+
+            changePlannedEvents(plannedEvents);
+          });
+        });
+      },
+    );
   }, [page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {
-    await createPlannedEvent(init);
-
-    const newPlannedEvents = await getPlannedEvents();
-
-    changePlannedEvents(newPlannedEvents);
+    runTransaction?.(
+      "planned_events",
+      "readwrite",
+      (event) => {
+        throw new Error(String(event));
+      },
+      (transaction) => {
+        createPlannedEvent(transaction, init, () => {
+          getPlannedEvents(transaction, 0, (newPlannedEvents) => {
+            changePlannedEvents(newPlannedEvents);
+          });
+        });
+      },
+    );
   }
 
   return (
