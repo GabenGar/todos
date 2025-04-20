@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { DEFAULT_LOG_LEVEL } from "#environment";
 import {
   type ILogLevel,

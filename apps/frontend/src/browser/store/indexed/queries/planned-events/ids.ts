@@ -12,7 +12,8 @@ export function selectPlannedEventIDs(
   const cursorRequest = objectStore.openKeyCursor();
   const ids: IPlannedEvent["id"][] = [];
   // https://stackoverflow.com/a/22562756
-  let isAdvancing = true;
+  // cursor requires offset more than 0 to advance
+  let isAdvancing = offset !== 0;
 
   cursorRequest.onsuccess = (event) => {
     const cursor = (event.target as typeof cursorRequest).result;

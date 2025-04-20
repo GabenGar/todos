@@ -33,7 +33,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       return;
     }
 
-    runTransaction?.(
+    runTransaction(
       "planned_events",
       "readonly",
       (event) => {

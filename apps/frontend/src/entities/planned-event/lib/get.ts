@@ -6,6 +6,7 @@ import {
 } from "#browser/store/indexed/queries/planned-events";
 import {
   createClientPagination,
+  PAGINATION_LIMIT,
   type IPaginatedCollection,
 } from "#lib/pagination";
 import type { IPlannedEvent } from "../types";
@@ -19,11 +20,11 @@ export function countPlannedEvents(
 
 export function getPlannedEvents(
   transaction: IIDBTransaction<"planned_events">,
-  page: number,
+  page: number | undefined,
   onSuccess: (plannedEvents: IPaginatedCollection<IPlannedEvent>) => void,
 ): void {
   selectPlannedEventCount(transaction, (count) => {
-    const pagination = createClientPagination(count, page);
+    const pagination = createClientPagination(count, PAGINATION_LIMIT, page);
 
     selectPlannedEventIDs(transaction, pagination, (ids) => {
       selectPlannedEventEntities(transaction, ids, (plannedEvents) => {

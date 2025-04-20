@@ -37,7 +37,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   useEffect(() => {
     switchLoading(true);
 
-    runTransaction?.(
+    runTransaction(
       "planned_events",
       "readonly",
       (event) => {
@@ -71,7 +71,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   }, [page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {
-    runTransaction?.(
+    runTransaction(
       "planned_events",
       "readwrite",
       (event) => {

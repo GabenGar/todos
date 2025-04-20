@@ -46,7 +46,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       return;
     }
 
-    runTransaction?.(
+    runTransaction(
       "planned_events",
       "readonly",
       (event) => {
@@ -93,7 +93,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 id={`edit-planned-event-${currentPlannedEvent.id}`}
                 currentPlannedEvent={currentPlannedEvent}
                 onPlannedEventEdit={async (update) => {
-                  runTransaction?.(
+                  runTransaction(
                     "planned_events",
                     "readwrite",
                     (event) => {
@@ -118,7 +118,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 <MenuItem
                   viewType="negative"
                   onClick={async () => {
-                    runTransaction?.(
+                    runTransaction(
                       "planned_events",
                       "readwrite",
                       (event) => {

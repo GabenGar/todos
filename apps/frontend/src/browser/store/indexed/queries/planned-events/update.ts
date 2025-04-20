@@ -30,14 +30,14 @@ export function updatePlannedEvents(
 
   // IDB doesn't support partial updates
   // https://stackoverflow.com/a/51542210
-  // therefoe doing partial updates with cursor
+  // therefore doing partial updates with cursor
   // https://www.huy.rocks/everyday/03-17-2022-javascript-partial-update-an-object-in-indexeddb
   const cursorRequest = objectStore.openCursor();
 
   cursorRequest.onsuccess = (event) => {
     const cursor = (event.target as typeof cursorRequest).result;
 
-    if (cursor && idbUpdates.length < ids.length) {
+    if (cursor && ids.length < updateIDs.length) {
       const currentID = (cursor.value as IPlannedEvent).id;
 
       if (updateIDs.includes(currentID)) {

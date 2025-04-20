@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   getDatabase,
   getTransaction,
@@ -7,7 +13,7 @@ import {
 } from "#browser/store/indexed";
 import { useClient } from "./client";
 
-type IIndexedDBContext = undefined | IIDBTransactionRunner;
+type IIndexedDBContext = IIDBTransactionRunner;
 
 interface IIDBTransactionRunner<StoreName extends IStorageName = IStorageName> {
   (
@@ -18,47 +24,52 @@ interface IIDBTransactionRunner<StoreName extends IStorageName = IStorageName> {
   ): void;
 }
 
-const defaultContext: IIndexedDBContext = undefined;
+const defaultContext: IIndexedDBContext = () => {};
 const IndexedDBContext = createContext<IIndexedDBContext>(defaultContext);
 
 export function IndexedDBProvider({ children }: { children: ReactNode }) {
   const { isClient } = useClient();
   const [database, changeDatabase] = useState<IDBDatabase>();
 
-  function runIndexedDBTransaction<StoreName extends IStorageName>(
-    storeNames: StoreName | StoreName[] | Iterable<StoreName>,
-    mode: IDBTransactionMode,
-    onError: (event: Event) => void,
-    run: (transaction: IIDBTransaction<StoreName>) => void,
-  ) {
-    if (!database) {
-      getDatabase(
-        (error) => {
-          throw error;
-        },
-        (db) => {
-          changeDatabase(db);
+  const runIndexedDBTransaction = useCallback(
+    <StoreName extends IStorageName>(
+      storeNames: StoreName | StoreName[] | Iterable<StoreName>,
+      mode: IDBTransactionMode,
+      onError: (event: Event) => void,
+      run: (transaction: IIDBTransaction<StoreName>) => void,
+    ) => {
+      if (isClient) {
+        throw new Error("IndexedDB is only available on client.");
+      }
 
-          const transaction = getTransaction(db, storeNames, mode);
+      if (!database) {
+        getDatabase(
+          (error) => {
+            throw error;
+          },
+          (db) => {
+            changeDatabase(db);
 
-          transaction.onerror = onError;
+            const transaction = getTransaction(db, storeNames, mode);
 
-          run(transaction);
-        },
-      );
-    } else {
-      const transaction = getTransaction(database, storeNames, mode);
+            transaction.onerror = onError;
 
-      transaction.onerror = onError;
+            run(transaction);
+          },
+        );
+      } else {
+        const transaction = getTransaction(database, storeNames, mode);
 
-      run(transaction);
-    }
-  }
+        transaction.onerror = onError;
+
+        run(transaction);
+      }
+    },
+    [],
+  );
 
   return (
-    <IndexedDBContext.Provider
-      value={!isClient && !database ? undefined : runIndexedDBTransaction}
-    >
+    <IndexedDBContext.Provider value={runIndexedDBTransaction}>
       {children}
     </IndexedDBContext.Provider>
   );
