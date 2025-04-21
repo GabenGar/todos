@@ -67,3 +67,7 @@ export function toIDBNull(value: undefined): IIDBNull {
 export function fromIDBNull(value: IIDBNull): undefined {
   return undefined;
 }
+
+export interface IIDBArgs<StoreName extends IStorageName> {
+  transaction: IIDBTransaction<StoreName>;
+}

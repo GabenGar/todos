@@ -53,7 +53,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         throw new Error(String(event));
       },
       (transaction) => {
-        getPlannedEvent(transaction, parsedID, (plannedEvent) =>
+        getPlannedEvent({ transaction, id: parsedID }, (plannedEvent) =>
           changePlannedEvent(plannedEvent),
         );
       },

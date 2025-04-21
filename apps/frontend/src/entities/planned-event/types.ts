@@ -17,3 +17,5 @@ export interface IPlannedEventInit
 export interface IPlannedEventUpdate
   extends Pick<Required<IPlannedEvent>, "id">,
     Pick<Partial<IPlannedEvent>, "title" | "description"> {}
+
+export type IPlannedEventOrder = "recently_created" | "recently_updated";

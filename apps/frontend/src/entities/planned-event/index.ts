@@ -3,6 +3,7 @@ export {
   countPlannedEvents,
   getPlannedEvents,
   getPlannedEvent,
+  isPlannedEventsOrder
 } from "./lib/get";
 export { editPlannedEvent } from "./lib/edit";
 export { removePlannedEvent } from "./lib/remove";
@@ -14,4 +15,5 @@ export type {
   IPlannedEvent,
   IPlannedEventInit,
   IPlannedEventUpdate,
+  IPlannedEventOrder
 } from "./types";

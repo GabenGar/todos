@@ -2,7 +2,10 @@ import type { Route } from "next";
 import type { ILocale } from "#lib/internationalization";
 import type { ITask } from "#entities/task";
 import type { IPlace, IPlacesCategory } from "#entities/place";
-import type { IPlannedEvent } from "#entities/planned-event";
+import type {
+  IPlannedEvent,
+  IPlannedEventOrder,
+} from "#entities/planned-event";
 import type { IMultiPageParams } from "./types";
 
 export function createHomePageURL(language: ILocale): Route {
@@ -136,14 +139,22 @@ export function createURLViewerPageURL(language: ILocale): Route {
   return `/${language}/url-viewer` as Route;
 }
 
+interface ICreatePlannedEventsPageURLParams extends IMultiPageParams {
+  order?: IPlannedEventOrder;
+}
+
 export function createPlannedEventsPageURL(
   language: ILocale,
-  params?: IMultiPageParams,
+  params?: ICreatePlannedEventsPageURLParams,
 ): Route {
   const urlSearchParams = new URLSearchParams();
 
   if (params?.page) {
     urlSearchParams.set("page", String(params.page));
+  }
+
+  if (params?.order) {
+    urlSearchParams.set("order", params.order);
   }
 
   const url = !urlSearchParams.size

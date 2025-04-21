@@ -1,13 +1,18 @@
 import type { IPlannedEvent } from "#entities/planned-event";
-import type { IIDBTransaction } from "../../types";
+import type { IIDBArgs } from "../../types";
+
+interface IArgs extends IIDBArgs<"planned_events"> {
+  ids: IPlannedEvent["id"][];
+  order?: "recently_created" | "recently_updated";
+}
 
 export function selectPlannedEventEntities(
-  transaction: IIDBTransaction<"planned_events">,
-  ids: IPlannedEvent["id"][],
+  { transaction, ids, order = "recently_created" }: IArgs,
   onSuccess: (plannedEvents: IPlannedEvent[]) => void,
 ) {
   const objectStore = transaction.objectStore("planned_events");
-  const cursorRequest = objectStore.openCursor();
+  const index = objectStore.index(order);
+  const cursorRequest = index.openCursor();
   const plannedEvents: IPlannedEvent[] = [];
 
   cursorRequest.onsuccess = (event) => {

@@ -7,4 +7,5 @@ export type {
   IIDBTransaction,
   IIDBBoolean,
   IIDBNull,
+  IIDBArgs,
 } from "./types";

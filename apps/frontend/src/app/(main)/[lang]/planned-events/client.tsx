@@ -16,6 +16,7 @@ import {
   countPlannedEvents,
   createPlannedEvent,
   getPlannedEvents,
+  isPlannedEventsOrder,
   type IPlannedEvent,
   type IPlannedEventInit,
 } from "#entities/planned-event";
@@ -33,6 +34,8 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   const [isLoading, switchLoading] = useState(true);
   const inputPage = searchParams.get("page")?.trim();
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
+  const inputOrder = searchParams.get("order")?.trim();
+  const order = !isPlannedEventsOrder(inputOrder) ? undefined : inputOrder;
 
   useEffect(() => {
     switchLoading(true);
@@ -45,17 +48,17 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         throw new Error(String(event));
       },
       (transaction) => {
-        countPlannedEvents(transaction, (count) => {
-          switchLoading(false);
-
+        countPlannedEvents({ transaction }, (count) => {
           if (count === 0) {
+            switchLoading(false);
             return;
           }
 
-          getPlannedEvents(transaction, page!, (plannedEvents) => {
+          getPlannedEvents({ transaction, page, order }, (plannedEvents) => {
             if (!page) {
               const url = createPlannedEventsPageURL(language, {
                 page: plannedEvents.pagination.totalPages,
+                order
               });
               router.replace(url);
 
@@ -79,7 +82,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       },
       (transaction) => {
         createPlannedEvent(transaction, init, () => {
-          getPlannedEvents(transaction, 0, (newPlannedEvents) => {
+          getPlannedEvents({ transaction, page: 0, order }, (newPlannedEvents) => {
             changePlannedEvents(newPlannedEvents);
           });
         });
@@ -119,7 +122,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
           pagination={plannedEvents.pagination}
           commonTranslation={commonTranslation}
           sortingOrder="descending"
-          buildURL={(page) => createPlannedEventsPageURL(language, { page })}
+          buildURL={(page) => createPlannedEventsPageURL(language, { page, order })}
         >
           {plannedEvents.items.map((plannedEvent) => (
             <PlannedEventPreview
