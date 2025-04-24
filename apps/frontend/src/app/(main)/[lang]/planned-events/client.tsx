@@ -13,12 +13,14 @@ import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
   PlannedEventCreateForm,
   PlannedEventPreview,
+  SearchPlannedEventForm,
   countPlannedEvents,
   createPlannedEvent,
   getPlannedEvents,
   isPlannedEventsOrder,
   type IPlannedEvent,
   type IPlannedEventInit,
+  type IPlannedEventSearchQuery,
 } from "#entities/planned-event";
 
 interface IProps extends ILocalizableProps, ITranslatableProps {
@@ -58,7 +60,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
             if (!page) {
               const url = createPlannedEventsPageURL(language, {
                 page: plannedEvents.pagination.totalPages,
-                order
+                order,
               });
               router.replace(url);
 
@@ -67,6 +69,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
             }
 
             changePlannedEvents(plannedEvents);
+            switchLoading(false);
           });
         });
       },
@@ -74,20 +77,66 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   }, [page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {
-    runTransaction(
-      "planned_events",
-      "readwrite",
-      (event) => {
-        throw new Error(String(event));
-      },
-      (transaction) => {
-        createPlannedEvent(transaction, init, () => {
-          getPlannedEvents({ transaction, page: 0, order }, (newPlannedEvents) => {
-            changePlannedEvents(newPlannedEvents);
+    await new Promise<void>((resolve, reject) =>
+      runTransaction(
+        "planned_events",
+        "readwrite",
+        (event) => {
+          reject(new Error(String(event)));
+        },
+        (transaction) => {
+          createPlannedEvent(transaction, init, () => {
+            getPlannedEvents(
+              { transaction, page: 0, order },
+              (newPlannedEvents) => {
+                changePlannedEvents(newPlannedEvents);
+                resolve();
+              },
+            );
           });
-        });
-      },
+        },
+      ),
     );
+    return;
+  }
+
+  async function handlePlannedEventsSearch({
+    order,
+  }: IPlannedEventSearchQuery) {
+    await new Promise<void>((resolve, reject) =>
+      runTransaction(
+        "planned_events",
+        "readonly",
+        (event) => {
+          reject(new Error(String(event)));
+        },
+        (transaction) => {
+          countPlannedEvents({ transaction }, (count) => {
+            if (count === 0) {
+              reject(new Error(translation["No planned events found"]));
+              return;
+            }
+
+            getPlannedEvents({ transaction, page, order }, (plannedEvents) => {
+              if (!page) {
+                const url = createPlannedEventsPageURL(language, {
+                  page: plannedEvents.pagination.totalPages,
+                  order,
+                });
+                router.replace(url);
+                resolve();
+                return;
+              }
+
+              changePlannedEvents(plannedEvents);
+              resolve();
+            });
+          });
+        },
+      ),
+    );
+
+    return;
   }
 
   return (
@@ -95,6 +144,15 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <OverviewHeader>
+            <Details summary={translation["Filter"]}>
+              <SearchPlannedEventForm
+                commonTranslation={commonTranslation}
+                translation={translation}
+                id="search-planned-event"
+                onSearch={handlePlannedEventsSearch}
+              />
+            </Details>
+
             <Details summary={translation["Add planned event"]}>
               <PlannedEventCreateForm
                 commonTranslation={commonTranslation}
@@ -122,7 +180,9 @@ export function Client({ language, commonTranslation, translation }: IProps) {
           pagination={plannedEvents.pagination}
           commonTranslation={commonTranslation}
           sortingOrder="descending"
-          buildURL={(page) => createPlannedEventsPageURL(language, { page, order })}
+          buildURL={(page) =>
+            createPlannedEventsPageURL(language, { page, order })
+          }
         >
           {plannedEvents.items.map((plannedEvent) => (
             <PlannedEventPreview

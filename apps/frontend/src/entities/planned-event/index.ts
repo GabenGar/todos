@@ -7,6 +7,7 @@ export {
 } from "./lib/get";
 export { editPlannedEvent } from "./lib/edit";
 export { removePlannedEvent } from "./lib/remove";
+export { SearchPlannedEventForm, type IPlannedEventSearchQuery } from "./forms/search";
 export { PlannedEventCreateForm } from "./forms/create";
 export { EditPlannedEventForm } from "./forms/edit";
 export { PlannedEventPreview } from "./preview";
