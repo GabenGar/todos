@@ -21,7 +21,7 @@ export function countPlannedEvents(
 }
 
 interface IGetPlannedEventsArgs extends IIDBArgs<"planned_events"> {
-  page: number | undefined;
+  page?: number;
   order?: IPlannedEventOrder;
 }
 
@@ -61,6 +61,8 @@ export function getPlannedEvent(
   );
 }
 
-export function isPlannedEventsOrder(input: unknown): input is IPlannedEventOrder {
-  return input === "recently_created" || input === "recently_updated"
+export function isPlannedEventsOrder(
+  input: unknown,
+): input is IPlannedEventOrder {
+  return input === "recently_created" || input === "recently_updated";
 }

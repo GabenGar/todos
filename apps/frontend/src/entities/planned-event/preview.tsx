@@ -14,6 +14,7 @@ import {
 import { Link } from "#components/link";
 import type { ITranslatableProps, ILocalizableProps } from "#components/types";
 import type { IPlannedEvent } from "./types";
+import { DateTime } from "#components/date";
 
 interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
   translation: ILocalizationEntities["planned_event"];
@@ -29,7 +30,7 @@ function Component({
   plannedEvent,
   ...props
 }: IProps) {
-  const { id, title, description } = plannedEvent;
+  const { id, title, description, created_at, updated_at } = plannedEvent;
 
   return (
     <Preview {...props}>
@@ -53,6 +54,27 @@ function Component({
                   ) : (
                     <EntityDescription>{description}</EntityDescription>
                   )
+                }
+              />
+            </DescriptionList>
+
+            <DescriptionList>
+              <DescriptionSection
+                dKey={translation["Date of creation"]}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    dateTime={created_at}
+                  />
+                }
+              />
+              <DescriptionSection
+                dKey={translation["Last updated"]}
+                dValue={
+                  <DateTime
+                    commonTranslation={commonTranslation}
+                    dateTime={updated_at}
+                  />
                 }
               />
             </DescriptionList>

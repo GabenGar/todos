@@ -49,8 +49,8 @@ export function Client({ language, commonTranslation, translation }: IProps) {
     runTransaction(
       "planned_events",
       "readonly",
-      (event) => {
-        throw new Error(String(event));
+      (error) => {
+        throw error;
       },
       (transaction) => {
         getPlannedEvent({ transaction, id: parsedID }, (plannedEvent) =>
@@ -96,8 +96,8 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                   runTransaction(
                     "planned_events",
                     "readwrite",
-                    (event) => {
-                      throw new Error(String(event));
+                    (error) => {
+                      throw error;
                     },
                     (transaction) => {
                       editPlannedEvent(transaction, update, (updatedEvent) =>

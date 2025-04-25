@@ -19,8 +19,8 @@ interface IIDBTransactionRunner<StoreName extends IStorageName = IStorageName> {
   (
     storeNames: StoreName | StoreName[] | Iterable<StoreName>,
     mode: Exclude<IDBTransactionMode, "versionchange">,
-    onError: (event: Event) => void,
-    run: (transaction: IIDBTransaction<StoreName>) => void,
+    onError: (error: Error | DOMException) => void,
+    onSuccess: (transaction: IIDBTransaction<StoreName>) => void,
   ): void;
 }
 
@@ -31,17 +31,14 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
   const { isClient } = useClient();
   const [database, changeDatabase] = useState<IDBDatabase>();
 
+  // @TODO: check for client without race conditions
   const runIndexedDBTransaction = useCallback(
     <StoreName extends IStorageName>(
       storeNames: StoreName | StoreName[] | Iterable<StoreName>,
       mode: IDBTransactionMode,
-      onError: (event: Event) => void,
-      run: (transaction: IIDBTransaction<StoreName>) => void,
+      onError: (error: Error | DOMException) => void,
+      onSuccess: (transaction: IIDBTransaction<StoreName>) => void,
     ) => {
-      if (isClient) {
-        throw new Error("IndexedDB is only available on client.");
-      }
-
       if (!database) {
         getDatabase(
           (error) => {
@@ -52,20 +49,27 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
 
             const transaction = getTransaction(db, storeNames, mode);
 
-            transaction.onerror = onError;
+            transaction.onerror = handleError;
+            transaction.onabort = handleError;
 
-            run(transaction);
+            onSuccess(transaction);
           },
         );
       } else {
         const transaction = getTransaction(database, storeNames, mode);
 
-        transaction.onerror = onError;
+        transaction.onerror = handleError;
+        transaction.onabort = handleError;
 
-        run(transaction);
+        onSuccess(transaction);
+      }
+
+      function handleError(event: Event) {
+        const error = (event.target as IIDBTransaction<StoreName>).error!;
+        onError(error);
       }
     },
-    [],
+    [database, isClient],
   );
 
   return (

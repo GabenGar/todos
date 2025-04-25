@@ -21,7 +21,10 @@ export function selectPlannedEventEntities(
     if (cursor && plannedEvents.length < ids.length) {
       const plannedEvent = cursor.value as IPlannedEvent;
 
-      plannedEvents.push(plannedEvent);
+      if (ids.includes(plannedEvent.id)) {
+        plannedEvents.push(plannedEvent);
+      }
+
       cursor.continue();
     } else {
       if (plannedEvents.length === 0) {

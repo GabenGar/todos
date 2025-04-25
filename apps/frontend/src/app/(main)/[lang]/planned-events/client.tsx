@@ -45,9 +45,9 @@ export function Client({ language, commonTranslation, translation }: IProps) {
     runTransaction(
       "planned_events",
       "readonly",
-      (event) => {
+      (error) => {
         switchLoading(false);
-        throw new Error(String(event));
+        throw error;
       },
       (transaction) => {
         countPlannedEvents({ transaction }, (count) => {
@@ -81,18 +81,15 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       runTransaction(
         "planned_events",
         "readwrite",
-        (event) => {
-          reject(new Error(String(event)));
+        (error) => {
+          reject(error);
         },
         (transaction) => {
           createPlannedEvent(transaction, init, () => {
-            getPlannedEvents(
-              { transaction, page: 0, order },
-              (newPlannedEvents) => {
-                changePlannedEvents(newPlannedEvents);
-                resolve();
-              },
-            );
+            getPlannedEvents({ transaction, order }, (newPlannedEvents) => {
+              changePlannedEvents(newPlannedEvents);
+              resolve();
+            });
           });
         },
       ),
@@ -107,29 +104,26 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       runTransaction(
         "planned_events",
         "readonly",
-        (event) => {
-          reject(new Error(String(event)));
+        (error) => {
+          reject(error);
         },
         (transaction) => {
           countPlannedEvents({ transaction }, (count) => {
             if (count === 0) {
               reject(new Error(translation["No planned events found"]));
+
               return;
             }
 
             getPlannedEvents({ transaction, page, order }, (plannedEvents) => {
-              if (!page) {
-                const url = createPlannedEventsPageURL(language, {
-                  page: plannedEvents.pagination.totalPages,
-                  order,
-                });
-                router.replace(url);
-                resolve();
-                return;
-              }
-
-              changePlannedEvents(plannedEvents);
+              const url = createPlannedEventsPageURL(language, {
+                page: plannedEvents.pagination.totalPages,
+                order,
+              });
+              router.replace(url);
               resolve();
+
+              return;
             });
           });
         },
