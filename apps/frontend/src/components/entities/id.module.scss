@@ -2,10 +2,10 @@
 
 .block {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   gap: $size-small;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   color: var(--colour-text-secondary);
 
   transition-duration: var(--duration-global);
