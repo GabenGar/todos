@@ -3,39 +3,57 @@ import type { IIDBArgs } from "../../types";
 
 interface IArgs extends IIDBArgs<"planned_events"> {
   ids: IPlannedEvent["id"][];
-  order?: "recently_created" | "recently_updated";
 }
 
 export function selectPlannedEventEntities(
-  { transaction, ids, order = "recently_created" }: IArgs,
+  { transaction, ids }: IArgs,
   onSuccess: (plannedEvents: IPlannedEvent[]) => void,
 ) {
   const objectStore = transaction.objectStore("planned_events");
-  const index = objectStore.index(order);
-  const cursorRequest = index.openCursor();
-  const plannedEvents: IPlannedEvent[] = [];
 
-  cursorRequest.onsuccess = (event) => {
-    const cursor = (event.target as typeof cursorRequest).result;
+  if (ids.length === 1) {
+    const id = ids[0];
+    const entityRequest = objectStore.get(id);
 
-    if (cursor && plannedEvents.length < ids.length) {
-      const plannedEvent = cursor.value as IPlannedEvent;
+    entityRequest.onsuccess = (event) => {
+      const plannedEvent = (event.target as typeof entityRequest).result as
+        | undefined
+        | IPlannedEvent;
 
-      if (ids.includes(plannedEvent.id)) {
-        plannedEvents.push(plannedEvent);
+      if (!plannedEvent) {
+        throw new Error(`No planned event exists for ID "${id}".`);
       }
 
-      cursor.continue();
-    } else {
-      if (plannedEvents.length === 0) {
-        throw new Error("No planned events found for provided IDs.");
-      }
+      onSuccess([plannedEvent]);
+    };
+  } else {
+    const cursorRequest = objectStore.openCursor();
+    const plannedEvents: IPlannedEvent[] = [];
 
-      if (plannedEvents.length !== ids.length) {
-        throw new Error("Amount of IDs and found planned events do not match.");
-      }
+    cursorRequest.onsuccess = (event) => {
+      const cursor = (event.target as typeof cursorRequest).result;
 
-      onSuccess(plannedEvents);
-    }
-  };
+      if (cursor && plannedEvents.length < ids.length) {
+        const plannedEvent = cursor.value as IPlannedEvent;
+
+        if (ids.includes(plannedEvent.id)) {
+          plannedEvents.push(plannedEvent);
+        }
+
+        cursor.continue();
+      } else {
+        if (plannedEvents.length === 0) {
+          throw new Error("No planned events found for provided IDs.");
+        }
+
+        if (plannedEvents.length !== ids.length) {
+          throw new Error(
+            "Amount of IDs and found planned events do not match.",
+          );
+        }
+
+        onSuccess(plannedEvents);
+      }
+    };
+  }
 }

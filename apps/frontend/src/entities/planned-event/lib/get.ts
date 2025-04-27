@@ -32,18 +32,15 @@ export function getPlannedEvents(
   selectPlannedEventCount(transaction, (count) => {
     const pagination = createClientPagination(count, PAGINATION_LIMIT, page);
 
-    selectPlannedEventIDs(transaction, pagination, (ids) => {
-      selectPlannedEventEntities(
-        { transaction, ids, order },
-        (plannedEvents) => {
-          const result: IPaginatedCollection<IPlannedEvent> = {
-            pagination,
-            items: plannedEvents,
-          };
+    selectPlannedEventIDs({ transaction, pagination, order }, (ids) => {
+      selectPlannedEventEntities({ transaction, ids }, (plannedEvents) => {
+        const result: IPaginatedCollection<IPlannedEvent> = {
+          pagination,
+          items: plannedEvents,
+        };
 
-          onSuccess(result);
-        },
-      );
+        onSuccess(result);
+      });
     });
   });
 }
