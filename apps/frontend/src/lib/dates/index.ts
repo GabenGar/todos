@@ -1,4 +1,8 @@
-export type IDateTime = string;
+import type { IDateTime } from "./types";
+
+export type { IDateTime } from "./types";
+
+export { formatDateTime } from "./format";
 
 export function toISODateTime(date: Date) {
   const timestamp = date.toISOString();
@@ -6,30 +10,14 @@ export function toISODateTime(date: Date) {
   return timestamp;
 }
 
-export function now(): string {
-  const date = new Date().toISOString();
+export function toJavascriptDate(dateTime: IDateTime): Date {
+  const date = new Date(dateTime);
 
   return date;
 }
 
-const formatDateTimeOptions: Intl.DateTimeFormatOptions = {
-  hour12: false,
-  hourCycle: "h23",
-  era: "long",
-  year: "numeric",
-  month: "long",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
-  timeZoneName: "long",
-};
-export function formatDateTime(locale: Intl.Locale, dateTime: IDateTime) {
-  const formatter = new Intl.DateTimeFormat(
-    String(locale),
-    formatDateTimeOptions,
-  );
-  const formattedDateTime = formatter.format(new Date(dateTime));
+export function now(): string {
+  const date = new Date().toISOString();
 
-  return formattedDateTime;
+  return date;
 }

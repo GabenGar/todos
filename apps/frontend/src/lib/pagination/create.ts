@@ -47,7 +47,7 @@ export function createClientPagination(
     );
   }
 
-  const offset = (currentPage - 1) * limit;
+  const offset = currentPage - 1 < 0 ? 0 : (currentPage - 1) * limit;
   const currentMin = totalCount === 0 ? 0 : offset + 1;
   const currentMax = offset + limit > totalCount ? totalCount : offset + limit;
 

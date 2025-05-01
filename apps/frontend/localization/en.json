@@ -45,6 +45,8 @@
       "URL Viewer": "URL Viewer",
       "Account": "Account",
       "Planned events": "Planned events",
+      "Recently updated":"Recently updated",
+      "Recently created":"Recently created",
       "Miscellaneous": "Miscellaneous",
       "YT-DLP configs": "YT-DLP configs"
     },
@@ -164,7 +166,12 @@
       "Details": "Details",
       "Add planned event": "Add planned event",
       "Adding planned event...": "Adding planned event...",
-      "No planned events found": "No planned events found"
+      "No planned events found": "No planned events found",
+      "Order": "Order",
+      "Recently updated": "Recently updated",
+      "Recently created": "Recently created",
+      "Filter": "Filter",
+      "Filtering...": "Filtering..."
     }
   },
 

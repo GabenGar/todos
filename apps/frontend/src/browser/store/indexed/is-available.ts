@@ -19,7 +19,6 @@ export async function isIndexedDBAvailable(): Promise<boolean> {
       resolve(true);
     };
   }).catch((error) => {
-    console.error(error);
     return false;
   });
 

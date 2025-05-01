@@ -3,6 +3,8 @@
 
 import { useEffect } from "react";
 import { logError } from "#lib/logs";
+import { Button } from "#components/button";
+import { Heading } from "#components/heading";
 
 /**
  * @TODO multilang
@@ -15,15 +17,15 @@ function PageError({ error, reset }: { error: Error; reset: () => void }) {
 
   return (
     <div>
-      <h2>Something went wrong!</h2>
-      <button
+      <Heading level={2}>Something went wrong!</Heading>
+      <Button
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
         Try again
-      </button>
+      </Button>
     </div>
   );
 }

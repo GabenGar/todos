@@ -5,6 +5,8 @@ export interface IPlannedEvent {
   id: number;
   created_at: IDateTime;
   updated_at: IDateTime;
+  parsed_created_at: Date;
+  parsed_updated_at: Date;
   title: ITitle;
   description?: IDescription;
 }
@@ -15,3 +17,5 @@ export interface IPlannedEventInit
 export interface IPlannedEventUpdate
   extends Pick<Required<IPlannedEvent>, "id">,
     Pick<Partial<IPlannedEvent>, "title" | "description"> {}
+
+export type IPlannedEventOrder = "recently_created" | "recently_updated";

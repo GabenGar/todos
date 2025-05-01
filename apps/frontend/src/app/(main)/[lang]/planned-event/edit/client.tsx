@@ -7,6 +7,7 @@ import {
   createPlannedEventsPageURL,
 } from "#lib/urls";
 import type { ILocalizationEntities } from "#lib/localization";
+import { useIndexedDB } from "#hooks";
 import { Loading } from "#components";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
@@ -20,10 +21,11 @@ import { List, ListItem } from "#components/list";
 import { MenuButtons, MenuItem } from "#components/button";
 import {
   EditPlannedEventForm,
-  deletePlannedEvent,
   getPlannedEvent,
+  editPlannedEvent,
+  removePlannedEvent,
+  type IPlannedEvent,
 } from "#entities/planned-event";
-import { editPlannedEvent } from "#entities/planned-event";
 
 interface IProps extends ITranslatableProps, ILocalizableProps {
   translation: ILocalizationEntities["planned_event"];
@@ -32,8 +34,8 @@ interface IProps extends ITranslatableProps, ILocalizableProps {
 export function Client({ language, commonTranslation, translation }: IProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [currentPlannedEvent, changePlannedEvent] =
-    useState<Awaited<ReturnType<typeof getPlannedEvent>>>();
+  const runTransaction = useIndexedDB();
+  const [currentPlannedEvent, changePlannedEvent] = useState<IPlannedEvent>();
   const inputID = searchParams.get("planned_event_id")?.trim();
   // consider an empty string as `undefined`
   const parsedID = !inputID?.length ? undefined : Number.parseInt(inputID, 10);
@@ -44,10 +46,18 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       return;
     }
 
-    (async () => {
-      const plannedEvent = await getPlannedEvent(parsedID);
-      changePlannedEvent(plannedEvent);
-    })();
+    runTransaction(
+      "planned_events",
+      "readonly",
+      (error) => {
+        throw error;
+      },
+      (transaction) => {
+        getPlannedEvent({ transaction, id: parsedID }, (plannedEvent) =>
+          changePlannedEvent(plannedEvent),
+        );
+      },
+    );
   }, [parsedID]);
 
   return (
@@ -83,9 +93,18 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 id={`edit-planned-event-${currentPlannedEvent.id}`}
                 currentPlannedEvent={currentPlannedEvent}
                 onPlannedEventEdit={async (update) => {
-                  const editedPlannedEvent = await editPlannedEvent(update);
-
-                  changePlannedEvent(editedPlannedEvent);
+                  runTransaction(
+                    "planned_events",
+                    "readwrite",
+                    (error) => {
+                      throw error;
+                    },
+                    (transaction) => {
+                      editPlannedEvent(transaction, update, (updatedEvent) =>
+                        changePlannedEvent(updatedEvent),
+                      );
+                    },
+                  );
                 }}
               />
             )}
@@ -99,9 +118,24 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 <MenuItem
                   viewType="negative"
                   onClick={async () => {
-                    await deletePlannedEvent(currentPlannedEvent.id);
-
-                    router.replace(createPlannedEventsPageURL(language));
+                    runTransaction(
+                      "planned_events",
+                      "readwrite",
+                      (event) => {
+                        throw new Error(String(event));
+                      },
+                      (transaction) => {
+                        removePlannedEvent(
+                          transaction,
+                          currentPlannedEvent.id,
+                          () => {
+                            router.replace(
+                              createPlannedEventsPageURL(language),
+                            );
+                          },
+                        );
+                      },
+                    );
                   }}
                 >
                   {commonTranslation.entity["Delete"]}

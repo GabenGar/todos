@@ -1,3 +1,4 @@
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { SITE_TITLE } from "#environment";
 import {
   createQRCodeReaderURL,
@@ -43,12 +44,34 @@ async function FrontPage({ params }: IProps) {
             <Heading level={headinglevel + 1}>{home["Tools"]}</Heading>
             <List className={styles.list}>
               <ListItem>
-                <Link
-                  className={styles.link}
-                  href={createPlannedEventsPageURL(lang)}
-                >
-                  {home["Planned events"]}
-                </Link>
+                <DescriptionList>
+                  <DescriptionSection
+                    dKey={home["Planned events"]}
+                    dValue={
+                      <List className={styles.list}>
+                        <ListItem>
+                          <Link
+                            className={styles.link}
+                            href={createPlannedEventsPageURL(lang, {
+                              order: "recently_updated",
+                            })}
+                          >
+                            {home["Recently updated"]}
+                          </Link>
+                        </ListItem>
+
+                        <ListItem>
+                          <Link
+                            className={styles.link}
+                            href={createPlannedEventsPageURL(lang)}
+                          >
+                            {home["Recently created"]}
+                          </Link>
+                        </ListItem>
+                      </List>
+                    }
+                  />
+                </DescriptionList>
               </ListItem>
 
               <ListItem>

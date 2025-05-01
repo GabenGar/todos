@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { DEFAULT_LOG_LEVEL } from "#environment";
 import {
   type ILogLevel,
@@ -14,6 +14,7 @@ import {
 } from "#lib/logs";
 import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 import { isIndexedDBAvailable } from "#store/indexed";
+import { IndexedDBProvider } from "./indexed-db";
 
 type IClientContext =
   | {
@@ -93,7 +94,7 @@ export function ClientProvider({ children }: { children: ReactNode }) {
             }
       }
     >
-      {children}
+      <IndexedDBProvider>{children}</IndexedDBProvider>
     </ClientContext.Provider>
   );
 }

@@ -1,38 +1,65 @@
+import { type IIDBArgs } from "#browser/store/indexed";
 import {
-  getManyIndexedDBItems,
-  getOneIndexedDBItem,
-  countIndexedDBItems,
-} from "#browser/store/indexed";
-import type { IPaginatedCollection } from "#lib/pagination";
-import type { IPlannedEvent } from "../types";
-import { validatePlannedEvent } from "./validate";
+  selectPlannedEventCount,
+  selectPlannedEventEntities,
+  selectPlannedEventIDs,
+} from "#browser/store/indexed/queries/planned-events";
+import {
+  createClientPagination,
+  PAGINATION_LIMIT,
+  type IPaginatedCollection,
+} from "#lib/pagination";
+import type { IPlannedEvent, IPlannedEventOrder } from "../types";
 
-export async function countPlannedEvents(): Promise<number> {
-  const count = await countIndexedDBItems("planned_events");
+interface ICountPlannedEventsArgs extends IIDBArgs<"planned_events"> {}
 
-  return count;
+export function countPlannedEvents(
+  { transaction }: ICountPlannedEventsArgs,
+  onSuccess: (count: number) => void,
+): void {
+  selectPlannedEventCount(transaction, onSuccess);
 }
 
-export async function getPlannedEvents(
-  page?: number,
-): Promise<IPaginatedCollection<IPlannedEvent>> {
-  const plannedEvents = await getManyIndexedDBItems(
-    "planned_events",
-    validatePlannedEvent,
-    page,
-  );
-
-  return plannedEvents;
+interface IGetPlannedEventsArgs extends IIDBArgs<"planned_events"> {
+  page?: number;
+  order?: IPlannedEventOrder;
 }
 
-export async function getPlannedEvent(
-  id: IPlannedEvent["id"],
-): Promise<IPlannedEvent> {
-  const plannedEvent = await getOneIndexedDBItem(
-    "planned_events",
-    id,
-    validatePlannedEvent,
-  );
+export function getPlannedEvents(
+  { transaction, page, order }: IGetPlannedEventsArgs,
+  onSuccess: (plannedEvents: IPaginatedCollection<IPlannedEvent>) => void,
+): void {
+  selectPlannedEventCount(transaction, (count) => {
+    const pagination = createClientPagination(count, PAGINATION_LIMIT, page);
 
-  return plannedEvent;
+    selectPlannedEventIDs({ transaction, pagination, order }, (ids) => {
+      selectPlannedEventEntities({ transaction, ids }, (plannedEvents) => {
+        const result: IPaginatedCollection<IPlannedEvent> = {
+          pagination,
+          items: plannedEvents,
+        };
+
+        onSuccess(result);
+      });
+    });
+  });
+}
+
+interface IGetPlannedEventArgs extends IIDBArgs<"planned_events"> {
+  id: IPlannedEvent["id"];
+}
+
+export function getPlannedEvent(
+  { transaction, id }: IGetPlannedEventArgs,
+  onSuccess: (plannedEvent: IPlannedEvent) => void,
+): void {
+  selectPlannedEventEntities({ transaction, ids: [id] }, ([plannedEvent]) =>
+    onSuccess(plannedEvent),
+  );
+}
+
+export function isPlannedEventsOrder(
+  input: unknown,
+): input is IPlannedEventOrder {
+  return input === "recently_created" || input === "recently_updated";
 }

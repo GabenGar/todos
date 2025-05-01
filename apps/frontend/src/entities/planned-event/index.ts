@@ -3,11 +3,21 @@ export {
   countPlannedEvents,
   getPlannedEvents,
   getPlannedEvent,
+  isPlannedEventsOrder,
 } from "./lib/get";
 export { editPlannedEvent } from "./lib/edit";
-export { deletePlannedEvent } from "./lib/delete";
+export { removePlannedEvent } from "./lib/remove";
+export {
+  SearchPlannedEventForm,
+  type IPlannedEventSearchQuery,
+} from "./forms/search";
 export { PlannedEventCreateForm } from "./forms/create";
 export { EditPlannedEventForm } from "./forms/edit";
 export { PlannedEventPreview } from "./preview";
 export { PlannetEventOverview } from "./overview";
-export type { IPlannedEvent, IPlannedEventInit } from "./types";
+export type {
+  IPlannedEvent,
+  IPlannedEventInit,
+  IPlannedEventUpdate,
+  IPlannedEventOrder,
+} from "./types";

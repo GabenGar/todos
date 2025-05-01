@@ -45,6 +45,8 @@
       "URL Viewer": "Просмотрщик ссылок",
       "Account": "Учётная запись",
       "Planned events": "Планируемые события",
+      "Recently updated":"Недавно обновлённые",
+      "Recently created":"Недавно добавленные",
       "Miscellaneous": "Разное",
       "YT-DLP configs": "Конфиги YT-DLP"
     },
@@ -164,7 +166,12 @@
       "Details": "Детали",
       "Add planned event": "Добавить планируемое событие",
       "Adding planned event...": "Добавляем планируемое событие...",
-      "No planned events found": "Планируемые события не найдены"
+      "No planned events found": "Планируемые события не найдены",
+      "Order": "Порядок",
+      "Recently updated": "Недавно обновлённые",
+      "Recently created": "Недавно добавленные",
+      "Filter": "Фильтровать",
+      "Filtering...": "Фильтруем..."
     }
   },
   "todos": {
