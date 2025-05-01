@@ -52,7 +52,10 @@ export function selectPlannedEventEntities(
           );
         }
 
-        onSuccess(plannedEvents);
+        const orderedEvents = ids.map(
+          (id) => plannedEvents.find((plannedEvent) => plannedEvent.id === id)!,
+        );
+        onSuccess(orderedEvents);
       }
     };
   }

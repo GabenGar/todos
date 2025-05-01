@@ -14,11 +14,12 @@ export function selectPlannedEventIDs(
   const { limit, offset } = pagination;
   const objectStore = transaction.objectStore("planned_events");
   const index = objectStore.index(order);
-  const cursorRequest = index.openKeyCursor();
   const ids: IPlannedEvent["id"][] = [];
   // https://stackoverflow.com/a/22562756
   // cursor requires offset more than 0 to advance
   let isAdvancing = offset !== 0;
+
+  const cursorRequest = index.openKeyCursor();
 
   cursorRequest.onsuccess = (event) => {
     const cursor = (event.target as typeof cursorRequest).result;
@@ -42,7 +43,7 @@ export function selectPlannedEventIDs(
           `No planned events exist for page ${pagination.currentPage}.`,
         );
       }
-
+      console.log(ids)
       onSuccess(ids);
     }
   };

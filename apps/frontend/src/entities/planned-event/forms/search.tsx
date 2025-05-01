@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { InputOption } from "@repo/ui/forms/inputs";
 import { InputSectionSelect } from "@repo/ui/forms/sections";
 import type { ILocalizationEntities } from "#lib/localization";
@@ -16,7 +15,7 @@ export interface IPlannedEventSearchQuery {
 interface ISearchPlannedEventFormProps extends ITranslatableProps {
   id: string;
   translation: ILocalizationEntities["planned_event"];
-  defaultQuery?: IPlannedEventSearchQuery;
+  defaultOrder?: IPlannedEventOrder;
   onSearch: (newSearchQuery: IPlannedEventSearchQuery) => Promise<void>;
 }
 
@@ -24,12 +23,9 @@ export function SearchPlannedEventForm({
   commonTranslation,
   translation,
   id,
-  defaultQuery,
+  defaultOrder,
   onSearch,
 }: ISearchPlannedEventFormProps) {
-  const [oldQuery, changeOldQuery] = useState<
-    IPlannedEventSearchQuery | undefined
-  >(defaultQuery);
   const FIELD = {
     ORDER: { name: "order", label: translation["Order"] },
   } as const;
@@ -42,7 +38,7 @@ export function SearchPlannedEventForm({
       ? undefined
       : inputOrder;
 
-    if (oldQuery && parsedOrder === oldQuery.order) {
+    if (defaultOrder && parsedOrder === defaultOrder) {
       return;
     }
 
@@ -50,7 +46,6 @@ export function SearchPlannedEventForm({
       order: parsedOrder,
     };
 
-    changeOldQuery(newSearchQuery);
     await onSearch(newSearchQuery);
   }
 
@@ -70,13 +65,15 @@ export function SearchPlannedEventForm({
             form={formID}
             name={FIELD.ORDER.name}
             label={FIELD.ORDER.label}
-            defaultValue={defaultQuery?.order}
+            defaultValue={defaultOrder ?? ""}
           >
-            <InputOption value={""}>
+            <InputOption
+              value={"recently_updated" satisfies IPlannedEventOrder}
+            >
               {translation["Recently updated"]}
             </InputOption>
             <InputOption
-              value={"recently_created" satisfies IPlannedEventOrder}
+              value={""}
             >
               {translation["Recently created"]}
             </InputOption>

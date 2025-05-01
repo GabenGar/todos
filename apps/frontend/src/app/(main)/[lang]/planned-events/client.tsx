@@ -120,6 +120,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
                 page: plannedEvents.pagination.totalPages,
                 order,
               });
+
               router.replace(url);
               resolve();
 
@@ -140,10 +141,12 @@ export function Client({ language, commonTranslation, translation }: IProps) {
           <OverviewHeader>
             <Details summary={translation["Filter"]}>
               <SearchPlannedEventForm
+                key={order}
                 commonTranslation={commonTranslation}
                 translation={translation}
                 id="search-planned-event"
                 onSearch={handlePlannedEventsSearch}
+                defaultOrder={order}
               />
             </Details>
 
