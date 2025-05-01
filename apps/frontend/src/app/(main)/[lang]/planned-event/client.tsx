@@ -40,8 +40,9 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         throw new Error(String(event));
       },
       (transaction) => {
-        getPlannedEvent({transaction, id: parsedPlannedEventID}, (plannedEvent) =>
-          changePlannedEvent(plannedEvent),
+        getPlannedEvent(
+          { transaction, id: parsedPlannedEventID },
+          (plannedEvent) => changePlannedEvent(plannedEvent),
         );
       },
     );

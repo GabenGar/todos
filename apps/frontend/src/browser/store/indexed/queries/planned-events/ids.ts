@@ -43,7 +43,7 @@ export function selectPlannedEventIDs(
           `No planned events exist for page ${pagination.currentPage}.`,
         );
       }
-      console.log(ids)
+
       onSuccess(ids);
     }
   };

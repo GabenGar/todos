@@ -72,9 +72,7 @@ export function SearchPlannedEventForm({
             >
               {translation["Recently updated"]}
             </InputOption>
-            <InputOption
-              value={""}
-            >
+            <InputOption value={""}>
               {translation["Recently created"]}
             </InputOption>
           </InputSectionSelect>

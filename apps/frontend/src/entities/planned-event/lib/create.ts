@@ -14,7 +14,7 @@ export function createPlannedEvent(
   validatePlannedEventInit(init);
 
   insertPlannedEvents(transaction, [init], ([id]) => {
-    selectPlannedEventEntities({transaction, ids: [id]} , ([plannedEvent]) => {
+    selectPlannedEventEntities({ transaction, ids: [id] }, ([plannedEvent]) => {
       onSuccess(plannedEvent);
     });
   });
