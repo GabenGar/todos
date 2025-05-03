@@ -1,0 +1,14 @@
+{
+  "$id": "/enum",
+  "title": "Enum",
+  "enum": [
+    null,
+    true,
+    false,
+    1.23,
+    567,
+    "enum",
+    { "lorem": "ipsum" },
+    ["enum", "lorem", "ipsum"]
+  ]
+}

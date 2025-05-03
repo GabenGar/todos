@@ -1,0 +1,6 @@
+{
+  "$id": "/read-only",
+  "title": "ReadOnly",
+  "type": "boolean",
+  "readOnly": true
+}

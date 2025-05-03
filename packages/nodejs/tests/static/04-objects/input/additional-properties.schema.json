@@ -1,0 +1,6 @@
+{
+  "$id": "/additional-properties",
+  "title": "AdditionalProperties",
+  "type": "object",
+  "additionalProperties": true
+}

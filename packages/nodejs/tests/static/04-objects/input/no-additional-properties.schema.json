@@ -1,0 +1,14 @@
+{
+  "$id": "/no-additional-properties.",
+  "title": "NoAdditionalProperties",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  }
+}

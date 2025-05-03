@@ -1,0 +1,8 @@
+{
+  "$id": "/external-ref",
+  "title": "ExternalRef",
+  "type": "array",
+  "items": {
+    "$ref": "/internal-ref"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "$id": "/exclusive-minimum-number",
+  "title": "ExclusiveMinimumNumber",
+  "type": "number",
+  "exclusiveMinimum": 2.5
+}
