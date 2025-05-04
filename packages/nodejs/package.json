@@ -4,14 +4,28 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./api/index.ts"
+    ".": {
+      "types": "./api/index.ts",
+      "default": "./dist/api/index.js"
+    }
   },
   "imports": {
-    "#tests": "./dist/src/tests/index.js",
-    "#lib": "./dist/src/transform/index.js",
-    "#codegen": "./dist/src/codegen/index.js",
-    "#codegen/*": "./dist/src/codegen/*/index.js",
-    "#strings": "./dist/src/strings/index.js"
+    "#tests": {
+      "types": "./src/tests/index.ts",
+      "default": "./dist/src/tests/index.js"
+    },
+    "#codegen": {
+      "types": "./src/codegen/index.ts",
+      "default": "./dist/src/codegen/index.js"
+    },
+    "#codegen/*": {
+      "types": "./src/codegen/*/index.ts",
+      "default": "./dist/src/codegen/*/index.js"
+    },
+    "#*": {
+      "types": "./src/*/index.ts",
+      "default": "./dist/src/*/index.js"
+    }
   },
   "scripts": {
     "build": "tsc",
