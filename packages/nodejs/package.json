@@ -15,6 +15,10 @@
     "./codegen": {
       "types": "./api/codegen/index.ts",
       "default": "./dist/api/codegen/index.js"
+    },
+    "./json-schema-to-typescript": {
+      "types": "./api/json-schema-to-typescript/index.ts",
+      "default": "./dist/api/json-schema-to-typescript/index.js"
     }
   },
   "imports": {

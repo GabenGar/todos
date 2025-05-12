@@ -1,7 +1,0 @@
-{
-  "$id": "/nanoid",
-  "title": "NanoID",
-  "type": "string",
-  "pattern": "[\\w_-]",
-  "examples": ["g70vf_OUV0xTYzb0WE2tE", "JaBQPk9lsroBTLPNviDyy"]
-}

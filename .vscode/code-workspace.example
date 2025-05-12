@@ -16,9 +16,9 @@
       "name": "@repo/ui",
       "path": "packages/ui"
     },
-    {
-      "name": "codegen",
-      "path": "packages/codegen"
+     {
+      "name": "@repo/nodejs",
+      "path": "packages/nodejs"
     },
     {
       "name": "schema",

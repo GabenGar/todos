@@ -1,6 +1,0 @@
-{
-  "$id": "/default",
-  "title": "Default",
-  "type": "boolean",
-  "default": false
-}
