@@ -7,6 +7,14 @@
     ".": {
       "types": "./api/index.ts",
       "default": "./dist/api/index.js"
+    },
+    "./fs": {
+      "types": "./api/fs/index.ts",
+      "default": "./dist/api/fs/index.js"
+    },
+    "./codegen": {
+      "types": "./api/codegen/index.ts",
+      "default": "./dist/api/codegen/index.js"
     }
   },
   "imports": {
@@ -40,7 +48,8 @@
   },
   "dependencies": {
     "@hyperjump/json-pointer": "^1.1.0",
-    "@hyperjump/json-schema": "^1.9.9"
+    "@hyperjump/json-schema": "^1.9.9",
+    "ajv": "^8.17.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

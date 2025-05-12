@@ -1,12 +1,11 @@
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import stringifyObject from "stringify-object";
-// @TODO import from a core lib once it's implemented
-import { reduceFolder } from "../../../../../../packages/codegen/dist/src/lib/fs/index.js";
+import { reduceFolder } from "@repo/nodejs/fs";
 import type {
   IGeneratedNestedModule,
   IModuleInfo,
-} from "../../../../../../packages/codegen/src/codegen/types.js";
+} from "@repo/nodejs/codegen";
 
 const schemaFolderPath = path.resolve("../schema");
 const schemaFileExtension = ".schema.json";
