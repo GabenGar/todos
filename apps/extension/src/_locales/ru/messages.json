@@ -105,6 +105,9 @@
   "Pathname": {
     "message": "Путь"
   },
+  "Segments": {
+    "message": "Сегменты"
+  },
   "Search Parameters Details": {
     "message": "Детали Поисковых Параметров"
   },
