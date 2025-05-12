@@ -1,6 +1,6 @@
 export function parseStringValueFromFormData(
   formData: FormData,
-  keyName: string
+  keyName: string,
 ): string | undefined {
   const value = formData.get(keyName);
 

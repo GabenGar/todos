@@ -1,1 +1,1 @@
-export { URLViewer } from "./viewer"
+export { URLViewer } from "./viewer";

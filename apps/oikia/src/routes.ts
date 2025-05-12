@@ -4,7 +4,7 @@ const routes = [
   index("routes/home.tsx"),
   route(
     "authentication/registration",
-    "./routes/authentication/registration.tsx"
+    "./routes/authentication/registration.tsx",
   ),
   route("authentication/login", "./routes/authentication/login.tsx"),
   route("authentication/logout", "./routes/authentication/logout.tsx"),

@@ -17,7 +17,7 @@ interface IFilter {
 
 export async function selectAccountIDs(
   transaction: ITransaction,
-  filter: IFilter
+  filter: IFilter,
 ): Promise<IAccountDB["id"][]> {
   const { limit, offset } = filter.pagination;
   const params = {

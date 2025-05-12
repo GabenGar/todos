@@ -15,7 +15,7 @@ export const strictTransactionMode = new TransactionMode({
 });
 
 export async function runTransaction<ReturnShape>(
-  dbFunction: (transaction: ITransaction) => Promise<ReturnShape>
+  dbFunction: (transaction: ITransaction) => Promise<ReturnShape>,
 ): ReturnType<typeof dbFunction> {
   const result = await database.tx(dbFunction);
 

@@ -122,7 +122,7 @@ function transformURL(url: URL) {
 }
 
 function transformSearchparams(
-  searchParams: URLSearchParams
+  searchParams: URLSearchParams,
 ): ITransformedSearchParams {
   const sortedParams = new URLSearchParams(searchParams);
   const transformedSearchParams: ITransformedSearchParams = new Map();

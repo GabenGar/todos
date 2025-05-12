@@ -5,7 +5,7 @@ import type {
 } from "#lib/api";
 
 export function createSuccessfullAPIResponse<DataShape>(
-  data: DataShape
+  data: DataShape,
 ): ISuccessfulAPIResponse<DataShape> {
   return { is_successful: true, data };
 }

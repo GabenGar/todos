@@ -12,7 +12,7 @@ import type { IAccount, IAccountInit } from "#entities/account";
 
 export async function registerAccount(
   transaction: ITransaction,
-  init: IAccountInit
+  init: IAccountInit,
 ): Promise<IAccount> {
   const { password } = init;
 

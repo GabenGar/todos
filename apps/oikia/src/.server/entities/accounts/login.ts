@@ -8,7 +8,7 @@ import type { IAccountLogin } from "#entities/account";
 
 export async function loginAccount(
   transaction: ITransaction,
-  data: IAccountLogin
+  data: IAccountLogin,
 ): Promise<IAccountDBAuthData> {
   const { login, password } = data;
   const accountAuth = await selectAccountAuth(transaction, { login });

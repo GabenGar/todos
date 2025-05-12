@@ -14,7 +14,8 @@ interface ITransformedSearchParamsProps {
   params: ITransformedSearchParams;
 }
 
-export interface ITransformedSearchParams extends Map<string, string | Set<string>> {}
+export interface ITransformedSearchParams
+  extends Map<string, string | Set<string>> {}
 
 export function TransformedSearchParams({
   params,

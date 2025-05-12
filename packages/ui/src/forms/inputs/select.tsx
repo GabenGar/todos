@@ -25,7 +25,7 @@ export const InputSelect = createBlockComponent(styles, SelectComponent);
 export const InputOption = createBlockComponent(styles.option, OptionComponent);
 export const InputOptionGroup = createBlockComponent(
   undefined,
-  OptionGroupComponent
+  OptionGroupComponent,
 );
 
 function SelectComponent({ ...props }: IInputSelectProps) {

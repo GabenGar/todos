@@ -11,7 +11,7 @@ interface IFilter {
 
 export async function selectAccountAuth(
   transaction: ITransaction,
-  filter: IFilter
+  filter: IFilter,
 ) {
   if (!filter.login && !filter.auth_id) {
     throw new Error("Login or auth ID is required by neither was provided.");
