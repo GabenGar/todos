@@ -5,7 +5,7 @@ import {
   type IGetSchemaDocument,
   transformSchemaDocumentToModule,
   validateJSONSchemaDocument,
-} from "#lib";
+} from "#transform";
 import type { ITestModuleGenerator } from "./types.js";
 
 interface schemaData {

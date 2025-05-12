@@ -13,12 +13,12 @@ interface IInputBaseProps
 export interface IInputProps extends Omit<IInputBaseProps, "type"> {}
 
 export const Input = forwardRef<HTMLInputElement, IInputBaseProps>(
-  createBlockComponent(styles, Component)
+  createBlockComponent(styles, Component),
 );
 
 function Component(
   { ...blockProps }: IInputBaseProps,
-  ref?: Ref<HTMLInputElement>
+  ref?: Ref<HTMLInputElement>,
 ) {
   return <input {...blockProps} ref={ref} />;
 }

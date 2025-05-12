@@ -14,7 +14,7 @@ interface IFilter {
 
 export async function selectAccountCount(
   transaction: ITransaction,
-  filter?: IFilter
+  filter?: IFilter,
 ): Promise<ICount> {
   const params = {
     role: filter?.role,

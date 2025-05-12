@@ -110,84 +110,85 @@ function RegistrationPage({ actionData }: Route.ComponentProps) {
   );
 }
 
-export const action = createServerAction(async ({ request }: Route.ActionArgs) => {
-  switch (request.method) {
-    case "POST": {
-      const formData = await request.formData();
+export const action = createServerAction(
+  async ({ request }: Route.ActionArgs) => {
+    switch (request.method) {
+      case "POST": {
+        const formData = await request.formData();
 
-      let login: string | undefined = undefined;
-      {
-        const value = parseStringValueFromFormData(formData, "login");
+        let login: string | undefined = undefined;
+        {
+          const value = parseStringValueFromFormData(formData, "login");
 
-        if (!value) {
-          throw new Error("Login is required.");
+          if (!value) {
+            throw new Error("Login is required.");
+          }
+
+          if (value.length < 5 && value.length > 20) {
+            throw new Error("Invalid login length.");
+          }
+
+          login = value;
         }
 
-        if (value.length < 5 && value.length > 20) {
-          throw new Error("Invalid login length.");
+        let password: string | undefined = undefined;
+        {
+          const value = parseStringValueFromFormData(formData, "password");
+
+          if (!value) {
+            throw new Error("Password is required.");
+          }
+
+          if (value.length < 8 && value.length > 49) {
+            throw new Error("Invalid password length.");
+          }
+
+          password = value;
         }
 
-        login = value;
-      }
+        let invitation_code: string | undefined = undefined;
+        {
+          const value = parseStringValueFromFormData(
+            formData,
+            "invitation_code",
+          );
 
-      let password: string | undefined = undefined;
-      {
-        const value = parseStringValueFromFormData(formData, "password");
+          if (!value) {
+            throw new Error("Invitation code is required.");
+          }
 
-        if (!value) {
-          throw new Error("Password is required.");
+          if (value.length !== 21) {
+            throw new Error("Invalid invitation code length.");
+          }
+
+          invitation_code = value;
         }
 
-        if (value.length < 8 && value.length > 49) {
-          throw new Error("Invalid password length.");
+        const name = parseStringValueFromFormData(formData, "name");
+
+        if (name && (name.length < 1 || name.length > 128)) {
+          throw new Error("Invalid display name length.");
         }
 
-        password = value;
-      }
+        const accountInit: IAccountInit = {
+          login,
+          password,
+          invitation_code,
+          name,
+        };
 
-      let invitation_code: string | undefined = undefined;
-      {
-        const value = parseStringValueFromFormData(
-          formData,
-          "invitation_code"
+        await runTransaction(async (transaction) =>
+          registerAccount(transaction, accountInit),
         );
 
-        if (!value) {
-          throw new Error("Invitation code is required.");
-        }
-
-        if (value.length !== 21) {
-          throw new Error("Invalid invitation code length.");
-        }
-
-        invitation_code = value;
+        return true;
       }
 
-      const name = parseStringValueFromFormData(formData, "name");
-
-      if (name && (name.length < 1 || name.length > 128)) {
-        throw new Error("Invalid display name length.");
+      default: {
+        throw new Error(`Unknown method "${request.method}".`);
       }
-
-      const accountInit: IAccountInit = {
-        login,
-        password,
-        invitation_code,
-        name,
-      };
-
-      await runTransaction(async (transaction) =>
-        registerAccount(transaction, accountInit)
-      );
-
-      return true;
     }
-
-    default: {
-      throw new Error(`Unknown method "${request.method}".`);
-    }
-  }
-
-})
+  },
+);
 
 export default RegistrationPage;

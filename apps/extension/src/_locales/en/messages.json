@@ -105,6 +105,9 @@
   "Pathname": {
     "message": "Pathname"
   },
+  "Segments": {
+    "message": "Segments"
+  },
   "Search Parameters Details": {
     "message": "Search Parameters Details"
   },

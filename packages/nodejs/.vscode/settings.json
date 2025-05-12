@@ -9,5 +9,11 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "biomejs.biome"
-  }
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["**/*.schema.json", "!src/transform/2020-12.schema.json"],
+      "url": "https://json-schema.org/draft/2020-12/schema"
+    }
+  ]
 }

@@ -2,7 +2,7 @@ import { PAGINATION_LIMIT, type IPagination } from "./types";
 
 export function createPagination(
   totalCount: string,
-  offset: string
+  offset: string,
 ): IPagination {
   const pagination: IPagination = {
     total_count: totalCount,

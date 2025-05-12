@@ -10,7 +10,7 @@ const query = getQueryFile("accounts", "insert.sql");
 
 export async function insertAccounts(
   transaction: ITransaction,
-  inits: IAccountDBInit[]
+  inits: IAccountDBInit[],
 ): Promise<IAccountDB["id"][]> {
   const params = { inits };
 

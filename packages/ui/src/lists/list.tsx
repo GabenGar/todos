@@ -18,7 +18,7 @@ interface IListItemProps extends IBaseComponentPropsWithChildren<"li"> {}
 export const List = createBlockComponent(styles.block, ListComponent);
 const ListUnordered = createBlockComponent(
   styles.unordered,
-  ListUnorderedComponent
+  ListUnorderedComponent,
 );
 const ListOrdered = createBlockComponent(styles.ordered, ListOrderedComponent);
 export const ListItem = createBlockComponent(styles.item, ListItemComponent);

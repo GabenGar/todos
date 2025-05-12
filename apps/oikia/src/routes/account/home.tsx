@@ -76,7 +76,7 @@ export const loader = createServerLoader(
     });
 
     return account;
-  }
+  },
 );
 
 export default RegistrationPage;

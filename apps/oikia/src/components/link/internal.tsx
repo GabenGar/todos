@@ -19,7 +19,7 @@ export function LinkInternal({
         clsx(
           styles.block,
           className &&
-            (typeof className === "string" ? className : className(props))
+            (typeof className === "string" ? className : className(props)),
         )
       }
       {...props}

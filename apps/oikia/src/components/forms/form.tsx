@@ -50,7 +50,7 @@ export function Form<ActionData>({
       className={clsx(
         // @ts-expect-error css modules issue
         baseFormStyles.block,
-        className
+        className,
       )}
     >
       {isSuccessElementVisible ? (

@@ -8,7 +8,7 @@ const queryFileBasePath = path.join(
   "src",
   ".server",
   "database",
-  "queries"
+  "queries",
 );
 
 export function getQueryFile(...pathSegments: string[]) {
@@ -19,7 +19,7 @@ export function getQueryFile(...pathSegments: string[]) {
 }
 
 export function toEntityIDs<EntityType extends IEntityRow>(
-  entities: EntityType[]
+  entities: EntityType[],
 ) {
   const ids = entities.map(({ id }) => id);
 

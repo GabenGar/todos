@@ -44,7 +44,9 @@ export function Layout({ children }: IProps) {
 function App() {
   return (
     <>
-      <header className={styles.header}><LinkInternal href={"/"}>Oikia</LinkInternal></header>
+      <header className={styles.header}>
+        <LinkInternal href={"/"}>Oikia</LinkInternal>
+      </header>
 
       <main className={styles.main}>
         <Outlet />

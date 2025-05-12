@@ -1,7 +1,4 @@
-import {
-  DescriptionList,
-  DescriptionSection,
-} from "#description-list";
+import { DescriptionList, DescriptionSection } from "#description-list";
 import { Preformatted } from "#formatting";
 import type { IURLViewerProps } from "./viewer";
 

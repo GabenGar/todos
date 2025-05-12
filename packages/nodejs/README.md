@@ -1,5 +1,4 @@
-# JSON Schema to Typescript Module
-
+# `@repo/nodejs`
 
 ## Test Runner
 

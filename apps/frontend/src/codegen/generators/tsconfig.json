@@ -15,10 +15,5 @@
     "verbatimModuleSyntax": true
   },
   "include": ["**/*.ts"],
-  "exclude": [],
-  "references": [
-    {
-      "path": "../../../../../packages/codegen/tsconfig.json"
-    }
-  ]
+  "exclude": []
 }

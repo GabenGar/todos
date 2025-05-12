@@ -5,7 +5,7 @@ const query = getQueryFile("accounts", "entities.sql");
 
 export async function selectAccountEntities(
   transaction: ITransaction,
-  ids: IAccountDB["id"][]
+  ids: IAccountDB["id"][],
 ): Promise<IAccountDB[]> {
   const params = {
     ids,

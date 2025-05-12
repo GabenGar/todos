@@ -3,11 +3,11 @@ export function isNonEmptyString(input: unknown): input is string {
     return false;
   }
 
-  const trimmedString = input.trim()
+  const trimmedString = input.trim();
 
   if (trimmedString.length === 0) {
     return false;
   }
 
-  return true
+  return true;
 }

@@ -139,7 +139,7 @@ export const action = createServerAction(
         };
 
         const { auth_id } = await runTransaction(async (transaction) =>
-          loginAccount(transaction, accountLogin)
+          loginAccount(transaction, accountLogin),
         );
 
         const session = await getSession(request.headers.get("Cookie"));
@@ -161,7 +161,7 @@ export const action = createServerAction(
         throw new Error(`Unknown method "${request.method}".`);
       }
     }
-  }
+  },
 );
 
 export default LoginPage;

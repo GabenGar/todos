@@ -1,6 +1,6 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { reduceFolder } from "#lib/fs";
+import { reduceFolder } from "#fs";
 import {
   type ICodeGenerator,
   type IGeneratorMap,

@@ -30,5 +30,5 @@ export const action = createServerAction(
         throw new Error(`Unknown method "${request.method}".`);
       }
     }
-  }
+  },
 );

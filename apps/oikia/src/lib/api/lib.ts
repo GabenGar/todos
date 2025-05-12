@@ -3,7 +3,7 @@ import { isNonEmptyString } from "#lib/strings";
 import type { IAPIError, IFailedAPIResponse } from "./types";
 
 export function isFailedAPIResponse(
-  input: unknown
+  input: unknown,
 ): input is IFailedAPIResponse {
   const isValidObject =
     isObject(input) &&
@@ -17,7 +17,7 @@ export function isFailedAPIResponse(
   }
 
   const isValidErrors = (input.errors as unknown[]).every((value) =>
-    isAPIError(value)
+    isAPIError(value),
   );
 
   if (!isValidErrors) {
