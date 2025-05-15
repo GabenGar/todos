@@ -5,16 +5,17 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build-codegen": "cd ./src/codegen/generators && npm run build",
+    "build-codegen": "cd ./codegen/generators && npm run build",
     "start": "serve ./dist -p 9001 --no-clipboard --no-port-switching",
     "lint": "next lint && prettier --log-level=warn ./src --check",
     "format": "prettier --log-level=warn ./src --write",
     "dev": "next dev --port 8001",
-    "codegen": "npm run build-codegen && cd ../../packages/codegen && npm start -- ../../apps/frontend/src/codegen/generators ../../apps/frontend/src/codegen/output && cd ../../apps/frontend && prettier --log-level=warn ./src/codegen/output --write"
+    "codegen": "npm run build-codegen && node ./scripts/codegen && prettier --log-level=warn ./src/codegen/output --write"
   },
   "dependencies": {
     "@hyperjump/json-schema": "^1.9.9",
     "@next/env": "15.2.4",
+    "@repo/nodejs": "*",
     "@repo/ui": "*",
     "ajv": "^8.17.1",
     "bcp-47": "^2.1.0",

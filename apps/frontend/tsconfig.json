@@ -45,7 +45,7 @@
         "./types.ts"
       ],
       "#json-schema/*": [
-        "./codegen/output/json-schema/*/index.ts"
+        "../codegen/output/json-schema/*/index.ts"
       ]
     },
     "lib": [
@@ -80,6 +80,6 @@
   ],
   "exclude": [
     "node_modules",
-    "src/codegen/generators"
+    "codegen/generators"
   ]
 }
