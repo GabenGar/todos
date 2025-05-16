@@ -1,53 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "#environment": [
-        "./environment/index.ts"
-      ],
-      "#environment/*": [
-        "./environment/*/index.ts"
-      ],
-      "#pages/types": [
-        "./app/types.ts"
-      ],
-      "#lib/*": [
-        "./lib/*/index.ts"
-      ],
-      "#server": [
-        "./server/index.ts"
-      ],
-      "#server/*": [
-        "./server/*/index.ts"
-      ],
-      "#store/*": [
-        "./browser/store/*/index.ts"
-      ],
-      "#browser/*": [
-        "./browser/*"
-      ],
-      "#hooks": [
-        "./hooks/index.ts"
-      ],
-      "#components": [
-        "./components/index.ts"
-      ],
-      "#components/types": [
-        "./components/types.ts"
-      ],
-      "#components/*": [
-        "./components/*/index.ts"
-      ],
-      "#entities/*": [
-        "./entities/*/index.ts"
-      ],
-      "#types": [
-        "./types.ts"
-      ],
-      "#json-schema/*": [
-        "./codegen/output/json-schema/*/index.ts"
-      ]
-    },
     "lib": [
       "dom",
       "dom.iterable",
@@ -80,6 +32,7 @@
   ],
   "exclude": [
     "node_modules",
-    "src/codegen/generators"
+    "scripts",
+    "codegen/generators"
   ]
 }

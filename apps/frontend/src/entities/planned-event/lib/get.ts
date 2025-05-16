@@ -1,9 +1,9 @@
-import { type IIDBArgs } from "#browser/store/indexed";
+import { type IIDBArgs } from "#store/indexed";
 import {
   selectPlannedEventCount,
   selectPlannedEventEntities,
   selectPlannedEventIDs,
-} from "#browser/store/indexed/queries/planned-events";
+} from "#store/indexed/queries/planned-events";
 import {
   createClientPagination,
   PAGINATION_LIMIT,

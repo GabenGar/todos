@@ -1,1 +1,5 @@
-export type { IGeneratedNestedModule, IModuleInfo } from "#codegen";
+export {
+  runCodegen,
+  type IGeneratedNestedModule,
+  type IModuleInfo,
+} from "#codegen";

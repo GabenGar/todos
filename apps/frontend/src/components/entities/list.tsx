@@ -9,11 +9,11 @@ import {
 } from "#lib/pagination";
 import { ListLocal } from "#components/list";
 import { createBlockComponent } from "@repo/ui/meta";
+import { Loading } from "#components";
 import type {
   IBaseComponentProps,
   ITranslatableProps,
 } from "#components/types";
-import { Loading } from "components/loading";
 
 interface IProps<IEntityType extends IEntityItem>
   extends IBaseComponentProps<"div">,

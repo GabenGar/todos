@@ -1,5 +1,5 @@
 import { createValidator } from "#lib/json/schema";
-import { createLocalStorage } from "#browser/store/local";
+import { createLocalStorage } from "#store/local";
 import type { IPlace } from "../types";
 
 const validatePlace = createValidator<IPlace>("/entities/place/entity");

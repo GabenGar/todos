@@ -5,16 +5,36 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build-codegen": "cd ./src/codegen/generators && npm run build",
+    "build-codegen": "cd ./codegen/generators && npm run build",
     "start": "serve ./dist -p 9001 --no-clipboard --no-port-switching",
     "lint": "next lint && prettier --log-level=warn ./src --check",
     "format": "prettier --log-level=warn ./src --write",
     "dev": "next dev --port 8001",
-    "codegen": "npm run build-codegen && cd ../../packages/codegen && npm start -- ../../apps/frontend/src/codegen/generators ../../apps/frontend/src/codegen/output && cd ../../apps/frontend && prettier --log-level=warn ./src/codegen/output --write"
+    "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"
+  },
+  "imports": {
+    "#environment": "./src/environment/index.ts",
+    "#environment/*": "./src/environment/*/index.ts",
+    "#pages/types": "./src/app/types.ts",
+    "#lib/*": "./src/lib/*/index.ts",
+    "#server": "./src/server/index.ts",
+    "#server/*": "./src/server/*/index.ts",
+    "#store/*": "./src/browser/store/*/index.ts",
+    "#browser/*": "./src/browser/*",
+    "#hooks": "./src/hooks/index.ts",
+    "#components": "./src/components/index.ts",
+    "#components/types": "./src/components/types.ts",
+    "#components/*": "./src/components/*/index.ts",
+    "#entities/*": "./src/entities/*/index.ts",
+    "#types": "./src/types.ts",
+    "#json-schema/*": [
+      "./codegen/output/json-schema/*/index.ts"
+    ]
   },
   "dependencies": {
     "@hyperjump/json-schema": "^1.9.9",
     "@next/env": "15.2.4",
+    "@repo/nodejs": "*",
     "@repo/ui": "*",
     "ajv": "^8.17.1",
     "bcp-47": "^2.1.0",

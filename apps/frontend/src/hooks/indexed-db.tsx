@@ -10,7 +10,7 @@ import {
   getTransaction,
   type IIDBTransaction,
   type IStorageName,
-} from "#browser/store/indexed";
+} from "#store/indexed";
 import { useClient } from "./client";
 
 type IIndexedDBContext = IIDBTransactionRunner;

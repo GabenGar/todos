@@ -4,7 +4,7 @@ import type { IPlannedEvent, IPlannedEventInit } from "../types";
 import {
   insertPlannedEvents,
   selectPlannedEventEntities,
-} from "#browser/store/indexed/queries/planned-events";
+} from "#store/indexed/queries/planned-events";
 
 export function createPlannedEvent(
   transaction: IIDBTransaction<"planned_events">,
