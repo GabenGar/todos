@@ -1,5 +1,8 @@
-import type { IPlannedEvent, IPlannedEventInit } from "#entities/planned-event";
-import type { IPlannedEventUpdate } from "entities/planned-event/types";
+import type {
+  IPlannedEvent,
+  IPlannedEventInit,
+  IPlannedEventUpdate,
+} from "#entities/planned-event";
 
 export interface IPlannedEventInitIDB
   extends IPlannedEventInit,

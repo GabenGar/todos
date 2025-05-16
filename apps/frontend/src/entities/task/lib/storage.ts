@@ -1,5 +1,5 @@
 import { createValidator } from "#lib/json/schema";
-import { createLocalStorage } from "#browser/store/local";
+import { createLocalStorage } from "#store/local";
 import type { ITaskStore } from "../types";
 
 const validateTask = createValidator<ITaskStore>("/entities/task/entity");
