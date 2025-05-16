@@ -4,7 +4,8 @@ import stringifyObject from "stringify-object";
 import { reduceFolder } from "@repo/nodejs/fs";
 import type { IGeneratedNestedModule, IModuleInfo } from "@repo/nodejs/codegen";
 
-const schemaFolderPath = path.resolve("../schema");
+// @TODO a proper path resolution
+const schemaFolderPath = path.resolve("../../packages/schema");
 const schemaFileExtension = ".schema.json";
 
 /**

@@ -4,7 +4,7 @@ import path from "node:path";
 import { cwd } from "node:process";
 
 const inputFolder = path.join(cwd(), "codegen", "generators");
-const outputFolder = path.join(cwd(), "codegen", "generators");
+const outputFolder = path.join(cwd(), "codegen", "output");
 
 run().catch((error) => console.error(error));
 
