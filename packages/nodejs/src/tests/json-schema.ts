@@ -5,7 +5,7 @@ import {
   type IGetSchemaDocument,
   transformSchemaDocumentToModule,
   validateJSONSchemaDocument,
-} from "#transform";
+} from "#json-schema-to-typescript";
 import type { ITestModuleGenerator } from "./types.js";
 
 interface schemaData {

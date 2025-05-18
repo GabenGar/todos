@@ -3,6 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run test-build && npm run test-generate && npm run test-format && npm run test-validate",
+    "test-build": "cd tests && npm run build",
+    "test-format": "biome check ./tests --apply-unsafe",
+    "test-generate": "node dist/scripts/test-generate.js",
+    "test-validate": "node dist/scripts/test-validate.js",
+    "lint": "biome lint ./ && tsc --noEmit",
+    "format": "biome check ./ --apply",
+    "prep": "npm run build && npm run test"
+  },
   "exports": {
     ".": {
       "types": "./api/index.ts",
@@ -38,17 +49,6 @@
       "types": "./src/*/index.ts",
       "default": "./dist/src/*/index.js"
     }
-  },
-  "scripts": {
-    "build": "tsc",
-    "test": "npm run test-build && npm run test-generate && npm run test-format && npm run test-validate",
-    "test-build": "cd tests && npm run build",
-    "test-format": "biome check ./tests --apply-unsafe",
-    "test-generate": "node dist/scripts/test-generate.js",
-    "test-validate": "node dist/scripts/test-validate.js",
-    "lint": "biome lint ./ && tsc --noEmit",
-    "format": "biome check ./ --apply",
-    "prep": "npm run build && npm run test"
   },
   "dependencies": {
     "@hyperjump/json-pointer": "^1.1.0",
