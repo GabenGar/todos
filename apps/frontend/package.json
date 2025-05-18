@@ -20,7 +20,7 @@
     "#server": "./src/server/index.ts",
     "#server/*": "./src/server/*/index.ts",
     "#store/*": "./src/browser/store/*/index.ts",
-    "#browser/*": "./src/browser/*",
+    "#browser/*": "./src/browser/*/index.ts",
     "#hooks": "./src/hooks/index.ts",
     "#components": "./src/components/index.ts",
     "#components/types": "./src/components/types.ts",

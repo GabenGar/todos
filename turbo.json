@@ -5,8 +5,7 @@
     "format": {},
     "check": {},
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "dependsOn": ["^build"]
     },
     "codegen": {},
     "dev": {
