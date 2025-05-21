@@ -4,17 +4,17 @@ import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Heading } from "@repo/ui/headings";
 import { authenticateRequest, createServerLoader } from "#server/lib/router";
 
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/invitations";
 
 export function meta({ error }: Route.MetaArgs) {
-  return [{ title: "Account" }];
+  return [{ title: "Invitations" }];
 }
 
 /**
  * @TODO client render
  */
 function RegistrationPage({ loaderData }: Route.ComponentProps) {
-  const heading = "Account";
+  const heading = "Invitations";
 
   if (!loaderData.is_successful) {
     const {
@@ -51,7 +51,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
 
 export const loader = createServerLoader(
   async ({ request }: Route.LoaderArgs) => {
-    const account = await authenticateRequest(request);
+    const account = await authenticateRequest(request, "administrator");
 
     return account;
   }

@@ -7,14 +7,14 @@ import { authenticateRequest, createServerLoader } from "#server/lib/router";
 import type { Route } from "./+types/home";
 
 export function meta({ error }: Route.MetaArgs) {
-  return [{ title: "Account" }];
+  return [{ title: "Administrator Overview" }];
 }
 
 /**
  * @TODO client render
  */
 function RegistrationPage({ loaderData }: Route.ComponentProps) {
-  const heading = "Account";
+  const heading = "Administrator Overview";
 
   if (!loaderData.is_successful) {
     const {
@@ -51,7 +51,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
 
 export const loader = createServerLoader(
   async ({ request }: Route.LoaderArgs) => {
-    const account = await authenticateRequest(request);
+    const account = await authenticateRequest(request, "administrator");
 
     return account;
   }

@@ -2,6 +2,10 @@
 /config/server.development.json
 /config/server.json
 
+# typescript build cache
+/tsconfig.node.tsbuildinfo
+/tsconfig.vite.tsbuildinfo
+
 .DS_Store
 /node_modules/
 
