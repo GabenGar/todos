@@ -3,4 +3,5 @@ export type {
   IAccountLogin,
   IAccount,
   IAccountRole,
+  IInvitation,
 } from "./types";
