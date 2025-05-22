@@ -1,7 +1,7 @@
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { authenticateRequest, createServerLoader } from "#server/lib/router";
+import { authenticateRequest } from "#server/lib/router";
 import { runTransaction } from "#database";
 import { selectInvitationCount } from "#database/queries/invitations";
 
@@ -26,7 +26,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
               <DescriptionList>
                 <DescriptionSection
                   dKey={"Total"}
-                  dValue={loaderData.is_successful && loaderData.data.count}
+                  dValue={loaderData.count}
                   isHorizontal
                 />
               </DescriptionList>
@@ -40,20 +40,18 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export const loader = createServerLoader(
-  async ({ request }: Route.LoaderArgs) => {
-    await authenticateRequest(request, "administrator");
+export async function loader({ request }: Route.LoaderArgs) {
+  await authenticateRequest(request, "administrator");
 
-    const count = await runTransaction(async (transaction) => {
-      const count = await selectInvitationCount(transaction);
+  const count = await runTransaction(async (transaction) => {
+    const count = await selectInvitationCount(transaction);
 
-      return count;
-    });
+    return count;
+  });
 
-    return {
-      count,
-    };
-  }
-);
+  return {
+    count,
+  };
+}
 
 export default RegistrationPage;
