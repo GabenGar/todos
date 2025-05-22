@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { NavLink, type NavLinkProps, type To } from "react-router";
+import { NavLink, type NavLinkProps, type To, href } from "react-router";
 
 import styles from "./internal.module.scss";
 

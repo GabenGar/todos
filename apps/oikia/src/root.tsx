@@ -16,6 +16,7 @@ import type { Route } from "./+types/root";
 import "@repo/ui/styles/global";
 import styles from "./root.module.scss";
 import { LinkInternal } from "#components/link";
+import { Preformatted } from "@repo/ui/formatting";
 
 interface IProps {
   children: ReactNode;
@@ -93,9 +94,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             <OverviewBody>
               <p>{details}</p>
               {stack && (
-                <pre className="w-full p-4 overflow-x-auto">
+                <Preformatted>
                   <code>{stack}</code>
-                </pre>
+                </Preformatted>
               )}
             </OverviewBody>
           </>

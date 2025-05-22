@@ -1,8 +1,10 @@
+import { href } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Heading } from "@repo/ui/headings";
 import { authenticateRequest, createServerLoader } from "#server/lib/router";
+import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/home";
 
@@ -37,7 +39,19 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
 
             <OverviewBody>
               <DescriptionList>
-                <DescriptionSection dKey="Role" dValue={role} isHorizontal />
+                <DescriptionSection
+                  dKey="Role"
+                  dValue={
+                    role !== "administrator" ? (
+                      role
+                    ) : (
+                      <LinkInternal href={href("/account/role/administrator")}>
+                        {role}
+                      </LinkInternal>
+                    )
+                  }
+                  isHorizontal
+                />
 
                 <DescriptionSection dKey="Joined" dValue={created_at} />
               </DescriptionList>
