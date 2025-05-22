@@ -1,6 +1,9 @@
+import { href, redirect } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { createPagination } from "@repo/ui/pagination";
+import { BIGINT_ZERO } from "@repo/ui/numbers/bigint";
 import { authenticateRequest } from "#server/lib/router";
 import { runTransaction } from "#database";
 import { selectInvitationCount } from "#database/queries/invitations";
@@ -12,9 +15,12 @@ export function meta({ error }: Route.MetaArgs) {
 }
 
 /**
- * @TODO client render
+ * @TODOs
+ * - client render
+ * - creation form
  */
-function RegistrationPage({ loaderData }: Route.ComponentProps) {
+function InvitationsPage({ loaderData }: Route.ComponentProps) {
+  const { count } = loaderData;
   const heading = "Invitations";
 
   return (
@@ -26,7 +32,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
               <DescriptionList>
                 <DescriptionSection
                   dKey={"Total"}
-                  dValue={loaderData.count}
+                  dValue={count}
                   isHorizontal
                 />
               </DescriptionList>
@@ -49,9 +55,16 @@ export async function loader({ request }: Route.LoaderArgs) {
     return count;
   });
 
-  return {
-    count,
-  };
+  if (BigInt(count) === BIGINT_ZERO) {
+    return { count };
+  }
+
+  const pagination = createPagination(count);
+  const url = href("/account/role/administrator/invitations/:page", {
+    page: pagination.current_page,
+  });
+
+  return redirect(url);
 }
 
-export default RegistrationPage;
+export default InvitationsPage;

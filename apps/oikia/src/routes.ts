@@ -11,6 +11,7 @@ const routes = [
   route("account", "./routes/account/home.tsx"),
   route("account/role/administrator", "./routes/account/role/administrator/home.tsx"),
   route("account/role/administrator/invitations", "./routes/account/role/administrator/invitations.tsx"),
+  route("account/role/administrator/invitations/:page", "./routes/account/role/administrator/invitations-list.tsx"),
 ] satisfies RouteConfig;
 
 export default routes;

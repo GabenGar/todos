@@ -16,7 +16,7 @@ export function meta({ error }: Route.MetaArgs) {
 /**
  * @TODO client render
  */
-function RegistrationPage({ loaderData }: Route.ComponentProps) {
+function AdministratorPage({ loaderData }: Route.ComponentProps) {
   const { count } = loaderData;
   const heading = "Administrator";
 
@@ -61,4 +61,4 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   };
 }
 
-export default RegistrationPage;
+export default AdministratorPage;

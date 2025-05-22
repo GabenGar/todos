@@ -11,7 +11,7 @@ export function meta({ error }: Route.MetaArgs) {
   return [{ title: "Oikia" }];
 }
 
-function Home() {
+function HomePage() {
   const heading = "Hello World";
 
   return (
@@ -58,4 +58,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

@@ -15,7 +15,7 @@ export function meta({ error }: Route.MetaArgs) {
 /**
  * @TODO client render
  */
-function RegistrationPage({ loaderData }: Route.ComponentProps) {
+function AccountPage({ loaderData }: Route.ComponentProps) {
   const heading = "Account";
 
   if (!loaderData.is_successful) {
@@ -71,4 +71,4 @@ export const loader = createServerLoader(
   }
 );
 
-export default RegistrationPage;
+export default AccountPage;
