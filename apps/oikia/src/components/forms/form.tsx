@@ -5,7 +5,6 @@ import {
   type Navigation,
   Form as RouterForm,
   type FormProps,
-  type FormMethod,
   useActionData,
 } from "react-router";
 import { ButtonReset, ButtonSubmit } from "@repo/ui/buttons";
@@ -15,17 +14,21 @@ import { InputSection } from "@repo/ui/forms/sections";
 import { List, ListItem } from "@repo/ui/lists";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { isFailedAPIResponse } from "#lib/api";
+import type { IFormMethod } from "./types";
 
 export interface IFormProps<ActionData>
   extends Omit<FormProps, "children" | "method"> {
   id: string;
-  method?: Uppercase<FormMethod>;
+  method?: IFormMethod;
   children?: (formID: string) => ReactNode;
   submitButton?: (state: Navigation["state"]) => ReactNode;
   resetButton?:
     | null
     | ((formID: string, state: Navigation["state"]) => ReactNode);
-  successElement?: (formID: string, data: ActionData) => ReactNode;
+  successElement?: (
+    formID: string,
+    data: Exclude<ActionData, undefined>
+  ) => ReactNode;
 }
 
 export function Form<ActionData>({
@@ -41,8 +44,9 @@ export function Form<ActionData>({
   navigation.state;
   const data = useActionData<ActionData>();
   const formID = `${id}-form`;
-  const isSuccessElementVisible =
-    successElement && data && !isFailedAPIResponse(data);
+  const isSuccessElementVisible = Boolean(
+    successElement && data && !isFailedAPIResponse(data)
+  );
 
   return (
     <div
@@ -50,15 +54,15 @@ export function Form<ActionData>({
       className={clsx(
         // @ts-expect-error css modules issue
         baseFormStyles.block,
-        className,
+        className
       )}
     >
       {isSuccessElementVisible ? (
         <>
           <InputSection>
             {
-              // @ts-expect-error @TODO better data typing
-              successElement(formID, data)
+              // biome-ignore lint/style/noNonNullAssertion: dynamic stuff
+              successElement!(formID, data as Exclude<ActionData, undefined>)
             }
           </InputSection>
 

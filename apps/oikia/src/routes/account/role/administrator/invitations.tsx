@@ -1,7 +1,4 @@
 import { href, redirect } from "react-router";
-import { Page } from "@repo/ui/pages";
-import { Overview, OverviewHeader } from "@repo/ui/articles";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { createPagination } from "@repo/ui/pagination";
 import { BIGINT_ZERO } from "@repo/ui/numbers/bigint";
 import { authenticateRequest } from "#server/lib/router";
@@ -14,38 +11,6 @@ export function meta({ error }: Route.MetaArgs) {
   return [{ title: "Invitations" }];
 }
 
-/**
- * @TODOs
- * - client render
- * - creation form
- */
-function InvitationsPage({ loaderData }: Route.ComponentProps) {
-  const { count } = loaderData;
-  const heading = "Invitations";
-
-  return (
-    <Page heading={heading}>
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
-          <>
-            <OverviewHeader>
-              <DescriptionList>
-                <DescriptionSection
-                  dKey={"Total"}
-                  dValue={count}
-                  isHorizontal
-                />
-              </DescriptionList>
-            </OverviewHeader>
-
-            {/* <OverviewBody></OverviewBody> */}
-          </>
-        )}
-      </Overview>
-    </Page>
-  );
-}
-
 export async function loader({ request }: Route.LoaderArgs) {
   await authenticateRequest(request, "administrator");
 
@@ -56,7 +21,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   });
 
   if (BigInt(count) === BIGINT_ZERO) {
-    return { count };
+    const url = href("/account/role/administrator/create/invitation");
+
+    return redirect(url);
   }
 
   const pagination = createPagination(count);
@@ -66,5 +33,3 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   return redirect(url);
 }
-
-export default InvitationsPage;

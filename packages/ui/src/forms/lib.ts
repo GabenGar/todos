@@ -1,6 +1,8 @@
-export function parseStringValueFromFormData(
-  formData: FormData,
-  keyName: string,
+import type { IFormData } from "./types";
+
+export function parseStringValueFromFormData<Field extends string = string>(
+  formData: IFormData<Field>,
+  keyName: Field
 ): string | undefined {
   const value = formData.get(keyName);
 

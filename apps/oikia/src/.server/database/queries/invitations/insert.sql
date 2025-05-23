@@ -5,7 +5,6 @@ WITH inits AS (
     expires_at,
     name,
     max_uses,
-    is_active,
     title,
     description
   FROM
@@ -15,7 +14,6 @@ WITH inits AS (
       expires_at timestamptz,
       name text,
       max_uses bigint,
-      is_active boolean,
       title text,
       description text
     )
@@ -27,7 +25,6 @@ INSERT INTO invitations
     expires_at,
     name,
     max_uses,
-    is_active,
     title,
     description
   )
@@ -37,7 +34,6 @@ SELECT
   expires_at,
   name,
   max_uses,
-  is_active,
   title,
   description
 FROM

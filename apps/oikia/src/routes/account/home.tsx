@@ -65,7 +65,7 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
 
 export const loader = createServerLoader(
   async ({ request }: Route.LoaderArgs) => {
-    const account = await authenticateRequest(request);
+    const { id: _, ...account } = await authenticateRequest(request);
 
     return account;
   }

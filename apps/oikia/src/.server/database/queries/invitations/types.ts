@@ -11,7 +11,6 @@ export interface IInvitationDBInit
     | "code"
     | "expires_at"
     | "max_uses"
-    | "is_active"
     | "title"
     | "description"
   > {}

@@ -1,3 +1,4 @@
+import { href } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
@@ -47,7 +48,7 @@ function RegistrationPage({ actionData }: Route.ComponentProps) {
                   <>
                     <p>
                       You have successfully created an account, now you can{" "}
-                      <LinkInternal href={"/authentication/login"}>
+                      <LinkInternal href={href("/authentication/login")}>
                         log in
                       </LinkInternal>
                       .
@@ -150,7 +151,7 @@ export const action = createServerAction(
         {
           const value = parseStringValueFromFormData(
             formData,
-            "invitation_code",
+            "invitation_code"
           );
 
           if (!value) {
@@ -178,7 +179,7 @@ export const action = createServerAction(
         };
 
         await runTransaction(async (transaction) =>
-          registerAccount(transaction, accountInit),
+          registerAccount(transaction, accountInit)
         );
 
         return true;
@@ -188,7 +189,7 @@ export const action = createServerAction(
         throw new Error(`Unknown method "${request.method}".`);
       }
     }
-  },
+  }
 );
 
 export default RegistrationPage;
