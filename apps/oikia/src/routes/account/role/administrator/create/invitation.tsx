@@ -3,7 +3,8 @@ import { nanoid } from "nanoid";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData, type IFormData } from "@repo/ui/forms";
-import { InputSectionText } from "@repo/ui/forms/sections";
+import { InputSectionInteger, InputSectionText } from "@repo/ui/forms/sections";
+import { BIGINT_ONE } from "@repo/ui/numbers/bigint";
 import {
   authenticateAdmin,
   createServerAction,
@@ -94,13 +95,14 @@ function InvitationCreatePage(props: Route.ComponentProps) {
                       Expiration date
                     </InputSectionText>
 
-                    <InputSectionText
+                    <InputSectionInteger
                       id={`${formID}-max_uses`}
                       form={formID}
                       name="max_uses"
+                      min={BIGINT_ONE}
                     >
                       Maximum uses
-                    </InputSectionText>
+                    </InputSectionInteger>
                   </>
                 )}
               </Form>
