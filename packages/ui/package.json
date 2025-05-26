@@ -25,6 +25,7 @@
     "./url": "./src/url/index.ts",
     "./numbers/bigint": "./src/numbers/bigint/index.ts",
     "./pagination": "./src/pagination/index.ts",
+    "./errors": "./src/errors/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
     "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
@@ -43,10 +44,12 @@
     "#description-list": "./src/description-list/index.ts",
     "#details": "./src/details/index.ts",
     "#numbers/bigint": "./src/numbers/bigint/index.ts",
+    "#errors": "./src/errors/index.ts",
     "#types": "./src/types/index.ts"
   },
   "dependencies": {
     "clsx": "^2.1.0",
+    "date-fns": "^4.1.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

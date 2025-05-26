@@ -1,5 +1,10 @@
+import { useRef } from "react";
 import { createBlockComponent } from "#meta";
-import { InputDateTime, type IInputDateTimeProps } from "../../inputs";
+import {
+  InputDateTime,
+  InputHidden,
+  type IInputDateTimeProps,
+} from "../../inputs";
 import { Label } from "../../label";
 import { type IInputSectionProps, InputSection } from "../section";
 
@@ -22,10 +27,16 @@ function Component({
   children,
   ...props
 }: IInputSectionDateTimeProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <InputSection {...props}>
       <Label htmlFor={id}>{children}</Label>
-      <InputDateTime
+      <InputDateTime id="" form="" name="" onChange={(event) => {
+        const value = event.currentTarget.value
+      }} />
+      <InputHidden
+        ref={inputRef}
         id={id}
         form={form}
         name={name}
