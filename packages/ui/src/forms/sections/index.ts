@@ -8,3 +8,4 @@ export { InputSectionTitle } from "./text/title";
 export { InputSectionDescription } from "./text/description";
 export { InputSectionPassword } from "./password";
 export { InputSectionInteger } from "./number/integer";
+export { InputSectionDatetime } from "./datetime/datetime";
