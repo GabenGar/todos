@@ -26,6 +26,8 @@
     "./numbers/bigint": "./src/numbers/bigint/index.ts",
     "./pagination": "./src/pagination/index.ts",
     "./errors": "./src/errors/index.ts",
+    "./dates": "./src/dates/index.ts",
+    "./hooks": "./src/hooks/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
     "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
@@ -45,6 +47,7 @@
     "#details": "./src/details/index.ts",
     "#numbers/bigint": "./src/numbers/bigint/index.ts",
     "#errors": "./src/errors/index.ts",
+    "#hooks": "./src/hooks/index.ts",
     "#types": "./src/types/index.ts"
   },
   "dependencies": {

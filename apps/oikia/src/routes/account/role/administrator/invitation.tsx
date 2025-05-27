@@ -1,3 +1,4 @@
+import { href } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
@@ -6,6 +7,7 @@ import { Preformatted } from "@repo/ui/formatting";
 import { runTransaction } from "#database";
 import { selectInvitationEntities } from "#database/queries/invitations";
 import { authenticateAdmin } from "#server/lib/router";
+import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/invitation";
 
@@ -67,11 +69,21 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   isHorizontal
                 />
 
-                <DescriptionSection
-                  dKey={"Creator"}
-                  dValue={created_by}
-                  isHorizontal
-                />
+                {created_by && (
+                  <DescriptionSection
+                    dKey={"Creator"}
+                    dValue={
+                      <LinkInternal
+                        href={href("/account/role/administrator/account/:id", {
+                          id: created_by,
+                        })}
+                      >
+                        Untitled ({created_by})
+                      </LinkInternal>
+                    }
+                    isHorizontal
+                  />
+                )}
 
                 {description && (
                   <DescriptionSection
@@ -94,7 +106,10 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection dKey={"Created at"} dValue={created_at} />
 
-                <DescriptionSection dKey={"Latest updated at"} dValue={updated_at} />
+                <DescriptionSection
+                  dKey={"Latest updated at"}
+                  dValue={updated_at}
+                />
               </DescriptionList>
             </OverviewBody>
           </>
