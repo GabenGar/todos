@@ -9,6 +9,8 @@ import { authenticateAdmin } from "#server/lib/router";
 
 import type { Route } from "./+types/invitation";
 
+import styles from "./invitation.module.scss";
+
 export function meta({ data }: Route.MetaArgs) {
   const { invitation } = data;
   const { id, title } = invitation;
@@ -19,7 +21,18 @@ export function meta({ data }: Route.MetaArgs) {
 
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
   const { invitation } = loaderData;
-  const { id, title, code } = invitation;
+  const {
+    id,
+    title,
+    code,
+    created_at,
+    updated_at,
+    is_active,
+    created_by,
+    description,
+    expires_at,
+    max_uses,
+  } = invitation;
   const parsedTitle = title ? `"${title}"` : "Untitled";
   const heading = "Invitation Overview";
 
@@ -41,6 +54,47 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   isValuePreformatted
                   isHorizontal
                 />
+
+                <DescriptionSection
+                  dKey={"Status"}
+                  dValue={
+                    is_active ? (
+                      <span className={styles.active}>Active</span>
+                    ) : (
+                      <span className={styles.inactive}>Inactive</span>
+                    )
+                  }
+                  isHorizontal
+                />
+
+                <DescriptionSection
+                  dKey={"Creator"}
+                  dValue={created_by}
+                  isHorizontal
+                />
+
+                {description && (
+                  <DescriptionSection
+                    dKey={"Description"}
+                    dValue={description}
+                  />
+                )}
+
+                {expires_at && (
+                  <DescriptionSection dKey={"Expires at"} dValue={expires_at} />
+                )}
+
+                {max_uses && (
+                  <DescriptionSection
+                    dKey={"Maximum uses"}
+                    dValue={max_uses}
+                    isHorizontal
+                  />
+                )}
+
+                <DescriptionSection dKey={"Created at"} dValue={created_at} />
+
+                <DescriptionSection dKey={"Latest updated at"} dValue={updated_at} />
               </DescriptionList>
             </OverviewBody>
           </>
