@@ -8,7 +8,7 @@ SELECT
   max_uses,
   is_active,
   title,
-  description,
+  description
 FROM
   invitations
 WHERE
