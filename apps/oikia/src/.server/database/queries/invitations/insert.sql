@@ -3,6 +3,9 @@ WITH inits AS (
     created_by,
     code,
     expires_at,
+    (
+      CAST expires_at AS timestamptz
+    ) AS parsed_expires_at
     name,
     max_uses,
     title,
@@ -11,7 +14,7 @@ WITH inits AS (
     json_to_recordset(${inits:json}) AS init(
       created_by bigint,
       code text,
-      expires_at timestamptz,
+      expires_at text,
       name text,
       max_uses bigint,
       title text,
@@ -23,6 +26,7 @@ INSERT INTO invitations
     created_by,
     code,
     expires_at,
+    parsed_expires_at,
     name,
     max_uses,
     title,
@@ -32,6 +36,7 @@ SELECT
   created_by,
   code,
   expires_at,
+  parsed_expires_at,
   name,
   max_uses,
   title,

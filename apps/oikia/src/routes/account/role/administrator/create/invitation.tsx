@@ -9,7 +9,6 @@ import {
   InputSectionText,
 } from "@repo/ui/forms/sections";
 import { BIGINT_ONE } from "@repo/ui/numbers/bigint";
-import { NotImplementedError } from "@repo/ui/errors";
 import {
   authenticateAdmin,
   createServerAction,
@@ -143,8 +142,6 @@ export const action = createServerAction(
         "Must have at least expiration date or maximum uses."
       );
     }
-
-    throw new NotImplementedError();
 
     const invitation = await runTransaction(async (transaction) => {
       const createdBy = account.id;
