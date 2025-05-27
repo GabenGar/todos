@@ -8,15 +8,16 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
+import { ClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import { Preformatted } from "@repo/ui/formatting";
+import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/root";
 
 import "@repo/ui/styles/global";
 import styles from "./root.module.scss";
-import { LinkInternal } from "#components/link";
-import { Preformatted } from "@repo/ui/formatting";
 
 interface IProps {
   children: ReactNode;
@@ -44,7 +45,7 @@ export function Layout({ children }: IProps) {
 
 function App() {
   return (
-    <>
+    <ClientProvider>
       <header className={styles.header}>
         <LinkInternal href={"/"}>Oikia</LinkInternal>
       </header>
@@ -64,7 +65,7 @@ function App() {
           </li>
         </ul>
       </footer>
-    </>
+    </ClientProvider>
   );
 }
 
