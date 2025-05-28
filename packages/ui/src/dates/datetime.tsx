@@ -8,7 +8,7 @@ import {
 } from "#meta";
 import { Button } from "#buttons";
 import { Loading } from "#loading";
-import { formatDateTime } from "./format";
+import { formatDateTime, formatRelativeDateTime } from "./format";
 
 import styles from "./datetime.module.scss";
 
@@ -33,7 +33,10 @@ function Component({ dateTime, children, ...props }: IProps) {
         ) : !client ? (
           <Loading />
         ) : (
-          formatDateTime(client.locale, dateTime)
+          <>
+            {formatRelativeDateTime(client.locale, dateTime)} (
+            {formatDateTime(client.locale, dateTime)})
+          </>
         )}
       </time>
 
