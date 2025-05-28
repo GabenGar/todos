@@ -7,6 +7,7 @@ import {
   type IBaseComponentPropsWithChildren,
 } from "#meta";
 import { Button } from "#buttons";
+import { Loading } from "#loading";
 import { formatDateTime } from "./format";
 
 import styles from "./datetime.module.scss";
@@ -21,16 +22,19 @@ interface IProps extends IBaseComponentPropsWithChildren<"div"> {
 export const DateTimeView = createBlockComponent(styles, Component);
 
 function Component({ dateTime, children, ...props }: IProps) {
-  const clientInfo = useClient();
+  const client = useClient();
   const [isCopied, switchCopiedStatus] = useState(false);
-  const formattedDateTime = !clientInfo.isClient
-    ? dateTime
-    : formatDateTime(clientInfo.locale, dateTime);
 
   return (
     <div {...props}>
       <time className={styles.datetime} dateTime={dateTime}>
-        {children ?? formattedDateTime}
+        {children ? (
+          children
+        ) : !client ? (
+          <Loading />
+        ) : (
+          formatDateTime(client.locale, dateTime)
+        )}
       </time>
 
       <Button

@@ -4,6 +4,7 @@ import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
+import { DateTimeView } from "@repo/ui/dates";
 import { runTransaction } from "#database";
 import { selectInvitationEntities } from "#database/queries/invitations";
 import { authenticateAdmin } from "#server/lib/router";
@@ -78,7 +79,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                           id: created_by,
                         })}
                       >
-                        Untitled ({created_by})
+                        Unnamed ({created_by})
                       </LinkInternal>
                     }
                     isHorizontal
@@ -93,7 +94,10 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                 )}
 
                 {expires_at && (
-                  <DescriptionSection dKey={"Expires at"} dValue={expires_at} />
+                  <DescriptionSection
+                    dKey={"Expires at"}
+                    dValue={<DateTimeView dateTime={expires_at} />}
+                  />
                 )}
 
                 {max_uses && (
@@ -104,11 +108,14 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   />
                 )}
 
-                <DescriptionSection dKey={"Created at"} dValue={created_at} />
+                <DescriptionSection
+                  dKey={"Created at"}
+                  dValue={<DateTimeView dateTime={created_at} />}
+                />
 
                 <DescriptionSection
                   dKey={"Latest updated at"}
-                  dValue={updated_at}
+                  dValue={<DateTimeView dateTime={updated_at} />}
                 />
               </DescriptionList>
             </OverviewBody>

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import {
+  href,
   isRouteErrorResponse,
   Links,
   Meta,
@@ -47,7 +48,7 @@ function App() {
   return (
     <ClientProvider>
       <header className={styles.header}>
-        <LinkInternal href={"/"}>Oikia</LinkInternal>
+        <LinkInternal href={href("/")}>Oikia</LinkInternal>
       </header>
 
       <main className={styles.main}>
@@ -87,23 +88,25 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <Page heading={heading}>
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
-          <>
-            <OverviewHeader>{message}</OverviewHeader>
-            <OverviewBody>
-              <p>{details}</p>
-              {stack && (
-                <Preformatted>
-                  <code>{stack}</code>
-                </Preformatted>
-              )}
-            </OverviewBody>
-          </>
-        )}
-      </Overview>
-    </Page>
+    <main className={styles.main}>
+      <Page heading={heading}>
+        <Overview headingLevel={2}>
+          {(headingLevel) => (
+            <>
+              <OverviewHeader>{message}</OverviewHeader>
+              <OverviewBody>
+                <p>{details}</p>
+                {stack && (
+                  <Preformatted>
+                    <code>{stack}</code>
+                  </Preformatted>
+                )}
+              </OverviewBody>
+            </>
+          )}
+        </Overview>
+      </Page>
+    </main>
   );
 }
 

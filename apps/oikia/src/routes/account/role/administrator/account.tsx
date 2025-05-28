@@ -3,6 +3,7 @@ import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
+import { DateTimeView } from "@repo/ui/dates";
 import { runTransaction } from "#database";
 import { selectAccountEntities } from "#database/queries/accounts";
 import { authenticateAdmin } from "#server/lib/router";
@@ -37,7 +38,10 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
               <DescriptionList>
                 <DescriptionSection dKey={"Role"} dValue={role} isHorizontal />
 
-                <DescriptionSection dKey={"Join date"} dValue={created_at} />
+                <DescriptionSection
+                  dKey={"Join date"}
+                  dValue={<DateTimeView dateTime={created_at} />}
+                />
               </DescriptionList>
             </OverviewBody>
           </>

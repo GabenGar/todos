@@ -1,3 +1,4 @@
+import { parseISO } from "date-fns";
 import type { IDateTime } from "./types";
 
 const formatDateTimeOptions: Intl.DateTimeFormatOptions = {
@@ -18,7 +19,8 @@ export function formatDateTime(locale: Intl.Locale, dateTime: IDateTime) {
     String(locale),
     formatDateTimeOptions
   );
-  const formattedDateTime = formatter.format(new Date(dateTime));
+
+  const formattedDateTime = formatter.format(parseISO(dateTime));
 
   return formattedDateTime;
 }
