@@ -15,6 +15,7 @@ export interface IAccountLogin {
 export interface IAccount extends Pick<IAccountInit, "name"> {
   created_at: string;
   role: IAccountRole;
+  invited_through?: IInvitationItem;
 }
 
 export type IAccountRole = "user" | "administrator";
@@ -30,3 +31,5 @@ export interface IInvitation {
   title?: string;
   description?: string;
 }
+
+export interface IInvitationItem extends Pick<IInvitation, "code" | "title"> {}

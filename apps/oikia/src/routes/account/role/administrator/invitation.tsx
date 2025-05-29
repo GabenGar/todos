@@ -76,10 +76,11 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                     dValue={
                       <LinkInternal
                         href={href("/account/role/administrator/account/:id", {
-                          id: created_by,
+                          id: created_by.id,
                         })}
                       >
-                        Unnamed ({created_by})
+                        {created_by.name ? `"${created_by.name}"` : "Unnamed"} (
+                        {created_by.id})
                       </LinkInternal>
                     }
                     isHorizontal

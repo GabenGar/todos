@@ -16,9 +16,6 @@ interface IProps extends IBaseComponentPropsWithChildren<"div"> {
   dateTime: string;
 }
 
-/**
- * @TODO formatting options
- */
 export const DateTimeView = createBlockComponent(styles, Component);
 
 function Component({ dateTime, children, ...props }: IProps) {

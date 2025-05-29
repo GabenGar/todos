@@ -4,4 +4,5 @@ export type {
   IAccount,
   IAccountRole,
   IInvitation,
+  IInvitationItem,
 } from "./types";
