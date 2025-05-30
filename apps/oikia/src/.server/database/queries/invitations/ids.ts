@@ -5,12 +5,14 @@ import {
   type IEntityRow,
   type ITransaction,
 } from "#database";
+import type { IInvitation } from "#entities/account";
 import type { IInvitationDB } from "./types";
 
 const query = getQueryFile("invitations", "ids.sql");
 
 interface IFilter {
   pagination: IPagination;
+  code?: IInvitation["code"];
 }
 
 export async function selectInvitationIDs(
@@ -21,6 +23,7 @@ export async function selectInvitationIDs(
   const params = {
     offset,
     limit,
+    code: filter.code,
   };
   const result = await transaction.many<IEntityRow>(query, params);
   const ids = toEntityIDs(result);
