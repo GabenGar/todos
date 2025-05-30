@@ -26,6 +26,7 @@ export async function selectInvitationEntities(
   }
 
   const resultInvitations = ids.map(
+    // biome-ignore lint/style/noNonNullAssertion: it's already validated
     (id) => invitations.find((invitation) => invitation.id === id)!
   );
 

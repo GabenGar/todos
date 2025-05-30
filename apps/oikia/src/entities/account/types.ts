@@ -27,6 +27,7 @@ export interface IInvitation {
   created_by?: IAccountDB["id"];
   expires_at?: string;
   max_uses?: string;
+  current_uses?: string;
   is_active: boolean;
   title?: string;
   description?: string;
