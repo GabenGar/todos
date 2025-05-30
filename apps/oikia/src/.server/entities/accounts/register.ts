@@ -1,5 +1,9 @@
 import { genSalt, hash as hashPassword, truncates } from "bcryptjs";
-import { BIGINT_ZERO } from "#lib/numbers/bigint";
+import { isBefore } from "date-fns";
+import { NotImplementedError } from "@repo/ui/errors";
+import { BIGINT_ONE, BIGINT_ZERO } from "@repo/ui/numbers/bigint";
+import { createPagination } from "@repo/ui/pagination";
+import { now } from "@repo/ui/dates";
 import type { ITransaction } from "#database";
 import {
   insertAccounts,
@@ -7,13 +11,18 @@ import {
   selectAccountEntities,
   type IAccountDBInit,
 } from "#database/queries/accounts";
-import { ADMIN_INVITATION_CODE } from "#server/environment";
+import {
+  selectInvitationCount,
+  selectInvitationEntities,
+  selectInvitationIDs,
+  type IInvitationDB,
+} from "#database/queries/invitations";
 import { ClientError } from "#server/lib/errors";
-import type { IAccount, IAccountInit } from "#entities/account";
+import type { IAccount, IAccountInit, IInvitation } from "#entities/account";
 
 export async function registerAccount(
   transaction: ITransaction,
-  init: IAccountInit,
+  init: IAccountInit
 ): Promise<IAccount> {
   const { password } = init;
 
@@ -21,7 +30,15 @@ export async function registerAccount(
     throw new ClientError("Invalid password length.");
   }
 
-  const isAdminInvitation = init.invitation_code === ADMIN_INVITATION_CODE;
+  let invitation: IInvitationDB;
+
+  try {
+    invitation = await parseInvitation(transaction, init.invitation_code);
+  } catch (error) {
+    throw new ClientError("Invalid invitation or it doesn't exist.", {
+      cause: error,
+    });
+  }
 
   if (isAdminInvitation) {
     const resultCount = await selectAccountCount(transaction, {
@@ -31,7 +48,7 @@ export async function registerAccount(
     const adminCount = BigInt(resultCount);
 
     if (adminCount !== BIGINT_ZERO) {
-      throw new ClientError("Invalid invitation code.");
+      throw new ClientError("Invalid invitation or it doesn't exist.");
     }
   }
 
@@ -52,4 +69,45 @@ export async function registerAccount(
   };
 
   return account;
+}
+
+async function parseInvitation(
+  transaction: ITransaction,
+  code: IInvitation["code"]
+): Promise<IInvitationDB> {
+  const count = await selectInvitationCount(transaction, { code });
+  const parsedCount = BigInt(count);
+
+  if (parsedCount !== BIGINT_ONE) {
+    const message =
+      parsedCount === BIGINT_ZERO
+        ? "Invitation doesn't exist."
+        : `Found more than one invitation for code "${code}".`;
+
+    throw new Error(message);
+  }
+
+  const pagination = createPagination(count);
+  const result = await selectInvitationIDs(transaction, { pagination, code });
+  const [invitation] = await selectInvitationEntities(transaction, result);
+  const { id, is_active, title, expires_at, max_uses } = invitation
+  const fancyTitle = `${title ? `"${title}"` : "Untitled"} (${id})`
+
+  if (!is_active) {
+    throw new Error(`Invitation ${fancyTitle} is inactive.`);
+  }
+
+  if (expires_at) {
+    const isValid = isBefore(expires_at, now());
+
+    if (!isValid) {
+      throw new Error(`Invitation ${fancyTitle} is expired.`)
+    }
+  }
+
+  if (max_uses) {
+    throw new NotImplementedError();
+  }
+
+  throw new NotImplementedError();
 }

@@ -6,10 +6,16 @@
   "additionalProperties": false,
   "required": ["server", "database"],
   "properties": {
+    "server": { "$ref": "#/definitions/server" },
+    "database": {
+      "$ref": "#/definitions/database"
+    }
+  },
+  "definitions": {
     "server": {
       "description": "Server options.",
       "type": "object",
-      "required": ["port", "secret_key", "admin_invitation_code"],
+      "required": ["port", "secret_key"],
       "additionalProperties": false,
       "properties": {
         "port": {
@@ -22,17 +28,9 @@
           "pattern": "^[\\s\\S]*$",
           "minLength": 8,
           "maxLength": 32
-        },
-        "admin_invitation_code": {
-          "$ref": "#/definitions/nanoid"
         }
       }
     },
-    "database": {
-      "$ref": "#/definitions/database"
-    }
-  },
-  "definitions": {
     "database": {
       "description": "PostgreSQL connection object.",
       "type": "object",
