@@ -2,6 +2,7 @@ WITH inits AS (
   SELECT
     created_by,
     code,
+    target_role,
     expires_at,
     (
       CAST (
@@ -15,6 +16,7 @@ WITH inits AS (
     json_to_recordset(${inits:json}) AS init(
       created_by bigint,
       code text,
+      target_role text,
       expires_at text,
       max_uses bigint,
       title text,
@@ -25,6 +27,7 @@ INSERT INTO invitations
   (
     created_by,
     code,
+    target_role,
     expires_at,
     parsed_expires_at,
     max_uses,
@@ -34,6 +37,7 @@ INSERT INTO invitations
 SELECT
   created_by,
   code,
+  target_role,
   expires_at,
   parsed_expires_at,
   max_uses,

@@ -1,6 +1,5 @@
 import { genSalt, hash as hashPassword, truncates } from "bcryptjs";
 import { BIGINT_ZERO } from "#lib/numbers/bigint";
-import { ADMIN_INVITATION_CODE } from "#server/environment";
 import type { ITransaction } from "#database";
 import {
   insertAccounts,
@@ -8,6 +7,8 @@ import {
   selectAccountEntities,
   type IAccountDBInit,
 } from "#database/queries/accounts";
+import { ADMIN_INVITATION_CODE } from "#server/environment";
+import { ClientError } from "#server/lib/errors";
 import type { IAccount, IAccountInit } from "#entities/account";
 
 export async function registerAccount(
@@ -17,7 +18,7 @@ export async function registerAccount(
   const { password } = init;
 
   if (truncates(password)) {
-    throw new Error("Invalid password length.");
+    throw new ClientError("Invalid password length.");
   }
 
   const isAdminInvitation = init.invitation_code === ADMIN_INVITATION_CODE;
@@ -30,7 +31,7 @@ export async function registerAccount(
     const adminCount = BigInt(resultCount);
 
     if (adminCount !== BIGINT_ZERO) {
-      throw new Error("Invalid invitation code.");
+      throw new ClientError("Invalid invitation code.");
     }
   }
 

@@ -15,6 +15,7 @@ CREATE TABLE invitations (
   updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_by bigint NOT NULL REFERENCES accounts,
   code text UNIQUE NOT NULL,
+  target_role text NOT NULL,
   expires_at text,
   parsed_expires_at timestamptz,
   max_uses bigint,
