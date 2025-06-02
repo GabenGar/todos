@@ -6,7 +6,10 @@ import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
 import { DateTimeView } from "@repo/ui/dates";
 import { runTransaction } from "#database";
-import { selectInvitationEntities } from "#database/queries/invitations";
+import {
+  selectInvitationEntities,
+  type IInvitationDB,
+} from "#database/queries/invitations";
 import { authenticateAdmin } from "#server/lib/router";
 import { LinkInternal } from "#components/link";
 
@@ -34,7 +37,6 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
     created_by,
     description,
     expires_at,
-    max_uses,
   } = invitation;
   const parsedTitle = title ? `"${title}"` : "Untitled";
   const heading = "Invitation Overview";
@@ -101,11 +103,11 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   />
                 )}
 
-                {max_uses && (
-                  <DescriptionSection
-                    dKey={"Maximum uses"}
-                    dValue={max_uses}
-                    isHorizontal
+                {invitation.max_uses && (
+                  <UsesStat
+                    max_uses={invitation.max_uses}
+                    // biome-ignore lint/style/noNonNullAssertion: just correlated values things
+                    current_uses={invitation.current_uses!}
                   />
                 )}
 
@@ -124,6 +126,23 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
         )}
       </Overview>
     </Page>
+  );
+}
+
+interface IUsesStatProps
+  extends Pick<Required<IInvitationDB>, "max_uses" | "current_uses"> {}
+
+function UsesStat({ max_uses, current_uses }: IUsesStatProps) {
+  return (
+    <DescriptionSection
+      dKey={"Uses"}
+      dValue={
+        <>
+          {current_uses} out of {max_uses}
+        </>
+      }
+      isHorizontal
+    />
   );
 }
 

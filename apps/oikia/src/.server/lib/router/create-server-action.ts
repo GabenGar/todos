@@ -23,7 +23,7 @@ export function createServerAction<
         const { name, message, statusCode, cause } = error;
 
         if (cause) {
-          console.error(error.cause);
+          console.error(cause);
         }
 
         return data(createFailedAPIResponse({ name, message }), {

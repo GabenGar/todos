@@ -51,9 +51,6 @@
       "*code-workspace.example": "jsonc",
       ".env.*": ".env"
     },
-    "typescript.preferences.autoImportFileExcludePatterns": [
-      "**/frontend/src/app"
-    ],
     "typescript.referencesCodeLens.enabled": true,
     "typescript.preferences.preferTypeOnlyAutoImports": true,
     "typescript.preferences.jsxAttributeCompletionStyle": "braces"

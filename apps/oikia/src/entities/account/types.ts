@@ -20,17 +20,19 @@ export interface IAccount extends Pick<IAccountInit, "name"> {
 
 export type IAccountRole = "user" | "administrator";
 
-export interface IInvitation {
+export type IInvitation = {
   code: string;
+  target_role: IAccountRole;
   created_at: string;
   updated_at: string;
   created_by?: IAccountDB["id"];
   expires_at?: string;
-  max_uses?: string;
-  current_uses?: string;
   is_active: boolean;
   title?: string;
   description?: string;
-}
+} & (
+  | { max_uses?: string; current_uses?: string }
+  | { max_uses: string; current_uses: string }
+);
 
 export interface IInvitationItem extends Pick<IInvitation, "code" | "title"> {}

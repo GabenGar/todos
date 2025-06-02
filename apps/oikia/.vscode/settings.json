@@ -1,4 +1,7 @@
 {
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/src/routes"
+  ],
   "json.schemas": [
     {
       "fileMatch": [

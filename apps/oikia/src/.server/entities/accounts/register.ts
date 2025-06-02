@@ -1,6 +1,5 @@
 import { genSalt, hash as hashPassword, truncates } from "bcryptjs";
 import { isBefore } from "date-fns";
-import { NotImplementedError } from "@repo/ui/errors";
 import { BIGINT_ONE, BIGINT_ZERO } from "@repo/ui/numbers/bigint";
 import { createPagination } from "@repo/ui/pagination";
 import { now } from "@repo/ui/dates";
@@ -40,6 +39,10 @@ export async function registerAccount(
     });
   }
 
+  const role = invitation.target_role;
+  const isAdminInvitation = role === "administrator";
+
+  // only allow a single admin
   if (isAdminInvitation) {
     const resultCount = await selectAccountCount(transaction, {
       role: "administrator",
@@ -56,7 +59,7 @@ export async function registerAccount(
   const hashedPassword = await hashPassword(password, salt);
   const realInit: IAccountDBInit = {
     ...init,
-    role: isAdminInvitation ? "administrator" : "user",
+    role,
     password: hashedPassword,
   };
 
@@ -90,8 +93,8 @@ async function parseInvitation(
   const pagination = createPagination(count);
   const result = await selectInvitationIDs(transaction, { pagination, code });
   const [invitation] = await selectInvitationEntities(transaction, result);
-  const { id, is_active, title, expires_at, max_uses } = invitation
-  const fancyTitle = `${title ? `"${title}"` : "Untitled"} (${id})`
+  const { id, is_active, title, expires_at } = invitation;
+  const fancyTitle = `${title ? `"${title}"` : "Untitled"} (${id})`;
 
   if (!is_active) {
     throw new Error(`Invitation ${fancyTitle} is inactive.`);
@@ -101,13 +104,19 @@ async function parseInvitation(
     const isValid = isBefore(expires_at, now());
 
     if (!isValid) {
-      throw new Error(`Invitation ${fancyTitle} is expired.`)
+      throw new Error(`Invitation ${fancyTitle} is expired.`);
     }
   }
 
-  if (max_uses) {
-    throw new NotImplementedError();
+  if (invitation.max_uses) {
+    const parsedMax = BigInt(invitation.max_uses);
+    // biome-ignore lint/style/noNonNullAssertion: just correlated values things
+    const parsedCurrent = BigInt(invitation.current_uses!);
+
+    if (parsedCurrent >= parsedMax) {
+      throw new Error(`Invitation ${fancyTitle} ran out of uses.`);
+    }
   }
 
-  throw new NotImplementedError();
+  return invitation;
 }
