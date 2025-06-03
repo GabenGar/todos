@@ -149,6 +149,7 @@ export const action = createServerAction(
       const init: IInvitationDBInit = {
         created_by: createdBy,
         code,
+        target_role: "user",
         expires_at: expiresAt,
         max_uses: maxUses,
         title,

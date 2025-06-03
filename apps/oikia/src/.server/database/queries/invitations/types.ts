@@ -12,5 +12,11 @@ export interface IInvitationDBItem
 export interface IInvitationDBInit
   extends Pick<
     IInvitation,
-    "created_by" | "code" | "expires_at" | "max_uses" | "title" | "description"
+    | "created_by"
+    | "code"
+    | "target_role"
+    | "expires_at"
+    | "max_uses"
+    | "title"
+    | "description"
   > {}

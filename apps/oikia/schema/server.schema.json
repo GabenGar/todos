@@ -32,6 +32,30 @@
       }
     },
     "database": {
+      "description": "PostgreSQL accounts.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["migrations", "administrator"],
+      "properties": {
+        "migrations": {
+          "description": "Connection used for migrations. Must have postgresql superuser privileges because it can install extensions.",
+          "$ref": "#/definitions/postgresql-connection"
+        },
+        "administrator": {
+          "description": "Connection used by admin.",
+          "$ref": "#/definitions/postgresql-connection"
+        }
+      }
+    },
+    "nanoid": {
+      "title": "NanoID",
+      "description": "[`nanoid`](https://github.com/ai/nanoid) string with default parameters.\nThe pattern is package author's [advice](https://github.com/ai/nanoid/issues/405#issuecomment-1397709000).",
+      "type": "string",
+      "minLength": 21,
+      "maxLength": 21,
+      "pattern": "^[\\w_-]*$"
+    },
+    "postgresql-connection": {
       "description": "PostgreSQL connection object.",
       "type": "object",
       "additionalProperties": false,
@@ -57,14 +81,6 @@
           "pattern": "^[\\s\\S]*$"
         }
       }
-    },
-    "nanoid": {
-      "title": "NanoID",
-      "description": "[`nanoid`](https://github.com/ai/nanoid) string with default parameters.\nThe pattern is package author's [advice](https://github.com/ai/nanoid/issues/405#issuecomment-1397709000).",
-      "type": "string",
-      "minLength": 21,
-      "maxLength": 21,
-      "pattern": "^[\\w_-]*$"
     }
   }
 }

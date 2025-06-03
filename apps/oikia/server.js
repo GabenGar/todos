@@ -21,6 +21,12 @@ import { runner as runMigrations } from "node-pg-migrate"
 
 /**
  * @typedef IDatabaseConfiguration
+ * @property {IDatabaseConnection} migrations
+ * @property {IDatabaseConnection} administrator
+ */
+
+/**
+ * @typedef IDatabaseConnection
  * @property {string} user
  * @property {string} host
  * @property {number} port
@@ -53,7 +59,7 @@ const isDevelopment = environment === "development";
 const config = await parseConfig(isDevelopment);
 const PORT = config.server.port;
 
-await migrateDatabase(config.database)
+await migrateDatabase(config.database.migrations)
 
 const app = express();
 
@@ -119,8 +125,9 @@ async function runProductionServer(app) {
  * @returns {Promise<IConfiguration>}
  */
 async function parseConfig(isDevelopment) {
+  const schemaBasePath = path.join(cwd(), "schema");
   const configBasePath = path.join(cwd(), "config");
-  const configSchemaPath = path.join(configBasePath, "server.schema.json");
+  const configSchemaPath = path.join(schemaBasePath, "server.schema.json");
   const configPath = path.join(
     configBasePath,
     isDevelopment ? "server.development.json" : "server.json"
@@ -169,7 +176,7 @@ async function parseConfig(isDevelopment) {
 }
 
 /**
- * @param {IDatabaseConfiguration} connectionData
+ * @param {IDatabaseConnection} connectionData
  */
 async function migrateDatabase(connectionData) {
   /**
@@ -182,5 +189,5 @@ async function migrateDatabase(connectionData) {
     migrationsTable: "migrations",
     checkOrder: true
   };
-  const migrations = await runMigrations(options);
+  await runMigrations(options);
 }

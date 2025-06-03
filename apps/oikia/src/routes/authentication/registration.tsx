@@ -175,8 +175,8 @@ export const action = createServerAction(
       name,
     };
 
-    await runTransaction(async (transaction) =>
-      registerAccount(transaction, accountInit)
+    await runTransaction(
+      async (transaction) => await registerAccount(transaction, accountInit)
     );
 
     return true;

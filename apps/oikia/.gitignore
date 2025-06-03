@@ -1,6 +1,5 @@
 # configs
-/config/server.development.json
-/config/server.json
+/config
 
 # typescript build cache
 /tsconfig.node.tsbuildinfo
