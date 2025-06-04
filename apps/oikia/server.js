@@ -6,7 +6,7 @@ import compression from "compression";
 import express from "express";
 import morgan from "morgan";
 import { lint, parser } from "@exodus/schemasafe";
-import { runner as runMigrations } from "node-pg-migrate"
+import { runner as runMigrations } from "node-pg-migrate";
 
 /**
  * @typedef IConfiguration
@@ -59,7 +59,7 @@ const isDevelopment = environment === "development";
 const config = await parseConfig(isDevelopment);
 const PORT = config.server.port;
 
-await migrateDatabase(config.database.migrations)
+await migrateDatabase(config.database.migrations);
 
 const app = express();
 
@@ -94,9 +94,9 @@ async function runDevelopmentServer(app) {
   app.use(async (req, res, next) => {
     try {
       const source = await viteDevServer.ssrLoadModule("./server/app.ts");
-      const app = await source.app;
+      const resolvedApp = await source.createApp();
 
-      return await app(req, res, next);
+      return await resolvedApp(req, res, next);
     } catch (error) {
       if (typeof error === "object" && error instanceof Error) {
         viteDevServer.ssrFixStacktrace(error);
@@ -117,7 +117,11 @@ async function runProductionServer(app) {
     express.static("build/client/assets", { immutable: true, maxAge: "1y" })
   );
   app.use(express.static("build/client", { maxAge: "1h" }));
-  app.use(await import(BUILD_PATH).then((mod) => mod.app));
+  app.use(
+    await import(BUILD_PATH).then(
+      async (serverModule) => await serverModule.createApp()
+    )
+  );
 }
 
 /**
@@ -187,7 +191,7 @@ async function migrateDatabase(connectionData) {
     dir: "./src/.server/database/migrations",
     direction: "up",
     migrationsTable: "migrations",
-    checkOrder: true
+    checkOrder: true,
   };
   await runMigrations(options);
 }

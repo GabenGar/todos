@@ -10,9 +10,12 @@ import type { IInvitationDB } from "./types";
 
 const query = getQueryFile("invitations", "ids.sql");
 
-interface IFilter {
+interface IFilter
+  extends Pick<
+    Partial<IInvitation>,
+    "code" | "target_role" | "is_active" | "expires_at"
+  > {
   pagination: IPagination;
-  code?: IInvitation["code"];
 }
 
 export async function selectInvitationIDs(
@@ -24,6 +27,9 @@ export async function selectInvitationIDs(
     offset,
     limit,
     code: filter.code,
+    target_role: filter?.target_role,
+    is_active: filter?.is_active,
+    expires_at: filter?.expires_at,
   };
   const result = await transaction.many<IEntityRow>(query, params);
   const ids = toEntityIDs(result);
