@@ -34,9 +34,6 @@
       "**/CVS": true,
       "**/node_modules": true,
       "**/Thumbs.db": true,
-      "codegen": true,
-      "frontend": true,
-      "schema": true,
       "**/.turbo": true,
       // "**/.vscode": true,
       "**/.next": true
