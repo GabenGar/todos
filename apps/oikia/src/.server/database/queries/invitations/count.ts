@@ -16,7 +16,7 @@ interface IFilter
 
 export async function selectInvitationCount(
   transaction: ITransaction,
-  filter?: IFilter
+  filter?: IFilter,
 ): Promise<ICount> {
   const params = {
     code: filter?.code,

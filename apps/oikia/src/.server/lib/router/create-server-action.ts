@@ -42,7 +42,7 @@ export function createServerAction<
         {
           headers: new Headers([["Content-Type", "application/json"]]),
           status: 500,
-        }
+        },
       );
     }
   }

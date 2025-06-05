@@ -62,7 +62,7 @@ function InvitationCreatePage(props: Route.ComponentProps) {
                         <LinkInternal
                           href={href(
                             "/account/role/administrator/invitation/:id",
-                            { id }
+                            { id },
                           )}
                         >
                           {title ? `"${title}"` : "Untitled"} ({id})
@@ -139,7 +139,7 @@ export const action = createServerAction(
 
     if (!expiresAt && !maxUses) {
       throw new ClientError(
-        "Must have at least expiration date or maximum uses."
+        "Must have at least expiration date or maximum uses.",
       );
     }
 
@@ -165,7 +165,7 @@ export const action = createServerAction(
     const response = createSuccessfullAPIResponse(invitation);
 
     return response;
-  }
+  },
 );
 
 export default InvitationCreatePage;

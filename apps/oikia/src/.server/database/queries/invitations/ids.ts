@@ -20,7 +20,7 @@ interface IFilter
 
 export async function selectInvitationIDs(
   transaction: ITransaction,
-  filter: IFilter
+  filter: IFilter,
 ): Promise<IInvitationDB["id"][]> {
   const { limit, offset } = filter.pagination;
   const params = {

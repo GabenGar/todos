@@ -21,7 +21,7 @@ import type { IAccount, IAccountInit, IInvitation } from "#entities/account";
 
 export async function registerAccount(
   transaction: ITransaction,
-  init: IAccountInit
+  init: IAccountInit,
 ): Promise<IAccount> {
   const { password } = init;
 
@@ -76,7 +76,7 @@ export async function registerAccount(
 
 async function parseInvitation(
   transaction: ITransaction,
-  code: IInvitation["code"]
+  code: IInvitation["code"],
 ): Promise<IInvitationDB> {
   const count = await selectInvitationCount(transaction, { code });
   const parsedCount = BigInt(count);

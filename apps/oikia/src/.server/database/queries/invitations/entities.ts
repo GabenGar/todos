@@ -5,7 +5,7 @@ const query = getQueryFile("invitations", "entities.sql");
 
 export async function selectInvitationEntities(
   transaction: ITransaction,
-  ids: IInvitationDB["id"][]
+  ids: IInvitationDB["id"][],
 ): Promise<IInvitationDB[]> {
   const params = {
     ids,
@@ -21,13 +21,13 @@ export async function selectInvitationEntities(
 
   if (invitations.length !== ids.length) {
     throw new Error(
-      `The amount of output invitations ${invitations.length} does not match the amount of IDs provided ${ids.length}.`
+      `The amount of output invitations ${invitations.length} does not match the amount of IDs provided ${ids.length}.`,
     );
   }
 
   const resultInvitations = ids.map(
     // biome-ignore lint/style/noNonNullAssertion: it's already validated
-    (id) => invitations.find((invitation) => invitation.id === id)!
+    (id) => invitations.find((invitation) => invitation.id === id)!,
   );
 
   return resultInvitations;

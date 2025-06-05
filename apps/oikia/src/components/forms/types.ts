@@ -1,3 +1,3 @@
 import type { FormMethod } from "react-router";
 
-export type IFormMethod = Uppercase<FormMethod>
+export type IFormMethod = Uppercase<FormMethod>;

@@ -176,11 +176,11 @@ export const action = createServerAction(
     };
 
     await runTransaction(
-      async (transaction) => await registerAccount(transaction, accountInit)
+      async (transaction) => await registerAccount(transaction, accountInit),
     );
 
     return true;
-  }
+  },
 );
 
 export default RegistrationPage;

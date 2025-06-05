@@ -27,9 +27,7 @@ function HomePage() {
                   dValue={
                     <List>
                       <ListItem>
-                        <LinkInternal
-                          href={href("/account")}
-                        >
+                        <LinkInternal href={href("/account")}>
                           Account
                         </LinkInternal>
                       </ListItem>

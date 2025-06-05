@@ -3,7 +3,7 @@ import { ClientError } from "../errors";
 
 export function parseMethod<Method extends IFormMethod>(
   request: Request,
-  allowedMethods: Method | Method[]
+  allowedMethods: Method | Method[],
 ): Method {
   const isValidMethod =
     typeof allowedMethods === "string"

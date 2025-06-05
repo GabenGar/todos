@@ -10,7 +10,7 @@ const query = getQueryFile("invitations", "insert.sql");
 
 export async function insertInvitations(
   transaction: ITransaction,
-  inits: IInvitationDBInit[]
+  inits: IInvitationDBInit[],
 ): Promise<IInvitationDB["id"][]> {
   const params = { inits };
 

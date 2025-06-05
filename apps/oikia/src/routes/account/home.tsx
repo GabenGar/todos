@@ -68,7 +68,7 @@ export const loader = createServerLoader(
     const { id: _, ...account } = await authenticateRequest(request);
 
     return account;
-  }
+  },
 );
 
 export default AccountPage;

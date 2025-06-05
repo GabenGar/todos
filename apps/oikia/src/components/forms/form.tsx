@@ -27,7 +27,7 @@ export interface IFormProps<ActionData>
     | ((formID: string, state: Navigation["state"]) => ReactNode);
   successElement?: (
     formID: string,
-    data: Exclude<ActionData, undefined>
+    data: Exclude<ActionData, undefined>,
   ) => ReactNode;
 }
 
@@ -45,7 +45,7 @@ export function Form<ActionData>({
   const data = useActionData<ActionData>();
   const formID = `${id}-form`;
   const isSuccessElementVisible = Boolean(
-    successElement && data && !isFailedAPIResponse(data)
+    successElement && data && !isFailedAPIResponse(data),
   );
 
   return (
@@ -54,7 +54,7 @@ export function Form<ActionData>({
       className={clsx(
         // @ts-expect-error css modules issue
         baseFormStyles.block,
-        className
+        className,
       )}
     >
       {isSuccessElementVisible ? (
