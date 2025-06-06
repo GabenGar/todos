@@ -1,4 +1,4 @@
-export { getQueryFile, toEntityIDs } from "./lib";
+export { getQueryFile, toEntityIDs, migrateDatabase } from "./lib";
 export {
   runTransaction,
   runStrictTransaction,

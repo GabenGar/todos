@@ -1,5 +1,5 @@
-import { DATABASE_CONNECTION_DATA } from "#server/environment";
 import pgPromiseLib, { type IInitOptions } from "pg-promise";
+import { DATABASE_CONNECTION_DATA } from "#server/environment";
 
 const initOptions: IInitOptions = {
   capSQL: true,

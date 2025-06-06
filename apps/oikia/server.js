@@ -1,38 +1,9 @@
-import path from "node:path";
-import { cwd } from "node:process";
-import fs from "node:fs/promises";
 import { parseArgs } from "node:util";
 import compression from "compression";
 import express from "express";
 import morgan from "morgan";
-import { lint, parser } from "@exodus/schemasafe";
-import { runner as runMigrations } from "node-pg-migrate";
 
-/**
- * @typedef IConfiguration
- * @property {IServerConfiguration} server
- * @property {IDatabaseConfiguration} database
- */
-
-/**
- * @typedef IServerConfiguration
- * @property {number} port
- */
-
-/**
- * @typedef IDatabaseConfiguration
- * @property {IDatabaseConnection} migrations
- * @property {IDatabaseConnection} administrator
- */
-
-/**
- * @typedef IDatabaseConnection
- * @property {string} user
- * @property {string} host
- * @property {number} port
- * @property {string} database
- * @property {string} [password]
- */
+import { parseConfig } from "./scripts/lib/parse-configuration.mjs";
 
 // Short-circuit the type-checking of the built output.
 const BUILD_PATH = "./build/server/index.js";
@@ -57,9 +28,14 @@ process.env.NODE_ENV = environment;
 
 const isDevelopment = environment === "development";
 const config = await parseConfig(isDevelopment);
-const PORT = config.server.port;
 
-await migrateDatabase(config.database.migrations);
+// Setting it in such a hacky way to avoid reparsing
+// within react router code
+const configSymbol = Symbol.for("server-config");
+// @ts-expect-error
+globalThis[configSymbol] = config;
+
+const PORT = config.server.port;
 
 const app = express();
 
@@ -122,76 +98,4 @@ async function runProductionServer(app) {
       async (serverModule) => await serverModule.createApp()
     )
   );
-}
-
-/**
- * @param {boolean} isDevelopment
- * @returns {Promise<IConfiguration>}
- */
-async function parseConfig(isDevelopment) {
-  const schemaBasePath = path.join(cwd(), "schema");
-  const configBasePath = path.join(cwd(), "config");
-  const configSchemaPath = path.join(schemaBasePath, "server.schema.json");
-  const configPath = path.join(
-    configBasePath,
-    isDevelopment ? "server.development.json" : "server.json"
-  );
-
-  const schemaContent = await fs.readFile(configSchemaPath, {
-    encoding: "utf-8",
-  });
-  /**
-   * @type {import("@exodus/schemasafe").Schema}
-   */
-  const schema = JSON.parse(schemaContent);
-
-  const schemaErrors = lint(schema, { mode: "strong" });
-
-  if (schemaErrors.length !== 0) {
-    throw new AggregateError(
-      schemaErrors,
-      "Failed to validate server configuration schema."
-    );
-  }
-
-  const configParser = parser(schema, { includeErrors: true });
-
-  const configContent = await fs.readFile(configPath, { encoding: "utf-8" });
-
-  const result = configParser(configContent);
-
-  if (!result.valid) {
-    throw new Error("Failed to parse server configuration.", {
-      cause: result.error,
-    });
-  }
-
-  /**
-   * @type {IConfiguration}
-   */
-  // @ts-expect-error just generic shit
-  const config = result.value;
-
-  const configSymbol = Symbol.for("server-config");
-  // @ts-expect-error
-  globalThis[configSymbol] = config;
-
-  return config;
-}
-
-/**
- * @param {IDatabaseConnection} connectionData
- */
-async function migrateDatabase(connectionData) {
-  /**
-   * @type {import("node-pg-migrate").RunnerOption}
-   */
-  const options = {
-    databaseUrl: connectionData,
-    dir: "./src/.server/database/migrations",
-    direction: "up",
-    migrationsTable: "migrations",
-    checkOrder: true,
-  };
-  await runMigrations(options);
 }

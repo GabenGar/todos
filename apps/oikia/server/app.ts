@@ -4,7 +4,11 @@ import express from "express";
 import { BIGINT_ONE, BIGINT_ZERO } from "@repo/ui/numbers/bigint";
 import { now } from "@repo/ui/dates";
 import { IS_DEVELOPMENT } from "#environment";
-import { runStrictTransaction, type ITransaction } from "#database";
+import {
+  migrateDatabase,
+  runStrictTransaction,
+  type ITransaction,
+} from "#database";
 import { selectAccountCount } from "#database/queries/accounts";
 import {
   insertInvitations,
@@ -21,6 +25,7 @@ declare module "react-router" {
 }
 
 export async function createApp() {
+  await migrateDatabase();
   await runStrictTransaction(async (transaction) => {
     await handleAdminInvitation(transaction);
   });

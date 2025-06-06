@@ -9,6 +9,9 @@
     "start": {
       "persistent": true,
       "cache": false
+    },
+    "develop-database-purge": {
+      "cache": false
     }
   }
 }
