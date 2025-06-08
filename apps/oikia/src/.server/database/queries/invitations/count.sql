@@ -24,6 +24,10 @@ WHERE
   (
     ${expires_at} IS NULL
     OR
-    parsed_expires_at > ${expires_at}
+    -- assume invitations without expiration
+    -- all match for any datetime
+    expires_at IS NULL
+    OR
+    parsed_expires_at < ${expires_at}
   )
 ;
