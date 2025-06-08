@@ -13,7 +13,7 @@ CREATE TABLE invitations (
   id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  created_by bigint NOT NULL REFERENCES accounts,
+  created_by bigint REFERENCES accounts,
   code text UNIQUE NOT NULL,
   target_role text NOT NULL,
   expires_at text,

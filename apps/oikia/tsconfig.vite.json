@@ -5,7 +5,7 @@
     "src/**/*",
     "src/**/.server/**/*",
     "src/**/.client/**/*",
-    "server/**/*"
+    "backend/**/*"
   ],
   "compilerOptions": {
     "composite": true,

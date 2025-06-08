@@ -5,7 +5,7 @@ import { log } from "node:console";
 await run();
 
 async function run() {
-  log("Purging development database...")
+  log("Purging development database...");
 
   const config = await parseConfig(true);
   const connectionData = config.database.migrations;
@@ -29,10 +29,10 @@ async function run() {
   const query = `
     DROP SCHEMA IF EXISTS public CASCADE;
 
-    CREATE SCHEMA public;
+    CREATE SCHEMA IF NOT EXISTS public;
   `;
   await database.any(query);
   database.$pool.end();
 
-  log("Purged development database.")
+  log("Purged development database.");
 }

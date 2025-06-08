@@ -69,7 +69,7 @@ async function runDevelopmentServer(app) {
   app.use(viteDevServer.middlewares);
   app.use(async (req, res, next) => {
     try {
-      const source = await viteDevServer.ssrLoadModule("./server/app.ts");
+      const source = await viteDevServer.ssrLoadModule("./backend/app.ts");
       const resolvedApp = await source.createApp();
 
       return await resolvedApp(req, res, next);

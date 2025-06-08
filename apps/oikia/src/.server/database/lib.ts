@@ -1,9 +1,7 @@
 import path from "node:path";
 import { cwd } from "node:process";
 import { runner as runMigrations, type RunnerOption } from "node-pg-migrate";
-import {
-  MIGRATIONS_CONNECTION_DATA,
-} from "#server/environment";
+import { MIGRATIONS_CONNECTION_DATA } from "#server/environment";
 import { pgPromise } from "./database";
 import type { IEntityRow } from "./types";
 
@@ -12,7 +10,7 @@ const queryFileBasePath = path.join(
   "src",
   ".server",
   "database",
-  "queries",
+  "queries"
 );
 
 export function getQueryFile(...pathSegments: string[]) {
@@ -23,7 +21,7 @@ export function getQueryFile(...pathSegments: string[]) {
 }
 
 export function toEntityIDs<EntityType extends IEntityRow>(
-  entities: EntityType[],
+  entities: EntityType[]
 ) {
   const ids = entities.map(({ id }) => id);
 
@@ -37,6 +35,7 @@ export async function migrateDatabase() {
     direction: "up",
     migrationsTable: "migrations",
     checkOrder: true,
+    singleTransaction: true,
   };
   await runMigrations(options);
 }
