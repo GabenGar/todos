@@ -22,7 +22,7 @@ export async function selectAccountAuth(
     auth_id: filter.auth_id,
   };
 
-  const auth = await transaction.one<IAccountDBAuthData>(query, params);
+  const auth = await transaction.oneOrNone<IAccountDBAuthData>(query, params);
 
   return auth;
 }

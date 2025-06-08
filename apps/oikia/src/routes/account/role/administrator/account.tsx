@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
@@ -7,6 +8,7 @@ import { DateTimeView } from "@repo/ui/dates";
 import { runTransaction } from "#database";
 import { selectAccountEntities } from "#database/queries/accounts";
 import { authenticateAdmin } from "#server/lib/router";
+import { ClientError } from "#server/lib/errors";
 
 import type { Route } from "./+types/account";
 
@@ -52,7 +54,16 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 }
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
+  try {
+    await authenticateAdmin(request);
+  } catch (error) {
+    const pathName =
+      error instanceof ClientError && error.statusCode === 401
+        ? "/401"
+        : "/404";
+
+    return redirect(pathName);
+  }
 
   const { id } = params;
 

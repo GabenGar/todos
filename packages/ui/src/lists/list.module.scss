@@ -2,6 +2,9 @@
 
 .block {
   padding-left: $size-normal;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: $size-small;
 }
 
 .unordered {

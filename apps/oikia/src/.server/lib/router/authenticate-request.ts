@@ -6,11 +6,11 @@ import {
 } from "#database/queries/accounts";
 import type { IAccountRole } from "#entities/account";
 import { ClientError } from "../errors";
-import { getSession } from "../sessions";
+import { destroySession, getSession } from "../sessions";
 
 export async function authenticateRequest(
   request: Request,
-  allowedRoles?: IAccountRole | IAccountRole[],
+  allowedRoles?: IAccountRole | IAccountRole[]
 ): Promise<IAccountDB> {
   const session = await getSession(request.headers.get("Cookie"));
   const authID = session.get("auth_id");
@@ -20,10 +20,17 @@ export async function authenticateRequest(
   }
 
   const account = await runTransaction(async (transaction) => {
-    const { id } = await selectAccountAuth(transaction, {
+    const result = await selectAccountAuth(transaction, {
       auth_id: authID,
     });
-    const [account] = await selectAccountEntities(transaction, [id]);
+
+    if (!result) {
+      await destroySession(session);
+
+      throw new ClientError("Not Found", { statusCode: 404 });
+    }
+
+    const [account] = await selectAccountEntities(transaction, [result.id]);
 
     return account;
   });

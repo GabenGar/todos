@@ -1,4 +1,4 @@
-import { data } from "react-router";
+import { data, redirect } from "react-router";
 import { createServerAction } from "#server/lib/router";
 import { destroySession, getSession } from "#server/lib/sessions";
 import { createSuccessfullAPIResponse } from "#server/lib/api";
