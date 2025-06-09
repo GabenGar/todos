@@ -48,6 +48,7 @@
     "#numbers/bigint": "./src/numbers/bigint/index.ts",
     "#errors": "./src/errors/index.ts",
     "#dates": "./src/dates/index.ts",
+    "#links": "./src/links/index.ts",
     "#hooks": "./src/hooks/index.ts",
     "#types": "./src/types/index.ts"
   },
