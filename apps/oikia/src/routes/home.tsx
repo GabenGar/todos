@@ -1,10 +1,11 @@
-import { href } from "react-router";
+import { href,  } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { List, ListItem } from "@repo/ui/lists";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { authenticateRequest } from "#server/lib/router";
 import { LinkInternal } from "#components/link";
+import { Form } from "#components/forms";
 
 import type { Route } from "./+types/home";
 
@@ -15,6 +16,7 @@ export function meta({ error }: Route.MetaArgs) {
 function HomePage({ loaderData }: Route.ComponentProps) {
   const { isRegistered } = loaderData;
   const heading = "Hello World";
+  const formID = "logout";
 
   return (
     <Page heading={heading}>
@@ -34,9 +36,12 @@ function HomePage({ loaderData }: Route.ComponentProps) {
                           </LinkInternal>
                         </ListItem>
                         <ListItem>
-                          <LinkInternal href={href("/authentication/logout")}>
-                            Log out
-                          </LinkInternal>
+                          <Form
+                            id={formID}
+                            method="POST"
+                            action={href("/authentication/logout")}
+                            submitButton={() => <>Log out</>}
+                          />
                         </ListItem>
                       </List>
                     ) : (
@@ -69,7 +74,7 @@ function HomePage({ loaderData }: Route.ComponentProps) {
 
 export async function loader({ request }: Route.LoaderArgs) {
   try {
-    authenticateRequest(request);
+    await authenticateRequest(request);
   } catch (error) {
     const props = {
       isRegistered: false,
