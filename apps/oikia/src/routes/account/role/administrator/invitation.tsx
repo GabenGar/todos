@@ -3,8 +3,10 @@ import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { Preformatted } from "@repo/ui/formatting";
 import { DateTimeView } from "@repo/ui/dates";
+import { EntityID, parseTitle } from "@repo/ui/entities";
+import { Preformatted } from "@repo/ui/formatting";
+import { ButtonCopy } from "@repo/ui/buttons";
 import { runTransaction } from "#database";
 import {
   selectInvitationEntities,
@@ -20,7 +22,8 @@ import styles from "./invitation.module.scss";
 export function meta({ data }: Route.MetaArgs) {
   const { invitation } = data;
   const { id, title } = invitation;
-  const metaTitle = `Invitation ${title ? `"${title}"` : "Untitled"} (${id}) overview`;
+  const parsedTitle = parseTitle(title);
+  const metaTitle = `Invitation ${parsedTitle} (${id}) overview`;
 
   return [{ title: metaTitle }];
 }
@@ -37,8 +40,9 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
     created_by,
     description,
     expires_at,
+    target_role,
   } = invitation;
-  const parsedTitle = title ? `"${title}"` : "Untitled";
+  const parsedTitle = parseTitle(title);
   const heading = "Invitation Overview";
 
   return (
@@ -48,14 +52,24 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
           <>
             <OverviewHeader>
               <Heading level={headingLevel}>{parsedTitle}</Heading>
-              <Preformatted>{id}</Preformatted>
+              <EntityID entityID={id} />
             </OverviewHeader>
 
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
                   dKey={"Code"}
-                  dValue={code}
+                  dValue={
+                    <>
+                      <Preformatted>{code}</Preformatted>
+                      <ButtonCopy valueToCopy={code} />
+                    </>
+                  }
+                />
+
+                <DescriptionSection
+                  dKey={"Target role"}
+                  dValue={target_role}
                   isValuePreformatted
                   isHorizontal
                 />
@@ -72,10 +86,10 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   isHorizontal
                 />
 
-                {created_by && (
-                  <DescriptionSection
-                    dKey={"Creator"}
-                    dValue={
+                <DescriptionSection
+                  dKey={"Creator"}
+                  dValue={
+                    !created_by ? undefined : (
                       <LinkInternal
                         href={href("/account/role/administrator/account/:id", {
                           id: created_by.id,
@@ -84,10 +98,10 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                         {created_by.name ? `"${created_by.name}"` : "Unnamed"} (
                         {created_by.id})
                       </LinkInternal>
-                    }
-                    isHorizontal
-                  />
-                )}
+                    )
+                  }
+                  isHorizontal
+                />
 
                 {description && (
                   <DescriptionSection

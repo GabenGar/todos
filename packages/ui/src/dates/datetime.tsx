@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { useClient } from "#hooks";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-import { Button } from "#buttons";
+import { ButtonCopy } from "#buttons";
 import { Loading } from "#loading";
 import { formatDateTime, formatRelativeDateTime } from "./format";
 
@@ -20,7 +19,6 @@ export const DateTimeView = createBlockComponent(styles, Component);
 
 function Component({ dateTime, children, ...props }: IProps) {
   const client = useClient();
-  const [isCopied, switchCopiedStatus] = useState(false);
 
   return (
     <div {...props}>
@@ -37,23 +35,7 @@ function Component({ dateTime, children, ...props }: IProps) {
         )}
       </time>
 
-      <Button
-        className={styles.button}
-        disabled={isCopied}
-        onClick={async () => {
-          try {
-            await navigator.clipboard.writeText(dateTime);
-            switchCopiedStatus(true);
-            setTimeout(() => {
-              switchCopiedStatus(false);
-            }, 3000);
-          } catch (error) {
-            console.error(error);
-          }
-        }}
-      >
-        {!isCopied ? "Copy" : "Copied"}
-      </Button>
+      <ButtonCopy className={styles.button} valueToCopy={dateTime} />
     </div>
   );
 }

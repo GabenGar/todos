@@ -15,7 +15,7 @@ export interface IPaginationProps extends IBaseComponentProps<"ul"> {
 }
 
 interface IBaseLinkButtonProps {
-  href?: string;
+  href: string;
   className?: string;
   children?: ReactNode;
 }

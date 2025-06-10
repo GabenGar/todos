@@ -5,6 +5,7 @@
   display: flex;
   flex-flow: column nowrap;
   gap: $size-small;
+  list-style-position: inside;
 }
 
 .unordered {
