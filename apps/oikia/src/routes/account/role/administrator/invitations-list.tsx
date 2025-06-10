@@ -5,6 +5,7 @@ import {
   createPagination,
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
+import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { authenticateAdmin } from "#server/lib/router";
 import { runTransaction } from "#database";
 import {
@@ -13,12 +14,12 @@ import {
   selectInvitationIDs,
   type IInvitationDB,
 } from "#database/queries/invitations";
-import { LinkButton } from "#components/link";
+import { LinkButton, LinkInternal } from "#components/link";
 import { InvitationPreview } from "#entities/account";
 
 import type { Route } from "./+types/invitations-list";
 
-export function meta({ error, data }: Route.MetaArgs) {
+export function meta({ data }: Route.MetaArgs) {
   const { current_page, total_pages } = data.invitations.pagination;
   const title = `Invitations page ${current_page} out of ${total_pages}`;
 
@@ -50,6 +51,20 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
           />
         ))}
       </PreviewList>
+
+      <Overview headingLevel={2}>
+        {() => (
+          <>
+            <OverviewHeader>
+              <LinkInternal
+                href={href("/account/role/administrator/create/invitation")}
+              >
+                Create invitation
+              </LinkInternal>
+            </OverviewHeader>
+          </>
+        )}
+      </Overview>
     </Page>
   );
 }

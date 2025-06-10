@@ -27,7 +27,15 @@ const routes = [
   ),
   route(
     "account/role/administrator/invitation/:id",
-    "./routes/account/role/administrator/invitation.tsx",
+    "./routes/account/role/administrator/invitation/overview.tsx",
+  ),
+  route(
+    "account/role/administrator/invitation/:id/accounts",
+    "./routes/account/role/administrator/invitation/accounts.tsx",
+  ),
+  route(
+    "account/role/administrator/invitation/:id/accounts/:page",
+    "./routes/account/role/administrator/invitation/accounts-list.tsx",
   ),
   route(
     "account/role/administrator/account/:id",

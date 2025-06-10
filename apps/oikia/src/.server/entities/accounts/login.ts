@@ -1,4 +1,5 @@
 import { compare as comparePassword } from "bcryptjs";
+import { ClientError } from "#server/lib/errors";
 import type { ITransaction } from "#database";
 import {
   selectAccountAuth,
@@ -12,6 +13,11 @@ export async function loginAccount(
 ): Promise<IAccountDBAuthData> {
   const { login, password } = data;
   const accountAuth = await selectAccountAuth(transaction, { login });
+
+  if (!accountAuth) {
+    throw new ClientError("Not Authorized", { statusCode: 401 });
+  }
+
   const hashedPassword = accountAuth.password;
   const isMatching = await comparePassword(password, hashedPassword);
 

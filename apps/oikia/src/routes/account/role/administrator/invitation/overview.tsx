@@ -15,7 +15,7 @@ import {
 import { authenticateAdmin } from "#server/lib/router";
 import { LinkInternal } from "#components/link";
 
-import type { Route } from "./+types/invitation";
+import type { Route } from "./+types/overview";
 
 import styles from "./invitation.module.scss";
 
