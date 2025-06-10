@@ -4,4 +4,10 @@ export {
   runStrictTransaction,
   runReadOnlyTransaction,
 } from "./transactions";
-export type { ITransaction, IEntityRow, ICountResult, ICount } from "./types";
+export type {
+  ITransaction,
+  IEntityRow,
+  ICountResult,
+  ICount,
+  IPaginatedFilter,
+} from "./types";

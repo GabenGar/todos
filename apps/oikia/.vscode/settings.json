@@ -1,7 +1,14 @@
 {
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "**/src/routes"
-  ],
+  "typescript.preferences.autoImportFileExcludePatterns": ["**/src/routes"],
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "json.schemas": [
     {
       "fileMatch": [
