@@ -30,6 +30,7 @@
     "./previews": "./src/previews/index.ts",
     "./entities": "./src/entities/index.ts",
     "./strings": "./src/strings/index.ts",
+    "./numbers": "./src/numbers/index.ts",
     "./hooks": "./src/hooks/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
@@ -57,6 +58,7 @@
     "#previews": "./src/previews/index.ts",
     "#entities": "./src/entities/index.ts",
     "#strings": "./src/strings/index.ts",
+    "#numbers": "./src/numbers/index.ts",
     "#hooks": "./src/hooks/index.ts",
     "#types": "./src/types/index.ts"
   },

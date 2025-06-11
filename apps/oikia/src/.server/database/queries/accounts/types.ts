@@ -14,4 +14,7 @@ export interface IAccountDB extends Omit<IAccount, "invited_through"> {
   invited_through?: IInvitationDBItem;
 }
 
+export interface IAccountDBPreview
+  extends Pick<IAccountDB, "id" | "name" | "role" | "created_at"> {}
+
 export interface IAccountDBItem extends Pick<IAccountDB, "id" | "name"> {}

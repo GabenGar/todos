@@ -9,10 +9,16 @@ export function toEntityItem<Type extends IEntityItem>(
   return item;
 }
 
-export function parseTitle(title?: string) {
-  return title ? toQuotedString(title) : "Untitled";
+export function parseTitle(title?: string, id?: string) {
+  const parsedTitle = !title ? "Untitled" : toQuotedString(title);
+  const finalTitle = `${parsedTitle}${!id ? "" : ` (${id})`}`;
+
+  return finalTitle;
 }
 
-export function parseName(name?: string) {
-  return name ? toQuotedString(name) : "Unnamed";
+export function parseName(name?: string, id?: string) {
+  const parsedName = !name ? "Unnamed" : toQuotedString(name);
+  const finalName = `${parsedName}${!id ? "" : ` (${id})`}`;
+
+  return finalName;
 }
