@@ -17,7 +17,7 @@ import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/overview";
 
-import styles from "./invitation.module.scss";
+import styles from "./overview.module.scss";
 
 export function meta({ data }: Route.MetaArgs) {
   const { invitation } = data;
@@ -119,6 +119,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 {invitation.max_uses && (
                   <UsesStat
+                    id={id}
                     max_uses={invitation.max_uses}
                     // biome-ignore lint/style/noNonNullAssertion: just correlated values things
                     current_uses={invitation.current_uses!}
@@ -144,16 +145,20 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 }
 
 interface IUsesStatProps
-  extends Pick<Required<IInvitationDB>, "max_uses" | "current_uses"> {}
+  extends Pick<Required<IInvitationDB>, "id" | "max_uses" | "current_uses"> {}
 
-function UsesStat({ max_uses, current_uses }: IUsesStatProps) {
+function UsesStat({ id, max_uses, current_uses }: IUsesStatProps) {
   return (
     <DescriptionSection
       dKey={"Uses"}
       dValue={
-        <>
+        <LinkInternal
+          href={href("/account/role/administrator/invitation/:id/accounts", {
+            id,
+          })}
+        >
           {current_uses} out of {max_uses}
-        </>
+        </LinkInternal>
       }
       isHorizontal
     />

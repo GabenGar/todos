@@ -1,4 +1,5 @@
 export { InvitationPreview } from "./invitation-preview";
+export { AccountPreview } from "./preview";
 export type {
   IAccountInit,
   IAccountLogin,

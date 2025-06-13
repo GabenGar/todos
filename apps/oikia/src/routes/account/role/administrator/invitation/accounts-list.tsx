@@ -21,13 +21,14 @@ import {
   type IAccountDBPreview,
 } from "#database/queries/accounts";
 import { LinkButton, LinkInternal } from "#components/link";
+import { AccountPreview } from "#entities/account";
 
 import type { Route } from "./+types/accounts-list";
 
 export function meta({ data }: Route.MetaArgs) {
   const { invitation, accounts } = data;
   const { current_page, total_pages } = accounts.pagination;
-  const parsedTitle = parseTitle(invitation.title);
+  const parsedTitle = parseTitle(invitation.title, invitation.id);
   const metaTitle = `Invited accounts for invitation ${parsedTitle} page ${current_page} out of ${total_pages}`;
 
   return [{ title: metaTitle }];
@@ -35,7 +36,7 @@ export function meta({ data }: Route.MetaArgs) {
 
 function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
   const { invitation, accounts } = loaderData;
-  const parsedInvitationTitle = parseTitle(invitation.title);
+  const invitationTitle = parseTitle(invitation.title, invitation.id);
   const heading = "Invited Accounts";
 
   return (
@@ -52,7 +53,7 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
                       id: invitation.id,
                     })}
                   >
-                    {parsedInvitationTitle}
+                    {invitationTitle}
                   </LinkInternal>
                 }
               />
@@ -72,7 +73,9 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
           })
         }
       >
-        {}
+        {accounts.items.map((account) => (
+          <AccountPreview key={account.id} headingLevel={2} account={account} />
+        ))}
       </PreviewList>
     </Page>
   );
