@@ -41,6 +41,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     href("/account/role/administrator/invitation/:id/accounts/:page", {
       id,
       page: pagination.current_page,
-    })
+    }),
   );
 }

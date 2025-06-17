@@ -10,7 +10,7 @@ import { destroySession, getSession } from "../sessions";
 
 export async function authenticateRequest(
   request: Request,
-  allowedRoles?: IAccountRole | IAccountRole[]
+  allowedRoles?: IAccountRole | IAccountRole[],
 ): Promise<IAccountDB> {
   const session = await getSession(request.headers.get("Cookie"));
   const authID = session.get("auth_id");

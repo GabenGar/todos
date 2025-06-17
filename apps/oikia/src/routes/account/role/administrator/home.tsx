@@ -64,9 +64,9 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   await authenticateRequest(request, "administrator");
 
   const results = await runTransaction(async (transaction) => {
-    const accountCount = await selectAccountCount(transaction)
+    const accountCount = await selectAccountCount(transaction);
     const invitationCount = await selectInvitationCount(transaction);
-    const result = {accounts: accountCount, invitations: invitationCount}
+    const result = { accounts: accountCount, invitations: invitationCount };
 
     return result;
   });

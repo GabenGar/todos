@@ -18,5 +18,5 @@ export const action = createServerAction(
     redirectResponse.headers.set("Set-Cookie", await destroySession(session));
 
     return redirectResponse;
-  }
+  },
 );

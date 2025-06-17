@@ -55,7 +55,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                       <LinkInternal
                         href={href(
                           "/account/role/administrator/invitation/:id",
-                          { id: invited_through.id }
+                          { id: invited_through.id },
                         )}
                       >
                         {parseTitle(invited_through.title, invited_through.id)}

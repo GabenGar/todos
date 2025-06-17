@@ -9,5 +9,5 @@ export type {
   IAccountDB,
   IAccountDBAuthData,
   IAccountDBItem,
-  IAccountDBPreview
+  IAccountDBPreview,
 } from "./types";

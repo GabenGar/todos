@@ -29,7 +29,7 @@ const config = defineConfig(({ isSsrBuild }) => {
 
           handler(level, log);
         },
-        input: isSsrBuild ? "./server/app.ts" : undefined,
+        input: isSsrBuild ? "./backend/app.ts" : undefined,
       },
     },
   };

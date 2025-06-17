@@ -13,7 +13,7 @@ export interface ICountResult {
 }
 
 export interface IPaginatedFilter {
-  pagination: IPagination
+  pagination: IPagination;
 }
 
 export type ICount = string;

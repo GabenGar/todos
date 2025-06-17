@@ -18,7 +18,7 @@ export function LinkButton({
         clsx(
           styles.block,
           className &&
-            (typeof className === "string" ? className : className(props))
+            (typeof className === "string" ? className : className(props)),
         )
       }
       to={href}
