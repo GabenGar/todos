@@ -8,7 +8,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { LinkExternal } from "@repo/ui/links";
 import { ClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
 import {
@@ -22,7 +21,6 @@ import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/root";
 
-import "@repo/ui/styles/global";
 import styles from "./root.module.scss";
 
 interface IProps {
@@ -52,25 +50,7 @@ export function Layout({ children }: IProps) {
 function App() {
   return (
     <ClientProvider>
-      <header className={styles.header}>
-        <LinkInternal href={href("/")}>Oikia</LinkInternal>
-      </header>
-
-      <main className={styles.main}>
-        <Outlet />
-      </main>
-
-      <footer className={styles.footer}>
-        <ul>
-          <li>
-            <LinkExternal
-              href={"https://github.com/GabenGar/todos/tree/master/apps/oikia"}
-            >
-              Source Code
-            </LinkExternal>
-          </li>
-        </ul>
-      </footer>
+      <Outlet />
     </ClientProvider>
   );
 }
