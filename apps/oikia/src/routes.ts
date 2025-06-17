@@ -18,6 +18,18 @@ const routes = [
     "./routes/account/role/administrator/create/invitation.tsx",
   ),
   route(
+    "account/role/administrator/account/:id",
+    "./routes/account/role/administrator/account.tsx",
+  ),
+  route(
+    "account/role/administrator/accounts",
+    "./routes/account/role/administrator/accounts.tsx",
+  ),
+  route(
+    "account/role/administrator/accounts/:page",
+    "./routes/account/role/administrator/accounts-list.tsx",
+  ),
+  route(
     "account/role/administrator/invitations",
     "./routes/account/role/administrator/invitations.tsx",
   ),
@@ -36,10 +48,6 @@ const routes = [
   route(
     "account/role/administrator/invitation/:id/accounts/:page",
     "./routes/account/role/administrator/invitation/accounts-list.tsx",
-  ),
-  route(
-    "account/role/administrator/account/:id",
-    "./routes/account/role/administrator/account.tsx",
   ),
 ] satisfies RouteConfig;
 

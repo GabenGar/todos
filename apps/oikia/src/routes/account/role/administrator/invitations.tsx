@@ -1,4 +1,4 @@
-import { href, redirect } from "react-router";
+import { href, redirect, replace } from "react-router";
 import { createPagination } from "@repo/ui/pagination";
 import { BIGINT_ZERO } from "@repo/ui/numbers/bigint";
 import { authenticateRequest } from "#server/lib/router";
@@ -31,5 +31,5 @@ export async function loader({ request }: Route.LoaderArgs) {
     page: pagination.current_page,
   });
 
-  return redirect(url);
+  return replace(url);
 }

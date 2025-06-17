@@ -5,6 +5,7 @@ import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { authenticateRequest } from "#server/lib/router";
 import { runTransaction } from "#database";
 import { selectInvitationCount } from "#database/queries/invitations";
+import { selectAccountCount } from "#database/queries/accounts";
 import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/home";
@@ -17,7 +18,7 @@ export function meta({ error }: Route.MetaArgs) {
  * @TODO client render
  */
 function AdministratorPage({ loaderData }: Route.ComponentProps) {
-  const { count } = loaderData;
+  const { accounts, invitations } = loaderData;
   const heading = "Administrator";
 
   return (
@@ -28,12 +29,24 @@ function AdministratorPage({ loaderData }: Route.ComponentProps) {
             <OverviewHeader>
               <DescriptionList>
                 <DescriptionSection
+                  dKey={"Accounts"}
+                  dValue={
+                    <LinkInternal
+                      href={href("/account/role/administrator/accounts")}
+                    >
+                      {accounts}
+                    </LinkInternal>
+                  }
+                  isHorizontal
+                />
+
+                <DescriptionSection
                   dKey={"Invitations"}
                   dValue={
                     <LinkInternal
                       href={href("/account/role/administrator/invitations")}
                     >
-                      {count}
+                      {invitations}
                     </LinkInternal>
                   }
                   isHorizontal
@@ -50,15 +63,15 @@ function AdministratorPage({ loaderData }: Route.ComponentProps) {
 export async function loader({ request, context }: Route.LoaderArgs) {
   await authenticateRequest(request, "administrator");
 
-  const count = await runTransaction(async (transaction) => {
-    const count = await selectInvitationCount(transaction);
+  const results = await runTransaction(async (transaction) => {
+    const accountCount = await selectAccountCount(transaction)
+    const invitationCount = await selectInvitationCount(transaction);
+    const result = {accounts: accountCount, invitations: invitationCount}
 
-    return count;
+    return result;
   });
 
-  return {
-    count,
-  };
+  return results;
 }
 
 export default AdministratorPage;
