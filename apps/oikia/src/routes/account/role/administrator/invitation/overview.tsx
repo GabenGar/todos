@@ -22,8 +22,8 @@ import styles from "./overview.module.scss";
 export function meta({ data }: Route.MetaArgs) {
   const { invitation } = data;
   const { id, title } = invitation;
-  const parsedTitle = parseTitle(title);
-  const metaTitle = `Invitation ${parsedTitle} (${id}) overview`;
+  const parsedTitle = parseTitle(title, id);
+  const metaTitle = `Invitation ${parsedTitle} overview`;
 
   return [{ title: metaTitle }];
 }

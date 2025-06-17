@@ -1,29 +1,32 @@
-import { redirect } from "react-router";
+import { href, redirect } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
 import { DateTimeView } from "@repo/ui/dates";
+import { parseName, parseTitle } from "@repo/ui/entities";
 import { runTransaction } from "#database";
 import { selectAccountEntities } from "#database/queries/accounts";
 import { authenticateAdmin } from "#server/lib/router";
 import { ClientError } from "#server/lib/errors";
+import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/account";
 
 export function meta({ data }: Route.MetaArgs) {
   const { account } = data;
   const { id, name } = account;
-  const metaTitle = `Account ${name ? `"${name}"` : "Unnamed"} (${id}) overview`;
+  const parsedName = parseName(name, id);
+  const metaTitle = `Account ${parsedName} overview`;
 
   return [{ title: metaTitle }];
 }
 
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
   const { account } = loaderData;
-  const { id, role, name, created_at } = account;
-  const parsedName = name ? `"${name}"` : "Unnamed";
+  const { id, role, name, created_at, invited_through } = account;
+  const parsedName = parseName(name);
   const heading = "Account Overview";
 
   return (
@@ -44,6 +47,22 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   dKey={"Join date"}
                   dValue={<DateTimeView dateTime={created_at} />}
                 />
+
+                {invited_through && (
+                  <DescriptionSection
+                    dKey={"Invited through"}
+                    dValue={
+                      <LinkInternal
+                        href={href(
+                          "/account/role/administrator/invitation/:id",
+                          { id: invited_through.id }
+                        )}
+                      >
+                        {parseTitle(invited_through.title, invited_through.id)}
+                      </LinkInternal>
+                    }
+                  />
+                )}
               </DescriptionList>
             </OverviewBody>
           </>
