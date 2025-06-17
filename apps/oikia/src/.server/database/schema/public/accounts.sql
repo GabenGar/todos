@@ -13,6 +13,8 @@ CREATE TABLE invitations (
   id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  -- the first administrator invitation
+  -- has to be created without any account present
   created_by bigint REFERENCES accounts,
   code text UNIQUE NOT NULL,
   target_role text NOT NULL,

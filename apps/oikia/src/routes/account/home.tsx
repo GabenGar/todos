@@ -3,6 +3,7 @@ import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Heading } from "@repo/ui/headings";
+import { DateTimeView } from "@repo/ui/dates";
 import { authenticateRequest, createServerLoader } from "#server/lib/router";
 import { LinkInternal } from "#components/link";
 
@@ -53,7 +54,10 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
                   isHorizontal
                 />
 
-                <DescriptionSection dKey="Joined" dValue={created_at} />
+                <DescriptionSection
+                  dKey="Joined"
+                  dValue={<DateTimeView dateTime={created_at} />}
+                />
               </DescriptionList>
             </OverviewBody>
           </>
@@ -68,7 +72,7 @@ export const loader = createServerLoader(
     const { id: _, ...account } = await authenticateRequest(request);
 
     return account;
-  },
+  }
 );
 
 export default AccountPage;

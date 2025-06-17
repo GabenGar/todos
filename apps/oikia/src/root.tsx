@@ -11,7 +11,12 @@ import {
 import { LinkExternal } from "@repo/ui/links";
 import { ClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
-import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import {
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+} from "@repo/ui/articles";
 import { Preformatted } from "@repo/ui/formatting";
 import { LinkInternal } from "#components/link";
 
@@ -94,6 +99,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
           {(headingLevel) => (
             <>
               <OverviewHeader>{message}</OverviewHeader>
+
               <OverviewBody>
                 <p>{details}</p>
                 {stack && (
@@ -102,6 +108,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
                   </Preformatted>
                 )}
               </OverviewBody>
+
+              <OverviewFooter>
+                <LinkInternal href={href("/")}>Back</LinkInternal>
+              </OverviewFooter>
             </>
           )}
         </Overview>
