@@ -1,14 +1,11 @@
+import { href } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Heading } from "@repo/ui/headings";
-import { createServerLoader } from "#server/lib/router";
-import { getSession } from "#server/lib/sessions";
-import { runTransaction } from "#database";
-import {
-  selectAccountAuth,
-  selectAccountEntities,
-} from "#database/queries/accounts";
+import { DateTimeView } from "@repo/ui/dates";
+import { authenticateRequest, createServerLoader } from "#server/lib/router";
+import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/home";
 
@@ -19,7 +16,7 @@ export function meta({ error }: Route.MetaArgs) {
 /**
  * @TODO client render
  */
-function RegistrationPage({ loaderData }: Route.ComponentProps) {
+function AccountPage({ loaderData }: Route.ComponentProps) {
   const heading = "Account";
 
   if (!loaderData.is_successful) {
@@ -43,9 +40,24 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
 
             <OverviewBody>
               <DescriptionList>
-                <DescriptionSection dKey="Role" dValue={role} isHorizontal />
+                <DescriptionSection
+                  dKey="Role"
+                  dValue={
+                    role !== "administrator" ? (
+                      role
+                    ) : (
+                      <LinkInternal href={href("/account/role/administrator")}>
+                        {role}
+                      </LinkInternal>
+                    )
+                  }
+                  isHorizontal
+                />
 
-                <DescriptionSection dKey="Joined" dValue={created_at} />
+                <DescriptionSection
+                  dKey="Joined"
+                  dValue={<DateTimeView dateTime={created_at} />}
+                />
               </DescriptionList>
             </OverviewBody>
           </>
@@ -57,26 +69,10 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
 
 export const loader = createServerLoader(
   async ({ request }: Route.LoaderArgs) => {
-    const session = await getSession(request.headers.get("Cookie"));
-    const authID = session.get("auth_id");
-
-    if (!authID) {
-      throw new Error("Not Authorized.");
-    }
-
-    const account = await runTransaction(async (transaction) => {
-      const { id } = await selectAccountAuth(transaction, {
-        auth_id: authID,
-      });
-      const [{ id: _, ...account }] = await selectAccountEntities(transaction, [
-        id,
-      ]);
-
-      return account;
-    });
+    const { id: _, ...account } = await authenticateRequest(request);
 
     return account;
-  },
+  }
 );
 
-export default RegistrationPage;
+export default AccountPage;

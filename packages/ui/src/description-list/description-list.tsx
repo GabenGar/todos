@@ -5,6 +5,7 @@ import {
   type IBaseComponentProps,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
+import { Preformatted } from "#formatting";
 
 import styles from "./description-list.module.scss";
 
@@ -18,7 +19,15 @@ type IDescriptionListProps = IBaseComponentProps<"dl"> &
 interface IDescriptionMap extends Array<[ReactNode, ReactNode]> {}
 type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
   isHorizontal?: boolean;
-} & ({ dKey: ReactNode; dValue?: ReactNode } | { children?: ReactNode });
+} & (
+    | { children?: ReactNode }
+    | {
+        dKey: ReactNode;
+        dValue?: ReactNode;
+        isKeyPreformatted?: boolean;
+        isValuePreformatted?: boolean;
+      }
+  );
 
 interface IDescriptionTermProps extends IBaseComponentPropsWithChildren<"dt"> {}
 
@@ -27,22 +36,22 @@ interface IDescriptionDetailsProps
 
 export const DescriptionList = createBlockComponent(
   styles,
-  DescriptionListComponent,
+  DescriptionListComponent
 );
 
 export const DescriptionSection = createBlockComponent(
   styles.section,
-  DescriptionSectionComponent,
+  DescriptionSectionComponent
 );
 
 export const DescriptionTerm = createBlockComponent(
   styles.term,
-  DescriptionTermComponent,
+  DescriptionTermComponent
 );
 
 export const DescriptionDetails = createBlockComponent(
   styles.details,
-  DescriptionDetailsComponent,
+  DescriptionDetailsComponent
 );
 
 function DescriptionListComponent({ ...props }: IDescriptionListProps) {
@@ -55,7 +64,7 @@ function DescriptionListComponent({ ...props }: IDescriptionListProps) {
   return (
     <dl {...otherProps}>
       {sections.map(([dKey, dValue], index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        // biome-ignore lint/suspicious/noArrayIndexKey: only index can be truly unique key in there
         <DescriptionSection key={index} dKey={dKey} dValue={dValue} />
       ))}
     </dl>
@@ -70,7 +79,7 @@ function DescriptionSectionComponent({
   const blockClass = clsx(
     className,
     "dKey" in props && styles.section_keyValue,
-    isHorizontal && styles.section_horizontal,
+    isHorizontal && styles.section_horizontal
   );
 
   // separate returns to avoid passing `dKey` and `dValue` to DOM
@@ -82,12 +91,27 @@ function DescriptionSectionComponent({
     );
   }
 
-  const { dKey, dValue, ...blockProps } = props;
+  const {
+    dKey,
+    dValue,
+    isKeyPreformatted,
+    isValuePreformatted,
+    ...blockProps
+  } = props;
 
   return (
     <div className={blockClass} {...blockProps}>
-      <DescriptionTerm className={styles.key}>{dKey}:</DescriptionTerm>
-      <DescriptionDetails className={styles.value}>{dValue}</DescriptionDetails>
+      <DescriptionTerm className={styles.key}>
+        {isKeyPreformatted ? (
+          <Preformatted>{dKey}:</Preformatted>
+        ) : (
+          <>{dKey}:</>
+        )}
+      </DescriptionTerm>
+
+      <DescriptionDetails className={styles.value}>
+        {isValuePreformatted ? <Preformatted>{dValue}</Preformatted> : dValue}
+      </DescriptionDetails>
     </div>
   );
 }

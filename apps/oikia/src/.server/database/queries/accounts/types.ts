@@ -1,8 +1,5 @@
 import type { IAccount, IAccountInit, IAccountLogin } from "#entities/account";
-
-export interface IAccountDB extends IAccount {
-  id: string;
-}
+import type { IInvitationDBItem } from "#database/queries/invitations";
 
 export interface IAccountDBInit extends IAccountInit, Pick<IAccount, "role"> {}
 
@@ -11,3 +8,13 @@ export interface IAccountDBAuthData
     Pick<IAccountDB, "id"> {
   auth_id: string;
 }
+
+export interface IAccountDB extends Omit<IAccount, "invited_through"> {
+  id: string;
+  invited_through?: IInvitationDBItem;
+}
+
+export interface IAccountDBPreview
+  extends Pick<IAccountDB, "id" | "name" | "role" | "created_at"> {}
+
+export interface IAccountDBItem extends Pick<IAccountDB, "id" | "name"> {}

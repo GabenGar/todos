@@ -15,3 +15,6 @@ export { InputNanoID } from "./text/nanoid";
 export { InputHidden } from "./hidden";
 export type { IInputHiddenProps } from "./hidden";
 export { InputPassword, type IInputPasswordProps } from "./password";
+export { InputNumber } from "./number/number";
+export { InputInteger, type IInputIntegerProps } from "./number/integer";
+export { InputDateTime, type IInputDateTimeProps } from "./datetime/datetime";

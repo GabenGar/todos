@@ -3,21 +3,37 @@ import type { ITransaction } from "./types";
 
 const { TransactionMode, isolationLevel } = pgPromise.txMode;
 
-/**
- * - serializable
- * - read-only
- * - deferrable
- */
-export const strictTransactionMode = new TransactionMode({
+const strictTransactionMode = new TransactionMode({
   tiLevel: isolationLevel.serializable,
+});
+
+const readOnlyTransactionMode = new TransactionMode({
   readOnly: true,
-  deferrable: true,
 });
 
 export async function runTransaction<ReturnShape>(
   dbFunction: (transaction: ITransaction) => Promise<ReturnShape>,
 ): ReturnType<typeof dbFunction> {
   const result = await database.tx(dbFunction);
+
+  return result;
+}
+
+export async function runStrictTransaction<ReturnShape>(
+  dbFunction: (transaction: ITransaction) => Promise<ReturnShape>,
+): ReturnType<typeof dbFunction> {
+  const result = await database.tx({ mode: strictTransactionMode }, dbFunction);
+
+  return result;
+}
+
+export async function runReadOnlyTransaction<ReturnShape>(
+  dbFunction: (transaction: ITransaction) => Promise<ReturnShape>,
+): ReturnType<typeof dbFunction> {
+  const result = await database.tx(
+    { mode: readOnlyTransactionMode },
+    dbFunction,
+  );
 
   return result;
 }

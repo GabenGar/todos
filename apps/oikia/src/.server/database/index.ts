@@ -1,3 +1,18 @@
-export { getQueryFile, toEntityIDs } from "./lib";
-export { runTransaction } from "./transactions";
-export type { ITransaction, IEntityRow, ICountResult, ICount } from "./types";
+export {
+  getQueryFile,
+  toEntityIDs,
+  migrateDatabase,
+  toOrderedEntities,
+} from "./lib";
+export {
+  runTransaction,
+  runStrictTransaction,
+  runReadOnlyTransaction,
+} from "./transactions";
+export type {
+  ITransaction,
+  IEntityRow,
+  ICountResult,
+  ICount,
+  IPaginatedFilter,
+} from "./types";

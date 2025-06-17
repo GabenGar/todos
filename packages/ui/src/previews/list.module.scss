@@ -1,0 +1,32 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.block {
+  display: grid;
+  gap: $size-normal;
+}
+
+.nothing {
+  justify-self: center;
+}
+
+.info {
+  background-color: var(--colour-background-primary);
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: $size-normal;
+}
+
+.descending {
+  flex-flow: row-reverse wrap-reverse;
+}
+
+.pagination {
+  justify-self: center;
+  max-width: $width-phone;
+  background-color: var(--colour-background-primary);
+}

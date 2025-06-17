@@ -1,0 +1,9 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.active {
+  color: var(--positive-colour-text-primary);
+}
+
+.inactive {
+  color: var(--negative-colour-text-primary);
+}

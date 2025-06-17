@@ -1,7 +1,6 @@
-import { data } from "react-router";
-import { createServerAction } from "#server/lib/router";
+import { href, redirect } from "react-router";
+import { createServerAction, parseMethod } from "#server/lib/router";
 import { destroySession, getSession } from "#server/lib/sessions";
-import { createSuccessfullAPIResponse } from "#server/lib/api";
 
 import type { Route } from "./+types/logout";
 
@@ -11,24 +10,13 @@ export function headers({ actionHeaders, loaderHeaders }: Route.HeadersArgs) {
 
 export const action = createServerAction(
   async ({ request }: Route.ActionArgs) => {
-    switch (request.method) {
-      case "POST": {
-        const session = await getSession(request.headers.get("Cookie"));
+    parseMethod(request, "POST");
 
-        const headers = new Headers([
-          ["Set-Cookie", await destroySession(session)],
-        ]);
+    const session = await getSession(request.headers.get("Cookie"));
+    const redirectResponse = redirect(href("/"));
 
-        const response = data(createSuccessfullAPIResponse(true), {
-          headers,
-        });
+    redirectResponse.headers.set("Set-Cookie", await destroySession(session));
 
-        return response;
-      }
-
-      default: {
-        throw new Error(`Unknown method "${request.method}".`);
-      }
-    }
+    return redirectResponse;
   },
 );

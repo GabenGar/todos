@@ -8,3 +8,4 @@ WHERE
     OR
     role = ${role}
   )
+;

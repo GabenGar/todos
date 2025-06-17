@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import {
+  href,
   isRouteErrorResponse,
   Links,
   Meta,
@@ -8,14 +9,21 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
+import { ClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
-import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import {
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+} from "@repo/ui/articles";
+import { Preformatted } from "@repo/ui/formatting";
+import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/root";
 
 import "@repo/ui/styles/global";
 import styles from "./root.module.scss";
-import { LinkInternal } from "#components/link";
 
 interface IProps {
   children: ReactNode;
@@ -43,9 +51,9 @@ export function Layout({ children }: IProps) {
 
 function App() {
   return (
-    <>
+    <ClientProvider>
       <header className={styles.header}>
-        <LinkInternal href={"/"}>Oikia</LinkInternal>
+        <LinkInternal href={href("/")}>Oikia</LinkInternal>
       </header>
 
       <main className={styles.main}>
@@ -63,7 +71,7 @@ function App() {
           </li>
         </ul>
       </footer>
-    </>
+    </ClientProvider>
   );
 }
 
@@ -85,23 +93,30 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <Page heading={heading}>
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
-          <>
-            <OverviewHeader>{message}</OverviewHeader>
-            <OverviewBody>
-              <p>{details}</p>
-              {stack && (
-                <pre className="w-full p-4 overflow-x-auto">
-                  <code>{stack}</code>
-                </pre>
-              )}
-            </OverviewBody>
-          </>
-        )}
-      </Overview>
-    </Page>
+    <main className={styles.main}>
+      <Page heading={heading}>
+        <Overview headingLevel={2}>
+          {(headingLevel) => (
+            <>
+              <OverviewHeader>{message}</OverviewHeader>
+
+              <OverviewBody>
+                <p>{details}</p>
+                {stack && (
+                  <Preformatted>
+                    <code>{stack}</code>
+                  </Preformatted>
+                )}
+              </OverviewBody>
+
+              <OverviewFooter>
+                <LinkInternal href={href("/")}>Back</LinkInternal>
+              </OverviewFooter>
+            </>
+          )}
+        </Overview>
+      </Page>
+    </main>
   );
 }
 

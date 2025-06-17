@@ -1,10 +1,10 @@
-import { DATABASE_CONNECTION_DATA } from "#server/environment";
 import pgPromiseLib, { type IInitOptions } from "pg-promise";
+import { MIGRATIONS_CONNECTION_DATA } from "#server/environment";
 
 const initOptions: IInitOptions = {
   capSQL: true,
 };
-const connectionOptions = { ...DATABASE_CONNECTION_DATA };
+const connectionOptions = { ...MIGRATIONS_CONNECTION_DATA };
 
 export const pgPromise = pgPromiseLib(initOptions);
 const pg = pgPromise.pg;

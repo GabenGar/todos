@@ -43,6 +43,8 @@ body {
   height: 100%;
   // Inherit line-height from `html` so users can set them as a class directly on the `html` element.
   line-height: inherit;
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background-primary);
   padding: 0;
   margin: 0;
 }

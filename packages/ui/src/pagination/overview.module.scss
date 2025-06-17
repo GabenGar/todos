@@ -1,0 +1,8 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.block {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  list-style-type: none;
+}
