@@ -52,7 +52,7 @@ function Component({ account, ...props }: IProps) {
               />
 
               <DescriptionSection
-                dKey={"Created at"}
+                dKey={"Join date"}
                 dValue={<DateTimeView dateTime={created_at} />}
               />
             </DescriptionList>
