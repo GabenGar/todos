@@ -10,6 +10,18 @@
       "Log out": "Выйти",
       "Register": "Зарегистрировать",
       "Log in": "Войти"
+    },
+    "account": {
+      "Account": "Учётная запись",
+      "Role": "Роль",
+      "Joined": "Дата регистрации",
+      "administrator": "администратор",
+      "user": "пользователь"
+    },
+    "administrator-home": {
+      "Administrator": "Администратор",
+      "Accounts": "Учётные записи",
+      "Invitations": "Приглашения"
     }
   }
 }

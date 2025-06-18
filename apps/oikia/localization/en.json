@@ -10,6 +10,18 @@
       "Log out": "Log out",
       "Register": "Register",
       "Log in": "Log in"
+    },
+    "account": {
+      "Account": "Account",
+      "Role": "Role",
+      "Joined": "Joined",
+      "administrator": "administrator",
+      "user": "user"
+    },
+    "administrator-home": {
+      "Administrator": "Administrator",
+      "Accounts": "Accounts",
+      "Invitations": "Invitations"
     }
   }
 }
