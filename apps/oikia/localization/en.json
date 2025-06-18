@@ -1,5 +1,7 @@
 {
-  "common": {},
+  "common": {
+    "Source Code": "Source Code"
+  },
   "pages": {
     "home": {
       "Welcome": "Welcome",

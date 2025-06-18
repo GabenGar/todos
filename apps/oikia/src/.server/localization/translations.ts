@@ -1,4 +1,4 @@
-import type { ILanguage, ITranslation } from "#lib/internationalization";
+import type { ICommonTranslation, ILanguage, ITranslation } from "#lib/internationalization";
 
 const translations = {
   en: async () => {
@@ -13,4 +13,12 @@ const translations = {
 
 export async function getTranslation(locale: ILanguage): Promise<ITranslation> {
   return await translations[locale]();
+}
+
+export async function getCommonTranslation(locale: ILanguage, translation?: ITranslation): Promise<ICommonTranslation> {
+  if (translation) {
+    return translation.common
+  }
+
+  return (await translations[locale]())["common"];
 }

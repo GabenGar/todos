@@ -1,5 +1,7 @@
 {
-  "common": {},
+  "common": {
+    "Source Code": "Исходный код"
+  },
   "pages": {
     "home": {
       "Welcome": "Добро пожаловать",

@@ -60,7 +60,7 @@ function AdministratorPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, context }: Route.LoaderArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
   await authenticateRequest(request, "administrator");
 
   const results = await runTransaction(async (transaction) => {

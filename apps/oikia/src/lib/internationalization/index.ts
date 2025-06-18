@@ -11,9 +11,11 @@ export function isSupportedLanguage(input?: string): input is ILanguage {
 }
 
 export type ITranslation = typeof IBaseTranslation;
+export type ICommonTranslation = ITranslation["common"]
 
 export interface ICommonTranslationProps {
-  commonTranslation: ITranslation["common"]
+  language: ILanguage;
+  commonTranslation: ICommonTranslation
 }
 
 export interface ITranslationPageProps<
