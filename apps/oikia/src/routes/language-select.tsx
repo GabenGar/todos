@@ -5,7 +5,7 @@ import { Overview, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { LinkButton } from "#components/link";
 import { List, ListItem } from "@repo/ui/lists";
-import { LOCALES, type ILocale } from "#lib/internationalization";
+import { LANGUAGES, type ILanguage } from "#lib/internationalization";
 
 import type { Route } from "./+types/language-select";
 
@@ -24,7 +24,7 @@ function LanguageSelectPage() {
         {(headingLevel) => (
           <OverviewBody>
             <List className={styles.list}>
-              {LOCALES.map((locale) => (
+              {LANGUAGES.map((locale) => (
                 <ListItem key={locale} className={styles.item}>
                   <LocaleLink locale={locale} />
                 </ListItem>
@@ -38,7 +38,7 @@ function LanguageSelectPage() {
 }
 
 interface ILocalLinkProps {
-  locale: ILocale;
+  locale: ILanguage;
 }
 function LocaleLink({ locale }: ILocalLinkProps) {
   const language = parseLocale(locale).language;

@@ -1,0 +1,13 @@
+{
+  "common": {},
+  "pages": {
+    "home": {
+      "Welcome": "Welcome",
+      "Authentication": "Authentication",
+      "Account": "Account",
+      "Log out": "Log out",
+      "Register": "Register",
+      "Log in": "Log in"
+    }
+  }
+}
