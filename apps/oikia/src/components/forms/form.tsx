@@ -13,11 +13,13 @@ import { baseFormStyles } from "@repo/ui/forms";
 import { InputSection } from "@repo/ui/forms/sections";
 import { List, ListItem } from "@repo/ui/lists";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import type { ICommonTranslationProps } from "#lib/internationalization";
 import { isFailedAPIResponse } from "#lib/api";
 import type { IFormMethod } from "./types";
 
 export interface IFormProps<ActionData>
-  extends Omit<FormProps, "children" | "method"> {
+  extends Omit<FormProps, "children" | "method">,
+    ICommonTranslationProps {
   id: string;
   method?: IFormMethod;
   children?: (formID: string) => ReactNode;
@@ -32,6 +34,7 @@ export interface IFormProps<ActionData>
 }
 
 export function Form<ActionData>({
+  commonTranslation,
   id,
   className,
   submitButton,
@@ -71,7 +74,7 @@ export function Form<ActionData>({
           ) : (
             <InputSection>
               <ButtonReset disabled={navigation.state !== "idle"} form={formID}>
-                Reset
+                {commonTranslation["Reset"]}
               </ButtonReset>
             </InputSection>
           )}
@@ -82,9 +85,9 @@ export function Form<ActionData>({
 
           <InputSection>
             {navigation.state === "loading" ? (
-              "Initializing..."
+              commonTranslation["Initializing..."]
             ) : navigation.state === "submitting" ? (
-              "Submitting..."
+              commonTranslation["Submitting..."]
             ) : data instanceof Error ? (
               <List isOrdered>
                 <ListItem>
@@ -97,13 +100,13 @@ export function Form<ActionData>({
                   <ListItem key={`${index}-${name}-${message}`}>
                     <DescriptionList>
                       <DescriptionSection
-                        dKey="Name"
+                        dKey={commonTranslation["Name"]}
                         dValue={<Preformatted>{name}</Preformatted>}
                         isHorizontal
                       />
 
                       <DescriptionSection
-                        dKey="Message"
+                        dKey={commonTranslation["Message"]}
                         dValue={<Preformatted>{message}</Preformatted>}
                         isHorizontal
                       />
@@ -112,13 +115,15 @@ export function Form<ActionData>({
                 ))}
               </List>
             ) : (
-              "Ready to submit."
+              commonTranslation["Ready to submit."]
             )}
           </InputSection>
 
           <InputSection>
             <ButtonSubmit form={formID} disabled={navigation.state !== "idle"}>
-              {!submitButton ? "Submit" : submitButton(navigation.state)}
+              {!submitButton
+                ? commonTranslation["Submit"]
+                : submitButton(navigation.state)}
             </ButtonSubmit>
           </InputSection>
         </>

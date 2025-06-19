@@ -3,7 +3,10 @@ import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { List, ListItem } from "@repo/ui/lists";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import type { ITranslationPageProps } from "#lib/internationalization";
+import type {
+  ICommonTranslationProps,
+  ITranslationPageProps,
+} from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateRequest, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
@@ -14,7 +17,9 @@ import type { Route } from "./+types/home";
 
 import styles from "./home.module.scss";
 
-interface IProps extends ITranslationPageProps<"home"> {
+interface IProps
+  extends ICommonTranslationProps,
+    ITranslationPageProps<"home"> {
   isRegistered: boolean;
 }
 
@@ -26,7 +31,7 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 function HomePage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, isRegistered } = loaderData;
+  const { language, commonTranslation, translation, isRegistered } = loaderData;
   const heading = translation["Welcome"];
   const formID = "logout";
 
@@ -52,6 +57,8 @@ function HomePage({ loaderData }: Route.ComponentProps) {
 
                         <ListItem className={styles.logout}>
                           <Form
+                            language={language}
+                            commonTranslation={commonTranslation}
                             id={formID}
                             method="POST"
                             action={href("/:language/authentication/logout", {
@@ -98,7 +105,7 @@ function HomePage({ loaderData }: Route.ComponentProps) {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const language = getLanguage(params);
-  const { pages } = await getTranslation(language);
+  const { common: commonTranslation, pages } = await getTranslation(language);
   const translation = pages.home;
   let isRegistered: boolean;
 
@@ -111,6 +118,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const props: IProps = {
     language,
+    commonTranslation,
     translation,
     isRegistered,
   };

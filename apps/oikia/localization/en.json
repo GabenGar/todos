@@ -3,7 +3,14 @@
     "Source Code": "Source Code",
     "Error": "Error",
     "An unexpected error occurred.": "An unexpected error occurred.",
-    "The requested page could not be found.": "The requested page could not be found."
+    "The requested page could not be found.": "The requested page could not be found.",
+    "Initializing...": "Initializing...",
+    "Submitting...": "Submitting...",
+    "Name": "Name",
+    "Message": "Message",
+    "Ready to submit.": "Ready to submit.",
+    "Submit": "Submit",
+    "Reset": "Reset"
   },
   "pages": {
     "home": {
