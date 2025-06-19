@@ -1,14 +1,18 @@
-import { isSupportedLanguage, type ILanguage } from "#lib/internationalization";
+import {
+  isSupportedLanguage,
+  type ILanguage,
+  DEFAULT_LANGUAGE,
+} from "#lib/internationalization";
 import { NotFoundError } from "../errors";
 
 interface ILanguageParams {
-  language: string;
+  language?: string;
 }
 
 export function getLanguage<Params extends ILanguageParams>(
   params: Params,
 ): ILanguage {
-  const { language } = params;
+  const language = params.language ?? DEFAULT_LANGUAGE;
 
   if (!isSupportedLanguage(language)) {
     throw new NotFoundError();

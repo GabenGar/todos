@@ -1,6 +1,9 @@
 {
   "common": {
-    "Source Code": "Исходный код"
+    "Source Code": "Исходный код",
+    "Error": "Ошибка",
+    "An unexpected error occurred.": "Произошла непредвиденная ошибка.",
+    "The requested page could not be found.": "Запрашиваемая страница не найдена."
   },
   "pages": {
     "home": {
@@ -23,5 +26,6 @@
       "Accounts": "Учётные записи",
       "Invitations": "Приглашения"
     }
-  }
+  },
+  "entities": {}
 }

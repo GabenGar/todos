@@ -1,6 +1,9 @@
 {
   "common": {
-    "Source Code": "Source Code"
+    "Source Code": "Source Code",
+    "Error": "Error",
+    "An unexpected error occurred.": "An unexpected error occurred.",
+    "The requested page could not be found.": "The requested page could not be found."
   },
   "pages": {
     "home": {
