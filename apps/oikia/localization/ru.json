@@ -10,7 +10,8 @@
     "Message": "Сообщение",
     "Ready to submit.": "Готовы к отправке.",
     "Submit": "Отправить",
-    "Reset": "Сбросить"
+    "Reset": "Сбросить",
+    "Unknown method": "Неизвестный метод"
   },
   "pages": {
     "home": {
@@ -20,6 +21,25 @@
       "Log out": "Выйти",
       "Register": "Зарегистрироваться",
       "Log in": "Войти"
+    },
+    "registration": {
+      "Registration": "Регистрация",
+      "Already registered?": "Уже зарегистрированны?",
+      "Log in.": "Войти.",
+      "Register": "Зарегистрироваться",
+      "You have successfully created an account, now you can": "Ваша учётная запись спешно создана, теперь вы можете",
+      "log in": "войти",
+      "Login": "Логин",
+      "Password": "Пароль",
+      "Invitation code": "Код приглашения",
+      "Display name": "Отображаемое имя",
+      "Login is required.": "Логин обязателен.",
+      "Invalid login length.": "Неправильная длина логина.",
+      "Password is required.": "Пароль обязателен.",
+      "Invalid password length.": "Неправильная длина пароля.",
+      "Invitation code is required.": "Код приглашения обязателен.",
+      "Invalid invitation code length.": "Неправильная длина кода приглашения.",
+      "Invalid display name length.": "Неправильная длина отображаемого имени."
     },
     "account": {
       "Account": "Учётная запись",

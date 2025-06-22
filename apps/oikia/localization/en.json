@@ -10,7 +10,8 @@
     "Message": "Message",
     "Ready to submit.": "Ready to submit.",
     "Submit": "Submit",
-    "Reset": "Reset"
+    "Reset": "Reset",
+    "Unknown method": "Unknown method"
   },
   "pages": {
     "home": {
@@ -20,6 +21,25 @@
       "Log out": "Log out",
       "Register": "Register",
       "Log in": "Log in"
+    },
+    "registration": {
+      "Registration": "Registration",
+      "Already registered?": "Already registered?",
+      "Log in.": "Log in.",
+      "Register": "Register",
+      "You have successfully created an account, now you can": "You have successfully created an account, now you can",
+      "log in": "log in",
+      "Login": "Login",
+      "Password": "Password",
+      "Invitation code": "Invitation code",
+      "Display name": "Display name",
+      "Login is required.": "Login is required.",
+      "Invalid login length.": "Invalid login length.",
+      "Password is required.": "Password is required.",
+      "Invalid password length.": "Invalid password length.",
+      "Invitation code is required.": "Invitation code is required.",
+      "Invalid invitation code length.": "Invalid invitation code length.",
+      "Invalid display name length.": "Invalid display name length."
     },
     "account": {
       "Account": "Account",
@@ -33,5 +53,6 @@
       "Accounts": "Accounts",
       "Invitations": "Invitations"
     }
-  }
+  },
+  "entities": {}
 }

@@ -57,7 +57,6 @@ function HomePage({ loaderData }: Route.ComponentProps) {
 
                         <ListItem className={styles.logout}>
                           <Form
-                            language={language}
                             commonTranslation={commonTranslation}
                             id={formID}
                             method="POST"
