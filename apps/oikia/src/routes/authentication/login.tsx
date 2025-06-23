@@ -6,27 +6,41 @@ import {
   InputSectionPassword,
   InputSectionText,
 } from "@repo/ui/forms/sections";
+import { createMetaTitle } from "#lib/router";
+import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { runTransaction } from "#database";
-import { createServerAction } from "#server/lib/router";
+import {
+  createServerAction,
+  getLanguage,
+  parseMethod,
+} from "#server/lib/router";
 import { loginAccount } from "#server/entities/accounts";
 import { commitSession, getSession } from "#server/lib/sessions";
 import { createSuccessfullAPIResponse } from "#server/lib/api";
+import { ClientInputError } from "#server/lib/errors";
+import { getTranslation } from "#server/localization";
 import { LinkInternal } from "#components/link";
 import { Form } from "#components/forms";
 import type { IAccountLogin } from "#entities/account";
 
 import type { Route } from "./+types/login";
 
-export function meta({ error }: Route.MetaArgs) {
-  return [{ title: "Login" }];
+interface IProps extends ICommonTranslationPageProps<"login"> {}
+
+export function meta({ data }: Route.MetaArgs) {
+  const { translation } = data;
+  const title = createMetaTitle(translation["Login"]);
+
+  return [{ title }];
 }
 
 export function headers({ actionHeaders, loaderHeaders }: Route.HeadersArgs) {
   return loaderHeaders ? loaderHeaders : actionHeaders;
 }
 
-function LoginPage({ matches }: Route.ComponentProps) {
-  const heading = "Login";
+function LoginPage({ loaderData }: Route.ComponentProps) {
+  const { commonTranslation, translation } = loaderData;
+  const heading = translation["Login"];
   const formID = "login";
 
   return (
@@ -36,25 +50,26 @@ function LoginPage({ matches }: Route.ComponentProps) {
           <>
             <OverviewHeader>
               <p>
-                Not registered?{" "}
+                {translation["Not registered?"]}{" "}
                 <LinkInternal href={"/authentication/registration"}>
-                  Register.
-                </LinkInternal>
+                  {translation["Register"]}
+                </LinkInternal>.
               </p>
             </OverviewHeader>
 
             <OverviewBody>
               <Form<Route.ComponentProps["actionData"]>
+                commonTranslation={commonTranslation}
                 id={formID}
                 method="POST"
-                submitButton={() => "Login"}
+                submitButton={() => translation["Login"]}
                 resetButton={null}
                 successElement={(formID, data) => (
                   <>
                     <p>
-                      You have successfully logged in, now you can visit
+                      {translation["You have successfully logged in, now you can visit"]}
                       <LinkInternal href={"/account"}>
-                        account page
+                        {translation["account page"]}
                       </LinkInternal>
                       .
                     </p>
@@ -71,7 +86,7 @@ function LoginPage({ matches }: Route.ComponentProps) {
                       maxLength={20}
                       required
                     >
-                      Login
+                      {translation.form["Login"]}
                     </InputSectionText>
 
                     <InputSectionPassword
@@ -84,7 +99,7 @@ function LoginPage({ matches }: Route.ComponentProps) {
                       maxLength={49}
                       required
                     >
-                      Password
+                      {translation.form["Password"]}
                     </InputSectionPassword>
                   </>
                 )}
@@ -97,70 +112,80 @@ function LoginPage({ matches }: Route.ComponentProps) {
   );
 }
 
+export async function loader({ params }: Route.LoaderArgs) {
+  const language = getLanguage(params);
+  const { common: commonTranslation, pages } = await getTranslation(language);
+  const translation = pages.login;
+
+  const props: IProps = {
+    language,
+    commonTranslation,
+    translation,
+  };
+
+  return props;
+}
+
 export const action = createServerAction(
-  async ({ request }: Route.ActionArgs) => {
-    switch (request.method) {
-      case "POST": {
-        const formData = await request.formData();
+  async ({ request, params }: Route.ActionArgs) => {
+    const language = getLanguage(params);
+    const { common: commonTranslation, pages } = await getTranslation(language);
+    const translation = pages.login;
 
-        let login: string | undefined = undefined;
-        {
-          const value = parseStringValueFromFormData(formData, "login");
+    parseMethod(request, "POST", commonTranslation);
 
-          if (!value) {
-            throw new Error("Login is required.");
-          }
+    const formData = await request.formData();
 
-          if (value.length < 5 && value.length > 20) {
-            throw new Error("Invalid login length.");
-          }
+    let login: string | undefined = undefined;
+    {
+      const value = parseStringValueFromFormData(formData, "login");
 
-          login = value;
-        }
-
-        let password: string | undefined = undefined;
-        {
-          const value = parseStringValueFromFormData(formData, "password");
-
-          if (!value) {
-            throw new Error("Password is required.");
-          }
-
-          if (value.length < 8 && value.length > 49) {
-            throw new Error("Invalid password length.");
-          }
-
-          password = value;
-        }
-
-        const accountLogin: IAccountLogin = {
-          login,
-          password,
-        };
-
-        const { auth_id } = await runTransaction(async (transaction) =>
-          loginAccount(transaction, accountLogin),
-        );
-
-        const session = await getSession(request.headers.get("Cookie"));
-
-        session.set("auth_id", auth_id);
-
-        const headers = new Headers([
-          ["Set-Cookie", await commitSession(session)],
-        ]);
-
-        const response = data(createSuccessfullAPIResponse(true), {
-          headers,
-        });
-
-        return response;
+      if (!value) {
+        throw new ClientInputError(translation["Login is required."]);
       }
 
-      default: {
-        throw new Error(`Unknown method "${request.method}".`);
+      if (value.length < 5 && value.length > 20) {
+        throw new ClientInputError(translation["Invalid login length."]);
       }
+
+      login = value;
     }
+
+    let password: string | undefined = undefined;
+    {
+      const value = parseStringValueFromFormData(formData, "password");
+
+      if (!value) {
+        throw new ClientInputError(translation["Password is required."]);
+      }
+
+      if (value.length < 8 && value.length > 49) {
+        throw new ClientInputError(translation["Invalid password length."]);
+      }
+
+      password = value;
+    }
+
+    const accountLogin: IAccountLogin = {
+      login,
+      password,
+    };
+
+    const { auth_id } = await runTransaction(async (transaction) =>
+      loginAccount(transaction, accountLogin),
+    );
+
+    const session = await getSession(request.headers.get("Cookie"));
+
+    session.set("auth_id", auth_id);
+
+    const headers = new Headers([["Set-Cookie", await commitSession(session)]]);
+
+    const response = data(createSuccessfullAPIResponse(true), {
+      headers,
+    });
+
+    return response;
   },
 );
 

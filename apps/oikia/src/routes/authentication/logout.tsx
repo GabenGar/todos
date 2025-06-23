@@ -1,6 +1,11 @@
 import { href, redirect } from "react-router";
-import { createServerAction, parseMethod } from "#server/lib/router";
+import {
+  createServerAction,
+  getLanguage,
+  parseMethod,
+} from "#server/lib/router";
 import { destroySession, getSession } from "#server/lib/sessions";
+import { getCommonTranslation } from "#server/localization";
 
 import type { Route } from "./+types/logout";
 
@@ -9,8 +14,11 @@ export function headers({ actionHeaders, loaderHeaders }: Route.HeadersArgs) {
 }
 
 export const action = createServerAction(
-  async ({ request }: Route.ActionArgs) => {
-    parseMethod(request, "POST");
+  async ({ request, params }: Route.ActionArgs) => {
+    const language = getLanguage(params);
+    const commonTranslation = await getCommonTranslation(language);
+
+    parseMethod(request, "POST", commonTranslation);
 
     const session = await getSession(request.headers.get("Cookie"));
     const redirectResponse = redirect(href("/"));

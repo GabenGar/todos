@@ -41,6 +41,21 @@
       "Invalid invitation code length.": "Неправильная длина кода приглашения.",
       "Invalid display name length.": "Неправильная длина отображаемого имени."
     },
+    "login": {
+      "Login": "Вход",
+      "Not registered?": "Не зарегистрированны?",
+      "Register": "Зарегистрироваться",
+      "You have successfully logged in, now you can visit": "Вы успешно вошли, теперь вы можете перейти на",
+      "account page": "страницу учётной записи",
+      "Login is required.": "Логин обязателен.",
+      "Invalid login length.": "Неправильная длина логина.",
+      "Password is required.": "Пароль обязателен.",
+      "Invalid password length.": "Неправильная длина пароля.",
+      "form": {
+        "Login": "Логин",
+        "Password": "Пароль"
+      }
+    },
     "account": {
       "Account": "Учётная запись",
       "Role": "Роль",

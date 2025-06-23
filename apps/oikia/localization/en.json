@@ -41,6 +41,21 @@
       "Invalid invitation code length.": "Invalid invitation code length.",
       "Invalid display name length.": "Invalid display name length."
     },
+    "login": {
+      "Login": "Login",
+      "Not registered?": "Not registered?",
+      "Register": "Register",
+      "You have successfully logged in, now you can visit": "You have successfully logged in, now you can visit",
+      "account page": "account page",
+      "Login is required.": "Login is required.",
+      "Invalid login length.": "Invalid login length.",
+      "Password is required.": "Password is required.",
+      "Invalid password length.": "Invalid password length.",
+      "form": {
+        "Login": "Login",
+        "Password": "Password"
+      }
+    },
     "account": {
       "Account": "Account",
       "Role": "Role",
