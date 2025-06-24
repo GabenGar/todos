@@ -57,7 +57,7 @@
         "Password": "Пароль"
       }
     },
-    "account": {
+    "account-home": {
       "Account": "Учётная запись",
       "Role": "Роль",
       "Joined": "Дата регистрации",
@@ -79,6 +79,32 @@
       "Expiration date": "Дата просрочки",
       "Maximum uses": "Максимальное количество использований",
       "Must have at least expiration date or maximum uses.": "Обязательно хотя бы дату просрочки или максимальное количество использований."
+    },
+    "invitation": {
+      "Invitation": "Приглашение",
+      "overview": "обзор",
+      "Invitation Overview": "Обзор приглашения",
+      "Code": "Код",
+      "Target role": "Целевая роль",
+      "Status": "Статус",
+      "Active": "Активно",
+      "Inactive": "Неактивно",
+      "Creator": "Создатель",
+      "Description": "Описание",
+      "Expires at": "Дата просрочки",
+      "Created at": "Дата создания",
+      "Latest updated at": "Дата последнего обновления",
+      "Uses": "Использований",
+      "out of": "из"
+    },
+    "invited-accounts": {
+      "Invited accounts": "Приглашённые учётные записи",
+      "Invited accounts for invitation": "Приглашённые учётные записи приглашения",
+      "page": "страница",
+      "out of": "из",
+      "Invited Accounts": "Приглашённые Учётные Записи",
+      "Invitation": "Приглашение",
+      "No accounts found.": "Не найдено учётных записей."
     }
   },
   "entities": {}

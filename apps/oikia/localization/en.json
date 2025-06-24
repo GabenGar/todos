@@ -57,7 +57,7 @@
         "Password": "Password"
       }
     },
-    "account": {
+    "account-home": {
       "Account": "Account",
       "Role": "Role",
       "Joined": "Joined",
@@ -79,6 +79,32 @@
       "Expiration date": "Expiration date",
       "Maximum uses": "Maximum uses",
       "Must have at least expiration date or maximum uses.": "Must have at least expiration date or maximum uses."
+    },
+    "invitation": {
+      "Invitation": "Invitation",
+      "overview": "overview",
+      "Invitation Overview": "Invitation Overview",
+      "Code": "Code",
+      "Target role": "Target role",
+      "Status": "Status",
+      "Active": "Active",
+      "Inactive": "Inactive",
+      "Creator": "Creator",
+      "Description": "Description",
+      "Expires at": "Expires at",
+      "Created at": "Created at",
+      "Latest updated at": "Latest updated at",
+      "Uses": "Uses",
+      "out of": "out of"
+    },
+    "invited-accounts": {
+      "Invited accounts": "Invited accounts",
+      "Invited accounts for invitation": "Invited accounts for invitation",
+      "page": "page",
+      "out of": "out of",
+      "Invited Accounts": "Invited Accounts",
+      "Invitation": "Invitation",
+      "No accounts found.": "No accounts found."
     }
   },
   "entities": {}

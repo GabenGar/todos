@@ -4,32 +4,40 @@ import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { DateTimeView } from "@repo/ui/dates";
-import { EntityID, parseTitle } from "@repo/ui/entities";
+import { EntityID, parseName, parseTitle } from "@repo/ui/entities";
 import { Preformatted } from "@repo/ui/formatting";
 import { ButtonCopy } from "@repo/ui/buttons";
+import type { ITranslationPageProps } from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
+import { getTranslation } from "#server/localization";
 import { runTransaction } from "#database";
 import {
   selectInvitationEntities,
   type IInvitationDB,
 } from "#database/queries/invitations";
-import { authenticateAdmin } from "#server/lib/router";
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/overview";
 
 import styles from "./overview.module.scss";
 
-export function meta({ data }: Route.MetaArgs) {
-  const { invitation } = data;
-  const { id, title } = invitation;
-  const parsedTitle = parseTitle(title, id);
-  const metaTitle = `Invitation ${parsedTitle} overview`;
+interface IProps extends ITranslationPageProps<"invitation"> {
+  invitation: IInvitationDB;
+}
 
-  return [{ title: metaTitle }];
+export function meta({ data }: Route.MetaArgs) {
+  const { translation, invitation } = data;
+  const parsedTitle = parseTitle(invitation.title, invitation.id);
+  const title = createMetaTitle(
+    `${translation["Invitation"]} ${parsedTitle} ${translation["overview"]}`,
+  );
+
+  return [{ title }];
 }
 
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
-  const { invitation } = loaderData;
+  const { language, translation, invitation } = loaderData;
   const {
     id,
     title,
@@ -43,7 +51,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
     target_role,
   } = invitation;
   const parsedTitle = parseTitle(title);
-  const heading = "Invitation Overview";
+  const heading = translation["Invitation Overview"];
 
   return (
     <Page heading={heading}>
@@ -58,7 +66,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={"Code"}
+                  dKey={translation["Code"]}
                   dValue={
                     <>
                       <Preformatted>{code}</Preformatted>
@@ -68,35 +76,42 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                 />
 
                 <DescriptionSection
-                  dKey={"Target role"}
+                  dKey={translation["Target role"]}
                   dValue={target_role}
                   isValuePreformatted
                   isHorizontal
                 />
 
                 <DescriptionSection
-                  dKey={"Status"}
+                  dKey={translation["Status"]}
                   dValue={
                     is_active ? (
-                      <span className={styles.active}>Active</span>
+                      <span className={styles.active}>
+                        {translation["Active"]}
+                      </span>
                     ) : (
-                      <span className={styles.inactive}>Inactive</span>
+                      <span className={styles.inactive}>
+                        {translation["Inactive"]}
+                      </span>
                     )
                   }
                   isHorizontal
                 />
 
                 <DescriptionSection
-                  dKey={"Creator"}
+                  dKey={translation["Creator"]}
                   dValue={
                     !created_by ? undefined : (
                       <LinkInternal
-                        href={href("/account/role/administrator/account/:id", {
-                          id: created_by.id,
-                        })}
+                        href={href(
+                          "/:language/account/role/administrator/account/:id",
+                          {
+                            language,
+                            id: created_by.id,
+                          },
+                        )}
                       >
-                        {created_by.name ? `"${created_by.name}"` : "Unnamed"} (
-                        {created_by.id})
+                        {parseName(created_by.name)} ({created_by.id})
                       </LinkInternal>
                     )
                   }
@@ -105,20 +120,22 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 {description && (
                   <DescriptionSection
-                    dKey={"Description"}
+                    dKey={translation["Description"]}
                     dValue={description}
                   />
                 )}
 
                 {expires_at && (
                   <DescriptionSection
-                    dKey={"Expires at"}
+                    dKey={translation["Expires at"]}
                     dValue={<DateTimeView dateTime={expires_at} />}
                   />
                 )}
 
                 {invitation.max_uses && (
                   <UsesStat
+                    language={language}
+                    translation={translation}
                     id={id}
                     max_uses={invitation.max_uses}
                     // biome-ignore lint/style/noNonNullAssertion: just correlated values things
@@ -127,12 +144,12 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                 )}
 
                 <DescriptionSection
-                  dKey={"Created at"}
+                  dKey={translation["Created at"]}
                   dValue={<DateTimeView dateTime={created_at} />}
                 />
 
                 <DescriptionSection
-                  dKey={"Latest updated at"}
+                  dKey={translation["Latest updated at"]}
                   dValue={<DateTimeView dateTime={updated_at} />}
                 />
               </DescriptionList>
@@ -145,19 +162,30 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 }
 
 interface IUsesStatProps
-  extends Pick<Required<IInvitationDB>, "id" | "max_uses" | "current_uses"> {}
+  extends Pick<IProps, "language" | "translation">,
+    Pick<Required<IInvitationDB>, "id" | "max_uses" | "current_uses"> {}
 
-function UsesStat({ id, max_uses, current_uses }: IUsesStatProps) {
+function UsesStat({
+  language,
+  translation,
+  id,
+  max_uses,
+  current_uses,
+}: IUsesStatProps) {
   return (
     <DescriptionSection
-      dKey={"Uses"}
+      dKey={translation["Uses"]}
       dValue={
         <LinkInternal
-          href={href("/account/role/administrator/invitation/:id/accounts", {
-            id,
-          })}
+          href={href(
+            "/:language/account/role/administrator/invitation/:id/accounts",
+            {
+              language,
+              id,
+            },
+          )}
         >
-          {current_uses} out of {max_uses}
+          {current_uses} {translation["out of"]} {max_uses}
         </LinkInternal>
       }
       isHorizontal
@@ -170,13 +198,23 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const { id } = params;
 
+  const language = getLanguage(params);
+  const { pages } = await getTranslation(language);
+  const translation = pages["invitation"];
+
   const invitation = await runTransaction(async (transaction) => {
     const [invitation] = await selectInvitationEntities(transaction, [id]);
 
     return invitation;
   });
 
-  return { invitation };
+  const props: IProps = {
+    language,
+    translation,
+    invitation,
+  };
+
+  return props;
 }
 
 export default InvitationOverviewPage;
