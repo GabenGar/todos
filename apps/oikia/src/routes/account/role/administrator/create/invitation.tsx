@@ -9,13 +9,18 @@ import {
   InputSectionText,
 } from "@repo/ui/forms/sections";
 import { BIGINT_ONE } from "@repo/ui/numbers/bigint";
+import { parseTitle } from "@repo/ui/entities";
+import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
 import {
   authenticateAdmin,
   createServerAction,
+  getLanguage,
   parseMethod,
 } from "#server/lib/router";
-import { ClientError } from "#server/lib/errors";
+import { ClientInputError } from "#server/lib/errors";
 import { createSuccessfullAPIResponse } from "#server/lib/api";
+import { getTranslation } from "#server/localization";
 import { runTransaction } from "#database";
 import {
   insertInvitations,
@@ -27,15 +32,21 @@ import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/invitation";
 
-export function meta(args: Route.MetaArgs) {
-  return [{ title: "Create invitation" }];
+interface IProps extends ICommonTranslationPageProps<"create-invitation"> {}
+
+export function meta({ data }: Route.MetaArgs) {
+  const { translation } = data;
+  const title = createMetaTitle(translation["Create invitation"]);
+
+  return [{ title }];
 }
 
 /**
  * @TODO client render
  */
-function InvitationCreatePage(props: Route.ComponentProps) {
-  const heading = "Create Invitation";
+function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
+  const { language, commonTranslation, translation } = loaderData;
+  const heading = translation["Create Invitation"];
   const formID = "create-invitation";
 
   return (
@@ -45,27 +56,35 @@ function InvitationCreatePage(props: Route.ComponentProps) {
           <>
             <OverviewHeader>
               <Form<Route.ComponentProps["actionData"]>
+                commonTranslation={commonTranslation}
                 id={formID}
                 method="POST"
-                submitButton={() => "Create"}
+                submitButton={() => translation["Create"]}
                 successElement={(formID, data) => {
                   if (!data.is_successful) {
-                    throw new Error("Success element is unsuccessful.");
+                    throw new Error(
+                      commonTranslation["Success element is unsuccessful."],
+                    );
                   }
 
                   const { id, title } = data.data;
+                  const parsedTitle = parseTitle(title);
 
                   return (
                     <>
                       <p>
-                        You have successfully created an invitation{" "}
+                        {
+                          translation[
+                            "You have successfully created an invitation"
+                          ]
+                        }{" "}
                         <LinkInternal
                           href={href(
-                            "/account/role/administrator/invitation/:id",
-                            { id },
+                            "/:language/account/role/administrator/invitation/:id",
+                            { language, id },
                           )}
                         >
-                          {title ? `"${title}"` : "Untitled"} ({id})
+                          {parsedTitle} ({id})
                         </LinkInternal>
                         .
                       </p>
@@ -80,7 +99,7 @@ function InvitationCreatePage(props: Route.ComponentProps) {
                       form={formID}
                       name="title"
                     >
-                      Title
+                      {translation["Title"]}
                     </InputSectionText>
 
                     <InputSectionText
@@ -88,7 +107,7 @@ function InvitationCreatePage(props: Route.ComponentProps) {
                       form={formID}
                       name="description"
                     >
-                      Description
+                      {translation["Description"]}
                     </InputSectionText>
 
                     <InputSectionDatetime
@@ -96,7 +115,7 @@ function InvitationCreatePage(props: Route.ComponentProps) {
                       form={formID}
                       name="expires_at"
                     >
-                      Expiration date
+                      {translation["Expiration date"]}
                     </InputSectionDatetime>
 
                     <InputSectionInteger
@@ -105,7 +124,7 @@ function InvitationCreatePage(props: Route.ComponentProps) {
                       name="max_uses"
                       min={BIGINT_ONE}
                     >
-                      Maximum uses
+                      {translation["Maximum uses"]}
                     </InputSectionInteger>
                   </>
                 )}
@@ -118,15 +137,31 @@ function InvitationCreatePage(props: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request, params }: Route.LoaderArgs) {
   await authenticateAdmin(request);
+
+  const language = getLanguage(params);
+  const { common: commonTranslation, pages } = await getTranslation(language);
+  const translation = pages["create-invitation"];
+
+  const props: IProps = {
+    language,
+    commonTranslation,
+    translation,
+  };
+
+  return props;
 }
 
 export const action = createServerAction(
-  async ({ request }: Route.LoaderArgs) => {
+  async ({ request, params }: Route.LoaderArgs) => {
     const account = await authenticateAdmin(request);
 
-    parseMethod(request, "POST");
+    const language = getLanguage(params);
+    const { common: commonTranslation, pages } = await getTranslation(language);
+    const translation = pages["create-invitation"];
+
+    parseMethod(request, "POST", commonTranslation);
 
     const formData = (await request.formData()) as IFormData<
       "expires_at" | "max_uses" | "title" | "description"
@@ -138,8 +173,8 @@ export const action = createServerAction(
     const description = parseStringValueFromFormData(formData, "description");
 
     if (!expiresAt && !maxUses) {
-      throw new ClientError(
-        "Must have at least expiration date or maximum uses.",
+      throw new ClientInputError(
+        translation["Must have at least expiration date or maximum uses."],
       );
     }
 

@@ -11,7 +11,8 @@
     "Ready to submit.": "Ready to submit.",
     "Submit": "Submit",
     "Reset": "Reset",
-    "Unknown method": "Unknown method"
+    "Unknown method": "Unknown method",
+    "Success element is unsuccessful.": "Success element is unsuccessful."
   },
   "pages": {
     "home": {
@@ -67,6 +68,17 @@
       "Administrator": "Administrator",
       "Accounts": "Accounts",
       "Invitations": "Invitations"
+    },
+    "create-invitation": {
+      "Create invitation": "Create invitation",
+      "Create Invitation": "Create Invitation",
+      "Create": "Create",
+      "You have successfully created an invitation": "You have successfully created an invitation",
+      "Title": "Title",
+      "Description": "Description",
+      "Expiration date": "Expiration date",
+      "Maximum uses": "Maximum uses",
+      "Must have at least expiration date or maximum uses.": "Must have at least expiration date or maximum uses."
     }
   },
   "entities": {}

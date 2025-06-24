@@ -10,9 +10,12 @@ import { LANGUAGES, type ILanguage } from "#lib/internationalization";
 import type { Route } from "./+types/language-select";
 
 import styles from "./language-select.module.scss";
+import { createMetaTitle } from "#lib/router";
 
 export function meta({ error }: Route.MetaArgs) {
-  return [{ title: "Oikia" }];
+  const title = createMetaTitle()
+
+  return [{ title}];
 }
 
 function LanguageSelectPage() {

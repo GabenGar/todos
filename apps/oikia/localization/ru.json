@@ -11,7 +11,8 @@
     "Ready to submit.": "Готовы к отправке.",
     "Submit": "Отправить",
     "Reset": "Сбросить",
-    "Unknown method": "Неизвестный метод"
+    "Unknown method": "Неизвестный метод",
+    "Success element is unsuccessful.": "Успешный элемент провален."
   },
   "pages": {
     "home": {
@@ -67,6 +68,17 @@
       "Administrator": "Администратор",
       "Accounts": "Учётные записи",
       "Invitations": "Приглашения"
+    },
+    "create-invitation": {
+      "Create invitation": "Создать приглашение",
+      "Create Invitation": "Создать Приглашение",
+      "Create": "Создать",
+      "You have successfully created an invitation": "Вы успешно создали приглашение",
+      "Title": "Заглавие",
+      "Description": "Описание",
+      "Expiration date": "Дата просрочки",
+      "Maximum uses": "Максимальное количество использований",
+      "Must have at least expiration date or maximum uses.": "Обязательно хотя бы дату просрочки или максимальное количество использований."
     }
   },
   "entities": {}
