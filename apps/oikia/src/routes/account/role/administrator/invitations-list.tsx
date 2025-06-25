@@ -6,7 +6,10 @@ import {
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
-import type { ITranslationPageProps } from "#lib/internationalization";
+import type {
+  IEntityTranslationProps,
+  ITranslationPageProps,
+} from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
@@ -22,7 +25,9 @@ import { InvitationPreview } from "#entities/account";
 
 import type { Route } from "./+types/invitations-list";
 
-interface IProps extends ITranslationPageProps<"invitations"> {
+interface IProps
+  extends IEntityTranslationProps<"invitation">,
+    ITranslationPageProps<"invitations"> {
   invitations: IPaginatedCollection<IInvitationDB>;
 }
 
@@ -40,7 +45,7 @@ export function meta({ data }: Route.MetaArgs) {
  * @TODO client render
  */
 function InvitationsListPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, invitations } = loaderData;
+  const { language, translation, entityTranslation, invitations } = loaderData;
   const heading = translation["Invitations"];
 
   return (
@@ -59,6 +64,8 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
         {invitations.items.map((invitation) => (
           <InvitationPreview
             key={invitation.id}
+            language={language}
+            entityTranslation={entityTranslation}
             headingLevel={2}
             invitation={invitation}
           />
@@ -89,7 +96,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   await authenticateAdmin(request);
 
   const language = getLanguage(params);
-  const { pages } = await getTranslation(language);
+  const { pages, entities } = await getTranslation(language);
   const translation = pages["invitations"];
   const page = params.page;
 
@@ -111,6 +118,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const props: IProps = {
     language,
     translation,
+    entityTranslation: { invitation: entities.invitation },
     invitations,
   };
 

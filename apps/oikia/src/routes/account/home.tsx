@@ -14,7 +14,7 @@ import type { IAccount } from "#entities/account";
 
 import type { Route } from "./+types/home";
 
-interface IProps extends ITranslationPageProps<"account"> {
+interface IProps extends ITranslationPageProps<"account-home"> {
   account: IAccount;
 }
 
@@ -79,7 +79,7 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
 export async function loader({ request, params }: Route.LoaderArgs) {
   const language = getLanguage(params);
   const { pages } = await getTranslation(language);
-  const translation = pages["account"];
+  const translation = pages["account-home"];
   const { id: _, ...account } = await authenticateRequest(request);
 
   const props: IProps = {

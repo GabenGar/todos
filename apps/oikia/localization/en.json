@@ -128,5 +128,20 @@
       "No accounts found.": "No accounts found."
     }
   },
-  "entities": {}
+  "entities": {
+    "account": {
+      "Role": "Role",
+      "Join date": "Join date"
+    },
+    "invitation": {
+      "Code": "Code",
+      "Target role": "Target role",
+      "Status": "Status",
+      "Active": "Active",
+      "Inactive": "Inactive",
+      "Description": "Description",
+      "No description provided": "No description provided",
+      "Creator": "Creator"
+    }
+  }
 }

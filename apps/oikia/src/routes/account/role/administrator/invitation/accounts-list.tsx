@@ -9,7 +9,10 @@ import {
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { PreviewList } from "@repo/ui/previews";
-import type { ITranslationPageProps } from "#lib/internationalization";
+import type {
+  IEntityTranslationProps,
+  ITranslationPageProps,
+} from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { NotFoundError } from "#server/lib/errors";
@@ -29,7 +32,9 @@ import { AccountPreview } from "#entities/account";
 
 import type { Route } from "./+types/accounts-list";
 
-interface IProps extends ITranslationPageProps<"invited-accounts"> {
+interface IProps
+  extends IEntityTranslationProps<"account">,
+    ITranslationPageProps<"invited-accounts"> {
   invitation: IInvitationDB;
   accounts: IPaginatedCollection<IAccountDBPreview>;
 }
@@ -46,7 +51,8 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, invitation, accounts } = loaderData;
+  const { language, translation, entityTranslation, invitation, accounts } =
+    loaderData;
   const invitationTitle = parseTitle(invitation.title, invitation.id);
   const heading = translation["Invited Accounts"];
 
@@ -93,7 +99,13 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
         }
       >
         {accounts.items.map((account) => (
-          <AccountPreview key={account.id} headingLevel={2} account={account} />
+          <AccountPreview
+            key={account.id}
+            language={language}
+            entityTranslation={entityTranslation}
+            headingLevel={2}
+            account={account}
+          />
         ))}
       </PreviewList>
     </Page>
@@ -106,7 +118,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const { id, page } = params;
 
   const language = getLanguage(params);
-  const { pages } = await getTranslation(language);
+  const { pages, entities } = await getTranslation(language);
   const translation = pages["invited-accounts"];
 
   parsePositiveInteger(params.id);
@@ -140,6 +152,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const props: IProps = {
     language,
     translation,
+    entityTranslation: { account: entities.account },
     invitation: result.invitation,
     accounts: result.accounts,
   };

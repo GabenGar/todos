@@ -23,6 +23,7 @@ import { IS_DEVELOPMENT } from "#environment";
 import {
   DEFAULT_LANGUAGE,
   type ICommonTranslationProps,
+  type ILanguageProps,
 } from "#lib/internationalization";
 import { getLanguage } from "#server/lib/router";
 import { getCommonTranslation } from "#server/localization";
@@ -36,7 +37,7 @@ interface ILayoutProps {
   children: ReactNode;
 }
 
-interface ILoaderProps extends ICommonTranslationProps {}
+interface ILoaderProps extends ILanguageProps, ICommonTranslationProps {}
 
 export const links: Route.LinksFunction = () => [];
 

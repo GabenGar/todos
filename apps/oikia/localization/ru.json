@@ -128,5 +128,20 @@
       "No accounts found.": "Не найдено учётных записей."
     }
   },
-  "entities": {}
+  "entities": {
+    "account": {
+      "Role": "Роль",
+      "Join date": "Дата регистрации"
+    },
+    "invitation": {
+      "Code": "Код",
+      "Target role": "Целевая роль",
+      "Status": "Статус",
+      "Active": "Активно",
+      "Inactive": "Неактивно",
+      "Description": "Описание",
+      "No description provided": "Описание не предоставлено",
+      "Creator": "Создатель"
+    }
+  }
 }
