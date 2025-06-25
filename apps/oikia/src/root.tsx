@@ -7,8 +7,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "react-router";
-import { LinkExternal } from "@repo/ui/links";
 import { ClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
 import {
@@ -18,22 +18,36 @@ import {
   OverviewHeader,
 } from "@repo/ui/articles";
 import { Preformatted } from "@repo/ui/formatting";
+import englishTranslation from "#localization/en";
+import { IS_DEVELOPMENT } from "#environment";
+import {
+  DEFAULT_LANGUAGE,
+  type ICommonTranslationProps,
+  type ILanguageProps,
+} from "#lib/internationalization";
+import { getLanguage } from "#server/lib/router";
+import { getCommonTranslation } from "#server/localization";
 import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/root";
 
-import "@repo/ui/styles/global";
 import styles from "./root.module.scss";
 
-interface IProps {
+interface ILayoutProps {
   children: ReactNode;
 }
 
+interface ILoaderProps extends ILanguageProps, ICommonTranslationProps {}
+
 export const links: Route.LinksFunction = () => [];
 
-export function Layout({ children }: IProps) {
+export function Layout({ children }: ILayoutProps) {
+  const data = useRouteLoaderData<ILoaderProps>("root");
+
+  const language = data?.language ?? DEFAULT_LANGUAGE;
+
   return (
-    <html lang="en">
+    <html lang={language}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,42 +66,27 @@ export function Layout({ children }: IProps) {
 function App() {
   return (
     <ClientProvider>
-      <header className={styles.header}>
-        <LinkInternal href={href("/")}>Oikia</LinkInternal>
-      </header>
-
-      <main className={styles.main}>
-        <Outlet />
-      </main>
-
-      <footer className={styles.footer}>
-        <ul>
-          <li>
-            <LinkExternal
-              href={"https://github.com/GabenGar/todos/tree/master/apps/oikia"}
-            >
-              Source Code
-            </LinkExternal>
-          </li>
-        </ul>
-      </footer>
+      <Outlet />
     </ClientProvider>
   );
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  const heading = "Error";
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
+  const language = loaderData?.language ?? DEFAULT_LANGUAGE;
+  const commonTranslation =
+    loaderData?.commonTranslation ?? englishTranslation.common;
+  const heading = commonTranslation["Error"];
+  let message = commonTranslation["Error"];
+  let details = commonTranslation["An unexpected error occurred."];
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
+    message = error.status === 404 ? "404" : commonTranslation["Error"];
     details =
       error.status === 404
-        ? "The requested page could not be found."
+        ? commonTranslation["The requested page could not be found."]
         : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+  } else if (IS_DEVELOPMENT && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;
   }
@@ -110,7 +109,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
               </OverviewBody>
 
               <OverviewFooter>
-                <LinkInternal href={href("/")}>Back</LinkInternal>
+                <LinkInternal href={href("/:language", { language })}>
+                  Back
+                </LinkInternal>
               </OverviewFooter>
             </>
           )}
@@ -118,6 +119,18 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       </Page>
     </main>
   );
+}
+
+export async function loader({ params }: Route.LoaderArgs) {
+  const language = getLanguage(params);
+  const commonTranslation = await getCommonTranslation(language);
+
+  const props: ILoaderProps = {
+    language,
+    commonTranslation,
+  };
+
+  return props;
 }
 
 export default App;

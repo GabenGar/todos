@@ -1,4 +1,4 @@
-import { href, redirect } from "react-router";
+import { href } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
@@ -6,28 +6,39 @@ import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
 import { DateTimeView } from "@repo/ui/dates";
 import { parseName, parseTitle } from "@repo/ui/entities";
+import { createMetaTitle } from "#lib/router";
+import type { ITranslationPageProps } from "#lib/internationalization";
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
+import { getTranslation } from "#server/localization";
 import { runTransaction } from "#database";
-import { selectAccountEntities } from "#database/queries/accounts";
-import { authenticateAdmin } from "#server/lib/router";
-import { ClientError } from "#server/lib/errors";
+import {
+  selectAccountEntities,
+  type IAccountDB,
+} from "#database/queries/accounts";
 import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/account";
 
+interface IProps extends ITranslationPageProps<"account-overview"> {
+  account: IAccountDB;
+}
+
 export function meta({ data }: Route.MetaArgs) {
-  const { account } = data;
+  const { translation, account } = data;
   const { id, name } = account;
   const parsedName = parseName(name, id);
-  const metaTitle = `Account ${parsedName} overview`;
+  const title = createMetaTitle(
+    `${translation["Account"]} ${parsedName} ${translation["overview"]}`,
+  );
 
-  return [{ title: metaTitle }];
+  return [{ title }];
 }
 
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
-  const { account } = loaderData;
+  const { language, translation, account } = loaderData;
   const { id, role, name, created_at, invited_through } = account;
   const parsedName = parseName(name);
-  const heading = "Account Overview";
+  const heading = translation["Account Overview"];
 
   return (
     <Page heading={heading}>
@@ -41,21 +52,25 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
             <OverviewBody>
               <DescriptionList>
-                <DescriptionSection dKey={"Role"} dValue={role} isHorizontal />
+                <DescriptionSection
+                  dKey={translation["Role"]}
+                  dValue={role}
+                  isHorizontal
+                />
 
                 <DescriptionSection
-                  dKey={"Join date"}
+                  dKey={translation["Join date"]}
                   dValue={<DateTimeView dateTime={created_at} />}
                 />
 
                 {invited_through && (
                   <DescriptionSection
-                    dKey={"Invited through"}
+                    dKey={translation["Invited through"]}
                     dValue={
                       <LinkInternal
                         href={href(
-                          "/account/role/administrator/invitation/:id",
-                          { id: invited_through.id },
+                          "/:language/account/role/administrator/invitation/:id",
+                          { language, id: invited_through.id },
                         )}
                       >
                         {parseTitle(invited_through.title, invited_through.id)}
@@ -73,18 +88,12 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 }
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-  try {
-    await authenticateAdmin(request);
-  } catch (error) {
-    const pathName =
-      error instanceof ClientError && error.statusCode === 401
-        ? "/401"
-        : "/404";
-
-    return redirect(pathName);
-  }
+  await authenticateAdmin(request);
 
   const { id } = params;
+  const language = getLanguage(params);
+  const { pages } = await getTranslation(language);
+  const translation = pages["account-overview"];
 
   const account = await runTransaction(async (transaction) => {
     const [account] = await selectAccountEntities(transaction, [id]);
@@ -92,7 +101,13 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     return account;
   });
 
-  return { account };
+  const props: IProps = {
+    language,
+    translation,
+    account,
+  };
+
+  return props;
 }
 
 export default InvitationOverviewPage;

@@ -4,30 +4,35 @@ import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Heading } from "@repo/ui/headings";
 import { DateTimeView } from "@repo/ui/dates";
-import { authenticateRequest, createServerLoader } from "#server/lib/router";
+import { parseName } from "@repo/ui/entities";
+import type { ITranslationPageProps } from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
+import { authenticateRequest, getLanguage } from "#server/lib/router";
+import { getTranslation } from "#server/localization";
 import { LinkInternal } from "#components/link";
+import type { IAccount } from "#entities/account";
 
 import type { Route } from "./+types/home";
 
-export function meta({ error }: Route.MetaArgs) {
-  return [{ title: "Account" }];
+interface IProps extends ITranslationPageProps<"account-home"> {
+  account: IAccount;
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const { translation } = data;
+  const title = createMetaTitle(translation["Account"]);
+
+  return [{ title }];
 }
 
 /**
  * @TODO client render
  */
 function AccountPage({ loaderData }: Route.ComponentProps) {
-  const heading = "Account";
-
-  if (!loaderData.is_successful) {
-    const {
-      errors: [error],
-    } = loaderData;
-
-    throw new Error(`${error.name}: ${error.message}`);
-  }
-
-  const { name, role, created_at } = loaderData.data;
+  const { language, translation, account } = loaderData;
+  const { name, role, created_at } = account;
+  const parsedName = parseName(name);
+  const heading = translation["Account"];
 
   return (
     <Page heading={heading}>
@@ -35,19 +40,23 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>{name}</Heading>
+              <Heading level={headingLevel + 1}>{parsedName}</Heading>
             </OverviewHeader>
 
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey="Role"
+                  dKey={translation["Role"]}
                   dValue={
                     role !== "administrator" ? (
                       role
                     ) : (
-                      <LinkInternal href={href("/account/role/administrator")}>
-                        {role}
+                      <LinkInternal
+                        href={href("/:language/account/role/administrator", {
+                          language,
+                        })}
+                      >
+                        {translation[role]}
                       </LinkInternal>
                     )
                   }
@@ -55,7 +64,7 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
                 />
 
                 <DescriptionSection
-                  dKey="Joined"
+                  dKey={translation["Joined"]}
                   dValue={<DateTimeView dateTime={created_at} />}
                 />
               </DescriptionList>
@@ -67,12 +76,19 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export const loader = createServerLoader(
-  async ({ request }: Route.LoaderArgs) => {
-    const { id: _, ...account } = await authenticateRequest(request);
+export async function loader({ request, params }: Route.LoaderArgs) {
+  const language = getLanguage(params);
+  const { pages } = await getTranslation(language);
+  const translation = pages["account-home"];
+  const { id: _, ...account } = await authenticateRequest(request);
 
-    return account;
-  }
-);
+  const props: IProps = {
+    language,
+    translation,
+    account,
+  };
+
+  return props;
+}
 
 export default AccountPage;

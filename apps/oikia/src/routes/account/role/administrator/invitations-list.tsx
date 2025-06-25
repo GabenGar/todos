@@ -6,7 +6,13 @@ import {
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
-import { authenticateAdmin } from "#server/lib/router";
+import type {
+  IEntityTranslationProps,
+  ITranslationPageProps,
+} from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
+import { getTranslation } from "#server/localization";
 import { runTransaction } from "#database";
 import {
   selectInvitationCount,
@@ -19,9 +25,18 @@ import { InvitationPreview } from "#entities/account";
 
 import type { Route } from "./+types/invitations-list";
 
+interface IProps
+  extends IEntityTranslationProps<"invitation">,
+    ITranslationPageProps<"invitations"> {
+  invitations: IPaginatedCollection<IInvitationDB>;
+}
+
 export function meta({ data }: Route.MetaArgs) {
-  const { current_page, total_pages } = data.invitations.pagination;
-  const title = `Invitations page ${current_page} out of ${total_pages}`;
+  const { translation, invitations } = data;
+  const { current_page, total_pages } = invitations.pagination;
+  const title = createMetaTitle(
+    `${translation["Invitations page"]} ${current_page} ${translation["out of"]} ${total_pages}`,
+  );
 
   return [{ title }];
 }
@@ -30,22 +45,27 @@ export function meta({ data }: Route.MetaArgs) {
  * @TODO client render
  */
 function InvitationsListPage({ loaderData }: Route.ComponentProps) {
-  const { invitations } = loaderData;
-  const heading = "Invitations";
+  const { language, translation, entityTranslation, invitations } = loaderData;
+  const heading = translation["Invitations"];
 
   return (
     <Page heading={heading}>
       <PreviewList
         LinkButtonComponent={LinkButton}
-        noItemsElement={<>No invitations found.</>}
+        noItemsElement={translation["No invitations found."]}
         pagination={invitations.pagination}
         buildURL={(page) =>
-          href("/account/role/administrator/invitations/:page", { page })
+          href("/:language/account/role/administrator/invitations/:page", {
+            language,
+            page,
+          })
         }
       >
         {invitations.items.map((invitation) => (
           <InvitationPreview
             key={invitation.id}
+            language={language}
+            entityTranslation={entityTranslation}
             headingLevel={2}
             invitation={invitation}
           />
@@ -57,9 +77,12 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
           <>
             <OverviewHeader>
               <LinkInternal
-                href={href("/account/role/administrator/create/invitation")}
+                href={href(
+                  "/:language/account/role/administrator/create/invitation",
+                  { language },
+                )}
               >
-                Create invitation
+                {translation["Create invitation"]}
               </LinkInternal>
             </OverviewHeader>
           </>
@@ -72,7 +95,11 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
 export async function loader({ request, params }: Route.LoaderArgs) {
   await authenticateAdmin(request);
 
+  const language = getLanguage(params);
+  const { pages, entities } = await getTranslation(language);
+  const translation = pages["invitations"];
   const page = params.page;
+
   const invitations = await runTransaction(async (transaction) => {
     const count = await selectInvitationCount(transaction);
 
@@ -80,15 +107,22 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     const ids = await selectInvitationIDs(transaction, { pagination });
     const items = await selectInvitationEntities(transaction, ids);
 
-    const invitations: IPaginatedCollection<IInvitationDB> = {
+    const invitations = {
       pagination,
       items,
-    };
+    } satisfies IPaginatedCollection<IInvitationDB>;
 
     return invitations;
   });
 
-  return { invitations };
+  const props: IProps = {
+    language,
+    translation,
+    entityTranslation: { invitation: entities.invitation },
+    invitations,
+  };
+
+  return props;
 }
 
 export default InvitationsListPage;

@@ -5,7 +5,7 @@ import {
   type IAccountDB,
 } from "#database/queries/accounts";
 import type { IAccountRole } from "#entities/account";
-import { ClientError } from "../errors";
+import { ClientError, NotFoundError } from "../errors";
 import { destroySession, getSession } from "../sessions";
 
 export async function authenticateRequest(
@@ -27,7 +27,7 @@ export async function authenticateRequest(
     if (!result) {
       await destroySession(session);
 
-      throw new ClientError("Not Found", { statusCode: 404 });
+      throw new NotFoundError();
     }
 
     const [account] = await selectAccountEntities(transaction, [result.id]);
@@ -43,7 +43,7 @@ export async function authenticateRequest(
         : allowedRoles.includes(account.role);
 
     if (!isValidRole) {
-      throw new ClientError("Not Found", { statusCode: 404 });
+      throw new NotFoundError();
     }
   }
 

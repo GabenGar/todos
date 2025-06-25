@@ -1,0 +1,147 @@
+{
+  "common": {
+    "Source Code": "Исходный код",
+    "Error": "Ошибка",
+    "An unexpected error occurred.": "Произошла непредвиденная ошибка.",
+    "The requested page could not be found.": "Запрашиваемая страница не найдена.",
+    "Initializing...": "Загружаем...",
+    "Submitting...": "Отправляем...",
+    "Name": "Название",
+    "Message": "Сообщение",
+    "Ready to submit.": "Готовы к отправке.",
+    "Submit": "Отправить",
+    "Reset": "Сбросить",
+    "Unknown method": "Неизвестный метод",
+    "Success element is unsuccessful.": "Успешный элемент провален."
+  },
+  "pages": {
+    "home": {
+      "Welcome": "Добро пожаловать",
+      "Authentication": "Аутентификация",
+      "Account": "Учётная запись",
+      "Log out": "Выйти",
+      "Register": "Зарегистрироваться",
+      "Log in": "Войти"
+    },
+    "registration": {
+      "Registration": "Регистрация",
+      "Already registered?": "Уже зарегистрированны?",
+      "Log in.": "Войти.",
+      "Register": "Зарегистрироваться",
+      "You have successfully created an account, now you can": "Ваша учётная запись спешно создана, теперь вы можете",
+      "log in": "войти",
+      "Login": "Логин",
+      "Password": "Пароль",
+      "Invitation code": "Код приглашения",
+      "Display name": "Отображаемое имя",
+      "Login is required.": "Логин обязателен.",
+      "Invalid login length.": "Неправильная длина логина.",
+      "Password is required.": "Пароль обязателен.",
+      "Invalid password length.": "Неправильная длина пароля.",
+      "Invitation code is required.": "Код приглашения обязателен.",
+      "Invalid invitation code length.": "Неправильная длина кода приглашения.",
+      "Invalid display name length.": "Неправильная длина отображаемого имени."
+    },
+    "login": {
+      "Login": "Вход",
+      "Not registered?": "Не зарегистрированны?",
+      "Register": "Зарегистрироваться",
+      "You have successfully logged in, now you can visit": "Вы успешно вошли, теперь вы можете перейти на",
+      "account page": "страницу учётной записи",
+      "Login is required.": "Логин обязателен.",
+      "Invalid login length.": "Неправильная длина логина.",
+      "Password is required.": "Пароль обязателен.",
+      "Invalid password length.": "Неправильная длина пароля.",
+      "form": {
+        "Login": "Логин",
+        "Password": "Пароль"
+      }
+    },
+    "account-home": {
+      "Account": "Учётная запись",
+      "Role": "Роль",
+      "Joined": "Дата регистрации",
+      "administrator": "администратор",
+      "user": "пользователь"
+    },
+    "administrator-home": {
+      "Administrator": "Администратор",
+      "Accounts": "Учётные записи",
+      "Invitations": "Приглашения"
+    },
+    "create-invitation": {
+      "Create invitation": "Создать приглашение",
+      "Create Invitation": "Создать Приглашение",
+      "Create": "Создать",
+      "You have successfully created an invitation": "Вы успешно создали приглашение",
+      "Title": "Заглавие",
+      "Description": "Описание",
+      "Expiration date": "Дата просрочки",
+      "Maximum uses": "Максимальное количество использований",
+      "Must have at least expiration date or maximum uses.": "Обязательно хотя бы дату просрочки или максимальное количество использований."
+    },
+    "account-overview": {
+      "Account": "Учётная запись",
+      "overview": "обзор",
+      "Account Overview": "Обзор учётной записи",
+      "Role": "Роль",
+      "Join date": "Дата регистрации",
+      "Invited through": "Приглашён через"
+    },
+    "accounts": {
+      "Accounts page": "Учётные записи страница",
+      "out of": "из",
+      "Accounts": "Учётные Записи",
+      "No accounts found.": "Не найдено учётных записей."
+    },
+    "invitations": {
+      "Invitations page": "Приглашения страница",
+      "out of": "из",
+      "Invitations": "Приглашения",
+      "Create invitation": "Создать приглашение",
+      "No invitations found.": "Приглашений не найдено."
+    },
+    "invitation": {
+      "Invitation": "Приглашение",
+      "overview": "обзор",
+      "Invitation Overview": "Обзор приглашения",
+      "Code": "Код",
+      "Target role": "Целевая роль",
+      "Status": "Статус",
+      "Active": "Активно",
+      "Inactive": "Неактивно",
+      "Creator": "Создатель",
+      "Description": "Описание",
+      "Expires at": "Дата просрочки",
+      "Created at": "Дата создания",
+      "Latest updated at": "Дата последнего обновления",
+      "Uses": "Использований",
+      "out of": "из"
+    },
+    "invited-accounts": {
+      "Invited accounts": "Приглашённые учётные записи",
+      "Invited accounts for invitation": "Приглашённые учётные записи приглашения",
+      "page": "страница",
+      "out of": "из",
+      "Invited Accounts": "Приглашённые Учётные Записи",
+      "Invitation": "Приглашение",
+      "No accounts found.": "Не найдено учётных записей."
+    }
+  },
+  "entities": {
+    "account": {
+      "Role": "Роль",
+      "Join date": "Дата регистрации"
+    },
+    "invitation": {
+      "Code": "Код",
+      "Target role": "Целевая роль",
+      "Status": "Статус",
+      "Active": "Активно",
+      "Inactive": "Неактивно",
+      "Description": "Описание",
+      "No description provided": "Описание не предоставлено",
+      "Creator": "Создатель"
+    }
+  }
+}

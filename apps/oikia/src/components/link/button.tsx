@@ -1,6 +1,5 @@
-import { NavLink } from "react-router";
 import clsx from "clsx";
-import type { ILinkInternalProps } from "./internal";
+import { type ILinkInternalProps, LinkInternal } from "./internal";
 
 import styles from "./button.module.scss";
 
@@ -13,7 +12,7 @@ export function LinkButton({
   ...blockProps
 }: ILinkButtonProps) {
   return (
-    <NavLink
+    <LinkInternal
       className={(props) =>
         clsx(
           styles.block,
@@ -21,7 +20,7 @@ export function LinkButton({
             (typeof className === "string" ? className : className(props)),
         )
       }
-      to={href}
+      href={href}
       {...blockProps}
     >
       {(props) => (
@@ -29,6 +28,6 @@ export function LinkButton({
           {typeof children === "function" ? children(props) : children}
         </span>
       )}
-    </NavLink>
+    </LinkInternal>
   );
 }

@@ -9,12 +9,19 @@ import {
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { PreviewList } from "@repo/ui/previews";
-import { authenticateAdmin } from "#server/lib/router";
+import type {
+  IEntityTranslationProps,
+  ITranslationPageProps,
+} from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { NotFoundError } from "#server/lib/errors";
+import { getTranslation } from "#server/localization";
 import { runReadOnlyTransaction } from "#database";
 import {
   selectInvitationEntities,
   selectInvitedAccountIDs,
+  type IInvitationDB,
 } from "#database/queries/invitations";
 import {
   selectAccountPreviews,
@@ -25,19 +32,29 @@ import { AccountPreview } from "#entities/account";
 
 import type { Route } from "./+types/accounts-list";
 
+interface IProps
+  extends IEntityTranslationProps<"account">,
+    ITranslationPageProps<"invited-accounts"> {
+  invitation: IInvitationDB;
+  accounts: IPaginatedCollection<IAccountDBPreview>;
+}
+
 export function meta({ data }: Route.MetaArgs) {
-  const { invitation, accounts } = data;
+  const { translation, invitation, accounts } = data;
   const { current_page, total_pages } = accounts.pagination;
   const parsedTitle = parseTitle(invitation.title, invitation.id);
-  const metaTitle = `Invited accounts for invitation ${parsedTitle} page ${current_page} out of ${total_pages}`;
+  const title = createMetaTitle(
+    `${translation["Invited accounts for invitation"]} ${parsedTitle} ${translation["page"]} ${current_page} ${translation["out of"]} ${total_pages}`,
+  );
 
-  return [{ title: metaTitle }];
+  return [{ title }];
 }
 
 function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
-  const { invitation, accounts } = loaderData;
+  const { language, translation, entityTranslation, invitation, accounts } =
+    loaderData;
   const invitationTitle = parseTitle(invitation.title, invitation.id);
-  const heading = "Invited Accounts";
+  const heading = translation["Invited Accounts"];
 
   return (
     <Page heading={heading}>
@@ -46,12 +63,16 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
           <OverviewHeader>
             <DescriptionList>
               <DescriptionSection
-                dKey={"Invitation"}
+                dKey={translation["Invitation"]}
                 dValue={
                   <LinkInternal
-                    href={href("/account/role/administrator/invitation/:id", {
-                      id: invitation.id,
-                    })}
+                    href={href(
+                      "/:language/account/role/administrator/invitation/:id",
+                      {
+                        language,
+                        id: invitation.id,
+                      },
+                    )}
                   >
                     {invitationTitle}
                   </LinkInternal>
@@ -64,17 +85,27 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
 
       <PreviewList
         LinkButtonComponent={LinkButton}
-        noItemsElement={<>No accounts found.</>}
+        noItemsElement={translation["No accounts found."]}
         pagination={accounts.pagination}
         buildURL={(page) =>
-          href("/account/role/administrator/invitation/:id/accounts/:page", {
-            id: invitation.id,
-            page,
-          })
+          href(
+            "/:language/account/role/administrator/invitation/:id/accounts/:page",
+            {
+              language,
+              id: invitation.id,
+              page,
+            },
+          )
         }
       >
         {accounts.items.map((account) => (
-          <AccountPreview key={account.id} headingLevel={2} account={account} />
+          <AccountPreview
+            key={account.id}
+            language={language}
+            entityTranslation={entityTranslation}
+            headingLevel={2}
+            account={account}
+          />
         ))}
       </PreviewList>
     </Page>
@@ -85,6 +116,10 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   await authenticateAdmin(request);
 
   const { id, page } = params;
+
+  const language = getLanguage(params);
+  const { pages, entities } = await getTranslation(language);
+  const translation = pages["invited-accounts"];
 
   parsePositiveInteger(params.id);
   parsePositiveInteger(params.page);
@@ -108,13 +143,16 @@ export async function loader({ request, params }: Route.LoaderArgs) {
       accounts: {
         pagination,
         items,
-      } satisfies IPaginatedCollection<IAccountDBPreview>,
+      } satisfies IProps["accounts"],
     };
 
     return result;
   });
 
-  const props = {
+  const props: IProps = {
+    language,
+    translation,
+    entityTranslation: { account: entities.account },
     invitation: result.invitation,
     accounts: result.accounts,
   };

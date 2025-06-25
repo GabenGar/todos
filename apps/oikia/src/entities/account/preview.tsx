@@ -10,17 +10,25 @@ import {
 } from "@repo/ui/previews";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { DateTimeView } from "@repo/ui/dates";
+import type {
+  IEntityTranslationProps,
+  ILanguageProps,
+} from "#lib/internationalization";
 import type { IAccountDBPreview } from "#database/queries/accounts";
 import { LinkInternal } from "#components/link";
 
-interface IProps extends IPreviewProps {
+interface IProps
+  extends ILanguageProps,
+    IEntityTranslationProps<"account">,
+    IPreviewProps {
   account: IAccountDBPreview;
 }
 
 export const AccountPreview: ReturnType<typeof createBlockComponent<IProps>> =
   createBlockComponent(undefined, Component);
 
-function Component({ account, ...props }: IProps) {
+function Component({ language, entityTranslation, account, ...props }: IProps) {
+  const translation = entityTranslation.account;
   const { id, name, role, created_at } = account;
   const parsedName = parseName(name);
 
@@ -31,9 +39,13 @@ function Component({ account, ...props }: IProps) {
           <PreviewHeader>
             <Heading level={headingLevel}>
               <LinkInternal
-                href={href("/account/role/administrator/account/:id", {
-                  id,
-                })}
+                href={href(
+                  "/:language/account/role/administrator/account/:id",
+                  {
+                    language,
+                    id,
+                  },
+                )}
               >
                 {parsedName}
               </LinkInternal>
@@ -45,14 +57,14 @@ function Component({ account, ...props }: IProps) {
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={"Role"}
+                dKey={translation["Role"]}
                 dValue={role}
                 isValuePreformatted
                 isHorizontal
               />
 
               <DescriptionSection
-                dKey={"Join date"}
+                dKey={translation["Join date"]}
                 dValue={<DateTimeView dateTime={created_at} />}
               />
             </DescriptionList>

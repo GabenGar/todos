@@ -14,12 +14,19 @@ import {
   PreviewHeader,
 } from "@repo/ui/previews";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import type {
+  IEntityTranslationProps,
+  ILanguageProps,
+} from "#lib/internationalization";
 import type { IInvitationDB } from "#database/queries/invitations";
 import { LinkInternal } from "#components/link";
 
 import styles from "./invitation-preview.module.scss";
 
-interface IProps extends IPreviewProps {
+interface IProps
+  extends ILanguageProps,
+    IEntityTranslationProps<"invitation">,
+    IPreviewProps {
   invitation: IInvitationDB;
 }
 
@@ -27,7 +34,13 @@ export const InvitationPreview: ReturnType<
   typeof createBlockComponent<IProps>
 > = createBlockComponent(undefined, Component);
 
-function Component({ invitation, ...props }: IProps) {
+function Component({
+  language,
+  entityTranslation,
+  invitation,
+  ...props
+}: IProps) {
+  const translation = entityTranslation.invitation;
   const { id, title, description, code, is_active, target_role, created_by } =
     invitation;
   const parsedTitle = parseTitle(title);
@@ -40,9 +53,13 @@ function Component({ invitation, ...props }: IProps) {
           <PreviewHeader>
             <Heading level={headingLevel}>
               <LinkInternal
-                href={href("/account/role/administrator/invitation/:id", {
-                  id,
-                })}
+                href={href(
+                  "/:language/account/role/administrator/invitation/:id",
+                  {
+                    language,
+                    id,
+                  },
+                )}
               >
                 {parsedTitle}
               </LinkInternal>
@@ -54,35 +71,39 @@ function Component({ invitation, ...props }: IProps) {
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={"Code"}
+                dKey={translation["Code"]}
                 dValue={code}
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={"Target role"}
+                dKey={translation["Target role"]}
                 dValue={target_role}
                 isValuePreformatted
                 isHorizontal
               />
 
               <DescriptionSection
-                dKey={"Status"}
+                dKey={translation["Status"]}
                 dValue={
                   is_active ? (
-                    <span className={styles.active}>Active</span>
+                    <span className={styles.active}>
+                      {translation["Active"]}
+                    </span>
                   ) : (
-                    <span className={styles.inactive}>Inactive</span>
+                    <span className={styles.inactive}>
+                      {translation["Inactive"]}
+                    </span>
                   )
                 }
                 isHorizontal
               />
 
               <DescriptionSection
-                dKey={"Description"}
+                dKey={translation["Description"]}
                 dValue={
                   !description ? (
-                    "No description provided"
+                    translation["No description provided"]
                   ) : (
                     <EntityDescription>{description}</EntityDescription>
                   )
@@ -90,13 +111,17 @@ function Component({ invitation, ...props }: IProps) {
               />
 
               <DescriptionSection
-                dKey={"Creator"}
+                dKey={translation["Creator"]}
                 dValue={
                   !created_by ? undefined : (
                     <LinkInternal
-                      href={href("/account/role/administrator/account/:id", {
-                        id: created_by.id,
-                      })}
+                      href={href(
+                        "/:language/account/role/administrator/account/:id",
+                        {
+                          language,
+                          id: created_by.id,
+                        },
+                      )}
                     >
                       {parsedName} ({created_by.id})
                     </LinkInternal>
