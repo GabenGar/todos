@@ -31,7 +31,7 @@ export function meta({ data }: Route.MetaArgs) {
 function AccountPage({ loaderData }: Route.ComponentProps) {
   const { language, translation, account } = loaderData;
   const { name, role, created_at } = account;
-  const parsedName = parseName(name)
+  const parsedName = parseName(name);
   const heading = translation["Account"];
 
   return (

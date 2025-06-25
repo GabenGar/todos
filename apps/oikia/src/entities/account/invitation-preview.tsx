@@ -87,9 +87,13 @@ function Component({
                 dKey={translation["Status"]}
                 dValue={
                   is_active ? (
-                    <span className={styles.active}>{translation["Active"]}</span>
+                    <span className={styles.active}>
+                      {translation["Active"]}
+                    </span>
                   ) : (
-                    <span className={styles.inactive}>{translation["Inactive"]}</span>
+                    <span className={styles.inactive}>
+                      {translation["Inactive"]}
+                    </span>
                   )
                 }
                 isHorizontal

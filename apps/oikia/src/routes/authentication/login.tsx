@@ -53,7 +53,8 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
                 {translation["Not registered?"]}{" "}
                 <LinkInternal href={"/authentication/registration"}>
                   {translation["Register"]}
-                </LinkInternal>.
+                </LinkInternal>
+                .
               </p>
             </OverviewHeader>
 
@@ -67,7 +68,11 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
                 successElement={(formID, data) => (
                   <>
                     <p>
-                      {translation["You have successfully logged in, now you can visit"]}
+                      {
+                        translation[
+                          "You have successfully logged in, now you can visit"
+                        ]
+                      }
                       <LinkInternal href={"/account"}>
                         {translation["account page"]}
                       </LinkInternal>

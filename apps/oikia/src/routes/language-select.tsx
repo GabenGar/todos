@@ -13,13 +13,13 @@ import styles from "./language-select.module.scss";
 import { createMetaTitle } from "#lib/router";
 
 export function meta({ error }: Route.MetaArgs) {
-  const title = createMetaTitle()
+  const title = createMetaTitle();
 
-  return [{ title}];
+  return [{ title }];
 }
 
 function LanguageSelectPage() {
-  const heading = "Oikia"
+  const heading = "Oikia";
 
   return (
     <Page heading={heading}>
@@ -47,11 +47,14 @@ function LocaleLink({ locale }: ILocalLinkProps) {
   const language = parseLocale(locale).language;
 
   if (!language) {
-    throw new Error(`No language was found for locale "${locale}".`)
+    throw new Error(`No language was found for locale "${locale}".`);
   }
 
   return (
-    <LinkButton className={styles.link} href={href("/:language", { language: locale })}>
+    <LinkButton
+      className={styles.link}
+      href={href("/:language", { language: locale })}
+    >
       <span>
         <span className={styles.language}>{language}</span>{" "}
         {iso6391.getNativeName(language)} ({iso6391.getName(language)})
