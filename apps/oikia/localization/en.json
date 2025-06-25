@@ -80,6 +80,14 @@
       "Maximum uses": "Maximum uses",
       "Must have at least expiration date or maximum uses.": "Must have at least expiration date or maximum uses."
     },
+    "account-overview": {
+      "Account": "Account",
+      "overview": "overview",
+      "Account Overview": "Account Overview",
+      "Role": "Role",
+      "Join date": "Join date",
+      "Invited through": "Invited through"
+    },
     "invitation": {
       "Invitation": "Invitation",
       "overview": "overview",

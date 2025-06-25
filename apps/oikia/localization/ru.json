@@ -80,6 +80,14 @@
       "Maximum uses": "Максимальное количество использований",
       "Must have at least expiration date or maximum uses.": "Обязательно хотя бы дату просрочки или максимальное количество использований."
     },
+    "account-overview": {
+      "Account": "Учётная запись",
+      "overview": "обзор",
+      "Account Overview": "Обзор учётной записи",
+      "Role": "Роль",
+      "Join date": "Дата регистрации",
+      "Invited through": "Приглашён через"
+    },
     "invitation": {
       "Invitation": "Приглашение",
       "overview": "обзор",

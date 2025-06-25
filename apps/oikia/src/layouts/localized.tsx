@@ -1,6 +1,6 @@
 import { href, Outlet } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
-import type { ICommonTranslationProps } from "#lib/internationalization";
+import type { ICommonTranslationProps, ILanguageProps } from "#lib/internationalization";
 import { getLanguage } from "#server/lib/router";
 import { getCommonTranslation } from "#server/localization";
 import { LinkInternal } from "#components/link";
@@ -10,7 +10,7 @@ import type { Route } from "./+types/localized";
 import "@repo/ui/styles/global";
 import styles from "./localized.module.scss";
 
-interface IProps extends ICommonTranslationProps {}
+interface IProps extends ILanguageProps, ICommonTranslationProps {}
 
 export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
   const { language, commonTranslation } = loaderData
