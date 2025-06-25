@@ -5,7 +5,10 @@ import {
   createPagination,
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
-import { authenticateAdmin } from "#server/lib/router";
+import type { ITranslationPageProps } from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
+import { getTranslation } from "#server/localization";
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { runTransaction } from "#database";
 import { LinkButton } from "#components/link";
 import { AccountPreview } from "#entities/account";
@@ -18,9 +21,16 @@ import {
 
 import type { Route } from "./+types/accounts-list";
 
+interface IProps extends ITranslationPageProps<"accounts"> {
+  accounts: IPaginatedCollection<IAccountDBPreview>;
+}
+
 export function meta({ data }: Route.MetaArgs) {
-  const { current_page, total_pages } = data.accounts.pagination;
-  const title = `Accounts page ${current_page} out of ${total_pages}`;
+  const { translation, accounts } = data;
+  const { current_page, total_pages } = accounts.pagination;
+  const title = createMetaTitle(
+    `${translation["Accounts page"]} ${current_page} ${translation["out of"]} ${total_pages}`,
+  );
 
   return [{ title }];
 }
@@ -29,18 +39,21 @@ export function meta({ data }: Route.MetaArgs) {
  * @TODO client render
  */
 function InvitationsListPage({ loaderData }: Route.ComponentProps) {
-  const { accounts } = loaderData;
+  const { language, translation, accounts } = loaderData;
   const { pagination, items } = accounts;
-  const heading = "Accounts";
+  const heading = translation["Accounts"];
 
   return (
     <Page heading={heading}>
       <PreviewList
         LinkButtonComponent={LinkButton}
-        noItemsElement={<>No accounts found.</>}
+        noItemsElement={translation["No accounts found."]}
         pagination={pagination}
         buildURL={(page) =>
-          href("/account/role/administrator/accounts/:page", { page })
+          href("/:language/account/role/administrator/accounts/:page", {
+            language,
+            page,
+          })
         }
       >
         {items.map((account) => (
@@ -54,7 +67,11 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
 export async function loader({ request, params }: Route.LoaderArgs) {
   await authenticateAdmin(request);
 
+  const language = getLanguage(params);
+  const { pages } = await getTranslation(language);
+  const translation = pages["accounts"];
   const page = params.page;
+
   const accounts = await runTransaction(async (transaction) => {
     const count = await selectAccountCount(transaction);
 
@@ -62,15 +79,21 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     const ids = await selectAccountIDs(transaction, { pagination });
     const items = await selectAccountPreviews(transaction, ids);
 
-    const accounts: IPaginatedCollection<IAccountDBPreview> = {
+    const accounts = {
       pagination,
       items,
-    };
+    } satisfies IProps["accounts"];
 
     return accounts;
   });
 
-  return { accounts };
+  const props: IProps = {
+    language,
+    translation,
+    accounts,
+  };
+
+  return props;
 }
 
 export default InvitationsListPage;

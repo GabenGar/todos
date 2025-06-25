@@ -88,6 +88,12 @@
       "Join date": "Дата регистрации",
       "Invited through": "Приглашён через"
     },
+    "accounts": {
+      "Accounts page": "Учётные записи страница",
+      "out of": "из",
+      "Accounts": "Учётные Записи",
+      "No accounts found.": "Не найдено учётных записей."
+    },
     "invitation": {
       "Invitation": "Приглашение",
       "overview": "обзор",
