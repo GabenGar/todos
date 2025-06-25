@@ -94,6 +94,13 @@
       "Accounts": "Учётные Записи",
       "No accounts found.": "Не найдено учётных записей."
     },
+    "invitations": {
+      "Invitations page": "Приглашения страница",
+      "out of": "из",
+      "Invitations": "Приглашения",
+      "Create invitation": "Создать приглашение",
+      "No invitations found.": "Приглашений не найдено."
+    },
     "invitation": {
       "Invitation": "Приглашение",
       "overview": "обзор",

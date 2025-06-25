@@ -94,6 +94,13 @@
       "Accounts": "Accounts",
       "No accounts found.": "No accounts found."
     },
+    "invitations": {
+      "Invitations page": "Invitations page",
+      "out of": "out of",
+      "Invitations": "Invitations",
+      "Create invitation": "Create invitation",
+      "No invitations found.": "No invitations found."
+    },
     "invitation": {
       "Invitation": "Invitation",
       "overview": "overview",
