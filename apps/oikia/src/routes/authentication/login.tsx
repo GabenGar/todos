@@ -1,4 +1,4 @@
-import { data } from "react-router";
+import { data, href } from "react-router";
 import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
@@ -39,7 +39,7 @@ export function headers({ actionHeaders, loaderHeaders }: Route.HeadersArgs) {
 }
 
 function LoginPage({ loaderData }: Route.ComponentProps) {
-  const { commonTranslation, translation } = loaderData;
+  const { language, commonTranslation, translation } = loaderData;
   const heading = translation["Login"];
   const formID = "login";
 
@@ -51,7 +51,11 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
             <OverviewHeader>
               <p>
                 {translation["Not registered?"]}{" "}
-                <LinkInternal href={"/authentication/registration"}>
+                <LinkInternal
+                  href={href("/:language/authentication/registration", {
+                    language,
+                  })}
+                >
                   {translation["Register"]}
                 </LinkInternal>
                 .
@@ -73,7 +77,9 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
                           "You have successfully logged in, now you can visit"
                         ]
                       }
-                      <LinkInternal href={"/account"}>
+                      <LinkInternal
+                        href={href("/:language/account", { language })}
+                      >
                         {translation["account page"]}
                       </LinkInternal>
                       .
