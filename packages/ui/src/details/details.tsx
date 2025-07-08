@@ -6,13 +6,14 @@ import {
 
 import styles from "./details.module.scss";
 
-interface IProps extends IBaseComponentPropsWithChildren<"details"> {
+export interface IDetailsProps
+  extends IBaseComponentPropsWithChildren<"details"> {
   summary: ReactNode;
 }
 
 export const Details = createBlockComponent(styles, Component);
 
-function Component({ summary, children, ...props }: IProps) {
+function Component({ summary, children, ...props }: IDetailsProps) {
   return (
     <details {...props}>
       <summary className={styles.summary}>{summary}</summary>

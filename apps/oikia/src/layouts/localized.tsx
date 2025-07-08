@@ -1,8 +1,11 @@
-import { href, Outlet } from "react-router";
+import { href, Outlet, useLocation } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
-import type {
-  ICommonTranslationProps,
-  ILanguageProps,
+import { List, ListItem } from "@repo/ui/lists";
+import { LanguageSwitcher } from "@repo/ui/internationalization";
+import {
+  LANGUAGES,
+  type ICommonTranslationProps,
+  type ILanguageProps,
 } from "#lib/internationalization";
 import { getLanguage } from "#server/lib/router";
 import { getCommonTranslation } from "#server/localization";
@@ -17,13 +20,38 @@ interface IProps extends ILanguageProps, ICommonTranslationProps {}
 
 export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
   const { language, commonTranslation } = loaderData;
+  const location = useLocation();
+  const currentURL = `${location.pathname}${location.search}${location.hash}`;
+
+  function getLocalizedURL(locale: string, currentURL: string): string {
+    const firstMatch = currentURL.indexOf("/");
+    const path = currentURL.slice(firstMatch);
+    const resultPath = `${locale}/${path}`;
+
+    return resultPath;
+  }
 
   return (
     <>
       <header className={styles.header}>
-        <LinkInternal href={href("/:language", { language })}>
-          Oikia
-        </LinkInternal>
+        <nav>
+          <List>
+            <ListItem>
+              <LinkInternal href={href("/:language", { language })}>
+                Oikia
+              </LinkInternal>
+            </ListItem>
+
+            <ListItem>
+              <LanguageSwitcher
+                locales={LANGUAGES}
+                currentLocale={language}
+                currentURL={currentURL}
+                getLocalizedURL={getLocalizedURL}
+              />
+            </ListItem>
+          </List>
+        </nav>
       </header>
 
       <main className={styles.main}>
