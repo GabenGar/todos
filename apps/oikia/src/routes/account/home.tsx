@@ -5,7 +5,7 @@ import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Heading } from "@repo/ui/headings";
 import { DateTimeView } from "@repo/ui/dates";
 import { parseName } from "@repo/ui/entities";
-import type { ITranslationPageProps } from "#lib/internationalization";
+import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateRequest, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
@@ -14,7 +14,7 @@ import type { IAccount } from "#entities/account";
 
 import type { Route } from "./+types/home";
 
-interface IProps extends ITranslationPageProps<"account-home"> {
+interface IProps extends ICommonTranslationPageProps<"account-home"> {
   account: IAccount;
 }
 
@@ -29,7 +29,7 @@ export function meta({ data }: Route.MetaArgs) {
  * @TODO client render
  */
 function AccountPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, account } = loaderData;
+  const { language, commonTranslation, translation, account } = loaderData;
   const { name, role, created_at } = account;
   const parsedName = parseName(name);
   const heading = translation["Account"];
@@ -65,7 +65,7 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection
                   dKey={translation["Joined"]}
-                  dValue={<DateTimeView dateTime={created_at} />}
+                  dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
                 />
               </DescriptionList>
             </OverviewBody>
@@ -78,12 +78,13 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const language = getLanguage(params);
-  const { pages } = await getTranslation(language);
+  const { pages, common: commonTranslation } = await getTranslation(language);
   const translation = pages["account-home"];
   const { id: _, ...account } = await authenticateRequest(request);
 
   const props: IProps = {
     language,
+    commonTranslation,
     translation,
     account,
   };

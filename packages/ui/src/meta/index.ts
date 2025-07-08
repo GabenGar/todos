@@ -3,4 +3,5 @@ export type {
   IBaseComponentPropsWithChildren,
   IBaseComponentProps,
   ITranslatableProps,
+  ITranslationProps
 } from "./types";

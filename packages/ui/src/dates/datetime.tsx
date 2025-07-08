@@ -5,19 +5,21 @@ import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-import { ButtonCopy } from "#buttons";
+import { ButtonCopy, type IButtonCopyProps } from "#buttons";
 import { Loading } from "#loading";
 import { formatDateTime, formatRelativeDateTime } from "./format";
 
 import styles from "./datetime.module.scss";
 
-interface IProps extends IBaseComponentPropsWithChildren<"div"> {
+interface IProps
+  extends IBaseComponentPropsWithChildren<"div">,
+    Pick<IButtonCopyProps, "translation"> {
   dateTime: string;
 }
 
 export const DateTimeView = createBlockComponent(styles, Component);
 
-function Component({ dateTime, children, ...props }: IProps) {
+function Component({ translation, dateTime, children, ...props }: IProps) {
   const client = useClient();
 
   return (
@@ -35,7 +37,11 @@ function Component({ dateTime, children, ...props }: IProps) {
         )}
       </time>
 
-      <ButtonCopy className={styles.button} valueToCopy={dateTime} />
+      <ButtonCopy
+        translation={translation}
+        className={styles.button}
+        valueToCopy={dateTime}
+      />
     </div>
   );
 }

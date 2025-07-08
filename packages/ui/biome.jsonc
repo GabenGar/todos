@@ -14,7 +14,11 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"complexity": {
+				// makes it ass to work with translation props otherwise
+        "useLiteralKeys": "off"
+      }
 		}
 	},
 	"javascript": {

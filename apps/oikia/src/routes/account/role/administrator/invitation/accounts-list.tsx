@@ -10,8 +10,8 @@ import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { PreviewList } from "@repo/ui/previews";
 import type {
+  ICommonTranslationPageProps,
   IEntityTranslationProps,
-  ITranslationPageProps,
 } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
@@ -34,7 +34,7 @@ import type { Route } from "./+types/accounts-list";
 
 interface IProps
   extends IEntityTranslationProps<"account">,
-    ITranslationPageProps<"invited-accounts"> {
+    ICommonTranslationPageProps<"invited-accounts"> {
   invitation: IInvitationDB;
   accounts: IPaginatedCollection<IAccountDBPreview>;
 }
@@ -51,7 +51,7 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, entityTranslation, invitation, accounts } =
+  const { language, commonTranslation, translation, entityTranslation, invitation, accounts } =
     loaderData;
   const invitationTitle = parseTitle(invitation.title, invitation.id);
   const heading = translation["Invited Accounts"];
@@ -102,6 +102,7 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
           <AccountPreview
             key={account.id}
             language={language}
+            commonTranslation={commonTranslation}
             entityTranslation={entityTranslation}
             headingLevel={2}
             account={account}
@@ -118,7 +119,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const { id, page } = params;
 
   const language = getLanguage(params);
-  const { pages, entities } = await getTranslation(language);
+  const { pages, entities, common:commonTranslation } = await getTranslation(language);
   const translation = pages["invited-accounts"];
 
   parsePositiveInteger(params.id);
@@ -151,6 +152,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const props: IProps = {
     language,
+    commonTranslation,
     translation,
     entityTranslation: { account: entities.account },
     invitation: result.invitation,

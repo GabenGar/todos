@@ -7,7 +7,7 @@ import { DateTimeView } from "@repo/ui/dates";
 import { EntityID, parseName, parseTitle } from "@repo/ui/entities";
 import { Preformatted } from "@repo/ui/formatting";
 import { ButtonCopy } from "@repo/ui/buttons";
-import type { ITranslationPageProps } from "#lib/internationalization";
+import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { getTranslation } from "#server/localization";
 import { runTransaction } from "#database";
@@ -22,7 +22,7 @@ import type { Route } from "./+types/overview";
 
 import styles from "./overview.module.scss";
 
-interface IProps extends ITranslationPageProps<"invitation"> {
+interface IProps extends ICommonTranslationPageProps<"invitation"> {
   invitation: IInvitationDB;
 }
 
@@ -37,7 +37,7 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, invitation } = loaderData;
+  const { language, commonTranslation, translation, invitation } = loaderData;
   const {
     id,
     title,
@@ -70,7 +70,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   dValue={
                     <>
                       <Preformatted>{code}</Preformatted>
-                      <ButtonCopy valueToCopy={code} />
+                      <ButtonCopy translation={commonTranslation} valueToCopy={code} />
                     </>
                   }
                 />
@@ -128,7 +128,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                 {expires_at && (
                   <DescriptionSection
                     dKey={translation["Expires at"]}
-                    dValue={<DateTimeView dateTime={expires_at} />}
+                    dValue={<DateTimeView translation={commonTranslation} dateTime={expires_at} />}
                   />
                 )}
 
@@ -145,12 +145,12 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection
                   dKey={translation["Created at"]}
-                  dValue={<DateTimeView dateTime={created_at} />}
+                  dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
                 />
 
                 <DescriptionSection
                   dKey={translation["Latest updated at"]}
-                  dValue={<DateTimeView dateTime={updated_at} />}
+                  dValue={<DateTimeView translation={commonTranslation} dateTime={updated_at} />}
                 />
               </DescriptionList>
             </OverviewBody>
@@ -199,7 +199,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const { id } = params;
 
   const language = getLanguage(params);
-  const { pages } = await getTranslation(language);
+  const { pages, common: commonTranslation } = await getTranslation(language);
   const translation = pages["invitation"];
 
   const invitation = await runTransaction(async (transaction) => {
@@ -210,6 +210,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const props: IProps = {
     language,
+    commonTranslation,
     translation,
     invitation,
   };

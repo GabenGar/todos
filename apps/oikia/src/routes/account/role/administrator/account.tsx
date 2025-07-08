@@ -7,7 +7,7 @@ import { Preformatted } from "@repo/ui/formatting";
 import { DateTimeView } from "@repo/ui/dates";
 import { parseName, parseTitle } from "@repo/ui/entities";
 import { createMetaTitle } from "#lib/router";
-import type { ITranslationPageProps } from "#lib/internationalization";
+import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
 import { runTransaction } from "#database";
@@ -19,7 +19,7 @@ import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/account";
 
-interface IProps extends ITranslationPageProps<"account-overview"> {
+interface IProps extends ICommonTranslationPageProps<"account-overview"> {
   account: IAccountDB;
 }
 
@@ -35,7 +35,7 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, account } = loaderData;
+  const { language, commonTranslation, translation, account } = loaderData;
   const { id, role, name, created_at, invited_through } = account;
   const parsedName = parseName(name);
   const heading = translation["Account Overview"];
@@ -60,7 +60,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection
                   dKey={translation["Join date"]}
-                  dValue={<DateTimeView dateTime={created_at} />}
+                  dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
                 />
 
                 {invited_through && (
@@ -92,7 +92,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const { id } = params;
   const language = getLanguage(params);
-  const { pages } = await getTranslation(language);
+  const { pages, common:commonTranslation } = await getTranslation(language);
   const translation = pages["account-overview"];
 
   const account = await runTransaction(async (transaction) => {
@@ -103,6 +103,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const props: IProps = {
     language,
+    commonTranslation,
     translation,
     account,
   };
