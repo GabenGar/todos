@@ -24,9 +24,10 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
   const currentURL = `${location.pathname}${location.search}${location.hash}`;
 
   function getLocalizedURL(locale: string, currentURL: string): string {
-    const firstMatch = currentURL.indexOf("/");
+    // stepping over the first slash
+    const firstMatch = currentURL.indexOf("/", 1);
     const path = currentURL.slice(firstMatch);
-    const resultPath = `${locale}/${path}`;
+    const resultPath = `/${locale}${path}`;
 
     return resultPath;
   }
@@ -34,8 +35,8 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <header className={styles.header}>
-        <nav>
-          <List>
+        <nav className={styles.nav}>
+          <List className={styles.list}>
             <ListItem>
               <LinkInternal href={href("/:language", { language })}>
                 Oikia
@@ -48,6 +49,7 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
                 currentLocale={language}
                 currentURL={currentURL}
                 getLocalizedURL={getLocalizedURL}
+                InternalLinkComponent={LinkInternal}
               />
             </ListItem>
           </List>

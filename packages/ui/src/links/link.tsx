@@ -5,12 +5,15 @@ import { type ILinkInternalProps, LinkInternal } from "./internal";
 const linkTypes = ["internal", "external"] as const;
 type ILinkType = (typeof linkTypes)[number];
 
-export type ILinkProps = ILinkExternalProps | ILinkInternalProps;
+export type ILinkProps = { InternalLinkComponent?: typeof LinkInternal } & (
+  | ILinkExternalProps
+  | ILinkInternalProps
+);
 
 export const Link = createBlockComponent(undefined, Component);
 
 function Component({ ...props }: ILinkProps) {
-  const linkType = guessLinkType(props.href)
+  const linkType = guessLinkType(props.href);
 
   switch (linkType) {
     case "external": {
@@ -20,9 +23,9 @@ function Component({ ...props }: ILinkProps) {
     }
 
     case "internal": {
-      const { ...linkProps } = props;
+      const { InternalLinkComponent = LinkInternal, ...linkProps } = props;
 
-      return <LinkInternal {...linkProps} />;
+      return <InternalLinkComponent {...linkProps} />;
     }
 
     default: {

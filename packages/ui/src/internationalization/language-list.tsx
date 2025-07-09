@@ -1,12 +1,14 @@
 import { parse as parseLocale } from "bcp-47";
 import { createBlockComponent } from "#meta";
 import { ListItem, ListUnordered, type IUnorderedListProps } from "#lists";
-import { Link } from "#links";
+import { Link, type ILinkProps } from "#links";
 import { Language } from "./language";
 
 import styles from "./language-list.module.scss";
 
-export interface ILanguageListProps extends IUnorderedListProps {
+export interface ILanguageListProps
+  extends IUnorderedListProps,
+    Pick<ILinkProps, "InternalLinkComponent"> {
   locales: readonly string[];
   currentLocale: string;
   currentURL: string;
@@ -20,6 +22,7 @@ function Component({
   currentLocale,
   currentURL,
   getLocalizedURL,
+  InternalLinkComponent,
   ...props
 }: ILanguageListProps) {
   return (
@@ -31,6 +34,7 @@ function Component({
           currentLocale={currentLocale}
           currentURL={currentURL}
           getLocalizedURL={getLocalizedURL}
+          InternalLinkComponent={InternalLinkComponent}
         />
       ))}
     </ListUnordered>
@@ -38,7 +42,10 @@ function Component({
 }
 
 interface ILocaleItemsProps
-  extends Pick<ILanguageListProps, "currentLocale" | "currentURL" | "getLocalizedURL"> {
+  extends Pick<
+    ILanguageListProps,
+    "currentLocale" | "currentURL" | "getLocalizedURL" | "InternalLinkComponent"
+  > {
   locale: string;
 }
 
@@ -47,6 +54,7 @@ function LocaleItem({
   currentLocale,
   currentURL,
   getLocalizedURL,
+  InternalLinkComponent,
 }: ILocaleItemsProps) {
   // biome-ignore lint/style/noNonNullAssertion: just typescript things
   const language = parseLocale(locale).language!;
@@ -57,7 +65,11 @@ function LocaleItem({
       {locale === currentLocale ? (
         <Language language={language} />
       ) : (
-        <Link className={styles.link} href={href}>
+        <Link
+          className={styles.link}
+          href={href}
+          InternalLinkComponent={InternalLinkComponent}
+        >
           <Language language={language} />
         </Link>
       )}
