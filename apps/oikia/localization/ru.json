@@ -14,7 +14,8 @@
     "Unknown method": "Неизвестный метод",
     "Success element is unsuccessful.": "Успешный элемент провален.",
     "Copy": "Копировать",
-    "Copied": "Скопировано"
+    "Copied": "Скопировано",
+    "Client language": "Клиентский язык"
   },
   "pages": {
     "home": {

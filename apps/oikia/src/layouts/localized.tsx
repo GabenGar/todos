@@ -1,7 +1,9 @@
 import { href, Outlet, useLocation } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
 import { List, ListItem } from "@repo/ui/lists";
-import { LanguageSwitcher } from "@repo/ui/internationalization";
+import { Language, LanguageSwitcher } from "@repo/ui/internationalization";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Loading } from "@repo/ui/loading";
 import {
   LANGUAGES,
   type ICommonTranslationProps,
@@ -9,6 +11,7 @@ import {
 } from "#lib/internationalization";
 import { getLanguage } from "#server/lib/router";
 import { getCommonTranslation } from "#server/localization";
+import { useClient } from "#hooks";
 import { LinkInternal } from "#components/link";
 
 import type { Route } from "./+types/localized";
@@ -21,6 +24,7 @@ interface IProps extends ILanguageProps, ICommonTranslationProps {}
 export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
   const { language, commonTranslation } = loaderData;
   const location = useLocation();
+  const client = useClient();
   const currentURL = `${location.pathname}${location.search}${location.hash}`;
 
   function getLocalizedURL(locale: string, currentURL: string): string {
@@ -61,15 +65,30 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
       </main>
 
       <footer className={styles.footer}>
-        <ul>
-          <li>
+        <List className={styles.flist}>
+          <ListItem>
             <LinkExternal
               href={"https://github.com/GabenGar/todos/tree/master/apps/oikia"}
             >
               {commonTranslation["Source Code"]}
             </LinkExternal>
-          </li>
-        </ul>
+          </ListItem>
+
+          <ListItem>
+            <DescriptionList className={styles.client}>
+              <DescriptionSection
+                dKey={commonTranslation["Client language"]}
+                dValue={
+                  !client ? (
+                    <Loading />
+                  ) : (
+                    <Language language={client.locale.language} />
+                  )
+                }
+              />
+            </DescriptionList>
+          </ListItem>
+        </List>
       </footer>
     </>
   );

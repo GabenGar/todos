@@ -17,6 +17,7 @@
     "#environment": "./src/environment/index.ts",
     "#environment/*": "./src/environment/*/index.ts",
     "#lib/*": "./src/lib/*/index.ts",
+    "#hooks": "./src/hooks/index.ts",
     "#components/*": "./src/components/*/index.ts",
     "#entities/*": "./src/entities/*/index.ts",
     "#database": "./src/.server/database/index.ts",
