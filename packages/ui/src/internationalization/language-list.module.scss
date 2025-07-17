@@ -1,0 +1,17 @@
+@use "../styles/sass/variables" as *;
+
+.block {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  gap: $size-small;
+  width: 100%;
+  background-color: var(--colour-background-secondary);
+  padding: $size-normal;
+}
+
+.link {
+  width: 100%;
+}

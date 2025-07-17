@@ -11,6 +11,7 @@ import {
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { DateTimeView } from "@repo/ui/dates";
 import type {
+  ICommonTranslationProps,
   IEntityTranslationProps,
   ILanguageProps,
 } from "#lib/internationalization";
@@ -19,6 +20,7 @@ import { LinkInternal } from "#components/link";
 
 interface IProps
   extends ILanguageProps,
+    ICommonTranslationProps,
     IEntityTranslationProps<"account">,
     IPreviewProps {
   account: IAccountDBPreview;
@@ -27,7 +29,7 @@ interface IProps
 export const AccountPreview: ReturnType<typeof createBlockComponent<IProps>> =
   createBlockComponent(undefined, Component);
 
-function Component({ language, entityTranslation, account, ...props }: IProps) {
+function Component({ language, commonTranslation, entityTranslation, account, ...props }: IProps) {
   const translation = entityTranslation.account;
   const { id, name, role, created_at } = account;
   const parsedName = parseName(name);
@@ -65,7 +67,7 @@ function Component({ language, entityTranslation, account, ...props }: IProps) {
 
               <DescriptionSection
                 dKey={translation["Join date"]}
-                dValue={<DateTimeView dateTime={created_at} />}
+                dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
               />
             </DescriptionList>
           </PreviewBody>

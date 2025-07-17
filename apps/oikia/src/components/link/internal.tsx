@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import { NavLink, type NavLinkProps, type To } from "react-router";
+import { NavLink, type NavLinkProps } from "react-router";
 
 import styles from "./internal.module.scss";
 
 export interface ILinkInternalProps extends Omit<NavLinkProps, "to"> {
-  href: To;
+  href?: string | URL;
 }
 
 export function LinkInternal({
@@ -12,6 +12,10 @@ export function LinkInternal({
   className,
   ...props
 }: ILinkInternalProps) {
+  if (!href) {
+    return <span className={clsx(styles.block, className)} />;
+  }
+
   return (
     <NavLink
       to={href}

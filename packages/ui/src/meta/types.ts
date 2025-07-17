@@ -15,3 +15,7 @@ export type IBaseComponentPropsWithChildren<
 export interface ITranslatableProps<TranslationKey extends string> {
   t: (translationKey: TranslationKey) => ReactNode;
 }
+
+export interface ITranslationProps<TranslationKey extends string> {
+  translation: Record<TranslationKey, string>
+}

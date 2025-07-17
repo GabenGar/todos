@@ -5,22 +5,22 @@ import {
 
 import styles from "./list.module.scss";
 
-type IListProps =
+export type IListProps =
   | ({ isOrdered?: false } & IUnorderedListProps)
   | ({ isOrdered: true } & IOrderedListProps);
 
-interface IUnorderedListProps extends IBaseComponentPropsWithChildren<"ul"> {}
+export interface IUnorderedListProps extends IBaseComponentPropsWithChildren<"ul"> {}
 
-interface IOrderedListProps extends IBaseComponentPropsWithChildren<"ol"> {}
+export interface IOrderedListProps extends IBaseComponentPropsWithChildren<"ol"> {}
 
 interface IListItemProps extends IBaseComponentPropsWithChildren<"li"> {}
 
 export const List = createBlockComponent(styles.block, ListComponent);
-const ListUnordered = createBlockComponent(
+export const ListUnordered = createBlockComponent(
   styles.unordered,
   ListUnorderedComponent,
 );
-const ListOrdered = createBlockComponent(styles.ordered, ListOrderedComponent);
+export const ListOrdered = createBlockComponent(styles.ordered, ListOrderedComponent);
 export const ListItem = createBlockComponent(styles.item, ListItemComponent);
 
 function ListComponent({ ...props }: IListProps) {

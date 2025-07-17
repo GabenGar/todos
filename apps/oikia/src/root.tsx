@@ -7,9 +7,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useParams,
   useRouteLoaderData,
 } from "react-router";
-import { ClientProvider } from "@repo/ui/hooks";
+import { ClientProvider as BaseClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
 import {
   Overview,
@@ -64,10 +65,13 @@ export function Layout({ children }: ILayoutProps) {
 }
 
 function App() {
+  const params = useParams();
+  const language = params.language;
+
   return (
-    <ClientProvider>
+    <BaseClientProvider serverLanguage={language}>
       <Outlet />
-    </ClientProvider>
+    </BaseClientProvider>
   );
 }
 

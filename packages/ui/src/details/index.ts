@@ -1,1 +1,1 @@
-export { Details } from "./details";
+export { Details, type IDetailsProps } from "./details";

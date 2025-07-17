@@ -10,6 +10,7 @@ type IClientContext =
   | undefined
   | {
       locale: Intl.Locale;
+      serverLanguage?: string;
     };
 
 const defaultContext: IClientContext = undefined;
@@ -18,33 +19,28 @@ const ClientContext = createContext<IClientContext>(defaultContext);
 
 interface IProps {
   children: ReactNode;
+  serverLanguage?: string;
 }
 
-export function ClientProvider({ children }: IProps) {
-  const [isClient, switchIsClient] = useState(false);
-  const [locale, changeLocale] = useState<Intl.Locale>();
+export function ClientProvider({ children, serverLanguage }: IProps) {
+  const [client, changeClient] = useState(defaultContext);
 
   useEffect(() => {
     //  https://stackoverflow.com/a/57529410
-    const localeValue = new Intl.NumberFormat().resolvedOptions().locale;
+    const localeValue =
+      serverLanguage ?? new Intl.NumberFormat().resolvedOptions().locale;
     const newLocale = new Intl.Locale(localeValue);
 
-    changeLocale(newLocale);
-    switchIsClient(true);
-  }, []);
+    const client = {
+      locale: newLocale,
+      serverLanguage,
+    };
+
+    changeClient(client);
+  }, [serverLanguage]);
 
   return (
-    <ClientContext.Provider
-      value={
-        !isClient || !locale
-          ? defaultContext
-          : {
-              locale,
-            }
-      }
-    >
-      {children}
-    </ClientContext.Provider>
+    <ClientContext.Provider value={client}>{children}</ClientContext.Provider>
   );
 }
 

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { ReactNode } from "react";
 import {
   createBlockComponent,
@@ -6,17 +7,24 @@ import {
 
 import styles from "./details.module.scss";
 
-interface IProps extends IBaseComponentPropsWithChildren<"details"> {
+export interface IDetailsProps
+  extends IBaseComponentPropsWithChildren<"details"> {
   summary: ReactNode;
+  contentClassname?: string;
 }
 
 export const Details = createBlockComponent(styles, Component);
 
-function Component({ summary, children, ...props }: IProps) {
+function Component({
+  summary,
+  children,
+  contentClassname,
+  ...props
+}: IDetailsProps) {
   return (
     <details {...props}>
       <summary className={styles.summary}>{summary}</summary>
-      <div className={styles.content}>{children}</div>
+      <div className={clsx(styles.content, contentClassname)}>{children}</div>
     </details>
   );
 }

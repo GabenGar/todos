@@ -7,7 +7,7 @@ import {
   type ReadonlyURLSearchParams,
 } from "next/navigation";
 import { parse as parseLocale } from "bcp-47";
-import iso6391 from "iso-639-1";
+import { Language } from "@repo/ui/internationalization"
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { createHomePageURL } from "#lib/urls";
@@ -33,6 +33,7 @@ export function GlobalNavigation({ language }: ILocalizableProps) {
             <span>{SITE_TITLE}</span>
           )}
         </ListItem>
+
         <ListItem>
           <Suspense fallback={<Loading />}>
             <LocaleSwitcher />
@@ -97,15 +98,6 @@ function LocaleItem({
         </Link>
       )}
     </ListItem>
-  );
-}
-
-function Language({ language }: { language: string }) {
-  return (
-    <span>
-      <span className={styles.language}>{language}</span>{" "}
-      {iso6391.getNativeName(language)} ({iso6391.getName(language)})
-    </span>
   );
 }
 

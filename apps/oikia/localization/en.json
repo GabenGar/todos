@@ -12,7 +12,10 @@
     "Submit": "Submit",
     "Reset": "Reset",
     "Unknown method": "Unknown method",
-    "Success element is unsuccessful.": "Success element is unsuccessful."
+    "Success element is unsuccessful.": "Success element is unsuccessful.",
+    "Copy": "Copy",
+    "Copied": "Copied",
+    "Client language": "Client language"
   },
   "pages": {
     "home": {

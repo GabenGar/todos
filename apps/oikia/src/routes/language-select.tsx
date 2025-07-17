@@ -3,14 +3,14 @@ import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
 import { Overview, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
-import { LinkButton } from "#components/link";
 import { List, ListItem } from "@repo/ui/lists";
+import { LinkButton } from "#components/link";
 import { LANGUAGES, type ILanguage } from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
 
 import type { Route } from "./+types/language-select";
 
 import styles from "./language-select.module.scss";
-import { createMetaTitle } from "#lib/router";
 
 export function meta({ error }: Route.MetaArgs) {
   const title = createMetaTitle();

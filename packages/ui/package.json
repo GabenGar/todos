@@ -32,6 +32,7 @@
     "./strings": "./src/strings/index.ts",
     "./numbers": "./src/numbers/index.ts",
     "./hooks": "./src/hooks/index.ts",
+    "./internationalization": "./src/internationalization/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
     "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
@@ -64,8 +65,10 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
+    "bcp-47": "^2.1.0",
     "clsx": "^2.1.0",
     "date-fns": "^4.1.0",
+    "iso-639-1": "^3.1.5",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

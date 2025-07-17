@@ -12,7 +12,10 @@
     "Submit": "Отправить",
     "Reset": "Сбросить",
     "Unknown method": "Неизвестный метод",
-    "Success element is unsuccessful.": "Успешный элемент провален."
+    "Success element is unsuccessful.": "Успешный элемент провален.",
+    "Copy": "Копировать",
+    "Copied": "Скопировано",
+    "Client language": "Клиентский язык"
   },
   "pages": {
     "home": {
