@@ -52,11 +52,11 @@
     "@types/node": "^20.9.0",
     "@types/react": "^18.3.12",
     "@types/stringify-object": "^4.0.5",
-    "eslint": "9.24.0",
+    "eslint": "9.31.0",
     "eslint-config-next": "15.2.4",
-    "eslint-config-prettier": "^10.1.1",
-    "prettier": "3.5.3",
-    "sass": "^1.86.3",
+    "eslint-config-prettier": "^10.1.5",
+    "prettier": "3.6.2",
+    "sass": "^1.89.2",
     "serve": "^14.2.4",
     "typescript": "^5.8.3"
   }
