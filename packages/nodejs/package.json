@@ -51,8 +51,8 @@
     }
   },
   "dependencies": {
-    "@hyperjump/json-pointer": "^1.1.0",
-    "@hyperjump/json-schema": "^1.9.9",
+    "@hyperjump/json-pointer": "^1.1.1",
+    "@hyperjump/json-schema": "^1.16.2",
     "ajv": "^8.17.1"
   },
   "devDependencies": {
