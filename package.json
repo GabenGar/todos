@@ -2,7 +2,9 @@
   "name": "todos",
   "version": "0.2.1",
   "description": "The list of todos in NextJS.",
-  "keywords": ["NextJS"],
+  "keywords": [
+    "NextJS"
+  ],
   "engines": {
     "node": ">=18"
   },
@@ -17,7 +19,11 @@
     "type": "git",
     "url": "git+https://github.com/GabenGar/todos.git"
   },
-  "workspaces": ["docs", "apps/*", "packages/*"],
+  "workspaces": [
+    "docs",
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "build-frontend": "turbo run build --filter=frontend",
@@ -31,6 +37,7 @@
     "validate": "turbo run validate"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.1.2",
     "turbo": "2.3.1"
   },
   "packageManager": "npm@8.7.0"

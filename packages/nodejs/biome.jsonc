@@ -1,34 +1,8 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
+  "root": false,
+  "extends": "//",
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
   "files": {
-    "ignore": ["dist", ".tmp"]
-  },
-  "organizeImports": {
-    "enabled": true
-  },
-  "json": {
-    "formatter": {
-      "enabled": true,
-      "indentStyle": "space"
-    }
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true,
-      "style": {
-        "useShorthandFunctionType": "off"
-      },
-      "suspicious": {
-        "noEmptyInterface": "off"
-      },
-      "complexity": {
-        "noForEach": "off"
-      }
-    }
-  },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "space"
+    "includes": ["**", "!**/dist", "!**/.tmp"]
   }
 }
