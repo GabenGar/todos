@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "check": "tsc --noEmit && biome check --write ./src",
-    "lint": "biome format --write ./src",
+    "lint": "biome lint ./src",
     "format": "biome format --write ./src"
   },
   "exports": {

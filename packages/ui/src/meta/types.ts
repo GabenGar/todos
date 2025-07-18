@@ -17,5 +17,5 @@ export interface ITranslatableProps<TranslationKey extends string> {
 }
 
 export interface ITranslationProps<TranslationKey extends string> {
-  translation: Record<TranslationKey, string>
+  translation: Record<TranslationKey, string>;
 }

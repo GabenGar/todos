@@ -99,7 +99,7 @@ export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
     <main className={styles.main}>
       <Page heading={heading}>
         <Overview headingLevel={2}>
-          {(headingLevel) => (
+          {() => (
             <>
               <OverviewHeader>{message}</OverviewHeader>
 

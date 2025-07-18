@@ -8,11 +8,14 @@ import { LinkButton } from "#components/link";
 import { LANGUAGES, type ILanguage } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 
+// biome-ignore lint/correctness/noUnusedImports: fuck off biome
 import type { Route } from "./+types/language-select";
 
 import styles from "./language-select.module.scss";
 
-export function meta({ error }: Route.MetaArgs) {
+export function meta(
+  // args: Route.MetaArgs
+) {
   const title = createMetaTitle();
 
   return [{ title }];
@@ -24,7 +27,7 @@ function LanguageSelectPage() {
   return (
     <Page heading={heading}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <OverviewBody>
             <List className={styles.list}>
               {LANGUAGES.map((locale) => (

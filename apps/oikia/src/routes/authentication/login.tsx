@@ -69,7 +69,7 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
                 method="POST"
                 submitButton={() => translation["Login"]}
                 resetButton={null}
-                successElement={(formID, data) => (
+                successElement={() => (
                   <>
                     <p>
                       {

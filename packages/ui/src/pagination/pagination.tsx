@@ -41,7 +41,7 @@ function Component({
     previous.length,
     current.length,
     next.length,
-    last.length
+    last.length,
   );
 
   return (

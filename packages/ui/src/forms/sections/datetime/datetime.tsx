@@ -10,7 +10,10 @@ import { Label } from "../../label";
 import { type IInputSectionProps, InputSection } from "../section";
 
 export interface IInputSectionDateTimeProps
-  extends Omit<IInputSectionProps, "defaultValue" | "readOnly" | "required"| "disabled">,
+  extends Omit<
+      IInputSectionProps,
+      "defaultValue" | "readOnly" | "required" | "disabled"
+    >,
     Pick<IInputDateTimeProps, "defaultValue" | "min" | "max"> {}
 
 export const InputSectionDatetime = createBlockComponent(undefined, Component);

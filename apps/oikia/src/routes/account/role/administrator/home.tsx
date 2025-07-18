@@ -35,7 +35,7 @@ function AdministratorPage({ loaderData }: Route.ComponentProps) {
   return (
     <Page heading={heading}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <>
             <OverviewHeader>
               <DescriptionList>

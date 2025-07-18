@@ -37,7 +37,7 @@ function Component({
   const parsedTotalCount = BigInt(pagination.total_count);
   const listClass = clsx(
     styles.list,
-    sortingOrder === "descending" && styles.descending
+    sortingOrder === "descending" && styles.descending,
   );
 
   return (

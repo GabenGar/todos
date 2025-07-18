@@ -207,7 +207,9 @@ function createArrayBody(
 
 function createEnumBody(
   enumValue: Required<IJSONSchemaObject>["enum"],
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   refMap: IRefMap,
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
   const bodyLiterals = enumValue.map((value) => JSON.stringify(value));
@@ -218,7 +220,9 @@ function createEnumBody(
 
 function createConstBody(
   constValue: Required<IJSONSchemaObject>["const"],
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   refMap: IRefMap,
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
   const body = JSON.stringify(constValue);
@@ -229,6 +233,7 @@ function createConstBody(
 function createAllOfBody(
   allOf: Required<IJSONSchemaObject>["allOf"],
   refMap: IRefMap,
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
   const types = allOf.map((schema) => {
@@ -249,6 +254,7 @@ function createAllOfBody(
 function createAnyOfBody(
   anyOf: Required<IJSONSchemaObject>["anyOf"],
   refMap: IRefMap,
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
   const types = anyOf.map((schema) => {
@@ -269,6 +275,7 @@ function createAnyOfBody(
 function createOneOfBody(
   oneOf: Required<IJSONSchemaObject>["oneOf"],
   refMap: IRefMap,
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
   const types = oneOf.map((schema) => {

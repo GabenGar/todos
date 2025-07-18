@@ -3,7 +3,7 @@ import { PAGINATION_LIMIT, type IPagination } from "./types";
 
 export function createPagination(
   totalCount: string,
-  page?: string
+  page?: string,
 ): IPagination {
   const parsedTotalCount = BigInt(totalCount);
   // https://stackoverflow.com/a/66192429
@@ -15,7 +15,7 @@ export function createPagination(
 
   if (currentPage > totalPages) {
     throw new Error(
-      `Current page ${page} of total count ${totalCount} and limit ${PAGINATION_LIMIT} is greater than ${totalPages}.`
+      `Current page ${page} of total count ${totalCount} and limit ${PAGINATION_LIMIT} is greater than ${totalPages}.`,
     );
   }
 
@@ -43,7 +43,7 @@ export function createPagination(
 export function createClientPagination(
   totalCount: string,
   limit: string,
-  page?: string
+  page?: string,
 ): IPagination {
   const parsedTotalCount = BigInt(totalCount);
   const parsedLimit = BigInt(limit);
@@ -56,7 +56,7 @@ export function createClientPagination(
 
   if (currentPage > totalPages) {
     throw new Error(
-      `Current page ${page} of total count ${totalCount} and limit ${limit} is greater than ${totalPages}.`
+      `Current page ${page} of total count ${totalCount} and limit ${limit} is greater than ${totalPages}.`,
     );
   }
 

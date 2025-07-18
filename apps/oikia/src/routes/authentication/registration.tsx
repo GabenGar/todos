@@ -61,7 +61,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                 method="POST"
                 submitButton={() => translation["Register"]}
                 resetButton={null}
-                successElement={(formID, data) => (
+                successElement={() => (
                   <>
                     <p>
                       {

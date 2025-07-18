@@ -21,11 +21,11 @@ const formatRelativeDateTimeOptions: Intl.RelativeTimeFormatOptions = {
 
 export function formatDateTime(
   locale: Intl.Locale,
-  dateTime: IDateTime
+  dateTime: IDateTime,
 ): string {
   const formatter = new Intl.DateTimeFormat(
     String(locale),
-    formatDateTimeOptions
+    formatDateTimeOptions,
   );
 
   const formattedDateTime = formatter.format(parseISO(dateTime));
@@ -45,11 +45,11 @@ const durationUnitsOrder = [
 
 export function formatRelativeDateTime(
   locale: Intl.Locale,
-  dateTime: IDateTime
+  dateTime: IDateTime,
 ): string {
   const formatter = new Intl.RelativeTimeFormat(
     String(locale),
-    formatRelativeDateTimeOptions
+    formatRelativeDateTimeOptions,
   );
   const end = parseISO(dateTime);
   const start = now();

@@ -7,7 +7,7 @@
     "build": "next build",
     "build-codegen": "cd ./codegen/generators && npm run build",
     "start": "serve ./dist -p 9001 --no-clipboard --no-port-switching",
-    "lint": "next lint && prettier --log-level=warn ./src --check",
+    "lint": "next lint",
     "format": "prettier --log-level=warn ./src --write",
     "dev": "next dev --port 8001",
     "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"

@@ -15,12 +15,12 @@ export interface IInputProps
     Pick<Required<IInputBaseProps>, "id"> {}
 
 export const Input = forwardRef<HTMLInputElement, IInputBaseProps>(
-  createBlockComponent(styles, Component)
+  createBlockComponent(styles, Component),
 );
 
 function Component(
   { ...blockProps }: IInputBaseProps,
-  ref?: Ref<HTMLInputElement>
+  ref?: Ref<HTMLInputElement>,
 ) {
   return <input {...blockProps} ref={ref} />;
 }

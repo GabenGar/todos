@@ -52,7 +52,7 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
   return (
     <Page heading={heading}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <>
             <OverviewHeader>
               <Form<Route.ComponentProps["actionData"]>
@@ -60,7 +60,7 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
                 id={formID}
                 method="POST"
                 submitButton={() => translation["Create"]}
-                successElement={(formID, data) => {
+                successElement={(_formID, data) => {
                   if (!data.is_successful) {
                     throw new Error(
                       commonTranslation["Success element is unsuccessful."],
@@ -71,24 +71,22 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
                   const parsedTitle = parseTitle(title);
 
                   return (
-                    <>
-                      <p>
-                        {
-                          translation[
-                            "You have successfully created an invitation"
-                          ]
-                        }{" "}
-                        <LinkInternal
-                          href={href(
-                            "/:language/account/role/administrator/invitation/:id",
-                            { language, id },
-                          )}
-                        >
-                          {parsedTitle} ({id})
-                        </LinkInternal>
-                        .
-                      </p>
-                    </>
+                    <p>
+                      {
+                        translation[
+                          "You have successfully created an invitation"
+                        ]
+                      }{" "}
+                      <LinkInternal
+                        href={href(
+                          "/:language/account/role/administrator/invitation/:id",
+                          { language, id },
+                        )}
+                      >
+                        {parsedTitle} ({id})
+                      </LinkInternal>
+                      .
+                    </p>
                   );
                 }}
               >

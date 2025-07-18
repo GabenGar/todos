@@ -79,7 +79,7 @@ function createDocumentSymbols(
   // core export and internal symbols
   const symbols: string[] = [documentSymbolDeclaration, NEWLINE];
 
-  for (const [ref, { symbolName, schema }] of refMap) {
+  for (const [ref, { schema }] of refMap) {
     if (!ref.startsWith("#") || ref === "#") {
       continue;
     }

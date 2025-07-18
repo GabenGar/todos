@@ -5,5 +5,13 @@
   "files": {
     "ignoreUnknown": false,
     "includes": ["**"]
+  },
+  "linter": {
+    "rules": {
+      "complexity": {
+        // this makes typescript cry if followed through
+        "noUselessUndefinedInitialization": "off"
+      }
+    }
   }
 }

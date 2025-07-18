@@ -31,7 +31,11 @@ function Component({
   const language = parseLocale(currentLocale).language!;
 
   return (
-    <Details {...props} contentClassname={styles.content} summary={<Language language={language} />}>
+    <Details
+      {...props}
+      contentClassname={styles.content}
+      summary={<Language language={language} />}
+    >
       <LanguageList
         locales={locales}
         currentLocale={currentLocale}
