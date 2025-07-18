@@ -44,7 +44,13 @@ export function meta({ data }: Route.MetaArgs) {
  * @TODO client render
  */
 function InvitationsListPage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation, entityTranslation, accounts } = loaderData;
+  const {
+    language,
+    commonTranslation,
+    translation,
+    entityTranslation,
+    accounts,
+  } = loaderData;
   const { pagination, items } = accounts;
   const heading = translation["Accounts"];
 
@@ -80,7 +86,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   await authenticateAdmin(request);
 
   const language = getLanguage(params);
-  const { pages, entities, common: commonTranslation } = await getTranslation(language);
+  const {
+    pages,
+    entities,
+    common: commonTranslation,
+  } = await getTranslation(language);
   const translation = pages["accounts"];
   const page = params.page;
 

@@ -51,8 +51,14 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation, entityTranslation, invitation, accounts } =
-    loaderData;
+  const {
+    language,
+    commonTranslation,
+    translation,
+    entityTranslation,
+    invitation,
+    accounts,
+  } = loaderData;
   const invitationTitle = parseTitle(invitation.title, invitation.id);
   const heading = translation["Invited Accounts"];
 
@@ -119,7 +125,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const { id, page } = params;
 
   const language = getLanguage(params);
-  const { pages, entities, common:commonTranslation } = await getTranslation(language);
+  const {
+    pages,
+    entities,
+    common: commonTranslation,
+  } = await getTranslation(language);
   const translation = pages["invited-accounts"];
 
   parsePositiveInteger(params.id);

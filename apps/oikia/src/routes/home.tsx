@@ -111,7 +111,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   try {
     await authenticateRequest(request);
     isRegistered = true;
-  // biome-ignore lint/correctness/noUnusedVariables: no idea what biome expects there
+    // biome-ignore lint/correctness/noUnusedVariables: no idea what biome expects there
   } catch (error) {
     isRegistered = false;
   }

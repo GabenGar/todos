@@ -70,7 +70,10 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                   dValue={
                     <>
                       <Preformatted>{code}</Preformatted>
-                      <ButtonCopy translation={commonTranslation} valueToCopy={code} />
+                      <ButtonCopy
+                        translation={commonTranslation}
+                        valueToCopy={code}
+                      />
                     </>
                   }
                 />
@@ -128,7 +131,12 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                 {expires_at && (
                   <DescriptionSection
                     dKey={translation["Expires at"]}
-                    dValue={<DateTimeView translation={commonTranslation} dateTime={expires_at} />}
+                    dValue={
+                      <DateTimeView
+                        translation={commonTranslation}
+                        dateTime={expires_at}
+                      />
+                    }
                   />
                 )}
 
@@ -145,12 +153,22 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection
                   dKey={translation["Created at"]}
-                  dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
+                  dValue={
+                    <DateTimeView
+                      translation={commonTranslation}
+                      dateTime={created_at}
+                    />
+                  }
                 />
 
                 <DescriptionSection
                   dKey={translation["Latest updated at"]}
-                  dValue={<DateTimeView translation={commonTranslation} dateTime={updated_at} />}
+                  dValue={
+                    <DateTimeView
+                      translation={commonTranslation}
+                      dateTime={updated_at}
+                    />
+                  }
                 />
               </DescriptionList>
             </OverviewBody>

@@ -29,7 +29,13 @@ interface IProps
 export const AccountPreview: ReturnType<typeof createBlockComponent<IProps>> =
   createBlockComponent(undefined, Component);
 
-function Component({ language, commonTranslation, entityTranslation, account, ...props }: IProps) {
+function Component({
+  language,
+  commonTranslation,
+  entityTranslation,
+  account,
+  ...props
+}: IProps) {
   const translation = entityTranslation.account;
   const { id, name, role, created_at } = account;
   const parsedName = parseName(name);
@@ -67,7 +73,12 @@ function Component({ language, commonTranslation, entityTranslation, account, ..
 
               <DescriptionSection
                 dKey={translation["Join date"]}
-                dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
+                dValue={
+                  <DateTimeView
+                    translation={commonTranslation}
+                    dateTime={created_at}
+                  />
+                }
               />
             </DescriptionList>
           </PreviewBody>
