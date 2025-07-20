@@ -31,6 +31,7 @@ interface IProps
 }
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation, accounts } = data;
   const { current_page, total_pages } = accounts.pagination;
   const title = createMetaTitle(

@@ -1,6 +1,6 @@
 import { forwardRef, type Ref } from "react";
 import { createBlockComponent } from "#meta";
-import { Input, type IInputProps } from "./input";
+import { type IInputProps, Input } from "./input";
 
 export interface IInputHiddenProps
   extends Omit<

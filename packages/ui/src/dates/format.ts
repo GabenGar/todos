@@ -1,4 +1,4 @@
-import { parseISO, intervalToDuration, type DurationUnit } from "date-fns";
+import { type DurationUnit, intervalToDuration, parseISO } from "date-fns";
 import { now } from "./lib";
 import type { IDateTime } from "./types";
 

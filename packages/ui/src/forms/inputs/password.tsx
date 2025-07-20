@@ -1,6 +1,6 @@
 import { createBlockComponent } from "#meta";
 import type { IRequiredSome } from "#types";
-import { Input, type IInputProps } from "./input";
+import { type IInputProps, Input } from "./input";
 
 export interface IInputPasswordProps
   extends IRequiredSome<IInputProps, "minLength" | "maxLength"> {

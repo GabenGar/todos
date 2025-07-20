@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import clsx from "clsx";
+import { useState } from "react";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
 import type { IClickEvent, IViewType } from "./types";
+//
 
 import styles from "./base.module.scss";
 

@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
+import { Heading } from "#headings";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-import { Heading } from "#headings";
 
 import styles from "./page.module.scss";
 

@@ -1,20 +1,20 @@
-export { Article, ArticleHeader, ArticleBody, ArticleFooter } from "./article";
 export type {
-  IArticleProps,
-  IArticleHeaderProps,
   IArticleBodyProps,
   IArticleFooterProps,
+  IArticleHeaderProps,
+  IArticleProps,
 } from "./article";
-export {
-  Overview,
-  OverviewHeader,
-  OverviewBody,
-  OverviewFooter,
-} from "./overview";
-export { OverviewPlaceHolder } from "./placeholder";
+export { Article, ArticleBody, ArticleFooter, ArticleHeader } from "./article";
 export type {
-  IOverviewProps,
-  IOverviewHeaderProps,
   IOverviewBodyProps,
   IOverviewFooterProps,
+  IOverviewHeaderProps,
+  IOverviewProps,
 } from "./overview";
+export {
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+} from "./overview";
+export { OverviewPlaceHolder } from "./placeholder";

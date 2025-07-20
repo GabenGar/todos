@@ -1,11 +1,11 @@
-import { Loading } from "#loading";
 import { Heading } from "#headings";
+import { Loading } from "#loading";
 import {
+  type IOverviewProps,
   Overview,
   OverviewBody,
   OverviewFooter,
   OverviewHeader,
-  type IOverviewProps,
 } from "./overview";
 
 interface IProps extends Pick<IOverviewProps, "headingLevel"> {}

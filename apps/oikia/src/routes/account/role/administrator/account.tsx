@@ -24,6 +24,7 @@ interface IProps extends ICommonTranslationPageProps<"account-overview"> {
 }
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation, account } = data;
   const { id, name } = account;
   const parsedName = parseName(name, id);

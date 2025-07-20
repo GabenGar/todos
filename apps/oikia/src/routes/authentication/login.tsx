@@ -28,6 +28,7 @@ import type { Route } from "./+types/login";
 interface IProps extends ICommonTranslationPageProps<"login"> {}
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation } = data;
   const title = createMetaTitle(translation["Login"]);
 

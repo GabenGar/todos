@@ -2,7 +2,7 @@ import { parse as parseLocale } from "bcp-47";
 import { Details, type IDetailsProps } from "#details";
 import { createBlockComponent } from "#meta";
 import { Language } from "./language";
-import { LanguageList, type ILanguageListProps } from "./language-list";
+import { type ILanguageListProps, LanguageList } from "./language-list";
 
 import styles from "./switcher.module.scss";
 

@@ -35,6 +35,7 @@ import type { Route } from "./+types/invitation";
 interface IProps extends ICommonTranslationPageProps<"create-invitation"> {}
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation } = data;
   const title = createMetaTitle(translation["Create invitation"]);
 

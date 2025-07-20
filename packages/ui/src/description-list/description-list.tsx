@@ -1,11 +1,11 @@
-import type { ReactNode } from "react";
 import clsx from "clsx";
+import type { ReactNode } from "react";
+import { Preformatted } from "#formatting";
 import {
   createBlockComponent,
   type IBaseComponentProps,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-import { Preformatted } from "#formatting";
 
 import styles from "./description-list.module.scss";
 

@@ -1,10 +1,11 @@
-import type { FunctionComponent, CSSProperties, ReactNode } from "react";
-import { createBlockComponent, type IBaseComponentProps } from "#meta";
+import type { CSSProperties, FunctionComponent, ReactNode } from "react";
 import { LinkButton } from "#links";
 import { List, ListItem } from "#lists";
+import { createBlockComponent, type IBaseComponentProps } from "#meta";
 import { BIGINT_ONE, BIGINT_ZERO } from "#numbers/bigint";
 import { PaginationOverview } from "./overview";
 import type { IPagination } from "./types";
+//
 
 import styles from "./pagination.module.scss";
 

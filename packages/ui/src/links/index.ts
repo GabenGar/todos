@@ -1,5 +1,5 @@
-export { Link, type ILinkProps } from "./link";
-export { LinkExternal } from "./external";
-export type { ILinkExternalProps } from "./external";
-export { linkInternalStyles } from "./internal";
 export { LinkButton } from "./button";
+export type { ILinkExternalProps } from "./external";
+export { LinkExternal } from "./external";
+export { linkInternalStyles } from "./internal";
+export { type ILinkProps, Link } from "./link";

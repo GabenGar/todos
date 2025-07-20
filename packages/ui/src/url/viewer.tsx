@@ -1,14 +1,14 @@
-import type { ITranslatableProps } from "#meta";
 import { DescriptionList, DescriptionSection } from "#description-list";
+import { Details } from "#details";
 import { Preformatted } from "#formatting";
 import { Heading, type IHeadingLevel } from "#headings";
-import { Details } from "#details";
+import type { ITranslatableProps } from "#meta";
 import { Origin } from "./origin";
-import { Pathname } from "./pathname";
 import {
-  TransformedSearchParams,
   type ITransformedSearchParams,
+  TransformedSearchParams,
 } from "./params";
+import { Pathname } from "./pathname";
 
 export interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
   url: URL;

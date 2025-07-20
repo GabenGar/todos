@@ -19,6 +19,7 @@ interface IProps extends ITranslationPageProps<"administrator-home"> {
 }
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation } = data;
   const title = createMetaTitle(translation["Administrator"]);
 

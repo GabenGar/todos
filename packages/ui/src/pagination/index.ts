@@ -1,5 +1,5 @@
-export { createPagination, createClientPagination } from "./create";
+export { createClientPagination, createPagination } from "./create";
 export { PaginationOverview } from "./overview";
-export { Pagination, type IPaginationProps } from "./pagination";
+export { type IPaginationProps, Pagination } from "./pagination";
+export type { IPaginatedCollection, IPagination } from "./types";
 export { PAGINATION_LIMIT } from "./types";
-export type { IPagination, IPaginatedCollection } from "./types";
