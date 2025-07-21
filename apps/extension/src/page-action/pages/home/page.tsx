@@ -1,4 +1,4 @@
-import { useLoaderData, type LoaderFunctionArgs } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import { Overview, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { URLViewer } from "@repo/ui/url";
@@ -29,7 +29,7 @@ export function HomePage() {
   );
 }
 
-export async function loader({}: LoaderFunctionArgs) {
+export async function loader() {
   const currentTab = await getActiveTab();
   const url = currentTab.url;
 

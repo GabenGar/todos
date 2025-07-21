@@ -1,5 +1,4 @@
-import { Outlet } from "react-router-dom";
-import { ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router";
 import { ClientProvider } from "#popup/hooks";
 
 import styles from "./layout.module.scss";

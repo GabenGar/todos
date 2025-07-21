@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactNode, JSX } from "react";
 import type { ILocalizationCommon } from "#lib/localization";
 import type { ILocale } from "#lib/internationalization";
 

@@ -1,5 +1,4 @@
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
-import { createHashRouter } from "react-router-dom";
+import { isRouteErrorResponse, useRouteError, createHashRouter } from "react-router";
 import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { getLocalizedMessage } from "#lib/localization";
@@ -18,12 +17,7 @@ export const router = createHashRouter(
         },
       ],
     },
-  ],
-  {
-    future: {
-      v7_partialHydration: true,
-    },
-  }
+  ]
 );
 
 function RootError() {

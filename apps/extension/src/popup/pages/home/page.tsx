@@ -1,4 +1,4 @@
-import { useActionData, type ActionFunctionArgs } from "react-router-dom";
+import { useActionData, type ActionFunctionArgs } from "react-router";
 import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { URLViewer } from "@repo/ui/url";
