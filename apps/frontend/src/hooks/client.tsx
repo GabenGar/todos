@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { DEFAULT_LOG_LEVEL } from "#environment";
 import {
   type ILogLevel,
@@ -43,7 +43,11 @@ const ClientContext = createContext<IClientContext>(defaultContext);
 const { get: getLocalStoreLogLevel, set: setLocalStoreLogLevel } =
   createLocalStorage("log_level", DEFAULT_LOG_LEVEL, validateLogLevel);
 
-export function ClientProvider({ children }: { children: ReactNode }) {
+interface IProps {
+  children: ReactNode;
+}
+
+export function ClientProvider({ children }: IProps) {
   const params = useParams<{ lang: string }>();
   const [isClient, switchIsClient] = useState(false);
   const [locale, changeLocale] = useState<Intl.Locale>();
@@ -76,6 +80,7 @@ export function ClientProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    console.log(lang);
     const newLocale = new Intl.Locale(lang);
     changeLocale(newLocale);
   }, [lang]);

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { REPOSITORY_URL, SITE_BASE_URL, SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { getDictionary } from "#server";

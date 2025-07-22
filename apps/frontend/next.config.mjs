@@ -32,7 +32,7 @@ async function createNextConfig() {
     },
     transpilePackages: ["@repo/ui"],
     experimental: {
-      typedRoutes: true,
+      typedRoutes: true
     },
   };
 
