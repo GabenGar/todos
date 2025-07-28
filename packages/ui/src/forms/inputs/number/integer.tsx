@@ -1,6 +1,6 @@
 import { createBlockComponent } from "#meta";
 import { BIGINT_ONE } from "#numbers/bigint";
-import { InputNumber, type IInputNumberProps } from "./number";
+import { type IInputNumberProps, InputNumber } from "./number";
 
 export interface IInputIntegerProps extends Omit<IInputNumberProps, "step"> {}
 

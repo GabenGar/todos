@@ -2,34 +2,26 @@ import {
   createMemoryRouter,
   useRouteError,
   isRouteErrorResponse,
-} from "react-router-dom";
+} from "react-router";
 import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { getLocalizedMessage } from "#lib/localization";
 import { Layout } from "#popup/components/layouts";
 import { HomePage, HomePageAction } from "#popup/pages/home";
 
-export const routes = createMemoryRouter(
-  [
-    {
-      element: <Layout />,
-      errorElement: <RootError />,
-      children: [
-        {
-          index: true,
-          element: <HomePage />,
-          action: HomePageAction,
-        },
-      ],
-    },
-  ],
+export const routes = createMemoryRouter([
   {
-    future: {
-      v7_normalizeFormMethod: true,
-      v7_partialHydration: true,
-    },
-  }
-);
+    element: <Layout />,
+    errorElement: <RootError />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+        action: HomePageAction,
+      },
+    ],
+  },
+]);
 
 function RootError() {
   const error = useRouteError();

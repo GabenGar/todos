@@ -6,10 +6,15 @@ import { logError } from "#lib/logs";
 import { Button } from "#components/button";
 import { Heading } from "#components/heading";
 
+interface IProps {
+  error: Error;
+  reset: () => void;
+}
+
 /**
  * @TODO multilang
  */
-function PageError({ error, reset }: { error: Error; reset: () => void }) {
+function PageError({ error, reset }: IProps) {
   useEffect(() => {
     // Log the error to an error reporting service
     logError(error);

@@ -19,6 +19,7 @@ interface IProps extends ICommonTranslationPageProps<"account-home"> {
 }
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation } = data;
   const title = createMetaTitle(translation["Account"]);
 
@@ -65,7 +66,12 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection
                   dKey={translation["Joined"]}
-                  dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
+                  dValue={
+                    <DateTimeView
+                      translation={commonTranslation}
+                      dateTime={created_at}
+                    />
+                  }
                 />
               </DescriptionList>
             </OverviewBody>

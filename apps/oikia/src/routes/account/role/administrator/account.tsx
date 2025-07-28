@@ -24,6 +24,7 @@ interface IProps extends ICommonTranslationPageProps<"account-overview"> {
 }
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation, account } = data;
   const { id, name } = account;
   const parsedName = parseName(name, id);
@@ -60,7 +61,12 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection
                   dKey={translation["Join date"]}
-                  dValue={<DateTimeView translation={commonTranslation} dateTime={created_at} />}
+                  dValue={
+                    <DateTimeView
+                      translation={commonTranslation}
+                      dateTime={created_at}
+                    />
+                  }
                 />
 
                 {invited_through && (
@@ -92,7 +98,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const { id } = params;
   const language = getLanguage(params);
-  const { pages, common:commonTranslation } = await getTranslation(language);
+  const { pages, common: commonTranslation } = await getTranslation(language);
   const translation = pages["account-overview"];
 
   const account = await runTransaction(async (transaction) => {

@@ -1,16 +1,19 @@
-import { useRef, type ChangeEvent } from "react";
 import { TZDate } from "@date-fns/tz";
+import { type ChangeEvent, useRef } from "react";
 import { createBlockComponent } from "#meta";
 import {
+  type IInputDateTimeProps,
   InputDateTime,
   InputHidden,
-  type IInputDateTimeProps,
 } from "../../inputs";
 import { Label } from "../../label";
 import { type IInputSectionProps, InputSection } from "../section";
 
 export interface IInputSectionDateTimeProps
-  extends Omit<IInputSectionProps, "defaultValue" | "readOnly" | "required"| "disabled">,
+  extends Omit<
+      IInputSectionProps,
+      "defaultValue" | "readOnly" | "required" | "disabled"
+    >,
     Pick<IInputDateTimeProps, "defaultValue" | "min" | "max"> {}
 
 export const InputSectionDatetime = createBlockComponent(undefined, Component);

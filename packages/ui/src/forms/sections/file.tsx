@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { createBlockComponent } from "#meta";
 import { type IInputFileProps, InputFile } from "../inputs";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
+//
 
 import styles from "./file.module.scss";
 
@@ -106,7 +107,9 @@ function Component({
       ) : (
         <ul>
           {currentFiles.map(({ name, size, type }, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            /* biome-ignore lint/suspicious/noArrayIndexKey: there literally no other way
+             * because `File` interface does not uniquely serialize into string
+             */
             <li key={index} className={styles.file}>
               {type} - {name} - {size}
             </li>

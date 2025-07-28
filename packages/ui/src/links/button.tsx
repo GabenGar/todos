@@ -1,5 +1,6 @@
 import { createBlockComponent } from "#meta";
-import { Link, type ILinkProps } from "./link";
+import { type ILinkProps, Link } from "./link";
+//
 
 import styles from "./button.module.scss";
 

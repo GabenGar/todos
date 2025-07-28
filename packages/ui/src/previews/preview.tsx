@@ -1,15 +1,15 @@
 import type { CSSProperties } from "react";
-import { createBlockComponent } from "#meta";
 import {
   Article,
-  ArticleHeader,
   ArticleBody,
   ArticleFooter,
+  ArticleHeader,
   type IArticleBodyProps,
   type IArticleFooterProps,
   type IArticleHeaderProps,
   type IArticleProps,
 } from "#articles";
+import { createBlockComponent } from "#meta";
 
 import styles from "./preview.module.scss";
 

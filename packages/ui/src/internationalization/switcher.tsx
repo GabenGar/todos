@@ -2,7 +2,7 @@ import { parse as parseLocale } from "bcp-47";
 import { Details, type IDetailsProps } from "#details";
 import { createBlockComponent } from "#meta";
 import { Language } from "./language";
-import { LanguageList, type ILanguageListProps } from "./language-list";
+import { type ILanguageListProps, LanguageList } from "./language-list";
 
 import styles from "./switcher.module.scss";
 
@@ -31,7 +31,11 @@ function Component({
   const language = parseLocale(currentLocale).language!;
 
   return (
-    <Details {...props} contentClassname={styles.content} summary={<Language language={language} />}>
+    <Details
+      {...props}
+      contentClassname={styles.content}
+      summary={<Language language={language} />}
+    >
       <LanguageList
         locales={locales}
         currentLocale={currentLocale}

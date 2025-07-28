@@ -2,7 +2,7 @@ import { toQuotedString } from "#strings";
 import type { IEntityItem } from "./types";
 
 export function toEntityItem<Type extends IEntityItem>(
-  entity: Type
+  entity: Type,
 ): IEntityItem {
   const item: IEntityItem = { id: entity.id, title: entity.title };
 

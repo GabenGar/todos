@@ -1,5 +1,5 @@
 import { createBlockComponent } from "@repo/ui/meta";
-import { Preformatted, type IPreformattedProps } from "#formatting";
+import { type IPreformattedProps, Preformatted } from "#formatting";
 
 interface IProps extends IPreformattedProps {}
 

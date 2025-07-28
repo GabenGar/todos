@@ -27,6 +27,7 @@ import type { Route } from "./+types/registration";
 interface IProps extends ICommonTranslationPageProps<"registration"> {}
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation } = data;
   const title = createMetaTitle(translation["Registration"]);
 
@@ -61,7 +62,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                 method="POST"
                 submitButton={() => translation["Register"]}
                 resetButton={null}
-                successElement={(formID, data) => (
+                successElement={() => (
                   <>
                     <p>
                       {

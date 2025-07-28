@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import type { JSX } from "react";
 
 export type IFuncComponent<PropsType> = (
   props: PropsType,

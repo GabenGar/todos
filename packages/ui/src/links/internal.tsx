@@ -17,10 +17,5 @@ export const LinkInternal = createBlockComponent(styles, Component);
 function Component({ href, ...props }: ILinkInternalProps) {
   const urlString = href instanceof URL ? href.toString() : href;
 
-  return (
-    <a
-      href={urlString}
-      {...props}
-    />
-  );
+  return <a href={urlString} {...props} />;
 }

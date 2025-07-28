@@ -7,6 +7,7 @@
 # `turborepo prune` output
 # https://turbo.build/repo/docs/reference/prune
 /dist
+/out
 
 # Dependency directories
 node_modules/

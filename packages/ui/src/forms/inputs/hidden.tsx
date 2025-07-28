@@ -1,6 +1,6 @@
 import { forwardRef, type Ref } from "react";
 import { createBlockComponent } from "#meta";
-import { Input, type IInputProps } from "./input";
+import { type IInputProps, Input } from "./input";
 
 export interface IInputHiddenProps
   extends Omit<
@@ -15,12 +15,12 @@ export interface IInputHiddenProps
   > {}
 
 export const InputHidden = forwardRef<HTMLInputElement, IInputHiddenProps>(
-  createBlockComponent(undefined, Component)
+  createBlockComponent(undefined, Component),
 );
 
 function Component(
   { ...props }: IInputHiddenProps,
-  ref?: Ref<HTMLInputElement>
+  ref?: Ref<HTMLInputElement>,
 ) {
   return <Input ref={ref} type="hidden" {...props} />;
 }

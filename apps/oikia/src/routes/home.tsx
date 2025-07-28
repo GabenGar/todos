@@ -24,6 +24,7 @@ interface IProps
 }
 
 export function meta({ data }: Route.MetaArgs) {
+  // @ts-expect-error cannot fetch translaction
   const { translation } = data;
   const title = createMetaTitle(translation["Welcome"]);
 
@@ -111,6 +112,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   try {
     await authenticateRequest(request);
     isRegistered = true;
+    // biome-ignore lint/correctness/noUnusedVariables: no idea what biome expects there
   } catch (error) {
     isRegistered = false;
   }

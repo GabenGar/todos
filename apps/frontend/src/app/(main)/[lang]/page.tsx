@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { SITE_TITLE } from "#environment";
 import {
@@ -21,7 +22,7 @@ import styles from "./page.module.scss";
 
 interface IProps extends IStaticPageProps {}
 
-export async function generateMetadata({ params }: IProps) {
+export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { lang } = await params;
   const dict = await getDictionary(lang);
   const { home } = dict.pages;

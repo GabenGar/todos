@@ -1,7 +1,7 @@
 export { createBlockComponent } from "./block-component";
 export type {
-  IBaseComponentPropsWithChildren,
   IBaseComponentProps,
+  IBaseComponentPropsWithChildren,
   ITranslatableProps,
-  ITranslationProps
+  ITranslationProps,
 } from "./types";

@@ -1,9 +1,9 @@
 export {
+  type IListProps,
+  type IOrderedListProps,
+  type IUnorderedListProps,
   List,
+  ListItem,
   ListOrdered,
   ListUnordered,
-  ListItem,
-  type IListProps,
-  type IUnorderedListProps,
-  type IOrderedListProps,
 } from "./list";

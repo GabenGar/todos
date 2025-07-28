@@ -1,8 +1,8 @@
-import clsx from "clsx";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "@repo/ui/meta";
+import clsx from "clsx";
 
 import styles from "./pre.module.scss";
 

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, JSX, ReactNode } from "react";
 
 /**
  * Base props for components.
@@ -17,5 +17,5 @@ export interface ITranslatableProps<TranslationKey extends string> {
 }
 
 export interface ITranslationProps<TranslationKey extends string> {
-  translation: Record<TranslationKey, string>
+  translation: Record<TranslationKey, string>;
 }

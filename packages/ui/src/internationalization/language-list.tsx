@@ -1,7 +1,7 @@
 import { parse as parseLocale } from "bcp-47";
+import { type ILinkProps, Link } from "#links";
+import { type IUnorderedListProps, ListItem, ListUnordered } from "#lists";
 import { createBlockComponent } from "#meta";
-import { ListItem, ListUnordered, type IUnorderedListProps } from "#lists";
-import { Link, type ILinkProps } from "#links";
 import { Language } from "./language";
 
 import styles from "./language-list.module.scss";

@@ -1,0 +1,13 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.header {
+  justify-items: stretch;
+}
+
+.list {
+  align-items: stretch;
+}
+
+.link {
+  display: flex;
+}

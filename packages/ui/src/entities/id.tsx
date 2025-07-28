@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import type { IEntityItem } from "#entities";
 import { createBlockComponent, type IBaseComponentProps } from "@repo/ui/meta";
+import { useState } from "react";
 import { Button } from "#buttons";
+import type { IEntityItem } from "#entities";
 import { Preformatted } from "#formatting";
 
 import styles from "./id.module.scss";

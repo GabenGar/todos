@@ -1,3 +1,3 @@
-export { LanguageSwitcher } from "./switcher";
-export { LanguageList } from "./language-list";
 export { Language } from "./language";
+export { LanguageList } from "./language-list";
+export { LanguageSwitcher } from "./switcher";

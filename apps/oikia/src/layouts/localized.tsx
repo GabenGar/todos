@@ -28,10 +28,12 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
   const currentURL = `${location.pathname}${location.search}${location.hash}`;
 
   function getLocalizedURL(locale: string, currentURL: string): string {
-    // stepping over the first slash
-    const firstMatch = currentURL.indexOf("/", 1);
-    const path = currentURL.slice(firstMatch);
-    const resultPath = `/${locale}${path}`;
+    const segments = currentURL.split("/");
+
+    // the first element is an empty string due to slash at start
+    segments[1] = locale;
+
+    const resultPath = segments.join("/");
 
     return resultPath;
   }

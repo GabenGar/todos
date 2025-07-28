@@ -7,7 +7,7 @@ import {
   type ReadonlyURLSearchParams,
 } from "next/navigation";
 import { parse as parseLocale } from "bcp-47";
-import { Language } from "@repo/ui/internationalization"
+import { Language } from "@repo/ui/internationalization";
 import { SITE_TITLE } from "#environment";
 import { LOCALES } from "#lib/internationalization";
 import { createHomePageURL } from "#lib/urls";

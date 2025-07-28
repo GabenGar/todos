@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
+import { type IHeadingLevel, validateHeadinglevel } from "#headings";
 import {
   createBlockComponent,
   type IBaseComponentProps,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-import { validateHeadinglevel, type IHeadingLevel } from "#headings";
 
 export interface IArticleProps extends IBaseComponentProps<"article"> {
   headingLevel: IHeadingLevel;

@@ -1,6 +1,6 @@
 export {
+  DescriptionDetails,
   DescriptionList,
   DescriptionSection,
   DescriptionTerm,
-  DescriptionDetails,
 } from "./description-list";

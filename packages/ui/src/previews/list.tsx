@@ -1,15 +1,15 @@
-import type { ReactNode } from "react";
 import clsx from "clsx";
+import type { ReactNode } from "react";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
+import { BIGINT_ZERO } from "#numbers/bigint";
 import {
   type IPaginationProps,
-  PaginationOverview,
   Pagination,
+  PaginationOverview,
 } from "#pagination";
-import { BIGINT_ZERO } from "#numbers/bigint";
 
 import styles from "./list.module.scss";
 
@@ -37,7 +37,7 @@ function Component({
   const parsedTotalCount = BigInt(pagination.total_count);
   const listClass = clsx(
     styles.list,
-    sortingOrder === "descending" && styles.descending
+    sortingOrder === "descending" && styles.descending,
   );
 
   return (

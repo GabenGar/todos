@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
 import { getLocalizedMessage } from "#lib/localization";
 

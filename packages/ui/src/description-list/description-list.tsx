@@ -1,11 +1,11 @@
-import type { ReactNode } from "react";
 import clsx from "clsx";
+import type { ReactNode } from "react";
+import { Preformatted } from "#formatting";
 import {
   createBlockComponent,
   type IBaseComponentProps,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-import { Preformatted } from "#formatting";
 
 import styles from "./description-list.module.scss";
 
@@ -36,22 +36,22 @@ interface IDescriptionDetailsProps
 
 export const DescriptionList = createBlockComponent(
   styles,
-  DescriptionListComponent
+  DescriptionListComponent,
 );
 
 export const DescriptionSection = createBlockComponent(
   styles.section,
-  DescriptionSectionComponent
+  DescriptionSectionComponent,
 );
 
 export const DescriptionTerm = createBlockComponent(
   styles.term,
-  DescriptionTermComponent
+  DescriptionTermComponent,
 );
 
 export const DescriptionDetails = createBlockComponent(
   styles.details,
-  DescriptionDetailsComponent
+  DescriptionDetailsComponent,
 );
 
 function DescriptionListComponent({ ...props }: IDescriptionListProps) {
@@ -79,7 +79,7 @@ function DescriptionSectionComponent({
   const blockClass = clsx(
     className,
     "dKey" in props && styles.section_keyValue,
-    isHorizontal && styles.section_horizontal
+    isHorizontal && styles.section_horizontal,
   );
 
   // separate returns to avoid passing `dKey` and `dValue` to DOM
