@@ -3,7 +3,15 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "inputs": ["$TURBO_DEFAULT$", "config/**", "schema/**"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "src/**",
+        "public/**",
+        "schema/**",
+        "scripts/**",
+        "localization/**",
+        "backend/**"
+      ],
       "outputs": ["build/**"]
     },
     "start": {

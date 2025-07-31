@@ -30,7 +30,7 @@ import { lint, parser } from "@exodus/schemasafe";
  */
 
 /**
- * @param {boolean} isDevelopment
+ * @param {boolean} [isDevelopment]
  * @returns {Promise<IConfiguration>}
  */
 export async function parseConfig(isDevelopment) {
