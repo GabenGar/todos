@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "start": "node server.js --environment=production",
-    "dev": "node server.js --environment=development",
+    "start": "node ./scripts/start.js",
+    "dev": "node ./scripts/dev.js",
     "check": "react-router typegen && tsc --build",
     "lint": "biome lint ./src",
     "format": "biome format --write ./src",
