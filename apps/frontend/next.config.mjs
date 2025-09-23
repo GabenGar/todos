@@ -31,9 +31,7 @@ async function createNextConfig() {
       silenceDeprecations: ["legacy-js-api"],
     },
     transpilePackages: ["@repo/ui"],
-    experimental: {
-      typedRoutes: true
-    },
+    typedRoutes: true,
   };
 
   return nextConfig;

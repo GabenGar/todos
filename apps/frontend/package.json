@@ -7,7 +7,7 @@
     "build": "next build",
     "build-codegen": "cd ./codegen/generators && npm run build",
     "start": "serve ./dist -p 9001 --no-clipboard --no-port-switching",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier --log-level=warn ./src --write",
     "dev": "next dev --port 8001",
     "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"
@@ -49,6 +49,7 @@
     "stringify-object": "^5.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^20.9.0",
     "@types/react": "^19.1.8",
     "@types/stringify-object": "^4.0.5",
