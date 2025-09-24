@@ -9,6 +9,7 @@
     "start": "serve ./dist -p 9001 --no-clipboard --no-port-switching",
     "lint": "eslint .",
     "format": "prettier --log-level=warn ./src --write",
+    "check": "next typegen && tsc --noEmit",
     "dev": "next dev --port 8001",
     "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"
   },
