@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { SITE_BASE_URL, SITE_TITLE } from "#environment";
 import { DEFAULT_LOCALE } from "#lib/internationalization";
@@ -7,11 +6,7 @@ import { getDictionary } from "#server";
 import "@repo/ui/styles/global";
 import styles from "./layout.module.scss";
 
-interface IProps {
-  children: ReactNode;
-}
-
-export async function generateMetadata({}: IProps): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const lang = DEFAULT_LOCALE;
   const dict = await getDictionary(lang);
   const { layout } = dict;
@@ -32,7 +27,7 @@ export async function generateMetadata({}: IProps): Promise<Metadata> {
   return metadata;
 }
 
-async function RootLayout({ children }: IProps) {
+async function RootLayout({ children }: LayoutProps<"/404">) {
   const lang = DEFAULT_LOCALE;
 
   return (

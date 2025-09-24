@@ -1,24 +1,18 @@
-import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { REPOSITORY_URL, SITE_BASE_URL, SITE_TITLE } from "#environment";
-import { LOCALES } from "#lib/internationalization";
+import { LOCALES, validateLocale } from "#lib/internationalization";
 import { getDictionary } from "#server";
 import { ClientProvider } from "#hooks";
 import { GlobalNavigation } from "#components";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
-import type { IBasePageParams } from "#pages/types";
 
 import "@repo/ui/styles/global";
 import styles from "./layout.module.scss";
 
-interface IProps {
-  children: ReactNode;
-  params: Promise<IBasePageParams>;
-}
-
-export async function generateMetadata({ params }: IProps): Promise<Metadata> {
+export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
+  validateLocale(lang)
   const dict = await getDictionary(lang);
   const { layout } = dict;
 
@@ -38,8 +32,9 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   return metadata;
 }
 
-async function RootLayout({ children, params }: IProps) {
+async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
+  validateLocale(lang)
   const dict = await getDictionary(lang);
   const { layout } = dict;
 

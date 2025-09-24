@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { validateLocale } from "#lib/internationalization";
 import { getDictionary } from "#server";
 import { Page } from "#components";
-import type { IStaticPageProps } from "#pages/types";
 import { Client } from "./client";
 
-interface IProps extends IStaticPageProps {}
-
-export async function generateMetadata({ params }: IProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/account">): Promise<Metadata> {
   const { lang } = await params;
+  validateLocale(lang);
   const dict = await getDictionary(lang);
   const { title } = dict.pages.account;
 
@@ -16,8 +17,9 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   };
 }
 
-async function PlaceDetailsPage({ params }: IProps) {
+async function PlaceDetailsPage({ params }: PageProps<"/[lang]/account">) {
   const { lang } = await params;
+  validateLocale(lang);
   const dict = await getDictionary(lang);
   const { pages, common } = dict;
   const { heading } = pages.account;

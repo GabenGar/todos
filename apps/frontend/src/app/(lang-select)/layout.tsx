@@ -1,15 +1,10 @@
-import type { ReactNode } from "react";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { SITE_BASE_URL, SITE_TITLE } from "#environment";
 
 import "@repo/ui/styles/global";
 import styles from "./layout.module.scss";
 
-interface IProps {
-  children: ReactNode;
-}
-
-export async function generateMetadata({}: IProps): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const metadata: Metadata = {
     metadataBase: new URL(SITE_BASE_URL),
     title: { template: `%s | ${SITE_TITLE}`, default: SITE_TITLE },
@@ -23,7 +18,7 @@ export async function generateMetadata({}: IProps): Promise<Metadata> {
   return metadata;
 }
 
-async function RootLayout({ children }: IProps) {
+async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html>
       <body>

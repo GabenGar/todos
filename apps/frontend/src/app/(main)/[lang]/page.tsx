@@ -10,6 +10,7 @@ import {
   createURLViewerPageURL,
   createYTDLPConfigPage,
 } from "#lib/urls";
+import { validateLocale } from "#lib/internationalization";
 import { getDictionary } from "#server";
 import type { IStaticPageProps } from "#pages/types";
 import { Page } from "#components";
@@ -22,8 +23,9 @@ import styles from "./page.module.scss";
 
 interface IProps extends IStaticPageProps {}
 
-export async function generateMetadata({ params }: IProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
+  validateLocale(lang)
   const dict = await getDictionary(lang);
   const { home } = dict.pages;
 

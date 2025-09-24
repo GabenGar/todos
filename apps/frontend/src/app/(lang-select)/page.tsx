@@ -1,5 +1,6 @@
 import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
+import type { Metadata } from "next";
 import { SITE_TITLE } from "#environment";
 import { LOCALES, type ILocale } from "#lib/internationalization";
 import { createHomePageURL } from "#lib/urls";
@@ -10,7 +11,7 @@ import { Overview, OverviewBody } from "#components/overview";
 
 import styles from "./page.module.scss";
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: SITE_TITLE,
   };
@@ -24,7 +25,7 @@ async function FrontPage() {
   return (
     <Page heading={SITE_TITLE}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <OverviewBody>
             <List className={styles.list}>
               {LOCALES.map((locale) => (
