@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SITE_BASE_URL, SITE_TITLE } from "#environment";
 
-import "@repo/ui/styles/global";
+
 import styles from "./layout.module.scss";
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
  * @TODO language guesser to show "choose language text"
  * @TODO center text in a container
  */
-async function FrontPage() {
+async function LanguageSelectPage() {
   return (
     <Page heading={SITE_TITLE}>
       <Overview headingLevel={2}>
@@ -56,5 +56,4 @@ function LocaleLink({ locale }: ILocalLinkProps) {
     </LinkButton>
   );
 }
-
-export default FrontPage;
+export default LanguageSelectPage;
