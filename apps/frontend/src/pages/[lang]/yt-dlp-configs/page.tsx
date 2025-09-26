@@ -1,5 +1,5 @@
 import { promises as fs } from "node:fs";
-import { getDictionary } from "#server";
+import { getDictionary } from "#lib/localization";
 import { Page } from "#components";
 import type { IStaticPageProps } from "#pages/types";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";

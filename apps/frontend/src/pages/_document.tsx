@@ -1,8 +1,9 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { DEFAULT_LOCALE } from "#lib/internationalization";
 
 function Document() {
   return (
-    <Html>
+    <Html lang={DEFAULT_LOCALE} prefix="og: https://ogp.me/ns#">
       <Head />
       <body>
         <Main />

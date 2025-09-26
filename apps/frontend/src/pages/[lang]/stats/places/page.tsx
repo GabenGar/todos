@@ -1,5 +1,5 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { getDictionary } from "#server";
+import { getDictionary } from "#lib/localization";
 import { Page } from "#components";
 import { Overview, OverviewHeader } from "#components/overview";
 import type { IStaticPageProps } from "#pages/types";

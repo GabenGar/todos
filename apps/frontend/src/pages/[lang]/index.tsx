@@ -1,6 +1,11 @@
-import type { Metadata } from "next";
+import type { ParsedUrlQuery } from "node:querystring";
+import type {
+  GetStaticPaths,
+  GetStaticPathsResult,
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from "next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { SITE_TITLE } from "#environment";
 import {
   createQRCodeReaderURL,
   createAccountPageURL,
@@ -10,37 +15,31 @@ import {
   createURLViewerPageURL,
   createYTDLPConfigPage,
 } from "#lib/urls";
-import { validateLocale } from "#lib/internationalization";
-import { getDictionary } from "#server";
-import type { IStaticPageProps } from "#pages/types";
+import { getDictionary } from "#lib/localization";
+import { LOCALES, type ILocale } from "#lib/internationalization";
 import { Page } from "#components";
 import { Link } from "#components/link";
 import { Overview, OverviewHeader } from "#components/overview";
 import { List, ListItem } from "#components/list";
 import { Heading } from "#components/heading";
 
-import styles from "./page.module.scss";
+import styles from "./index.module.scss";
 
-interface IProps extends IStaticPageProps {}
-
-export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
-  const { lang } = await params;
-  validateLocale(lang)
-  const dict = await getDictionary(lang);
-  const { home } = dict.pages;
-
-  return {
-    title: `${home.title} | ${SITE_TITLE}`,
-  };
+interface IProps {
+  le: string;
 }
 
-async function FrontPage({ params }: IProps) {
+interface IParams extends ParsedUrlQuery {
+  lang: ILocale;
+}
+
+async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
   const { home } = dict.pages;
 
   return (
-    <Page heading={home.heading}>
+    <Page heading={home.heading} title={home.title}>
       <Overview headingLevel={2}>
         {(headinglevel) => (
           <OverviewHeader className={styles.header}>
@@ -137,5 +136,26 @@ async function FrontPage({ params }: IProps) {
     </Page>
   );
 }
+
+export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+  params,
+}) => {
+  const props = { le: "le" } satisfies IProps;
+
+  return {
+    props,
+  };
+};
+export const getStaticPaths: GetStaticPaths<IParams> = async () => {
+  const paths = LOCALES.map((locale) => {
+    return { params: { lang: locale } };
+  });
+  const result = {
+    paths,
+    fallback: false,
+  } satisfies GetStaticPathsResult<IParams>;
+
+  return result;
+};
 
 export default FrontPage;

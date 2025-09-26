@@ -1,9 +1,13 @@
-import type { AppProps } from "next/app";
-
 import "@repo/ui/styles/global";
 
-function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+import { MainLayout, type AppPropsWithLayout } from "#components/pages/layouts";
+
+function App({ Component, pageProps }: AppPropsWithLayout) {
+  return !Component.getLayout ? (
+    <MainLayout>{<Component {...pageProps} />}</MainLayout>
+  ) : (
+    Component.getLayout(<Component {...pageProps} />)
+  );
 }
 
 export default App;

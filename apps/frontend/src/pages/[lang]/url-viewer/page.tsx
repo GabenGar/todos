@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getDictionary } from "#server";
+import { getDictionary } from "#lib/localization";
 import { Page } from "#components";
 import type { IStaticPageProps } from "#pages/types";
 import { Client } from "./client";

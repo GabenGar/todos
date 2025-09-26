@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getDictionary } from "#server";
+import { getDictionary } from "#lib/localization";
 import { TaskList } from "#entities/task";
 import { Loading, Page } from "#components";
 import type { IStaticPageProps } from "#pages/types";

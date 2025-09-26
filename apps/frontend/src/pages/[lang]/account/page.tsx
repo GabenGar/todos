@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { validateLocale } from "#lib/internationalization";
-import { getDictionary } from "#server";
+import { getDictionary } from "#lib/localization";
 import { Page } from "#components";
 import { Client } from "./client";
 
