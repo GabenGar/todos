@@ -1,14 +1,13 @@
+import type { ParsedUrlQuery } from "node:querystring";
 import type { ILocale } from "#lib/internationalization";
+import type { ILocalizationCommon, ILocalizationPage } from "#lib/localization";
 
-export interface IStaticPageProps {
-  params: Promise<IBasePageParams>;
-}
-
-export interface IDynamicPageProps {
-  params: Promise<IBasePageParams>;
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export interface IBasePageParams {
+export interface ILocalizedParams extends ParsedUrlQuery {
   lang: ILocale;
+}
+
+export interface ILocalizedProps<Page extends keyof ILocalizationPage> {
+  lang: ILocale;
+  common: ILocalizationCommon
+  t: ILocalizationPage[Page]
 }

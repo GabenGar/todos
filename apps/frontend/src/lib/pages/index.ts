@@ -1,5 +1,1 @@
-export type {
-  IBasePageParams,
-  IDynamicPageProps,
-  IStaticPageProps,
-} from "./types";
+export type { ILocalizedParams, ILocalizedProps } from "./types";

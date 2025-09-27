@@ -1,3 +1,4 @@
 import "server-only";
 
-export async function serverFunction() {}
+export { getStaticExportPaths } from "./get-static-export-paths";
+export { getStaticExportProps } from "./get-static-export-props";

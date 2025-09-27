@@ -1,11 +1,6 @@
-import type { ParsedUrlQuery } from "node:querystring";
-import type {
-  GetStaticPaths,
-  GetStaticPathsResult,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { getStaticExportPaths } from "#server";
 import {
   createQRCodeReaderURL,
   createAccountPageURL,
@@ -16,7 +11,7 @@ import {
   createYTDLPConfigPage,
 } from "#lib/urls";
 import { getDictionary } from "#lib/localization";
-import { LOCALES, type ILocale } from "#lib/internationalization";
+import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import { Page } from "#components";
 import { Link } from "#components/link";
 import { Overview, OverviewHeader } from "#components/overview";
@@ -25,30 +20,25 @@ import { Heading } from "#components/heading";
 
 import styles from "./index.module.scss";
 
-interface IProps {
-  le: string;
-}
+interface IProps extends ILocalizedProps<"home"> {}
 
-interface IParams extends ParsedUrlQuery {
-  lang: ILocale;
-}
+interface IParams extends ILocalizedParams {}
 
-async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { lang } = await params;
-  const dict = await getDictionary(lang);
-  const { home } = dict.pages;
-
+async function FrontPage({
+  lang,
+  t,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Page heading={home.heading} title={home.title}>
+    <Page heading={t.heading} title={t.title}>
       <Overview headingLevel={2}>
         {(headinglevel) => (
           <OverviewHeader className={styles.header}>
-            <Heading level={headinglevel + 1}>{home["Tools"]}</Heading>
+            <Heading level={headinglevel + 1}>{t["Tools"]}</Heading>
             <List className={styles.list}>
               <ListItem>
                 <DescriptionList>
                   <DescriptionSection
-                    dKey={home["Planned events"]}
+                    dKey={t["Planned events"]}
                     dValue={
                       <List className={styles.list}>
                         <ListItem>
@@ -58,7 +48,7 @@ async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
                               order: "recently_updated",
                             })}
                           >
-                            {home["Recently updated"]}
+                            {t["Recently updated"]}
                           </Link>
                         </ListItem>
 
@@ -67,7 +57,7 @@ async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
                             className={styles.link}
                             href={createPlannedEventsPageURL(lang)}
                           >
-                            {home["Recently created"]}
+                            {t["Recently created"]}
                           </Link>
                         </ListItem>
                       </List>
@@ -81,7 +71,7 @@ async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createStatsPlacesPageURL(lang)}
                 >
-                  {home["Places"]}
+                  {t["Places"]}
                 </Link>
               </ListItem>
 
@@ -90,7 +80,7 @@ async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createTaskStatsPageURL(lang)}
                 >
-                  {home["Tasks"]}
+                  {t["Tasks"]}
                 </Link>
               </ListItem>
 
@@ -99,7 +89,7 @@ async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createQRCodeReaderURL(lang)}
                 >
-                  {home["QR code reader"]}
+                  {t["QR code reader"]}
                 </Link>
               </ListItem>
 
@@ -108,25 +98,25 @@ async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createURLViewerPageURL(lang)}
                 >
-                  {home["URL Viewer"]}
+                  {t["URL Viewer"]}
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link className={styles.link} href={createAccountPageURL(lang)}>
-                  {home["Account"]}
+                  {t["Account"]}
                 </Link>
               </ListItem>
             </List>
 
-            <Heading level={headinglevel + 1}>{home["Miscellaneous"]}</Heading>
+            <Heading level={headinglevel + 1}>{t["Miscellaneous"]}</Heading>
             <List className={styles.list}>
               <ListItem>
                 <Link
                   className={styles.link}
                   href={createYTDLPConfigPage(lang)}
                 >
-                  {home["YT-DLP configs"]}
+                  {t["YT-DLP configs"]}
                 </Link>
               </ListItem>
             </List>
@@ -140,22 +130,15 @@ async function FrontPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
-  const props = { le: "le" } satisfies IProps;
+  const { lang } = params!;
+  const dict = await getDictionary(lang);
+  const { home } = dict.pages;
+  const props = { lang, common: dict.common, t: home } satisfies IProps;
 
   return {
     props,
   };
 };
-export const getStaticPaths: GetStaticPaths<IParams> = async () => {
-  const paths = LOCALES.map((locale) => {
-    return { params: { lang: locale } };
-  });
-  const result = {
-    paths,
-    fallback: false,
-  } satisfies GetStaticPathsResult<IParams>;
-
-  return result;
-};
+export const getStaticPaths = getStaticExportPaths;
 
 export default FrontPage;
