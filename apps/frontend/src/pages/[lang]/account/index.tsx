@@ -1,9 +1,10 @@
-
-
-import { useRouter } from "next/navigation";
-import type { ILocalizationPage } from "#lib/localization";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
+import { getDictionary } from "#lib/localization";
+import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { getStaticExportPaths } from "#server";
 import { useClient } from "#hooks";
-import type { ITranslatableProps } from "#components/types";
+import { Page } from "#components";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Heading } from "#components/heading";
@@ -12,37 +13,36 @@ import { Pre } from "#components/pre";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import { SettingsForm } from "./settings-form";
 
-interface IProps extends ITranslatableProps {
-  translation: ILocalizationPage["account"];
-}
+interface IProps extends ILocalizedProps<"account"> {}
 
-export function Client({ commonTranslation, translation }: IProps) {
+interface IParams extends ILocalizedParams {}
+
+function AccountPage({
+  translation,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
-  const clientInfo = useClient();
+  const client = useClient();
+  const { common, t } = translation;
 
   return (
-    <>
+    <Page heading={t.heading} title={t.title}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>{translation["Data"]}</Heading>
+              <Heading level={headingLevel + 1}>{t["Data"]}</Heading>
             </OverviewHeader>
 
             <OverviewBody>
-              <Heading level={headingLevel + 2}>
-                {translation["Export"]}
-              </Heading>
-              <DataExportForm translation={translation} />
+              <Heading level={headingLevel + 2}>{t["Export"]}</Heading>
+              <DataExportForm translation={t} />
 
-              <Heading level={headingLevel + 2}>
-                {translation["Import"]}
-              </Heading>
+              <Heading level={headingLevel + 2}>{t["Import"]}</Heading>
               <ImportDataExportForm
-                commonTranslation={commonTranslation}
-                translation={translation}
+                commonTranslation={common}
+                translation={t}
                 id="import-data-export"
-                onSuccess={async () => router.refresh()}
+                onSuccess={async () => router.reload()}
               />
             </OverviewBody>
           </>
@@ -53,9 +53,7 @@ export function Client({ commonTranslation, translation }: IProps) {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>
-                {translation["Compatibility"]}
-              </Heading>
+              <Heading level={headingLevel + 1}>{t["Compatibility"]}</Heading>
             </OverviewHeader>
             <OverviewBody>
               <Compatibility translation={translation} />
@@ -68,22 +66,20 @@ export function Client({ commonTranslation, translation }: IProps) {
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>
-                {translation["Settings"]}
-              </Heading>
+              <Heading level={headingLevel + 1}>{t["Settings"]}</Heading>
             </OverviewHeader>
             <OverviewBody>
-              {!clientInfo.isClient ? (
+              {!client ? (
                 <Loading />
               ) : (
                 <SettingsForm
-                  key={clientInfo.logLevel}
-                  commonTranslation={commonTranslation}
-                  translation={translation}
+                  key={client.logLevel}
+                  commonTranslation={common}
+                  translation={t}
                   id="edit-account-settings"
-                  currentLogLevel={clientInfo.logLevel}
+                  currentLogLevel={client.logLevel}
                   onSettingsUpdate={async (settingsUpdate) => {
-                    clientInfo.changeLoglevel(settingsUpdate.log_level);
+                    client.changeLoglevel(settingsUpdate.log_level);
                   }}
                 />
               )}
@@ -91,7 +87,7 @@ export function Client({ commonTranslation, translation }: IProps) {
           </>
         )}
       </Overview>
-    </>
+    </Page>
   );
 }
 
@@ -101,7 +97,8 @@ interface ICompatibilityProps extends Pick<IProps, "translation"> {}
  * @TODO colouring
  */
 function Compatibility({ translation }: ICompatibilityProps) {
-  const clientInfo = useClient();
+  const client = useClient();
+  const { t } = translation;
 
   return (
     <DescriptionList>
@@ -113,12 +110,12 @@ function Compatibility({ translation }: ICompatibilityProps) {
           </Link>
         }
         dValue={
-          !clientInfo.isClient ? (
+          !client ? (
             <Loading />
-          ) : clientInfo.compatibility.localStorage ? (
-            translation["Supported"]
+          ) : client.compatibility.localStorage ? (
+            t["Supported"]
           ) : (
-            translation["Not supported"]
+            t["Not supported"]
           )
         }
       />
@@ -131,15 +128,34 @@ function Compatibility({ translation }: ICompatibilityProps) {
           </Link>
         }
         dValue={
-          !clientInfo.isClient ? (
+          !client ? (
             <Loading />
-          ) : clientInfo.compatibility.indexedDB ? (
-            translation["Supported"]
+          ) : client.compatibility.indexedDB ? (
+            t["Supported"]
           ) : (
-            translation["Not supported"]
+            t["Not supported"]
           )
         }
       />
     </DescriptionList>
   );
 }
+
+export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+  params,
+}) => {
+  const { lang } = params!;
+  const dict = await getDictionary(lang);
+  const { account } = dict.pages;
+  const props = {
+    translation: { lang, common: dict.common, t: account },
+  } satisfies IProps;
+
+  return {
+    props,
+  };
+};
+
+export const getStaticPaths = getStaticExportPaths;
+
+export default AccountPage;

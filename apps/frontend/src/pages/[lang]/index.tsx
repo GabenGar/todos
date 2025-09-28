@@ -142,6 +142,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
     props,
   };
 };
+
 export const getStaticPaths = getStaticExportPaths;
 
 export default FrontPage;

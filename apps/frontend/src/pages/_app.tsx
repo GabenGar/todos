@@ -6,7 +6,6 @@ import { MainLayout, type AppPropsWithLayout } from "#components/pages/layouts";
 function App({ Component, pageProps }: AppPropsWithLayout) {
   if (!Component.getLayout) {
     const { lang, common } = pageProps.translation;
-    console.log(lang);
 
     return (
       <ClientProvider lang={lang}>

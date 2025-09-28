@@ -1,9 +1,16 @@
+import type { ILocale } from "#lib/internationalization";
 import type engJSON from "../../../localization/en.json";
 
 export type ILocalization = typeof engJSON;
 export type ILocalizationCommon = ILocalization["common"];
 export type ILocalizationPage = ILocalization["pages"];
 export type ILocalizationEntities = ILocalization["entities"];
+
+export type IPageLocalization<Page extends keyof ILocalizationPage> = {
+  lang: ILocale;
+  common: ILocalizationCommon;
+  t: ILocalizationPage[Page];
+}
 
 const dictionaries = {
   en: async () => {
@@ -16,8 +23,6 @@ const dictionaries = {
   },
 };
 
-export const getDictionary = async (locale: keyof typeof dictionaries) => {
+export async function getDictionary(locale: keyof typeof dictionaries) {
   return await dictionaries[locale]();
-};
-
-export async function getTranslation(locale: keyof typeof dictionaries) {}
+}
