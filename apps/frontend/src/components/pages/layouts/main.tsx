@@ -1,7 +1,7 @@
-import { use, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { REPOSITORY_URL } from "#environment";
-import { DEFAULT_LOCALE, validateLocale } from "#lib/internationalization";
-import { getDictionary } from "#lib/localization";
+import { type ILocale } from "#lib/internationalization";
+import { type ILocalizationCommon } from "#lib/localization";
 import { ClientProvider } from "#hooks";
 import { GlobalNavigation } from "#components";
 import { Link } from "#components/link";
@@ -10,14 +10,13 @@ import { List, ListItem } from "#components/list";
 import styles from "./main.module.scss";
 
 interface IProps {
+  lang: ILocale;
+  common: ILocalizationCommon;
   children: ReactNode;
 }
 
-export function MainLayout({ children }: IProps) {
-  const lang = DEFAULT_LOCALE;
-  validateLocale(lang);
-  const dict = use(getDictionary(lang));
-  const { layout } = dict;
+export function MainLayout({ lang, common, children }: IProps) {
+  const { layout } = common;
 
   return (
     <ClientProvider>

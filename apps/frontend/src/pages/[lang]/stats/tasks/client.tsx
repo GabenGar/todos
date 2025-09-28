@@ -1,4 +1,4 @@
-"use client";
+
 
 import type { ILocalization } from "#lib/localization";
 import { TasksStats } from "#entities/task";

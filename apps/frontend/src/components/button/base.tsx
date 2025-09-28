@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import clsx from "clsx";
 import { createBlockComponent } from "@repo/ui/meta";

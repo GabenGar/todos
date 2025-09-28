@@ -1,9 +1,9 @@
 {
-  "layout": {
-    "description": "Организовывайте задачи в браузере",
-    "source_code": "Исходный код"
-  },
   "common": {
+    "layout": {
+      "description": "Организовывайте задачи в браузере",
+      "source_code": "Исходный код"
+    },
     "form": {
       "submit": "Отправить",
       "submitting": "Отправляем...",
@@ -45,8 +45,8 @@
       "URL Viewer": "Просмотрщик ссылок",
       "Account": "Учётная запись",
       "Planned events": "Планируемые события",
-      "Recently updated":"Недавно обновлённые",
-      "Recently created":"Недавно добавленные",
+      "Recently updated": "Недавно обновлённые",
+      "Recently created": "Недавно добавленные",
       "Miscellaneous": "Разное",
       "YT-DLP configs": "Конфиги YT-DLP"
     },

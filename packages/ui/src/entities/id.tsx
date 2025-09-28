@@ -1,4 +1,4 @@
-"use client";
+ ;
 
 import { createBlockComponent, type IBaseComponentProps } from "@repo/ui/meta";
 import { useState } from "react";

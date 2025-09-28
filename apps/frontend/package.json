@@ -46,7 +46,6 @@
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "server-only": "^0.0.1",
     "stringify-object": "^5.0.0"
   },
   "devDependencies": {

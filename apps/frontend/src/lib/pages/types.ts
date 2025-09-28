@@ -6,8 +6,12 @@ export interface ILocalizedParams extends ParsedUrlQuery {
   lang: ILocale;
 }
 
-export interface ILocalizedProps<Page extends keyof ILocalizationPage> {
-  lang: ILocale;
-  common: ILocalizationCommon
-  t: ILocalizationPage[Page]
+export interface ILocalizedProps<
+  Page extends keyof ILocalizationPage = keyof ILocalizationPage,
+> {
+  translation: {
+    lang: ILocale;
+    common: ILocalizationCommon;
+    t: ILocalizationPage[Page];
+  };
 }

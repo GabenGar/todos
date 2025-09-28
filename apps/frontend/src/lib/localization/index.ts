@@ -19,3 +19,5 @@ const dictionaries = {
 export const getDictionary = async (locale: keyof typeof dictionaries) => {
   return await dictionaries[locale]();
 };
+
+export async function getTranslation(locale: keyof typeof dictionaries) {}

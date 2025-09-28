@@ -1,4 +1,4 @@
-"use client";
+ ;
 
 import { ButtonCopy, type IButtonCopyProps } from "#buttons";
 import { useClient } from "#hooks";

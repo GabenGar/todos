@@ -1,4 +1,4 @@
-"use client";
+
 
 import { URLViewer } from "@repo/ui/url";
 import { useState } from "react";

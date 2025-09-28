@@ -28,7 +28,7 @@ const defaultContext: IIndexedDBContext = () => {};
 const IndexedDBContext = createContext<IIndexedDBContext>(defaultContext);
 
 export function IndexedDBProvider({ children }: { children: ReactNode }) {
-  const { isClient } = useClient();
+  const client = useClient();
   const [database, changeDatabase] = useState<IDBDatabase>();
 
   // @TODO: check for client without race conditions
@@ -69,7 +69,7 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
         onError(error);
       }
     },
-    [database, isClient],
+    [database, client],
   );
 
   return (

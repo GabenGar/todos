@@ -24,10 +24,11 @@ interface IProps extends ILocalizedProps<"home"> {}
 
 interface IParams extends ILocalizedParams {}
 
-async function FrontPage({
-  lang,
-  t,
+function FrontPage({
+  translation,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { lang, t } = translation;
+
   return (
     <Page heading={t.heading} title={t.title}>
       <Overview headingLevel={2}>
@@ -133,7 +134,9 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const { home } = dict.pages;
-  const props = { lang, common: dict.common, t: home } satisfies IProps;
+  const props = {
+    translation: { lang, common: dict.common, t: home },
+  } satisfies IProps;
 
   return {
     props,

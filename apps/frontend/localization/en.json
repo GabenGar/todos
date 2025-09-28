@@ -1,9 +1,9 @@
 {
-  "layout": {
-    "description": "Manage tasks in browser",
-    "source_code": "Source Code"
-  },
   "common": {
+    "layout": {
+      "description": "Manage tasks in browser",
+      "source_code": "Source Code"
+    },
     "form": {
       "submit": "Submit",
       "submitting": "Submitting...",
@@ -45,8 +45,8 @@
       "URL Viewer": "URL Viewer",
       "Account": "Account",
       "Planned events": "Planned events",
-      "Recently updated":"Recently updated",
-      "Recently created":"Recently created",
+      "Recently updated": "Recently updated",
+      "Recently created": "Recently created",
       "Miscellaneous": "Miscellaneous",
       "YT-DLP configs": "YT-DLP configs"
     },

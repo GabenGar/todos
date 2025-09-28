@@ -1,4 +1,4 @@
-"use client";
+
 // not sure why it needs this directive considering
 // it's only called from the client component
 
