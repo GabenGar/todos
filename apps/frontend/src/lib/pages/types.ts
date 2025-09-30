@@ -8,6 +8,6 @@ export interface ILocalizedParams extends ParsedUrlQuery {
 
 export interface ILocalizedProps<
   Page extends keyof ILocalizationPage = keyof ILocalizationPage,
-> extends Record<string, unknown> {
+> {
   translation: IPageLocalization<Page>;
 }
