@@ -1,13 +1,17 @@
-
-
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import type { ILocalization } from "#lib/localization";
+import { type GetStaticProps, type InferGetStaticPropsType } from "next";
+import { getDictionary, type ILocalization } from "#lib/localization";
+import {
+  getSingleValueFromQuery,
+  type ILocalizedParams,
+  type ILocalizedProps,
+} from "#lib/pages";
 import { createPlacesPageURL } from "#lib/urls";
+import { getStaticExportPaths } from "#server";
+import { Page } from "#components";
 import { Details, Loading } from "#components";
 import { Overview, OverviewHeader } from "#components/overview";
 import { PreviewList } from "#components/preview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
   type IPlaceInit,
   PlaceCreateForm,
@@ -18,24 +22,32 @@ import {
   SearchPlacesForm,
   type IPlaceSearchQuery,
 } from "#entities/place";
+import { useRouter } from "next/router";
 
-interface IProps extends ILocalizableProps, ITranslatableProps {
-  translation: ILocalization["place"];
+interface IProps extends ILocalizedProps<"places"> {
+  placeTranslation: ILocalization["place"];
 }
 
-export function Client({ language, commonTranslation, translation }: IProps) {
+interface IParams extends ILocalizedParams {}
+
+function PlacesPage({
+  translation,
+  placeTranslation,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [places, changePlaces] =
     useState<Awaited<ReturnType<typeof getPlaces>>>();
-  const inputPage = searchParams.get("page")?.trim();
+  const { isReady, query: pathQuery } = router;
+  const { lang, common, t } = translation;
+  const title = t.title;
+  const inputPage = getSingleValueFromQuery(pathQuery, "page");
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
-  const inputCategory = searchParams.get("category")?.trim();
+  const inputCategory = getSingleValueFromQuery(pathQuery, "category");
   const category =
     !inputCategory || !isPlaceCategory(inputCategory)
       ? undefined
       : inputCategory;
-  const inputQuery = searchParams.get("query")?.trim();
+  const inputQuery = getSingleValueFromQuery(pathQuery, "query");
   const query = !inputQuery ? undefined : inputQuery;
   const options = {
     page,
@@ -44,6 +56,10 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   };
 
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+
     (async () => {
       const newPlaces = await getPlaces(options);
 
@@ -51,7 +67,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         newPlaces.pagination.currentPage !== 0 &&
         page !== newPlaces.pagination.currentPage
       ) {
-        const url = createPlacesPageURL(language, {
+        const url = createPlacesPageURL(lang, {
           ...options,
           page: newPlaces.pagination.currentPage,
         });
@@ -61,7 +77,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
 
       changePlaces(newPlaces);
     })();
-  }, [page, category, query]);
+  }, [isReady, page, category, query]);
 
   async function handlePlaceCreation(init: IPlaceInit) {
     await createPlace(init);
@@ -69,7 +85,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
     const newPlaces = await getPlaces(options);
 
     if (places?.pagination.totalPages !== newPlaces.pagination.totalPages) {
-      const url = createPlacesPageURL(language, {
+      const url = createPlacesPageURL(lang, {
         page: newPlaces.pagination.totalPages,
       });
       router.replace(url);
@@ -86,7 +102,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       page: undefined,
     });
 
-    const newURL = createPlacesPageURL(language, {
+    const newURL = createPlacesPageURL(lang, {
       ...options,
       page: pagination.currentPage,
       query,
@@ -96,26 +112,26 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   }
 
   return (
-    <>
+    <Page heading={t.heading} title={title}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <OverviewHeader>
-            <Details summary={translation.add}>
+            <Details summary={placeTranslation.add}>
               <PlaceCreateForm
-                commonTranslation={commonTranslation}
-                translation={translation}
+                commonTranslation={common}
+                translation={placeTranslation}
                 id="create-place"
                 onNewPlace={handlePlaceCreation}
               />
             </Details>
 
             <Details
-              summary={translation.search["Search"]}
+              summary={placeTranslation.search["Search"]}
               open={Boolean(query)}
             >
               <SearchPlacesForm
-                commonTranslation={commonTranslation}
-                translation={translation}
+                commonTranslation={common}
+                translation={placeTranslation}
                 id="search-places"
                 defaultQuery={options}
                 onSearch={handlePlaceSearch}
@@ -130,23 +146,23 @@ export function Client({ language, commonTranslation, translation }: IProps) {
       ) : places.pagination.totalCount === 0 ? (
         <Overview headingLevel={2}>
           {() => (
-            <OverviewHeader>{translation["No places found"]}</OverviewHeader>
+            <OverviewHeader>
+              {placeTranslation["No places found"]}
+            </OverviewHeader>
           )}
         </Overview>
       ) : (
         <PreviewList
           pagination={places.pagination}
-          commonTranslation={commonTranslation}
+          commonTranslation={common}
           sortingOrder="descending"
-          buildURL={(page) =>
-            createPlacesPageURL(language, { ...options, page })
-          }
+          buildURL={(page) => createPlacesPageURL(lang, { ...options, page })}
         >
           {places.items.map((place) => (
             <PlacePreview
-              language={language}
-              commonTranslation={commonTranslation}
-              translation={translation}
+              language={lang}
+              commonTranslation={common}
+              translation={placeTranslation}
               headingLevel={2}
               key={place.id}
               place={place}
@@ -154,6 +170,26 @@ export function Client({ language, commonTranslation, translation }: IProps) {
           ))}
         </PreviewList>
       )}
-    </>
+    </Page>
   );
 }
+
+export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+  params,
+}) => {
+  const { lang } = params!;
+  const dict = await getDictionary(lang);
+  const { places } = dict.pages;
+  const props = {
+    translation: { lang, common: dict.common, t: places },
+    placeTranslation: dict.place,
+  } satisfies IProps;
+
+  return {
+    props,
+  };
+};
+
+export const getStaticPaths = getStaticExportPaths;
+
+export default PlacesPage;
