@@ -1,15 +1,20 @@
-
-
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import type { ILocalizationEntities } from "#lib/localization";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
+import { getDictionary, type ILocalizationEntities } from "#lib/localization";
+import {
+  getSingleValueFromQuery,
+  type ILocalizedParams,
+  type ILocalizedProps,
+} from "#lib/pages";
+import { getStaticExportPaths } from "#server";
+import { Page } from "#components";
 import { createPlannedEventsPageURL } from "#lib/urls";
 import type { IPaginatedCollection } from "#lib/pagination";
 import { useIndexedDB } from "#hooks";
 import { Details, Loading } from "#components";
 import { Overview, OverviewHeader } from "#components/overview";
 import { PreviewList } from "#components/preview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import {
   PlannedEventCreateForm,
   PlannedEventPreview,
@@ -23,23 +28,33 @@ import {
   type IPlannedEventSearchQuery,
 } from "#entities/planned-event";
 
-interface IProps extends ILocalizableProps, ITranslatableProps {
-  translation: ILocalizationEntities["planned_event"];
+interface IProps extends ILocalizedProps<"planned-events"> {
+  plannedEventTranslation: ILocalizationEntities["planned_event"];
 }
 
-export function Client({ language, commonTranslation, translation }: IProps) {
+interface IParams extends ILocalizedParams {}
+
+function PlannedEventsPage({
+  translation,
+  plannedEventTranslation,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const runTransaction = useIndexedDB();
   const [plannedEvents, changePlannedEvents] =
     useState<IPaginatedCollection<IPlannedEvent>>();
   const [isLoading, switchLoading] = useState(true);
-  const inputPage = searchParams.get("page")?.trim();
+  const { isReady, query } = router;
+  const { lang, common, t } = translation;
+  const inputPage = getSingleValueFromQuery(query, "page");
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
-  const inputOrder = searchParams.get("order")?.trim();
+  const inputOrder = getSingleValueFromQuery(query, "order");
   const order = !isPlannedEventsOrder(inputOrder) ? undefined : inputOrder;
 
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+
     switchLoading(true);
 
     runTransaction(
@@ -58,7 +73,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
 
           getPlannedEvents({ transaction, page, order }, (plannedEvents) => {
             if (!page) {
-              const url = createPlannedEventsPageURL(language, {
+              const url = createPlannedEventsPageURL(lang, {
                 page: plannedEvents.pagination.totalPages,
                 order,
               });
@@ -74,7 +89,7 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         });
       },
     );
-  }, [page]);
+  }, [isReady, page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {
     await new Promise<void>((resolve, reject) =>
@@ -110,13 +125,15 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         (transaction) => {
           countPlannedEvents({ transaction }, (count) => {
             if (count === 0) {
-              reject(new Error(translation["No planned events found"]));
+              reject(
+                new Error(plannedEventTranslation["No planned events found"]),
+              );
 
               return;
             }
 
             getPlannedEvents({ transaction, page, order }, (plannedEvents) => {
-              const url = createPlannedEventsPageURL(language, {
+              const url = createPlannedEventsPageURL(lang, {
                 page: plannedEvents.pagination.totalPages,
                 order,
               });
@@ -135,25 +152,25 @@ export function Client({ language, commonTranslation, translation }: IProps) {
   }
 
   return (
-    <>
+    <Page heading={t.heading} title={t.title}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <OverviewHeader>
-            <Details summary={translation["Filter"]}>
+            <Details summary={plannedEventTranslation["Filter"]}>
               <SearchPlannedEventForm
                 key={order}
-                commonTranslation={commonTranslation}
-                translation={translation}
+                commonTranslation={common}
+                translation={plannedEventTranslation}
                 id="search-planned-event"
                 onSearch={handlePlannedEventsSearch}
                 defaultOrder={order}
               />
             </Details>
 
-            <Details summary={translation["Add planned event"]}>
+            <Details summary={plannedEventTranslation["Add planned event"]}>
               <PlannedEventCreateForm
-                commonTranslation={commonTranslation}
-                translation={translation}
+                commonTranslation={common}
+                translation={plannedEventTranslation}
                 id="create-planned-event"
                 onNewPlannedEvent={handlePlannedEventCreation}
               />
@@ -168,24 +185,22 @@ export function Client({ language, commonTranslation, translation }: IProps) {
         <Overview headingLevel={2}>
           {() => (
             <OverviewHeader>
-              {translation["No planned events found"]}
+              {plannedEventTranslation["No planned events found"]}
             </OverviewHeader>
           )}
         </Overview>
       ) : (
         <PreviewList
           pagination={plannedEvents.pagination}
-          commonTranslation={commonTranslation}
+          commonTranslation={common}
           sortingOrder="descending"
-          buildURL={(page) =>
-            createPlannedEventsPageURL(language, { page, order })
-          }
+          buildURL={(page) => createPlannedEventsPageURL(lang, { page, order })}
         >
           {plannedEvents.items.map((plannedEvent) => (
             <PlannedEventPreview
-              language={language}
-              commonTranslation={commonTranslation}
-              translation={translation}
+              language={lang}
+              commonTranslation={common}
+              translation={plannedEventTranslation}
               headingLevel={2}
               key={plannedEvent.id}
               plannedEvent={plannedEvent}
@@ -193,6 +208,29 @@ export function Client({ language, commonTranslation, translation }: IProps) {
           ))}
         </PreviewList>
       )}
-    </>
+    </Page>
   );
 }
+
+export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+  params,
+}) => {
+  const { lang } = params!;
+  const dict = await getDictionary(lang);
+  const props = {
+    translation: {
+      lang,
+      common: dict.common,
+      t: dict.pages["planned-events"],
+    },
+    plannedEventTranslation: dict.entities.planned_event,
+  } satisfies IProps;
+
+  return {
+    props,
+  };
+};
+
+export const getStaticPaths = getStaticExportPaths;
+
+export default PlannedEventsPage;
