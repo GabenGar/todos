@@ -83,6 +83,18 @@
         "Eventless": "Eventless"
       }
     },
+    "stats_tasks": {
+      "title": "Task stats",
+      "heading": "Task Stats",
+      "description": "Rundown of the tasks",
+      "status_values": {
+        "all": "All",
+        "pending": "Pending",
+        "in-progress": "In progress",
+        "finished": "Finished",
+        "failed": "Failed"
+      }
+    },
     "account": {
       "title": "Account",
       "heading": "Account",
@@ -234,18 +246,6 @@
     },
     "delete": "Delete",
     "details": "Details"
-  },
-  "stats_tasks": {
-    "title": "Task stats",
-    "heading": "Task Stats",
-    "description": "Rundown of the tasks",
-    "status_values": {
-      "all": "All",
-      "pending": "Pending",
-      "in-progress": "In progress",
-      "finished": "Finished",
-      "failed": "Failed"
-    }
   },
   "task_edit": {
     "title": "Edit task",
