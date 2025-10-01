@@ -95,6 +95,32 @@
         "failed": "Failed"
       }
     },
+    "task": {
+      "title": "Task",
+      "heading": "Task",
+      "description": "Description",
+      "no_description": "No description provided",
+      "creation_date": "Creation date",
+      "last_updated": "Last updated",
+      "edit": "Edit",
+      "place": "Place",
+      "place_unknown": "Unknown",
+      "status": "Status",
+      "status_values": {
+        "pending": "Pending",
+        "in-progress": "In progress",
+        "finished": "Finished",
+        "failed": "Failed"
+      },
+      "actions": {
+        "fail": "Fail",
+        "delay": "Delay",
+        "start": "Start",
+        "complete": "Complete"
+      },
+      "delete": "Delete",
+      "details": "Details"
+    },
     "account": {
       "title": "Account",
       "heading": "Account",
@@ -221,32 +247,7 @@
     "edit": "Edit",
     "editing": "Editing..."
   },
-  "task": {
-    "title": "Task",
-    "heading": "Task",
-    "description": "Description",
-    "no_description": "No description provided",
-    "creation_date": "Creation date",
-    "last_updated": "Last updated",
-    "edit": "Edit",
-    "place": "Place",
-    "place_unknown": "Unknown",
-    "status": "Status",
-    "status_values": {
-      "pending": "Pending",
-      "in-progress": "In progress",
-      "finished": "Finished",
-      "failed": "Failed"
-    },
-    "actions": {
-      "fail": "Fail",
-      "delay": "Delay",
-      "start": "Start",
-      "complete": "Complete"
-    },
-    "delete": "Delete",
-    "details": "Details"
-  },
+
   "task_edit": {
     "title": "Edit task",
     "heading": "Edit Task",

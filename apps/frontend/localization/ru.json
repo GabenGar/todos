@@ -95,6 +95,32 @@
         "failed": "Проваленные"
       }
     },
+    "task": {
+      "title": "Задача",
+      "heading": "Задача",
+      "description": "Описание",
+      "no_description": "Без описания",
+      "creation_date": "Дата создания",
+      "last_updated": "Последнее обновление",
+      "edit": "Редактировать",
+      "place": "Место",
+      "place_unknown": "Неизвестно",
+      "status": "Статус",
+      "status_values": {
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершена",
+        "failed": "Провалена"
+      },
+      "actions": {
+        "fail": "Провалить",
+        "delay": "Отложить",
+        "start": "Начать",
+        "complete": "Завершить"
+      },
+      "delete": "Удалить",
+      "details": "Детали"
+    },
     "account": {
       "title": "Учётная запись",
       "heading": "Учётная Запись",
@@ -219,32 +245,6 @@
     },
     "edit": "Редактировать",
     "editing": "Редактируем..."
-  },
-  "task": {
-    "title": "Задача",
-    "heading": "Задача",
-    "description": "Описание",
-    "no_description": "Без описания",
-    "creation_date": "Дата создания",
-    "last_updated": "Последнее обновление",
-    "edit": "Редактировать",
-    "place": "Место",
-    "place_unknown": "Неизвестно",
-    "status": "Статус",
-    "status_values": {
-      "pending": "В ожидании",
-      "in-progress": "В ходе выполнения",
-      "finished": "Завершена",
-      "failed": "Провалена"
-    },
-    "actions": {
-      "fail": "Провалить",
-      "delay": "Отложить",
-      "start": "Начать",
-      "complete": "Завершить"
-    },
-    "delete": "Удалить",
-    "details": "Детали"
   },
 
   "task_edit": {

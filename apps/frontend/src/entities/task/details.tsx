@@ -34,7 +34,7 @@ export interface ITaskOverviewProps
   extends ILocalizableProps,
     ITranslatableProps,
     IOverviewProps {
-  translation: ILocalization["task"];
+  translation: ILocalization["pages"]["task"];
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
 }
