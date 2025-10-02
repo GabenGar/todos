@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "build-codegen": "cd ./codegen/generators && npm run build",
-    "start": "serve ./dist -p 9001 --no-clipboard --no-port-switching",
+    "start": "serve ./out -p 9001 --no-clipboard --no-port-switching",
     "lint": "eslint .",
     "format": "prettier --log-level=warn ./src --write",
     "check": "next typegen && tsc --noEmit",

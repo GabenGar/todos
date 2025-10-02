@@ -1,6 +1,8 @@
 # Next.js build output
 .next
 dist
+# nextjs shits itself when having a custom output folder
+out
 
 # Dependency directories
 node_modules/

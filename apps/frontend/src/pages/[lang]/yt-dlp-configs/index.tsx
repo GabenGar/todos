@@ -53,11 +53,11 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const windowsConfig = await fs.readFile(
-    process.cwd() + "/src/app/(main)/[lang]/yt-dlp-configs/windows.conf",
+    process.cwd() + "/src/pages/[lang]/yt-dlp-configs/windows.conf",
     "utf8",
   );
   const linuxConfig = await fs.readFile(
-    process.cwd() + "/src/app/(main)/[lang]/yt-dlp-configs/linux.conf",
+    process.cwd() + "/src/pages/[lang]/yt-dlp-configs/linux.conf",
     "utf8",
   );
 
