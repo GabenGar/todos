@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { OverviewPlaceHolder } from "@repo/ui/articles";
 import { getDictionary } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -22,7 +23,7 @@ function TaskDetailsPage({
   const { isReady, query } = router;
   const { lang, common, t } = translation;
   const title = t.title;
-  const taskID = getSingleValueFromQuery(query, "task_id")!;
+  const taskID = getSingleValueFromQuery(query, "task_id");
 
   useEffect(() => {
     if (!isReady) {
@@ -37,13 +38,17 @@ function TaskDetailsPage({
 
   return (
     <Page heading={t.heading} title={title}>
-      <TaskOverview
-        language={lang}
-        commonTranslation={common}
-        translation={t}
-        headingLevel={2}
-        taskID={taskID}
-      />
+      {!taskID ? (
+        <OverviewPlaceHolder headingLevel={2} />
+      ) : (
+        <TaskOverview
+          language={lang}
+          commonTranslation={common}
+          translation={t}
+          headingLevel={2}
+          taskID={taskID}
+        />
+      )}
     </Page>
   );
 }

@@ -121,6 +121,13 @@
       "delete": "Delete",
       "details": "Details"
     },
+    "task_edit": {
+      "title": "Edit task",
+      "heading": "Edit Task",
+      "description": "Edit task details.",
+      "task": "Task",
+      "Delete": "Delete"
+    },
     "account": {
       "title": "Account",
       "heading": "Account",
@@ -212,7 +219,6 @@
       "Filtering...": "Filtering..."
     }
   },
-
   "todos": {
     "title": "Tasks",
     "heading": "Tasks",
@@ -248,13 +254,6 @@
     "editing": "Editing..."
   },
 
-  "task_edit": {
-    "title": "Edit task",
-    "heading": "Edit Task",
-    "description": "Edit task details.",
-    "task": "Task",
-    "Delete": "Delete"
-  },
   "place": {
     "title": "Title",
     "description": "Description",
