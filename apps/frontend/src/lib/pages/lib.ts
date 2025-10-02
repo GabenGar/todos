@@ -7,7 +7,7 @@ export function getSingleValueFromQuery(
   const value = query[key];
   const inputValue = !Array.isArray(value) ? value?.trim() : value[1].trim();
   const parsedValue =
-    !inputValue || inputValue.length !== 0 ? undefined : inputValue;
+    !inputValue || inputValue.length === 0 ? undefined : inputValue;
 
   return parsedValue;
 }
