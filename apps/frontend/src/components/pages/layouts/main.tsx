@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { REPOSITORY_URL } from "#environment";
 import { type ILocale } from "#lib/internationalization";
 import { type ILocalizationCommon } from "#lib/localization";
@@ -17,6 +17,18 @@ interface IProps {
 
 export function MainLayout({ lang, common, children }: IProps) {
   const { layout } = common;
+
+  /**
+   * `pages` router doesn't allow to set `"lang"`
+   * on `<html>` element during static rendering.
+   * This apparently passes some tests:
+   * https://stackoverflow.com/a/61902243
+   * Otherwise it requires `getInitialProps()` fuckery
+   * on `_document.tsx` file.
+   */
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   return (
     <ClientProvider lang={lang}>
