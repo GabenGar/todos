@@ -128,6 +128,40 @@
       "task": "Task",
       "Delete": "Delete"
     },
+    "tasks": {
+      "title": "Tasks",
+      "heading": "Tasks",
+      "new_todo": {
+        "title": "Title",
+        "description": "Description",
+        "status": "Status",
+        "add": "Add",
+        "adding": "Adding...",
+        "place": "Place"
+      },
+      "status": "Status",
+      "status_values": {
+        "pending": "Pending",
+        "in-progress": "In progress",
+        "finished": "Finished",
+        "failed": "Failed"
+      },
+      "export_tasks": "Export tasks",
+      "click_to_file": "Click to upload a file",
+      "import_tasks": "Import tasks",
+      "importing_tasks": "Importing tasks...",
+      "details": "Details",
+      "search": "Search",
+      "add": "Add",
+      "search_tasks": {
+        "query": "Query",
+        "Place": "Place",
+        "search": "Search",
+        "searching": "Searching..."
+      },
+      "edit": "Edit",
+      "editing": "Editing..."
+    },
     "account": {
       "title": "Account",
       "heading": "Account",
@@ -218,40 +252,6 @@
       "Filter": "Filter",
       "Filtering...": "Filtering..."
     }
-  },
-  "todos": {
-    "title": "Tasks",
-    "heading": "Tasks",
-    "new_todo": {
-      "title": "Title",
-      "description": "Description",
-      "status": "Status",
-      "add": "Add",
-      "adding": "Adding...",
-      "place": "Place"
-    },
-    "status": "Status",
-    "status_values": {
-      "pending": "Pending",
-      "in-progress": "In progress",
-      "finished": "Finished",
-      "failed": "Failed"
-    },
-    "export_tasks": "Export tasks",
-    "click_to_file": "Click to upload a file",
-    "import_tasks": "Import tasks",
-    "importing_tasks": "Importing tasks...",
-    "details": "Details",
-    "search": "Search",
-    "add": "Add",
-    "search_tasks": {
-      "query": "Query",
-      "Place": "Place",
-      "search": "Search",
-      "searching": "Searching..."
-    },
-    "edit": "Edit",
-    "editing": "Editing..."
   },
 
   "place": {

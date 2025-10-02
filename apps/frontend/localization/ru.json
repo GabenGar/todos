@@ -128,6 +128,40 @@
       "task": "Задача",
       "Delete": "Удалить"
     },
+    "tasks": {
+      "title": "Задачи",
+      "heading": "Задачи",
+      "new_todo": {
+        "title": "Название",
+        "description": "Описание",
+        "status": "Статус",
+        "add": "Добавить",
+        "adding": "Добавляем...",
+        "place": "Место"
+      },
+      "status": "Статус",
+      "status_values": {
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершена",
+        "failed": "Провалена"
+      },
+      "export_tasks": "Экспортировать задачи",
+      "click_to_file": "Кликните, чтобы загрузить файл",
+      "import_tasks": "Импортировать задачи",
+      "importing_tasks": "Импортируем задачи...",
+      "details": "Детали",
+      "search": "Искать",
+      "add": "Добавить",
+      "search_tasks": {
+        "query": "Запрос",
+        "search": "Искать",
+        "Place": "Место",
+        "searching": "Ищем..."
+      },
+      "edit": "Редактировать",
+      "editing": "Редактируем..."
+    },
     "account": {
       "title": "Учётная запись",
       "heading": "Учётная Запись",
@@ -219,40 +253,7 @@
       "Filtering...": "Фильтруем..."
     }
   },
-  "todos": {
-    "title": "Задачи",
-    "heading": "Задачи",
-    "new_todo": {
-      "title": "Название",
-      "description": "Описание",
-      "status": "Статус",
-      "add": "Добавить",
-      "adding": "Добавляем...",
-      "place": "Место"
-    },
-    "status": "Статус",
-    "status_values": {
-      "pending": "В ожидании",
-      "in-progress": "В ходе выполнения",
-      "finished": "Завершена",
-      "failed": "Провалена"
-    },
-    "export_tasks": "Экспортировать задачи",
-    "click_to_file": "Кликните, чтобы загрузить файл",
-    "import_tasks": "Импортировать задачи",
-    "importing_tasks": "Импортируем задачи...",
-    "details": "Детали",
-    "search": "Искать",
-    "add": "Добавить",
-    "search_tasks": {
-      "query": "Запрос",
-      "search": "Искать",
-      "Place": "Место",
-      "searching": "Ищем..."
-    },
-    "edit": "Редактировать",
-    "editing": "Редактируем..."
-  },
+
   "place": {
     "title": "Заглавие",
     "description": "Описание",

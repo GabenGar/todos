@@ -1,41 +1,60 @@
-import { Suspense } from "react";
-import { getDictionary } from "#lib/localization";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { getDictionary, type ILocalization } from "#lib/localization";
+import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { getStaticExportPaths } from "#server";
+import { Page } from "#components";
 import { TaskList } from "#entities/task";
-import { Loading, Page } from "#components";
-import type { IStaticPageProps } from "#pages/types";
 
-interface IProps extends IStaticPageProps {}
-
-export async function generateMetadata({ params }: IProps) {
-  const { lang } = await params;
-  const dict = await getDictionary(lang);
-  const { todos } = dict;
-
-  return {
-    title: todos.title,
-  };
+interface IProps extends ILocalizedProps<"tasks"> {
+  taskTranslation: ILocalization["pages"]["task"];
+  statusTranslation: ILocalization["pages"]["stats_tasks"];
 }
 
-async function TodosPage({ params }: IProps) {
-  const { lang } = await params;
-  const dict = await getDictionary(lang);
-  const { common, todos, task, stats_tasks } = dict;
+interface IParams extends ILocalizedParams {}
+
+function TasksPage({
+  translation,
+  taskTranslation,
+  statusTranslation,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { lang, common, t } = translation;
+  const title = t.title;
 
   return (
-    <Page heading={todos.heading}>
-      <Suspense fallback={<Loading />}>
-        <TaskList
-          language={lang}
-          commonTranslation={common}
-          headingLevel={2}
-          taskTranslation={task}
-          statusTranslation={stats_tasks.status_values}
-          translation={todos}
-          id="tasks"
-        />
-      </Suspense>
+    <Page heading={t.heading} title={title}>
+      <TaskList
+        language={lang}
+        commonTranslation={common}
+        headingLevel={2}
+        taskTranslation={taskTranslation}
+        statusTranslation={statusTranslation.status_values}
+        translation={t}
+        id="tasks"
+      />
     </Page>
   );
 }
 
-export default TodosPage;
+export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+  params,
+}) => {
+  const { lang } = params!;
+  const dict = await getDictionary(lang);
+  const props = {
+    translation: {
+      lang,
+      common: dict.common,
+      t: dict.pages["tasks"],
+    },
+    taskTranslation: dict.pages.task,
+    statusTranslation: dict.pages.stats_tasks,
+  } satisfies IProps;
+
+  return {
+    props,
+  };
+};
+
+export const getStaticPaths = getStaticExportPaths;
+
+export default TasksPage;

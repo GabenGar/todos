@@ -23,7 +23,7 @@ import { Button } from "#components/button";
 import { EditTaskForm, editTask, getTask, removeTask } from "#entities/task";
 
 interface IProps extends ILocalizedProps<"task_edit"> {
-  todosTranslation: ILocalization["todos"];
+  todosTranslation: ILocalization["pages"]["tasks"];
 }
 
 interface IParams extends ILocalizedParams {}
@@ -133,7 +133,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
       common: dict.common,
       t: dict.pages["task_edit"],
     },
-    todosTranslation: dict.todos,
+    todosTranslation: dict.pages.tasks,
   } satisfies IProps;
 
   return {
