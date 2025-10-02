@@ -4,7 +4,7 @@ import type { ITask } from "./types";
 import styles from "./status.module.scss";
 
 interface IProps {
-  translation: ILocalization["task"]["status_values"];
+  translation: ILocalization["pages"]["task"]["status_values"];
   status: ITask["status"];
 }
 

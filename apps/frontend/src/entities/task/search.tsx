@@ -26,8 +26,8 @@ export interface ISearchTasksFormProps
   extends ILocalizableProps,
     ITranslatableProps {
   id: string;
-  translation: ILocalization["todos"];
-  statusTranslation: ILocalization["stats_tasks"]["status_values"];
+  translation: ILocalization["pages"]["tasks"];
+  statusTranslation: ILocalization["pages"]["stats_tasks"]["status_values"];
   defaultQuery?: ITaskSearchQuery;
   onSearch: (newSearchQuery: ITaskSearchQuery) => Promise<void>;
   place?: IPlace;

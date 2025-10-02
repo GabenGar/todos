@@ -1,5 +1,3 @@
-
-
 import { useState, useRef } from "react";
 import { useClient } from "#hooks";
 import { createBlockComponent } from "@repo/ui/meta";
@@ -111,7 +109,7 @@ function Component({
           {currentFiles.map(({ name, size, type }, index) => (
             <ListItem key={index} className={styles.file}>
               {type} - {name} -{" "}
-              {!client.isClient
+              {!client
                 ? size
                 : // @TODO proper size formatter
                   new Intl.NumberFormat(client.locale.toString(), {

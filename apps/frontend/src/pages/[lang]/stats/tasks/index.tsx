@@ -25,7 +25,7 @@ function TasksStatsPage({
             <TasksStats
               language={lang}
               commonTranslation={common}
-              translation={translation}
+              translation={t}
             />
           </OverviewHeader>
         )}

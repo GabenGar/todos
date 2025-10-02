@@ -25,7 +25,7 @@ export interface IPlaceOverviewProps
     ILocalizableProps,
     ITranslatableProps {
   translation: ILocalization["place"];
-  taskTranslation: ILocalization["stats_tasks"];
+  taskTranslation: ILocalization["pages"]["stats_tasks"];
   place: IPlace;
 }
 

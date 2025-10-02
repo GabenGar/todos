@@ -12,7 +12,7 @@ import statusStyles from "./status.module.scss";
 export interface INewTaskFormProps
   extends ILocalizableProps,
     ITranslatableProps {
-  translation: ILocalization["todos"];
+  translation: ILocalization["pages"]["tasks"];
   id: string;
   place?: IPlace;
   onNewTask: (taskInit: ITaskInit) => Promise<void>;

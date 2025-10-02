@@ -20,7 +20,7 @@ import styles from "./preview.module.scss";
 
 interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
   task: ITask;
-  translation: ILocalization["task"];
+  translation: ILocalization["pages"]["task"];
 }
 
 /**

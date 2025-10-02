@@ -14,7 +14,7 @@ import { OverviewPlaceHolder } from "#components/overview";
 import { PlaceOverview, type IPlace, getPlace } from "#entities/place";
 
 interface IProps extends ILocalizedProps<"place"> {
-  taskTranslation: ILocalization["stats_tasks"];
+  taskTranslation: ILocalization["pages"]["stats_tasks"];
   placeTranslation: ILocalization["place"];
 }
 
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   const { place } = dict.pages;
   const props = {
     translation: { lang, common: dict.common, t: place },
-    taskTranslation: dict.stats_tasks,
+    taskTranslation: dict.pages.stats_tasks,
     placeTranslation: dict.place,
   } satisfies IProps;
 

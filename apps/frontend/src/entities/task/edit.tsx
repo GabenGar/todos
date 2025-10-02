@@ -15,7 +15,7 @@ import statusStyles from "./status.module.scss";
 export interface IEditTaskFormProps
   extends ILocalizableProps,
     ITranslatableProps {
-  translation: ILocalization["todos"];
+  translation: ILocalization["pages"]["tasks"];
   id: string;
   currentTask: ITask;
   onTaskEdit: (taskUpdate: ITaskUpdate) => Promise<void>;

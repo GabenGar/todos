@@ -19,7 +19,7 @@ export function MainLayout({ lang, common, children }: IProps) {
   const { layout } = common;
 
   return (
-    <ClientProvider>
+    <ClientProvider lang={lang}>
       <header className={styles.header}>
         <GlobalNavigation language={lang} />
       </header>

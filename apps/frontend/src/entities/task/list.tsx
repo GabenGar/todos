@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { ILocalization } from "#lib/localization";
@@ -36,9 +34,9 @@ interface IProps
   extends ILocalizableProps,
     ITranslatableProps,
     Pick<IOverviewProps, "headingLevel"> {
-  translation: ILocalization["todos"];
-  taskTranslation: ILocalization["task"];
-  statusTranslation: ILocalization["stats_tasks"]["status_values"];
+  translation: ILocalization["pages"]["tasks"];
+  taskTranslation: ILocalization["pages"]["task"];
+  statusTranslation: ILocalization["pages"]["stats_tasks"]["status_values"];
   id: string;
 }
 
