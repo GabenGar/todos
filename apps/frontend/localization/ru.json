@@ -1,9 +1,9 @@
 {
-  "layout": {
-    "description": "Организовывайте задачи в браузере",
-    "source_code": "Исходный код"
-  },
   "common": {
+    "layout": {
+      "description": "Организовывайте задачи в браузере",
+      "source_code": "Исходный код"
+    },
     "form": {
       "submit": "Отправить",
       "submitting": "Отправляем...",
@@ -45,8 +45,8 @@
       "URL Viewer": "Просмотрщик ссылок",
       "Account": "Учётная запись",
       "Planned events": "Планируемые события",
-      "Recently updated":"Недавно обновлённые",
-      "Recently created":"Недавно добавленные",
+      "Recently updated": "Недавно обновлённые",
+      "Recently created": "Недавно добавленные",
       "Miscellaneous": "Разное",
       "YT-DLP configs": "Конфиги YT-DLP"
     },
@@ -82,6 +82,85 @@
         "All": "Все",
         "Eventless": "Бедные событиями"
       }
+    },
+    "stats_tasks": {
+      "title": "Статистика задач",
+      "heading": "Статистика Задач",
+      "description": "Краткое изложение задач",
+      "status_values": {
+        "all": "Все",
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершённые",
+        "failed": "Проваленные"
+      }
+    },
+    "task": {
+      "title": "Задача",
+      "heading": "Задача",
+      "description": "Описание",
+      "no_description": "Без описания",
+      "creation_date": "Дата создания",
+      "last_updated": "Последнее обновление",
+      "edit": "Редактировать",
+      "place": "Место",
+      "place_unknown": "Неизвестно",
+      "status": "Статус",
+      "status_values": {
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершена",
+        "failed": "Провалена"
+      },
+      "actions": {
+        "fail": "Провалить",
+        "delay": "Отложить",
+        "start": "Начать",
+        "complete": "Завершить"
+      },
+      "delete": "Удалить",
+      "details": "Детали"
+    },
+    "task_edit": {
+      "title": "Редактирование задачи",
+      "heading": "Редактирование Задачи",
+      "description": "Редактирование задачи.",
+      "task": "Задача",
+      "Delete": "Удалить"
+    },
+    "tasks": {
+      "title": "Задачи",
+      "heading": "Задачи",
+      "new_todo": {
+        "title": "Название",
+        "description": "Описание",
+        "status": "Статус",
+        "add": "Добавить",
+        "adding": "Добавляем...",
+        "place": "Место"
+      },
+      "status": "Статус",
+      "status_values": {
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершена",
+        "failed": "Провалена"
+      },
+      "export_tasks": "Экспортировать задачи",
+      "click_to_file": "Кликните, чтобы загрузить файл",
+      "import_tasks": "Импортировать задачи",
+      "importing_tasks": "Импортируем задачи...",
+      "details": "Детали",
+      "search": "Искать",
+      "add": "Добавить",
+      "search_tasks": {
+        "query": "Запрос",
+        "search": "Искать",
+        "Place": "Место",
+        "searching": "Ищем..."
+      },
+      "edit": "Редактировать",
+      "editing": "Редактируем..."
     },
     "account": {
       "title": "Учётная запись",
@@ -140,7 +219,11 @@
     },
     "planned-events": {
       "title": "Планируемые события",
-      "heading": "Планируемые События"
+      "heading": "Планируемые События",
+      "Recently updated planned events": "Недавно измененные планируемые события",
+      "Recently created planned events": "Недавно созданные планируемые события",
+      "Recently Updated Planned Events": "Недавно Измененные Планируемые События",
+      "Recently Created Planned Events": "Недавно Созданные Планируемые События"
     },
     "planned-event": {
       "title": "Планируемое событие",
@@ -174,85 +257,7 @@
       "Filtering...": "Фильтруем..."
     }
   },
-  "todos": {
-    "title": "Задачи",
-    "heading": "Задачи",
-    "new_todo": {
-      "title": "Название",
-      "description": "Описание",
-      "status": "Статус",
-      "add": "Добавить",
-      "adding": "Добавляем...",
-      "place": "Место"
-    },
-    "status": "Статус",
-    "status_values": {
-      "pending": "В ожидании",
-      "in-progress": "В ходе выполнения",
-      "finished": "Завершена",
-      "failed": "Провалена"
-    },
-    "export_tasks": "Экспортировать задачи",
-    "click_to_file": "Кликните, чтобы загрузить файл",
-    "import_tasks": "Импортировать задачи",
-    "importing_tasks": "Импортируем задачи...",
-    "details": "Детали",
-    "search": "Искать",
-    "add": "Добавить",
-    "search_tasks": {
-      "query": "Запрос",
-      "search": "Искать",
-      "Place": "Место",
-      "searching": "Ищем..."
-    },
-    "edit": "Редактировать",
-    "editing": "Редактируем..."
-  },
-  "task": {
-    "title": "Задача",
-    "heading": "Задача",
-    "description": "Описание",
-    "no_description": "Без описания",
-    "creation_date": "Дата создания",
-    "last_updated": "Последнее обновление",
-    "edit": "Редактировать",
-    "place": "Место",
-    "place_unknown": "Неизвестно",
-    "status": "Статус",
-    "status_values": {
-      "pending": "В ожидании",
-      "in-progress": "В ходе выполнения",
-      "finished": "Завершена",
-      "failed": "Провалена"
-    },
-    "actions": {
-      "fail": "Провалить",
-      "delay": "Отложить",
-      "start": "Начать",
-      "complete": "Завершить"
-    },
-    "delete": "Удалить",
-    "details": "Детали"
-  },
-  "stats_tasks": {
-    "title": "Статистика задач",
-    "heading": "Статистика Задач",
-    "description": "Краткое изложение задач",
-    "status_values": {
-      "all": "Все",
-      "pending": "В ожидании",
-      "in-progress": "В ходе выполнения",
-      "finished": "Завершённые",
-      "failed": "Проваленные"
-    }
-  },
-  "task_edit": {
-    "title": "Редактирование задачи",
-    "heading": "Редактирование Задачи",
-    "description": "Редактирование задачи.",
-    "task": "Задача",
-    "Delete": "Удалить"
-  },
+
   "place": {
     "title": "Заглавие",
     "description": "Описание",

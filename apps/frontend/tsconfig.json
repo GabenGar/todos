@@ -24,11 +24,10 @@
     ]
   },
   "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "dist/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
   ],
   "exclude": [
     "node_modules",

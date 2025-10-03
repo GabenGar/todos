@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";
@@ -10,7 +8,7 @@ import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import type { IPlace } from "#entities/place";
 
 interface IProps extends ILocalizableProps, ITranslatableProps {
-  translation: ILocalization["stats_tasks"];
+  translation: ILocalization["pages"]["stats_tasks"];
   placeID?: IPlace["id"];
 }
 

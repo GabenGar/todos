@@ -1,9 +1,8 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
 import type { ILocalization } from "#lib/localization";
 import { createPlacePageURL, createTasksPageURL } from "#lib/urls";
+import { getSingleValueFromQuery } from "#lib/pages";
 import { Details, Loading } from "#components";
 import { PreviewList } from "#components/preview";
 import {
@@ -30,15 +29,13 @@ import { createTask } from "./lib/create";
 import { TaskPreview } from "./preview";
 import { isTaskStatus, type ITask, type ITaskInit } from "./types";
 
-import styles from "./list.module.scss";
-
 interface IProps
   extends ILocalizableProps,
     ITranslatableProps,
     Pick<IOverviewProps, "headingLevel"> {
-  translation: ILocalization["todos"];
-  taskTranslation: ILocalization["task"];
-  statusTranslation: ILocalization["stats_tasks"]["status_values"];
+  translation: ILocalization["pages"]["tasks"];
+  taskTranslation: ILocalization["pages"]["task"];
+  statusTranslation: ILocalization["pages"]["stats_tasks"]["status_values"];
   id: string;
 }
 
@@ -55,25 +52,29 @@ export function TaskList({
   headingLevel,
 }: IProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const { isReady, query: pageQuery } = router;
   const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
-  const inputPage = searchParams.get("page")?.trim();
+  const inputPage = getSingleValueFromQuery(pageQuery, "page");
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
-  const inputQuery = searchParams.get("query")?.trim();
-  const query = !inputQuery ? undefined : inputQuery;
-  const inputStatus = searchParams.get("status")?.trim();
+  const query = getSingleValueFromQuery(pageQuery, "query");
+  const inputStatus = getSingleValueFromQuery(pageQuery, "status");
   const status = !isTaskStatus(inputStatus) ? undefined : inputStatus;
-  const inputPlaceID = searchParams.get("place_id")?.trim();
-  const placeID = !inputPlaceID ? undefined : inputPlaceID;
-  const options: Required<Parameters<typeof getTasks>>[0] = {
-    includeDeleted: false,
-    page,
-    query,
-    status,
-    placeID,
-  };
+  const placeID = getSingleValueFromQuery(pageQuery, "place_id");
+  const options = useMemo<Required<Parameters<typeof getTasks>>[0]>(() => {
+    return {
+      includeDeleted: false,
+      page,
+      query,
+      status,
+      placeID,
+    };
+  }, [isReady, page, query, status, placeID]);
 
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+
     (async () => {
       const newTasks = await getTasks(options);
 
@@ -83,7 +84,7 @@ export function TaskList({
         return;
       }
 
-      if (page !== newTasks.pagination.currentPage) {
+      if (options.page !== newTasks.pagination.currentPage) {
         const newTasksURL = createTasksPageURL(language, {
           page: newTasks.pagination.currentPage,
           query: options.query,
@@ -98,7 +99,7 @@ export function TaskList({
 
       changeTasks(newTasks);
     })();
-  }, [page, query, status, placeID]);
+  }, [isReady, options]);
 
   async function handleTaskCreation(init: ITaskInit) {
     await createTask(init);

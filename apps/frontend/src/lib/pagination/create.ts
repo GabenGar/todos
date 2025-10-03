@@ -7,7 +7,7 @@ export function createPagination(
   const totalPages = Math.ceil(totalCount / PAGINATION_LIMIT);
   const currentPage = page ?? totalPages;
 
-  if (currentPage > totalPages) {
+  if (totalPages !== 0 && currentPage > totalPages) {
     throw new Error(
       `Current page ${page} of total count ${totalCount} and limit ${PAGINATION_LIMIT} is greater than ${totalPages}.`,
     );
@@ -41,7 +41,7 @@ export function createClientPagination(
   const totalPages = Math.ceil(totalCount / limit);
   const currentPage = page ?? totalPages;
 
-  if (currentPage > totalPages) {
+  if (totalPages !== 0 && currentPage > totalPages) {
     throw new Error(
       `Current page ${page} of total count ${totalCount} and limit ${limit} is greater than ${totalPages}.`,
     );

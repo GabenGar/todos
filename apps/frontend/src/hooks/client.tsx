@@ -5,21 +5,20 @@ import {
   useState,
   useEffect,
 } from "react";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { DEFAULT_LOG_LEVEL } from "#environment";
 import {
   type ILogLevel,
   changeCurrentLogLevel,
   validateLogLevel,
 } from "#lib/logs";
+import type { ILocale } from "#lib/internationalization";
 import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 import { isIndexedDBAvailable } from "#store/indexed";
 import { IndexedDBProvider } from "./indexed-db";
 
 type IClientContext =
-  | {
-      isClient: false;
-    }
+  | undefined
   | {
       isClient: true;
       locale: Intl.Locale;
@@ -35,25 +34,23 @@ interface ICompatibility {
   indexedDB: boolean;
 }
 
-const defaultContext: IClientContext = {
-  isClient: false,
-};
+const defaultContext = undefined satisfies IClientContext;
 
 const ClientContext = createContext<IClientContext>(defaultContext);
 const { get: getLocalStoreLogLevel, set: setLocalStoreLogLevel } =
   createLocalStorage("log_level", DEFAULT_LOG_LEVEL, validateLogLevel);
 
 interface IProps {
+  lang: ILocale;
   children: ReactNode;
 }
 
-export function ClientProvider({ children }: IProps) {
-  const params = useParams<{ lang: string }>();
+export function ClientProvider({ lang, children }: IProps) {
+  const { isReady } = useRouter();
   const [isClient, switchIsClient] = useState(false);
   const [locale, changeLocale] = useState<Intl.Locale>();
   const [logLevel, changeLogLevel] = useState<ILogLevel>();
   const [compatibility, changeCompatiblity] = useState<ICompatibility>();
-  const lang = params.lang;
 
   async function switchLogLevel(
     ...args: Parameters<typeof changeCurrentLogLevel>
@@ -64,6 +61,10 @@ export function ClientProvider({ children }: IProps) {
   }
 
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+
     (async () => {
       const localStorage = isLocalStorageAvailable();
       const indexedDB = await isIndexedDBAvailable();
@@ -77,18 +78,23 @@ export function ClientProvider({ children }: IProps) {
       changeLogLevel(newLogLevel);
       switchIsClient(true);
     })();
-  }, []);
+  }, [isReady]);
 
   useEffect(() => {
-    console.log(lang);
+    // no idea why is it undefined on the first render
+    // despite being a literal prop of the component
+    if (!lang) {
+      return;
+    }
+
     const newLocale = new Intl.Locale(lang);
     changeLocale(newLocale);
-  }, [lang]);
+  }, [isClient, lang]);
 
   return (
     <ClientContext.Provider
       value={
-        !isClient || !locale
+        !isReady || !isClient || !locale
           ? defaultContext
           : {
               isClient,

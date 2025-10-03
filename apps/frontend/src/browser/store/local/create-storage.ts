@@ -1,4 +1,3 @@
-import type { IEntityItem } from "#lib/entities";
 import { runMigrations } from "./migrations";
 import { getLocalStoreItem } from "./get";
 import { setLocalStoreItem } from "./set";
@@ -33,6 +32,7 @@ export function createLocalStorage<Type>(
   return storage;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createLocalStorageFunction<ArgsType extends any[], ReturnShape>(
   func: (...args: ArgsType) => Promise<ReturnShape>,
 ): typeof func {

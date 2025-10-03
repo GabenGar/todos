@@ -1,17 +1,10 @@
 import { useState } from "react";
-import type { ILocalization, ILocalizationCommon } from "#lib/localization";
-import { createPlacePageURL } from "#lib/urls";
-import { DescriptionList } from "#components";
+import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import {
-  InputSectionNanoID,
-  InputSectionSelect,
-  InputSectionText,
-} from "#components/form/section";
-import { InputHidden, InputOption } from "#components/form/input";
-import { Link } from "#components/link";
+import { InputSectionSelect, InputSectionText } from "#components/form/section";
+import { InputOption } from "#components/form/input";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import type { IPlace } from "#entities/place";
+import { PlaceSection, type IPlace } from "#entities/place";
 import { ITask, isTaskStatus } from "./types";
 
 import statusStyles from "./status.module.scss";
@@ -26,8 +19,8 @@ export interface ISearchTasksFormProps
   extends ILocalizableProps,
     ITranslatableProps {
   id: string;
-  translation: ILocalization["todos"];
-  statusTranslation: ILocalization["stats_tasks"]["status_values"];
+  translation: ILocalization["pages"]["tasks"];
+  statusTranslation: ILocalization["pages"]["stats_tasks"]["status_values"];
   defaultQuery?: ITaskSearchQuery;
   onSearch: (newSearchQuery: ITaskSearchQuery) => Promise<void>;
   place?: IPlace;
@@ -103,38 +96,18 @@ export function SearchTasksForm({
             {FIELD.QUERY.label}
           </InputSectionText>
 
-          {/* @TODO replace with place selector component */}
-          {place ? (
-            <>
-              <DescriptionList
-                sections={[
-                  [
-                    FIELD.PLACE.label,
-                    <Link
-                      key="place"
-                      href={createPlacePageURL(language, place.id)}
-                    >
-                      {place.title} ({place.id})
-                    </Link>,
-                  ],
-                ]}
-              />
-              <InputHidden
-                id={`${formID}-${FIELD.PLACE.name}`}
-                form={formID}
-                name={FIELD.PLACE.name}
-                defaultValue={place.id}
-              />
-            </>
-          ) : (
-            <InputSectionNanoID
-              id={`${formID}-${FIELD.PLACE.name}`}
-              form={formID}
-              name={FIELD.PLACE.name}
-            >
-              {FIELD.PLACE.label}
-            </InputSectionNanoID>
-          )}
+          <PlaceSection
+            // a dirty hack to force update on the component state
+            key={place?.id}
+            language={language}
+            commonTranslation={commonTranslation}
+            id={`${formID}-${FIELD.PLACE.name}`}
+            form={formID}
+            name={FIELD.PLACE.name}
+            place={place}
+          >
+            {FIELD.PLACE.label}
+          </PlaceSection>
 
           <InputSectionSelect
             label={FIELD.STATUS.label}

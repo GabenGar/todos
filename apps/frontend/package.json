@@ -6,9 +6,10 @@
   "scripts": {
     "build": "next build",
     "build-codegen": "cd ./codegen/generators && npm run build",
-    "start": "serve ./dist -p 9001 --no-clipboard --no-port-switching",
-    "lint": "next lint",
+    "start": "serve ./out -p 9001 --no-clipboard --no-port-switching",
+    "lint": "eslint ./src",
     "format": "prettier --log-level=warn ./src --write",
+    "check": "next typegen && tsc --noEmit",
     "dev": "next dev --port 8001",
     "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"
   },
@@ -33,7 +34,7 @@
   },
   "dependencies": {
     "@hyperjump/json-schema": "^1.16.2",
-    "@next/env": "15.4.4",
+    "@next/env": "15.5.4",
     "@repo/nodejs": "*",
     "@repo/ui": "*",
     "ajv": "^8.17.1",
@@ -42,18 +43,18 @@
     "html5-qrcode": "^2.3.8",
     "iso-639-1": "^3.1.5",
     "nanoid": "^5.1.5",
-    "next": "15.4.4",
+    "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "server-only": "^0.0.1",
     "stringify-object": "^5.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^20.9.0",
     "@types/react": "^19.1.8",
     "@types/stringify-object": "^4.0.5",
     "eslint": "9.31.0",
-    "eslint-config-next": "15.4.4",
+    "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.5",
     "prettier": "3.6.2",
     "sass": "^1.89.2",

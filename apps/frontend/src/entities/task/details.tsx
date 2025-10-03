@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { INanoidID } from "#lib/strings";
@@ -34,7 +32,7 @@ export interface ITaskOverviewProps
   extends ILocalizableProps,
     ITranslatableProps,
     IOverviewProps {
-  translation: ILocalization["task"];
+  translation: ILocalization["pages"]["task"];
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
 }

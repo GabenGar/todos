@@ -22,7 +22,6 @@ async function createNextConfig() {
     output: "export",
     trailingSlash: true,
     skipTrailingSlashRedirect: true,
-    distDir: "dist",
     sassOptions: {
       // a duct tape
       // https://github.com/vercel/next.js/discussions/67931#discussioncomment-11044560
@@ -31,9 +30,7 @@ async function createNextConfig() {
       silenceDeprecations: ["legacy-js-api"],
     },
     transpilePackages: ["@repo/ui"],
-    experimental: {
-      typedRoutes: true
-    },
+    typedRoutes: true,
   };
 
   return nextConfig;

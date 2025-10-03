@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { formatDateTime } from "#lib/dates";
 import { logError } from "#lib/logs";
@@ -30,11 +28,11 @@ function Component({
   children,
   ...props
 }: IProps) {
-  const clientInfo = useClient();
+  const client = useClient();
   const [isCopied, switchCopiedStatus] = useState(false);
-  const formattedDateTime = !clientInfo.isClient
+  const formattedDateTime = !client
     ? dateTime
-    : formatDateTime(clientInfo.locale, dateTime);
+    : formatDateTime(client.locale, dateTime);
 
   return (
     <div {...props}>

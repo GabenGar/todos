@@ -1,4 +1,4 @@
-"use client";
+ ;
 
 import { useState, useRef } from "react";
 import { createBlockComponent } from "@repo/ui/meta";

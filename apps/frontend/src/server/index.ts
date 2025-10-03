@@ -1,5 +1,1 @@
-import "server-only";
-
-export { getDictionary } from "./dictionaries";
-
-export async function serverFunction() {}
+export { getStaticExportPaths } from "./get-static-export-paths";
