@@ -7,7 +7,7 @@
     "build": "next build",
     "build-codegen": "cd ./codegen/generators && npm run build",
     "start": "serve ./out -p 9001 --no-clipboard --no-port-switching",
-    "lint": "eslint .",
+    "lint": "eslint ./src",
     "format": "prettier --log-level=warn ./src --write",
     "check": "next typegen && tsc --noEmit",
     "dev": "next dev --port 8001",
