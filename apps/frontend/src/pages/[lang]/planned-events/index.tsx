@@ -49,6 +49,15 @@ function PlannedEventsPage({
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
   const inputOrder = getSingleValueFromQuery(query, "order");
   const order = !isPlannedEventsOrder(inputOrder) ? undefined : inputOrder;
+  const title =
+    !isReady || !order || order === "recently_created"
+      ? t["Recently created planned events"]
+      : t["Recently updated planned events"];
+  // it has to be this way to avoid hydration errors
+  const heading =
+    !isReady || !order || order === "recently_created"
+      ? t["Recently Created Planned Events"]
+      : t["Recently Updated Planned Events"];
 
   useEffect(() => {
     if (!isReady) {
@@ -152,7 +161,7 @@ function PlannedEventsPage({
   }
 
   return (
-    <Page heading={t.heading} title={t.title}>
+    <Page title={title} heading={heading}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <OverviewHeader>

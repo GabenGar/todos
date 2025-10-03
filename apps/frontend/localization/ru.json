@@ -219,7 +219,11 @@
     },
     "planned-events": {
       "title": "Планируемые события",
-      "heading": "Планируемые События"
+      "heading": "Планируемые События",
+      "Recently updated planned events": "Недавно измененные планируемые события",
+      "Recently created planned events": "Недавно созданные планируемые события",
+      "Recently Updated Planned Events": "Недавно Измененные Планируемые События",
+      "Recently Created Planned Events": "Недавно Созданные Планируемые События"
     },
     "planned-event": {
       "title": "Планируемое событие",

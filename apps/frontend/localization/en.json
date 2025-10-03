@@ -219,7 +219,11 @@
     },
     "planned-events": {
       "title": "Planned events",
-      "heading": "Planned Events"
+      "heading": "Planned Events",
+      "Recently updated planned events": "Recently updated planned events",
+      "Recently created planned events": "Recently created planned events",
+      "Recently Updated Planned Events": "Recently Updated Planned Events",
+      "Recently Created Planned Events": "Recently Created Planned Events"
     },
     "planned-event": {
       "title": "Planned event",

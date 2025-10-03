@@ -29,8 +29,6 @@ import { createTask } from "./lib/create";
 import { TaskPreview } from "./preview";
 import { isTaskStatus, type ITask, type ITaskInit } from "./types";
 
-import styles from "./list.module.scss";
-
 interface IProps
   extends ILocalizableProps,
     ITranslatableProps,
