@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import { createPlacePageURL } from "#lib/urls";
 import { IEntityItem } from "#lib/entities";

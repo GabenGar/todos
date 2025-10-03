@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import type { ILocalization } from "#lib/localization";
 import { createTasksPageURL } from "#lib/urls";

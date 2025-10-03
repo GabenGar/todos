@@ -84,7 +84,7 @@ export function ClientProvider({ lang, children }: IProps) {
     // no idea why is it undefined on the first render
     // despite being a literal prop of the component
     if (!lang) {
-      return
+      return;
     }
 
     const newLocale = new Intl.Locale(lang);

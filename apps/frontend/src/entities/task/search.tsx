@@ -1,10 +1,7 @@
 import { useState } from "react";
 import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import {
-  InputSectionSelect,
-  InputSectionText,
-} from "#components/form/section";
+import { InputSectionSelect, InputSectionText } from "#components/form/section";
 import { InputOption } from "#components/form/input";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { PlaceSection, type IPlace } from "#entities/place";

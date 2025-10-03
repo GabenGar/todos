@@ -10,7 +10,7 @@ export type IPageLocalization<Page extends keyof ILocalizationPage> = {
   lang: ILocale;
   common: ILocalizationCommon;
   t: ILocalizationPage[Page];
-}
+};
 
 const dictionaries = {
   en: async () => {

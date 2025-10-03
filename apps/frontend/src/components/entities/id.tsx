@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import type { IEntityItem } from "#lib/entities";
 import { logError } from "#lib/logs";

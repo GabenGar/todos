@@ -1,5 +1,3 @@
-
-
 import { type ReactNode, useState } from "react";
 import { logError } from "#lib/logs";
 import { isError, validateError } from "#lib/errors";

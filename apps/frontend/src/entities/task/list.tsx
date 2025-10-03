@@ -76,7 +76,6 @@ export function TaskList({
     }
 
     (async () => {
-      console.log(options)
       const newTasks = await getTasks(options);
 
       // short circuit if nothing found
