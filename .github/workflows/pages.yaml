@@ -36,6 +36,7 @@ jobs:
           cache: npm
 
       - name: Setup Pages
+        id: setup_pages
         uses: actions/configure-pages@v5
 
       # https://turbo.build/repo/docs/guides/ci-vendors/github-actions
