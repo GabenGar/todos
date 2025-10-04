@@ -33,10 +33,6 @@ async function createNextConfig() {
     typedRoutes: true,
   };
 
-
-  console.log([baseURL, basePathname, basePath])
-  throw new Error("test")
-
   return nextConfig;
 }
 
