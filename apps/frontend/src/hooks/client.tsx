@@ -16,6 +16,7 @@ import type { ILocale } from "#lib/internationalization";
 import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 import { isIndexedDBAvailable } from "#store/indexed";
 import { IndexedDBProvider } from "./indexed-db";
+import { registerServiceWorker } from "#browser/workers";
 
 type IClientContext =
   | undefined
@@ -73,6 +74,7 @@ export function ClientProvider({ lang, children }: IProps) {
         indexedDB,
       };
       const newLogLevel = await getLocalStoreLogLevel();
+      registerServiceWorker()
 
       changeCompatiblity(newCompatibility);
       changeLogLevel(newLogLevel);
