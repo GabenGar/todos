@@ -1,3 +1,7 @@
+import { SITE_BASE_PATHNAME } from "#environment";
+
+const serviceWorkerPath = `${SITE_BASE_PATHNAME}/service-worker.js`;
+
 export async function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) {
     return;
@@ -5,10 +9,9 @@ export async function registerServiceWorker() {
 
   try {
     const registration =
-      await navigator.serviceWorker.register("/service-worker.js");
+      await navigator.serviceWorker.register(serviceWorkerPath);
     console.log(
       `Service Worker registration successful with scope "${registration.scope}".`,
-      registration.scope,
     );
   } catch (error) {
     console.error(

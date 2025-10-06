@@ -4,7 +4,7 @@ import { NEXT_PUBLIC_VERCEL_URL } from "./vercel";
 export const NODE_ENV = process.env.NODE_ENV;
 
 export const SITE_BASE_URL =
-  NEXT_PUBLIC_VERCEL_URL ?? process.env.NEXT_PUBLIC_SITE_BASE_URL!;
+  NEXT_PUBLIC_VERCEL_URL ?? process.env.NEXT_PUBLIC_SITE_BASE_URL;
 
 export const SITE_TITLE = process.env.NEXT_PUBLIC_SITE_TITLE!;
 
@@ -27,3 +27,11 @@ export const DEFAULT_LOG_LEVEL = process.env
 export const IS_BROWSER = typeof window !== "undefined";
 export const IS_DEVELOPMENT = NODE_ENV === "development";
 export const ROCKET_SHIP = "8::::::::::::::::D~~~~";
+
+const basePathname = !SITE_BASE_URL
+  ? undefined
+  : new URL(SITE_BASE_URL, "https://example.com").pathname;
+export const SITE_BASE_PATHNAME =
+  // defaulting to empty string instead of `undefined`
+  // so it wouldn't be ass to interpolate into path strings
+  !basePathname || basePathname === "/" ? "" : basePathname;
