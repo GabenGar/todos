@@ -10,9 +10,17 @@ export async function registerServiceWorker() {
   try {
     const registration =
       await navigator.serviceWorker.register(serviceWorkerPath);
+    if (registration.installing) {
+      console.log("Service worker installing");
+    } else if (registration.waiting) {
+      console.log("Service worker installed");
+    } else if (registration.active) {
+      console.log("Service worker active");
+    }
     console.log(
       `Service Worker registration successful with scope "${registration.scope}".`,
     );
+
   } catch (error) {
     console.error(
       new Error("Service Worker registration failed", { cause: error }),
