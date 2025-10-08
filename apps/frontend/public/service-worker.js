@@ -60,7 +60,7 @@
   });
 
   self.addEventListener("fetch", (event) => {
-    event.respondWith(cacheFirst(event.request, event, event.preloadResponse));
+    // event.respondWith(cacheFirst(event.request, event, event.preloadResponse));
   });
 
   async function install() {
@@ -152,5 +152,17 @@
    */
   async function deleteCache(key) {
     await caches.delete(key);
+  }
+
+  /**
+   * A quick worker to nuke older ones.
+   */
+  async function initNoOpWorker() {
+    self.addEventListener("install", (event) => {
+      self.skipWaiting();
+    });
+    self.addEventListener("activate", (event) => {
+      event.waitUntil(self.clients.claim());
+    });
   }
 })();

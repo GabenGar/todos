@@ -24,6 +24,27 @@ if (!REPOSITORY_URL) {
 export const DEFAULT_LOG_LEVEL = process.env
   .NEXT_PUBLIC_DEFAULT_LOG_LEVEL as ILogLevel;
 
+const NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED =
+  process.env.NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED ?? "false";
+
+if (
+  NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED.length == 0 ||
+  (NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED !== "true" &&
+    NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED !== "false")
+) {
+  throw new Error(
+    `Invalid value for "NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED" configuration option.`,
+  );
+}
+
+/**
+ * An option to nuke service workers off client when needed.
+ *
+ * https://youtu.be/CPP9ew4Co0M?t=1058
+ */
+export const IS_SERVICE_WORKER_ENABLED = JSON.parse(
+  NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED,
+) as boolean;
 export const IS_BROWSER = typeof window !== "undefined";
 export const IS_DEVELOPMENT = NODE_ENV === "development";
 export const ROCKET_SHIP = "8::::::::::::::::D~~~~";

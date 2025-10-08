@@ -46,7 +46,7 @@
     },
     "files.associations": {
       "*code-workspace.example": "jsonc",
-      ".env.*": ".env"
+      ".env.*": "dotenv"
     },
     "typescript.referencesCodeLens.enabled": true,
     "typescript.preferences.preferTypeOnlyAutoImports": true,
