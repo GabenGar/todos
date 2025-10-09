@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "files": ["src/browser/workers/service-worker.ts"],
+  "compilerOptions": {
+    "composite": true,
+    "lib": ["WebWorker"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  }
+}

@@ -1,11 +1,11 @@
 {
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.pages.json" },
+    { "path": "./tsconfig.service-worker.json" }
+  ],
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
+    "checkJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -16,22 +16,5 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "next-env.d.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "scripts",
-    "codegen/generators"
-  ]
+  }
 }
