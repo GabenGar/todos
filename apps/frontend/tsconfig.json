@@ -1,9 +1,4 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.pages.json" },
-    { "path": "./tsconfig.service-worker.json" }
-  ],
   "compilerOptions": {
     "checkJs": true,
     "skipLibCheck": true,
@@ -16,5 +11,20 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-  }
+    "lib": ["dom", "dom.iterable", "esnext", "WebWorker"],
+    "allowJs": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-env.d.ts"],
+  "exclude": [
+    "node_modules",
+    "scripts",
+    "codegen/generators",
+    "src/browser/workers/service-worker.ts"
+  ]
 }

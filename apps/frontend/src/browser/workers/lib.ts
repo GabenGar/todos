@@ -22,7 +22,10 @@ export async function registerServiceWorker() {
     // if following this exact syntax
     // https://webpack.js.org/blog/2020-10-10-webpack-5-release/#native-worker-support
     const registration = await navigator.serviceWorker.register(
-      new URL("./service-worker.ts", import.meta.url),
+      serviceWorkerPath,
+      {
+        scope: serviceWorkerPath,
+      },
     );
     if (registration.installing) {
       console.log("Service worker installing");

@@ -1,6 +1,6 @@
 import "@repo/ui/styles/global/nextjs/pages";
 
-import { ClientProvider } from "#hooks";
+import { ClientProvider, ServiceWorkerProvider } from "#hooks";
 import { MainLayout, type AppPropsWithLayout } from "#components/pages/layouts";
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
@@ -8,15 +8,21 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
     const { lang, common } = pageProps.translation;
 
     return (
-      <ClientProvider lang={lang}>
-        <MainLayout lang={lang} common={common}>
-          <Component {...pageProps} />
-        </MainLayout>
-      </ClientProvider>
+      <ServiceWorkerProvider>
+        <ClientProvider lang={lang}>
+          <MainLayout lang={lang} common={common}>
+            <Component {...pageProps} />
+          </MainLayout>
+        </ClientProvider>
+      </ServiceWorkerProvider>
     );
   }
 
-  return Component.getLayout(<Component {...pageProps} />);
+  return (
+    <ServiceWorkerProvider>
+      {Component.getLayout(<Component {...pageProps} />)}
+    </ServiceWorkerProvider>
+  );
 }
 
 export default App;

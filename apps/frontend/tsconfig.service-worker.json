@@ -1,13 +1,23 @@
 {
-  "extends": "./tsconfig.json",
-  "files": ["src/browser/workers/service-worker.ts"],
   "compilerOptions": {
-    "composite": true,
-    "lib": ["WebWorker"],
+    "checkJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "target": "ES2015",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "lib": ["esnext", "WebWorker"],
+    "allowJs": true,
     "plugins": [
       {
         "name": "next"
       }
     ]
-  }
+  },
+  "include": ["src/browser/workers/service-worker.ts"]
 }
