@@ -45,7 +45,19 @@ if (
 export const IS_SERVICE_WORKER_ENABLED = JSON.parse(
   NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED,
 ) as boolean;
-export const IS_BROWSER = typeof window !== "undefined";
+
+// not invoking `window` directly because there is no `window` in service worker
+// https://stackoverflow.com/a/8785422
+export const IS_BROWSER =
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore typescript types for worker do not like `windows` access for checking
+  typeof globalThis["window"] !== "undefined" ||
+  // https://stackoverflow.com/a/8785422
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore typescript types for worker do not like `document` access for checking
+  (typeof globalThis["document"] == "undefined" &&
+    typeof globalThis["importScripts"] !== "undefined");
+
 export const IS_DEVELOPMENT = NODE_ENV === "development";
 export const ROCKET_SHIP = "8::::::::::::::::D~~~~";
 

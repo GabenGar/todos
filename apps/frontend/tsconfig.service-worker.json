@@ -3,7 +3,7 @@
     "checkJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
+    "sourceMap":  true,
     "incremental": true,
     "esModuleInterop": true,
     "target": "ES2015",

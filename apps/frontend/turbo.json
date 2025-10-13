@@ -3,7 +3,19 @@
   "extends": ["//"],
   "tasks": {
     "build": {
+      "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
+      "dependsOn": ["build-pages", "build-workers"]
+    },
+    "build-pages": {
+      "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
       "outputs": ["out/**", ".next/**", "!.next/cache/**"]
+    },
+    "build-workers": {
+      "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
+      "dependsOn": ["build-pages"]
+    },
+    "dev": {
+      "with": ["dev-workers"]
     }
   }
 }
