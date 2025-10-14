@@ -1,7 +1,9 @@
 import { IS_BROWSER } from "#environment";
 
 if (IS_BROWSER) {
-  initServiceWorker(globalThis.self as unknown as ServiceWorkerGlobalScope);
+  initServiceWorker(
+    globalThis.self as unknown as ServiceWorkerGlobalScope,
+  );
 }
 
 async function initServiceWorker(self: ServiceWorkerGlobalScope) {

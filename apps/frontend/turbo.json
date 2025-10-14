@@ -3,19 +3,32 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
       "dependsOn": ["build-pages", "build-workers"]
     },
     "build-pages": {
       "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
-      "outputs": ["out/**", ".next/**", "!.next/cache/**"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "src/**",
+        "scripts/**",
+        "public/**",
+        "!public/service-worker.js",
+        "!public/service-worker.js.map",
+        "codegen/**"
+      ],
+      "outputs": ["out/**", ".next/**", "!.next/cache"]
     },
     "build-workers": {
       "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
-      "dependsOn": ["build-pages"]
+      "dependsOn": ["build-pages"],
+      "inputs": ["$TURBO_DEFAULT$", "src/**", "scripts/**", "codegen/**"],
+      "outputs": ["public/service-worker.js", "public/service-worker.js.map"]
     },
     "dev": {
       "with": ["dev-workers"]
+    },
+    "dev-workers": {
+      "persistent": true
     }
   }
 }
