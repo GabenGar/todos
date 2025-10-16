@@ -1,14 +1,10 @@
 // @ts-check
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import webpack from "webpack";
 import nextEnv from "@next/env";
 
 const { EnvironmentPlugin } = webpack;
 const projectDir = process.cwd();
 nextEnv.loadEnvConfig(projectDir);
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * @typedef ITSLoaderOptions
@@ -51,6 +47,8 @@ const commonConfiguration = {
       VERCEL_ENV: null,
       VERCEL_URL: null,
       NEXT_PUBLIC_VERCEL_ENV: null,
+      NEXT_PUBLIC_VERCEL_URL: null,
+      NEXT_PUBLIC_SITE_TITLE: null,
       NEXT_PUBLIC_SITE_BASE_URL: null,
       NEXT_PUBLIC_REPOSITORY_URL: null,
       NEXT_PUBLIC_DEFAULT_LOG_LEVEL: null,
@@ -85,10 +83,7 @@ const commonConfiguration = {
   cache: {
     type: "filesystem",
   },
-  output: {
-    path: path.resolve(__dirname, "public"),
-    filename: "[name].js",
-  },
+
 };
 
 export default commonConfiguration;

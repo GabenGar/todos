@@ -12,7 +12,7 @@
     "format": "prettier --log-level=warn ./src --write",
     "check": "next typegen && tsc --noEmit",
     "dev": "next dev --port 8001",
-    "dev-workers": "webpack --config webpack.dev.mjs",
+    "dev-workers": "webpack --config webpack.dev.mjs --watch",
     "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"
   },
   "imports": {

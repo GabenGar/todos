@@ -8,21 +8,41 @@
     "build-pages": {
       "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
       "inputs": [
-        "$TURBO_DEFAULT$",
+        ".env",
+        ".env.production",
+        ".env.production.local",
+        "next-env.d.ts",
+        "next.config.mjs",
         "src/**",
         "scripts/**",
         "public/**",
         "!public/service-worker.js",
         "!public/service-worker.js.map",
+        "localization/**",
         "codegen/**"
       ],
-      "outputs": ["out/**", ".next/**", "!.next/cache"]
+      "outputs": [
+        "out/**",
+        ".next/**",
+        "!.next/cache",
+        "!out/service-worker.js",
+        "!out/service-worker.js.map"
+      ]
     },
     "build-workers": {
       "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
       "dependsOn": ["build-pages"],
-      "inputs": ["$TURBO_DEFAULT$", "src/**", "scripts/**", "codegen/**"],
-      "outputs": ["public/service-worker.js", "public/service-worker.js.map"]
+      "inputs": [
+        ".env",
+        ".env.production",
+        ".env.production.local",
+        "webpack.common.mjs",
+        "webpack.prod.mjs",
+        "src/**",
+        "scripts/**",
+        "codegen/**"
+      ],
+      "outputs": ["out/service-worker.js", "out/service-worker.js.map"]
     },
     "dev": {
       "with": ["dev-workers"]

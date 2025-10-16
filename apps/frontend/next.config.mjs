@@ -31,7 +31,7 @@ async function createNextConfig() {
     },
     transpilePackages: ["@repo/ui"],
     typedRoutes: true,
-    crossOrigin: "anonymous"
+    crossOrigin: "anonymous",
   };
 
   return nextConfig;
