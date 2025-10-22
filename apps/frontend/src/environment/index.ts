@@ -2,7 +2,6 @@ import type { ILogLevel } from "#lib/logs";
 import { NEXT_PUBLIC_VERCEL_URL } from "./vercel";
 
 export const NODE_ENV = process.env.NODE_ENV;
-
 export const SITE_BASE_URL =
   NEXT_PUBLIC_VERCEL_URL ?? process.env.NEXT_PUBLIC_SITE_BASE_URL;
 
@@ -68,3 +67,10 @@ export const SITE_BASE_PATHNAME =
   // defaulting to empty string instead of `undefined`
   // so it wouldn't be ass to interpolate into path strings
   !basePathname || basePathname === "/" ? "" : basePathname;
+
+/**
+ * A list of assets for service worker to cache.
+ * Only available to service worker and only in production.
+ */
+export const SERVICE_WORKER_STATIC_ASSETS_PATHS = process.env
+  .SERVICE_WORKER_STATIC_ASSETS_PATHS as string[] | undefined;

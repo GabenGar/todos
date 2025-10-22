@@ -1,22 +1,28 @@
 // @ts-check
+import { platform } from "node:os";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import webpack from "webpack";
 import { merge } from "webpack-merge";
 import commonConfiguration from "./webpack.common.mjs";
+
+const { DefinePlugin } = webpack;
+const isWindows = platform() === "win32";
 
 async function createProdConfig() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const outputPath = path.resolve(__dirname, "out");
-
-  // doing dev worker output cleanup here
-  // because setting up an adhoc script is a gigantic pain
   const devOutputPath = path.join(__dirname, "public");
   const devWorkerPath = path.resolve(devOutputPath, "service-worker.js");
   const devWorkerMapPath = path.resolve(devOutputPath, "service-worker.js.map");
 
+  // doing dev worker output cleanup here
+  // because setting up an adhoc script is a gigantic pain
   await fs.rm(devWorkerPath, { force: true });
   await fs.rm(devWorkerMapPath, { force: true });
+
+  const staticPaths = await collectStaticPaths(outputPath);
 
   /**
    * @type {import("webpack").Configuration}
@@ -25,6 +31,11 @@ async function createProdConfig() {
     name: "prod-config",
     mode: "production",
     devtool: "source-map",
+    plugins: [
+      new DefinePlugin({
+        SERVICE_WORKER_STATIC_ASSETS_PATHS: JSON.stringify(staticPaths),
+      }),
+    ],
     optimization: {
       runtimeChunk: false,
     },
@@ -37,6 +48,38 @@ async function createProdConfig() {
   const finalConfig = merge(commonConfiguration, prodConfig);
 
   return finalConfig;
+}
+
+/**
+ * @param {string} outputPath
+ *
+ */
+async function collectStaticPaths(outputPath) {
+  const folder = await fs.opendir(outputPath, {
+    recursive: true,
+    encoding: "utf-8",
+  });
+
+  /**
+   * @type {string[]}
+   */
+  const staticPaths = [];
+
+  for await (const dirEntry of folder) {
+    if (!dirEntry.isFile()) {
+      continue;
+    }
+
+    const fullPath = path.join(dirEntry.parentPath, dirEntry.name);
+    const relativeOutputPath = path.relative(outputPath, fullPath);
+    const normalizedPath = !isWindows
+      ? relativeOutputPath
+      : relativeOutputPath.split(path.sep).join(path.posix.sep);
+
+    staticPaths.push(normalizedPath);
+  }
+
+  return staticPaths;
 }
 
 export default createProdConfig;

@@ -1,67 +1,44 @@
-import { IS_BROWSER } from "#environment";
+import {
+  IS_DEVELOPMENT,
+  SERVICE_WORKER_STATIC_ASSETS_PATHS,
+} from "#environment";
 
-if (IS_BROWSER) {
-  initServiceWorker(
-    globalThis.self as unknown as ServiceWorkerGlobalScope,
-  );
-}
+initServiceWorker(globalThis.self as unknown as ServiceWorkerGlobalScope);
 
 async function initServiceWorker(self: ServiceWorkerGlobalScope) {
   const cacheSpace = "service_worker";
   const currentVersion = "v0.0.1";
   const cacheName = `${cacheSpace}_${currentVersion}`;
-  // need to accomodate deployment base path,
-  // aka build pipeline
-  const resources: string[] = [
-    // "/",
-    // "/404",
-    // "/500",
-    // "/en/account",
-    // "/en/place",
-    // "/en/places",
-    // "/en/planned-event",
-    // "/en/planned-event/edit",
-    // "/en/planned-events",
-    // "/en/qr-code-reader",
-    // "/en/stats/places",
-    // "/en/stats/tasks",
-    // "/en/task",
-    // "/en/task/edit",
-    // "/en/tasks",
-    // "/en/url-viewer",
-    // "/en/yt-dlp-configs",
-    // "/ru/account",
-    // "/ru/place",
-    // "/ru/places",
-    // "/ru/planned-event",
-    // "/ru/planned-event/edit",
-    // "/ru/planned-events",
-    // "/ru/qr-code-reader",
-    // "/ru/stats/places",
-    // "/ru/stats/tasks",
-    // "/ru/task",
-    // "/ru/task/edit",
-    // "/ru/tasks",
-    // "/ru/url-viewer",
-    // "/ru/yt-dlp-configs",
-  ];
 
-  self.addEventListener("install", (event) => {
-    // event.waitUntil(install());
-    console.log("service worker installed");
-  });
+  // do not do anything in develpment
+  if (IS_DEVELOPMENT) {
+    await initNoOpWorker();
+  } else {
+    self.addEventListener("install", (event) => {
+      if (!SERVICE_WORKER_STATIC_ASSETS_PATHS) {
+        throw new Error(
+          `Static paths weren't generated for service worker ahead of time.`,
+        );
+      }
 
-  self.addEventListener("activate", (event) => {
-    // event.waitUntil(activate());
-    console.log("service worker activated");
-  });
+      event.waitUntil(install(SERVICE_WORKER_STATIC_ASSETS_PATHS));
+      console.log("service worker installed");
+    });
 
-  self.addEventListener("fetch", (event) => {
-    // event.respondWith(cacheFirst(event.request, event, event.preloadResponse));
-  });
+    self.addEventListener("activate", (event) => {
+      event.waitUntil(activate());
+      console.log("service worker activated");
+    });
 
-  async function install() {
-    await addResourcesToCache(resources);
+    self.addEventListener("fetch", (event) => {
+      event.respondWith(
+        cacheFirst(event.request, event, event.preloadResponse),
+      );
+    });
+  }
+
+  async function install(staticPaths: string[]) {
+    await addResourcesToCache(staticPaths);
   }
 
   async function activate() {
@@ -103,6 +80,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
       // and serve second one
       event.waitUntil(putInCache(request, responseFromNetwork.clone()));
       return responseFromNetwork;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // when even the fallback response is not available,
       // there is nothing we can do, but we must always
