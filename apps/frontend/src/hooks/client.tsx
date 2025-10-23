@@ -15,8 +15,8 @@ import {
 import type { ILocale } from "#lib/internationalization";
 import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 import { isIndexedDBAvailable } from "#store/indexed";
-import { IndexedDBProvider } from "./indexed-db";
 import { registerServiceWorker } from "#browser/workers";
+import { IndexedDBProvider } from "./indexed-db";
 
 type IClientContext =
   | undefined

@@ -18,9 +18,10 @@ export async function registerServiceWorker() {
   }
 
   try {
-    // apparently webpack automatically creates entries
-    // if following this exact syntax
+    // not using this exact syntax:
     // https://webpack.js.org/blog/2020-10-10-webpack-5-release/#native-worker-support
+    // because it creates variable output filename
+    // and for service workers to works properly the filename has to be stable
     const registration = await navigator.serviceWorker.register(
       serviceWorkerPath,
       {

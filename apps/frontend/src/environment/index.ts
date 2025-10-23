@@ -73,4 +73,4 @@ export const SITE_BASE_PATHNAME =
  * Only available to service worker and only in production.
  */
 export const SERVICE_WORKER_STATIC_ASSETS_PATHS = process.env
-  .SERVICE_WORKER_STATIC_ASSETS_PATHS as string[] | undefined;
+  .NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS as string[] | undefined;

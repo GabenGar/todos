@@ -7,7 +7,7 @@ import webpack from "webpack";
 import { merge } from "webpack-merge";
 import commonConfiguration from "./webpack.common.mjs";
 
-const { DefinePlugin } = webpack;
+const { EnvironmentPlugin } = webpack;
 const isWindows = platform() === "win32";
 
 async function createProdConfig() {
@@ -32,9 +32,9 @@ async function createProdConfig() {
     mode: "production",
     devtool: "source-map",
     plugins: [
-      new DefinePlugin({
-        SERVICE_WORKER_STATIC_ASSETS_PATHS: JSON.stringify(staticPaths),
-      }),
+      new EnvironmentPlugin({
+        NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS: staticPaths
+      })
     ],
     optimization: {
       runtimeChunk: false,
