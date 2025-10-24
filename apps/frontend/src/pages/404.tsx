@@ -10,7 +10,7 @@ import {
 } from "#components/overview";
 import { Link } from "#components/link";
 
-import styles from "./index.module.scss";
+import styles from "./404.module.scss";
 
 /**
  * @TODO lathe with client logic (plus localization)

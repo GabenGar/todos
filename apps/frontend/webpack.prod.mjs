@@ -33,8 +33,8 @@ async function createProdConfig() {
     devtool: "source-map",
     plugins: [
       new EnvironmentPlugin({
-        NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS: staticPaths
-      })
+        NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS: staticPaths,
+      }),
     ],
     optimization: {
       runtimeChunk: false,
@@ -70,7 +70,16 @@ async function collectStaticPaths(outputPath) {
       continue;
     }
 
-    const fullPath = path.join(dirEntry.parentPath, dirEntry.name);
+    const isHTMLFile = dirEntry.name.endsWith(".html");
+    const isIndexHTMLFile = !isHTMLFile
+      ? false
+      : dirEntry.name === "index.html";
+    const normalizedName = !isHTMLFile
+      ? dirEntry.name
+      : !isIndexHTMLFile
+        ? dirEntry.name.replace(".html", "")
+        : dirEntry.name.replace("index.html", "");
+    const fullPath = path.join(dirEntry.parentPath, normalizedName);
     const relativeOutputPath = path.relative(outputPath, fullPath);
     const normalizedPath = !isWindows
       ? relativeOutputPath

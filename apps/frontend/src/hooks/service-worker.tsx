@@ -1,4 +1,10 @@
-import { createContext, useContext, type ReactNode, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  type ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { registerServiceWorker } from "#browser/workers";
 
 type IServiceWorkerContext = undefined;
@@ -13,8 +19,17 @@ interface IProps {
 }
 
 export function ServiceWorkerProvider({ children }: IProps) {
+  const [registration, changeRegistration] =
+    useState<ServiceWorkerRegistration>();
+
   useEffect(() => {
-    registerServiceWorker();
+    if (registration) {
+      return;
+    }
+
+    registerServiceWorker().then((nextRegistration) => {
+      changeRegistration(nextRegistration);
+    });
   }, []);
 
   return (

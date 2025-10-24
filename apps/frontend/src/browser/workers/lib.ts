@@ -38,6 +38,8 @@ export async function registerServiceWorker() {
     console.log(
       `Service Worker registration successful with scope "${registration.scope}".`,
     );
+
+    return registration
   } catch (error) {
     console.error(
       new Error("Service Worker registration failed", { cause: error }),
