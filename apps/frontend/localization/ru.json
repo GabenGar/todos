@@ -2,7 +2,11 @@
   "common": {
     "layout": {
       "description": "Организовывайте задачи в браузере",
-      "source_code": "Исходный код"
+      "source_code": "Исходный код",
+      "Service Worker": "Сервис-воркер",
+      "Installing": "Установка",
+      "Waiting": "Ожидание",
+      "Active": "Активен"
     },
     "form": {
       "submit": "Отправить",

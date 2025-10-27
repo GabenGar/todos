@@ -7,7 +7,7 @@ import {
 } from "react";
 import { registerServiceWorker } from "#browser/workers";
 
-type IServiceWorkerContext = undefined;
+type IServiceWorkerContext = undefined | ServiceWorker;
 
 const defaultContext = undefined satisfies IServiceWorkerContext;
 
@@ -19,21 +19,24 @@ interface IProps {
 }
 
 export function ServiceWorkerProvider({ children }: IProps) {
-  const [registration, changeRegistration] =
-    useState<ServiceWorkerRegistration>();
+  const [serviceWorker, changeServiceWorker] = useState<ServiceWorker>();
 
   useEffect(() => {
-    if (registration) {
+    if (serviceWorker) {
       return;
     }
 
-    registerServiceWorker().then((nextRegistration) => {
-      changeRegistration(nextRegistration);
+    registerServiceWorker().then((nextServiceWorker) => {
+      if (!nextServiceWorker) {
+        return;
+      }
+
+      changeServiceWorker(nextServiceWorker);
     });
   }, []);
 
   return (
-    <ServiceWorkerContext.Provider value={undefined}>
+    <ServiceWorkerContext.Provider value={serviceWorker}>
       {children}
     </ServiceWorkerContext.Provider>
   );

@@ -28,18 +28,18 @@ export async function registerServiceWorker() {
         scope: serviceWorkerPath,
       },
     );
-    if (registration.installing) {
-      console.log("Service worker installing");
-    } else if (registration.waiting) {
-      console.log("Service worker installed");
-    } else if (registration.active) {
-      console.log("Service worker active");
-    }
+
+    const worker =
+      registration.installing ??
+      registration.waiting ??
+      registration.active ??
+      undefined;
+
     console.log(
       `Service Worker registration successful with scope "${registration.scope}".`,
     );
 
-    return registration
+    return worker;
   } catch (error) {
     console.error(
       new Error("Service Worker registration failed", { cause: error }),

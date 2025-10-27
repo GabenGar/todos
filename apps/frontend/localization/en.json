@@ -2,7 +2,11 @@
   "common": {
     "layout": {
       "description": "Manage tasks in browser",
-      "source_code": "Source Code"
+      "source_code": "Source Code",
+      "Service Worker": "Service Worker",
+      "Installing": "Installing",
+      "Waiting": "Waiting",
+      "Active": "Active"
     },
     "form": {
       "submit": "Submit",
