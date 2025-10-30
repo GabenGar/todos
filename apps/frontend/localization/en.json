@@ -3,10 +3,21 @@
     "layout": {
       "description": "Manage tasks in browser",
       "source_code": "Source Code",
-      "Service Worker": "Service Worker",
-      "Installing": "Installing",
-      "Waiting": "Waiting",
-      "Active": "Active"
+      "service_worker": {
+        "Service Worker": "Service Worker",
+        "status": {
+          "disabled": "Disabled",
+          "initializing": "Initializing",
+          "unavailable": "Unavailable",
+          "error": "Error",
+          "redundant": "Redundant",
+          "installing": "Installing",
+          "installed": "Installed",
+          "activating": "Activating",
+          "activated": "Activated",
+          "parsed": "Parsed"
+        }
+      }
     },
     "form": {
       "submit": "Submit",

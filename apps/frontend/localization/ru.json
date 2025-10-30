@@ -3,10 +3,21 @@
     "layout": {
       "description": "Организовывайте задачи в браузере",
       "source_code": "Исходный код",
-      "Service Worker": "Сервис-воркер",
-      "Installing": "Установка",
-      "Waiting": "Ожидание",
-      "Active": "Активен"
+      "service_worker": {
+        "Service Worker": "Сервис-воркер",
+        "status": {
+          "disabled": "Отключён",
+          "initializing": "Запускается",
+          "unavailable": "Недоступен",
+          "error": "Ошибка",
+          "redundant": "Избыточный",
+          "installing": "Устанавливается",
+          "installed": "Установлен",
+          "activating": "Активируется",
+          "activated": "Активирован",
+          "parsed": "Обработан"
+        }
+      }
     },
     "form": {
       "submit": "Отправить",

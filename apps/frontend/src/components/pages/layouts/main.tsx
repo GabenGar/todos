@@ -1,6 +1,5 @@
 import { useEffect, type ReactNode } from "react";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { Loading } from "@repo/ui/loading";
 import { REPOSITORY_URL } from "#environment";
 import { type ILocale } from "#lib/internationalization";
 import { type ILocalizationCommon } from "#lib/localization";
@@ -57,23 +56,13 @@ export function MainLayout({ lang, common, children }: IProps) {
 
 interface IServiceWorkerOverviewProps extends Pick<IProps, "common"> {}
 function ServiceWorkerOverview({ common }: IServiceWorkerOverviewProps) {
-  const serviceWorker = useServiceWorker();
-  const { layout } = common;
+  const serviceWorkerContext = useServiceWorker();
+  const t = common.layout.service_worker;
 
   return (
     <DescriptionSection
-      dKey={layout["Service Worker"]}
-      dValue={
-        !serviceWorker ? (
-          <Loading />
-        ) : serviceWorker.state === "installing" ? (
-          layout["Installing"]
-        ) : serviceWorker.state === "activating" ? (
-          layout["Waiting"]
-        ) : serviceWorker.state === "activated" ? (
-          layout["Active"]
-        ) : undefined
-      }
+      dKey={t["Service Worker"]}
+      dValue={t.status[serviceWorkerContext.status]}
       isHorizontal
     />
   );
