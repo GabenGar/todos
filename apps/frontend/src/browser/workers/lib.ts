@@ -36,7 +36,9 @@ export async function registerServiceWorker() {
       undefined;
 
     console.log(
-      `Service Worker registration successful with scope "${registration.scope}".`,
+      !worker
+        ? `Failed to register Service Worker at scope "${registration.scope}" for some reason.`
+        : `Service Worker registration successful with scope "${registration.scope}".`,
     );
 
     return worker;

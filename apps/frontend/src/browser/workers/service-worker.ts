@@ -13,29 +13,29 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
   // do not do anything in develpment
   if (IS_DEVELOPMENT) {
     await initNoOpWorker();
-  } else {
-    self.addEventListener("install", (event) => {
-      if (!SERVICE_WORKER_STATIC_ASSETS_PATHS) {
-        throw new Error(
-          `Static paths weren't generated for service worker ahead of time.`,
-        );
-      }
 
-      event.waitUntil(install(SERVICE_WORKER_STATIC_ASSETS_PATHS));
-      console.log("service worker installed");
-    });
-
-    self.addEventListener("activate", (event) => {
-      event.waitUntil(activate());
-      console.log("service worker activated");
-    });
-
-    self.addEventListener("fetch", (event) => {
-      event.respondWith(
-        cacheFirst(event.request, event, event.preloadResponse),
-      );
-    });
+    return;
   }
+
+  self.addEventListener("install", (event) => {
+    if (!SERVICE_WORKER_STATIC_ASSETS_PATHS) {
+      throw new Error(
+        `Static paths weren't generated for service worker ahead of time.`,
+      );
+    }
+
+    event.waitUntil(install(SERVICE_WORKER_STATIC_ASSETS_PATHS));
+    console.log("service worker installed");
+  });
+
+  self.addEventListener("activate", (event) => {
+    event.waitUntil(activate());
+    console.log("service worker activated");
+  });
+
+  self.addEventListener("fetch", async (event) => {
+    event.respondWith(cacheFirst(event.request, event, event.preloadResponse));
+  });
 
   async function install(staticPaths: string[]) {
     await addResourcesToCache(staticPaths);
@@ -56,8 +56,18 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
     event: FetchEvent,
     preloadResponsePromise: Promise<Response>,
   ) {
+    const pathname = new URL(request.url, self.location.origin).pathname;
+
+    const client = await self.clients.get(event.clientId);
+
+    if (client) {
+      client.postMessage(
+        `ServiceWorker: intercepting request "${request.url}" whose cache key will be "${pathname}".`,
+      );
+    }
+
     // First try to get the resource from the cache
-    const responseFromCache = await caches.match(request);
+    const responseFromCache = await caches.match(pathname);
 
     if (responseFromCache) {
       return responseFromCache;
@@ -67,7 +77,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
     const preloadResponse = await preloadResponsePromise;
 
     if (preloadResponse) {
-      event.waitUntil(putInCache(request, preloadResponse.clone()));
+      event.waitUntil(putInCache(pathname, preloadResponse.clone()));
 
       return preloadResponse;
     }
@@ -78,7 +88,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
       // response may be used only once
       // we need to save clone to put one copy in cache
       // and serve second one
-      event.waitUntil(putInCache(request, responseFromNetwork.clone()));
+      event.waitUntil(putInCache(pathname, responseFromNetwork.clone()));
       return responseFromNetwork;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -92,7 +102,10 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
     }
   }
 
-  async function putInCache(request: Request, response: Response) {
+  async function putInCache(
+    request: Parameters<Cache["put"]>[0],
+    response: Response,
+  ) {
     const cache = await caches.open(cacheName);
     await cache.put(request, response);
   }

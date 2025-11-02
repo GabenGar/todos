@@ -50,6 +50,7 @@ export function ServiceWorkerProvider({ children }: IProps) {
 
   useEffect(() => {
     let worker: ServiceWorker | undefined = undefined;
+    navigator.serviceWorker.addEventListener("message", listenForMessages);
 
     registerServiceWorker().then((nextServiceWorker) => {
       if (!nextServiceWorker) {
@@ -57,6 +58,7 @@ export function ServiceWorkerProvider({ children }: IProps) {
       } else {
         nextServiceWorker.addEventListener("statechange", listenForState);
         nextServiceWorker.addEventListener("error", listenForErrors);
+
         worker = nextServiceWorker;
         changeContext({
           status: nextServiceWorker.state,
@@ -68,6 +70,7 @@ export function ServiceWorkerProvider({ children }: IProps) {
     return () => {
       worker?.removeEventListener("statechange", listenForState);
       worker?.removeEventListener("error", listenForErrors);
+      navigator.serviceWorker.removeEventListener("message", listenForMessages);
     };
   }, []);
 
@@ -86,6 +89,10 @@ export function ServiceWorkerProvider({ children }: IProps) {
 
   function listenForErrors(event: ErrorEvent) {
     console.error(event.error);
+  }
+
+  function listenForMessages(event: MessageEvent) {
+    console.log(event.data);
   }
 
   return (
