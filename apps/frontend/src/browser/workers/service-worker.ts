@@ -18,32 +18,46 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
   }
 
   self.addEventListener("install", (event) => {
-    if (!SERVICE_WORKER_STATIC_ASSETS_PATHS) {
-      throw new Error(
-        `Static paths weren't generated for service worker ahead of time.`,
-      );
-    }
-
     event.waitUntil(install(SERVICE_WORKER_STATIC_ASSETS_PATHS));
-    console.log("service worker installed");
   });
 
   self.addEventListener("activate", (event) => {
     event.waitUntil(activate());
-    console.log("service worker activated");
   });
 
   self.addEventListener("fetch", async (event) => {
     event.respondWith(cacheFirst(event.request, event, event.preloadResponse));
   });
 
-  async function install(staticPaths: string[]) {
-    await addResourcesToCache(staticPaths);
+  async function install(staticPaths?: string[]) {
+    const clients = await getWindowClients();
+
+    try {
+      if (!staticPaths) {
+        throw new Error(
+          `Static paths weren't generated for service worker ahead of time.`,
+        );
+      }
+      await addResourcesToCache(staticPaths);
+      sendMessageToClients("Successfully installed service worker.", clients);
+    } catch (error) {
+      sendMessageToClients(String(error), clients);
+
+      throw error;
+    }
   }
 
   async function activate() {
-    await deleteOldCaches();
-    await enableNavigationPreload();
+    const clients = await getWindowClients();
+    try {
+      await deleteOldCaches();
+      await enableNavigationPreload();
+      sendMessageToClients("Successfully activated service worker.", clients);
+    } catch (error) {
+      sendMessageToClients(String(error), clients);
+
+      throw error;
+    }
   }
 
   async function addResourcesToCache(resources: RequestInfo[]) {
@@ -140,5 +154,20 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
     self.addEventListener("activate", (event) => {
       event.waitUntil(self.clients.claim());
     });
+  }
+
+  async function getWindowClients() {
+    const clients = await self.clients.matchAll({
+      type: "window",
+      includeUncontrolled: true,
+    });
+
+    return clients;
+  }
+
+  function sendMessageToClients(message: string, clients: readonly Client[]) {
+    for (const client of clients) {
+      client.postMessage(message);
+    }
   }
 }

@@ -26,8 +26,8 @@ interface IActiveServiceWorkerContext {
 
 const defaultContext = (
   IS_SERVICE_WORKER_ENABLED
-    ? { status: "disabled" }
-    : { status: "initializing" }
+    ? { status: "initializing" }
+    : { status: "disabled" }
 ) satisfies IServiceWorkerContext;
 
 const ServiceWorkerContext =
