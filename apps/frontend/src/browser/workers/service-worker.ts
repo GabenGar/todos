@@ -91,7 +91,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
     const preloadResponse = await preloadResponsePromise;
 
     if (preloadResponse) {
-      event.waitUntil(putInCache(pathname, preloadResponse.clone()));
+      await putInCache(pathname, preloadResponse.clone());
 
       return preloadResponse;
     }
@@ -102,7 +102,8 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
       // response may be used only once
       // we need to save clone to put one copy in cache
       // and serve second one
-      event.waitUntil(putInCache(pathname, responseFromNetwork.clone()));
+      await putInCache(pathname, responseFromNetwork.clone());
+
       return responseFromNetwork;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {

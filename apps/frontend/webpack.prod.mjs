@@ -33,7 +33,7 @@ async function createProdConfig() {
     devtool: "source-map",
     plugins: [
       new EnvironmentPlugin({
-        NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS: staticPaths,
+        NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS: Array.from(staticPaths),
       }),
     ],
     optimization: {
@@ -61,12 +61,16 @@ async function collectStaticPaths(outputPath) {
   });
 
   /**
-   * @type {string[]}
+   * @type {Set<string>}
    */
-  const staticPaths = [];
+  const staticPaths = new Set();
 
   for await (const dirEntry of folder) {
-    if (!dirEntry.isFile()) {
+    const isValidFile =
+      dirEntry.isFile()
+      // service worker doesn't like caching itself
+      && dirEntry.name !== "service-worker.js";
+    if (!isValidFile) {
       continue;
     }
 
@@ -85,7 +89,7 @@ async function collectStaticPaths(outputPath) {
       ? relativeOutputPath
       : relativeOutputPath.split(path.sep).join(path.posix.sep);
 
-    staticPaths.push(normalizedPath);
+    staticPaths.add(normalizedPath);
   }
 
   return staticPaths;
