@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Head from "next/head";
 import { createBlockComponent } from "@repo/ui/meta";
-import { SITE_TITLE } from "#environment";
+import { SITE_BASE_PATHNAME, SITE_TITLE } from "#environment";
 import { Heading } from "./heading";
 import type { IBaseComponentPropsWithChildren } from "./types";
 
@@ -16,7 +16,8 @@ interface IProps extends IBaseComponentPropsWithChildren<"section"> {
   canonicalURL?: string;
 }
 
-export const Page = createBlockComponent(styles, Component);
+export const Page: ReturnType<typeof createBlockComponent<IProps>> =
+  createBlockComponent(styles, Component);
 
 function Component({
   title,
@@ -60,6 +61,12 @@ function Component({
             content={imageURL ?? "/next.svg"}
           />
         )}
+
+        <link
+          rel="icon"
+          href={`${SITE_BASE_PATHNAME}/favicon.ico`}
+          type="image/x-icon"
+        />
       </Head>
 
       {heading && <Heading level={1}>{heading}</Heading>}

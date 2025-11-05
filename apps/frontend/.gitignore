@@ -3,6 +3,9 @@
 dist
 # nextjs shits itself when having a custom output folder
 out
+# service worker setup
+public/service-worker.js
+public/service-worker.js.map
 
 # Dependency directories
 node_modules/

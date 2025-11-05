@@ -12,7 +12,7 @@ export interface IInputSelectProps
     Pick<IInputProps, "id" | "name" | "form"> {}
 
 // `label` is omitted because it's a legacy attribute
-// https://stackoverflow.com/q/3905984/14481500
+// https://stackoverflow.com/q/3905984
 export interface IInputOptionProps
   extends Omit<IBaseComponentPropsWithChildren<"option">, "label"> {}
 

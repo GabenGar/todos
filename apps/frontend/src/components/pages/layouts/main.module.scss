@@ -42,9 +42,9 @@
 .footer {
   grid-area: footer;
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: center;
   gap: $size-normal;
   color: var(--colour-text-primary);
   background-color: var(--colour-background-secondary);

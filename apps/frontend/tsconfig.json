@@ -1,11 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
+    "checkJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -16,6 +11,12 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // adding webworker there to have IDE support for service worker file
+    // otherwise nextjs overwrites the config file
+    // when used with project references
+    // https://github.com/vercel/next.js/discussions/39942
+    "lib": ["dom", "dom.iterable", "esnext", "WebWorker"],
+    "allowJs": true,
     "jsx": "preserve",
     "plugins": [
       {
@@ -23,15 +24,10 @@
       }
     ]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "next-env.d.ts",
-  ],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-env.d.ts"],
   "exclude": [
     "node_modules",
     "scripts",
-    "codegen/generators"
+    "codegen/generators",
   ]
 }

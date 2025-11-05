@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "sourceMap":  true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "target": "es2017",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "lib": ["esnext", "WebWorker"],
+    "allowJs": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["src/browser/workers/service-worker.ts"]
+}

@@ -4,13 +4,15 @@
   "description": "NextJS frontend for todo list.",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build-pages": "next build",
     "build-codegen": "cd ./codegen/generators && npm run build",
+    "build-workers": "webpack --config webpack.prod.mjs",
     "start": "serve ./out -p 9001 --no-clipboard --no-port-switching",
     "lint": "eslint ./src",
     "format": "prettier --log-level=warn ./src --write",
     "check": "next typegen && tsc --noEmit",
     "dev": "next dev --port 8001",
+    "dev-workers": "webpack --config webpack.dev.mjs --watch",
     "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"
   },
   "imports": {
@@ -56,9 +58,14 @@
     "eslint": "9.31.0",
     "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.5",
+    "eslint-config-turbo": "^2.5.8",
     "prettier": "3.6.2",
     "sass": "^1.89.2",
     "serve": "^14.2.4",
-    "typescript": "^5.8.3"
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.8.3",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-merge": "^6.0.1"
   }
 }
