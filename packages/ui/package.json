@@ -33,6 +33,7 @@
     "./numbers": "./src/numbers/index.ts",
     "./hooks": "./src/hooks/index.ts",
     "./internationalization": "./src/internationalization/index.ts",
+    "./http": "./src/http/index.ts",
     "./types": "./src/types/index.ts",
     "./styles/global": "./src/styles/global.scss",
     "./styles/global/extension/options": "./src/styles/global/extension/options.scss",
@@ -62,6 +63,7 @@
     "#strings": "./src/strings/index.ts",
     "#numbers": "./src/numbers/index.ts",
     "#hooks": "./src/hooks/index.ts",
+    "#http": "./src/http/index.ts",
     "#types": "./src/types/index.ts"
   },
   "dependencies": {

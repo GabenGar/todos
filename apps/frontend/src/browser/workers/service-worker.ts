@@ -1,3 +1,4 @@
+import { HTTP_STATUS_CODE } from "@repo/ui/http";
 import {
   IS_DEVELOPMENT,
   SERVICE_WORKER_STATIC_ASSETS_PATHS,
@@ -30,8 +31,6 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
   });
 
   async function install(staticPaths?: string[]) {
-    const clients = await getWindowClients();
-
     try {
       if (!staticPaths) {
         throw new Error(
@@ -39,30 +38,31 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
         );
       }
       await addResourcesToCache(staticPaths);
-      sendMessageToClients("Successfully installed service worker.", clients);
+      console.info("Successfully installed service worker.");
     } catch (error) {
-      sendMessageToClients(String(error), clients);
+      console.error(error);
 
       throw error;
     }
   }
 
   async function activate() {
-    const clients = await getWindowClients();
     try {
       await deleteOldCaches();
       await enableNavigationPreload();
-      sendMessageToClients("Successfully activated service worker.", clients);
+      console.info("Successfully activated service worker.");
     } catch (error) {
-      sendMessageToClients(String(error), clients);
+      console.error(error);
 
       throw error;
     }
   }
 
   async function addResourcesToCache(resources: RequestInfo[]) {
+    console.debug(`Adding ${resources.length} resources to cache...`);
     const cache = await caches.open(cacheName);
     await cache.addAll(resources);
+    console.debug(`Added ${resources.length} resources to cache.`);
   }
 
   async function cacheFirst(
@@ -72,13 +72,9 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
   ) {
     const pathname = new URL(request.url, self.location.origin).pathname;
 
-    const client = await self.clients.get(event.clientId);
-
-    if (client) {
-      client.postMessage(
-        `ServiceWorker: intercepting request "${request.url}" whose cache key will be "${pathname}".`,
-      );
-    }
+    console.debug(
+      `Intercepting request "${request.url}" whose cache key will be "${pathname}".`,
+    );
 
     // First try to get the resource from the cache
     const responseFromCache = await caches.match(pathname);
@@ -111,7 +107,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
       // there is nothing we can do, but we must always
       // return a Response object
       return new Response("Request Timeout", {
-        status: 408,
+        status: HTTP_STATUS_CODE.REQUEST_TIMEOUT,
         headers: { "Content-Type": "text/plain" },
       });
     }
@@ -155,20 +151,5 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
     self.addEventListener("activate", (event) => {
       event.waitUntil(self.clients.claim());
     });
-  }
-
-  async function getWindowClients() {
-    const clients = await self.clients.matchAll({
-      type: "window",
-      includeUncontrolled: true,
-    });
-
-    return clients;
-  }
-
-  function sendMessageToClients(message: string, clients: readonly Client[]) {
-    for (const client of clients) {
-      client.postMessage(message);
-    }
   }
 }
