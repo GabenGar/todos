@@ -2,14 +2,14 @@ import { HTTP_STATUS_CODE } from "@repo/ui/http";
 import {
   IS_DEVELOPMENT,
   SERVICE_WORKER_STATIC_ASSETS_PATHS,
+  SERVICE_WORKER_STATIC_ASSETS_HASH,
 } from "#environment";
 
 initServiceWorker(globalThis.self as unknown as ServiceWorkerGlobalScope);
 
 async function initServiceWorker(self: ServiceWorkerGlobalScope) {
   const cacheSpace = "service_worker";
-  const currentVersion = "v0.0.1";
-  const cacheName = `${cacheSpace}_${currentVersion}`;
+  const cacheName = `${cacheSpace}_${SERVICE_WORKER_STATIC_ASSETS_HASH}`;
 
   // do not do anything in develpment
   if (IS_DEVELOPMENT) {
