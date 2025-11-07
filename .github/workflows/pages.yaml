@@ -55,6 +55,7 @@ jobs:
         run: npm run build-frontend
         env:
           NEXT_PUBLIC_SITE_BASE_URL: ${{ steps.setup_pages.outputs.base_path }}
+          NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED: ${{ vars.NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
