@@ -25,6 +25,8 @@ async function createProdConfig() {
   await fs.rm(workerPath, { force: true });
   await fs.rm(workerMapPath, { force: true });
 
+  console.log(process.env.NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED)
+
   const staticPaths = await collectStaticPaths(outputPath);
   const assetsHash = await getAssetsHash(staticPaths);
   /**
