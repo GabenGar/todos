@@ -22,6 +22,7 @@ const devConfig = {
       // add this one so it wouldn't error in dev
       // due to opaque parsing error
       NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS: null,
+      NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_HASH: null
     }),
   ],
   output: {
