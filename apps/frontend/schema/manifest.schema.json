@@ -1,0 +1,54 @@
+{
+  "$id": "pwa-manifest",
+  "title": "PWAManifest",
+  "description": "Manifest for Progressive Web Apps.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "short_name",
+    "start_url",
+    "display",
+    "display_override",
+    "prefer_related_applications"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "icons": {
+      "description": "",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "src": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "sizes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "prefer_related_applications": {
+      "const": false
+    },
+    "display": {
+      "anyOf": [
+        {
+          "description": "Indicates that the PWA should look and feel like a platform-specific application, with no browser UI elements.",
+          "const": "standalone"
+        },
+        {
+          "description": "Indicates that the PWA should be opened as a new browser tab or window, just like a normal website.",
+          "const": "browser"
+        }
+      ]
+    }
+  }
+}
