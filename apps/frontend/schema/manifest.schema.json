@@ -8,16 +8,27 @@
     "name",
     "short_name",
     "start_url",
-    "display",
-    "display_override",
     "prefer_related_applications"
   ],
   "properties": {
+    "id": {
+      "description": "A unique identifier for your web app.",
+      "type": "string"
+    },
     "name": {
+      "description": "Full name of your web app.",
+      "type": "string"
+    },
+    "short_name": {
+      "description": "A short version of your web app's `name`.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Supplementary metadata that does not affect the app's runtime behavior or how browsers present the app. Its value is used in app stores and other distribution platforms to help users understand what your app does. Additionally, it provides an accessible description of your installed app.",
       "type": "string"
     },
     "icons": {
-      "description": "",
+      "description": "Must contain a 192px and a 512px icon.",
       "type": "array",
       "items": {
         "type": "object",
@@ -35,20 +46,141 @@
         }
       }
     },
+    "start_url": {
+      "description": "The starting URL of a web app. The URL can be absolute or relative. If the value is relative, it is resolved against the manifest file's URL.",
+      "type": "string",
+      "default": "./"
+    },
     "prefer_related_applications": {
       "const": false
     },
     "display": {
+      "description": "Preferred display mode for the web application. The display mode determines how much of the browser UI is shown to the user when the app is launched within the context of an operating system. ",
       "anyOf": [
         {
-          "description": "Indicates that the PWA should look and feel like a platform-specific application, with no browser UI elements.",
+          "description": "Opens the app to look and feel like a standalone native app. This can include the app having a different window and its own icon in the app launcher. The browser will exclude UI elements such as a URL bar but can still include other UI elements such as the status bar. For example, use it for a task manager app that opens in its own window without the browser's URL bar, while still displaying the device's status bar for battery and notifications, thereby providing an integrated experience.",
           "const": "standalone"
         },
         {
-          "description": "Indicates that the PWA should be opened as a new browser tab or window, just like a normal website.",
+          "description": "Opens the app in a conventional browser tab or new window, using the platform-specific convention for opening links. Use this value for apps that are designed to be used within a browser context, where full browser functionality is needed. This is the default value if no display mode is specified.",
           "const": "browser"
+        },
+        {
+          "description": "Opens the app with browser UI elements hidden and uses the entirety of the available display area. Use this value for apps where fullscreen engagement is crucial and desired. For example, use it for a game app that can take up the entire screen without any browser controls visible, providing a fully immersive gaming experience.",
+          "const": "fullscreen"
+        },
+        {
+          "description": "Opens the app to look and feel like a standalone app but with a minimal set of UI elements for navigation. The specific elements can vary by browser but typically include navigation controls like back, forward, reload, and possibly a way to view the app's URL. Additionally, the browser may include platform-specific UI elements that provide functionality for sharing and printing content. Use this value for apps where displaying a minimal browser interface is beneficial. For example, use it for a news reading or other general reading apps that show only the essential browser controls like back and reload buttons, providing a cleaner and less distracting interface.",
+          "const": "minimal-ui"
         }
       ]
+    },
+    "theme_color": {
+      "description": "The default color for your web application's user interface. This color may be applied to various browser UI elements, such as the toolbar, address bar, and status bar. It can be particularly noticeable in contexts like the task switcher or when the app is added to the home screen.",
+      "type": "string"
+    },
+    "background_color": {
+      "description": "An initial background color for your web application. This color appears in the application window before your application's stylesheets have loaded.",
+      "type": "string"
+    },
+    "screenshots": {
+      "description": "One or more images that showcase your web application. These images help users preview your web app's interface and features in app stores.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["src"],
+        "additionalProperties": false,
+        "properties": {
+          "src": {
+            "description": "The path to the image file. It has the same format as the `icons` member's `src` property.",
+            "type": "string"
+          },
+          "sizes": {
+            "description": "One or more sizes of the image. It has the same format as the `icons` member's `sizes` property.",
+            "type": "string"
+          },
+          "type": {
+            "description": "The MIME type of the image. It has the same format as the `icons` member's `type` property.",
+            "type": "string"
+          },
+          "label": {
+            "description": "The accessible name of the screenshot object. Keep it descriptive because it can serve as alternative text for the rendered screenshot. For accessibility, it is recommended to specify this property for every screenshot.",
+            "type": "string"
+          },
+          "form_factor": {
+            "description": "The screen shape of a broad class of devices to which the screenshot applies. Specify this property only when the screenshot applies to a specific screen layout. If form_factor is not specified, the screenshot is considered suitable for all screen types.",
+            "anyOf": [
+              {
+                "description": "Indicates that the screenshot is applicable only to narrow screens, such as mobile devices.",
+                "const": "narrow"
+              },
+              {
+                "description": "Indicates that the screenshot is applicable only to wide screens, such as desktop computers.",
+                "const": "wide"
+              }
+            ]
+          },
+          "platform": {
+            "description": "The platform to which the screenshot applies. Specify this property only when the screenshot applies to a specific device or distribution platform. If platform is not specified, the screenshot is considered suitable for all platforms.",
+            "anyOf": [
+              { "description": "Google Android", "const": "android" },
+              { "description": "Google ChromeOS", "const": "chromeos" },
+              { "description": "Apple iOS", "const": "ios" },
+              { "description": "Apple iPadOS", "const": "ipados" },
+              { "description": "KaiOS", "const": "kaios" },
+              { "description": "Apple macOS", "const": "macos" },
+              { "description": "Microsoft Windows", "const": "windows" },
+              { "description": "Microsoft Xbox", "const": "xbox" },
+              {
+                "description": "Google Chrome Web Store",
+                "const": "chrome_web_store"
+              },
+              { "description": "iTunes App Store", "const": "itunes" },
+              {
+                "description": "Pre-installed with Microsoft Windows",
+                "const": "microsoft-inbox"
+              },
+              { "description": "Microsoft Store", "const": "microsoft-store" },
+              { "description": "Google Play Store", "const": "play" }
+            ]
+          },
+          "shortcuts": {
+            "description": "Links to key tasks or pages within your web application. Browsers can use this information to create a context menu, which is typically displayed when a user interacts with the web app's icon.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "url"],
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "description": "The name of the shortcut, which is displayed to users in a context menu.",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "An app URL that opens when the associated shortcut is activated. The URL must be within the scope of the web app manifest. If the value is absolute, it should be same-origin with the page that links to the manifest file. If the value is relative, it is resolved against the manifest file's URL.",
+                  "type": "string"
+                },
+                "short_name": {
+                  "description": "A short version of the shortcut's name. Browsers may use this in contexts where there isn't enough space to display the full name.",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "The purpose of the shortcut. Browsers may expose this information to assistive technology, such as screen readers, which can help users understand the purpose of the shortcut.",
+                  "type": "string"
+                },
+                "icons": {
+                  "description": "Shortcut in various contexts. This has the same format as the `icons` manifest member.",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
