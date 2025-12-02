@@ -28,20 +28,47 @@
       "type": "string"
     },
     "icons": {
-      "description": "Must contain a 192px and a 512px icon.",
+      "description": "One or more image files that define the icons to represent your web application. Must contain a 192px and a 512px icon.",
       "type": "array",
       "items": {
         "type": "object",
+        "required": ["src"],
         "additionalProperties": false,
         "properties": {
           "src": {
-            "type": "string"
-          },
-          "type": {
+            "description": "The path to the icon image file. If `src` is relative, the path is resolved relative to the manifest file's URL.",
             "type": "string"
           },
           "sizes": {
+            "description": "One or more sizes at which the icon file can be used. Each size is specified as &lt;width in pixels&gt;x&lt;height in pixels&gt;. If multiple sizes are specified, they are separated by spaces; for example, `48x48 96x96`. When multiple icons are available, browsers may select the most suitable icon for a particular display context. For raster formats like PNG, specifying the exact available sizes is recommended. For vector formats like SVG, you can use `any` to indicate scalability. If `sizes` is not specified, the selection and display of the icon may vary depending on the browser's implementation.",
+            "anyOf": [
+              {
+                "description": "For vector formats.",
+                "const": "any"
+              },
+              { "type": "string" }
+            ]
+          },
+          "type": {
+            "description": "The MIME type of the icon. The value should be in the format `image/&lt;subtype&gt;`, where `&lt;subtype&gt;` is a specific image format; for example, `image/png` indicates a PNG image. If omitted, browsers typically infer the image type from the file extension.",
             "type": "string"
+          },
+          "purpose": {
+            "description": "One or more contexts in which the icon can be used by the browser or operating system. The value can be a single keyword or multiple space-separated keywords. If omitted, the browser can use the icon for any purpose.",
+            "anyOf": [
+              {
+                "description": "Indicates that the icon is intended to be used as a monochrome icon with a solid fill. With this value, a browser discards the color information in the icon and uses only the alpha channel as a mask over any solid fill.",
+                "const": "monochrome"
+              },
+              {
+                "description": "Indicates that the icon is designed with icon masks and safe zone in mind, such that any part of the image outside the safe zone can be ignored and masked away.",
+                "const": "maskable"
+              },
+              {
+                "description": "Indicates that the icon can be used in any context. This is the default value.",
+                "const": "any"
+              }
+            ]
           }
         }
       }
