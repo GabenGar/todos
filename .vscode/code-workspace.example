@@ -21,6 +21,10 @@
       "path": "packages/nodejs"
     },
     {
+      "name": "@repo/webpack",
+      "path": "packages/webpack"
+    },
+    {
       "name": "schema",
       "path": "packages/schema"
     }

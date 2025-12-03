@@ -1,0 +1,31 @@
+{
+  "name": "@repo/webpack",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "biome lint ./ && tsc --noEmit",
+    "format": "biome format --write ./src"
+  },
+  "exports": {
+    ".": {
+      "types": "./api/index.ts",
+      "default": "./dist/api/index.js"
+    }
+  },
+  "imports": {
+    "#*": "./src/*/index.ts"
+  },
+  "dependencies": {
+    "@repo/nodejs": "*",
+    "schema-utils": "^4.3.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.2",
+    "@types/node": "^20.12.7",
+    "typescript": "^5.8.3",
+    "webpack": "^5.100.2"
+  }
+}
