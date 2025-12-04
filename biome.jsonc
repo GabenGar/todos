@@ -44,5 +44,10 @@
       "enabled": true,
       "indentStyle": "space"
     }
+  },
+  "html": {
+    "formatter": {
+      // "indentScriptAndStyle": true
+    }
   }
 }

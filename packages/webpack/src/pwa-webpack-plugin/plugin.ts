@@ -1,6 +1,7 @@
-import { validate } from "schema-utils";
+import { validate, type Schema } from "schema-utils";
 import type { Compiler } from "webpack";
-import schema from "./plugin.schema.json" with { type: "json" };
+import schema from "./options.schema.json" with { type: "json" };
+import type { IPWAWebpackPluginOptions } from "./options.js";
 
 const configuration = {
   name: "PWAWebpackPlugin",
@@ -8,13 +9,20 @@ const configuration = {
 };
 
 export class PWAWebpackPlugin {
-  constructor(options = {}) {
-    validate(schema, options, configuration);
+  options: IPWAWebpackPluginOptions;
+
+  constructor(options: IPWAWebpackPluginOptions) {
+    const resolvedOptions = options ?? {};
+
+    validate(schema as Schema, resolvedOptions, configuration);
+
+    this.options = resolvedOptions;
   }
   apply(compiler: Compiler) {
-    compiler.hooks.emit.tapPromise("PWAWebpackPlugin", async (compilation) => {
-      // Manipulate the build using the plugin API provided by webpack
-      // compilation.addModule();
+    compiler.hooks.done.tapPromise("PWAWebpackPlugin", async (compilation) => {
+      console.log(
+        `Hello ${this.options.name}! - ${compilation.compilation.fullHash}`,
+      );
     });
   }
 }
