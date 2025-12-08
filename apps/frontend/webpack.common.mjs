@@ -30,6 +30,8 @@ nextEnv.loadEnvConfig(projectDir);
  * Should be specified in the same format as you would do for the `compilerOptions` property in tsconfig.json.
  */
 
+
+
 /**
  * @type {import("webpack").Configuration}
  */
@@ -53,7 +55,7 @@ const commonConfiguration = {
       NEXT_PUBLIC_REPOSITORY_URL: null,
       NEXT_PUBLIC_DEFAULT_LOG_LEVEL: null,
       NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED: null,
-    }),
+    })
   ],
   module: {
     parser: {

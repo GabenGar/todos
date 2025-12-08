@@ -4,6 +4,7 @@ import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import nextEnv from "@next/env";
 import { PHASE_PRODUCTION_BUILD } from "next/constants.js";
+import { PWAWebpackPlugin } from "@repo/webpack";
 
 const projectDir = process.cwd();
 nextEnv.loadEnvConfig(projectDir);
@@ -52,6 +53,28 @@ async function createNextConfig(phase) {
     typedRoutes: true,
     crossOrigin: "anonymous",
     reactStrictMode: true,
+    webpack: (
+      config,
+      { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
+    ) => {
+      // PWA stuff is strictly client thing,
+      // therefore no need to have it in the server bundle
+      if (!isServer) {
+        return config;
+      }
+
+      const name = process.env.NEXT_PUBLIC_SITE_TITLE;
+
+      if (!name) {
+        throw new Error("No name was provided to PWA manifest.");
+      }
+
+      const plugin = new PWAWebpackPlugin({ name, short_name: name });
+
+      config.plugins.push(plugin);
+
+      return config;
+    },
   };
 
   return nextConfig;

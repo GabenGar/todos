@@ -19,10 +19,12 @@ export class PWAWebpackPlugin {
     this.options = resolvedOptions;
   }
   apply(compiler: Compiler) {
-    compiler.hooks.done.tapPromise("PWAWebpackPlugin", async (compilation) => {
-      console.log(
-        `Hello ${this.options.name}! - ${compilation.compilation.fullHash}`,
-      );
+    const { done } = compiler.hooks;
+
+    done.tapPromise("PWAWebpackPlugin", async (compilation) => {
+      const { fullHash } = compilation.compilation;
+
+      console.log(`Hello ${this.options.name}! - ${fullHash}`);
     });
   }
 }

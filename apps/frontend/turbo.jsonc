@@ -6,6 +6,7 @@
       "dependsOn": ["build-pages", "build-workers"],
     },
     "build-pages": {
+      "dependsOn": ["@repo/webpack#build"],
       "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
       "inputs": [
         ".env",
@@ -52,7 +53,7 @@
       "outputs": ["out/service-worker.js", "out/service-worker.js.map"],
     },
     "dev": {
-      "with": ["dev-workers"],
+      "with": ["dev-workers", "@repo/webpack#dev", "@repo/nodejs#dev"],
     },
     "dev-workers": {
       "persistent": true,

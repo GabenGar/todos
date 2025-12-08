@@ -16,7 +16,10 @@
     }
   },
   "imports": {
-    "#*": "./src/*/index.ts"
+    "#*": {
+      "types": "./src/*/index.ts",
+      "default": "./src/*/index.js"
+    }
   },
   "dependencies": {
     "@repo/nodejs": "*",
