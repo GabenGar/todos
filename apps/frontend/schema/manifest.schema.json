@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": [
     "name",
+    "short_name",
     "start_url",
     "prefer_related_applications"
   ],
