@@ -20,6 +20,7 @@ export class PWAWebpackPlugin {
 
     this.options = resolvedOptions;
   }
+
   apply(compiler: Compiler) {
     const { name } = this.options;
     // webpack module instance can be accessed from the compiler object,
@@ -31,7 +32,7 @@ export class PWAWebpackPlugin {
     // RawSource is one of the "sources" classes that should be used
     // to represent asset sources in compilation.
     const { RawSource } = webpack.sources;
-    const { done } = compiler.hooks;
+    const { done, thisCompilation } = compiler.hooks;
 
     done.tapPromise(pluginName, async (stats) => {
       const { fullHash } = stats.compilation;
@@ -39,7 +40,7 @@ export class PWAWebpackPlugin {
       console.log(`Hello ${name}! - ${fullHash}`);
     });
 
-    compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
+    thisCompilation.tap(pluginName, (compilation) => {
       // Tapping to the assets processing pipeline on a specific stage.
       compilation.hooks.processAssets.tap(
         {
