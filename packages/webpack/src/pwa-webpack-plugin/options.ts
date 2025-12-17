@@ -7,5 +7,5 @@ export interface IPWAWebpackPluginOptions {
   start_url?: string;
   display?: "standalone" | "browser" | "fullscreen" | "minimal-ui";
   theme_color?: string;
-  background_color: string;
+  background_color?: string;
 }

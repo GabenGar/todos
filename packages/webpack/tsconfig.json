@@ -15,7 +15,8 @@
     "strict": true,
     "skipLibCheck": true,
     "composite": true,
-    "incremental": true
+    "incremental": true,
+    "preserveWatchOutput": true
   },
   "include": ["**/*.ts", "**/*.json" ],
   "exclude": ["dist", "tests", "node_modules"]
