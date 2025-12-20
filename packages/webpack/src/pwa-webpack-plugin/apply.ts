@@ -16,6 +16,7 @@ const RawSource = webpackSources.RawSource
 // https://www.typescriptlang.org/docs/handbook/2/functions.html#declaring-this-in-a-function
 export function applyMethod(this: PWAWebpackPlugin, compiler: Compiler) {
   const { thisCompilation } = compiler.hooks;
+
   thisCompilation.tap(pluginName, (compilation) => {
     const { hooks, outputOptions } = compilation;
     const { processAssets } = hooks;

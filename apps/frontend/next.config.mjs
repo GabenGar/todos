@@ -59,7 +59,7 @@ async function createNextConfig(phase) {
     ) => {
       // PWA stuff is strictly client thing,
       // therefore no need to have it in the server bundle
-      if (!isServer) {
+      if (isServer) {
         return config;
       }
 
