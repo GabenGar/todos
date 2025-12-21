@@ -1,9 +1,8 @@
-import { validate, type Schema } from "schema-utils";
-import schema from "./options.schema.json" with { type: "json" };
+import { type Schema, validate } from "schema-utils";
+import { applyMethod } from "./apply.js";
 import type { IPWAWebpackPluginOptions } from "./options.js";
-import {applyMethod} from "./apply.js"
+import schema from "./options.schema.json" with { type: "json" };
 import { pluginName } from "./types.js";
-
 
 const configuration = {
   name: pluginName,
@@ -19,5 +18,5 @@ export class PWAWebpackPlugin {
     this.options = options;
   }
 
-  apply = applyMethod
+  apply = applyMethod;
 }

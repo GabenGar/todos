@@ -18,6 +18,6 @@
     "incremental": true,
     "preserveWatchOutput": true
   },
-  "include": ["**/*.ts", "**/*.json" ],
+  "include": ["**/*.ts", "**/*.json"],
   "exclude": ["dist", "tests", "node_modules"]
 }

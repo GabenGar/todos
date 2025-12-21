@@ -1,15 +1,15 @@
 import {
-  default as webpack,
   // type AssetInfo,
   // type Chunk,
   type Compiler,
+  default as webpack,
 } from "webpack";
 import { default as webpackSources } from "webpack-sources";
 import type { PWAWebpackPlugin } from "./plugin.js";
 import { pluginName } from "./types.js";
 
 const Compilation = webpack.Compilation;
-const RawSource = webpackSources.RawSource
+const RawSource = webpackSources.RawSource;
 
 // a typecript magic to declare the value of `this`
 // outside of class declaration
@@ -18,10 +18,10 @@ export function applyMethod(this: PWAWebpackPlugin, compiler: Compiler) {
   const { thisCompilation } = compiler.hooks;
 
   thisCompilation.tap(pluginName, (compilation) => {
-    const { hooks, outputOptions } = compilation;
+    const { hooks /*outputOptions*/ } = compilation;
     const { processAssets } = hooks;
     // const hashDigestLength = outputOptions.hashDigestLength;
-    const publicPath = compilation.getPath(outputOptions.publicPath);
+    // const publicPath = compilation.getPath(outputOptions.publicPath);
     const { name, short_name } = this.options;
     const manifest = {
       name,
@@ -41,10 +41,10 @@ export function applyMethod(this: PWAWebpackPlugin, compiler: Compiler) {
         name: pluginName,
         stage: Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE,
       },
-      (compilationAssets) => {
+      (_compilationAssets) => {
         compilation.emitAsset(
           "manifest.webmanifest",
-          new RawSource(JSON.stringify(manifest))
+          new RawSource(JSON.stringify(manifest)),
         );
       },
     );

@@ -1,4 +1,4 @@
 export {
-  PWAWebpackPlugin,
   type IPWAWebpackPluginOptions,
+  PWAWebpackPlugin,
 } from "#pwa-webpack-plugin";

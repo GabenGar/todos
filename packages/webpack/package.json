@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "lint": "biome lint ./ && tsc --noEmit",
-    "format": "biome format --write ./src"
+    "lint": "biome lint --write ./ && tsc --noEmit",
+    "format": "biome format --write ./src",
+    "check": "biome check --write ./"
   },
   "exports": {
     ".": {
