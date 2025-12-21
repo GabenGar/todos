@@ -73,12 +73,13 @@ function PlannedEventEditPage({
         );
       },
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, parsedID]);
 
   return (
     <Page heading={t.heading} title={t.title}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <>
             <OverviewHeader>
               <List>

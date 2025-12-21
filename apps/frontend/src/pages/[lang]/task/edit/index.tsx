@@ -54,12 +54,13 @@ function TaskEditPage({
       const task = await getTask(taskID);
       changeCurrentTask(task);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, taskID]);
 
   return (
     <Page heading={t.heading} title={title}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <>
             <OverviewHeader>
               <List>

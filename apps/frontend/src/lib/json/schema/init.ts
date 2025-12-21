@@ -30,6 +30,7 @@ function createAJV() {
         {} as Record<IValidSchemaID, number>,
       ),
     )
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([id, count]) => count > 1)
       .map<string>(([id]) => `"${id}"`)
       .join(", ");

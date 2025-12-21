@@ -14,6 +14,7 @@ export const List = createBlockComponent(styles, ListComponent);
 
 function ListComponent(props: IListProps) {
   if ("isOrdered" in props) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isOrdered, isAlternating, className, ...listProps } = props;
     const finalClassName = clsx(className, isAlternating && styles.alternating);
 

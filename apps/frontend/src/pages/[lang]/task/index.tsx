@@ -34,6 +34,7 @@ function TaskDetailsPage({
 
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, taskID]);
 
   return (

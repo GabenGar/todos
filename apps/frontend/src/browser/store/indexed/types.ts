@@ -60,10 +60,12 @@ export function fromIDBBoolean(value: IIDBBoolean): boolean {
  */
 export type IIDBNull = 0;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function toIDBNull(value: undefined): IIDBNull {
   return 0;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function fromIDBNull(value: IIDBNull): undefined {
   return undefined;
 }

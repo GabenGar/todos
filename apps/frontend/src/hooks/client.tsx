@@ -74,7 +74,7 @@ export function ClientProvider({ lang, children }: IProps) {
         indexedDB,
       };
       const newLogLevel = await getLocalStoreLogLevel();
-      registerServiceWorker()
+      registerServiceWorker();
 
       changeCompatiblity(newCompatibility);
       changeLogLevel(newLogLevel);

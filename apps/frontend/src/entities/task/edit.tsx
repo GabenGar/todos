@@ -1,10 +1,6 @@
 import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import {
-  InputSectionNanoID,
-  InputSectionSelect,
-  InputSectionText,
-} from "#components/form/section";
+import { InputSectionSelect, InputSectionText } from "#components/form/section";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { InputOption } from "#components/form/input";
 import { PlaceSection } from "#entities/place";

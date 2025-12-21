@@ -9,16 +9,16 @@ export async function isIndexedDBAvailable(): Promise<boolean> {
       const error =
         (event.target as IDBOpenDBRequest).error ??
         new Error(
-          `Failed to connect to "${databaseName}" of version ${1} IndexedDB.`,
+          `Failed to connect to "${databaseName}" of version ${databaseVersion} IndexedDB.`,
         );
 
       reject(error);
     };
 
-    idbRequest.onsuccess = (event) => {
+    idbRequest.onsuccess = () => {
       resolve(true);
     };
-  }).catch((error) => {
+  }).catch(() => {
     return false;
   });
 

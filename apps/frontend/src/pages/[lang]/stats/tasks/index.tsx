@@ -20,7 +20,7 @@ function TasksStatsPage({
   return (
     <Page heading={t.heading} title={title} description={description}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <OverviewHeader>
             <TasksStats
               language={lang}

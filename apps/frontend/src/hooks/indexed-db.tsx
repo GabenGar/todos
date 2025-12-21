@@ -69,6 +69,7 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
         onError(error);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [database, client],
   );
 

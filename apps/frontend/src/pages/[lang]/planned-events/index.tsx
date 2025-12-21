@@ -98,6 +98,7 @@ function PlannedEventsPage({
         });
       },
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {
@@ -163,7 +164,7 @@ function PlannedEventsPage({
   return (
     <Page title={title} heading={heading}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <OverviewHeader>
             <Details summary={plannedEventTranslation["Filter"]}>
               <SearchPlannedEventForm

@@ -46,6 +46,9 @@ function createLogger(logLevel: ILogLevel, logger = console) {
   return (message: string | Error | unknown) => {
     const isLoggable =
       LOG_LEVELS.indexOf(logLevel, LOG_LEVELS.indexOf(currentLogLevel)) !== -1;
-    isLoggable && logger[logLevel](message);
+
+    if (isLoggable) {
+      logger[logLevel](message);
+    }
   };
 }

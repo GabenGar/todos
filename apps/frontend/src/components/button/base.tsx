@@ -41,7 +41,10 @@ function Component({
 
     try {
       switchClicking(true);
-      onClick && (await onClick(event));
+
+      if (onClick) {
+        await onClick(event);
+      }
     } finally {
       switchClicking(false);
     }

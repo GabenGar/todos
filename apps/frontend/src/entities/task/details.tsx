@@ -67,12 +67,13 @@ function Component({
         router.replace("/404");
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskID]);
 
   if (!task) {
     return (
       <Overview {...props}>
-        {(headinglevel) => (
+        {() => (
           <>
             <OverviewHeader>
               <Loading />
@@ -96,7 +97,7 @@ function Component({
     created_at,
     updated_at,
     status,
-    deleted_at,
+    // deleted_at,
     place,
   } = task;
 

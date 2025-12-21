@@ -77,6 +77,7 @@ function PlacesPage({
 
       changePlaces(newPlaces);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page, category, query]);
 
   async function handlePlaceCreation(init: IPlaceInit) {
@@ -114,7 +115,7 @@ function PlacesPage({
   return (
     <Page heading={t.heading} title={title}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <OverviewHeader>
             <Details summary={placeTranslation.add}>
               <PlaceCreateForm

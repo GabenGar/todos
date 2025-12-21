@@ -22,14 +22,14 @@ export function getDatabase(
   idbRequest.onsuccess = (event) => {
     const db = (event.target as IDBOpenDBRequest).result;
 
-    db.onversionchange = (event) => {
+    db.onversionchange = () => {
       db.close();
       alert(
         `Database "${databaseName}" of version "${databaseVersion}" is outdated, please reload the page.`,
       );
     };
 
-    db.onclose = (event) => {
+    db.onclose = () => {
       console.log(
         `Database "${databaseName}" of version "${databaseVersion}" closed unexpectedly.`,
       );

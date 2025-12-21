@@ -97,6 +97,11 @@ npm install turbo --global
 ```
 And then instead of `npm run ...` commands it can be used as `turbo run ...`.
 
+### Create a Package
+```sh
+turbo generate workspace --type=package --name=<name> --empty --destination=<path>
+```
+
 ## Troubleshooting
 
 - **I get `npm ERR! code ENOWORKSPACES frontend:dev: npm ERR! This command does not support workspaces.` error when starting development.**

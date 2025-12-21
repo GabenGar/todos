@@ -72,6 +72,7 @@ export function ServiceWorkerProvider({ children }: IProps) {
       worker?.removeEventListener("error", listenForErrors);
       navigator.serviceWorker.removeEventListener("message", listenForMessages);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function listenForState(event: Event) {
