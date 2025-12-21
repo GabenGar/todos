@@ -2,7 +2,6 @@ import { fromJSON } from "#lib/json";
 import type { ILocalizationCommon, ILocalization } from "#lib/localization";
 import { Form, IFormEvent } from "#components/form";
 import { InputSectionFile } from "#components/form/section";
-import { ButtonSubmit } from "#components/button";
 import { importDataExport } from "./lib";
 
 import styles from "./import-form.module.scss";

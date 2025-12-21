@@ -25,6 +25,7 @@ function Component({
   form,
   accept,
   multiple,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   defaultValue,
   readOnly,
   required,

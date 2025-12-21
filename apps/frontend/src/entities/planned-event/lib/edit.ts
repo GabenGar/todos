@@ -13,7 +13,7 @@ export function editPlannedEvent(
 
   const id = update.id;
 
-  getPlannedEvent({ transaction, id }, (currentEvent) => {
+  getPlannedEvent({ transaction, id }, () => {
     updatePlannedEvents(transaction, [update], ([updatedEventID]) => {
       getPlannedEvent({ transaction, id: updatedEventID }, (updatedEvent) => {
         onSuccess(updatedEvent);

@@ -29,7 +29,6 @@ interface IProps
     ITranslatableProps,
     IInputSectionProps {
   place?: IEntityItem;
-  onPlaceChange?: (nextPlace: IEntityItem) => Promise<void>;
 }
 
 export const PlaceSection = createBlockComponent(styles, Component);
@@ -43,7 +42,6 @@ function Component({
   place,
   required,
   children,
-  onPlaceChange,
   ...props
 }: IProps) {
   const [selectedPlace, changeSelectedPlace] = useState(place);

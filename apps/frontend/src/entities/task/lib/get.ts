@@ -27,6 +27,7 @@ export async function getTask(taskID: ITask["id"]): Promise<ITask> {
     throw new Error(`No task with ID "${taskID}" exists.`);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { place, ...restTask } = storeTask;
   const task: ITask = {
     ...restTask,

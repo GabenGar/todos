@@ -47,12 +47,13 @@ function PlaceEditPage({
       const task = await getPlace(placeID);
       changePlace(task);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, placeID]);
 
   return (
     <Page heading={t.heading} title={t.title}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <>
             <OverviewHeader>
               <List>

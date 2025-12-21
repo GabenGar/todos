@@ -68,6 +68,7 @@ export function TaskList({
       status,
       placeID,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page, query, status, placeID]);
 
   useEffect(() => {
@@ -99,6 +100,7 @@ export function TaskList({
 
       changeTasks(newTasks);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, options]);
 
   async function handleTaskCreation(init: ITaskInit) {

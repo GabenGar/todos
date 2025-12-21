@@ -83,7 +83,7 @@ function runMigrationV1(
 
         const updateRequest = cursor.update(update);
 
-        updateRequest.onsuccess = (event) => {
+        updateRequest.onsuccess = () => {
           cursor.continue();
         };
       } else {

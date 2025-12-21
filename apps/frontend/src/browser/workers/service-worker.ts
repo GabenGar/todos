@@ -145,7 +145,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
    * A quick worker to nuke older ones.
    */
   async function initNoOpWorker() {
-    self.addEventListener("install", (event) => {
+    self.addEventListener("install", () => {
       self.skipWaiting();
     });
     self.addEventListener("activate", (event) => {
