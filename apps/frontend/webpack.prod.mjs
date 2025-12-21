@@ -14,16 +14,21 @@ const isWindows = platform() === "win32";
 
 async function createProdConfig() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const outputPath = path.resolve(__dirname, "out");
-
-  const workerPath = path.resolve(outputPath, "service-worker.js");
-  const workerMapPath = path.resolve(outputPath, "service-worker.js.map");
+  const outputPath = path.join(__dirname, "out");
+  const nextFolder = path.join(__dirname, ".next");
+  const workerPath = path.join(outputPath, "service-worker.js");
+  const workerMapPath = path.join(outputPath, "service-worker.js.map");
+  const manifestInputPath = path.join(nextFolder, "manifest.webmanifest");
+  const manifestOutputPath = path.join(outputPath, "manifest.webmanifest");
 
   // all this logic technically runs before webpack cleans up anything
   // therefore delete the output of the previous build
   // so it won't get included into hash and the cache paths
   await fs.rm(workerPath, { force: true });
   await fs.rm(workerMapPath, { force: true });
+
+  // also copy manifest file
+  await fs.copyFile(manifestInputPath, manifestOutputPath);
 
   const staticPaths = await collectStaticPaths(outputPath);
   const assetsHash = await getAssetsHash(staticPaths);
