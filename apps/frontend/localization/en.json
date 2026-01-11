@@ -57,7 +57,8 @@
       "Tasks": "Tasks",
       "QR code reader": "QR code reader",
       "Places": "Places",
-      "URL Viewer": "URL Viewer",
+      "URL Viewer": "URL viewer",
+      "URL Editor": "URL editor",
       "Account": "Account",
       "Planned events": "Planned events",
       "Recently updated": "Recently updated",
@@ -205,7 +206,7 @@
       }
     },
     "url-viewer": {
-      "title": "URL Viewer",
+      "title": "URL viewer",
       "heading": "URL Viewer",
       "URL": "URL",
       "Decoded URL": "Decoded URL",
@@ -231,6 +232,10 @@
       "Search": "Search",
       "Search parameters": "Search parameters",
       "Hash": "Hash"
+    },
+    "url-editor": {
+      "title": "URL editor",
+      "heading": "URL Editor"
     },
     "planned-events": {
       "title": "Planned events",

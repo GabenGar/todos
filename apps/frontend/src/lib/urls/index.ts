@@ -135,8 +135,13 @@ export function createPlaceEditPageURL(
 export function createAccountPageURL(language: ILocale): Route {
   return `/${language}/account` as Route;
 }
+
 export function createURLViewerPageURL(language: ILocale): Route {
-  return `/${language}/url-viewer` as Route;
+  return `/${language}/url` as Route;
+}
+
+export function createURLEditorPageURL(language: ILocale): Route {
+  return `/${language}/url/edit` as Route;
 }
 
 interface ICreatePlannedEventsPageURLParams extends IMultiPageParams {

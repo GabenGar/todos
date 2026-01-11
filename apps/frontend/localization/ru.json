@@ -58,6 +58,7 @@
       "QR code reader": "Считыватель QR кодов",
       "Places": "Места",
       "URL Viewer": "Просмотрщик ссылок",
+      "URL Editor": "Редактор ссылок",
       "Account": "Учётная запись",
       "Planned events": "Планируемые события",
       "Recently updated": "Недавно обновлённые",
@@ -231,6 +232,10 @@
       "Search": "Поиск",
       "Search parameters": "Поисковые параметры",
       "Hash": "Идентификатор фрагмента"
+    },
+    "url-editor": {
+      "title": "Редактор ссылок",
+      "heading": "Редактор Ссылок"
     },
     "planned-events": {
       "title": "Планируемые события",

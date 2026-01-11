@@ -9,6 +9,7 @@ import {
   createTaskStatsPageURL,
   createURLViewerPageURL,
   createYTDLPConfigPage,
+  createURLEditorPageURL,
 } from "#lib/urls";
 import { getDictionary } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
@@ -100,6 +101,15 @@ function FrontPage({
                   href={createURLViewerPageURL(lang)}
                 >
                   {t["URL Viewer"]}
+                </Link>
+              </ListItem>
+
+              <ListItem>
+                <Link
+                  className={styles.link}
+                  href={createURLEditorPageURL(lang)}
+                >
+                  {t["URL Editor"]}
                 </Link>
               </ListItem>
 
