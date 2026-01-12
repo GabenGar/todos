@@ -235,7 +235,12 @@
     },
     "url-editor": {
       "title": "Редактор ссылок",
-      "heading": "Редактор Ссылок"
+      "heading": "Редактор Ссылок",
+      "Base URL": "Основная ссылка",
+      "URL": "Ссылка",
+      "Parse": "Обработать",
+      "Parsing...": "Обрабатываем...",
+      "A URL which will be used as a base for editing, if provided.": "Ссылка, которая будет использоваться за основу, если есть."
     },
     "planned-events": {
       "title": "Планируемые события",

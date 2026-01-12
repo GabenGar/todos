@@ -235,7 +235,13 @@
     },
     "url-editor": {
       "title": "URL editor",
-      "heading": "URL Editor"
+      "heading": "URL Editor",
+      "Base URL": "Base URL",
+      "URL": "URL",
+      "Parse": "Parse",
+      "Parsing...": "Parsing...",
+      "A URL which will be used as a base for editing, if provided.": "A URL which will be used as a base for editing, if provided.",
+      "Protocol": "Protocol"
     },
     "planned-events": {
       "title": "Planned events",

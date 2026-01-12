@@ -1,18 +1,18 @@
 import { useState } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Heading } from "@repo/ui/headings";
-import { InputSectionText } from "@repo/ui/forms/sections";
-import { getDictionary, type ILocalizationPage } from "#lib/localization";
+import { getDictionary } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import { getStaticExportPaths } from "#server";
 import { Page } from "#components";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import {
-  Form,
-  type IFormComponentProps,
-  type IFormEvent,
-} from "#components/form";
-import type { ITranslatableProps } from "#components/types";
+  Overview,
+  OverviewBody,
+  OverviewHeader,
+  OverviewFooter,
+} from "#components/overview";
+
+import { BaseURLForm, URLEditorForm } from "#components/url";
 
 interface IProps extends ILocalizedProps<"url-editor"> {}
 
@@ -21,9 +21,12 @@ interface IParams extends ILocalizedParams {}
 function URLViewerPage({
   translation,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [baseURL, changeBaseURL] = useState<URL>();
+  const [baseURL, changeBaseURL] = useState<URL | true>();
+  const [finalURL, changeFinalURL] = useState<URL>();
   const { common, t } = translation;
   const title = t.title;
+  const baseID = "base-url";
+  const editID = "edit-url";
   /**
    * t. Alberto Barbosa
    */
@@ -38,65 +41,32 @@ function URLViewerPage({
           <>
             <OverviewHeader>
               <Heading level={headingLevel}>{t["Base URL"]}</Heading>
-
-              <p>
-                {
-                  t[
-                    "A URL which will be used as a base for editing, if provided."
-                  ]
-                }
-              </p>
+              <BaseURLForm
+                id={baseID}
+                commonTranslation={common}
+                translation={t}
+                onNewURL={async (newURL) => changeBaseURL(newURL)}
+              />
             </OverviewHeader>
-            <OverviewBody></OverviewBody>
+
+            {!baseURL ? undefined : (
+              <OverviewBody>
+                <URLEditorForm
+                  id={editID}
+                  commonTranslation={common}
+                  translation={t}
+                  baseURL={baseURL}
+                  onNewURL={async (newURL) => changeFinalURL(newURL)}
+                />
+              </OverviewBody>
+            )}
+
+            {!finalURL ? undefined : <OverviewFooter></OverviewFooter>}
           </>
         )}
       </Overview>
     </Page>
   );
-}
-
-interface IBaseURLFormProps extends ITranslatableProps, IFormComponentProps {
-  translation: ILocalizationPage["url-editor"];
-  onNewURL: (newURL: URL) => Promise<void>;
-}
-function BaseURLForm({
-  commonTranslation,
-  translation,
-  id,
-  onNewURL,
-}: IBaseURLFormProps) {
-  const FIELD = {
-    URL: { name: "url", label: translation["URL"] },
-  } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
-
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
-    const urlInput = event.currentTarget.elements.url;
-    const newURL = new URL(urlInput.value.trim());
-
-    await onNewURL(newURL);
-  }
-
-  <Form<IFieldName>
-        commonTranslation={commonTranslation}
-        id={id}
-        submitButton={(formID, isSubmitting) =>
-          !isSubmitting ? translation["Parse"] : translation["Parsing..."]
-        }
-        onSubmit={handleSubmit}
-      >
-        {(formID) => (
-          <>
-            <InputSectionText
-              id={`${formID}-${FIELD.URL.name}`}
-              form={formID}
-              name={FIELD.URL.name}
-            >
-              {FIELD.URL.label}
-            </InputSectionText>
-          </>
-        )}
-      </Form>
 }
 
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({

@@ -29,7 +29,7 @@ export function Pathname({ t, pathname }: IProps) {
           dKey={t("Segments")}
           dValue={
             <Details summary={<Preformatted>{totalSegments}</Preformatted>}>
-              <List>
+              <List isOrdered>
                 {segments.map((segment, index) => (
                   <ListItem
                     key={`${segment}${
