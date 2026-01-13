@@ -240,7 +240,21 @@
       "URL": "Ссылка",
       "Parse": "Обработать",
       "Parsing...": "Обрабатываем...",
-      "A URL which will be used as a base for editing, if provided.": "Ссылка, которая будет использоваться за основу, если есть."
+      "A URL which will be used as a base for editing, if provided.": "Ссылка, которая будет использоваться за основу, если есть.",
+      "Origin": "Источник",
+      "Protocol": "Протокол",
+      "Username": "Имя пользователя",
+      "Password": "Пароль",
+      "Hostname": "Имя хоста",
+      "Port": "Порт",
+      "Pathname": "Путь",
+      "Segments": "Сегменты",
+      "Search parameters": "Поисковые параметры",
+      "Empty": "Пусто",
+      "Hash": "Идентификатор фрагмента",
+      "Unknown": "Неизвестно",
+      "Change": "Change",
+      "Changing...": "Changing..."
     },
     "planned-events": {
       "title": "Планируемые события",

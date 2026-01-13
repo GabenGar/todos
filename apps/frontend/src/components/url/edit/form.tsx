@@ -1,0 +1,115 @@
+import { NotImplementedError } from "@repo/ui/errors";
+import { type ILocalizationPage } from "#lib/localization";
+import {
+  Form,
+  type IFormComponentProps,
+  type IFormEvent,
+} from "#components/form";
+import type { ITranslatableProps } from "#components/types";
+import type { IBaseURLFormProps } from "./base";
+import { Origin } from "./origin";
+import { SearchParams } from "./search-params";
+import { Pathname } from "./pathname";
+
+interface IURLEditorFormProps extends ITranslatableProps, IFormComponentProps {
+  t: ILocalizationPage["url-editor"];
+  baseURL: Parameters<IBaseURLFormProps["onNewURL"]>[0];
+  onNewURL: (newURL: URL) => Promise<void>;
+}
+export function URLEditorForm({
+  commonTranslation,
+  t,
+  id,
+  baseURL,
+  onNewURL,
+}: IURLEditorFormProps) {
+  const FIELD = {
+    ORIGIN: { name: "origin", label: t["Origin"] },
+    PATHNAME: { name: "pathname", label: t["Pathname"] },
+    SEARCHPARAMS: {
+      name: "search-params",
+      label: t["Search parameters"],
+    },
+    HASH: { name: "hash", label: t["Hash"] },
+  } as const;
+  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  const baseOrigin = baseURL === true ? undefined : baseURL.origin;
+  const basePath = baseURL === true ? undefined : baseURL.pathname;
+  const baseSearchParams = baseURL === true ? undefined : baseURL.search;
+
+  async function handleSubmit(event: IFormEvent<IFieldName>) {
+    throw new NotImplementedError();
+  }
+
+  return (
+    <Form<IFieldName>
+      commonTranslation={commonTranslation}
+      id={id}
+      submitButton={(formID, isSubmitting) =>
+        !isSubmitting ? t["Parse"] : t["Parsing..."]
+      }
+      onSubmit={handleSubmit}
+    >
+      {(formID) => (
+        <>
+          <Origin
+            commonTranslation={commonTranslation}
+            t={t}
+            id={`${formID}-${FIELD.ORIGIN.name}`}
+            formID={formID}
+            name={FIELD.ORIGIN.name}
+            defaultValue={baseOrigin}
+          />
+
+          <Pathname
+            commonTranslation={commonTranslation}
+            t={t}
+            id={`${formID}-${FIELD.PATHNAME.name}`}
+            formID={formID}
+            name={FIELD.PATHNAME.name}
+            defaultValue={basePath}
+          />
+
+          <SearchParams
+            commonTranslation={commonTranslation}
+            t={t}
+            id={`${formID}-${FIELD.SEARCHPARAMS.name}`}
+            formID={formID}
+            name={FIELD.SEARCHPARAMS.name}
+            defaultValue={baseSearchParams}
+          />
+
+          {/* <InputSectionText
+            id={`${formID}-${FIELD.PATHNAME.name}`}
+            form={formID}
+            name={FIELD.PATHNAME.name}
+            defaultValue={baseOrigin}
+            rows={1}
+          >
+            {FIELD.PATHNAME.label}
+          </InputSectionText>
+
+          <InputSectionText
+            id={`${formID}-${FIELD.SEARCHPARAMS.name}`}
+            form={formID}
+            name={FIELD.SEARCHPARAMS.name}
+            defaultValue={baseOrigin}
+            rows={1}
+          >
+            {FIELD.SEARCHPARAMS.label}
+          </InputSectionText>
+
+          <InputSectionText
+            id={`${formID}-${FIELD.HASH.name}`}
+            form={formID}
+            name={FIELD.HASH.name}
+            defaultValue={baseOrigin}
+            rows={1}
+          >
+            {FIELD.HASH.label}
+          </InputSectionText> */}
+        </>
+      )}
+    </Form>
+  );
+}

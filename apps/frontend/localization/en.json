@@ -241,7 +241,20 @@
       "Parse": "Parse",
       "Parsing...": "Parsing...",
       "A URL which will be used as a base for editing, if provided.": "A URL which will be used as a base for editing, if provided.",
-      "Protocol": "Protocol"
+      "Origin": "Origin",
+      "Protocol": "Protocol",
+      "Username": "Username",
+      "Password": "Password",
+      "Hostname": "Hostname",
+      "Port": "Port",
+      "Pathname": "Pathname",
+      "Segments": "Segments",
+      "Search parameters": "Search parameters",
+      "Empty": "Empty",
+      "Hash": "Hash",
+      "Unknown": "Unknown",
+      "Change": "Change",
+      "Changing...": "Changing..."
     },
     "planned-events": {
       "title": "Planned events",

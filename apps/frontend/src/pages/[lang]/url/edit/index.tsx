@@ -40,7 +40,6 @@ function URLViewerPage({
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel}>{t["Base URL"]}</Heading>
               <BaseURLForm
                 id={baseID}
                 commonTranslation={common}
@@ -54,7 +53,7 @@ function URLViewerPage({
                 <URLEditorForm
                   id={editID}
                   commonTranslation={common}
-                  translation={t}
+                  t={t}
                   baseURL={baseURL}
                   onNewURL={async (newURL) => changeFinalURL(newURL)}
                 />

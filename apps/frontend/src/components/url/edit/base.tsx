@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { NotImplementedError } from "@repo/ui/errors";
 import { InputSectionText } from "@repo/ui/forms/sections";
 import { type ILocalizationPage } from "#lib/localization";
 import {
@@ -8,28 +6,28 @@ import {
   type IFormEvent,
 } from "#components/form";
 import type { ITranslatableProps } from "#components/types";
-import type { IBaseURLFormProps } from "./base";
 
-interface IURLEditorFormProps extends ITranslatableProps, IFormComponentProps {
+export interface IBaseURLFormProps extends ITranslatableProps, IFormComponentProps {
   translation: ILocalizationPage["url-editor"];
-  baseURL: Parameters<IBaseURLFormProps["onNewURL"]>[0];
-  onNewURL: (newURL: URL) => Promise<void>;
+  onNewURL: (newURL: URL | true) => Promise<void>;
 }
-export function URLEditorForm({
+export function BaseURLForm({
   commonTranslation,
   translation,
   id,
-  baseURL,
   onNewURL,
-}: IURLEditorFormProps) {
+}: IBaseURLFormProps) {
   const FIELD = {
-    PROTOCOL: { name: "protocol", label: translation["Protocol"] },
+    URL: { name: "url", label: translation["Base URL"] },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
-  const baseProtocol = baseURL === true ? undefined : baseURL.protocol;
 
   async function handleSubmit(event: IFormEvent<IFieldName>) {
-    throw new NotImplementedError();
+    const urlInput = event.currentTarget.elements.url;
+    const value = urlInput.value.trim();
+    const newURL = value.length === 0 ? true : new URL(value);
+
+    await onNewURL(newURL);
   }
 
   return (
@@ -44,13 +42,19 @@ export function URLEditorForm({
       {(formID) => (
         <>
           <InputSectionText
-            id={`${formID}-${FIELD.PROTOCOL.name}`}
+            id={`${formID}-${FIELD.URL.name}`}
             form={formID}
-            name={FIELD.PROTOCOL.name}
-            defaultValue={baseProtocol}
+            name={FIELD.URL.name}
           >
-            {FIELD.PROTOCOL.label}
+            {FIELD.URL.label}
           </InputSectionText>
+          <p>
+            {
+              translation[
+                "A URL which will be used as a base for editing, if provided."
+              ]
+            }
+          </p>
         </>
       )}
     </Form>
