@@ -89,9 +89,10 @@ export function Pathname({
                 isEmptyPath ? (
                   t["Empty"]
                 ) : (
-                  <Preformatted>
-                    {t["Segments"]}: {currentPathname.length}
-                  </Preformatted>
+                  <>
+                    {t["Segments"]}:{" "}
+                    <Preformatted>{currentPathname.length}</Preformatted>
+                  </>
                 )
               }
             >
