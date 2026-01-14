@@ -11,4 +11,6 @@ export interface IFormEvent<InputName extends string = string>
 }
 
 export type IFormElements<InputName extends string> =
-  HTMLFormControlsCollection & Record<InputName, HTMLInputElement>;
+  HTMLFormControlsCollection & {
+    namedItem: (name: InputName) => RadioNodeList | Element | null;
+  } & Record<InputName, HTMLInputElement>;

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
@@ -10,10 +11,14 @@ export type IListProps =
   | ({ isOrdered: true } & IOrderedListProps);
 
 export interface IUnorderedListProps
-  extends IBaseComponentPropsWithChildren<"ul"> {}
+  extends IBaseComponentPropsWithChildren<"ul"> {
+  isNested?: boolean;
+}
 
 export interface IOrderedListProps
-  extends IBaseComponentPropsWithChildren<"ol"> {}
+  extends IBaseComponentPropsWithChildren<"ol"> {
+  isNested?: boolean;
+}
 
 interface IListItemProps extends IBaseComponentPropsWithChildren<"li"> {}
 
@@ -40,11 +45,21 @@ function ListComponent({ ...props }: IListProps) {
 
   return <ListUnordered {...listProps} />;
 }
-function ListUnorderedComponent({ ...props }: IUnorderedListProps) {
-  return <ul {...props} />;
+function ListUnorderedComponent({
+  isNested,
+  className,
+  ...props
+}: IUnorderedListProps) {
+  const resolvedClassname = clsx(className, isNested && styles.nested);
+  return <ul className={resolvedClassname} {...props} />;
 }
-function ListOrderedComponent({ ...props }: IOrderedListProps) {
-  return <ol {...props} />;
+function ListOrderedComponent({
+  isNested,
+  className,
+  ...props
+}: IOrderedListProps) {
+  const resolvedClassname = clsx(className, isNested && styles.nested);
+  return <ol className={resolvedClassname} {...props} />;
 }
 
 function ListItemComponent({ ...props }: IListItemProps) {

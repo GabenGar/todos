@@ -249,12 +249,14 @@
       "Port": "Порт",
       "Pathname": "Путь",
       "Segments": "Сегменты",
+      "Segment": "Сегмент",
       "Search parameters": "Поисковые параметры",
       "Empty": "Пусто",
       "Hash": "Идентификатор фрагмента",
       "Unknown": "Неизвестно",
-      "Change": "Change",
-      "Changing...": "Changing..."
+      "Change": "Изменить",
+      "Changing...": "Изменяем...",
+      "Delete": "Удалить"
     },
     "planned-events": {
       "title": "Планируемые события",

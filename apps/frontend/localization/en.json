@@ -249,12 +249,14 @@
       "Port": "Port",
       "Pathname": "Pathname",
       "Segments": "Segments",
+      "Segment": "Segment",
       "Search parameters": "Search parameters",
       "Empty": "Empty",
       "Hash": "Hash",
       "Unknown": "Unknown",
       "Change": "Change",
-      "Changing...": "Changing..."
+      "Changing...": "Changing...",
+      "Delete": "Delete"
     },
     "planned-events": {
       "title": "Planned events",

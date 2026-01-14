@@ -38,6 +38,14 @@ export function URLEditorForm({
   const baseSearchParams = baseURL === true ? undefined : baseURL.search;
 
   async function handleSubmit(event: IFormEvent<IFieldName>) {
+    const elements = event.currentTarget.elements;
+    const origin = elements.origin.value;
+    const pathname = elements.pathname.value;
+    const normalizedPathname = pathname.slice(pathname.startsWith("/") ? 1 : 0);
+
+    const finalURL = `${origin}/${normalizedPathname}`;
+    console.log(finalURL);
+
     throw new NotImplementedError();
   }
 
@@ -80,26 +88,6 @@ export function URLEditorForm({
           />
 
           {/* <InputSectionText
-            id={`${formID}-${FIELD.PATHNAME.name}`}
-            form={formID}
-            name={FIELD.PATHNAME.name}
-            defaultValue={baseOrigin}
-            rows={1}
-          >
-            {FIELD.PATHNAME.label}
-          </InputSectionText>
-
-          <InputSectionText
-            id={`${formID}-${FIELD.SEARCHPARAMS.name}`}
-            form={formID}
-            name={FIELD.SEARCHPARAMS.name}
-            defaultValue={baseOrigin}
-            rows={1}
-          >
-            {FIELD.SEARCHPARAMS.label}
-          </InputSectionText>
-
-          <InputSectionText
             id={`${formID}-${FIELD.HASH.name}`}
             form={formID}
             name={FIELD.HASH.name}

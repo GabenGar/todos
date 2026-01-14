@@ -24,7 +24,13 @@ export function Origin({
   name,
   defaultValue,
 }: IProps) {
-  const [currentOrigin, changeCurrentOrigin] = useState(() => defaultValue);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [currentOrigin, changeCurrentOrigin] = useState(() => {
+    if (inputRef.current) {
+      inputRef.current.value = defaultValue ?? "";
+    }
+    return defaultValue;
+  });
   const FIELD = {
     PROTOCOL: { name: "protocol", label: t["Protocol"] },
     HOSTNAME: { name: "hostname", label: t["Hostname"] },
@@ -33,7 +39,7 @@ export function Origin({
     PASSWORD: { name: "password", label: t["Password"] },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
-  const inputRef = useRef<HTMLInputElement>(null);
+
   const nestedFormID = `${id}-origin`;
   const originURL = !currentOrigin ? undefined : new URL(currentOrigin);
   const defaultProtocol = originURL?.protocol ?? "https:";
@@ -51,6 +57,10 @@ export function Origin({
   const defaultPassword = originURL?.password;
 
   useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = defaultValue ?? "";
+    }
+
     changeCurrentOrigin(defaultValue);
   }, [defaultValue]);
 
@@ -91,10 +101,10 @@ export function Origin({
               <Form<IFieldName>
                 id={nestedFormID}
                 commonTranslation={commonTranslation}
-                onSubmit={handleSubmit}
                 submitButton={(_, isSubmitting) =>
-                  isSubmitting ? t["Change"] : t["Changing..."]
+                  isSubmitting ? t["Changing..."] : t["Change"]
                 }
+                onSubmit={handleSubmit}
               >
                 {(formID) => (
                   <>
