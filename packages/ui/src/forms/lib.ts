@@ -22,3 +22,32 @@ export function parseStringValueFromFormData<Field extends string = string>(
 
   return trimmedValue;
 }
+
+/**
+ * Converts form data to search params.
+ * Skips keys with no values.
+ * Throws if any of the values is not a string.
+ */
+export function formDataToURLSearchParams(formData: FormData): URLSearchParams {
+  const searchParams = new URLSearchParams();
+
+  for (const key of formData.keys()) {
+    const values = formData.getAll(key);
+
+    if (values.length === 0) {
+      continue;
+    }
+
+    values.forEach((value, index) => {
+      if (typeof value !== "string") {
+        throw new Error(
+          `The value for key "${key}" at index ${index} is not a string.`,
+        );
+      }
+
+      searchParams.append(key, value);
+    });
+  }
+
+  return searchParams;
+}
