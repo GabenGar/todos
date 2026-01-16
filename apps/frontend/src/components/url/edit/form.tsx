@@ -1,4 +1,5 @@
 import { NotImplementedError } from "@repo/ui/errors";
+import { InputSectionText } from "@repo/ui/forms/sections";
 import { type ILocalizationPage } from "#lib/localization";
 import {
   Form,
@@ -36,17 +37,21 @@ export function URLEditorForm({
   const baseOrigin = baseURL === true ? undefined : baseURL.origin;
   const basePath = baseURL === true ? undefined : baseURL.pathname;
   const baseSearchParams = baseURL === true ? undefined : baseURL.search;
+  const baseHash = baseURL === true ? undefined : baseURL.hash.slice(1);
 
   async function handleSubmit(event: IFormEvent<IFieldName>) {
     const elements = event.currentTarget.elements;
     const origin = elements.origin.value;
     const pathname = elements.pathname.value;
     const normalizedPathname = pathname.slice(pathname.startsWith("/") ? 1 : 0);
+    const searchParams = elements["search-params"].value;
+    const hash = elements.hash.value;
 
-    const finalURL = `${origin}/${normalizedPathname}`;
-    console.log(finalURL);
+    const finalURL = new URL(
+      `${origin}/${normalizedPathname}${searchParams}${!hash ? "" : `#${hash}`}`,
+    );
 
-    throw new NotImplementedError();
+    onNewURL(finalURL);
   }
 
   return (
@@ -87,15 +92,15 @@ export function URLEditorForm({
             defaultValue={baseSearchParams}
           />
 
-          {/* <InputSectionText
+          <InputSectionText
             id={`${formID}-${FIELD.HASH.name}`}
             form={formID}
             name={FIELD.HASH.name}
-            defaultValue={baseOrigin}
+            defaultValue={baseHash}
             rows={1}
           >
             {FIELD.HASH.label}
-          </InputSectionText> */}
+          </InputSectionText>
         </>
       )}
     </Form>

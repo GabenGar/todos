@@ -60,7 +60,7 @@ function URLViewerPage({
               </OverviewBody>
             )}
 
-            {!finalURL ? undefined : <OverviewFooter></OverviewFooter>}
+            {!finalURL ? undefined : <OverviewFooter>{String(finalURL)}</OverviewFooter>}
           </>
         )}
       </Overview>

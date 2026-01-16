@@ -7,11 +7,11 @@ import { Preformatted } from "@repo/ui/formatting";
 import type { ILocalizationPage } from "#lib/localization";
 import { List, ListItem } from "@repo/ui/lists";
 import { formDataToURLSearchParams } from "@repo/ui/forms";
+import { Button } from "@repo/ui/buttons";
 import type { ITranslatableProps } from "#components/types";
 import { Form, type IFormEvent } from "#components/form";
 
 import styles from "./search-params.module.scss";
-import { Button } from "@repo/ui/buttons";
 
 interface IProps extends ITranslatableProps {
   t: ILocalizationPage["url-editor"];
@@ -47,14 +47,6 @@ export function SearchParams({
 
     changeCurrentSearchParams(new URLSearchParams(defaultValue));
   }, [defaultValue]);
-
-  function changeSearchParams(nextSearchParams: URLSearchParams) {
-    changeCurrentSearchParams(nextSearchParams)
-
-    if (inputRef.current) {
-      inputRef.current.value = String(nextSearchParams);
-    }
-  }
 
   async function handleSearchParamsChange(event: IFormEvent<string>) {
     const formData = new FormData(event.currentTarget);
@@ -109,12 +101,10 @@ export function SearchParams({
                                     currentSearchParams,
                                   );
 
-                                  nextParams.delete(paramKey)
+                                  nextParams.delete(paramKey);
 
-                                  changeSearchParams(nextParams)
+                                  changeCurrentSearchParams(nextParams);
                                 }}
-
-
                               >
                                 {t["Delete"]}
                               </Button>
@@ -142,7 +132,46 @@ export function SearchParams({
                                       rows={1}
                                       defaultValue={value}
                                     />
-                                    <Button onClick={() => {}}>
+                                    <Button
+                                      onClick={() => {
+                                        const nextParams = new URLSearchParams(
+                                          currentSearchParams,
+                                        );
+                                        // we are not using two-argument of `URLSearchParams.delete()`
+                                        // because it deletes by the value, including duplicates
+                                        // but we only want to delete a single value at specific index
+                                        const currentValues = nextParams
+                                          .getAll(paramKey)
+                                          .filter(
+                                            (_, currentIndex) =>
+                                              currentIndex !== index,
+                                          );
+
+                                        if (currentValues.length === 0) {
+                                          nextParams.delete(paramKey);
+                                        } else {
+                                          currentValues.forEach(
+                                            (value, index) => {
+                                              // overwrite the key at the first value
+                                              // because I assume deleting the key and appending to it
+                                              // will change the order of the key in the view
+                                              if (index === 0) {
+                                                nextParams.set(paramKey, value);
+
+                                                return;
+                                              }
+
+                                              nextParams.append(
+                                                paramKey,
+                                                value,
+                                              );
+                                            },
+                                          );
+                                        }
+
+                                        changeCurrentSearchParams(nextParams);
+                                      }}
+                                    >
                                       {t["Delete"]}
                                     </Button>
                                   </ListItem>
