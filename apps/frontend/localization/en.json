@@ -47,6 +47,10 @@
     "datetime": {
       "Copy": "Copy",
       "Copied": "Copied"
+    },
+    "button": {
+      "Copy": "Copy",
+      "Copied": "Copied"
     }
   },
   "pages": {
@@ -255,6 +259,9 @@
       "Values": "Values",
       "Empty": "Empty",
       "Hash": "Hash",
+      "Decoded URL": "Decoded URL",
+      "Encoded URL": "Encoded URL",
+      "Full URL": "Full URL",
       "Unknown": "Unknown",
       "Change": "Change",
       "Changing...": "Changing...",

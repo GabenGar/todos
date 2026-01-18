@@ -45,14 +45,15 @@ export function Origin({
   const defaultProtocol = originURL?.protocol ?? "https:";
   const defaultHostname = originURL?.hostname;
   const defaultPort =
-    originURL?.port ??
-    (defaultProtocol === "https:" || defaultProtocol === "wss:"
-      ? "443"
-      : defaultProtocol === "http:" || defaultProtocol === "ws:"
-        ? "80"
-        : defaultProtocol === "ftp:"
-          ? "21"
-          : undefined);
+    originURL?.port !== "" && originURL?.port !== undefined
+      ? originURL?.port
+      : defaultProtocol === "https:" || defaultProtocol === "wss:"
+        ? "443"
+        : defaultProtocol === "http:" || defaultProtocol === "ws:"
+          ? "80"
+          : defaultProtocol === "ftp:"
+            ? "21"
+            : undefined;
   const defaultUsername = originURL?.username;
   const defaultPassword = originURL?.password;
 
@@ -99,8 +100,9 @@ export function Origin({
               }
             >
               <Form<IFieldName>
-                id={nestedFormID}
                 commonTranslation={commonTranslation}
+                id={nestedFormID}
+                isNested
                 submitButton={(_, isSubmitting) =>
                   isSubmitting ? t["Changing..."] : t["Change"]
                 }
@@ -123,6 +125,7 @@ export function Origin({
                       form={formID}
                       name={FIELD.HOSTNAME.name}
                       defaultValue={defaultHostname}
+                      rows={1}
                     >
                       {FIELD.HOSTNAME.label}
                     </InputSectionText>

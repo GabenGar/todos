@@ -1,18 +1,19 @@
 import { useState } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { Heading } from "@repo/ui/headings";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Preformatted } from "@repo/ui/formatting";
+import { ButtonCopy } from "@repo/ui/buttons";
 import { getDictionary } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import { getStaticExportPaths } from "#server";
 import { Page } from "#components";
+import { BaseURLForm, URLEditorForm } from "#components/url";
 import {
   Overview,
-  OverviewBody,
   OverviewHeader,
+  OverviewBody,
   OverviewFooter,
-} from "#components/overview";
-
-import { BaseURLForm, URLEditorForm } from "#components/url";
+} from "@repo/ui/articles";
 
 interface IProps extends ILocalizedProps<"url-editor"> {}
 
@@ -27,6 +28,9 @@ function URLViewerPage({
   const title = t.title;
   const baseID = "base-url";
   const editID = "edit-url";
+  const fullURL = !finalURL ? undefined : String(finalURL);
+  const decodedFullURL = !fullURL ? undefined : decodeURI(fullURL);
+  const encodedFullURL = !fullURL ? undefined : encodeURI(fullURL);
   /**
    * t. Alberto Barbosa
    */
@@ -39,7 +43,7 @@ function URLViewerPage({
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
-            <OverviewHeader>
+            <OverviewHeader isFilled>
               <BaseURLForm
                 id={baseID}
                 commonTranslation={common}
@@ -49,7 +53,7 @@ function URLViewerPage({
             </OverviewHeader>
 
             {!baseURL ? undefined : (
-              <OverviewBody>
+              <OverviewBody isFilled>
                 <URLEditorForm
                   id={editID}
                   commonTranslation={common}
@@ -60,7 +64,53 @@ function URLViewerPage({
               </OverviewBody>
             )}
 
-            {!finalURL ? undefined : <OverviewFooter>{String(finalURL)}</OverviewFooter>}
+            {!finalURL ? undefined : (
+              <OverviewFooter>
+                <DescriptionList>
+                  {decodedFullURL === encodedFullURL ? (
+                    <DescriptionSection
+                      dKey={t["Full URL"]}
+                      dValue={
+                        <>
+                          <Preformatted>{decodedFullURL}</Preformatted>
+                          <ButtonCopy
+                            translation={common.button}
+                            valueToCopy={decodedFullURL!}
+                          />
+                        </>
+                      }
+                    />
+                  ) : (
+                    <>
+                      <DescriptionSection
+                        dKey={t["Decoded URL"]}
+                        dValue={
+                          <>
+                            <Preformatted>{decodedFullURL}</Preformatted>
+                            <ButtonCopy
+                              translation={common.button}
+                              valueToCopy={decodedFullURL!}
+                            />
+                          </>
+                        }
+                      />
+                      <DescriptionSection
+                        dKey={t["Encoded URL"]}
+                        dValue={
+                          <>
+                            <Preformatted>{encodedFullURL}</Preformatted>
+                            <ButtonCopy
+                              translation={common.button}
+                              valueToCopy={encodedFullURL!}
+                            />
+                          </>
+                        }
+                      />
+                    </>
+                  )}
+                </DescriptionList>
+              </OverviewFooter>
+            )}
           </>
         )}
       </Overview>

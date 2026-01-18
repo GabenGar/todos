@@ -80,6 +80,7 @@ export function SearchParams({
               <Form
                 commonTranslation={commonTranslation}
                 id={editFormID}
+                isNested
                 submitButton={(_, isSubmitting) =>
                   isSubmitting ? t["Changing..."] : t["Change"]
                 }

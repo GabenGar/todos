@@ -1,10 +1,11 @@
+import clsx from "clsx";
 import { type ReactNode, useState } from "react";
+import { ButtonSubmit } from "@repo/ui/buttons";
 import { logError } from "#lib/logs";
 import { isError, validateError } from "#lib/errors";
 import type { ILocalizationCommon } from "#lib/localization";
 import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentProps } from "#components/types";
-import { ButtonSubmit } from "#components/button";
 import { Pre } from "#components/pre";
 import { List, ListItem } from "#components/list";
 import { InputSection } from "./section";
@@ -17,6 +18,7 @@ export interface IFormProps<InputName extends string = string>
   commonTranslation: ILocalizationCommon;
   id: string;
   children?: (formID: string, isSubmitting: boolean) => ReactNode;
+  isNested?: boolean;
   onSubmit: (event: IFormEvent<InputName>) => Promise<void>;
   onReset?: (event: IFormEvent<InputName>) => Promise<void>;
   submitButton?: null | ((formID: string, isSubmitting: boolean) => ReactNode);
@@ -27,6 +29,7 @@ export const Form = createBlockComponent(styles, Component);
 function Component<InputName extends string>({
   commonTranslation,
   id,
+  isNested,
   className,
   submitButton,
   onSubmit,
@@ -37,6 +40,7 @@ function Component<InputName extends string>({
   const [isSubmitting, switchSubmitting] = useState(false);
   const [errors, changeErrors] = useState<(Error | string)[]>();
   const formID = `${id}-form`;
+  const resolvedClassname = clsx(className, isNested && styles.nested);
 
   async function handleSubmit(event: IFormEvent<InputName>) {
     event.preventDefault();
@@ -75,7 +79,7 @@ function Component<InputName extends string>({
   }
 
   return (
-    <div id={id} className={className}>
+    <div id={id} className={resolvedClassname}>
       {children?.(formID, isSubmitting)}
       {errors && (
         <List isOrdered>
@@ -93,7 +97,11 @@ function Component<InputName extends string>({
           <InputSection className={styles.submit}>
             {/* render default button if not a function */}
             {submitButton === undefined ? (
-              <ButtonSubmit form={formID} disabled={isSubmitting}>
+              <ButtonSubmit
+                form={formID}
+                viewType={isNested ? "button" : "submit"}
+                disabled={isSubmitting}
+              >
                 {!isSubmitting
                   ? commonTranslation.form.submit
                   : commonTranslation.form.submitting}
@@ -101,6 +109,7 @@ function Component<InputName extends string>({
             ) : (
               <CustomButton
                 formID={formID}
+                isNested={isNested}
                 isSubmitting={isSubmitting}
                 submitButton={submitButton}
               />
@@ -119,7 +128,7 @@ function Component<InputName extends string>({
   );
 }
 
-interface ICustomButtonProps {
+interface ICustomButtonProps extends Pick<IFormProps, "isNested"> {
   formID: string;
   isSubmitting: boolean;
   submitButton: (formID: string, isSubmitting: boolean) => ReactNode;
@@ -127,6 +136,7 @@ interface ICustomButtonProps {
 
 function CustomButton({
   formID,
+  isNested,
   isSubmitting,
   submitButton,
 }: ICustomButtonProps) {
@@ -138,7 +148,11 @@ function CustomButton({
   }
 
   return (
-    <ButtonSubmit form={formID} disabled={isSubmitting}>
+    <ButtonSubmit
+      form={formID}
+      viewType={isNested ? "button" : "submit"}
+      disabled={isSubmitting}
+    >
       {result}
     </ButtonSubmit>
   );

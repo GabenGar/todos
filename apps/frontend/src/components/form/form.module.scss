@@ -5,7 +5,6 @@
   display: grid;
   gap: $size-small;
   max-width: $width-phone;
-  width: 100%;
   border-radius: $radius-normal;
   border: $size-thin solid var(--colour-text-primary);
   padding: $size-normal;
@@ -24,5 +23,11 @@
 
 .submit {
   display: grid;
-  justify-items: flex-end;
+  justify-items: flex-start;
+}
+
+.nested {
+  padding: $size-small 0;
+  border-left: 0;
+  border-right: 0;
 }

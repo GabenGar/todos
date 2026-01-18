@@ -1,4 +1,3 @@
-import { NotImplementedError } from "@repo/ui/errors";
 import { InputSectionText } from "@repo/ui/forms/sections";
 import { type ILocalizationPage } from "#lib/localization";
 import {
