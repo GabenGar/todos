@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-import { InputSectionText } from "@repo/ui/forms/sections";
 import { type ILocalizationPage } from "#lib/localization";
 import {
   Form,

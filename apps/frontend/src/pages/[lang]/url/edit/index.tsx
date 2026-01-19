@@ -35,7 +35,7 @@ function URLViewerPage({
   return (
     <Page heading={t.heading} title={title}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <>
             <OverviewHeader isFilled>
               <BaseURLForm
