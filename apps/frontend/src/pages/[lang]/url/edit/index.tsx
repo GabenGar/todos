@@ -31,12 +31,6 @@ function URLViewerPage({
   const fullURL = !finalURL ? undefined : String(finalURL);
   const decodedFullURL = !fullURL ? undefined : decodeURI(fullURL);
   const encodedFullURL = !fullURL ? undefined : encodeURI(fullURL);
-  /**
-   * t. Alberto Barbosa
-   */
-  function coreT(key: keyof typeof t) {
-    return t[key];
-  }
 
   return (
     <Page heading={t.heading} title={title}>

@@ -21,9 +21,14 @@ export interface IFormProps<InputName extends string = string>
   isNested?: boolean;
   onSubmit: (event: IFormEvent<InputName>) => Promise<void>;
   onReset?: (event: IFormEvent<InputName>) => Promise<void>;
+  // @TODO use `false` instead of `null`
   submitButton?: null | ((formID: string, isSubmitting: boolean) => ReactNode);
+  isResetOnSuccess?: boolean;
 }
 
+/**
+ * @TODO move into ui package
+ */
 export const Form = createBlockComponent(styles, Component);
 
 function Component<InputName extends string>({
@@ -34,6 +39,7 @@ function Component<InputName extends string>({
   submitButton,
   onSubmit,
   onReset,
+  isResetOnSuccess = true,
   children,
   ...props
 }: IFormProps<InputName>) {
@@ -54,7 +60,10 @@ function Component<InputName extends string>({
 
     try {
       await onSubmit?.(event);
-      await handleReset(event);
+
+      if (isResetOnSuccess) {
+        await handleReset(event);
+      }
     } catch (error) {
       validateError(error);
       logError(error);

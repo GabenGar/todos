@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { InputSectionText } from "@repo/ui/forms/sections";
 import { type ILocalizationPage } from "#lib/localization";
 import {
@@ -23,6 +24,7 @@ export function URLEditorForm({
   baseURL,
   onNewURL,
 }: IURLEditorFormProps) {
+  const hashInput = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const FIELD = {
     ORIGIN: { name: "origin", label: t["Origin"] },
     PATHNAME: { name: "pathname", label: t["Pathname"] },
@@ -37,6 +39,12 @@ export function URLEditorForm({
   const basePath = baseURL === true ? undefined : baseURL.pathname;
   const baseSearchParams = baseURL === true ? undefined : baseURL.search;
   const baseHash = baseURL === true ? undefined : baseURL.hash.slice(1);
+
+  useEffect(() => {
+    if (hashInput.current) {
+      hashInput.current.defaultValue = baseHash ?? "";
+    }
+  }, [baseHash]);
 
   async function handleSubmit(event: IFormEvent<IFieldName>) {
     const elements = event.currentTarget.elements;
@@ -61,6 +69,7 @@ export function URLEditorForm({
         !isSubmitting ? t["Parse"] : t["Parsing..."]
       }
       onSubmit={handleSubmit}
+      isResetOnSuccess={false}
     >
       {(formID) => (
         <>
@@ -92,6 +101,7 @@ export function URLEditorForm({
           />
 
           <InputSectionText
+            inputRef={hashInput}
             id={`${formID}-${FIELD.HASH.name}`}
             form={formID}
             name={FIELD.HASH.name}

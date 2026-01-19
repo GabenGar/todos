@@ -1,3 +1,4 @@
+import { forwardRef, type Ref } from "react";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
@@ -13,8 +14,14 @@ export interface IInputTextAreaProps
     >,
     Pick<IInputProps, "id" | "name" | "form"> {}
 
-export const InputTextArea = createBlockComponent(styles, Component);
+export const InputTextArea = forwardRef<
+  HTMLTextAreaElement,
+  IInputTextAreaProps
+>(createBlockComponent(styles, Component));
 
-function Component({ rows = 2, ...props }: IInputTextAreaProps) {
-  return <textarea rows={rows} {...props} />;
+function Component(
+  { rows = 2, ...props }: IInputTextAreaProps,
+  ref?: Ref<HTMLTextAreaElement>,
+) {
+  return <textarea rows={rows} {...props} ref={ref} />;
 }

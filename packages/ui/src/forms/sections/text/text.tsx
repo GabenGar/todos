@@ -1,3 +1,4 @@
+import type { Ref } from "react";
 import { createBlockComponent } from "#meta";
 import { type IInputTextProps, InputText, InputTextArea } from "../../inputs";
 import type { IInputTextAreaProps } from "../../inputs/text/text-area";
@@ -7,7 +8,9 @@ import { type IInputSectionProps, InputSection } from "../section";
 export interface IInputSectionTextProps
   extends IInputSectionProps,
     Pick<IInputTextProps, "minLength" | "maxLength">,
-    Pick<IInputTextAreaProps, "rows"> {}
+    Pick<IInputTextAreaProps, "rows"> {
+  inputRef?: Ref<HTMLInputElement | HTMLTextAreaElement>;
+}
 
 export const InputSectionText = createBlockComponent(undefined, Component);
 
@@ -23,6 +26,7 @@ function Component({
   maxLength,
   rows,
   children,
+  inputRef,
   ...props
 }: IInputSectionTextProps) {
   // render a normal input if constraints fit a value
@@ -36,6 +40,9 @@ function Component({
       <Label htmlFor={id}>{children}</Label>
       {isShort ? (
         <InputText
+          // @ts-expect-error probably easier to use single row
+          // `<textarea>` for all text down the line
+          ref={inputRef}
           id={id}
           form={form}
           name={name}
@@ -48,6 +55,9 @@ function Component({
         />
       ) : (
         <InputTextArea
+          // @ts-expect-error probably easier to use single row
+          // `<textarea>` for all text down the line
+          ref={inputRef}
           id={id}
           form={form}
           name={name}
