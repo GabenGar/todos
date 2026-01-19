@@ -1,0 +1,10 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+/*
+  Not using flex properties because `list-item`
+  is a separate display type which strips list item
+  out of sematinc meaning when changed.
+*/
+.delete {
+  margin: auto
+}

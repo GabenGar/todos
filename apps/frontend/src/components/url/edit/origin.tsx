@@ -104,7 +104,9 @@ export function Origin({
                 id={nestedFormID}
                 isNested
                 submitButton={(_, isSubmitting) =>
-                  isSubmitting ? t["Changing..."] : t["Change"]
+                  isSubmitting
+                    ? commonTranslation.form["Applying changes..."]
+                    : commonTranslation.form["Confirm changes"]
                 }
                 onSubmit={handleSubmit}
               >

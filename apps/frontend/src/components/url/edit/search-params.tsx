@@ -1,7 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import { InputSection } from "@repo/ui/forms/sections";
 import { InputHidden, InputTextArea } from "@repo/ui/forms/inputs";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import {
+  DescriptionDetails,
+  DescriptionList,
+  DescriptionSection,
+  DescriptionTerm,
+} from "@repo/ui/description-list";
 import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
 import type { ILocalizationPage } from "#lib/localization";
@@ -58,6 +63,44 @@ export function SearchParams({
       inputRef.current.value = String(searchParams);
     }
   }
+
+  async function handleKeyDeletion(paramKey: string) {
+    const nextParams = new URLSearchParams(currentSearchParams);
+
+    nextParams.delete(paramKey);
+
+    changeCurrentSearchParams(nextParams);
+  }
+
+  async function handleValueDeletion(paramKey: string, index: number) {
+    const nextParams = new URLSearchParams(currentSearchParams);
+    // we are not using two-argument of `URLSearchParams.delete()`
+    // because it deletes by the value, including duplicates
+    // but we only want to delete a single value at specific index
+    const currentValues = nextParams
+      .getAll(paramKey)
+      .filter((_, currentIndex) => currentIndex !== index);
+
+    if (currentValues.length === 0) {
+      nextParams.delete(paramKey);
+    } else {
+      currentValues.forEach((value, index) => {
+        // overwrite the key at the first value
+        // because I assume deleting the key and appending to it
+        // will change the order of the key in the view
+        if (index === 0) {
+          nextParams.set(paramKey, value);
+
+          return;
+        }
+
+        nextParams.append(paramKey, value);
+      });
+    }
+
+    changeCurrentSearchParams(nextParams);
+  }
+
   return (
     <InputSection>
       <InputHidden ref={inputRef} form={formID} name={name} />
@@ -82,7 +125,9 @@ export function SearchParams({
                 id={editFormID}
                 isNested
                 submitButton={(_, isSubmitting) =>
-                  isSubmitting ? t["Changing..."] : t["Change"]
+                  isSubmitting
+                    ? commonTranslation.form["Applying changes..."]
+                    : commonTranslation.form["Confirm changes"]
                 }
                 onSubmit={handleSearchParamsChange}
               >
@@ -91,97 +136,15 @@ export function SearchParams({
                     const values = currentSearchParams.getAll(paramKey);
 
                     return (
-                      <DescriptionList key={paramKey}>
-                        <DescriptionSection
-                          dKey={
-                            <>
-                              <Preformatted>{paramKey}</Preformatted>
-                              <Button
-                                onClick={() => {
-                                  const nextParams = new URLSearchParams(
-                                    currentSearchParams,
-                                  );
-
-                                  nextParams.delete(paramKey);
-
-                                  changeCurrentSearchParams(nextParams);
-                                }}
-                              >
-                                {t["Delete"]}
-                              </Button>
-                            </>
-                          }
-                          dValue={
-                            <Details
-                              summary={
-                                <>
-                                  {t["Values"]}:{" "}
-                                  <Preformatted>{values.length}</Preformatted>
-                                </>
-                              }
-                            >
-                              <List isOrdered>
-                                {values.map((value, index) => (
-                                  <ListItem
-                                    key={`${paramKey}-${value}-${index}`}
-                                  >
-                                    <InputTextArea
-                                      id={`${formID}-${paramKey}-${value}-${index}`}
-                                      className={styles.value}
-                                      name={paramKey}
-                                      form={formID}
-                                      rows={1}
-                                      defaultValue={value}
-                                    />
-                                    <Button
-                                      onClick={() => {
-                                        const nextParams = new URLSearchParams(
-                                          currentSearchParams,
-                                        );
-                                        // we are not using two-argument of `URLSearchParams.delete()`
-                                        // because it deletes by the value, including duplicates
-                                        // but we only want to delete a single value at specific index
-                                        const currentValues = nextParams
-                                          .getAll(paramKey)
-                                          .filter(
-                                            (_, currentIndex) =>
-                                              currentIndex !== index,
-                                          );
-
-                                        if (currentValues.length === 0) {
-                                          nextParams.delete(paramKey);
-                                        } else {
-                                          currentValues.forEach(
-                                            (value, index) => {
-                                              // overwrite the key at the first value
-                                              // because I assume deleting the key and appending to it
-                                              // will change the order of the key in the view
-                                              if (index === 0) {
-                                                nextParams.set(paramKey, value);
-
-                                                return;
-                                              }
-
-                                              nextParams.append(
-                                                paramKey,
-                                                value,
-                                              );
-                                            },
-                                          );
-                                        }
-
-                                        changeCurrentSearchParams(nextParams);
-                                      }}
-                                    >
-                                      {t["Delete"]}
-                                    </Button>
-                                  </ListItem>
-                                ))}
-                              </List>
-                            </Details>
-                          }
-                        />
-                      </DescriptionList>
+                      <ParamKey
+                        key={paramKey}
+                        formID={formID}
+                        t={t}
+                        paramKey={paramKey}
+                        values={values}
+                        onKeyDelete={handleKeyDeletion}
+                        onValueDelete={handleValueDeletion}
+                      />
                     );
                   })
                 }
@@ -191,5 +154,66 @@ export function SearchParams({
         />
       </DescriptionList>
     </InputSection>
+  );
+}
+
+interface IParamKeyProps extends Pick<IProps, "t"> {
+  paramKey: string;
+  values: string[];
+  formID: string;
+  onKeyDelete: (paramKey: string) => Promise<void>;
+  onValueDelete: (paramKey: string, index: number) => Promise<void>;
+}
+
+function ParamKey({
+  t,
+  formID,
+  paramKey,
+  values,
+  onKeyDelete,
+  onValueDelete,
+}: IParamKeyProps) {
+  return (
+    <DescriptionList>
+      <DescriptionSection>
+        <DescriptionTerm className={styles.key}>
+          <Preformatted>{paramKey}:</Preformatted>
+          <Button onClick={async () => onKeyDelete(paramKey)}>
+            {t["Delete"]}
+          </Button>
+        </DescriptionTerm>
+
+        <DescriptionDetails>
+          <Details
+            summary={
+              <>
+                {t["Values"]}: <Preformatted>{values.length}</Preformatted>
+              </>
+            }
+          >
+            <List isOrdered isNested>
+              {values.map((value, index) => (
+                <ListItem key={`${paramKey}-${value}-${index}`}>
+                  <InputTextArea
+                    id={`${formID}-${paramKey}-${value}-${index}`}
+                    className={styles.value}
+                    name={paramKey}
+                    form={formID}
+                    rows={1}
+                    defaultValue={value}
+                  />
+                  <Button
+                    className={styles.delete}
+                    onClick={() => onValueDelete(paramKey, index)}
+                  >
+                    {t["Delete"]}
+                  </Button>
+                </ListItem>
+              ))}
+            </List>
+          </Details>
+        </DescriptionDetails>
+      </DescriptionSection>
+    </DescriptionList>
   );
 }

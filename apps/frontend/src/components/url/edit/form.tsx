@@ -11,6 +11,7 @@ import type { IBaseURLFormProps } from "./base";
 import { Origin } from "./origin";
 import { SearchParams } from "./search-params";
 import { Pathname } from "./pathname";
+import { Hash } from "./hash";
 
 interface IURLEditorFormProps extends ITranslatableProps, IFormComponentProps {
   t: ILocalizationPage["url-editor"];
@@ -24,7 +25,6 @@ export function URLEditorForm({
   baseURL,
   onNewURL,
 }: IURLEditorFormProps) {
-  const hashInput = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const FIELD = {
     ORIGIN: { name: "origin", label: t["Origin"] },
     PATHNAME: { name: "pathname", label: t["Pathname"] },
@@ -39,12 +39,6 @@ export function URLEditorForm({
   const basePath = baseURL === true ? undefined : baseURL.pathname;
   const baseSearchParams = baseURL === true ? undefined : baseURL.search;
   const baseHash = baseURL === true ? undefined : baseURL.hash.slice(1);
-
-  useEffect(() => {
-    if (hashInput.current) {
-      hashInput.current.defaultValue = baseHash ?? "";
-    }
-  }, [baseHash]);
 
   async function handleSubmit(event: IFormEvent<IFieldName>) {
     const elements = event.currentTarget.elements;
@@ -100,16 +94,15 @@ export function URLEditorForm({
             defaultValue={baseSearchParams}
           />
 
-          <InputSectionText
-            inputRef={hashInput}
+          <Hash
+            commonTranslation={commonTranslation}
+            t={t}
             id={`${formID}-${FIELD.HASH.name}`}
-            form={formID}
+            formID={formID}
             name={FIELD.HASH.name}
+            label={FIELD.HASH.label}
             defaultValue={baseHash}
-            rows={1}
-          >
-            {FIELD.HASH.label}
-          </InputSectionText>
+          />
         </>
       )}
     </Form>

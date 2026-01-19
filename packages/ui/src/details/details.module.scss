@@ -2,6 +2,7 @@
 
 .block {
   border: $size-thin solid var(--colour-background-tertiary);
+  border-radius: $size-little;
 
   &[open] {
     .summary {

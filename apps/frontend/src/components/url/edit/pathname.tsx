@@ -11,6 +11,8 @@ import { Button } from "@repo/ui/buttons";
 import type { ITranslatableProps } from "#components/types";
 import { Form, type IFormEvent } from "#components/form";
 
+import styles from "./pathname.module.scss";
+
 interface IProps extends ITranslatableProps {
   t: ILocalizationPage["url-editor"];
   id: string;
@@ -101,7 +103,9 @@ export function Pathname({
                 id={editFormID}
                 isNested
                 submitButton={(_, isSubmitting) =>
-                  isSubmitting ? t["Changing..."] : t["Change"]
+                  isSubmitting
+                    ? commonTranslation.form["Applying changes..."]
+                    : commonTranslation.form["Confirm changes"]
                 }
                 onSubmit={handlePathnameChange}
               >
@@ -118,6 +122,7 @@ export function Pathname({
                             rows={1}
                           />
                           <Button
+                            className={styles.delete}
                             onClick={() => {
                               const nextPathname = currentPathname.reduce<
                                 string[]
