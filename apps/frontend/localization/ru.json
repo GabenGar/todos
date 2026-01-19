@@ -47,6 +47,10 @@
     "datetime": {
       "Copy": "Копировать",
       "Copied": "Скопировано"
+    },
+    "button": {
+      "Copy": "Копировать",
+      "Copied": "Скопировано"
     }
   },
   "pages": {
@@ -58,6 +62,7 @@
       "QR code reader": "Считыватель QR кодов",
       "Places": "Места",
       "URL Viewer": "Просмотрщик ссылок",
+      "URL Editor": "Редактор ссылок",
       "Account": "Учётная запись",
       "Planned events": "Планируемые события",
       "Recently updated": "Недавно обновлённые",
@@ -231,6 +236,36 @@
       "Search": "Поиск",
       "Search parameters": "Поисковые параметры",
       "Hash": "Идентификатор фрагмента"
+    },
+    "url-editor": {
+      "title": "Редактор ссылок",
+      "heading": "Редактор Ссылок",
+      "Base URL": "Основная ссылка",
+      "URL": "Ссылка",
+      "Parse": "Анализировать",
+      "Parsing...": "Анализируем...",
+      "A URL which will be used as a base for editing, if provided.": "Ссылка, которая будет использоваться за основу, если есть.",
+      "Origin": "Источник",
+      "Protocol": "Протокол",
+      "Username": "Имя пользователя",
+      "Password": "Пароль",
+      "Hostname": "Имя хоста",
+      "Port": "Порт",
+      "Pathname": "Путь",
+      "Segments": "Сегменты",
+      "Segment": "Сегмент",
+      "Search parameters": "Поисковые параметры",
+      "Keys": "Ключи",
+      "Values": "Значения",
+      "Empty": "Пусто",
+      "Hash": "Идентификатор фрагмента",
+      "Decoded URL": "Раскодированная ссылка",
+      "Encoded URL": "Закодированная ссылка",
+      "Full URL": "Полная ссылка",
+      "Unknown": "Неизвестно",
+      "Change": "Изменить",
+      "Changing...": "Изменяем...",
+      "Delete": "Удалить"
     },
     "planned-events": {
       "title": "Планируемые события",

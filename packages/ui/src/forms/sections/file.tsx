@@ -1,5 +1,3 @@
- ;
-
 import { useRef, useState } from "react";
 import { createBlockComponent } from "#meta";
 import { type IInputFileProps, InputFile } from "../inputs";

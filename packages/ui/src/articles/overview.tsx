@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { createBlockComponent } from "@repo/ui/meta";
 import {
   Article,
@@ -13,9 +14,15 @@ import {
 import styles from "./overview.module.scss";
 
 export interface IOverviewProps extends IArticleProps {}
-export interface IOverviewHeaderProps extends IArticleHeaderProps {}
-export interface IOverviewBodyProps extends IArticleBodyProps {}
-export interface IOverviewFooterProps extends IArticleFooterProps {}
+export interface IOverviewHeaderProps extends IArticleHeaderProps {
+  isFilled?: boolean;
+}
+export interface IOverviewBodyProps extends IArticleBodyProps {
+  isFilled?: boolean;
+}
+export interface IOverviewFooterProps extends IArticleFooterProps {
+  isFilled?: boolean;
+}
 
 export const Overview = createBlockComponent(styles, OverviewComponent);
 export const OverviewHeader = createBlockComponent(
@@ -35,14 +42,32 @@ function OverviewComponent({ ...props }: IOverviewProps) {
   return <Article {...props} />;
 }
 
-function OverviewHeaderComponent({ ...props }: IOverviewHeaderProps) {
-  return <ArticleHeader {...props} />;
+function OverviewHeaderComponent({
+  isFilled,
+  className,
+  ...props
+}: IOverviewHeaderProps) {
+  const resolvedClassname = clsx(className, isFilled && styles.filled);
+
+  return <ArticleHeader className={resolvedClassname} {...props} />;
 }
 
-function OverviewBodyComponent({ ...props }: IOverviewBodyProps) {
-  return <ArticleBody {...props} />;
+function OverviewBodyComponent({
+  isFilled,
+  className,
+  ...props
+}: IOverviewBodyProps) {
+  const resolvedClassname = clsx(className, isFilled && styles.filled);
+
+  return <ArticleBody className={resolvedClassname} {...props} />;
 }
 
-function OverviewFooterComponent({ ...props }: IOverviewFooterProps) {
-  return <ArticleFooter {...props} />;
+function OverviewFooterComponent({
+  isFilled,
+  className,
+  ...props
+}: IOverviewFooterProps) {
+  const resolvedClassname = clsx(className, isFilled && styles.filled);
+
+  return <ArticleFooter className={resolvedClassname} {...props} />;
 }

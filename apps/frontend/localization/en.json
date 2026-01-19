@@ -47,6 +47,10 @@
     "datetime": {
       "Copy": "Copy",
       "Copied": "Copied"
+    },
+    "button": {
+      "Copy": "Copy",
+      "Copied": "Copied"
     }
   },
   "pages": {
@@ -57,7 +61,8 @@
       "Tasks": "Tasks",
       "QR code reader": "QR code reader",
       "Places": "Places",
-      "URL Viewer": "URL Viewer",
+      "URL Viewer": "URL viewer",
+      "URL Editor": "URL editor",
       "Account": "Account",
       "Planned events": "Planned events",
       "Recently updated": "Recently updated",
@@ -205,7 +210,7 @@
       }
     },
     "url-viewer": {
-      "title": "URL Viewer",
+      "title": "URL viewer",
       "heading": "URL Viewer",
       "URL": "URL",
       "Decoded URL": "Decoded URL",
@@ -231,6 +236,36 @@
       "Search": "Search",
       "Search parameters": "Search parameters",
       "Hash": "Hash"
+    },
+    "url-editor": {
+      "title": "URL editor",
+      "heading": "URL Editor",
+      "Base URL": "Base URL",
+      "URL": "URL",
+      "Parse": "Parse",
+      "Parsing...": "Parsing...",
+      "A URL which will be used as a base for editing, if provided.": "A URL which will be used as a base for editing, if provided.",
+      "Origin": "Origin",
+      "Protocol": "Protocol",
+      "Username": "Username",
+      "Password": "Password",
+      "Hostname": "Hostname",
+      "Port": "Port",
+      "Pathname": "Pathname",
+      "Segments": "Segments",
+      "Segment": "Segment",
+      "Search parameters": "Search parameters",
+      "Keys": "Keys",
+      "Values": "Values",
+      "Empty": "Empty",
+      "Hash": "Hash",
+      "Decoded URL": "Decoded URL",
+      "Encoded URL": "Encoded URL",
+      "Full URL": "Full URL",
+      "Unknown": "Unknown",
+      "Change": "Change",
+      "Changing...": "Changing...",
+      "Delete": "Delete"
     },
     "planned-events": {
       "title": "Planned events",

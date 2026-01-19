@@ -11,8 +11,8 @@ import {
   type IFormComponentProps,
   type IFormEvent,
 } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
 import { InputSectionText } from "#components/form/section";
+import type { ITranslatableProps } from "#components/types";
 
 interface IProps extends ILocalizedProps<"url-viewer"> {}
 
