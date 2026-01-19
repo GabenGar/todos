@@ -1,5 +1,3 @@
- ;
-
 import { useState } from "react";
 import { Button } from "#buttons";
 import { createBlockComponent } from "#meta";

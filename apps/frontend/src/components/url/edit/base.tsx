@@ -7,7 +7,9 @@ import {
 } from "#components/form";
 import type { ITranslatableProps } from "#components/types";
 
-export interface IBaseURLFormProps extends ITranslatableProps, IFormComponentProps {
+export interface IBaseURLFormProps
+  extends ITranslatableProps,
+    IFormComponentProps {
   translation: ILocalizationPage["url-editor"];
   onNewURL: (newURL: URL | true) => Promise<void>;
 }
