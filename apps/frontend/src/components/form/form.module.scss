@@ -4,6 +4,7 @@
   justify-self: center;
   display: grid;
   gap: $size-small;
+  width: 100%;
   max-width: $width-phone;
   border-radius: $radius-normal;
   border: $size-thin solid var(--colour-text-primary);

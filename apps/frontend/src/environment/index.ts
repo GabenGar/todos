@@ -24,12 +24,14 @@ export const DEFAULT_LOG_LEVEL = process.env
   .NEXT_PUBLIC_DEFAULT_LOG_LEVEL as ILogLevel;
 
 const NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED =
-  process.env.NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED ?? "false";
+  process.env.NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED === undefined ||
+  process.env.NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED.length === 0
+    ? "false"
+    : process.env.NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED;
 
 if (
-  NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED.length === 0 ||
-  (NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED !== "true" &&
-    NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED !== "false")
+  NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED !== "true" &&
+  NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED !== "false"
 ) {
   throw new Error(
     `Invalid value for "NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED" configuration option.`,
