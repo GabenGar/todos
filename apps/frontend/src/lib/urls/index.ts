@@ -8,6 +8,10 @@ import type {
 } from "#entities/planned-event";
 import type { IMultiPageParams } from "./types";
 
+export function createRootPageURL(): Route {
+  return `/` as Route;
+}
+
 export function createHomePageURL(language: ILocale): Route {
   return `/${language}` as Route;
 }

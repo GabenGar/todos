@@ -9,8 +9,9 @@ import {
 
 import styles from "./description-list.module.scss";
 
-type IDescriptionListProps = IBaseComponentProps<"dl"> &
-  ({ sections: IDescriptionMap } | { children: ReactNode });
+type IDescriptionListProps = IBaseComponentProps<"dl"> & {
+  isNested?: boolean;
+} & ({ sections: IDescriptionMap } | { children: ReactNode });
 
 /**
  * Is not actual `Map` because keys can be of nullish values
@@ -54,15 +55,21 @@ export const DescriptionDetails = createBlockComponent(
   DescriptionDetailsComponent,
 );
 
-function DescriptionListComponent({ ...props }: IDescriptionListProps) {
+function DescriptionListComponent({
+  isNested,
+  className,
+  ...props
+}: IDescriptionListProps) {
+  const resolvedClassname = clsx(className, isNested && styles.nested);
+
   if ("children" in props) {
-    return <dl {...props} />;
+    return <dl className={resolvedClassname} {...props} />;
   }
 
   const { sections, ...otherProps } = props;
 
   return (
-    <dl {...otherProps}>
+    <dl className={resolvedClassname} {...otherProps}>
       {sections.map(([dKey, dValue], index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: only index can be truly unique key in there
         <DescriptionSection key={index} dKey={dKey} dValue={dValue} />
