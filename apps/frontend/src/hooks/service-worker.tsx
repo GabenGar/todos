@@ -44,13 +44,18 @@ type IServiceWorkerStatus =
   | "unavailable"
   | "error";
 
+/**
+ * @TODO render errors because there is no console on mobiles
+ */
 export function ServiceWorkerProvider({ children }: IProps) {
   const [context, changeContext] =
     useState<IServiceWorkerContext>(defaultContext);
 
   useEffect(() => {
     let worker: ServiceWorker | undefined = undefined;
-    navigator.serviceWorker.addEventListener("message", listenForMessages);
+    // this interface is different from the one returned by registration
+    // so has to be checked for existence too
+    navigator.serviceWorker?.addEventListener("message", listenForMessages);
 
     registerServiceWorker().then((nextServiceWorker) => {
       if (!nextServiceWorker) {
@@ -70,7 +75,10 @@ export function ServiceWorkerProvider({ children }: IProps) {
     return () => {
       worker?.removeEventListener("statechange", listenForState);
       worker?.removeEventListener("error", listenForErrors);
-      navigator.serviceWorker.removeEventListener("message", listenForMessages);
+      navigator.serviceWorker?.removeEventListener(
+        "message",
+        listenForMessages,
+      );
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
