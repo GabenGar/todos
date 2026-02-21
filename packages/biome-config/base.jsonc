@@ -1,0 +1,102 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "root": false,
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": ["**/*", "!**/node_modules", "!!**/dist", "!!**/.turbo"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 80,
+    "lineEnding": "auto"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "noUndeclaredEnvVars": "error"
+      },
+      "style": {
+        // function types get out of hand pretty fast
+        "useShorthandFunctionType": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "html": {
+    "formatter": {
+      "enabled": true
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true
+    },
+    "parser": {
+      "cssModules": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space"
+    }
+  },
+  "overrides": [
+    {
+      // typescript-related overrides
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"]
+    },
+    {
+      // exclude various configs from key sorting
+      "includes": [
+        "**/biome.jsonc",
+        "**/package.json",
+        "**/tsconfig.json",
+        "**/turbo.jsonc"
+      ],
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      }
+    }
+  ],
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "recommended": true,
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":URL:",
+              ":NODE:",
+              [":PACKAGE:", "!@repo/**"],
+              ":PACKAGE_WITH_PROTOCOL:",
+              // sorting in a way so monorepo workspaces
+              // go after packages
+              ["@repo/**"],
+              ":ALIAS:",
+              ":PATH:"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

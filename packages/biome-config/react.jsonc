@@ -1,0 +1,13 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "root": false,
+  "linter": {
+    "domains": {
+      "react": "recommended"
+    },
+    "rules": {
+      // it's a bit of nuisanse to deal here and there
+      "suspicious": "off"
+    }
+  }
+}

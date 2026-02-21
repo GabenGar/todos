@@ -1,0 +1,25 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "root": false,
+  "files": {
+    "ignoreUnknown": true,
+    "includes": ["**/*", "!node_modules", "!.next", "!!**/out", "!!**/dist"]
+  },
+  "linter": {
+    "domains": {
+      "next": "recommended",
+      "react": "recommended"
+    },
+    "includes": ["**/*", "!**/next-env.d.ts"],
+    "rules": {
+      "suspicious": {
+        // it's a bit of nuisanse to deal here and there
+        "noArrayIndexKey": "off"
+      },
+      "performance": {
+        // we don't use `Image` in any of the nextjs projects
+        "noImgElement": "off"
+      }
+    }
+  }
+}

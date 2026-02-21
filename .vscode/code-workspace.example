@@ -27,6 +27,10 @@
     {
       "name": "schema",
       "path": "packages/schema"
+    },
+    {
+      "name": "@repo/biome-config",
+      "path": "packages/biome-config"
     }
   ],
   "settings": {
