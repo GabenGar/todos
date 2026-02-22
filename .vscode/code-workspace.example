@@ -58,7 +58,10 @@
     },
     "typescript.referencesCodeLens.enabled": true,
     "typescript.preferences.preferTypeOnlyAutoImports": true,
-    "typescript.preferences.jsxAttributeCompletionStyle": "braces"
+    "typescript.preferences.jsxAttributeCompletionStyle": "braces",
+    "json.schemaDownload.trustedDomains": {
+      "https://v2-8-10.turborepo.dev/schema.json": true
+    }
   },
   "extensions": {
     "recommendations": ["eamodio.gitlens", "dotenv.dotenv-vscode"]
