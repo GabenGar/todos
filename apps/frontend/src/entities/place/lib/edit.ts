@@ -3,7 +3,7 @@ import { logDebug } from "#lib/logs";
 import { now } from "#lib/dates";
 import { setLocalStorePlaces } from "./storage";
 import { getAllPlaces } from "./get";
-import { type IPlaceUpdate, type IPlace } from "../types";
+import type { IPlaceUpdate, IPlace } from "../types";
 
 const validatePlaceUpdate = createValidator<IPlaceUpdate>(
   "/entities/place/update",

@@ -2,7 +2,7 @@ import type { ILocalizationEntities } from "#lib/localization";
 import { createPlannedEventEditPageURL } from "#lib/urls";
 import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection } from "#components";
-import { ITranslatableProps, type ILocalizableProps } from "#components/types";
+import type { ITranslatableProps, ILocalizableProps } from "#components/types";
 import { Heading } from "#components/heading";
 import { DateTime } from "#components/date";
 import {

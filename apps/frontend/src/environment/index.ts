@@ -51,11 +51,11 @@ export const IS_SERVICE_WORKER_ENABLED = JSON.parse(
 // https://stackoverflow.com/a/8785422
 export const IS_BROWSER =
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore typescript types for worker do not like `windows` access for checking
+  // @ts-expect-error typescript types for worker do not like `windows` access for checking
   typeof globalThis["window"] !== "undefined" ||
   // https://stackoverflow.com/a/8785422
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore typescript types for worker do not like `document` access for checking
+  // @ts-expect-error typescript types for worker do not like `document` access for checking
   (typeof globalThis["document"] == "undefined" &&
     typeof globalThis["importScripts"] !== "undefined");
 

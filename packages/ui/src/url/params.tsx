@@ -34,12 +34,7 @@ export function TransformedSearchParams({
             ) : (
               <List isOrdered>
                 {Array.from(value).map((value, index) => (
-                  <ListItem
-                    key={`${value}-${
-                      // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
-                      index
-                    }`}
-                  >
+                  <ListItem key={`${value}-${index}`}>
                     <Preformatted>{value}</Preformatted>
                   </ListItem>
                 ))}

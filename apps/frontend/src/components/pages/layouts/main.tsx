@@ -1,8 +1,8 @@
 import { useEffect, type ReactNode } from "react";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { REPOSITORY_URL } from "#environment";
-import { type ILocale } from "#lib/internationalization";
-import { type ILocalizationCommon } from "#lib/localization";
+import type { ILocale } from "#lib/internationalization";
+import type { ILocalizationCommon } from "#lib/localization";
 import { ClientProvider, useServiceWorker } from "#hooks";
 import { GlobalNavigation } from "#components";
 import { Link } from "#components/link";

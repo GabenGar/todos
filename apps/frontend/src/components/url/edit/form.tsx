@@ -1,4 +1,4 @@
-import { type ILocalizationPage } from "#lib/localization";
+import type { ILocalizationPage } from "#lib/localization";
 import {
   Form,
   type IFormComponentProps,

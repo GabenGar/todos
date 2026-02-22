@@ -21,6 +21,7 @@ import type { ITranslatableProps } from "#components/types";
 import { validateLogLevel, type ILogLevel } from "#lib/logs";
 import { InputSectionSelect } from "#components/form/section";
 import { InputOption } from "#components/form/input";
+// 
 
 import styles from "./index.module.scss";
 
@@ -239,6 +240,7 @@ export function SettingsForm({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const { account } = dict.pages;

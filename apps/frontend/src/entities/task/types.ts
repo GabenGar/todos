@@ -1,6 +1,6 @@
-import { IPlace } from "#entities/place";
+import type { IPlace } from "#entities/place";
 import type { IDateTime } from "#lib/dates";
-import { IEntityItem } from "#lib/entities";
+import type { IEntityItem } from "#lib/entities";
 import type { INonNegativeInteger } from "#lib/numbers";
 import { toQuotedStrings, type INanoidID } from "#lib/strings";
 

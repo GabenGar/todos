@@ -90,7 +90,7 @@ export function URLViewerForm({
     <Form<IFieldName>
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? translation["Parse"] : translation["Parsing..."]
       }
       onSubmit={handleSubmit}
@@ -113,6 +113,7 @@ export function URLViewerForm({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

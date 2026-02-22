@@ -33,6 +33,7 @@ function PlaceEditPage({
   const { lang, common, t } = translation;
   const placeID = getSingleValueFromQuery(query, "place_id");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -96,6 +97,7 @@ function PlaceEditPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const { place } = dict.pages;

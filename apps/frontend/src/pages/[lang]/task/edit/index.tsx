@@ -40,6 +40,7 @@ function TaskEditPage({
   const taskID = getSingleValueFromQuery(query, "task_id");
   const title = t.title;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -126,6 +127,7 @@ function TaskEditPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

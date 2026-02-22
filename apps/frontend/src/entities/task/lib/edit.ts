@@ -1,8 +1,8 @@
 import { now } from "#lib/dates";
 import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
-import { INanoidID, toQuotedStrings } from "#lib/strings";
-import { IPlace, getAllPlaces } from "#entities/place";
+import { type INanoidID, toQuotedStrings } from "#lib/strings";
+import { type IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskStore, ITaskUpdate } from "../types";
 import { setLocalStoreTasks } from "./storage";
 import { getAllTasks } from "./get";

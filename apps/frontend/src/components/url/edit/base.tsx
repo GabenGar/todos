@@ -1,5 +1,5 @@
 import { InputSectionText } from "@repo/ui/forms/sections";
-import { type ILocalizationPage } from "#lib/localization";
+import type { ILocalizationPage } from "#lib/localization";
 import {
   Form,
   type IFormComponentProps,

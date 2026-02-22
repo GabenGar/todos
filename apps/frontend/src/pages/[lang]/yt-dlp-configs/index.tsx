@@ -50,14 +50,15 @@ function YTDLPConfigsPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const windowsConfig = await fs.readFile(
-    process.cwd() + "/src/pages/[lang]/yt-dlp-configs/windows.conf",
+    `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/windows.conf`,
     "utf8",
   );
   const linuxConfig = await fs.readFile(
-    process.cwd() + "/src/pages/[lang]/yt-dlp-configs/linux.conf",
+    `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/linux.conf`,
     "utf8",
   );
 

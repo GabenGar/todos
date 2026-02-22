@@ -5,7 +5,7 @@ import {
   OverviewBody,
   OverviewFooter,
   OverviewHeader,
-  IOverviewProps,
+  type IOverviewProps,
 } from "./overview";
 
 interface IProps extends Pick<IOverviewProps, "headingLevel"> {}

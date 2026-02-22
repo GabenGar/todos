@@ -67,7 +67,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
 
   async function cacheFirst(
     request: Request,
-    event: FetchEvent,
+    _event: FetchEvent,
     preloadResponsePromise: Promise<Response>,
   ) {
     const pathname = new URL(request.url, self.location.origin).pathname;
@@ -101,8 +101,7 @@ async function initServiceWorker(self: ServiceWorkerGlobalScope) {
       await putInCache(pathname, responseFromNetwork.clone());
 
       return responseFromNetwork;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
+    } catch (_error) {
       // when even the fallback response is not available,
       // there is nothing we can do, but we must always
       // return a Response object

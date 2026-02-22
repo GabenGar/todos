@@ -3,10 +3,9 @@ import {
   type ISettings,
   type ISettingKey,
   getSetting,
-  settings,
+  // settings,
 } from "#lib/settings";
 import { onLocalStorageChange } from "#lib/storage";
-import { getAllpermissions } from "#lib/permissions";
 
 /**
  * @TODO
@@ -14,8 +13,9 @@ import { getAllpermissions } from "#lib/permissions";
  */
 export function useSetting(settingKey: ISettingKey) {
   const [settingValue, changeSettingValue] = useState<ISettings[ISettingKey]>();
-  const data = settings[settingKey];
+  // const data = settings[settingKey];
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     const localCleanup = onLocalStorageChange(handleLocalStorageChange);
 

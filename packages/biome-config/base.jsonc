@@ -20,12 +20,16 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "a11y": {
+        // it is handled by translations
+        "useHtmlLang": "off"
+      },
+      "complexity": {
+        // translation keys are everywhere
+        "useLiteralKeys": "off"
+      },
       "nursery": {
         "noUndeclaredEnvVars": "error"
-      },
-      "style": {
-        // function types get out of hand pretty fast
-        "useShorthandFunctionType": "off"
       }
     }
   },
@@ -56,7 +60,19 @@
   "overrides": [
     {
       // typescript-related overrides
-      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"]
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            // typescript doesn't like unitialized variables
+            "noUselessUndefinedInitialization": "off"
+          },
+          "style": {
+            // function types get out of hand pretty fast
+            "useShorthandFunctionType": "off"
+          }
+        }
+      }
     },
     {
       // exclude various configs from key sorting

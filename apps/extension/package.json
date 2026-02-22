@@ -45,6 +45,7 @@
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@biomejs/biome": "2.4.4",
+    "@repo/biome-config": "*",
     "@svgr/webpack": "^8.1.0",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",

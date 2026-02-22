@@ -87,6 +87,7 @@ function QRCodeReaderForm({
       return;
     }
 
+    // biome-ignore lint/style/noNonNullAssertion: blah
     const QRCodeFile = files.item(0)!;
     const result = await qrReader.scanFile(QRCodeFile, false);
 
@@ -97,7 +98,7 @@ function QRCodeReaderForm({
     <Form<IFieldName>
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? form.scan : form.scanning
       }
       onSubmit={handleSubmit}
@@ -123,6 +124,7 @@ function QRCodeReaderForm({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

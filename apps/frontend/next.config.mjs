@@ -55,7 +55,7 @@ async function createNextConfig(phase) {
     reactStrictMode: true,
     webpack: (
       config,
-      { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
+      { isServer },
     ) => {
       // PWA stuff is strictly client thing,
       // therefore no need to have it in the server bundle

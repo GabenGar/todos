@@ -1,5 +1,5 @@
-import { type ValidateFunction, type DefinedError } from "ajv/dist/2020";
-import { validateSchemaID, IValidSchemaID } from "./map";
+import type { ValidateFunction, DefinedError } from "ajv/dist/2020";
+import { validateSchemaID, type IValidSchemaID } from "./map";
 import { ajv } from "./init";
 
 /**

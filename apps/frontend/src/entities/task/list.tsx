@@ -11,13 +11,13 @@ import {
   OverviewHeader,
   type IOverviewProps,
 } from "#components/overview";
-import {
-  type ILocalizableProps,
-  type ITranslatableProps,
+import type {
+  ILocalizableProps,
+  ITranslatableProps,
 } from "#components/types";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
-import { IPlace, getPlace } from "#entities/place";
+import { type IPlace, getPlace } from "#entities/place";
 import { type INewTaskFormProps, NewTaskForm } from "./new";
 import {
   type ISearchTasksFormProps,

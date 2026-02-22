@@ -1,8 +1,8 @@
 import { logDebug } from "#lib/logs";
 import { type IPaginatedCollection, createPagination } from "#lib/pagination";
 import { isSubstring } from "#lib/strings";
-import { type IEntityItem } from "#lib/entities";
-import { IPlace, getAllPlaces } from "#entities/place";
+import type { IEntityItem } from "#lib/entities";
+import { type IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITasksStats, ITaskStore } from "../types";
 import { getLocalStoreTasks } from "./storage";
 import { toTasks } from "./to-tasks";

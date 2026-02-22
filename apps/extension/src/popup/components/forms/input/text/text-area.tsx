@@ -1,8 +1,8 @@
 import {
   createBlockComponent,
-  IBaseComponentPropsWithChildren,
+  type IBaseComponentPropsWithChildren,
 } from "@repo/ui/meta";
-import { type IInputProps } from "../input";
+import type { IInputProps } from "../input";
 
 import styles from "./text-area.module.scss";
 

@@ -3,7 +3,6 @@ import { createFailedAPIResponse } from "#server/lib/api";
 import { ClientError } from "../errors";
 
 export function createServerAction<
-  // biome-ignore lint/suspicious/noExplicitAny: functions require `any` for generics to be useful
   ActionFunc extends (...args: any[]) => Promise<any>,
 >(actionFunc: ActionFunc) {
   async function serverAction(

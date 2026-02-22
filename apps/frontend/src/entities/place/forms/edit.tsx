@@ -5,7 +5,7 @@ import {
   InputSectionTitle,
 } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
-import { type IPlace, type IPlaceUpdate } from "../types";
+import type { IPlace, IPlaceUpdate } from "../types";
 
 export interface IEditPlaceFormProps extends ITranslatableProps {
   translation: ILocalization["place"];

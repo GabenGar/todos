@@ -9,6 +9,7 @@ import { Page } from "#components";
 import { List, ListItem } from "#components/list";
 import { LinkButton } from "#components/link";
 import { Overview, OverviewBody } from "#components/overview";
+//
 
 import styles from "./index.module.scss";
 
@@ -44,6 +45,7 @@ interface ILocalLinkProps {
   locale: ILocale;
 }
 function LocaleLink({ locale }: ILocalLinkProps) {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const language = parseLocale(locale).language!;
 
   return (

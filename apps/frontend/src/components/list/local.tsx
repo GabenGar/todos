@@ -5,7 +5,7 @@ import type {
   ITranslatableProps,
 } from "#components/types";
 import {
-  IPaginationLocalProps,
+  type IPaginationLocalProps,
   PaginationLocal,
   PaginationOverview,
 } from "#components/pagination";

@@ -5,7 +5,7 @@ import {
   InputSectionTitle,
 } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
-import { type IPlannedEvent, type IPlannedEventUpdate } from "../types";
+import type { IPlannedEvent, IPlannedEventUpdate } from "../types";
 
 interface IProps extends ITranslatableProps {
   translation: ILocalizationEntities["planned_event"];

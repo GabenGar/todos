@@ -39,7 +39,8 @@ function PlannedEventPage({
     ? undefined
     : parseInt(plannedEventID, 10);
 
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
+    useEffect(() => {
     if (!isReady) {
       return;
     }
@@ -85,6 +86,7 @@ function PlannedEventPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

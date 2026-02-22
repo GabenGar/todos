@@ -9,6 +9,7 @@
     "check": "biome check --formatter-enabled=false --linter-enabled=false --write"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.4"
+    "@biomejs/biome": "2.4.4",
+    "@repo/biome-config": "*"
   }
 }

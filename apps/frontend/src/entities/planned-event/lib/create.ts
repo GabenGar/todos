@@ -1,4 +1,4 @@
-import { type IIDBTransaction } from "#store/indexed";
+import type { IIDBTransaction } from "#store/indexed";
 import { validatePlannedEventInit } from "./validate";
 import type { IPlannedEvent, IPlannedEventInit } from "../types";
 import {

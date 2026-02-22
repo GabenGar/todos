@@ -12,7 +12,7 @@ import {
   PreviewFooter,
 } from "#components/preview";
 import { Link } from "#components/link";
-import { ITranslatableProps, type ILocalizableProps } from "#components/types";
+import type { ITranslatableProps, ILocalizableProps } from "#components/types";
 import type { IPlace } from "./types";
 
 import styles from "./preview.module.scss";

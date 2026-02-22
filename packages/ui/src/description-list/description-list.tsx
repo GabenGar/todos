@@ -71,7 +71,6 @@ function DescriptionListComponent({
   return (
     <dl className={resolvedClassname} {...otherProps}>
       {sections.map(([dKey, dValue], index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: only index can be truly unique key in there
         <DescriptionSection key={index} dKey={dKey} dValue={dValue} />
       ))}
     </dl>

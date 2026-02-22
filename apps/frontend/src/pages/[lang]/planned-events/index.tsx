@@ -59,6 +59,7 @@ function PlannedEventsPage({
       ? t["Recently Created Planned Events"]
       : t["Recently Updated Planned Events"];
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -225,6 +226,7 @@ function PlannedEventsPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

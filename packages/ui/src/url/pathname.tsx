@@ -31,12 +31,7 @@ export function Pathname({ t, pathname }: IProps) {
             <Details summary={<Preformatted>{totalSegments}</Preformatted>}>
               <List isOrdered>
                 {segments.map((segment, index) => (
-                  <ListItem
-                    key={`${segment}${
-                      // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
-                      index
-                    }`}
-                  >
+                  <ListItem key={`${segment}${index}`}>
                     <Preformatted>/{segment}</Preformatted>
                   </ListItem>
                 ))}

@@ -42,6 +42,7 @@ export function updatePlannedEvents(
 
       if (updateIDs.includes(currentID)) {
         const currentEvent = cursor.value as IPlannedEvent;
+        // biome-ignore lint/style/noNonNullAssertion: blah
         const update = idbUpdates.find(({ id }) => id === currentID)!;
         const incomingUpdate = { ...currentEvent, ...update };
 

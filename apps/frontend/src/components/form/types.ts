@@ -1,5 +1,5 @@
 import type { FormEvent } from "react";
-import { type IFormProps } from "./form";
+import type { IFormProps } from "./form";
 
 export interface IFormComponentProps extends Pick<IFormProps, "id"> {}
 

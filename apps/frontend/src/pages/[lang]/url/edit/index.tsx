@@ -69,6 +69,7 @@ function URLViewerPage({
                           <Preformatted>{decodedFullURL}</Preformatted>
                           <ButtonCopy
                             translation={common.button}
+                            // biome-ignore lint/style/noNonNullAssertion: blah
                             valueToCopy={decodedFullURL!}
                           />
                         </>
@@ -83,6 +84,7 @@ function URLViewerPage({
                             <Preformatted>{decodedFullURL}</Preformatted>
                             <ButtonCopy
                               translation={common.button}
+                              // biome-ignore lint/style/noNonNullAssertion: blah
                               valueToCopy={decodedFullURL!}
                             />
                           </>
@@ -95,6 +97,7 @@ function URLViewerPage({
                             <Preformatted>{encodedFullURL}</Preformatted>
                             <ButtonCopy
                               translation={common.button}
+                              // biome-ignore lint/style/noNonNullAssertion: blah
                               valueToCopy={encodedFullURL!}
                             />
                           </>
@@ -115,6 +118,7 @@ function URLViewerPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

@@ -53,6 +53,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
     "@react-router/dev": "^7.7.0",
+    "@repo/biome-config": "*",
     "@types/compression": "^1.8.1",
     "@types/express": "^5.0.3",
     "@types/express-serve-static-core": "^5.0.7",

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { type GetStaticProps, type InferGetStaticPropsType } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -55,6 +55,7 @@ function PlacesPage({
     query,
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -178,6 +179,7 @@ function PlacesPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const { places } = dict.pages;

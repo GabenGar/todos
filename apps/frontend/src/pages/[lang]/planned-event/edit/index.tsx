@@ -51,6 +51,7 @@ function PlannedEventEditPage({
   // consider an empty string as `undefined`
   const parsedID = !inputID?.length ? undefined : Number.parseInt(inputID, 10);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -168,6 +169,7 @@ function PlannedEventEditPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

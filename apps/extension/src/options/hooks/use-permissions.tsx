@@ -9,6 +9,7 @@ import {
 export function usePermissions() {
   const [permissions, changePermissions] = useState<Set<IPermission>>();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     const addedCleanup = onPermissionAdded(onAdded);
     const removedCleanup = onPermissionRemoved(onRemoved);

@@ -1,5 +1,5 @@
 import { toJSONPretty } from "#lib/json";
-import { ILocalization } from "#lib/localization";
+import type { ILocalization } from "#lib/localization";
 import { Button } from "#components/button";
 import { createDataExport } from "./lib";
 

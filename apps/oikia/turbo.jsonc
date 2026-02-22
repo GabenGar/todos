@@ -12,6 +12,7 @@
         "localization/**",
         "backend/**"
       ],
+      "env": ["MODE", "BASE_URL", "PROD", "DEV", "SSR"],
       "outputs": ["build/**"]
     },
     "start": {

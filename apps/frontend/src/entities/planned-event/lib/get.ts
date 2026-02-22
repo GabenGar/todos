@@ -1,4 +1,4 @@
-import { type IIDBArgs } from "#store/indexed";
+import type { IIDBArgs } from "#store/indexed";
 import {
   selectPlannedEventCount,
   selectPlannedEventEntities,
