@@ -8,12 +8,12 @@
     "build-codegen": "cd ./codegen/generators && npm run build",
     "build-workers": "webpack --config webpack.prod.mjs",
     "start": "serve ./out -p 9001 --no-clipboard --no-port-switching",
-    "lint": "eslint ./src",
-    "format": "prettier --log-level=warn ./src --write",
-    "check": "next typegen && tsc --noEmit",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && next typegen && tsc --noEmit",
     "dev": "next dev --port 8001",
     "dev-workers": "webpack --config webpack.dev.mjs --watch",
-    "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && prettier --log-level=warn ./codegen/output --write"
+    "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && biome format --write ./codegen/output"
   },
   "imports": {
     "#environment": "./src/environment/index.ts",
@@ -30,9 +30,7 @@
     "#components/*": "./src/components/*/index.ts",
     "#entities/*": "./src/entities/*/index.ts",
     "#types": "./src/types.ts",
-    "#json-schema/*": [
-      "./codegen/output/json-schema/*/index.ts"
-    ]
+    "#json-schema/*": "./codegen/output/json-schema/*/index.ts"
   },
   "dependencies": {
     "@hyperjump/json-schema": "^1.16.2",
@@ -52,15 +50,10 @@
     "stringify-object": "^5.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
+    "@biomejs/biome": "2.4.4",
     "@types/node": "^20.9.0",
     "@types/react": "^19.1.8",
     "@types/stringify-object": "^4.0.5",
-    "eslint": "9.31.0",
-    "eslint-config-next": "15.5.4",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-config-turbo": "^2.5.8",
-    "prettier": "3.6.2",
     "sass": "^1.89.2",
     "serve": "^14.2.4",
     "ts-loader": "^9.5.4",

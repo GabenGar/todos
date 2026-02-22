@@ -25,7 +25,7 @@
       "path": "packages/webpack"
     },
     {
-      "name": "schema",
+      "name": "@repo/schema",
       "path": "packages/schema"
     },
     {
@@ -56,6 +56,7 @@
       "*code-workspace.example": "jsonc",
       ".env.*": "dotenv"
     },
+    "editor.wordWrapColumn": 80,
     "typescript.referencesCodeLens.enabled": true,
     "typescript.preferences.preferTypeOnlyAutoImports": true,
     "typescript.preferences.jsxAttributeCompletionStyle": "braces",

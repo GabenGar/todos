@@ -1,0 +1,14 @@
+{
+  "name": "@repo/schema",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.4"
+  }
+}

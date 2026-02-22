@@ -3,6 +3,13 @@
   "root": false,
   "extends": ["@repo/biome-config/base", "@repo/biome-config/react"],
   "files": {
-    "includes": ["**", "!**/build", "!**/.react-router"]
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!custom.d.ts",
+      "!!**/dist",
+      "!!**/dev",
+      "!!**/build"
+    ]
   }
 }

@@ -1,9 +1,5 @@
 {
-  "root": false,
-  "extends": "//",
   "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
-  "files": {
-    "ignoreUnknown": false,
-    "includes": ["**"]
-  }
+  "root": false,
+  "extends": ["@repo/biome-config/base", "@repo/biome-config/react"]
 }
