@@ -40,7 +40,7 @@ function PlannedEventPage({
     : parseInt(plannedEventID, 10);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-    useEffect(() => {
+  useEffect(() => {
     if (!isReady) {
       return;
     }

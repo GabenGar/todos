@@ -1,7 +1,7 @@
 import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 import type { IInputProps } from "./input";
-// 
+//
 
 import styles from "./select.module.scss";
 

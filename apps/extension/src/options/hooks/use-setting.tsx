@@ -27,7 +27,7 @@ export function useSetting(settingKey: ISettingKey) {
   }, []);
 
   async function handleLocalStorageChange(
-    changes: Parameters<Parameters<typeof onLocalStorageChange>[0]>[0]
+    changes: Parameters<Parameters<typeof onLocalStorageChange>[0]>[0],
   ) {
     const newValue = changes[settingKey].newValue;
 

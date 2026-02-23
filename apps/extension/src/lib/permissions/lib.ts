@@ -21,14 +21,14 @@ export async function validatePermissions(permissions: readonly IPermission[]) {
       missingPerms.length === 1
         ? getLocalizedMessage(
             'Permission "$PERMISSION$" is not enabled.',
-            missingPerms[0]
+            missingPerms[0],
           )
         : getLocalizedMessage(
             "Permissions $PERMISSIONS$ are not enabled.",
             missingPerms
               .sort()
               .map((perm) => `"${perm}"`)
-              .join(",")
+              .join(","),
           );
 
     throw new Error(message);
@@ -43,7 +43,7 @@ export async function validatePermission(permission: IPermission) {
   if (!isPermitted) {
     const message = getLocalizedMessage(
       'Permission "$PERMISSION$" is not enabled.',
-      permission
+      permission,
     );
     throw new Error(message);
   }
@@ -58,7 +58,7 @@ export async function revokePermission(permission: IPermission) {
 }
 
 export function onPermissionAdded(
-  listener: Parameters<typeof browser.permissions.onAdded.addListener>[0]
+  listener: Parameters<typeof browser.permissions.onAdded.addListener>[0],
 ) {
   browser.permissions.onAdded.addListener(listener);
 
@@ -69,7 +69,7 @@ export function onPermissionAdded(
 }
 
 export function onPermissionRemoved(
-  listener: Parameters<typeof browser.permissions.onRemoved.addListener>[0]
+  listener: Parameters<typeof browser.permissions.onRemoved.addListener>[0],
 ) {
   browser.permissions.onRemoved.addListener(listener);
 

@@ -1,20 +1,20 @@
 {
   "$id": "/entities/planned-event/entity",
   "title": "PlannedEvent",
-  "type":"object",
+  "type": "object",
   "additionalProperties": false,
   "required": ["id", "created_at", "updated_at", "title"],
   "properties": {
-    "id":  {
+    "id": {
       "$ref": "/numbers/non-negative-integer"
     },
-    "created_at":  {
+    "created_at": {
       "$ref": "/dates/datetime"
     },
-    "updated_at":  {
+    "updated_at": {
       "$ref": "/dates/datetime"
     },
-    "title":  {
+    "title": {
       "$ref": "/strings/title"
     },
     "description": {

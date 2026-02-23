@@ -33,7 +33,7 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
 
   // @TODO: check for client without race conditions
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-    const runIndexedDBTransaction = useCallback(
+  const runIndexedDBTransaction = useCallback(
     <StoreName extends IStorageName>(
       storeNames: StoreName | StoreName[] | Iterable<StoreName>,
       mode: IDBTransactionMode,

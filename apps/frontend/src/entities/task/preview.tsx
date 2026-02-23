@@ -15,7 +15,7 @@ import { EntityDescription, EntityID } from "#components/entities";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
-// 
+//
 
 import styles from "./preview.module.scss";
 

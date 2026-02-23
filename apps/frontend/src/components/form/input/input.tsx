@@ -2,7 +2,7 @@ import { forwardRef, type Ref } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import type { IRequiredSome } from "@repo/ui/types";
 import type { IBaseComponentProps } from "#components/types";
-// 
+//
 
 import styles from "./input.module.scss";
 

@@ -62,7 +62,7 @@ async function validate() {
   }
 
   const counts = new Set(
-    [...messageKeys.values()].map((messages) => messages.size)
+    [...messageKeys.values()].map((messages) => messages.size),
   );
 
   if (counts.size !== 1) {

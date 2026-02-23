@@ -1,5 +1,9 @@
 import type { ILocalization } from "#lib/localization";
-import { Form, type IFormEvent, type IFormComponentProps } from "#components/form";
+import {
+  Form,
+  type IFormEvent,
+  type IFormComponentProps,
+} from "#components/form";
 import { InputSectionText } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
 import type { IPlaceInit } from "../types";

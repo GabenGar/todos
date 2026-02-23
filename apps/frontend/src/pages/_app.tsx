@@ -1,5 +1,5 @@
 import "@repo/ui/styles/global/nextjs/pages";
-// 
+//
 
 import { ClientProvider, ServiceWorkerProvider } from "#hooks";
 import { MainLayout, type AppPropsWithLayout } from "#components/pages/layouts";

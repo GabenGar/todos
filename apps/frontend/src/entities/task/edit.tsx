@@ -5,7 +5,7 @@ import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { InputOption } from "#components/form/input";
 import { PlaceSection } from "#entities/place";
 import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
-// 
+//
 
 import statusStyles from "./status.module.scss";
 

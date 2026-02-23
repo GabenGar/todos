@@ -26,7 +26,7 @@ export function usePermissions() {
   }, []);
 
   async function onAdded(
-    perms: Parameters<Parameters<typeof onPermissionAdded>[0]>[0]
+    perms: Parameters<Parameters<typeof onPermissionAdded>[0]>[0],
   ) {
     const addedPerms = perms.permissions;
 
@@ -44,7 +44,7 @@ export function usePermissions() {
   }
 
   async function onRemoved(
-    perms: Parameters<Parameters<typeof onPermissionRemoved>[0]>[0]
+    perms: Parameters<Parameters<typeof onPermissionRemoved>[0]>[0],
   ) {
     const removedPerms = perms.permissions;
 

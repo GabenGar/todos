@@ -55,7 +55,7 @@ export async function action({
   try {
     if (request.method !== "POST") {
       throw new Error(
-        getLocalizedMessage("Unknown method $METHOD$", request.method)
+        getLocalizedMessage("Unknown method $METHOD$", request.method),
       );
     }
 

@@ -1,3 +1,3 @@
 export const permissions = {
-  ACTIVE_TAB: "activeTab"
+  ACTIVE_TAB: "activeTab",
 } as const;

@@ -3,7 +3,7 @@ import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-// 
+//
 
 import styles from "./list.module.scss";
 

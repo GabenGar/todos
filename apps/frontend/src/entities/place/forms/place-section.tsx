@@ -21,7 +21,7 @@ import { Pre } from "#components/pre";
 import { EntityList } from "#components/entities";
 import { getPlaces } from "../lib/get";
 import type { IPlace } from "../types";
-// 
+//
 
 import styles from "./place-section.module.scss";
 

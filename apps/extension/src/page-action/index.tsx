@@ -17,5 +17,5 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <RouterProvider router={routes} />
-  </StrictMode>
+  </StrictMode>,
 );

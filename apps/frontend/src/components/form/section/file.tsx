@@ -5,7 +5,7 @@ import { List, ListItem } from "#components/list";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
-// 
+//
 
 import styles from "./file.module.scss";
 

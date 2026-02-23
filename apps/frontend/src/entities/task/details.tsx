@@ -25,7 +25,7 @@ import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
-// 
+//
 
 import styles from "./details.module.scss";
 

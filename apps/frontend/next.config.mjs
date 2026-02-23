@@ -53,10 +53,7 @@ async function createNextConfig(phase) {
     typedRoutes: true,
     crossOrigin: "anonymous",
     reactStrictMode: true,
-    webpack: (
-      config,
-      { isServer },
-    ) => {
+    webpack: (config, { isServer }) => {
       // PWA stuff is strictly client thing,
       // therefore no need to have it in the server bundle
       if (isServer) {

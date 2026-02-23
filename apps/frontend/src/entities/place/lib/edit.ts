@@ -37,7 +37,7 @@ async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
 
     // non-updates are filtered beforehand
     // biome-ignore lint/style/noNonNullAssertion: blah
-        const update = updates.find(({ id }) => id === place.id)!;
+    const update = updates.find(({ id }) => id === place.id)!;
     const updatedTitle = !update.title
       ? place.title
       : place.title !== update.title

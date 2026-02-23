@@ -1,24 +1,26 @@
-import { isRouteErrorResponse, useRouteError, createHashRouter } from "react-router";
+import {
+  isRouteErrorResponse,
+  useRouteError,
+  createHashRouter,
+} from "react-router";
 import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { getLocalizedMessage } from "#lib/localization";
 import { Layout } from "#options/components/layouts";
 import { HomePage } from "./pages/home";
 
-export const router = createHashRouter(
-  [
-    {
-      element: <Layout />,
-      errorElement: <RootError />,
-      children: [
-        {
-          index: true,
-          element: <HomePage />,
-        },
-      ],
-    },
-  ]
-);
+export const router = createHashRouter([
+  {
+    element: <Layout />,
+    errorElement: <RootError />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+    ],
+  },
+]);
 
 function RootError() {
   const error = useRouteError();

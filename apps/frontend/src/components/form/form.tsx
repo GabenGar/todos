@@ -10,7 +10,7 @@ import { Pre } from "#components/pre";
 import { List, ListItem } from "#components/list";
 import { InputSection } from "./section";
 import type { IFormEvent } from "./types";
-// 
+//
 
 import styles from "./form.module.scss";
 

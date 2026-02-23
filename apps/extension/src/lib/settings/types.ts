@@ -11,7 +11,7 @@ export const settings = {
 } as const;
 
 export const settingKeys: (keyof typeof settings)[] = Object.keys(
-  settings
+  settings,
 ) as (keyof typeof settings)[];
 
 export type ISettingKey = keyof typeof settings;

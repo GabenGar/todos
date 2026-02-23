@@ -13,7 +13,7 @@ import { Details, Loading } from "#components";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import type { ILocalizableProps } from "./types";
-// 
+//
 
 import styles from "./global-navigation.module.scss";
 

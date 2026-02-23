@@ -11,10 +11,7 @@ import {
   OverviewHeader,
   type IOverviewProps,
 } from "#components/overview";
-import type {
-  ILocalizableProps,
-  ITranslatableProps,
-} from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { type IPlace, getPlace } from "#entities/place";
