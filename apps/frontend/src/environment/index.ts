@@ -5,12 +5,13 @@ export const NODE_ENV = process.env.NODE_ENV;
 export const SITE_BASE_URL =
   NEXT_PUBLIC_VERCEL_URL ?? process.env.NEXT_PUBLIC_SITE_BASE_URL;
 
+// biome-ignore lint/style/noNonNullAssertion: blah
 export const SITE_TITLE = process.env.NEXT_PUBLIC_SITE_TITLE!;
 
 if (!SITE_TITLE) {
   throw new Error(`"SITE_TITLE" is not set.`);
 }
-
+// biome-ignore lint/style/noNonNullAssertion: blah
 export const REPOSITORY_URL = process.env.NEXT_PUBLIC_REPOSITORY_URL!;
 
 if (!REPOSITORY_URL) {
@@ -50,13 +51,13 @@ export const IS_SERVICE_WORKER_ENABLED = JSON.parse(
 // not invoking `window` directly because there is no `window` in service worker
 // https://stackoverflow.com/a/8785422
 export const IS_BROWSER =
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error typescript types for worker do not like `windows` access for checking
+  // biome-ignore lint/suspicious/noTsIgnore: blah
+  // @ts-ignore-error typescript types for worker do not like `windows` access for checking
   typeof globalThis["window"] !== "undefined" ||
   // https://stackoverflow.com/a/8785422
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error typescript types for worker do not like `document` access for checking
-  (typeof globalThis["document"] == "undefined" &&
+  // biome-ignore lint/suspicious/noTsIgnore: blah
+  // @ts-ignore-error typescript types for worker do not like `document` access for checking
+  (typeof globalThis["document"] === "undefined" &&
     typeof globalThis["importScripts"] !== "undefined");
 
 export const IS_DEVELOPMENT = NODE_ENV === "development";

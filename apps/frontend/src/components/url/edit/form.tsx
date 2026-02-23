@@ -16,6 +16,7 @@ interface IURLEditorFormProps extends ITranslatableProps, IFormComponentProps {
   baseURL: Parameters<IBaseURLFormProps["onNewURL"]>[0];
   onNewURL: (newURL: URL) => Promise<void>;
 }
+
 export function URLEditorForm({
   commonTranslation,
   t,
@@ -57,7 +58,7 @@ export function URLEditorForm({
     <Form<IFieldName>
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? t["Parse"] : t["Parsing..."]
       }
       onSubmit={handleSubmit}

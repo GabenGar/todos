@@ -58,7 +58,7 @@ export function EditPlannedEventForm({
     <Form
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? form["Confirm changes"] : form["Applying changes..."]
       }
       onSubmit={handleSubmit}

@@ -43,7 +43,7 @@ export function PlaceCreateForm({
       commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
-      submitButton={(formID, isSubmitting) => (!isSubmitting ? add : adding)}
+      submitButton={(_formID, isSubmitting) => (!isSubmitting ? add : adding)}
     >
       {(formID) => (
         <>

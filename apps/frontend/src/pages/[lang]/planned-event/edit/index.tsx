@@ -74,7 +74,6 @@ function PlannedEventEditPage({
         );
       },
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, parsedID]);
 
   return (

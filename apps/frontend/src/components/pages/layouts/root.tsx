@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+// 
 
 import styles from "./root.module.scss";
 
@@ -8,8 +9,6 @@ interface IProps {
 
 export function RootLayout({ children }: IProps) {
   return (
-    <>
-      <main className={styles.main}>{children}</main>
-    </>
+    <main className={styles.main}>{children}</main>
   );
 }

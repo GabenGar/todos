@@ -56,7 +56,7 @@ export function EditPlaceForm({
     <Form
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? edit["Confirm changes"] : edit["Applying changes..."]
       }
       onSubmit={handleSubmit}

@@ -3,6 +3,7 @@ import type { ILocalizationCommon, ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import { InputSectionFile } from "#components/form/section";
 import { importDataExport } from "./lib";
+// 
 
 import styles from "./import-form.module.scss";
 
@@ -50,7 +51,7 @@ export function ImportDataExportForm({
       commonTranslation={commonTranslation}
       id={id}
       className={styles.block}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting
           ? translation["Import data"]
           : translation["Importing data..."]

@@ -48,6 +48,7 @@ export function ServiceWorkerProvider({ children }: IProps) {
   const [context, changeContext] =
     useState<IServiceWorkerContext>(defaultContext);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     let worker: ServiceWorker | undefined = undefined;
     navigator.serviceWorker.addEventListener("message", listenForMessages);
@@ -72,7 +73,6 @@ export function ServiceWorkerProvider({ children }: IProps) {
       worker?.removeEventListener("error", listenForErrors);
       navigator.serviceWorker.removeEventListener("message", listenForMessages);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function listenForState(event: Event) {

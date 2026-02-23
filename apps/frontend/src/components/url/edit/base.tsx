@@ -36,7 +36,7 @@ export function BaseURLForm({
     <Form<IFieldName>
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? translation["Parse"] : translation["Parsing..."]
       }
       onSubmit={handleSubmit}

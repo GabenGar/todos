@@ -47,7 +47,6 @@ function PlaceDetailsPage({
       const newPlace = await getPlace(placeID);
       changePlace(newPlace);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, placeID]);
 
   return (

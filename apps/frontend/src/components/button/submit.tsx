@@ -9,7 +9,6 @@ export const ButtonSubmit = createBlockComponent(undefined, Component);
 
 function Component({
   viewType = "submit",
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   className,
   children,
   ...blockProps

@@ -32,7 +32,8 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
   const [database, changeDatabase] = useState<IDBDatabase>();
 
   // @TODO: check for client without race conditions
-  const runIndexedDBTransaction = useCallback(
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
+    const runIndexedDBTransaction = useCallback(
     <StoreName extends IStorageName>(
       storeNames: StoreName | StoreName[] | Iterable<StoreName>,
       mode: IDBTransactionMode,
@@ -65,11 +66,11 @@ export function IndexedDBProvider({ children }: { children: ReactNode }) {
       }
 
       function handleError(event: Event) {
+        // biome-ignore lint/style/noNonNullAssertion: blah
         const error = (event.target as IIDBTransaction<StoreName>).error!;
         onError(error);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [database, client],
   );
 

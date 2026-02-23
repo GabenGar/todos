@@ -32,7 +32,6 @@ export function createLocalStorage<Type>(
   return storage;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // biome-ignore lint/suspicious/noExplicitAny: blah
 function createLocalStorageFunction<ArgsType extends any[], ReturnShape>(
   func: (...args: ArgsType) => Promise<ReturnShape>,

@@ -5,6 +5,7 @@ import { InputSectionSelect, InputSectionText } from "#components/form/section";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { PlaceSection, type IPlace } from "#entities/place";
 import { type ITaskInit, isTaskStatus } from "./types";
+// 
 
 import styles from "./new.module.scss";
 import statusStyles from "./status.module.scss";
@@ -75,7 +76,7 @@ export function NewTaskForm({
       id={id}
       className={styles.block}
       onSubmit={handleSubmit}
-      submitButton={(formID, isSubmitting) => (!isSubmitting ? add : adding)}
+      submitButton={(_formID, isSubmitting) => (!isSubmitting ? add : adding)}
     >
       {(formID) => (
         <>

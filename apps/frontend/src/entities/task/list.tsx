@@ -60,6 +60,7 @@ export function TaskList({
   const inputStatus = getSingleValueFromQuery(pageQuery, "status");
   const status = !isTaskStatus(inputStatus) ? undefined : inputStatus;
   const placeID = getSingleValueFromQuery(pageQuery, "place_id");
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   const options = useMemo<Required<Parameters<typeof getTasks>>[0]>(() => {
     return {
       includeDeleted: false,
@@ -68,9 +69,9 @@ export function TaskList({
       status,
       placeID,
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page, query, status, placeID]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -100,7 +101,6 @@ export function TaskList({
 
       changeTasks(newTasks);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, options]);
 
   async function handleTaskCreation(init: ITaskInit) {

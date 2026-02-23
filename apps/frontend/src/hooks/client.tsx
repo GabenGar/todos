@@ -82,6 +82,7 @@ export function ClientProvider({ lang, children }: IProps) {
     })();
   }, [isReady]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     // no idea why is it undefined on the first render
     // despite being a literal prop of the component
@@ -101,8 +102,10 @@ export function ClientProvider({ lang, children }: IProps) {
           : {
               isClient,
               locale,
+              // biome-ignore lint/style/noNonNullAssertion: blah
               logLevel: logLevel!,
               changeLoglevel: switchLogLevel,
+              // biome-ignore lint/style/noNonNullAssertion: blah
               compatibility: compatibility!,
             }
       }

@@ -99,7 +99,6 @@ function PlannedEventsPage({
         });
       },
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {

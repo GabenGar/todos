@@ -5,9 +5,8 @@ import { setLocalStorePlaces } from "./storage";
 import { getAllPlaces } from "./get";
 import type { IPlaceUpdate, IPlace } from "../types";
 
-const validatePlaceUpdate = createValidator<IPlaceUpdate>(
-  "/entities/place/update",
-);
+const validatePlaceUpdate: ReturnType<typeof createValidator<IPlaceUpdate>> =
+  createValidator<IPlaceUpdate>("/entities/place/update");
 
 export async function editPlace(update: IPlaceUpdate): Promise<IPlace> {
   const [place] = await editPlaces([update]);
@@ -18,7 +17,9 @@ export async function editPlace(update: IPlaceUpdate): Promise<IPlace> {
 async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
   logDebug(`Editing ${updates.length} places...`);
 
-  updates.forEach((update) => validatePlaceUpdate(update));
+  updates.forEach((update) => {
+    validatePlaceUpdate(update);
+  });
 
   const storedPlaces = await getAllPlaces();
   const updateIDs = new Set(updates.map(({ id }) => id));
@@ -35,7 +36,8 @@ async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
     }
 
     // non-updates are filtered beforehand
-    const update = updates.find(({ id }) => id === place.id)!;
+    // biome-ignore lint/style/noNonNullAssertion: blah
+        const update = updates.find(({ id }) => id === place.id)!;
     const updatedTitle = !update.title
       ? place.title
       : place.title !== update.title

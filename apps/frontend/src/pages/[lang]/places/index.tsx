@@ -78,7 +78,6 @@ function PlacesPage({
 
       changePlaces(newPlaces);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page, category, query]);
 
   async function handlePlaceCreation(init: IPlaceInit) {

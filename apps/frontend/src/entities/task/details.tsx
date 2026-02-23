@@ -25,6 +25,7 @@ import { getTask } from "./lib/get";
 import { editTask } from "./lib/edit";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
+// 
 
 import styles from "./details.module.scss";
 
@@ -53,6 +54,7 @@ function Component({
   const router = useRouter();
   const [task, changeTask] = useState<Awaited<ReturnType<typeof getTask>>>();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     (async () => {
       try {
@@ -67,7 +69,6 @@ function Component({
         router.replace("/404");
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskID]);
 
   if (!task) {

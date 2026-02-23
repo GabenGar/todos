@@ -44,7 +44,7 @@ export function PlannedEventCreateForm({
       commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting
           ? translation["Add planned event"]
           : translation["Adding planned event..."]

@@ -13,6 +13,7 @@ import { Details, Loading } from "#components";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import type { ILocalizableProps } from "./types";
+// 
 
 import styles from "./global-navigation.module.scss";
 
@@ -46,6 +47,7 @@ export function LocaleSwitcher() {
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const currentLocale = pathName.split("/")[1];
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const language = parseLocale(currentLocale).language!;
 
   return (
@@ -81,6 +83,7 @@ function LocaleItem({
   pathName,
   searchParams,
 }: ILocaleItemsProps) {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const language = parseLocale(locale).language!;
   const serializedParams =
     searchParams.size === 0 ? "" : `?${String(searchParams)}`;
