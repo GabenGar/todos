@@ -4,6 +4,7 @@ import {
   type IBaseComponentPropsWithChildren,
 } from "#meta";
 import type { IInputProps } from "../input";
+//
 
 import styles from "./text-area.module.scss";
 

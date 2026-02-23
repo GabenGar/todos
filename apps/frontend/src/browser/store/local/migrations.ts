@@ -1,6 +1,6 @@
-import { logInfo } from "#lib/logs";
-import { now } from "#lib/dates";
 import type { ITaskStore } from "#entities/task";
+import { now } from "#lib/dates";
+import { logInfo } from "#lib/logs";
 import { getLocalStoreItem } from "./get";
 import { setLocalStoreItem } from "./set";
 import { LOCAL_STORAGE_KEYS } from "./types";

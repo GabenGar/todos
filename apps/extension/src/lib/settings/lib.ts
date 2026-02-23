@@ -1,6 +1,6 @@
 import { validatePermissions } from "#lib/permissions";
 import { getLocalStorageValue, setLocalStorageValue } from "#lib/storage";
-import { settings, type ISettingKey, type ISettings } from "./types";
+import { type ISettingKey, type ISettings, settings } from "./types";
 
 export async function getSetting(
   setting: ISettingKey,

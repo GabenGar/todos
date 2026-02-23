@@ -1,10 +1,9 @@
 import { href, redirect, replace } from "react-router";
-import { createPagination } from "@repo/ui/pagination";
 import { BIGINT_ZERO } from "@repo/ui/numbers/bigint";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
+import { createPagination } from "@repo/ui/pagination";
 import { runTransaction } from "#database";
 import { selectInvitationCount } from "#database/queries/invitations";
-
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import type { Route } from "./+types/invitations";
 
 export async function loader({ request, params }: Route.LoaderArgs) {

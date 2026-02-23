@@ -1,10 +1,10 @@
-import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
+import { InputOption } from "#components/form/input";
 import { InputSectionSelect, InputSectionText } from "#components/form/section";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import { InputOption } from "#components/form/input";
 import { PlaceSection } from "#entities/place";
-import { isTaskStatus, type ITask, type ITaskUpdate } from "./types";
+import type { ILocalization } from "#lib/localization";
+import { type ITask, type ITaskUpdate, isTaskStatus } from "./types";
 //
 
 import statusStyles from "./status.module.scss";

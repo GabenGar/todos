@@ -31,6 +31,7 @@
     "start": "turbo run start",
     "lint": "turbo run lint",
     "format": "turbo run format",
+    "check": "turbo run check",
     "dev": "turbo run dev",
     "prep": "npm install && npm run format && npm run build",
     "codegen": "turbo run codegen",

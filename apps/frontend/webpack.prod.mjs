@@ -1,9 +1,9 @@
 // @ts-check
 import { createHash } from "node:crypto";
-import { platform } from "node:os";
-import path from "node:path";
 import { createReadStream } from "node:fs";
 import fs from "node:fs/promises";
+import { platform } from "node:os";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 import webpack from "webpack";
 import { merge } from "webpack-merge";

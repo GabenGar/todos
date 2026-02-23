@@ -1,15 +1,16 @@
-import { Component, type ReactNode, type ErrorInfo } from "react";
+import { Component, type ErrorInfo, type ReactNode } from "react";
 import {
   Overview,
-  OverviewHeader,
   OverviewBody,
   OverviewFooter,
+  OverviewHeader,
 } from "@repo/ui/articles";
-import { Heading } from "@repo/ui/headings";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { ButtonCopy } from "@repo/ui/buttons";
-import { createRootPageURL } from "#lib/urls";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Heading } from "@repo/ui/headings";
 import { LinkInternal } from "#components/link";
+import { createRootPageURL } from "#lib/urls";
+//
 
 import styles from "./boundary.module.scss";
 

@@ -1,6 +1,11 @@
-import { useState, useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Loading, Page } from "#components";
+import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
+import { EditPlaceForm, editPlace, getPlace } from "#entities/place";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,12 +14,6 @@ import {
 } from "#lib/pages";
 import { createPlacePageURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { Loading } from "#components";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
-import { Link } from "#components/link";
-import { List, ListItem } from "#components/list";
-import { EditPlaceForm, editPlace, getPlace } from "#entities/place";
 
 interface IProps extends ILocalizedProps<"place_edit"> {
   placeTranslation: ILocalization["place"];

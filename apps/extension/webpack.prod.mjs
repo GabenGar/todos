@@ -1,9 +1,9 @@
 // @ts-check
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { merge } from "webpack-merge";
 import commonConfiguration from "./webpack.common.mjs";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 // @ts-expect-error
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

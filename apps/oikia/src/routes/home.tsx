@@ -1,8 +1,10 @@
 import { href } from "react-router";
-import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
-import { List, ListItem } from "@repo/ui/lists";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { List, ListItem } from "@repo/ui/lists";
+import { Page } from "@repo/ui/pages";
+import { Form } from "#components/forms";
+import { LinkInternal } from "#components/link";
 import type {
   ICommonTranslationProps,
   ITranslationPageProps,
@@ -10,11 +12,7 @@ import type {
 import { createMetaTitle } from "#lib/router";
 import { authenticateRequest, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
-import { LinkInternal } from "#components/link";
-import { Form } from "#components/forms";
-
 import type { Route } from "./+types/home";
-
 import styles from "./home.module.scss";
 
 interface IProps

@@ -1,8 +1,8 @@
 import { runTransaction } from "#database";
 import {
+  type IAccountDB,
   selectAccountAuth,
   selectAccountEntities,
-  type IAccountDB,
 } from "#database/queries/accounts";
 import type { IAccountRole } from "#entities/account";
 import { ClientError, NotFoundError } from "../errors";

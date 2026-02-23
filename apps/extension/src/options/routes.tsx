@@ -1,10 +1,10 @@
 import {
+  createHashRouter,
   isRouteErrorResponse,
   useRouteError,
-  createHashRouter,
 } from "react-router";
-import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Preformatted } from "@repo/ui/formatting";
 import { getLocalizedMessage } from "#lib/localization";
 import { Layout } from "#options/components/layouts";
 import { HomePage } from "./pages/home";

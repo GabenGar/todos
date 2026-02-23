@@ -1,22 +1,22 @@
-import { schema as entityItemSchema } from "#json-schema/entities/item";
+import { schema as dateTimeSchema } from "#json-schema/dates/datetime";
 import { schema as dataExportSchema } from "#json-schema/entities/data-export";
-import { schema as taskSchema } from "#json-schema/entities/task/entity";
-import { schema as taskStatusSchema } from "#json-schema/entities/task/status";
-import { schema as taskInitSchema } from "#json-schema/entities/task/init";
-import { schema as taskUpdateSchema } from "#json-schema/entities/task/update";
-import { schema as taskStatsAllSchema } from "#json-schema/entities/task/stats";
+import { schema as entityItemSchema } from "#json-schema/entities/item";
 import { schema as placeSchema } from "#json-schema/entities/place/entity";
 import { schema as placeInitSchema } from "#json-schema/entities/place/init";
 import { schema as placeUpdateSchema } from "#json-schema/entities/place/update";
 import { schema as plannedEventSchema } from "#json-schema/entities/planned-event/entity";
 import { schema as plannedEventInitSchema } from "#json-schema/entities/planned-event/init";
 import { schema as plannedEventUpdateSchema } from "#json-schema/entities/planned-event/update";
+import { schema as taskSchema } from "#json-schema/entities/task/entity";
+import { schema as taskInitSchema } from "#json-schema/entities/task/init";
+import { schema as taskStatsAllSchema } from "#json-schema/entities/task/stats";
+import { schema as taskStatusSchema } from "#json-schema/entities/task/status";
+import { schema as taskUpdateSchema } from "#json-schema/entities/task/update";
 import { schema as nonNegativeIntegerSchema } from "#json-schema/numbers/non-negative-integer";
 import { schema as positiveIntegerSchema } from "#json-schema/numbers/positive-integer";
+import { schema as descriptionSchema } from "#json-schema/strings/description";
 import { schema as nanoidSchema } from "#json-schema/strings/nanoid";
 import { schema as titleSchema } from "#json-schema/strings/title";
-import { schema as descriptionSchema } from "#json-schema/strings/description";
-import { schema as dateTimeSchema } from "#json-schema/dates/datetime";
 
 export const schemas = [
   dataExportSchema,

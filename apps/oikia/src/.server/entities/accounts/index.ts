@@ -1,2 +1,2 @@
-export { registerAccount } from "./register";
 export { loginAccount } from "./login";
+export { registerAccount } from "./register";

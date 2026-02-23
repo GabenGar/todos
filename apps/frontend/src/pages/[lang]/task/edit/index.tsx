@@ -1,6 +1,17 @@
-import { useState, useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Loading, Page } from "#components";
+import { Button } from "#components/button";
+import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
+import {
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+} from "#components/overview";
+import { EditTaskForm, editTask, getTask, removeTask } from "#entities/task";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,18 +20,6 @@ import {
 } from "#lib/pages";
 import { createTaskPageURL, createTasksPageURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { Loading } from "#components";
-import {
-  Overview,
-  OverviewBody,
-  OverviewFooter,
-  OverviewHeader,
-} from "#components/overview";
-import { Link } from "#components/link";
-import { List, ListItem } from "#components/list";
-import { Button } from "#components/button";
-import { EditTaskForm, editTask, getTask, removeTask } from "#entities/task";
 
 interface IProps extends ILocalizedProps<"task_edit"> {
   todosTranslation: ILocalization["pages"]["tasks"];

@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { NavLink, type NavLinkProps } from "react-router";
-
 import styles from "./internal.module.scss";
 
 export interface ILinkInternalProps extends Omit<NavLinkProps, "to"> {

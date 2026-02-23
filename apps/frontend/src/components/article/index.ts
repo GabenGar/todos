@@ -1,7 +1,7 @@
-export { Article, ArticleHeader, ArticleBody, ArticleFooter } from "./article";
 export type {
-  IArticleProps,
-  IArticleHeaderProps,
   IArticleBodyProps,
   IArticleFooterProps,
+  IArticleHeaderProps,
+  IArticleProps,
 } from "./article";
+export { Article, ArticleBody, ArticleFooter, ArticleHeader } from "./article";

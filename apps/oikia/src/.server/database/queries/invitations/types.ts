@@ -1,5 +1,5 @@
-import type { IInvitation } from "#entities/account";
 import type { IAccountDBItem } from "#database/queries/accounts";
+import type { IInvitation } from "#entities/account";
 
 export interface IInvitationDB extends Omit<IInvitation, "created_by"> {
   id: string;

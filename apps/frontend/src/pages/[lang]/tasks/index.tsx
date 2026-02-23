@@ -1,9 +1,9 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { Page } from "#components";
+import { TaskList } from "#entities/task";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { TaskList } from "#entities/task";
 
 interface IProps extends ILocalizedProps<"tasks"> {
   taskTranslation: ILocalization["pages"]["task"];

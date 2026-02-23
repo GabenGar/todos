@@ -6,6 +6,7 @@ import {
   type IBaseComponentProps,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
+//
 
 import styles from "./description-list.module.scss";
 

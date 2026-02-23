@@ -1,11 +1,11 @@
 export { getDatabase } from "./get-database";
-export { getTransaction } from "./transactions";
 export { isIndexedDBAvailable } from "./is-available";
-export { toIDBBoolean, fromIDBBoolean, toIDBNull, fromIDBNull } from "./types";
+export { getTransaction } from "./transactions";
 export type {
-  IStorageName,
-  IIDBTransaction,
+  IIDBArgs,
   IIDBBoolean,
   IIDBNull,
-  IIDBArgs,
+  IIDBTransaction,
+  IStorageName,
 } from "./types";
+export { fromIDBBoolean, fromIDBNull, toIDBBoolean, toIDBNull } from "./types";

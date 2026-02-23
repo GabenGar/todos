@@ -1,9 +1,9 @@
+import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
 import { logDebug } from "#lib/logs";
-import { now } from "#lib/dates";
-import { setLocalStorePlaces } from "./storage";
+import type { IPlace, IPlaceUpdate } from "../types";
 import { getAllPlaces } from "./get";
-import type { IPlaceUpdate, IPlace } from "../types";
+import { setLocalStorePlaces } from "./storage";
 
 const validatePlaceUpdate: ReturnType<typeof createValidator<IPlaceUpdate>> =
   createValidator<IPlaceUpdate>("/entities/place/update");

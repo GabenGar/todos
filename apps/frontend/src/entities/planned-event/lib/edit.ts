@@ -1,8 +1,8 @@
 import type { IIDBTransaction } from "#store/indexed";
 import { updatePlannedEvents } from "#store/indexed/queries/planned-events";
 import type { IPlannedEvent, IPlannedEventUpdate } from "../types";
-import { validatePlannedEventUpdate } from "./validate";
 import { getPlannedEvent } from "./get";
+import { validatePlannedEventUpdate } from "./validate";
 
 export function editPlannedEvent(
   transaction: IIDBTransaction<"planned_events">,

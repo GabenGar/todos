@@ -1,9 +1,10 @@
-import type { ReactNode } from "react";
 import Head from "next/head";
+import type { ReactNode } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import { SITE_BASE_PATHNAME, SITE_TITLE } from "#environment";
 import { Heading } from "./heading";
 import type { IBaseComponentPropsWithChildren } from "./types";
+//
 
 import styles from "./page.module.scss";
 

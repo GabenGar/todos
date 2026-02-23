@@ -1,5 +1,5 @@
-import { logDebug } from "#lib/logs";
 import { createBlockComponent } from "@repo/ui/meta";
+import { logDebug } from "#lib/logs";
 import { type ILinkExternalProps, LinkExternal } from "./external";
 import { type ILinkInternalProps, LinkInternal } from "./internal";
 

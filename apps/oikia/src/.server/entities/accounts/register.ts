@@ -1,23 +1,23 @@
 import { genSalt, hash as hashPassword, truncates } from "bcryptjs";
 import { isBefore } from "date-fns";
+import { now } from "@repo/ui/dates";
 import { BIGINT_ONE, BIGINT_ZERO } from "@repo/ui/numbers/bigint";
 import { createPagination } from "@repo/ui/pagination";
-import { now } from "@repo/ui/dates";
 import type { ITransaction } from "#database";
 import {
+  type IAccountDBInit,
   insertAccounts,
   selectAccountCount,
   selectAccountEntities,
-  type IAccountDBInit,
 } from "#database/queries/accounts";
 import {
+  type IInvitationDB,
   selectInvitationCount,
   selectInvitationEntities,
   selectInvitationIDs,
-  type IInvitationDB,
 } from "#database/queries/invitations";
-import { ClientError } from "#server/lib/errors";
 import type { IAccount, IAccountInit, IInvitation } from "#entities/account";
+import { ClientError } from "#server/lib/errors";
 
 export async function registerAccount(
   transaction: ITransaction,

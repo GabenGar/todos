@@ -1,6 +1,7 @@
 // @ts-check
-import path from "node:path";
+
 import fs from "node:fs/promises";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 import nextEnv from "@next/env";
 import { PHASE_PRODUCTION_BUILD } from "next/constants.js";

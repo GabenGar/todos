@@ -1,17 +1,17 @@
-import { Suspense } from "react";
+import { parse as parseLocale } from "bcp-47";
 import {
+  type ReadonlyURLSearchParams,
   usePathname,
   useSearchParams,
-  type ReadonlyURLSearchParams,
 } from "next/navigation";
-import { parse as parseLocale } from "bcp-47";
+import { Suspense } from "react";
 import { Language } from "@repo/ui/internationalization";
-import { SITE_TITLE } from "#environment";
-import { LOCALES } from "#lib/internationalization";
-import { createHomePageURL } from "#lib/urls";
 import { Details, Loading } from "#components";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
+import { SITE_TITLE } from "#environment";
+import { LOCALES } from "#lib/internationalization";
+import { createHomePageURL } from "#lib/urls";
 import type { ILocalizableProps } from "./types";
 //
 

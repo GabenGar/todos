@@ -1,11 +1,11 @@
 import { InputSectionText } from "@repo/ui/forms/sections";
-import type { ILocalizationPage } from "#lib/localization";
 import {
   Form,
   type IFormComponentProps,
   type IFormEvent,
 } from "#components/form";
 import type { ITranslatableProps } from "#components/types";
+import type { ILocalizationPage } from "#lib/localization";
 
 export interface IBaseURLFormProps
   extends ITranslatableProps,

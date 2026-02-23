@@ -1,10 +1,10 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { getDictionary } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
 import { Page } from "#components";
 import { Overview, OverviewHeader } from "#components/overview";
 import { TasksStats } from "#entities/task";
+import { getDictionary } from "#lib/localization";
+import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { getStaticExportPaths } from "#server";
 
 interface IProps extends ILocalizedProps<"stats_tasks"> {}
 

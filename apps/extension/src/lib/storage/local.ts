@@ -1,5 +1,5 @@
 import browser from "webextension-polyfill";
-import type { ILocalStorageKey, ILocalStorage } from "./types";
+import type { ILocalStorage, ILocalStorageKey } from "./types";
 
 /**
  * @TODO

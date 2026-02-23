@@ -1,9 +1,9 @@
 import { data } from "react-router";
+import type { ISuccessfulAPIResponse } from "#lib/api";
 import {
   createFailedAPIResponse,
   createSuccessfullAPIResponse,
 } from "#server/lib/api";
-import type { ISuccessfulAPIResponse } from "#lib/api";
 
 export function createServerLoader<
   ActionFunc extends (...args: any[]) => Promise<any>,

@@ -1,5 +1,5 @@
 import { createBlockComponent } from "@repo/ui/meta";
-import { Pre, type IPreProps } from "#components/pre";
+import { type IPreProps, Pre } from "#components/pre";
 
 interface IProps extends IPreProps {}
 

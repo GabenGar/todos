@@ -1,6 +1,6 @@
 import { createBlockComponent } from "@repo/ui/meta";
-import type { IBaseComponentPropsWithChildren } from "#components/types";
 import type { IRequiredSome } from "@repo/ui/types";
+import type { IBaseComponentPropsWithChildren } from "#components/types";
 //
 
 import styles from "./label.module.scss";

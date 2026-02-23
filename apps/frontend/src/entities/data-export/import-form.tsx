@@ -1,7 +1,7 @@
-import { fromJSON } from "#lib/json";
-import type { ILocalizationCommon, ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import { InputSectionFile } from "#components/form/section";
+import { fromJSON } from "#lib/json";
+import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { importDataExport } from "./lib";
 //
 

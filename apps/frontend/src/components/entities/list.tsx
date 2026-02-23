@@ -1,17 +1,17 @@
-import { useEffect, useState, type ReactNode } from "react";
-import type { IEntityItem } from "#lib/entities";
-import {
-  PAGINATION_LIMIT,
-  createClientPagination,
-  type IPaginatedCollection,
-} from "#lib/pagination";
-import { ListLocal } from "#components/list";
+import { type ReactNode, useEffect, useState } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import { Loading } from "#components";
+import { ListLocal } from "#components/list";
 import type {
   IBaseComponentProps,
   ITranslatableProps,
 } from "#components/types";
+import type { IEntityItem } from "#lib/entities";
+import {
+  createClientPagination,
+  type IPaginatedCollection,
+  PAGINATION_LIMIT,
+} from "#lib/pagination";
 
 interface IProps<IEntityType extends IEntityItem>
   extends IBaseComponentProps<"div">,

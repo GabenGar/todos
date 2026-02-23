@@ -1,7 +1,7 @@
+import type { ITasksStats } from "#entities/task";
 import type { IDateTime } from "#lib/dates";
 import type { INonNegativeInteger } from "#lib/numbers";
 import type { IDescription, INanoidID, ITitle } from "#lib/strings";
-import type { ITasksStats } from "#entities/task";
 
 export interface IPlace {
   id: INanoidID;

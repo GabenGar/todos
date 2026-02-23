@@ -1,10 +1,10 @@
 import {
   createMemoryRouter,
-  useRouteError,
   isRouteErrorResponse,
+  useRouteError,
 } from "react-router";
-import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Preformatted } from "@repo/ui/formatting";
 import { getLocalizedMessage } from "#lib/localization";
 import { Layout } from "#popup/components/layouts";
 import { HomePage, HomePageAction } from "#popup/pages/home";

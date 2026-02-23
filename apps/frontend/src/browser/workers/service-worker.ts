@@ -1,8 +1,8 @@
 import { HTTP_STATUS_CODE } from "@repo/ui/http";
 import {
   IS_DEVELOPMENT,
-  SERVICE_WORKER_STATIC_ASSETS_PATHS,
   SERVICE_WORKER_STATIC_ASSETS_HASH,
+  SERVICE_WORKER_STATIC_ASSETS_PATHS,
 } from "#environment";
 
 initServiceWorker(globalThis.self as unknown as ServiceWorkerGlobalScope);

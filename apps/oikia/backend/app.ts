@@ -1,20 +1,20 @@
-import { nanoid } from "nanoid";
 import { createRequestHandler } from "@react-router/express";
 import express from "express";
-import { BIGINT_ONE, BIGINT_ZERO } from "@repo/ui/numbers/bigint";
+import { nanoid } from "nanoid";
 import { now } from "@repo/ui/dates";
-import { IS_DEVELOPMENT } from "#environment";
+import { BIGINT_ONE, BIGINT_ZERO } from "@repo/ui/numbers/bigint";
 import {
+  type ITransaction,
   migrateDatabase,
   runStrictTransaction,
-  type ITransaction,
 } from "#database";
 import { selectAccountCount } from "#database/queries/accounts";
 import {
+  type IInvitationDBInit,
   insertInvitations,
   selectInvitationCount,
-  type IInvitationDBInit,
 } from "#database/queries/invitations";
+import { IS_DEVELOPMENT } from "#environment";
 
 import "react-router";
 
@@ -40,7 +40,7 @@ export async function createApp() {
           VALUE_FROM_EXPRESS: "Hello from Express",
         };
       },
-    })
+    }),
   );
 
   return app;
@@ -70,7 +70,7 @@ async function handleAdminInvitation(transaction: ITransaction) {
   }
 
   console.log(
-    "No administrators and active administrator invitations present, creating an invitation for one..."
+    "No administrators and active administrator invitations present, creating an invitation for one...",
   );
 
   const code = IS_DEVELOPMENT ? "YFXWgDSa4V5nuHZJeAYcj" : nanoid();

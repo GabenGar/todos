@@ -1,10 +1,10 @@
-import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import {
   InputSectionDescription,
   InputSectionTitle,
 } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
+import type { ILocalization } from "#lib/localization";
 import type { IPlace, IPlaceUpdate } from "../types";
 
 export interface IEditPlaceFormProps extends ITranslatableProps {

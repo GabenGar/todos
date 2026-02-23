@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Details } from "@repo/ui/details";
 import { MenuButtons, MenuItem } from "@repo/ui/buttons";
+import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
+import { Loading } from "#components/loading";
 import { getLocalizedMessage } from "#lib/localization";
 import {
+  type IPermission,
   requestPermission,
   revokePermission,
-  type IPermission,
 } from "#lib/permissions";
-import { Loading } from "#components/loading";
 import { usePermissions } from "#options/hooks";
+//
 
 import styles from "./permission.module.scss";
 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import type { ILocalization } from "#lib/localization";
-import { createTasksPageURL } from "#lib/urls";
+import { useEffect, useState } from "react";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
-import { TaskStatus, getTasksStats } from "#entities/task";
 import { Link } from "#components/link";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import type { IPlace } from "#entities/place";
+import { getTasksStats, TaskStatus } from "#entities/task";
+import type { ILocalization } from "#lib/localization";
+import { createTasksPageURL } from "#lib/urls";
 
 interface IProps extends ILocalizableProps, ITranslatableProps {
   translation: ILocalization["pages"]["stats_tasks"];

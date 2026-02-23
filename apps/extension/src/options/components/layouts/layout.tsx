@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { LinkExternal } from "@repo/ui/links";
 import { getLocalizedMessage } from "#lib/localization";
+//
 
 import styles from "./layout.module.scss";
 

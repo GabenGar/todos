@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import {
   getAllpermissions,
+  type IPermission,
   onPermissionAdded,
   onPermissionRemoved,
-  type IPermission,
 } from "#lib/permissions";
 
 export function usePermissions() {

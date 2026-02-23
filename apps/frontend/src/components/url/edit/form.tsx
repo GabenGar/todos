@@ -1,15 +1,15 @@
-import type { ILocalizationPage } from "#lib/localization";
 import {
   Form,
   type IFormComponentProps,
   type IFormEvent,
 } from "#components/form";
 import type { ITranslatableProps } from "#components/types";
+import type { ILocalizationPage } from "#lib/localization";
 import type { IBaseURLFormProps } from "./base";
-import { Origin } from "./origin";
-import { SearchParams } from "./search-params";
-import { Pathname } from "./pathname";
 import { Hash } from "./hash";
+import { Origin } from "./origin";
+import { Pathname } from "./pathname";
+import { SearchParams } from "./search-params";
 
 interface IURLEditorFormProps extends ITranslatableProps, IFormComponentProps {
   t: ILocalizationPage["url-editor"];

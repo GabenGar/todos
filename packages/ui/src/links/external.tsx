@@ -2,6 +2,7 @@ import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
+//
 
 import styles from "./external.module.scss";
 

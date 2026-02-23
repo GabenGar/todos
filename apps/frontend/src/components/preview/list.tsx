@@ -2,13 +2,14 @@ import clsx from "clsx";
 import { createBlockComponent } from "@repo/ui/meta";
 import {
   type IPaginationProps,
-  PaginationOverview,
   Pagination,
+  PaginationOverview,
 } from "#components/pagination";
 import type {
   IBaseComponentPropsWithChildren,
   ITranslatableProps,
 } from "#components/types";
+//
 
 import styles from "./list.module.scss";
 

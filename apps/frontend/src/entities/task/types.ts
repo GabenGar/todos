@@ -2,7 +2,7 @@ import type { IPlace } from "#entities/place";
 import type { IDateTime } from "#lib/dates";
 import type { IEntityItem } from "#lib/entities";
 import type { INonNegativeInteger } from "#lib/numbers";
-import { toQuotedStrings, type INanoidID } from "#lib/strings";
+import { type INanoidID, toQuotedStrings } from "#lib/strings";
 
 const statuses = ["pending", "in-progress", "finished", "failed"] as const;
 type ITaskStatus = (typeof statuses)[number];

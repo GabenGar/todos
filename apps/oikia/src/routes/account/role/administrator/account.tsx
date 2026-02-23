@@ -1,22 +1,21 @@
 import { href } from "react-router";
-import { Page } from "@repo/ui/pages";
-import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
-import { Heading } from "@repo/ui/headings";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { Preformatted } from "@repo/ui/formatting";
+import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { DateTimeView } from "@repo/ui/dates";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { parseName, parseTitle } from "@repo/ui/entities";
-import { createMetaTitle } from "#lib/router";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { Preformatted } from "@repo/ui/formatting";
+import { Heading } from "@repo/ui/headings";
+import { Page } from "@repo/ui/pages";
+import { LinkInternal } from "#components/link";
 import { runTransaction } from "#database";
 import {
-  selectAccountEntities,
   type IAccountDB,
+  selectAccountEntities,
 } from "#database/queries/accounts";
-import { LinkInternal } from "#components/link";
-
+import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
+import { getTranslation } from "#server/localization";
 import type { Route } from "./+types/account";
 
 interface IProps extends ICommonTranslationPageProps<"account-overview"> {

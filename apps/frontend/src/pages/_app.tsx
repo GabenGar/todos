@@ -1,9 +1,10 @@
 import "@repo/ui/styles/global/nextjs/pages";
+
 //
 
-import { ClientProvider, ServiceWorkerProvider } from "#hooks";
-import { MainLayout, type AppPropsWithLayout } from "#components/pages/layouts";
 import { ErrorBoundary } from "#components/errors";
+import { type AppPropsWithLayout, MainLayout } from "#components/pages/layouts";
+import { ClientProvider, ServiceWorkerProvider } from "#hooks";
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
   if (!Component.getLayout) {

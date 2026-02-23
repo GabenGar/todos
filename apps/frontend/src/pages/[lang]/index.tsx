@@ -1,23 +1,24 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { getStaticExportPaths } from "#server";
-import {
-  createQRCodeReaderURL,
-  createAccountPageURL,
-  createPlannedEventsPageURL,
-  createStatsPlacesPageURL,
-  createTaskStatsPageURL,
-  createURLViewerPageURL,
-  createYTDLPConfigPage,
-  createURLEditorPageURL,
-} from "#lib/urls";
+import { Page } from "#components";
+import { Heading } from "#components/heading";
+import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
+import { Overview, OverviewHeader } from "#components/overview";
 import { getDictionary } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { Page } from "#components";
-import { Link } from "#components/link";
-import { Overview, OverviewHeader } from "#components/overview";
-import { List, ListItem } from "#components/list";
-import { Heading } from "#components/heading";
+import {
+  createAccountPageURL,
+  createPlannedEventsPageURL,
+  createQRCodeReaderURL,
+  createStatsPlacesPageURL,
+  createTaskStatsPageURL,
+  createURLEditorPageURL,
+  createURLViewerPageURL,
+  createYTDLPConfigPage,
+} from "#lib/urls";
+import { getStaticExportPaths } from "#server";
+//
 
 import styles from "./index.module.scss";
 

@@ -9,7 +9,7 @@ import { parseConfig } from "./lib/parse-configuration.mjs";
 // Short-circuit the type-checking of the built output.
 // the real modern way of handling file system paths in context of ESM
 const BUILD_PATH = String(
-  pathToFileURL(path.join(cwd(), "build", "server", "index.js"))
+  pathToFileURL(path.join(cwd(), "build", "server", "index.js")),
 );
 
 process.env.NODE_ENV = "production";
@@ -33,13 +33,13 @@ console.log("Starting production server...");
 
 app.use(
   "/assets",
-  express.static("build/client/assets", { immutable: true, maxAge: "1y" })
+  express.static("build/client/assets", { immutable: true, maxAge: "1y" }),
 );
 app.use(express.static("build/client", { maxAge: "1h" }));
 app.use(
   await import(BUILD_PATH).then(
-    async (serverModule) => await serverModule.createApp()
-  )
+    async (serverModule) => await serverModule.createApp(),
+  ),
 );
 
 app.use(morgan("tiny"));

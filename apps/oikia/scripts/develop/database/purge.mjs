@@ -1,6 +1,6 @@
+import { log } from "node:console";
 import pgPromiseLib from "pg-promise";
 import { parseConfig } from "../../lib/parse-configuration.mjs";
-import { log } from "node:console";
 
 await run();
 

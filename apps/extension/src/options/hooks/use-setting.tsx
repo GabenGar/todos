@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  type ISettings,
-  type ISettingKey,
   getSetting,
+  type ISettingKey,
+  type ISettings,
   // settings,
 } from "#lib/settings";
 import { onLocalStorageChange } from "#lib/storage";

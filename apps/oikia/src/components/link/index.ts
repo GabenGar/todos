@@ -1,2 +1,2 @@
-export { LinkInternal } from "./internal";
 export { LinkButton } from "./button";
+export { LinkInternal } from "./internal";

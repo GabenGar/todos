@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useEffect, useState } from "react";
+import {
+  DescriptionList,
+  DescriptionSection,
+  Loading,
+  Page,
+} from "#components";
+import { Link } from "#components/link";
+import { Overview, OverviewHeader } from "#components/overview";
+import { getPlacesStats } from "#entities/place";
 import { getDictionary } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import { createPlacesPageURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { Overview, OverviewHeader } from "#components/overview";
-import { DescriptionList, DescriptionSection, Loading } from "#components";
-import { Link } from "#components/link";
-import { getPlacesStats } from "#entities/place";
 
 interface IProps extends ILocalizedProps<"stats_places"> {}
 

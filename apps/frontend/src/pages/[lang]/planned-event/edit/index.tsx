@@ -1,36 +1,35 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { getDictionary, type ILocalizationEntities } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
-import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { useState, useEffect } from "react";
-import {
-  createPlannedEventPageURL,
-  createPlannedEventsPageURL,
-} from "#lib/urls";
-import { useIndexedDB } from "#hooks";
-import { Loading } from "#components";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Loading, Page } from "#components";
+import { MenuButtons, MenuItem } from "#components/button";
+import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
 import {
   Overview,
   OverviewBody,
   OverviewFooter,
   OverviewHeader,
 } from "#components/overview";
-import { Link } from "#components/link";
-import { List, ListItem } from "#components/list";
-import { MenuButtons, MenuItem } from "#components/button";
 import {
   EditPlannedEventForm,
-  getPlannedEvent,
   editPlannedEvent,
-  removePlannedEvent,
+  getPlannedEvent,
   type IPlannedEvent,
+  removePlannedEvent,
 } from "#entities/planned-event";
-import { useRouter } from "next/router";
+import { useIndexedDB } from "#hooks";
+import { getDictionary, type ILocalizationEntities } from "#lib/localization";
+import {
+  getSingleValueFromQuery,
+  type ILocalizedParams,
+  type ILocalizedProps,
+} from "#lib/pages";
+import {
+  createPlannedEventPageURL,
+  createPlannedEventsPageURL,
+} from "#lib/urls";
+import { getStaticExportPaths } from "#server";
 
 interface IProps extends ILocalizedProps<"planned-event_edit"> {
   plannedEventTranslation: ILocalizationEntities["planned_event"];

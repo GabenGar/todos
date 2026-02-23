@@ -1,6 +1,7 @@
 // @ts-check
-import webpack from "webpack";
+
 import nextEnv from "@next/env";
+import webpack from "webpack";
 
 const { EnvironmentPlugin } = webpack;
 const projectDir = process.cwd();

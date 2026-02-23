@@ -1,5 +1,5 @@
-import type { IAccount, IAccountInit, IAccountLogin } from "#entities/account";
 import type { IInvitationDBItem } from "#database/queries/invitations";
+import type { IAccount, IAccountInit, IAccountLogin } from "#entities/account";
 
 export interface IAccountDBInit extends IAccountInit, Pick<IAccount, "role"> {}
 

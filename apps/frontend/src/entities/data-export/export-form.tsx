@@ -1,6 +1,6 @@
+import { Button } from "#components/button";
 import { toJSONPretty } from "#lib/json";
 import type { ILocalization } from "#lib/localization";
-import { Button } from "#components/button";
 import { createDataExport } from "./lib";
 
 interface IProps {

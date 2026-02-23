@@ -1,4 +1,6 @@
 import { href } from "react-router";
+import { DateTimeView } from "@repo/ui/dates";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { EntityID, parseName } from "@repo/ui/entities";
 import { Heading } from "@repo/ui/headings";
 import { createBlockComponent } from "@repo/ui/meta";
@@ -8,15 +10,13 @@ import {
   PreviewBody,
   PreviewHeader,
 } from "@repo/ui/previews";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { DateTimeView } from "@repo/ui/dates";
+import { LinkInternal } from "#components/link";
+import type { IAccountDBPreview } from "#database/queries/accounts";
 import type {
   ICommonTranslationProps,
   IEntityTranslationProps,
   ILanguageProps,
 } from "#lib/internationalization";
-import type { IAccountDBPreview } from "#database/queries/accounts";
-import { LinkInternal } from "#components/link";
 
 interface IProps
   extends ILanguageProps,

@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Html5Qrcode } from "html5-qrcode";
-import { getDictionary, type ILocalization } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { DescriptionList, DescriptionSection } from "#components";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useEffect, useState } from "react";
+import { DescriptionList, DescriptionSection, Page } from "#components";
 import {
   Form,
   type IFormComponentProps,
   type IFormEvent,
 } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
 import { InputSectionFile } from "#components/form/section";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
+import type { ITranslatableProps } from "#components/types";
+import { getDictionary, type ILocalization } from "#lib/localization";
+import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { getStaticExportPaths } from "#server";
 
 interface IProps extends ILocalizedProps<"qr_code_reader"> {}
 

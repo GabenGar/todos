@@ -1,18 +1,18 @@
-import { useState } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useState } from "react";
 import { URLViewer } from "@repo/ui/url";
-import { getDictionary, type ILocalizationPage } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
 import { Page } from "#components";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import {
   Form,
   type IFormComponentProps,
   type IFormEvent,
 } from "#components/form";
 import { InputSectionText } from "#components/form/section";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import type { ITranslatableProps } from "#components/types";
+import { getDictionary, type ILocalizationPage } from "#lib/localization";
+import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { getStaticExportPaths } from "#server";
 
 interface IProps extends ILocalizedProps<"url-viewer"> {}
 

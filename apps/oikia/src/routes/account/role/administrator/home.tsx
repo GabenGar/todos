@@ -1,16 +1,15 @@
 import { href } from "react-router";
-import { Page } from "@repo/ui/pages";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Page } from "@repo/ui/pages";
+import { LinkInternal } from "#components/link";
+import { runTransaction } from "#database";
+import { selectAccountCount } from "#database/queries/accounts";
+import { selectInvitationCount } from "#database/queries/invitations";
 import type { ITranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
-import { runTransaction } from "#database";
-import { selectInvitationCount } from "#database/queries/invitations";
-import { selectAccountCount } from "#database/queries/accounts";
-import { LinkInternal } from "#components/link";
-
 import type { Route } from "./+types/home";
 
 interface IProps extends ITranslationPageProps<"administrator-home"> {

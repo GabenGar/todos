@@ -1,5 +1,5 @@
-import { runMigrations } from "./migrations";
 import { getLocalStoreItem } from "./get";
+import { runMigrations } from "./migrations";
 import { setLocalStoreItem } from "./set";
 import type { ILocalStoreKey } from "./types";
 

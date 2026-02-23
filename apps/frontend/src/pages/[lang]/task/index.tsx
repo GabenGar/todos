@@ -1,7 +1,9 @@
-import { useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { OverviewPlaceHolder } from "@repo/ui/articles";
+import { Page } from "#components";
+import { TaskOverview } from "#entities/task";
 import { getDictionary } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,8 +11,6 @@ import {
   type ILocalizedProps,
 } from "#lib/pages";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { TaskOverview } from "#entities/task";
 
 interface IProps extends ILocalizedProps<"task"> {}
 

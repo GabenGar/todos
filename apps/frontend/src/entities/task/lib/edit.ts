@@ -1,11 +1,11 @@
+import { getAllPlaces, type IPlace } from "#entities/place";
 import { now } from "#lib/dates";
-import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
+import { logDebug } from "#lib/logs";
 import { type INanoidID, toQuotedStrings } from "#lib/strings";
-import { type IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskStore, ITaskUpdate } from "../types";
-import { setLocalStoreTasks } from "./storage";
 import { getAllTasks } from "./get";
+import { setLocalStoreTasks } from "./storage";
 import { toTasks } from "./to-tasks";
 
 const validateTaskUpdate: ReturnType<typeof createValidator<ITaskUpdate>> =

@@ -1,5 +1,19 @@
-import { useState, useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Details, Loading, Page } from "#components";
+import { Overview, OverviewHeader } from "#components/overview";
+import { PreviewList } from "#components/preview";
+import {
+  createPlace,
+  getPlaces,
+  type IPlaceInit,
+  type IPlaceSearchQuery,
+  isPlaceCategory,
+  PlaceCreateForm,
+  PlacePreview,
+  SearchPlacesForm,
+} from "#entities/place";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -8,21 +22,6 @@ import {
 } from "#lib/pages";
 import { createPlacesPageURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { Details, Loading } from "#components";
-import { Overview, OverviewHeader } from "#components/overview";
-import { PreviewList } from "#components/preview";
-import {
-  type IPlaceInit,
-  PlaceCreateForm,
-  PlacePreview,
-  createPlace,
-  getPlaces,
-  isPlaceCategory,
-  SearchPlacesForm,
-  type IPlaceSearchQuery,
-} from "#entities/place";
-import { useRouter } from "next/router";
 
 interface IProps extends ILocalizedProps<"places"> {
   placeTranslation: ILocalization["place"];

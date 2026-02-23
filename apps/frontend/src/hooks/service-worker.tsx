@@ -1,12 +1,12 @@
 import {
   createContext,
-  useContext,
   type ReactNode,
+  useContext,
   useEffect,
   useState,
 } from "react";
-import { IS_SERVICE_WORKER_ENABLED } from "#environment";
 import { registerServiceWorker } from "#browser/workers";
+import { IS_SERVICE_WORKER_ENABLED } from "#environment";
 
 type IServiceWorkerContext =
   | IInactiveServiceWorkerContext

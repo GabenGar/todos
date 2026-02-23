@@ -1,6 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { InputSection } from "@repo/ui/forms/sections";
-import { InputHidden, InputTextArea } from "@repo/ui/forms/inputs";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@repo/ui/buttons";
 import {
   DescriptionDetails,
   DescriptionList,
@@ -9,12 +8,14 @@ import {
 } from "@repo/ui/description-list";
 import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
-import type { ILocalizationPage } from "#lib/localization";
-import { List, ListItem } from "@repo/ui/lists";
 import { formDataToURLSearchParams } from "@repo/ui/forms";
-import { Button } from "@repo/ui/buttons";
-import type { ITranslatableProps } from "#components/types";
+import { InputHidden, InputTextArea } from "@repo/ui/forms/inputs";
+import { InputSection } from "@repo/ui/forms/sections";
+import { List, ListItem } from "@repo/ui/lists";
 import { Form, type IFormEvent } from "#components/form";
+import type { ITranslatableProps } from "#components/types";
+import type { ILocalizationPage } from "#lib/localization";
+//
 
 import styles from "./search-params.module.scss";
 

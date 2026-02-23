@@ -1,5 +1,4 @@
 import { href } from "react-router";
-import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { parseStringValueFromFormData } from "@repo/ui/forms";
 import {
@@ -7,21 +6,21 @@ import {
   InputSectionPassword,
   InputSectionText,
 } from "@repo/ui/forms/sections";
+import { Page } from "@repo/ui/pages";
+import { Form } from "#components/forms";
+import { LinkInternal } from "#components/link";
+import { runTransaction } from "#database";
+import type { IAccountInit } from "#entities/account";
 import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
+import { registerAccount } from "#server/entities/accounts";
+import { ClientInputError } from "#server/lib/errors";
 import {
   createServerAction,
   getLanguage,
   parseMethod,
 } from "#server/lib/router";
-import { ClientInputError } from "#server/lib/errors";
-import { runTransaction } from "#database";
 import { getTranslation } from "#server/localization";
-import { registerAccount } from "#server/entities/accounts";
-import { LinkInternal } from "#components/link";
-import { Form } from "#components/forms";
-import type { IAccountInit } from "#entities/account";
-
 import type { Route } from "./+types/registration";
 
 interface IProps extends ICommonTranslationPageProps<"registration"> {}

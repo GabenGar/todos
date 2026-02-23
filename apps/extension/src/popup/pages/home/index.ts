@@ -1,1 +1,1 @@
-export { HomePage, action as HomePageAction } from "./page";
+export { action as HomePageAction, HomePage } from "./page";

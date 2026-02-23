@@ -1,5 +1,5 @@
 import AJV2020, { type AnySchema } from "ajv/dist/2020";
-import { schemas, type IValidSchemaID } from "./map";
+import { type IValidSchemaID, schemas } from "./map";
 
 interface ISchemaMap extends Record<IValidSchemaID, AnySchema> {}
 

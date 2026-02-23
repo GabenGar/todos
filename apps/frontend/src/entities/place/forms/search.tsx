@@ -2,10 +2,10 @@
 // it's only called from the client component
 
 import { useState } from "react";
-import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import { InputSectionText } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
+import type { ILocalization } from "#lib/localization";
 
 export interface IPlaceSearchQuery {
   query?: string;

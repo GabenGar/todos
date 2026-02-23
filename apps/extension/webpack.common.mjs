@@ -1,7 +1,7 @@
 // @ts-check
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 /**
  * @type {import("webpack").Configuration}

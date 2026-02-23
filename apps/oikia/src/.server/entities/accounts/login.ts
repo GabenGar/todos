@@ -1,11 +1,11 @@
 import { compare as comparePassword } from "bcryptjs";
-import { ClientError } from "#server/lib/errors";
 import type { ITransaction } from "#database";
 import {
-  selectAccountAuth,
   type IAccountDBAuthData,
+  selectAccountAuth,
 } from "#database/queries/accounts";
 import type { IAccountLogin } from "#entities/account";
+import { ClientError } from "#server/lib/errors";
 
 export async function loginAccount(
   transaction: ITransaction,
