@@ -4,7 +4,7 @@
   "description": "NextJS frontend for todo list.",
   "private": true,
   "scripts": {
-    "build-pages": "next build",
+    "build-pages": "next build --webpack",
     "build-codegen": "cd ./codegen/generators && npm run build",
     "build-workers": "webpack --config webpack.prod.mjs",
     "start": "serve ./out -p 9001 --no-clipboard --no-port-switching",
