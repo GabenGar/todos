@@ -1,1 +1,1 @@
-export { getTranslation, getCommonTranslation } from "./translations";
+export { getCommonTranslation, getTranslation } from "./translations";

@@ -7,7 +7,8 @@ async function develop() {
     [
       {
         name: "web-ext",
-        command: "web-ext run --no-config-discovery --config=web-ext-config.mjs --source-dir=dev",
+        command:
+          "web-ext run --no-config-discovery --config=web-ext-config.mjs --source-dir=dev",
       },
       {
         name: "extension",

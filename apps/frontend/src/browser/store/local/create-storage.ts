@@ -1,5 +1,5 @@
-import { runMigrations } from "./migrations";
 import { getLocalStoreItem } from "./get";
+import { runMigrations } from "./migrations";
 import { setLocalStoreItem } from "./set";
 import type { ILocalStoreKey } from "./types";
 
@@ -32,7 +32,7 @@ export function createLocalStorage<Type>(
   return storage;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: blah
 function createLocalStorageFunction<ArgsType extends any[], ReturnShape>(
   func: (...args: ArgsType) => Promise<ReturnShape>,
 ): typeof func {

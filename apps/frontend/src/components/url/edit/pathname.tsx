@@ -1,15 +1,16 @@
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@repo/ui/buttons";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Details } from "@repo/ui/details";
+import { Preformatted } from "@repo/ui/formatting";
 import { InputHidden, InputTextArea } from "@repo/ui/forms/inputs";
 import { InputSection } from "@repo/ui/forms/sections";
-import type { ILocalizationPage } from "#lib/localization";
-import { Details } from "@repo/ui/details";
 import { List, ListItem } from "@repo/ui/lists";
 import { getPathnameSegments } from "@repo/ui/url";
-import { Preformatted } from "@repo/ui/formatting";
-import { Button } from "@repo/ui/buttons";
-import type { ITranslatableProps } from "#components/types";
 import { Form, type IFormEvent } from "#components/form";
+import type { ITranslatableProps } from "#components/types";
+import type { ILocalizationPage } from "#lib/localization";
+//
 
 import styles from "./pathname.module.scss";
 

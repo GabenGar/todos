@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Details } from "@repo/ui/details";
 import { MenuButtons, MenuItem } from "@repo/ui/buttons";
+import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
 import { getLocalizedMessage } from "#lib/localization";
-import { settings, updateSetting, type ISettingKey } from "#lib/settings";
+import { type ISettingKey, settings, updateSetting } from "#lib/settings";
 import { useSetting } from "#options/hooks";
+//
 
 import styles from "./setting.module.scss";
 

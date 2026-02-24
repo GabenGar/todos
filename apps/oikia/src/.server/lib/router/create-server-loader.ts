@@ -1,12 +1,11 @@
 import { data } from "react-router";
+import type { ISuccessfulAPIResponse } from "#lib/api";
 import {
   createFailedAPIResponse,
   createSuccessfullAPIResponse,
 } from "#server/lib/api";
-import type { ISuccessfulAPIResponse } from "#lib/api";
 
 export function createServerLoader<
-  // biome-ignore lint/suspicious/noExplicitAny: functions require `any` for generics to be useful
   ActionFunc extends (...args: any[]) => Promise<any>,
 >(loaderFunc: ActionFunc) {
   async function serverAction(

@@ -7,7 +7,7 @@ const config = defineConfig(({ isSsrBuild }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          api: "modern",
+          // api: "modern",
         },
       },
     },

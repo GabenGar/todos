@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
+//
 
 import styles from "./details.module.scss";
 

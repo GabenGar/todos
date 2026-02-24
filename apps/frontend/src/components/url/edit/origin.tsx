@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Details } from "@repo/ui/details";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
-import { InputSection, InputSectionText } from "@repo/ui/forms/sections";
 import { InputHidden } from "@repo/ui/forms/inputs";
-import type { ILocalizationPage } from "#lib/localization";
+import { InputSection, InputSectionText } from "@repo/ui/forms/sections";
 import { Form, type IFormEvent } from "#components/form";
 import type { ITranslatableProps } from "#components/types";
+import type { ILocalizationPage } from "#lib/localization";
 
 interface IProps extends ITranslatableProps {
   t: ILocalizationPage["url-editor"];

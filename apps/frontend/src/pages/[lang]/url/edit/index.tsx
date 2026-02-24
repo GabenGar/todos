@@ -1,19 +1,19 @@
-import { useState } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useState } from "react";
+import {
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+} from "@repo/ui/articles";
+import { ButtonCopy } from "@repo/ui/buttons";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
-import { ButtonCopy } from "@repo/ui/buttons";
+import { Page } from "#components";
+import { BaseURLForm, URLEditorForm } from "#components/url";
 import { getDictionary } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { BaseURLForm, URLEditorForm } from "#components/url";
-import {
-  Overview,
-  OverviewHeader,
-  OverviewBody,
-  OverviewFooter,
-} from "@repo/ui/articles";
 
 interface IProps extends ILocalizedProps<"url-editor"> {}
 
@@ -69,6 +69,7 @@ function URLViewerPage({
                           <Preformatted>{decodedFullURL}</Preformatted>
                           <ButtonCopy
                             translation={common.button}
+                            // biome-ignore lint/style/noNonNullAssertion: blah
                             valueToCopy={decodedFullURL!}
                           />
                         </>
@@ -83,6 +84,7 @@ function URLViewerPage({
                             <Preformatted>{decodedFullURL}</Preformatted>
                             <ButtonCopy
                               translation={common.button}
+                              // biome-ignore lint/style/noNonNullAssertion: blah
                               valueToCopy={decodedFullURL!}
                             />
                           </>
@@ -95,6 +97,7 @@ function URLViewerPage({
                             <Preformatted>{encodedFullURL}</Preformatted>
                             <ButtonCopy
                               translation={common.button}
+                              // biome-ignore lint/style/noNonNullAssertion: blah
                               valueToCopy={encodedFullURL!}
                             />
                           </>
@@ -115,6 +118,7 @@ function URLViewerPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

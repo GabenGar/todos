@@ -3,6 +3,7 @@ import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
+//
 
 import styles from "./list.module.scss";
 
@@ -35,16 +36,16 @@ export const ListItem = createBlockComponent(styles.item, ListItemComponent);
 
 function ListComponent({ ...props }: IListProps) {
   if (props.isOrdered) {
-    // biome-ignore lint/correctness/noUnusedVariables: it is excluded from props
     const { isOrdered, ...listProps } = props;
 
     return <ListOrdered {...listProps} />;
   }
-  // biome-ignore lint/correctness/noUnusedVariables: it is excluded from props
+
   const { isOrdered, ...listProps } = props;
 
   return <ListUnordered {...listProps} />;
 }
+
 function ListUnorderedComponent({
   isNested,
   className,
@@ -53,6 +54,7 @@ function ListUnorderedComponent({
   const resolvedClassname = clsx(className, isNested && styles.nested);
   return <ul className={resolvedClassname} {...props} />;
 }
+
 function ListOrderedComponent({
   isNested,
   className,

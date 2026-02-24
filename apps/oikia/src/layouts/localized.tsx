@@ -1,19 +1,18 @@
 import { href, Outlet, useLocation } from "react-router";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Language, LanguageSwitcher } from "@repo/ui/internationalization";
 import { LinkExternal } from "@repo/ui/links";
 import { List, ListItem } from "@repo/ui/lists";
-import { Language, LanguageSwitcher } from "@repo/ui/internationalization";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Loading } from "@repo/ui/loading";
+import { LinkInternal } from "#components/link";
+import { useClient } from "#hooks";
 import {
-  LANGUAGES,
   type ICommonTranslationProps,
   type ILanguageProps,
+  LANGUAGES,
 } from "#lib/internationalization";
 import { getLanguage } from "#server/lib/router";
 import { getCommonTranslation } from "#server/localization";
-import { useClient } from "#hooks";
-import { LinkInternal } from "#components/link";
-
 import type { Route } from "./+types/localized";
 
 import "@repo/ui/styles/global";

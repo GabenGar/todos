@@ -1,9 +1,13 @@
-import type { ILocalizationEntities } from "#lib/localization";
-import { Form, IFormEvent, type IFormComponentProps } from "#components/form";
+import {
+  Form,
+  type IFormComponentProps,
+  type IFormEvent,
+} from "#components/form";
 import { InputSectionText } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
-import type { IPlannedEventInit } from "../types";
+import type { ILocalizationEntities } from "#lib/localization";
 import { validatePlannedEventInit } from "../lib/validate";
+import type { IPlannedEventInit } from "../types";
 
 interface IProps extends IFormComponentProps, ITranslatableProps {
   translation: ILocalizationEntities["planned_event"];
@@ -44,7 +48,7 @@ export function PlannedEventCreateForm({
       commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting
           ? translation["Add planned event"]
           : translation["Adding planned event..."]

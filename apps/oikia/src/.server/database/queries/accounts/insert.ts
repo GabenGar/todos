@@ -1,8 +1,8 @@
 import {
   getQueryFile,
-  toEntityIDs,
   type IEntityRow,
   type ITransaction,
+  toEntityIDs,
 } from "#database";
 import type { IAccountDB, IAccountDBInit } from "./types";
 

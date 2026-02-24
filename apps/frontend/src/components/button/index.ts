@@ -1,5 +1,5 @@
-export { Button } from "./button";
 export type { IButtonProps } from "./button";
-export { ButtonSubmit } from "./submit";
-export { ButtonReset } from "./reset";
+export { Button } from "./button";
 export { MenuButtons, MenuItem } from "./menu";
+export { ButtonReset } from "./reset";
+export { ButtonSubmit } from "./submit";

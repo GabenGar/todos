@@ -1,9 +1,8 @@
-import { logDebug } from "#lib/logs";
 import { createBlockComponent } from "@repo/ui/meta";
+import { logDebug } from "#lib/logs";
 import { type ILinkExternalProps, LinkExternal } from "./external";
 import { type ILinkInternalProps, LinkInternal } from "./internal";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const linkTypes = ["internal", "external"] as const;
 type ILinkType = (typeof linkTypes)[number];
 
@@ -22,14 +21,12 @@ function Component<RouteInferType>({ ...props }: ILinkProps<RouteInferType>) {
 
   switch (props.linkType) {
     case "external": {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { linkType, ...linkProps } = props;
 
       return <LinkExternal {...linkProps} />;
     }
 
     case "internal": {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { linkType, ...linkProps } = props;
 
       return <LinkInternal<RouteInferType> {...linkProps} />;

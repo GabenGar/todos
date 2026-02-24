@@ -1,6 +1,7 @@
 import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
-import { Button, IButtonProps } from "./button";
+import { Button, type IButtonProps } from "./button";
+//
 
 import styles from "./menu.module.scss";
 

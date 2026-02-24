@@ -1,6 +1,6 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
-import { IInputSelectProps, InputSelect } from "../input";
+import { type IInputSelectProps, InputSelect } from "../input";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
 

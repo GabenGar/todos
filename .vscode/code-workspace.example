@@ -25,8 +25,12 @@
       "path": "packages/webpack"
     },
     {
-      "name": "schema",
+      "name": "@repo/schema",
       "path": "packages/schema"
+    },
+    {
+      "name": "@repo/biome-config",
+      "path": "packages/biome-config"
     }
   ],
   "settings": {
@@ -52,9 +56,13 @@
       "*code-workspace.example": "jsonc",
       ".env.*": "dotenv"
     },
+    "editor.wordWrapColumn": 80,
     "typescript.referencesCodeLens.enabled": true,
     "typescript.preferences.preferTypeOnlyAutoImports": true,
-    "typescript.preferences.jsxAttributeCompletionStyle": "braces"
+    "typescript.preferences.jsxAttributeCompletionStyle": "braces",
+    "json.schemaDownload.trustedDomains": {
+      "https://v2-8-10.turborepo.dev/schema.json": true
+    }
   },
   "extensions": {
     "recommendations": ["eamodio.gitlens", "dotenv.dotenv-vscode"]

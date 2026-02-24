@@ -51,7 +51,7 @@ export function toIDBBoolean(value: boolean): IIDBBoolean {
 }
 
 export function fromIDBBoolean(value: IIDBBoolean): boolean {
-  return value === 1 ? true : false;
+  return value === 1;
 }
 
 /**
@@ -60,13 +60,11 @@ export function fromIDBBoolean(value: IIDBBoolean): boolean {
  */
 export type IIDBNull = 0;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function toIDBNull(value: undefined): IIDBNull {
+export function toIDBNull(_value: undefined): IIDBNull {
   return 0;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function fromIDBNull(value: IIDBNull): undefined {
+export function fromIDBNull(_value: IIDBNull): undefined {
   return undefined;
 }
 

@@ -1,20 +1,20 @@
-import type { ILocalizationEntities } from "#lib/localization";
-import { createPlannedEventPageURL } from "#lib/urls";
+import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection } from "#components";
+import { DateTime } from "#components/date";
 import { EntityDescription, EntityID } from "#components/entities";
 import { Heading } from "#components/heading";
-import { createBlockComponent } from "@repo/ui/meta";
+import { Link } from "#components/link";
 import {
   type IPreviewProps,
   Preview,
   PreviewBody,
-  PreviewHeader,
   PreviewFooter,
+  PreviewHeader,
 } from "#components/preview";
-import { Link } from "#components/link";
-import type { ITranslatableProps, ILocalizableProps } from "#components/types";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizationEntities } from "#lib/localization";
+import { createPlannedEventPageURL } from "#lib/urls";
 import type { IPlannedEvent } from "./types";
-import { DateTime } from "#components/date";
 
 interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
   translation: ILocalizationEntities["planned_event"];

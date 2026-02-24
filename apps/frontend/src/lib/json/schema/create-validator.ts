@@ -1,6 +1,6 @@
-import { type ValidateFunction, type DefinedError } from "ajv/dist/2020";
-import { validateSchemaID, IValidSchemaID } from "./map";
+import type { DefinedError, ValidateFunction } from "ajv/dist/2020";
 import { ajv } from "./init";
+import { type IValidSchemaID, validateSchemaID } from "./map";
 
 /**
  * @TODO return a type guard and a validator

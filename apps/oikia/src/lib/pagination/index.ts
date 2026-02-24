@@ -1,1 +1,1 @@
-export { PAGINATION_LIMIT, type IPagination } from "./types";
+export { type IPagination, PAGINATION_LIMIT } from "./types";

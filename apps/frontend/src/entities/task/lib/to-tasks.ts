@@ -22,6 +22,7 @@ export async function toTasks(storeTasks: ITaskStore[]): Promise<ITask[]> {
     const item: ITask = { ...task };
 
     if (placeID) {
+      // biome-ignore lint/style/noNonNullAssertion: blah
       const place = inputPlaces.find(({ id }) => id === placeID)!;
       const placeItem = toEntityItem(place);
 

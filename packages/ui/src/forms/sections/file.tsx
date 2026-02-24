@@ -105,9 +105,6 @@ function Component({
       ) : (
         <ul>
           {currentFiles.map(({ name, size, type }, index) => (
-            /* biome-ignore lint/suspicious/noArrayIndexKey: there literally no other way
-             * because `File` interface does not uniquely serialize into string
-             */
             <li key={index} className={styles.file}>
               {type} - {name} - {size}
             </li>

@@ -5,6 +5,7 @@ import { databaseVersion, type IIDBTransaction } from "../types";
 
 export function runMigrations(event: IDBVersionChangeEvent) {
   const { oldVersion, newVersion } = event;
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const transaction = (event.target as IDBOpenDBRequest)
     .transaction! as IIDBTransaction;
 

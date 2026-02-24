@@ -1,1 +1,1 @@
-export { getSession, commitSession, destroySession } from "./lib";
+export { commitSession, destroySession, getSession } from "./lib";

@@ -1,14 +1,15 @@
-import type { ReactNode } from "react";
 import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
-import { SITE_TITLE } from "#environment";
-import { LOCALES, type ILocale } from "#lib/internationalization";
-import { createHomePageURL } from "#lib/urls";
-import { RootLayout } from "#components/pages/layouts";
+import type { ReactNode } from "react";
 import { Page } from "#components";
-import { List, ListItem } from "#components/list";
 import { LinkButton } from "#components/link";
+import { List, ListItem } from "#components/list";
 import { Overview, OverviewBody } from "#components/overview";
+import { RootLayout } from "#components/pages/layouts";
+import { SITE_TITLE } from "#environment";
+import { type ILocale, LOCALES } from "#lib/internationalization";
+import { createHomePageURL } from "#lib/urls";
+//
 
 import styles from "./index.module.scss";
 
@@ -44,6 +45,7 @@ interface ILocalLinkProps {
   locale: ILocale;
 }
 function LocaleLink({ locale }: ILocalLinkProps) {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const language = parseLocale(locale).language!;
 
   return (

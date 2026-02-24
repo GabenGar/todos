@@ -1,4 +1,4 @@
-export { List } from "./list";
 export { ListItem } from "./item";
-export { ListLocal } from "./local";
+export { List } from "./list";
 export type { IListLocalProps } from "./local";
+export { ListLocal } from "./local";

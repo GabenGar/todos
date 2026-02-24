@@ -1,11 +1,11 @@
 import { validatePermissions } from "#lib/permissions";
 import { getLocalStorageValue, setLocalStorageValue } from "#lib/storage";
-import { settings, type ISettingKey, type ISettings } from "./types";
+import { type ISettingKey, type ISettings, settings } from "./types";
 
 export async function getSetting(
-  setting: ISettingKey
+  setting: ISettingKey,
 ): Promise<ISettings[ISettingKey]> {
-  const settingData = settings[setting]
+  const settingData = settings[setting];
   const result = await getLocalStorageValue(setting, settingData.defaultValue);
 
   return result;
@@ -13,11 +13,11 @@ export async function getSetting(
 
 export async function updateSetting(
   setting: ISettingKey,
-  data: ISettings[ISettingKey]
+  data: ISettings[ISettingKey],
 ): Promise<ISettings[ISettingKey]> {
-  const settingData = settings[setting]
+  const settingData = settings[setting];
 
-  await validatePermissions(settingData.requiredPermissions)
+  await validatePermissions(settingData.requiredPermissions);
 
   const result = await setLocalStorageValue(setting, data);
 

@@ -1,6 +1,6 @@
 export { selectPlannedEventCount } from "./count";
-export { selectPlannedEventIDs } from "./ids";
+export { deletePlannedEvents } from "./delete";
 export { selectPlannedEventEntities } from "./entities";
+export { selectPlannedEventIDs } from "./ids";
 export { insertPlannedEvents } from "./insert";
 export { updatePlannedEvents } from "./update";
-export { deletePlannedEvents } from "./delete";

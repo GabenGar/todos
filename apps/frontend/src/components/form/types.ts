@@ -1,11 +1,11 @@
-import type { FormEvent } from "react";
-import { type IFormProps } from "./form";
+import type { SubmitEvent } from "react";
+import type { IFormProps } from "./form";
 
 export interface IFormComponentProps extends Pick<IFormProps, "id"> {}
 
 export interface IFormEvent<InputName extends string = string>
-  extends FormEvent<HTMLFormElement> {
-  currentTarget: FormEvent<HTMLFormElement>["currentTarget"] & {
+  extends SubmitEvent<HTMLFormElement> {
+  currentTarget: SubmitEvent<HTMLFormElement>["currentTarget"] & {
     elements: IFormElements<InputName>;
   };
 }

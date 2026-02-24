@@ -1,16 +1,16 @@
-import { href } from "react-router";
 import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
+import { href } from "react-router";
 import { Overview, OverviewBody } from "@repo/ui/articles";
-import { Page } from "@repo/ui/pages";
 import { List, ListItem } from "@repo/ui/lists";
+import { Page } from "@repo/ui/pages";
 import { LinkButton } from "#components/link";
-import { LANGUAGES, type ILanguage } from "#lib/internationalization";
+import { type ILanguage, LANGUAGES } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
+//
 
 // biome-ignore lint/correctness/noUnusedImports: fuck off biome
 import type { Route } from "./+types/language-select";
-
 import styles from "./language-select.module.scss";
 
 export function meta(

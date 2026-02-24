@@ -1,7 +1,9 @@
-import { useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { OverviewPlaceHolder } from "@repo/ui/articles";
+import { Page } from "#components";
+import { TaskOverview } from "#entities/task";
 import { getDictionary } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,8 +11,6 @@ import {
   type ILocalizedProps,
 } from "#lib/pages";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { TaskOverview } from "#entities/task";
 
 interface IProps extends ILocalizedProps<"task"> {}
 
@@ -25,6 +25,7 @@ function TaskDetailsPage({
   const title = t.title;
   const taskID = getSingleValueFromQuery(query, "task_id");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -34,7 +35,6 @@ function TaskDetailsPage({
 
       return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, taskID]);
 
   return (
@@ -57,6 +57,7 @@ function TaskDetailsPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

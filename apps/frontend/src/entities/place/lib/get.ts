@@ -1,7 +1,7 @@
-import { type IPaginatedCollection, createPagination } from "#lib/pagination";
+import { getAllTasks, getTasksStats, type ITask } from "#entities/task";
 import { logDebug } from "#lib/logs";
+import { createPagination, type IPaginatedCollection } from "#lib/pagination";
 import { isSubstring } from "#lib/strings";
-import { type ITask, getAllTasks, getTasksStats } from "#entities/task";
 import type {
   IPlace,
   IPlaceOverview,

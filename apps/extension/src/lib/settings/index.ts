@@ -1,7 +1,7 @@
 export { getSetting, updateSetting } from "./lib";
 export {
-  settings,
-  settingKeys,
-  type ISettings,
   type ISettingKey,
+  type ISettings,
+  settingKeys,
+  settings,
 } from "./types";

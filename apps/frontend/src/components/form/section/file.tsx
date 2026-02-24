@@ -1,10 +1,11 @@
-import { useState, useRef } from "react";
-import { useClient } from "#hooks";
+import { useRef, useState } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import { List, ListItem } from "#components/list";
+import { useClient } from "#hooks";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
+//
 
 import styles from "./file.module.scss";
 
@@ -25,7 +26,6 @@ function Component({
   form,
   accept,
   multiple,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   defaultValue,
   readOnly,
   required,

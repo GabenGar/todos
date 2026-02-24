@@ -1,42 +1,42 @@
-import { href } from "react-router";
 import { nanoid } from "nanoid";
-import { Page } from "@repo/ui/pages";
+import { href } from "react-router";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
-import { parseStringValueFromFormData, type IFormData } from "@repo/ui/forms";
+import { parseTitle } from "@repo/ui/entities";
+import { type IFormData, parseStringValueFromFormData } from "@repo/ui/forms";
 import {
   InputSectionDatetime,
   InputSectionInteger,
   InputSectionText,
 } from "@repo/ui/forms/sections";
 import { BIGINT_ONE } from "@repo/ui/numbers/bigint";
-import { parseTitle } from "@repo/ui/entities";
+import { Page } from "@repo/ui/pages";
+import { Form } from "#components/forms";
+import { LinkInternal } from "#components/link";
+import { runTransaction } from "#database";
+import {
+  type IInvitationDBInit,
+  insertInvitations,
+  selectInvitationEntities,
+} from "#database/queries/invitations";
 import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
+import { createSuccessfullAPIResponse } from "#server/lib/api";
+import { ClientInputError } from "#server/lib/errors";
 import {
   authenticateAdmin,
   createServerAction,
   getLanguage,
   parseMethod,
 } from "#server/lib/router";
-import { ClientInputError } from "#server/lib/errors";
-import { createSuccessfullAPIResponse } from "#server/lib/api";
 import { getTranslation } from "#server/localization";
-import { runTransaction } from "#database";
-import {
-  insertInvitations,
-  selectInvitationEntities,
-  type IInvitationDBInit,
-} from "#database/queries/invitations";
-import { Form } from "#components/forms";
-import { LinkInternal } from "#components/link";
+//
 
 import type { Route } from "./+types/invitation";
 
 interface IProps extends ICommonTranslationPageProps<"create-invitation"> {}
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation } = loaderData;
   const title = createMetaTitle(translation["Create invitation"]);
 
   return [{ title }];

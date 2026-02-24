@@ -1,5 +1,6 @@
 import iso6391 from "iso-639-1";
 import { createBlockComponent, type IBaseComponentProps } from "#meta";
+//
 
 import styles from "./language.module.scss";
 

@@ -1,5 +1,5 @@
 import { createBlockComponent } from "@repo/ui/meta";
-import { InputText, IInputTextProps } from "./text";
+import { type IInputTextProps, InputText } from "./text";
 
 interface IInputNanoIDProps
   extends Omit<IInputTextProps, "minLength" | "maxLength"> {}

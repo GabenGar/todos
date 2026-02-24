@@ -1,5 +1,19 @@
-import { useState, useEffect } from "react";
-import { type GetStaticProps, type InferGetStaticPropsType } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Details, Loading, Page } from "#components";
+import { Overview, OverviewHeader } from "#components/overview";
+import { PreviewList } from "#components/preview";
+import {
+  createPlace,
+  getPlaces,
+  type IPlaceInit,
+  type IPlaceSearchQuery,
+  isPlaceCategory,
+  PlaceCreateForm,
+  PlacePreview,
+  SearchPlacesForm,
+} from "#entities/place";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -8,21 +22,6 @@ import {
 } from "#lib/pages";
 import { createPlacesPageURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { Details, Loading } from "#components";
-import { Overview, OverviewHeader } from "#components/overview";
-import { PreviewList } from "#components/preview";
-import {
-  type IPlaceInit,
-  PlaceCreateForm,
-  PlacePreview,
-  createPlace,
-  getPlaces,
-  isPlaceCategory,
-  SearchPlacesForm,
-  type IPlaceSearchQuery,
-} from "#entities/place";
-import { useRouter } from "next/router";
 
 interface IProps extends ILocalizedProps<"places"> {
   placeTranslation: ILocalization["place"];
@@ -55,6 +54,7 @@ function PlacesPage({
     query,
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -77,7 +77,6 @@ function PlacesPage({
 
       changePlaces(newPlaces);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page, category, query]);
 
   async function handlePlaceCreation(init: IPlaceInit) {
@@ -178,6 +177,7 @@ function PlacesPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const { places } = dict.pages;

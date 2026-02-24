@@ -1,10 +1,11 @@
-import type { IPagination } from "#lib/pagination";
 import { createBlockComponent } from "@repo/ui/meta";
 import { List, ListItem } from "#components/list";
 import type {
   IBaseComponentProps,
   ITranslatableProps,
 } from "#components/types";
+import type { IPagination } from "#lib/pagination";
+//
 
 import styles from "./overview.module.scss";
 

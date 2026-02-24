@@ -1,11 +1,12 @@
 import { useState } from "react";
-import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
-import { InputSectionSelect, InputSectionText } from "#components/form/section";
 import { InputOption } from "#components/form/input";
+import { InputSectionSelect, InputSectionText } from "#components/form/section";
 import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import { PlaceSection, type IPlace } from "#entities/place";
-import { ITask, isTaskStatus } from "./types";
+import { type IPlace, PlaceSection } from "#entities/place";
+import type { ILocalization } from "#lib/localization";
+import { type ITask, isTaskStatus } from "./types";
+//
 
 import statusStyles from "./status.module.scss";
 

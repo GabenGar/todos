@@ -1,15 +1,16 @@
 import { nanoid } from "nanoid";
+import { getAllPlaces, type IPlace } from "#entities/place";
 import { now } from "#lib/dates";
-import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
+import { logDebug } from "#lib/logs";
 import { toQuotedStrings } from "#lib/strings";
-import { type IPlace, getAllPlaces } from "#entities/place";
 import type { ITask, ITaskInit, ITaskStore } from "../types";
-import { setLocalStoreTasks } from "./storage";
 import { getAllTasks } from "./get";
+import { setLocalStoreTasks } from "./storage";
 import { toTasks } from "./to-tasks";
 
-const validateTaskInit = createValidator<ITaskInit>("/entities/task/init");
+const validateTaskInit: ReturnType<typeof createValidator<ITaskInit>> =
+  createValidator<ITaskInit>("/entities/task/init");
 
 export async function createTask(init: ITaskInit): Promise<ITask> {
   const [newTask] = await createTasks([init]);
@@ -24,7 +25,9 @@ export async function createTask(init: ITaskInit): Promise<ITask> {
 async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
   logDebug(`Creating ${inits.length} tasks...`);
 
-  inits.forEach((init) => validateTaskInit(init));
+  inits.forEach((init) => {
+    validateTaskInit(init);
+  });
 
   // validate place IDs
   const placeIDs = inits.reduce<Set<IPlace["id"]>>((placeIDs, { place_id }) => {

@@ -1,5 +1,5 @@
 import { createBlockComponent } from "@repo/ui/meta";
-import { IInputSectionTextProps, InputSectionText } from "./text";
+import { type IInputSectionTextProps, InputSectionText } from "./text";
 
 interface IProps
   extends Omit<IInputSectionTextProps, "minLength" | "maxLength"> {}

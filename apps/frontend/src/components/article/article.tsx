@@ -1,6 +1,6 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
-import { validateHeadinglevel, type IHeadingLevel } from "#components/heading";
+import { type IHeadingLevel, validateHeadinglevel } from "#components/heading";
 import type {
   IBaseComponentProps,
   IBaseComponentPropsWithChildren,

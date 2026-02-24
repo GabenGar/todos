@@ -1,13 +1,12 @@
+import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
 import { logDebug } from "#lib/logs";
-import { now } from "#lib/dates";
-import { setLocalStorePlaces } from "./storage";
+import type { IPlace, IPlaceUpdate } from "../types";
 import { getAllPlaces } from "./get";
-import { type IPlaceUpdate, type IPlace } from "../types";
+import { setLocalStorePlaces } from "./storage";
 
-const validatePlaceUpdate = createValidator<IPlaceUpdate>(
-  "/entities/place/update",
-);
+const validatePlaceUpdate: ReturnType<typeof createValidator<IPlaceUpdate>> =
+  createValidator<IPlaceUpdate>("/entities/place/update");
 
 export async function editPlace(update: IPlaceUpdate): Promise<IPlace> {
   const [place] = await editPlaces([update]);
@@ -18,7 +17,9 @@ export async function editPlace(update: IPlaceUpdate): Promise<IPlace> {
 async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
   logDebug(`Editing ${updates.length} places...`);
 
-  updates.forEach((update) => validatePlaceUpdate(update));
+  updates.forEach((update) => {
+    validatePlaceUpdate(update);
+  });
 
   const storedPlaces = await getAllPlaces();
   const updateIDs = new Set(updates.map(({ id }) => id));
@@ -35,6 +36,7 @@ async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
     }
 
     // non-updates are filtered beforehand
+    // biome-ignore lint/style/noNonNullAssertion: blah
     const update = updates.find(({ id }) => id === place.id)!;
     const updatedTitle = !update.title
       ? place.title

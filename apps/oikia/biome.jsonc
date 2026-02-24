@@ -1,16 +1,15 @@
 {
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
   "root": false,
-  "extends": "//",
-  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "extends": ["@repo/biome-config/base", "@repo/biome-config/react"],
   "files": {
-    "ignoreUnknown": false,
-    "includes": ["**", "!**/build", "!**/.react-router"]
+    "includes": ["**", "!!**/build", "!**/.react-router"]
   },
   "linter": {
     "rules": {
-      "complexity": {
-        // this makes typescript cry if followed through
-        "noUselessUndefinedInitialization": "off"
+      "correctness": {
+        // server endpoints feature a lot of `req`/`res` arguments
+        "noUnusedFunctionParameters": "off"
       }
     }
   }

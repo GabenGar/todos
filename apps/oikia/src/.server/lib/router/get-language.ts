@@ -1,7 +1,7 @@
 import {
-  isSupportedLanguage,
-  type ILanguage,
   DEFAULT_LANGUAGE,
+  type ILanguage,
+  isSupportedLanguage,
 } from "#lib/internationalization";
 import { NotFoundError } from "../errors";
 

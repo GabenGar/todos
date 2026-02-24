@@ -1,13 +1,13 @@
-export { insertAccounts } from "./insert";
-export { selectAccountCount } from "./count";
-export { selectAccountIDs } from "./ids";
-export { selectAccountEntities } from "./entities";
-export { selectAccountPreviews } from "./previews";
 export { selectAccountAuth } from "./auth";
+export { selectAccountCount } from "./count";
+export { selectAccountEntities } from "./entities";
+export { selectAccountIDs } from "./ids";
+export { insertAccounts } from "./insert";
+export { selectAccountPreviews } from "./previews";
 export type {
-  IAccountDBInit,
   IAccountDB,
   IAccountDBAuthData,
+  IAccountDBInit,
   IAccountDBItem,
   IAccountDBPreview,
 } from "./types";

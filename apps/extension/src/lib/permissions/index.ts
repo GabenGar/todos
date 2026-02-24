@@ -1,10 +1,10 @@
 export {
   getAllpermissions,
-  validatePermission,
-  validatePermissions,
-  requestPermission,
-  revokePermission,
   onPermissionAdded,
   onPermissionRemoved,
+  requestPermission,
+  revokePermission,
+  validatePermission,
+  validatePermissions,
 } from "./lib";
 export { availablePermissions, type IPermission } from "./types";

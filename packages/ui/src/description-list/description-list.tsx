@@ -6,6 +6,7 @@ import {
   type IBaseComponentProps,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
+//
 
 import styles from "./description-list.module.scss";
 
@@ -71,7 +72,6 @@ function DescriptionListComponent({
   return (
     <dl className={resolvedClassname} {...otherProps}>
       {sections.map(([dKey, dValue], index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: only index can be truly unique key in there
         <DescriptionSection key={index} dKey={dKey} dValue={dValue} />
       ))}
     </dl>

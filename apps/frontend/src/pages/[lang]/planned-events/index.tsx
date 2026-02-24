@@ -1,32 +1,31 @@
-import { useState, useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Details, Loading, Page } from "#components";
+import { Overview, OverviewHeader } from "#components/overview";
+import { PreviewList } from "#components/preview";
+import {
+  countPlannedEvents,
+  createPlannedEvent,
+  getPlannedEvents,
+  type IPlannedEvent,
+  type IPlannedEventInit,
+  type IPlannedEventSearchQuery,
+  isPlannedEventsOrder,
+  PlannedEventCreateForm,
+  PlannedEventPreview,
+  SearchPlannedEventForm,
+} from "#entities/planned-event";
+import { useIndexedDB } from "#hooks";
 import { getDictionary, type ILocalizationEntities } from "#lib/localization";
 import {
   getSingleValueFromQuery,
   type ILocalizedParams,
   type ILocalizedProps,
 } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { createPlannedEventsPageURL } from "#lib/urls";
 import type { IPaginatedCollection } from "#lib/pagination";
-import { useIndexedDB } from "#hooks";
-import { Details, Loading } from "#components";
-import { Overview, OverviewHeader } from "#components/overview";
-import { PreviewList } from "#components/preview";
-import {
-  PlannedEventCreateForm,
-  PlannedEventPreview,
-  SearchPlannedEventForm,
-  countPlannedEvents,
-  createPlannedEvent,
-  getPlannedEvents,
-  isPlannedEventsOrder,
-  type IPlannedEvent,
-  type IPlannedEventInit,
-  type IPlannedEventSearchQuery,
-} from "#entities/planned-event";
+import { createPlannedEventsPageURL } from "#lib/urls";
+import { getStaticExportPaths } from "#server";
 
 interface IProps extends ILocalizedProps<"planned-events"> {
   plannedEventTranslation: ILocalizationEntities["planned_event"];
@@ -59,6 +58,7 @@ function PlannedEventsPage({
       ? t["Recently Created Planned Events"]
       : t["Recently Updated Planned Events"];
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -98,7 +98,6 @@ function PlannedEventsPage({
         });
       },
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, page]);
 
   async function handlePlannedEventCreation(init: IPlannedEventInit) {
@@ -225,6 +224,7 @@ function PlannedEventsPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

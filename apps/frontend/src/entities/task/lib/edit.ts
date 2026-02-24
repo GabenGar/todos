@@ -1,16 +1,15 @@
+import { getAllPlaces, type IPlace } from "#entities/place";
 import { now } from "#lib/dates";
-import { logDebug } from "#lib/logs";
 import { createValidator } from "#lib/json/schema";
-import { INanoidID, toQuotedStrings } from "#lib/strings";
-import { IPlace, getAllPlaces } from "#entities/place";
+import { logDebug } from "#lib/logs";
+import { type INanoidID, toQuotedStrings } from "#lib/strings";
 import type { ITask, ITaskStore, ITaskUpdate } from "../types";
-import { setLocalStoreTasks } from "./storage";
 import { getAllTasks } from "./get";
+import { setLocalStoreTasks } from "./storage";
 import { toTasks } from "./to-tasks";
 
-const validateTaskUpdate = createValidator<ITaskUpdate>(
-  "/entities/task/update",
-);
+const validateTaskUpdate: ReturnType<typeof createValidator<ITaskUpdate>> =
+  createValidator<ITaskUpdate>("/entities/task/update");
 
 export async function editTask(update: ITaskUpdate): Promise<ITask> {
   const [editedTask] = await editTasks([update]);
@@ -25,7 +24,9 @@ export async function editTask(update: ITaskUpdate): Promise<ITask> {
 export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
   logDebug(`Editing ${updates.length} tasks...`);
 
-  updates.forEach((update) => validateTaskUpdate(update));
+  updates.forEach((update) => {
+    validateTaskUpdate(update);
+  });
 
   // validate places
   const inputPlaceIDs = updates.reduce<Set<IPlace["id"]>>(
@@ -76,6 +77,7 @@ export async function editTasks(updates: ITaskUpdate[]): Promise<ITask[]> {
     }
 
     // non-updates are filtered beforehand
+    // biome-ignore lint/style/noNonNullAssertion: blah
     const update = updates.find(({ id }) => id === task.id)!;
     const updatedTitle = !update.title
       ? task.title

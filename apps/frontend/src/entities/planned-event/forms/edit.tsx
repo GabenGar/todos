@@ -1,11 +1,11 @@
-import type { ILocalizationEntities } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import {
   InputSectionDescription,
   InputSectionTitle,
 } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
-import { type IPlannedEvent, type IPlannedEventUpdate } from "../types";
+import type { ILocalizationEntities } from "#lib/localization";
+import type { IPlannedEvent, IPlannedEventUpdate } from "../types";
 
 interface IProps extends ITranslatableProps {
   translation: ILocalizationEntities["planned_event"];
@@ -58,7 +58,7 @@ export function EditPlannedEventForm({
     <Form
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? form["Confirm changes"] : form["Applying changes..."]
       }
       onSubmit={handleSubmit}

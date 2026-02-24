@@ -1,8 +1,8 @@
-import { now, toJavascriptDate } from "#lib/dates";
 import type {
   IPlannedEvent,
   IPlannedEventUpdate,
 } from "#entities/planned-event";
+import { now, toJavascriptDate } from "#lib/dates";
 import type { IIDBTransaction } from "../../types";
 import type { IPlannedEventUpdateIDB } from "./types";
 
@@ -42,6 +42,7 @@ export function updatePlannedEvents(
 
       if (updateIDs.includes(currentID)) {
         const currentEvent = cursor.value as IPlannedEvent;
+        // biome-ignore lint/style/noNonNullAssertion: blah
         const update = idbUpdates.find(({ id }) => id === currentID)!;
         const incomingUpdate = { ...currentEvent, ...update };
 

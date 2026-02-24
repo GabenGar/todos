@@ -1,6 +1,6 @@
 import { forwardRef, type Ref } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
-import { Input, IInputProps } from "./input";
+import { type IInputProps, Input } from "./input";
 
 export interface IInputFileProps extends IInputProps {}
 

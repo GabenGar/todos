@@ -1,5 +1,9 @@
-import { createBlockComponent, IBaseComponentPropsWithChildren } from "@repo/ui/meta";
+import {
+  createBlockComponent,
+  type IBaseComponentPropsWithChildren,
+} from "@repo/ui/meta";
 import type { IInputProps } from "../input";
+//
 
 import styles from "./section.module.scss";
 

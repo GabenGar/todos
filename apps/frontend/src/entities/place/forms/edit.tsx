@@ -1,11 +1,11 @@
-import type { ILocalization } from "#lib/localization";
 import { Form, type IFormEvent } from "#components/form";
 import {
   InputSectionDescription,
   InputSectionTitle,
 } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
-import { type IPlace, type IPlaceUpdate } from "../types";
+import type { ILocalization } from "#lib/localization";
+import type { IPlace, IPlaceUpdate } from "../types";
 
 export interface IEditPlaceFormProps extends ITranslatableProps {
   translation: ILocalization["place"];
@@ -56,7 +56,7 @@ export function EditPlaceForm({
     <Form
       commonTranslation={commonTranslation}
       id={id}
-      submitButton={(formID, isSubmitting) =>
+      submitButton={(_formID, isSubmitting) =>
         !isSubmitting ? edit["Confirm changes"] : edit["Applying changes..."]
       }
       onSubmit={handleSubmit}

@@ -1,11 +1,10 @@
 import { PassThrough } from "node:stream";
-
-import type { AppLoadContext, EntryContext } from "react-router";
 import { createReadableStreamFromReadable } from "@react-router/node";
-import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { renderToPipeableStream } from "react-dom/server";
+import type { EntryContext } from "react-router";
+import { ServerRouter } from "react-router";
 
 export const streamTimeout = 5_000;
 
@@ -50,7 +49,6 @@ export default function handleRequest(
           reject(error);
         },
         onError(error: unknown) {
-          // biome-ignore lint/style/noParameterAssign: such are the way of hybrid render
           responseStatusCode = 500;
           // Log streaming rendering errors from inside the shell.  Don't log
           // errors encountered during initial shell rendering since they'll

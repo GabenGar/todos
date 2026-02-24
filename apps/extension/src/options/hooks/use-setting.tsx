@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import {
-  type ISettings,
-  type ISettingKey,
   getSetting,
-  settings,
+  type ISettingKey,
+  type ISettings,
+  // settings,
 } from "#lib/settings";
 import { onLocalStorageChange } from "#lib/storage";
-import { getAllpermissions } from "#lib/permissions";
 
 /**
  * @TODO
@@ -14,8 +13,9 @@ import { getAllpermissions } from "#lib/permissions";
  */
 export function useSetting(settingKey: ISettingKey) {
   const [settingValue, changeSettingValue] = useState<ISettings[ISettingKey]>();
-  const data = settings[settingKey];
+  // const data = settings[settingKey];
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     const localCleanup = onLocalStorageChange(handleLocalStorageChange);
 
@@ -27,7 +27,7 @@ export function useSetting(settingKey: ISettingKey) {
   }, []);
 
   async function handleLocalStorageChange(
-    changes: Parameters<Parameters<typeof onLocalStorageChange>[0]>[0]
+    changes: Parameters<Parameters<typeof onLocalStorageChange>[0]>[0],
   ) {
     const newValue = changes[settingKey].newValue;
 

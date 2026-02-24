@@ -1,22 +1,23 @@
-import type { ILocalization } from "#lib/localization";
-import { createPlaceEditPageURL } from "#lib/urls";
 import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection } from "#components";
-import { ITranslatableProps, type ILocalizableProps } from "#components/types";
-import { Heading, type IHeadingLevel } from "#components/heading";
 import { DateTime } from "#components/date";
+import { EntityDescription, EntityID } from "#components/entities";
+import { Heading, type IHeadingLevel } from "#components/heading";
+import { LinkButton } from "#components/link";
+import { List, ListItem } from "#components/list";
 import {
+  type IOverviewProps,
   Overview,
   OverviewBody,
   OverviewFooter,
   OverviewHeader,
-  type IOverviewProps,
 } from "#components/overview";
-import { EntityDescription, EntityID } from "#components/entities";
-import { LinkButton } from "#components/link";
-import { List, ListItem } from "#components/list";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { TasksStats } from "#entities/task";
+import type { ILocalization } from "#lib/localization";
+import { createPlaceEditPageURL } from "#lib/urls";
 import type { IPlace } from "./types";
+//
 
 import styles from "./details.module.scss";
 

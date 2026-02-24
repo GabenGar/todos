@@ -1,11 +1,11 @@
 import type { Route } from "next";
-import type { ILocale } from "#lib/internationalization";
-import type { ITask } from "#entities/task";
 import type { IPlace, IPlacesCategory } from "#entities/place";
 import type {
   IPlannedEvent,
   IPlannedEventOrder,
 } from "#entities/planned-event";
+import type { ITask } from "#entities/task";
+import type { ILocale } from "#lib/internationalization";
 import type { IMultiPageParams } from "./types";
 
 export function createRootPageURL(): Route {

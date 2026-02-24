@@ -1,5 +1,5 @@
 import browser from "webextension-polyfill";
-import type { ILocalStorageKey, ILocalStorage } from "./types";
+import type { ILocalStorage, ILocalStorageKey } from "./types";
 
 /**
  * @TODO
@@ -7,7 +7,7 @@ import type { ILocalStorageKey, ILocalStorage } from "./types";
  */
 export async function getLocalStorageValue(
   storageKey: ILocalStorageKey,
-  defaultValue?: ILocalStorage[ILocalStorageKey]
+  defaultValue?: ILocalStorage[ILocalStorageKey],
 ): Promise<ILocalStorage[ILocalStorageKey]> {
   const result = (await browser.storage.local.get({
     [storageKey]: defaultValue,
@@ -21,7 +21,7 @@ export async function getLocalStorageValue(
 
 export async function setLocalStorageValue(
   storageKey: ILocalStorageKey,
-  data: ILocalStorage[ILocalStorageKey]
+  data: ILocalStorage[ILocalStorageKey],
 ): Promise<ILocalStorage[ILocalStorageKey]> {
   const updateData = { [storageKey]: data };
   await browser.storage.local.set(updateData);
@@ -32,7 +32,7 @@ export async function setLocalStorageValue(
 }
 
 export function onLocalStorageChange(
-  listener: Parameters<typeof browser.storage.local.onChanged.addListener>[0]
+  listener: Parameters<typeof browser.storage.local.onChanged.addListener>[0],
 ) {
   const cleanup = () => {
     browser.storage.local.onChanged.removeListener(listener);

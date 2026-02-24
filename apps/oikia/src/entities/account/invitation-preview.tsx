@@ -1,4 +1,5 @@
 import { href } from "react-router";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import {
   EntityDescription,
   EntityID,
@@ -13,14 +14,12 @@ import {
   PreviewBody,
   PreviewHeader,
 } from "@repo/ui/previews";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { LinkInternal } from "#components/link";
+import type { IInvitationDB } from "#database/queries/invitations";
 import type {
   IEntityTranslationProps,
   ILanguageProps,
 } from "#lib/internationalization";
-import type { IInvitationDB } from "#database/queries/invitations";
-import { LinkInternal } from "#components/link";
-
 import styles from "./invitation-preview.module.scss";
 
 interface IProps

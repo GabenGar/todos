@@ -10,8 +10,6 @@ import {
   useParams,
   useRouteLoaderData,
 } from "react-router";
-import { ClientProvider as BaseClientProvider } from "@repo/ui/hooks";
-import { Page } from "@repo/ui/pages";
 import {
   Overview,
   OverviewBody,
@@ -19,19 +17,19 @@ import {
   OverviewHeader,
 } from "@repo/ui/articles";
 import { Preformatted } from "@repo/ui/formatting";
-import englishTranslation from "#localization/en";
+import { ClientProvider as BaseClientProvider } from "@repo/ui/hooks";
+import { Page } from "@repo/ui/pages";
+import { LinkInternal } from "#components/link";
 import { IS_DEVELOPMENT } from "#environment";
 import {
   DEFAULT_LANGUAGE,
   type ICommonTranslationProps,
   type ILanguageProps,
 } from "#lib/internationalization";
+import englishTranslation from "#localization/en";
 import { getLanguage } from "#server/lib/router";
 import { getCommonTranslation } from "#server/localization";
-import { LinkInternal } from "#components/link";
-
 import type { Route } from "./+types/root";
-
 import styles from "./root.module.scss";
 
 interface ILayoutProps {

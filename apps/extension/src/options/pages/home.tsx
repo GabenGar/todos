@@ -1,14 +1,14 @@
-import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Heading } from "@repo/ui/headings";
 import { List } from "@repo/ui/lists";
+import { Page } from "@repo/ui/pages";
+import { Loading } from "#components/loading";
 import { getLocalizedMessage } from "#lib/localization";
 import { availablePermissions } from "#lib/permissions";
 import { settingKeys } from "#lib/settings";
-import { Loading } from "#components/loading";
-import { usePermissions } from "#options/hooks";
 import { Permission } from "#options/components/permissions";
 import { Setting } from "#options/components/settings";
+import { usePermissions } from "#options/hooks";
 
 export function HomePage() {
   const permissions = usePermissions();

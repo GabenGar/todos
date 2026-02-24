@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import {
   getAllpermissions,
+  type IPermission,
   onPermissionAdded,
   onPermissionRemoved,
-  type IPermission,
 } from "#lib/permissions";
 
 export function usePermissions() {
   const [permissions, changePermissions] = useState<Set<IPermission>>();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     const addedCleanup = onPermissionAdded(onAdded);
     const removedCleanup = onPermissionRemoved(onRemoved);
@@ -25,7 +26,7 @@ export function usePermissions() {
   }, []);
 
   async function onAdded(
-    perms: Parameters<Parameters<typeof onPermissionAdded>[0]>[0]
+    perms: Parameters<Parameters<typeof onPermissionAdded>[0]>[0],
   ) {
     const addedPerms = perms.permissions;
 
@@ -43,7 +44,7 @@ export function usePermissions() {
   }
 
   async function onRemoved(
-    perms: Parameters<Parameters<typeof onPermissionRemoved>[0]>[0]
+    perms: Parameters<Parameters<typeof onPermissionRemoved>[0]>[0],
   ) {
     const removedPerms = perms.permissions;
 

@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Page } from "#components";
+import { OverviewPlaceHolder } from "#components/overview";
+import { getPlace, type IPlace, PlaceOverview } from "#entities/place";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,9 +12,6 @@ import {
 } from "#lib/pages";
 import { notFoundURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { OverviewPlaceHolder } from "#components/overview";
-import { PlaceOverview, type IPlace, getPlace } from "#entities/place";
 
 interface IProps extends ILocalizedProps<"place"> {
   taskTranslation: ILocalization["pages"]["stats_tasks"];
@@ -32,6 +32,7 @@ function PlaceDetailsPage({
   const title = t.title;
   const placeID = getSingleValueFromQuery(query, "place_id");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -46,7 +47,6 @@ function PlaceDetailsPage({
       const newPlace = await getPlace(placeID);
       changePlace(newPlace);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, placeID]);
 
   return (
@@ -70,6 +70,7 @@ function PlaceDetailsPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const { place } = dict.pages;

@@ -3,7 +3,6 @@ import type { JSX } from "react";
 
 export type IFuncComponent<PropsType> = (
   props: PropsType,
-  // biome-ignore lint/suspicious/noExplicitAny: refs are annoying
   ref?: any,
 ) => JSX.Element;
 

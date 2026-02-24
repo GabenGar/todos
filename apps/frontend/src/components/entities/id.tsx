@@ -1,6 +1,4 @@
 import { useState } from "react";
-import type { IEntityItem } from "#lib/entities";
-import { logError } from "#lib/logs";
 import { createBlockComponent } from "@repo/ui/meta";
 import { Button } from "#components/button";
 import { Pre } from "#components/pre";
@@ -8,6 +6,9 @@ import type {
   IBaseComponentProps,
   ITranslatableProps,
 } from "#components/types";
+import type { IEntityItem } from "#lib/entities";
+import { logError } from "#lib/logs";
+//
 
 import styles from "./id.module.scss";
 

@@ -1,12 +1,12 @@
 import {
   createContext,
-  useContext,
   type ReactNode,
+  useContext,
   useEffect,
   useState,
 } from "react";
-import { IS_SERVICE_WORKER_ENABLED } from "#environment";
 import { registerServiceWorker } from "#browser/workers";
+import { IS_SERVICE_WORKER_ENABLED } from "#environment";
 
 type IServiceWorkerContext =
   | IInactiveServiceWorkerContext
@@ -51,6 +51,7 @@ export function ServiceWorkerProvider({ children }: IProps) {
   const [context, changeContext] =
     useState<IServiceWorkerContext>(defaultContext);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     let worker: ServiceWorker | undefined = undefined;
     // this interface is different from the one returned by registration
@@ -80,7 +81,6 @@ export function ServiceWorkerProvider({ children }: IProps) {
         listenForMessages,
       );
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function listenForState(event: Event) {

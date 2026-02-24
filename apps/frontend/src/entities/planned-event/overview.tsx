@@ -1,20 +1,20 @@
-import type { ILocalizationEntities } from "#lib/localization";
-import { createPlannedEventEditPageURL } from "#lib/urls";
 import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection } from "#components";
-import { ITranslatableProps, type ILocalizableProps } from "#components/types";
-import { Heading } from "#components/heading";
 import { DateTime } from "#components/date";
+import { EntityDescription, EntityID } from "#components/entities";
+import { Heading } from "#components/heading";
+import { LinkButton } from "#components/link";
+import { List, ListItem } from "#components/list";
 import {
+  type IOverviewProps,
   Overview,
   OverviewBody,
   OverviewFooter,
   OverviewHeader,
-  type IOverviewProps,
 } from "#components/overview";
-import { EntityDescription, EntityID } from "#components/entities";
-import { List, ListItem } from "#components/list";
-import { LinkButton } from "#components/link";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizationEntities } from "#lib/localization";
+import { createPlannedEventEditPageURL } from "#lib/urls";
 import type { IPlannedEvent } from "./types";
 
 interface IProps extends IOverviewProps, ILocalizableProps, ITranslatableProps {

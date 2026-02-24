@@ -1,5 +1,5 @@
-import { useActionData, type ActionFunctionArgs } from "react-router";
-import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
+import { type ActionFunctionArgs, useActionData } from "react-router";
+import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { URLViewer } from "@repo/ui/url";
 import { getLocalizedMessage } from "#lib/localization";
@@ -55,7 +55,7 @@ export async function action({
   try {
     if (request.method !== "POST") {
       throw new Error(
-        getLocalizedMessage("Unknown method $METHOD$", request.method)
+        getLocalizedMessage("Unknown method $METHOD$", request.method),
       );
     }
 

@@ -1,6 +1,14 @@
-import { useEffect, useState } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Page } from "#components";
+import { OverviewPlaceHolder } from "#components/overview";
+import {
+  getPlannedEvent,
+  type IPlannedEvent,
+  PlannetEventOverview,
+} from "#entities/planned-event";
+import { useIndexedDB } from "#hooks";
 import { getDictionary, type ILocalizationEntities } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,14 +17,6 @@ import {
 } from "#lib/pages";
 import { notFoundURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { useIndexedDB } from "#hooks";
-import { Page } from "#components";
-import { OverviewPlaceHolder } from "#components/overview";
-import {
-  getPlannedEvent,
-  type IPlannedEvent,
-  PlannetEventOverview,
-} from "#entities/planned-event";
 
 interface IProps extends ILocalizedProps<"planned-event"> {
   plannedEventTranslation: ILocalizationEntities["planned_event"];
@@ -39,6 +39,7 @@ function PlannedEventPage({
     ? undefined
     : parseInt(plannedEventID, 10);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -62,7 +63,6 @@ function PlannedEventPage({
         );
       },
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, parsedPlannedEventID]);
 
   return (
@@ -85,6 +85,7 @@ function PlannedEventPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

@@ -1,4 +1,4 @@
-import { PAGINATION_LIMIT, type IPagination } from "./types";
+import { type IPagination, PAGINATION_LIMIT } from "./types";
 
 export function createPagination(
   totalCount: number,

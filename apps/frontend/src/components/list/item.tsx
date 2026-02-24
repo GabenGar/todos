@@ -1,5 +1,6 @@
 import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
+//
 
 import styles from "./item.module.scss";
 

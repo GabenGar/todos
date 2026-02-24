@@ -1,3 +1,3 @@
-export { createPagination, createClientPagination } from "./create";
+export { createClientPagination, createPagination } from "./create";
+export type { IPaginatedCollection, IPagination } from "./types";
 export { PAGINATION_LIMIT } from "./types";
-export type { IPagination, IPaginatedCollection } from "./types";

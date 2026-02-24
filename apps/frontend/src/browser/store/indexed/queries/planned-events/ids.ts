@@ -1,5 +1,5 @@
-import type { IPagination } from "#lib/pagination";
 import type { IPlannedEvent } from "#entities/planned-event";
+import type { IPagination } from "#lib/pagination";
 import type { IIDBArgs } from "../../types";
 
 interface IArgs extends IIDBArgs<"planned_events"> {

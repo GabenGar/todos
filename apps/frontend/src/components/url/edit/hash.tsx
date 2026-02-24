@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { InputSection } from "@repo/ui/forms/sections";
 import { Label } from "@repo/ui/forms";
 import { InputTextArea } from "@repo/ui/forms/inputs";
-import type { ILocalizationPage } from "#lib/localization";
+import { InputSection } from "@repo/ui/forms/sections";
 import type { ITranslatableProps } from "#components/types";
+import type { ILocalizationPage } from "#lib/localization";
 
 interface IProps extends ITranslatableProps {
   t: ILocalizationPage["url-editor"];

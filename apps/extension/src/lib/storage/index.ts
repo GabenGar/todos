@@ -1,5 +1,5 @@
 export {
   getLocalStorageValue,
-  setLocalStorageValue,
   onLocalStorageChange,
+  setLocalStorageValue,
 } from "./local";

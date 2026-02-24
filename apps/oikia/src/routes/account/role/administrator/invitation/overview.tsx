@@ -1,34 +1,33 @@
 import { href } from "react-router";
-import { Page } from "@repo/ui/pages";
-import { Overview, OverviewHeader, OverviewBody } from "@repo/ui/articles";
-import { Heading } from "@repo/ui/headings";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import { ButtonCopy } from "@repo/ui/buttons";
 import { DateTimeView } from "@repo/ui/dates";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { EntityID, parseName, parseTitle } from "@repo/ui/entities";
 import { Preformatted } from "@repo/ui/formatting";
-import { ButtonCopy } from "@repo/ui/buttons";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
-import { createMetaTitle } from "#lib/router";
-import { getTranslation } from "#server/localization";
+import { Heading } from "@repo/ui/headings";
+import { Page } from "@repo/ui/pages";
+import { LinkInternal } from "#components/link";
 import { runTransaction } from "#database";
 import {
-  selectInvitationEntities,
   type IInvitationDB,
+  selectInvitationEntities,
 } from "#database/queries/invitations";
+import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { LinkInternal } from "#components/link";
+import { getTranslation } from "#server/localization";
+//
 
 import type { Route } from "./+types/overview";
-
 import styles from "./overview.module.scss";
 
 interface IProps extends ICommonTranslationPageProps<"invitation"> {
   invitation: IInvitationDB;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, invitation } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, invitation } = loaderData;
   const parsedTitle = parseTitle(invitation.title, invitation.id);
   const title = createMetaTitle(
     `${translation["Invitation"]} ${parsedTitle} ${translation["overview"]}`,

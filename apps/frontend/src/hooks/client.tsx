@@ -1,21 +1,21 @@
+import { useRouter } from "next/router";
 import {
   createContext,
-  useContext,
   type ReactNode,
-  useState,
+  useContext,
   useEffect,
+  useState,
 } from "react";
-import { useRouter } from "next/router";
+import { registerServiceWorker } from "#browser/workers";
 import { DEFAULT_LOG_LEVEL } from "#environment";
+import type { ILocale } from "#lib/internationalization";
 import {
-  type ILogLevel,
   changeCurrentLogLevel,
+  type ILogLevel,
   validateLogLevel,
 } from "#lib/logs";
-import type { ILocale } from "#lib/internationalization";
-import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 import { isIndexedDBAvailable } from "#store/indexed";
-import { registerServiceWorker } from "#browser/workers";
+import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
 import { IndexedDBProvider } from "./indexed-db";
 
 type IClientContext =
@@ -82,6 +82,7 @@ export function ClientProvider({ lang, children }: IProps) {
     })();
   }, [isReady]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     // no idea why is it undefined on the first render
     // despite being a literal prop of the component
@@ -101,8 +102,10 @@ export function ClientProvider({ lang, children }: IProps) {
           : {
               isClient,
               locale,
+              // biome-ignore lint/style/noNonNullAssertion: blah
               logLevel: logLevel!,
               changeLoglevel: switchLogLevel,
+              // biome-ignore lint/style/noNonNullAssertion: blah
               compatibility: compatibility!,
             }
       }

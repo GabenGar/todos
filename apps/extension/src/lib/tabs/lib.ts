@@ -6,5 +6,5 @@ export async function getActiveTab() {
     currentWindow: true,
   });
 
-  return tabs[0]
+  return tabs[0];
 }

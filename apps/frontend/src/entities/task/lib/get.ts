@@ -1,9 +1,9 @@
+import { getAllPlaces, type IPlace } from "#entities/place";
+import type { IEntityItem } from "#lib/entities";
 import { logDebug } from "#lib/logs";
-import { type IPaginatedCollection, createPagination } from "#lib/pagination";
+import { createPagination, type IPaginatedCollection } from "#lib/pagination";
 import { isSubstring } from "#lib/strings";
-import { type IEntityItem } from "#lib/entities";
-import { IPlace, getAllPlaces } from "#entities/place";
-import type { ITask, ITasksStats, ITaskStore } from "../types";
+import type { ITask, ITaskStore, ITasksStats } from "../types";
 import { getLocalStoreTasks } from "./storage";
 import { toTasks } from "./to-tasks";
 
@@ -27,7 +27,6 @@ export async function getTask(taskID: ITask["id"]): Promise<ITask> {
     throw new Error(`No task with ID "${taskID}" exists.`);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { place, ...restTask } = storeTask;
   const task: ITask = {
     ...restTask,

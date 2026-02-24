@@ -1,11 +1,10 @@
- ;
-
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
-import { useClient } from "#popup/hooks";
+// import { useClient } from "#popup/hooks";
 import { type IInputFileProps, InputFile } from "../input";
 import { Label } from "../label";
 import { type IInputSectionProps, InputSection } from "./section";
+//
 
 import styles from "./file.module.scss";
 
@@ -36,7 +35,7 @@ function Component({
   onDrop,
   ...props
 }: IProps) {
-  const client = useClient();
+  // const client = useClient();
   const [currentFiles, changeCurrentFiles] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement>(null);
 

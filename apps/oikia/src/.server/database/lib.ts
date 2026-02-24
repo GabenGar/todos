@@ -1,6 +1,6 @@
 import path from "node:path";
 import { cwd } from "node:process";
-import { runner as runMigrations, type RunnerOption } from "node-pg-migrate";
+import { type RunnerOption, runner as runMigrations } from "node-pg-migrate";
 import { MIGRATIONS_CONNECTION_DATA } from "#server/environment";
 import { pgPromise } from "./database";
 import type { IEntityRow } from "./types";

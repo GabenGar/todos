@@ -1,7 +1,6 @@
 import clsx from "clsx";
-import { type ILinkInternalProps, LinkInternal } from "./internal";
-
 import styles from "./button.module.scss";
+import { type ILinkInternalProps, LinkInternal } from "./internal";
 
 interface ILinkButtonProps extends ILinkInternalProps {}
 

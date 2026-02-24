@@ -3,11 +3,11 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "react-router";
-import { Preformatted } from "@repo/ui/formatting";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Preformatted } from "@repo/ui/formatting";
+import { getLocalizedMessage } from "#lib/localization";
 import { Layout } from "#page-action/components/layouts";
 import { HomePage, HomePageLoader } from "#page-action/pages/home";
-import { getLocalizedMessage } from "#lib/localization";
 
 export const routes = createMemoryRouter([
   {

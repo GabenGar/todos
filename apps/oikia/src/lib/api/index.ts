@@ -1,7 +1,7 @@
-export { isFailedAPIResponse, isAPIError } from "./lib";
+export { isAPIError, isFailedAPIResponse } from "./lib";
 export type {
-  IAPIResponse,
-  ISuccessfulAPIResponse,
-  IFailedAPIResponse,
   IAPIError,
+  IAPIResponse,
+  IFailedAPIResponse,
+  ISuccessfulAPIResponse,
 } from "./types";

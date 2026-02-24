@@ -1,12 +1,12 @@
 import { promises as fs } from "node:fs";
-import { getDictionary } from "#lib/localization";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Page } from "#components";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { Heading } from "#components/heading";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { Pre } from "#components/pre";
+import { getDictionary } from "#lib/localization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import { getStaticExportPaths } from "#server";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
 interface IProps extends ILocalizedProps<"yt-dlp-configs"> {
   windowsConfig: string;
@@ -50,14 +50,15 @@ function YTDLPConfigsPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const windowsConfig = await fs.readFile(
-    process.cwd() + "/src/pages/[lang]/yt-dlp-configs/windows.conf",
+    `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/windows.conf`,
     "utf8",
   );
   const linuxConfig = await fs.readFile(
-    process.cwd() + "/src/pages/[lang]/yt-dlp-configs/linux.conf",
+    `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/linux.conf`,
     "utf8",
   );
 

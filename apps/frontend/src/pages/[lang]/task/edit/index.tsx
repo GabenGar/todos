@@ -1,6 +1,17 @@
-import { useState, useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Loading, Page } from "#components";
+import { Button } from "#components/button";
+import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
+import {
+  Overview,
+  OverviewBody,
+  OverviewFooter,
+  OverviewHeader,
+} from "#components/overview";
+import { EditTaskForm, editTask, getTask, removeTask } from "#entities/task";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,18 +20,6 @@ import {
 } from "#lib/pages";
 import { createTaskPageURL, createTasksPageURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { Loading } from "#components";
-import {
-  Overview,
-  OverviewBody,
-  OverviewFooter,
-  OverviewHeader,
-} from "#components/overview";
-import { Link } from "#components/link";
-import { List, ListItem } from "#components/list";
-import { Button } from "#components/button";
-import { EditTaskForm, editTask, getTask, removeTask } from "#entities/task";
 
 interface IProps extends ILocalizedProps<"task_edit"> {
   todosTranslation: ILocalization["pages"]["tasks"];
@@ -40,6 +39,7 @@ function TaskEditPage({
   const taskID = getSingleValueFromQuery(query, "task_id");
   const title = t.title;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -54,7 +54,6 @@ function TaskEditPage({
       const task = await getTask(taskID);
       changeCurrentTask(task);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, taskID]);
 
   return (
@@ -126,6 +125,7 @@ function TaskEditPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const props = {

@@ -6,9 +6,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "lint": "biome lint --write ./ && tsc --noEmit",
-    "format": "biome format --write ./src",
-    "check": "biome check --write ./"
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit"
   },
   "exports": {
     ".": {
@@ -27,9 +27,10 @@
     "schema-utils": "^4.3.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.2",
-    "@types/node": "^20.12.7",
-    "typescript": "^5.8.3",
-    "webpack": "^5.100.2"
+    "@biomejs/biome": "2.4.4",
+    "@repo/biome-config": "*",
+    "@types/node": "^22.14.0",
+    "typescript": "^5.9.3",
+    "webpack": "^5.105.2"
   }
 }

@@ -1,15 +1,16 @@
-import type { IPagination } from "#lib/pagination";
 import { createBlockComponent } from "@repo/ui/meta";
+import {
+  type IPaginationLocalProps,
+  PaginationLocal,
+  PaginationOverview,
+} from "#components/pagination";
 import type {
   IBaseComponentPropsWithChildren,
   ITranslatableProps,
 } from "#components/types";
-import {
-  IPaginationLocalProps,
-  PaginationLocal,
-  PaginationOverview,
-} from "#components/pagination";
+import type { IPagination } from "#lib/pagination";
 import { List } from "./list";
+//
 
 import styles from "./local.module.scss";
 

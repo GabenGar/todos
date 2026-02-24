@@ -1,7 +1,11 @@
-import type { ILocalization } from "#lib/localization";
-import { Form, IFormEvent, type IFormComponentProps } from "#components/form";
+import {
+  Form,
+  type IFormComponentProps,
+  type IFormEvent,
+} from "#components/form";
 import { InputSectionText } from "#components/form/section";
 import type { ITranslatableProps } from "#components/types";
+import type { ILocalization } from "#lib/localization";
 import type { IPlaceInit } from "../types";
 
 interface IProps extends IFormComponentProps, ITranslatableProps {
@@ -43,7 +47,7 @@ export function PlaceCreateForm({
       commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
-      submitButton={(formID, isSubmitting) => (!isSubmitting ? add : adding)}
+      submitButton={(_formID, isSubmitting) => (!isSubmitting ? add : adding)}
     >
       {(formID) => (
         <>

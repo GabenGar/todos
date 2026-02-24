@@ -3,6 +3,7 @@ import { Details, type IDetailsProps } from "#details";
 import { createBlockComponent } from "#meta";
 import { Language } from "./language";
 import { type ILanguageListProps, LanguageList } from "./language-list";
+//
 
 import styles from "./switcher.module.scss";
 

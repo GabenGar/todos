@@ -1,12 +1,13 @@
 import { nanoid } from "nanoid";
+import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
 import { logDebug } from "#lib/logs";
-import { now } from "#lib/dates";
-import { setLocalStorePlaces } from "./storage";
-import { getAllPlaces } from "./get";
 import type { IPlace, IPlaceInit } from "../types";
+import { getAllPlaces } from "./get";
+import { setLocalStorePlaces } from "./storage";
 
-const validatePlaceInit = createValidator<IPlaceInit>("/entities/place/init");
+const validatePlaceInit: ReturnType<typeof createValidator<IPlaceInit>> =
+  createValidator<IPlaceInit>("/entities/place/init");
 
 export async function createPlace(init: IPlaceInit): Promise<IPlace> {
   const [place] = await createPlaces([init]);
@@ -17,7 +18,9 @@ export async function createPlace(init: IPlaceInit): Promise<IPlace> {
 async function createPlaces(inits: IPlaceInit[]): Promise<IPlace[]> {
   logDebug(`Creating ${inits.length} places...`);
 
-  inits.forEach((init) => validatePlaceInit(init));
+  inits.forEach((init) => {
+    validatePlaceInit(init);
+  });
 
   const incomingPlaces = inits.map(({ title, description }) => {
     const newPlace: IPlace = {

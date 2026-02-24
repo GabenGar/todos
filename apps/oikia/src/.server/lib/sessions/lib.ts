@@ -1,5 +1,5 @@
-import { SESSION_SECRET_KEY } from "#server/environment";
 import { createCookieSessionStorage } from "react-router";
+import { SESSION_SECRET_KEY } from "#server/environment";
 
 type SessionData = {
   auth_id: string;

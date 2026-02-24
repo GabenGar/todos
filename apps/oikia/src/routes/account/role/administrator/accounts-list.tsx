@@ -1,26 +1,27 @@
 import { href } from "react-router";
 import { Page } from "@repo/ui/pages";
-import { PreviewList } from "@repo/ui/previews";
 import {
   createPagination,
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
+import { PreviewList } from "@repo/ui/previews";
+import { LinkButton } from "#components/link";
+import { runTransaction } from "#database";
+import {
+  type IAccountDBPreview,
+  selectAccountCount,
+  selectAccountIDs,
+  selectAccountPreviews,
+} from "#database/queries/accounts";
+import { AccountPreview } from "#entities/account";
 import type {
   ICommonTranslationPageProps,
   IEntityTranslationProps,
 } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
-import { getTranslation } from "#server/localization";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { runTransaction } from "#database";
-import { LinkButton } from "#components/link";
-import { AccountPreview } from "#entities/account";
-import {
-  selectAccountCount,
-  selectAccountIDs,
-  selectAccountPreviews,
-  type IAccountDBPreview,
-} from "#database/queries/accounts";
+import { getTranslation } from "#server/localization";
+//
 
 import type { Route } from "./+types/accounts-list";
 
@@ -30,9 +31,8 @@ interface IProps
   accounts: IPaginatedCollection<IAccountDBPreview>;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, accounts } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, accounts } = loaderData;
   const { current_page, total_pages } = accounts.pagination;
   const title = createMetaTitle(
     `${translation["Accounts page"]} ${current_page} ${translation["out of"]} ${total_pages}`,

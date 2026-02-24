@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { createPlacePageURL } from "#lib/urls";
-import { IEntityItem } from "#lib/entities";
+import { createBlockComponent } from "@repo/ui/meta";
 import {
   DescriptionDetails,
   DescriptionList,
   DescriptionSection,
   DescriptionTerm,
 } from "#components";
-import { createBlockComponent } from "@repo/ui/meta";
+import { Button, MenuButtons, MenuItem } from "#components/button";
+import { EntityList } from "#components/entities";
 import { InputHidden } from "#components/form/input";
 import {
   type IInputSectionProps,
@@ -15,12 +15,13 @@ import {
 } from "#components/form/section";
 import { Link } from "#components/link";
 import { ListItem } from "#components/list";
-import { Button, MenuButtons, MenuItem } from "#components/button";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
 import { Pre } from "#components/pre";
-import { EntityList } from "#components/entities";
+import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { IEntityItem } from "#lib/entities";
+import { createPlacePageURL } from "#lib/urls";
 import { getPlaces } from "../lib/get";
-import { type IPlace } from "../types";
+import type { IPlace } from "../types";
+//
 
 import styles from "./place-section.module.scss";
 

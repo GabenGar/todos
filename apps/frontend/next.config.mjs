@@ -1,6 +1,7 @@
 // @ts-check
-import path from "node:path";
+
 import fs from "node:fs/promises";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 import nextEnv from "@next/env";
 import { PHASE_PRODUCTION_BUILD } from "next/constants.js";
@@ -53,10 +54,7 @@ async function createNextConfig(phase) {
     typedRoutes: true,
     crossOrigin: "anonymous",
     reactStrictMode: true,
-    webpack: (
-      config,
-      { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
-    ) => {
+    webpack: (config, { isServer }) => {
       // PWA stuff is strictly client thing,
       // therefore no need to have it in the server bundle
       if (isServer) {

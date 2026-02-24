@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, ReactNode, JSX } from "react";
-import type { ILocalizationCommon } from "#lib/localization";
+import type { ComponentPropsWithoutRef, JSX, ReactNode } from "react";
 import type { ILocale } from "#lib/internationalization";
+import type { ILocalizationCommon } from "#lib/localization";
 
 /**
  * Base props for components.

@@ -1,6 +1,11 @@
-import { useState, useEffect } from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Loading, Page } from "#components";
+import { Link } from "#components/link";
+import { List, ListItem } from "#components/list";
+import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
+import { EditPlaceForm, editPlace, getPlace } from "#entities/place";
 import { getDictionary, type ILocalization } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -9,12 +14,6 @@ import {
 } from "#lib/pages";
 import { createPlacePageURL } from "#lib/urls";
 import { getStaticExportPaths } from "#server";
-import { Page } from "#components";
-import { Loading } from "#components";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
-import { Link } from "#components/link";
-import { List, ListItem } from "#components/list";
-import { EditPlaceForm, editPlace, getPlace } from "#entities/place";
 
 interface IProps extends ILocalizedProps<"place_edit"> {
   placeTranslation: ILocalization["place"];
@@ -33,6 +32,7 @@ function PlaceEditPage({
   const { lang, common, t } = translation;
   const placeID = getSingleValueFromQuery(query, "place_id");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady) {
       return;
@@ -47,7 +47,6 @@ function PlaceEditPage({
       const task = await getPlace(placeID);
       changePlace(task);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, placeID]);
 
   return (
@@ -96,6 +95,7 @@ function PlaceEditPage({
 export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   params,
 }) => {
+  // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
   const dict = await getDictionary(lang);
   const { place } = dict.pages;

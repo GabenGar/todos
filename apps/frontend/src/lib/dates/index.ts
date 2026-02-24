@@ -1,8 +1,7 @@
 import type { IDateTime } from "./types";
 
-export type { IDateTime } from "./types";
-
 export { formatDateTime } from "./format";
+export type { IDateTime } from "./types";
 
 export function toISODateTime(date: Date) {
   const timestamp = date.toISOString();

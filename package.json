@@ -6,7 +6,7 @@
     "NextJS"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=22.14.0"
   },
   "private": true,
   "author": "GabenGar",
@@ -26,19 +26,20 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build-frontend": "turbo run build --filter=frontend",
-    "build-extension": "turbo run build --filter=\"link-overwatch\"",
+    "build-frontend": "turbo run frontend#build",
+    "build-extension": "turbo run \"link-overwatch\"#build",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "format": "turbo run format",
+    "check": "turbo run check",
     "dev": "turbo run dev",
     "prep": "npm install && npm run format && npm run build",
     "codegen": "turbo run codegen",
     "validate": "turbo run validate"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.2",
-    "turbo": "2.5.5"
+    "@biomejs/biome": "2.4.4",
+    "turbo": "2.8.10"
   },
-  "packageManager": "npm@8.7.0"
+  "packageManager": "npm@11.10.1"
 }

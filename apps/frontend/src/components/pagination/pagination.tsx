@@ -1,11 +1,12 @@
 import type { CSSProperties } from "react";
-import type { ILocalizationCommon } from "#lib/localization";
-import type { IPagination } from "#lib/pagination";
-import type { IBaseComponentProps } from "#components/types";
 import { createBlockComponent } from "@repo/ui/meta";
 import { LinkButton } from "#components/link";
 import { List, ListItem } from "#components/list";
+import type { IBaseComponentProps } from "#components/types";
+import type { ILocalizationCommon } from "#lib/localization";
+import type { IPagination } from "#lib/pagination";
 import { PaginationOverview } from "./overview";
+//
 
 import styles from "./pagination.module.scss";
 

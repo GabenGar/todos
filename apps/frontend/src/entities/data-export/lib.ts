@@ -1,17 +1,17 @@
 import { nanoid } from "nanoid";
+import {
+  getAllPlaces,
+  type IPlace,
+  setLocalStorePlaces,
+} from "#entities/place";
+import {
+  getAllTasks,
+  type ITaskStore,
+  setLocalStoreTasks,
+} from "#entities/task";
 import { now } from "#lib/dates";
 import { createValidator } from "#lib/json/schema";
 import { logDebug, logInfo } from "#lib/logs";
-import {
-  getAllTasks,
-  setLocalStoreTasks,
-  type ITaskStore,
-} from "#entities/task";
-import {
-  type IPlace,
-  getAllPlaces,
-  setLocalStorePlaces,
-} from "#entities/place";
 import type { IDataExport } from "./types";
 
 const validateDataExport: ReturnType<typeof createValidator<IDataExport>> =

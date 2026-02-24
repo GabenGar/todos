@@ -1,34 +1,35 @@
 import { href } from "react-router";
-import { Page } from "@repo/ui/pages";
+import { Overview, OverviewHeader } from "@repo/ui/articles";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { parseTitle } from "@repo/ui/entities";
 import { parsePositiveInteger } from "@repo/ui/numbers";
+import { Page } from "@repo/ui/pages";
 import {
   createPagination,
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
-import { Overview, OverviewHeader } from "@repo/ui/articles";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { PreviewList } from "@repo/ui/previews";
+import { LinkButton, LinkInternal } from "#components/link";
+import { runReadOnlyTransaction } from "#database";
+import {
+  type IAccountDBPreview,
+  selectAccountPreviews,
+} from "#database/queries/accounts";
+import {
+  type IInvitationDB,
+  selectInvitationEntities,
+  selectInvitedAccountIDs,
+} from "#database/queries/invitations";
+import { AccountPreview } from "#entities/account";
 import type {
   ICommonTranslationPageProps,
   IEntityTranslationProps,
 } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { NotFoundError } from "#server/lib/errors";
+import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
-import { runReadOnlyTransaction } from "#database";
-import {
-  selectInvitationEntities,
-  selectInvitedAccountIDs,
-  type IInvitationDB,
-} from "#database/queries/invitations";
-import {
-  selectAccountPreviews,
-  type IAccountDBPreview,
-} from "#database/queries/accounts";
-import { LinkButton, LinkInternal } from "#components/link";
-import { AccountPreview } from "#entities/account";
+//
 
 import type { Route } from "./+types/accounts-list";
 
@@ -39,9 +40,8 @@ interface IProps
   accounts: IPaginatedCollection<IAccountDBPreview>;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, invitation, accounts } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, invitation, accounts } = loaderData;
   const { current_page, total_pages } = accounts.pagination;
   const parsedTitle = parseTitle(invitation.title, invitation.id);
   const title = createMetaTitle(

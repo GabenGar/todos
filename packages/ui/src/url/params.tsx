@@ -5,8 +5,8 @@ import {
   DescriptionTerm,
 } from "#description-list";
 import { Preformatted } from "#formatting";
-
 import { List, ListItem } from "#lists";
+//
 
 import styles from "./params.module.scss";
 
@@ -34,12 +34,7 @@ export function TransformedSearchParams({
             ) : (
               <List isOrdered>
                 {Array.from(value).map((value, index) => (
-                  <ListItem
-                    key={`${value}-${
-                      // biome-ignore lint/suspicious/noArrayIndexKey: no explanation
-                      index
-                    }`}
-                  >
+                  <ListItem key={`${value}-${index}`}>
                     <Preformatted>{value}</Preformatted>
                   </ListItem>
                 ))}

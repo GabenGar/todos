@@ -1,5 +1,5 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://v2-8-10.turborepo.dev/schema.json",
   "extends": ["//"],
   "tasks": {
     "build": {
@@ -12,6 +12,7 @@
         "localization/**",
         "backend/**"
       ],
+      "env": ["MODE", "BASE_URL", "PROD", "DEV", "SSR"],
       "outputs": ["build/**"]
     },
     "start": {

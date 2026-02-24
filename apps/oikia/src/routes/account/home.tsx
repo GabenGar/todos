@@ -1,16 +1,17 @@
 import { href } from "react-router";
-import { Page } from "@repo/ui/pages";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
-import { Heading } from "@repo/ui/headings";
 import { DateTimeView } from "@repo/ui/dates";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { parseName } from "@repo/ui/entities";
+import { Heading } from "@repo/ui/headings";
+import { Page } from "@repo/ui/pages";
+import { LinkInternal } from "#components/link";
+import type { IAccount } from "#entities/account";
 import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateRequest, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
-import { LinkInternal } from "#components/link";
-import type { IAccount } from "#entities/account";
+//
 
 import type { Route } from "./+types/home";
 
@@ -18,9 +19,8 @@ interface IProps extends ICommonTranslationPageProps<"account-home"> {
   account: IAccount;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation } = loaderData;
   const title = createMetaTitle(translation["Account"]);
 
   return [{ title }];

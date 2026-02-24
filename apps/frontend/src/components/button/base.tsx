@@ -1,8 +1,9 @@
-import { useState } from "react";
 import clsx from "clsx";
+import { useState } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentPropsWithChildren } from "#components/types";
 import type { IClickEvent, IViewType } from "./types";
+//
 
 import styles from "./base.module.scss";
 

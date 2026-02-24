@@ -1,6 +1,6 @@
+import fs from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
-import fs from "node:fs/promises";
 import { lint, parser } from "@exodus/schemasafe";
 
 /**
@@ -39,7 +39,7 @@ export async function parseConfig(isDevelopment) {
   const configSchemaPath = path.join(schemaBasePath, "server.schema.json");
   const configPath = path.join(
     configBasePath,
-    isDevelopment ? "server.development.json" : "server.json"
+    isDevelopment ? "server.development.json" : "server.json",
   );
 
   const schemaContent = await fs.readFile(configSchemaPath, {
@@ -55,7 +55,7 @@ export async function parseConfig(isDevelopment) {
   if (schemaErrors.length !== 0) {
     throw new AggregateError(
       schemaErrors,
-      "Failed to validate server configuration schema."
+      "Failed to validate server configuration schema.",
     );
   }
 

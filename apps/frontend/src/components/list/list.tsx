@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { createBlockComponent } from "@repo/ui/meta";
 import { type IOrderedListProps, OrderedList } from "./ordered";
 import { type IUnorderedListProps, UnorderedList } from "./unordered";
+//
 
 import styles from "./list.module.scss";
 
@@ -14,7 +15,6 @@ export const List = createBlockComponent(styles, ListComponent);
 
 function ListComponent(props: IListProps) {
   if ("isOrdered" in props) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isOrdered, isAlternating, className, ...listProps } = props;
     const finalClassName = clsx(className, isAlternating && styles.alternating);
 
