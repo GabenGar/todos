@@ -6,7 +6,7 @@
     "NextJS"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=22.14.0"
   },
   "private": true,
   "author": "GabenGar",
@@ -41,5 +41,5 @@
     "@biomejs/biome": "2.4.4",
     "turbo": "2.8.10"
   },
-  "packageManager": "npm@8.7.0"
+  "packageManager": "npm@11.10.1"
 }

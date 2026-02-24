@@ -29,8 +29,8 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
     "@repo/biome-config": "*",
-    "@types/node": "^20.12.7",
-    "typescript": "^5.8.3",
-    "webpack": "^5.100.2"
+    "@types/node": "^22.14.0",
+    "typescript": "^5.9.3",
+    "webpack": "^5.105.2"
   }
 }
