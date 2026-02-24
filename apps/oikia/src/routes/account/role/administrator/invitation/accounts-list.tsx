@@ -29,6 +29,8 @@ import { createMetaTitle } from "#lib/router";
 import { NotFoundError } from "#server/lib/errors";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/accounts-list";
 
 interface IProps
@@ -38,9 +40,8 @@ interface IProps
   accounts: IPaginatedCollection<IAccountDBPreview>;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, invitation, accounts } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, invitation, accounts } = loaderData;
   const { current_page, total_pages } = accounts.pagination;
   const parsedTitle = parseTitle(invitation.title, invitation.id);
   const title = createMetaTitle(

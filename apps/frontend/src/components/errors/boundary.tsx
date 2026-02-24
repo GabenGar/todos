@@ -16,10 +16,14 @@ import styles from "./boundary.module.scss";
 
 interface IProps {
   children: ReactNode;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  onError?: (error: Error, errorInfo: IErrorInfo) => void;
 }
 
-type IState = { extra?: { error: Error; errorInfo: ErrorInfo } } & (
+interface IErrorInfo extends ErrorInfo {
+  digest?: string;
+}
+
+type IState = { extra?: { error: Error; errorInfo: IErrorInfo } } & (
   | { hasError: false }
   | { error: Error; hasError: true }
 );

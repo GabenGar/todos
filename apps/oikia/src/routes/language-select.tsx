@@ -7,6 +7,8 @@ import { Page } from "@repo/ui/pages";
 import { LinkButton } from "#components/link";
 import { type ILanguage, LANGUAGES } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
+//
+
 // biome-ignore lint/correctness/noUnusedImports: fuck off biome
 import type { Route } from "./+types/language-select";
 import styles from "./language-select.module.scss";

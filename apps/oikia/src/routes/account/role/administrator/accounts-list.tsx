@@ -21,6 +21,8 @@ import type {
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/accounts-list";
 
 interface IProps
@@ -29,9 +31,8 @@ interface IProps
   accounts: IPaginatedCollection<IAccountDBPreview>;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, accounts } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, accounts } = loaderData;
   const { current_page, total_pages } = accounts.pagination;
   const title = createMetaTitle(
     `${translation["Accounts page"]} ${current_page} ${translation["out of"]} ${total_pages}`,

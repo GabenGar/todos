@@ -21,13 +21,14 @@ import {
   parseMethod,
 } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/registration";
 
 interface IProps extends ICommonTranslationPageProps<"registration"> {}
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation } = loaderData;
   const title = createMetaTitle(translation["Registration"]);
 
   return [{ title }];

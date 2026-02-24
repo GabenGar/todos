@@ -22,13 +22,14 @@ import {
 } from "#server/lib/router";
 import { commitSession, getSession } from "#server/lib/sessions";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/login";
 
 interface IProps extends ICommonTranslationPageProps<"login"> {}
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation } = loaderData;
   const title = createMetaTitle(translation["Login"]);
 
   return [{ title }];

@@ -17,6 +17,8 @@ import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/overview";
 import styles from "./overview.module.scss";
 
@@ -24,9 +26,8 @@ interface IProps extends ICommonTranslationPageProps<"invitation"> {
   invitation: IInvitationDB;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, invitation } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, invitation } = loaderData;
   const parsedTitle = parseTitle(invitation.title, invitation.id);
   const title = createMetaTitle(
     `${translation["Invitation"]} ${parsedTitle} ${translation["overview"]}`,

@@ -16,15 +16,16 @@ import type { ICommonTranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/account";
 
 interface IProps extends ICommonTranslationPageProps<"account-overview"> {
   account: IAccountDB;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, account } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, account } = loaderData;
   const { id, name } = account;
   const parsedName = parseName(name, id);
   const title = createMetaTitle(

@@ -22,6 +22,8 @@ import type {
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/invitations-list";
 
 interface IProps
@@ -30,9 +32,8 @@ interface IProps
   invitations: IPaginatedCollection<IInvitationDB>;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation, invitations } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation, invitations } = loaderData;
   const { current_page, total_pages } = invitations.pagination;
   const title = createMetaTitle(
     `${translation["Invitations page"]} ${current_page} ${translation["out of"]} ${total_pages}`,

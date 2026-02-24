@@ -10,6 +10,8 @@ import type { ITranslationPageProps } from "#lib/internationalization";
 import { createMetaTitle } from "#lib/router";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import { getTranslation } from "#server/localization";
+//
+
 import type { Route } from "./+types/home";
 
 interface IProps extends ITranslationPageProps<"administrator-home"> {
@@ -17,9 +19,8 @@ interface IProps extends ITranslationPageProps<"administrator-home"> {
   invitations: string;
 }
 
-export function meta({ data }: Route.MetaArgs) {
-  // @ts-expect-error cannot fetch translaction
-  const { translation } = data;
+export function meta({ loaderData }: Route.MetaArgs) {
+  const { translation } = loaderData;
   const title = createMetaTitle(translation["Administrator"]);
 
   return [{ title }];
