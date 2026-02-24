@@ -1,0 +1,334 @@
+{
+  "common": {
+    "layout": {
+      "description": "Организовывайте задачи в браузере",
+      "source_code": "Исходный код",
+      "service_worker": {
+        "Service Worker": "Сервис-воркер",
+        "status": {
+          "disabled": "Отключён",
+          "initializing": "Запускается",
+          "unavailable": "Недоступен",
+          "error": "Ошибка",
+          "redundant": "Избыточный",
+          "installing": "Устанавливается",
+          "installed": "Установлен",
+          "activating": "Активируется",
+          "activated": "Активирован",
+          "parsed": "Обработан"
+        }
+      }
+    },
+    "form": {
+      "submit": "Отправить",
+      "submitting": "Отправляем...",
+      "Confirm changes": "Применить изменения",
+      "Applying changes...": "Применяем изменения..."
+    },
+    "pagination": {
+      "first": "Первая",
+      "previous": "Предыдущая",
+      "current": "Нынешняя",
+      "next": "Следующая",
+      "last": "Последняя",
+      "out_of": "из"
+    },
+    "list": {
+      "no_items": "Ничего не найдено.",
+      "Select": "Выбрать",
+      "Reset": "Сбросить"
+    },
+    "entity": {
+      "Copy": "Копировать",
+      "Copied": "Скопировано",
+      "Edit": "Редактировать",
+      "Delete": "Удалить"
+    },
+    "datetime": {
+      "Copy": "Копировать",
+      "Copied": "Скопировано"
+    },
+    "button": {
+      "Copy": "Копировать",
+      "Copied": "Скопировано"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Добро пожаловать!",
+      "heading": "Добро пожаловать!",
+      "Tools": "Инструменты",
+      "Tasks": "Задачи",
+      "QR code reader": "Считыватель QR кодов",
+      "Places": "Места",
+      "URL Viewer": "Просмотрщик ссылок",
+      "URL Editor": "Редактор ссылок",
+      "Account": "Учётная запись",
+      "Planned events": "Планируемые события",
+      "Recently updated": "Недавно обновлённые",
+      "Recently created": "Недавно добавленные",
+      "Miscellaneous": "Разное",
+      "YT-DLP configs": "Конфиги YT-DLP"
+    },
+    "qr_code_reader": {
+      "title": "Считыватель QR кодов",
+      "heading": "Считыватель QR Кодов",
+      "description": "Считывайте любой QR код для его просмотра",
+      "result": "Результат",
+      "no_result": "Ничего",
+      "form": {
+        "file_label": "Кликните для загрузки файла",
+        "scan": "Сканировать",
+        "scanning": "Сканируем..."
+      }
+    },
+    "places": {
+      "title": "Места",
+      "heading": "Места"
+    },
+    "place": {
+      "title": "Место",
+      "heading": "Место"
+    },
+    "place_edit": {
+      "title": "Редактирование Места",
+      "heading": "Редактирование Места"
+    },
+    "stats_places": {
+      "title": "Статистика мест",
+      "heading": "Статистика Мест",
+      "description": "Рассматривайте статистику мест.",
+      "stats": {
+        "All": "Все",
+        "Eventless": "Бедные событиями"
+      }
+    },
+    "stats_tasks": {
+      "title": "Статистика задач",
+      "heading": "Статистика Задач",
+      "description": "Краткое изложение задач",
+      "status_values": {
+        "all": "Все",
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершённые",
+        "failed": "Проваленные"
+      }
+    },
+    "task": {
+      "title": "Задача",
+      "heading": "Задача",
+      "description": "Описание",
+      "no_description": "Без описания",
+      "creation_date": "Дата создания",
+      "last_updated": "Последнее обновление",
+      "edit": "Редактировать",
+      "place": "Место",
+      "place_unknown": "Неизвестно",
+      "status": "Статус",
+      "status_values": {
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершена",
+        "failed": "Провалена"
+      },
+      "actions": {
+        "fail": "Провалить",
+        "delay": "Отложить",
+        "start": "Начать",
+        "complete": "Завершить"
+      },
+      "delete": "Удалить",
+      "details": "Детали"
+    },
+    "task_edit": {
+      "title": "Редактирование задачи",
+      "heading": "Редактирование Задачи",
+      "description": "Редактирование задачи.",
+      "task": "Задача",
+      "Delete": "Удалить"
+    },
+    "tasks": {
+      "title": "Задачи",
+      "heading": "Задачи",
+      "new_todo": {
+        "title": "Название",
+        "description": "Описание",
+        "status": "Статус",
+        "add": "Добавить",
+        "adding": "Добавляем...",
+        "place": "Место"
+      },
+      "status": "Статус",
+      "status_values": {
+        "pending": "В ожидании",
+        "in-progress": "В ходе выполнения",
+        "finished": "Завершена",
+        "failed": "Провалена"
+      },
+      "export_tasks": "Экспортировать задачи",
+      "click_to_file": "Кликните, чтобы загрузить файл",
+      "import_tasks": "Импортировать задачи",
+      "importing_tasks": "Импортируем задачи...",
+      "details": "Детали",
+      "search": "Искать",
+      "add": "Добавить",
+      "search_tasks": {
+        "query": "Запрос",
+        "search": "Искать",
+        "Place": "Место",
+        "searching": "Ищем..."
+      },
+      "edit": "Редактировать",
+      "editing": "Редактируем..."
+    },
+    "account": {
+      "title": "Учётная запись",
+      "heading": "Учётная Запись",
+      "Compatibility": "Совместимость",
+      "Supported": "Поддерживается",
+      "Not supported": "Не поддерживается",
+      "Data": "Данные",
+      "Export": "Экспорт",
+      "Import": "Импорт",
+      "Export Data": "Экпортировать данные",
+      "Click to upload a file": "Кликните для загрузки файла",
+      "Import data": "Импортировать данные",
+      "Importing data...": "Импортируем данные...",
+      "Settings": "Настройки",
+      "Update": "Обновить",
+      "Updating...": "Обновляем...",
+      "logger": {
+        "Log level": "Уровень логов",
+        "levels": {
+          "Debug": "Отладка",
+          "Logs": "Сообщения",
+          "Information": "Информация",
+          "Warnings": "Предупреждения",
+          "Errors": "Ошибки"
+        }
+      }
+    },
+    "url-viewer": {
+      "title": "Просмотрщик Ссылок",
+      "heading": "Просмотрщик Ссылок",
+      "URL": "Ссылка",
+      "Decoded URL": "Раскодированная ссылка",
+      "Parse": "Анализировать",
+      "Parsing...": "Анализируем...",
+      "URLs": "Ссылки",
+      "Origin Details": "Детали Источника",
+      "Pathname Details": "Детали Пути",
+      "Search Parameters Details": "Детали Поисковых Параметров",
+      "Fragment Details": "Детали Фрагмента",
+      "No URL selected.": "Ссылка не выбрана.",
+      "Full URL": "Полная ссылка",
+      "Transformed URL": "Изменённая ссылка",
+      "Origin": "Источник",
+      "Protocol": "Протокол",
+      "Username": "Имя пользователя",
+      "Password": "Пароль",
+      "Host": "Хост",
+      "Hostname": "Имя хоста",
+      "Port": "Порт",
+      "Pathname": "Путь",
+      "Segments": "Сегменты",
+      "Search": "Поиск",
+      "Search parameters": "Поисковые параметры",
+      "Hash": "Идентификатор фрагмента"
+    },
+    "url-editor": {
+      "title": "Редактор ссылок",
+      "heading": "Редактор Ссылок",
+      "Base URL": "Основная ссылка",
+      "URL": "Ссылка",
+      "Parse": "Анализировать",
+      "Parsing...": "Анализируем...",
+      "A URL which will be used as a base for editing, if provided.": "Ссылка, которая будет использоваться за основу, если есть.",
+      "Origin": "Источник",
+      "Protocol": "Протокол",
+      "Username": "Имя пользователя",
+      "Password": "Пароль",
+      "Hostname": "Имя хоста",
+      "Port": "Порт",
+      "Pathname": "Путь",
+      "Segments": "Сегменты",
+      "Segment": "Сегмент",
+      "Search parameters": "Поисковые параметры",
+      "Keys": "Ключи",
+      "Values": "Значения",
+      "Empty": "Пусто",
+      "Hash": "Идентификатор фрагмента",
+      "Decoded URL": "Раскодированная ссылка",
+      "Encoded URL": "Закодированная ссылка",
+      "Full URL": "Полная ссылка",
+      "Unknown": "Неизвестно",
+      "Change": "Изменить",
+      "Changing...": "Изменяем...",
+      "Delete": "Удалить"
+    },
+    "planned-events": {
+      "title": "Планируемые события",
+      "heading": "Планируемые События",
+      "Recently updated planned events": "Недавно измененные планируемые события",
+      "Recently created planned events": "Недавно созданные планируемые события",
+      "Recently Updated Planned Events": "Недавно Измененные Планируемые События",
+      "Recently Created Planned Events": "Недавно Созданные Планируемые События"
+    },
+    "planned-event": {
+      "title": "Планируемое событие",
+      "heading": "Планируемое Событие"
+    },
+    "planned-event_edit": {
+      "title": "Редактирование планируемого события",
+      "heading": "Редактирование Планируемого События"
+    },
+    "yt-dlp-configs": {
+      "title": "Конфиги YT-DLP",
+      "heading": "Конфиги YT-DLP"
+    }
+  },
+  "entities": {
+    "planned_event": {
+      "Planned event": "Планируемое событие",
+      "Title": "Заглавие",
+      "Description": "Описание",
+      "No description provided": "Без описания",
+      "Date of creation": "Дата создания",
+      "Last updated": "Последнее обновление",
+      "Details": "Детали",
+      "Add planned event": "Добавить планируемое событие",
+      "Adding planned event...": "Добавляем планируемое событие...",
+      "No planned events found": "Планируемые события не найдены",
+      "Order": "Порядок",
+      "Recently updated": "Недавно обновлённые",
+      "Recently created": "Недавно добавленные",
+      "Filter": "Фильтровать",
+      "Filtering...": "Фильтруем..."
+    }
+  },
+
+  "place": {
+    "title": "Заглавие",
+    "description": "Описание",
+    "no_description": "Без описания",
+    "created_at": "Дата создания",
+    "updated_at": "Последнее обновление",
+    "add": "Добавить место",
+    "adding": "Добавляем место...",
+    "details": "Детали",
+    "Place": "Место",
+    "Edit": "Редактировать",
+    "Tasks": "Задачи",
+    "No places found": "Места не найдены",
+    "edit": {
+      "Confirm changes": "Применить изменения",
+      "Applying changes...": "Применяем изменения..."
+    },
+    "search": {
+      "Query": "Запрос",
+      "Search": "Искать",
+      "Searching...": "Ищем..."
+    }
+  }
+}
