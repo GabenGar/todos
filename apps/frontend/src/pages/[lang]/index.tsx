@@ -21,6 +21,7 @@ import { getStaticExportPaths } from "#server";
 //
 
 import styles from "./index.module.scss";
+import { useTranslation } from "react-i18next";
 
 interface IProps extends ILocalizedProps<"home"> {}
 
@@ -29,7 +30,9 @@ interface IParams extends ILocalizedParams {}
 function FrontPage({
   translation,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { lang, t } = translation;
+  const t = useTranslation("translation")
+  const { lang } = translation;
+  const heading = t($ => $)
 
   return (
     <Page heading={t.heading} title={t.title}>

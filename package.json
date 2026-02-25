@@ -33,6 +33,7 @@
     "format": "turbo run format",
     "check": "turbo run check",
     "dev": "turbo run dev",
+    "dev-pages": "turbo run frontend#dev",
     "prep": "npm install && npm run format && npm run build",
     "codegen": "turbo run codegen",
     "validate": "turbo run validate"

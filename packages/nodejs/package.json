@@ -12,7 +12,8 @@
     "test-validate": "node dist/scripts/test-validate.js",
     "lint": "biome lint ./ && tsc --noEmit",
     "format": "biome format --write ./src",
-    "prep": "npm run build && npm run test"
+    "prep": "npm run build && npm run test",
+    "dev": "tsc --watch"
   },
   "exports": {
     ".": {

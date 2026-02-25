@@ -1,58 +1,4 @@
 {
-  "common": {
-    "layout": {
-      "description": "Организовывайте задачи в браузере",
-      "source_code": "Исходный код",
-      "service_worker": {
-        "Service Worker": "Сервис-воркер",
-        "status": {
-          "disabled": "Отключён",
-          "initializing": "Запускается",
-          "unavailable": "Недоступен",
-          "error": "Ошибка",
-          "redundant": "Избыточный",
-          "installing": "Устанавливается",
-          "installed": "Установлен",
-          "activating": "Активируется",
-          "activated": "Активирован",
-          "parsed": "Обработан"
-        }
-      }
-    },
-    "form": {
-      "submit": "Отправить",
-      "submitting": "Отправляем...",
-      "Confirm changes": "Применить изменения",
-      "Applying changes...": "Применяем изменения..."
-    },
-    "pagination": {
-      "first": "Первая",
-      "previous": "Предыдущая",
-      "current": "Нынешняя",
-      "next": "Следующая",
-      "last": "Последняя",
-      "out_of": "из"
-    },
-    "list": {
-      "no_items": "Ничего не найдено.",
-      "Select": "Выбрать",
-      "Reset": "Сбросить"
-    },
-    "entity": {
-      "Copy": "Копировать",
-      "Copied": "Скопировано",
-      "Edit": "Редактировать",
-      "Delete": "Удалить"
-    },
-    "datetime": {
-      "Copy": "Копировать",
-      "Copied": "Скопировано"
-    },
-    "button": {
-      "Copy": "Копировать",
-      "Copied": "Скопировано"
-    }
-  },
   "pages": {
     "home": {
       "title": "Добро пожаловать!",
@@ -307,7 +253,6 @@
       "Filtering...": "Фильтруем..."
     }
   },
-
   "place": {
     "title": "Заглавие",
     "description": "Описание",

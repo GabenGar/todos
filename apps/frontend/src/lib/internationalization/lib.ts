@@ -1,22 +1,54 @@
-import i18next from "i18next";
+import i18next, { type InitOptions, type i18n } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
-import en from "#translation/en.json";
-import { DEFAULT_LOCALE, type ILocale } from "./types";
+import { initReactI18next } from "react-i18next";
+import { IS_DEVELOPMENT } from "#environment";
+import { fetchTranslation } from "./fetch-translation";
+import {
+  DEFAULT_LOCALE,
+  DEFAULT_NAMESPACES,
+  type ILocale,
+  LOCALES,
+} from "./types";
 
-i18next
-  .use(
-    resourcesToBackend<ILocale, "translation">(
-      async (language, namespace) =>
-        import(`./locales/${language}/${namespace}.json`),
-    ),
-  )
-  .on("failedLoading", (lng, ns, msg) => console.error(msg))
-  .init({
-    fallbackLng: DEFAULT_LOCALE,
-    debug: true,
-    resources: {
-      en: {
-        translation: en,
-      },
-    },
-  });
+let isInitialized = false;
+
+const options = {
+  debug: IS_DEVELOPMENT,
+  supportedLngs: LOCALES,
+  returnEmptyString: false,
+  returnNull: false,
+  load: "currentOnly",
+  ns: [],
+  defaultNS: DEFAULT_NAMESPACES,
+  fallbackLng: DEFAULT_LOCALE,
+  interpolation: {
+    // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+    escapeValue: false,
+  },
+  react: {
+    useSuspense: false,
+  },  
+} satisfies InitOptions;
+
+export async function getTranslation(language: ILocale): Promise<i18n> {
+  if (!isInitialized) {
+    i18next
+      .use(resourcesToBackend(fetchTranslation))
+      .use(initReactI18next)
+      .on("failedLoading", (_language, _namespace, message) =>
+        console.error(message),
+      );
+
+    await i18next.init(options);
+
+    isInitialized = true;
+  }
+
+  await i18next.changeLanguage(language);
+
+  return i18next;
+}
+
+export function getCurrentTranslation() {
+  return i18next;
+}

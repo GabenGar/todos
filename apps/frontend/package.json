@@ -11,7 +11,7 @@
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --formatter-enabled=false --linter-enabled=false --write && next typegen && tsc --noEmit",
-    "dev": "next dev --port 8001",
+    "dev": "next dev --port 8001 --webpack",
     "dev-workers": "webpack --config webpack.dev.mjs --watch",
     "codegen": "npm run build-codegen && node ./scripts/codegen.mjs && biome format --write ./codegen/output"
   },
@@ -50,6 +50,7 @@
     "next": "16.1.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-i18next": "^16.5.4",
     "stringify-object": "^5.0.0"
   },
   "devDependencies": {
