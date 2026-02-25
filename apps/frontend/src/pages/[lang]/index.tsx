@@ -1,4 +1,5 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useTranslation } from "react-i18next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Page } from "#components";
 import { Heading } from "#components/heading";
@@ -21,7 +22,6 @@ import { getStaticExportPaths } from "#server";
 //
 
 import styles from "./index.module.scss";
-import { useTranslation } from "react-i18next";
 
 interface IProps extends ILocalizedProps<"home"> {}
 
@@ -30,21 +30,24 @@ interface IParams extends ILocalizedParams {}
 function FrontPage({
   translation,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const t = useTranslation("translation")
+  const { t } = useTranslation("translation");
   const { lang } = translation;
-  const heading = t($ => $)
+  const title = t(($) => $.pages.home.title);
+  const heading = t(($) => $.pages.home.heading);
 
   return (
-    <Page heading={t.heading} title={t.title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {(headinglevel) => (
           <OverviewHeader className={styles.header}>
-            <Heading level={headinglevel + 1}>{t["Tools"]}</Heading>
+            <Heading level={headinglevel + 1}>
+              {t(($) => $.pages.home["Tools"])}
+            </Heading>
             <List className={styles.list}>
               <ListItem>
                 <DescriptionList>
                   <DescriptionSection
-                    dKey={t["Planned events"]}
+                    dKey={t(($) => $.pages.home["Planned events"])}
                     dValue={
                       <List className={styles.list}>
                         <ListItem>
@@ -54,7 +57,7 @@ function FrontPage({
                               order: "recently_updated",
                             })}
                           >
-                            {t["Recently updated"]}
+                            {t(($) => $.pages.home["Recently updated"])}
                           </Link>
                         </ListItem>
 
@@ -63,7 +66,7 @@ function FrontPage({
                             className={styles.link}
                             href={createPlannedEventsPageURL(lang)}
                           >
-                            {t["Recently created"]}
+                            {t(($) => $.pages.home["Recently created"])}
                           </Link>
                         </ListItem>
                       </List>
@@ -77,7 +80,7 @@ function FrontPage({
                   className={styles.link}
                   href={createStatsPlacesPageURL(lang)}
                 >
-                  {t["Places"]}
+                  {t(($) => $.pages.home["Places"])}
                 </Link>
               </ListItem>
 
@@ -86,7 +89,7 @@ function FrontPage({
                   className={styles.link}
                   href={createTaskStatsPageURL(lang)}
                 >
-                  {t["Tasks"]}
+                  {t(($) => $.pages.home["Tasks"])}
                 </Link>
               </ListItem>
 
@@ -95,7 +98,7 @@ function FrontPage({
                   className={styles.link}
                   href={createQRCodeReaderURL(lang)}
                 >
-                  {t["QR code reader"]}
+                  {t(($) => $.pages.home["QR code reader"])}
                 </Link>
               </ListItem>
 
@@ -104,7 +107,7 @@ function FrontPage({
                   className={styles.link}
                   href={createURLViewerPageURL(lang)}
                 >
-                  {t["URL Viewer"]}
+                  {t(($) => $.pages.home["URL Viewer"])}
                 </Link>
               </ListItem>
 
@@ -113,25 +116,27 @@ function FrontPage({
                   className={styles.link}
                   href={createURLEditorPageURL(lang)}
                 >
-                  {t["URL Editor"]}
+                  {t(($) => $.pages.home["URL Editor"])}
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link className={styles.link} href={createAccountPageURL(lang)}>
-                  {t["Account"]}
+                  {t(($) => $.pages.home["Account"])}
                 </Link>
               </ListItem>
             </List>
 
-            <Heading level={headinglevel + 1}>{t["Miscellaneous"]}</Heading>
+            <Heading level={headinglevel + 1}>
+              {t(($) => $.pages.home["Miscellaneous"])}
+            </Heading>
             <List className={styles.list}>
               <ListItem>
                 <Link
                   className={styles.link}
                   href={createYTDLPConfigPage(lang)}
                 >
-                  {t["YT-DLP configs"]}
+                  {t(($) => $.pages.home["YT-DLP configs"])}
                 </Link>
               </ListItem>
             </List>

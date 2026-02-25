@@ -27,7 +27,9 @@ const options = {
   },
   react: {
     useSuspense: false,
-  },  
+  },
+  // @ts-expect-error it's in the docs
+  enableSelector: "optimize"
 } satisfies InitOptions;
 
 export async function getTranslation(language: ILocale): Promise<i18n> {
