@@ -35,11 +35,7 @@ function TranslatedApp({ Component, pageProps }: AppPropsWithLayout) {
     <ErrorBoundary>
       <ServiceWorkerProvider>
         <ClientProvider lang={lang}>
-          <MainLayout
-            lang={lang}
-            // @ts-expect-error fdf
-            common={{}}
-          >
+          <MainLayout>
             <Component {...pageProps} />
           </MainLayout>
         </ClientProvider>

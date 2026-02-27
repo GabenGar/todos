@@ -1,4 +1,4 @@
-import i18next, { type InitOptions, type i18n, type Resource } from "i18next";
+import i18next, { type InitOptions, type Resource } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
 import { IS_DEVELOPMENT } from "#environment";
@@ -50,6 +50,8 @@ export async function getTranslation(language: ILocale): Promise<Resource> {
 
   return i18next.store.data;
 }
+
+
 
 export function getCurrentTranslation() {
   return i18next;
