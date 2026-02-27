@@ -1,4 +1,4 @@
-import i18next, { type InitOptions, type i18n } from "i18next";
+import i18next, { type InitOptions, type i18n, type Resource } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
 import { IS_DEVELOPMENT } from "#environment";
@@ -29,10 +29,10 @@ const options = {
     useSuspense: false,
   },
   // @ts-expect-error it's in the docs
-  enableSelector: "optimize"
+  enableSelector: "optimize",
 } satisfies InitOptions;
 
-export async function getTranslation(language: ILocale): Promise<i18n> {
+export async function getTranslation(language: ILocale): Promise<Resource> {
   if (!isInitialized) {
     i18next
       .use(resourcesToBackend(fetchTranslation))
@@ -48,7 +48,7 @@ export async function getTranslation(language: ILocale): Promise<i18n> {
 
   await i18next.changeLanguage(language);
 
-  return i18next;
+  return i18next.store.data;
 }
 
 export function getCurrentTranslation() {

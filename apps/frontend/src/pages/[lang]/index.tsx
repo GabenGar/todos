@@ -6,7 +6,7 @@ import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { Overview, OverviewHeader } from "#components/overview";
-import { getDictionary } from "#lib/localization";
+import { getTranslation } from "#lib/internationalization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import {
   createAccountPageURL,
@@ -23,15 +23,12 @@ import { getStaticExportPaths } from "#server";
 
 import styles from "./index.module.scss";
 
-interface IProps extends ILocalizedProps<"home"> {}
+interface IProps extends ILocalizedProps {}
 
 interface IParams extends ILocalizedParams {}
 
-function FrontPage({
-  translation,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("translation");
-  const { lang } = translation;
   const title = t(($) => $.pages.home.title);
   const heading = t(($) => $.pages.home.heading);
 
@@ -152,10 +149,10 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
 }) => {
   // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const { home } = dict.pages;
+  const translation = await getTranslation(lang);
   const props = {
-    translation: { lang, common: dict.common, t: home },
+    lang,
+    translation,
   } satisfies IProps;
 
   return {
