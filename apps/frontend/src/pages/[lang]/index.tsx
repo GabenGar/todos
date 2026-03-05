@@ -29,8 +29,8 @@ interface IParams extends ILocalizedParams {}
 
 function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("translation");
-  const title = t(($) => $.pages.home.title);
-  const heading = t(($) => $.pages.home.heading);
+  const title = t((t) => t.pages.home.title);
+  const heading = t((t) => t.pages.home.heading);
 
   return (
     <Page heading={heading} title={title}>
@@ -38,13 +38,13 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
         {(headinglevel) => (
           <OverviewHeader className={styles.header}>
             <Heading level={headinglevel + 1}>
-              {t(($) => $.pages.home["Tools"])}
+              {t((t) => t.pages.home["Tools"])}
             </Heading>
             <List className={styles.list}>
               <ListItem>
                 <DescriptionList>
                   <DescriptionSection
-                    dKey={t(($) => $.pages.home["Planned events"])}
+                    dKey={t((t) => t.pages.home["Planned events"])}
                     dValue={
                       <List className={styles.list}>
                         <ListItem>
@@ -54,7 +54,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                               order: "recently_updated",
                             })}
                           >
-                            {t(($) => $.pages.home["Recently updated"])}
+                            {t((t) => t.pages.home["Recently updated"])}
                           </Link>
                         </ListItem>
 
@@ -63,7 +63,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                             className={styles.link}
                             href={createPlannedEventsPageURL(lang)}
                           >
-                            {t(($) => $.pages.home["Recently created"])}
+                            {t((t) => t.pages.home["Recently created"])}
                           </Link>
                         </ListItem>
                       </List>
@@ -77,7 +77,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createStatsPlacesPageURL(lang)}
                 >
-                  {t(($) => $.pages.home["Places"])}
+                  {t((t) => t.pages.home["Places"])}
                 </Link>
               </ListItem>
 
@@ -86,7 +86,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createTaskStatsPageURL(lang)}
                 >
-                  {t(($) => $.pages.home["Tasks"])}
+                  {t((t) => t.pages.home["Tasks"])}
                 </Link>
               </ListItem>
 
@@ -95,7 +95,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createQRCodeReaderURL(lang)}
                 >
-                  {t(($) => $.pages.home["QR code reader"])}
+                  {t((t) => t.pages.home["QR code reader"])}
                 </Link>
               </ListItem>
 
@@ -104,7 +104,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createURLViewerPageURL(lang)}
                 >
-                  {t(($) => $.pages.home["URL Viewer"])}
+                  {t((t) => t.pages.home["URL Viewer"])}
                 </Link>
               </ListItem>
 
@@ -113,19 +113,19 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createURLEditorPageURL(lang)}
                 >
-                  {t(($) => $.pages.home["URL Editor"])}
+                  {t((t) => t.pages.home["URL Editor"])}
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link className={styles.link} href={createAccountPageURL(lang)}>
-                  {t(($) => $.pages.home["Account"])}
+                  {t((t) => t.pages.home["Account"])}
                 </Link>
               </ListItem>
             </List>
 
             <Heading level={headinglevel + 1}>
-              {t(($) => $.pages.home["Miscellaneous"])}
+              {t((t) => t.pages.home["Miscellaneous"])}
             </Heading>
             <List className={styles.list}>
               <ListItem>
@@ -133,7 +133,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createYTDLPConfigPage(lang)}
                 >
-                  {t(($) => $.pages.home["YT-DLP configs"])}
+                  {t((t) => t.pages.home["YT-DLP configs"])}
                 </Link>
               </ListItem>
             </List>

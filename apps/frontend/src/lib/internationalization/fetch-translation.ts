@@ -7,7 +7,8 @@ export async function fetchTranslation(
 ) {
   let translation: ResourceKey;
 
-  // doing nested
+  console.log(`fetch translation: ${language}, ${namespace}`);
+
   switch (language) {
     case "en": {
       switch (namespace) {
