@@ -1,4 +1,8 @@
-export { getInternatinalization, getTranslation } from "./lib";
+export {
+  getInternationalization as getInternatinalization,
+  getTranslation,
+  initClientTranslation,
+} from "./lib";
 export type { ILocale } from "./types";
 export {
   DEFAULT_LOCALE,

@@ -7,8 +7,6 @@ export async function fetchTranslation(
 ) {
   let translation: ResourceKey;
 
-  console.log(`fetch translation: ${language}, ${namespace}`);
-
   switch (language) {
     case "en": {
       switch (namespace) {
