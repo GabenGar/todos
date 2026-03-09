@@ -1,12 +1,13 @@
 import i18next, { type InitOptions, type Resource } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
-import { IS_DEVELOPMENT } from "#environment";
+import { IS_TRANSLATION_DEBUG_ENABLED } from "#environment";
 import { fetchTranslation } from "./fetch-translation";
 import {
   DEFAULT_LOCALE,
   DEFAULT_NAMESPACES,
   type ILocale,
+  type IPageNamespace,
   LOCALES,
 } from "./types";
 
@@ -30,22 +31,22 @@ const options = {
   react: {
     useSuspense: false,
   },
-  debug: IS_DEVELOPMENT,
+  debug: IS_TRANSLATION_DEBUG_ENABLED,
   returnEmptyString: false,
   returnNull: false,
 } satisfies InitOptions;
 
-export async function getTranslation(language: ILocale): Promise<Resource> {
+export async function getTranslation(
+  language: ILocale,
+  pageNamespace: IPageNamespace,
+): Promise<Resource> {
   await initServerTranslation();
 
   await i18next.changeLanguage(language);
   await i18next.loadNamespaces(DEFAULT_NAMESPACES);
+  await i18next.loadNamespaces(pageNamespace);
 
   return i18next.store.data;
-}
-
-export function getInternationalization() {
-  return i18next;
 }
 
 async function initServerTranslation() {

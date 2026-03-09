@@ -1,11 +1,11 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { useTranslation } from "react-i18next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Page } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { Overview, OverviewHeader } from "#components/overview";
+import { usePageTranslation } from "#hooks";
 import { getTranslation } from "#lib/internationalization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import {
@@ -28,23 +28,21 @@ interface IProps extends ILocalizedProps {}
 interface IParams extends ILocalizedParams {}
 
 function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation("translation");
-  const title = t((t) => t.pages.home.title);
-  const heading = t((t) => t.pages.home.heading);
+  const { t } = usePageTranslation("page-home");
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   return (
     <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {(headinglevel) => (
           <OverviewHeader className={styles.header}>
-            <Heading level={headinglevel + 1}>
-              {t((t) => t.pages.home["Tools"])}
-            </Heading>
+            <Heading level={headinglevel + 1}>{t((t) => t["Tools"])}</Heading>
             <List className={styles.list}>
               <ListItem>
                 <DescriptionList>
                   <DescriptionSection
-                    dKey={t((t) => t.pages.home["Planned events"])}
+                    dKey={t((t) => t["Planned events"])}
                     dValue={
                       <List className={styles.list}>
                         <ListItem>
@@ -54,7 +52,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                               order: "recently_updated",
                             })}
                           >
-                            {t((t) => t.pages.home["Recently updated"])}
+                            {t((t) => t["Recently updated"])}
                           </Link>
                         </ListItem>
 
@@ -63,7 +61,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                             className={styles.link}
                             href={createPlannedEventsPageURL(lang)}
                           >
-                            {t((t) => t.pages.home["Recently created"])}
+                            {t((t) => t["Recently created"])}
                           </Link>
                         </ListItem>
                       </List>
@@ -77,7 +75,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createStatsPlacesPageURL(lang)}
                 >
-                  {t((t) => t.pages.home["Places"])}
+                  {t((t) => t["Places"])}
                 </Link>
               </ListItem>
 
@@ -86,7 +84,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createTaskStatsPageURL(lang)}
                 >
-                  {t((t) => t.pages.home["Tasks"])}
+                  {t((t) => t["Tasks"])}
                 </Link>
               </ListItem>
 
@@ -95,7 +93,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createQRCodeReaderURL(lang)}
                 >
-                  {t((t) => t.pages.home["QR code reader"])}
+                  {t((t) => t["QR code reader"])}
                 </Link>
               </ListItem>
 
@@ -104,7 +102,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createURLViewerPageURL(lang)}
                 >
-                  {t((t) => t.pages.home["URL Viewer"])}
+                  {t((t) => t["URL Viewer"])}
                 </Link>
               </ListItem>
 
@@ -113,19 +111,19 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createURLEditorPageURL(lang)}
                 >
-                  {t((t) => t.pages.home["URL Editor"])}
+                  {t((t) => t["URL Editor"])}
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link className={styles.link} href={createAccountPageURL(lang)}>
-                  {t((t) => t.pages.home["Account"])}
+                  {t((t) => t["Account"])}
                 </Link>
               </ListItem>
             </List>
 
             <Heading level={headinglevel + 1}>
-              {t((t) => t.pages.home["Miscellaneous"])}
+              {t((t) => t["Miscellaneous"])}
             </Heading>
             <List className={styles.list}>
               <ListItem>
@@ -133,7 +131,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   className={styles.link}
                   href={createYTDLPConfigPage(lang)}
                 >
-                  {t((t) => t.pages.home["YT-DLP configs"])}
+                  {t((t) => t["YT-DLP configs"])}
                 </Link>
               </ListItem>
             </List>
@@ -149,7 +147,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
 }) => {
   // biome-ignore lint/style/noNonNullAssertion: blah
   const { lang } = params!;
-  const translation = await getTranslation(lang);
+  const translation = await getTranslation(lang, "page-home");
   const props = {
     lang,
     translation,

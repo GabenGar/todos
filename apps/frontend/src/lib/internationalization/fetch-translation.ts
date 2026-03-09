@@ -1,9 +1,10 @@
 import type { ResourceKey } from "i18next";
-import type { ILocale, INamespace } from "./types";
+import { fetchPageTranslation } from "./fetch-page-translation";
+import type { ILocale, INameSpace } from "./types";
 
 export async function fetchTranslation(
   language: ILocale,
-  namespace: INamespace,
+  namespace: INameSpace,
 ) {
   let translation: ResourceKey;
 
@@ -24,7 +25,7 @@ export async function fetchTranslation(
         }
 
         default: {
-          throw new Error(`Unknown namespace "${namespace}"`);
+          translation = await fetchPageTranslation(language, namespace);
         }
       }
       break;
@@ -46,14 +47,14 @@ export async function fetchTranslation(
         }
 
         default: {
-          throw new Error(`Unknown namespace "${namespace}"`);
+          translation = await fetchPageTranslation(language, namespace);
         }
       }
       break;
     }
 
     default: {
-      throw new Error(`Unknown language "${language}".`);
+      throw new Error(`Unknown language "${language satisfies never}".`);
     }
   }
 

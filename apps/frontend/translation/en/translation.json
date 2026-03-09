@@ -1,21 +1,5 @@
 {
   "pages": {
-    "home": {
-      "title": "Welcome!",
-      "heading": "Welcome!",
-      "Tools": "Tools",
-      "Tasks": "Tasks",
-      "QR code reader": "QR code reader",
-      "Places": "Places",
-      "URL Viewer": "URL viewer",
-      "URL Editor": "URL editor",
-      "Account": "Account",
-      "Planned events": "Planned events",
-      "Recently updated": "Recently updated",
-      "Recently created": "Recently created",
-      "Miscellaneous": "Miscellaneous",
-      "YT-DLP configs": "YT-DLP configs"
-    },
     "qr_code_reader": {
       "title": "QR code reader",
       "heading": "QR Code Reader",

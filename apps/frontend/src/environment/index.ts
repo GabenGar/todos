@@ -80,3 +80,11 @@ export const SERVICE_WORKER_STATIC_ASSETS_PATHS = process.env
 
 export const SERVICE_WORKER_STATIC_ASSETS_HASH =
   process.env.NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_HASH ?? "";
+
+const isTranslationDebugEnabled =
+  process.env.NEXT_PUBLIC_IS_TRANSLATION_DEBUG_ENABLED;
+
+export const IS_TRANSLATION_DEBUG_ENABLED =
+  !isTranslationDebugEnabled || isTranslationDebugEnabled === ""
+    ? false
+    : JSON.parse(isTranslationDebugEnabled) as boolean;

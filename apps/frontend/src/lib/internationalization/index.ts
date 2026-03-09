@@ -1,9 +1,8 @@
 export {
-  getInternationalization as getInternatinalization,
   getTranslation,
   initClientTranslation,
 } from "./lib";
-export type { ILocale } from "./types";
+export type { ILocale, IPageNamespace } from "./types";
 export {
   DEFAULT_LOCALE,
   DEFAULT_NAMESPACES,
