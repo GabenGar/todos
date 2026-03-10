@@ -30,6 +30,11 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-place-edit": {
+          translation = await import("#translation/en/pages/place-edit.json");
+          break;
+        }
+
         default: {
           throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
@@ -56,6 +61,11 @@ export async function fetchPageTranslation(
 
         case "page-place": {
           translation = await import("#translation/ru/pages/place.json");
+          break;
+        }
+
+        case "page-place-edit": {
+          translation = await import("#translation/ru/pages/place-edit.json");
           break;
         }
 

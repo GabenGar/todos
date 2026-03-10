@@ -1,9 +1,5 @@
 {
   "pages": {
-    "place_edit": {
-      "title": "Edit Place",
-      "heading": "Edit Place"
-    },
     "stats_places": {
       "title": "Stats of places",
       "heading": "Stats of Places",
@@ -27,29 +23,7 @@
     },
     "task": {
       "title": "Task",
-      "heading": "Task",
-      "description": "Description",
-      "no_description": "No description provided",
-      "creation_date": "Creation date",
-      "last_updated": "Last updated",
-      "edit": "Edit",
-      "place": "Place",
-      "place_unknown": "Unknown",
-      "status": "Status",
-      "status_values": {
-        "pending": "Pending",
-        "in-progress": "In progress",
-        "finished": "Finished",
-        "failed": "Failed"
-      },
-      "actions": {
-        "fail": "Fail",
-        "delay": "Delay",
-        "start": "Start",
-        "complete": "Complete"
-      },
-      "delete": "Delete",
-      "details": "Details"
+      "heading": "Task"
     },
     "task_edit": {
       "title": "Edit task",
@@ -220,6 +194,32 @@
       "Search": "Search",
       "Searching...": "Searching..."
     }
+  },
+  "task": {
+    "description": "Description",
+    "no_description": "No description provided",
+    "creation_date": "Creation date",
+    "last_updated": "Last updated",
+    "edit": "Edit",
+    "place": "Place",
+    "place_unknown": "Unknown",
+    "status": "Status",
+    "status_values": {
+      "all": "All",
+      "pending": "Pending",
+      "in-progress": "In progress",
+      "finished": "Finished",
+      "failed": "Failed"
+    },
+    "actions": {
+      "fail": "Fail",
+      "delay": "Delay",
+      "start": "Start",
+      "complete": "Complete"
+    },
+    
+    "delete": "Delete",
+    "details": "Details"
   },
   "entities": {
     "planned_event": {

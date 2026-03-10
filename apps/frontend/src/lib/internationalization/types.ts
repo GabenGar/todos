@@ -1,6 +1,12 @@
 export const LOCALES = ["en", "ru"] as const;
 export const BASE_NAMESPACES = ["common", "translation", "@repo/ui"] as const;
-export const PAGE_NAMESPACES = ["page-home", "page-qr-code-reader", "page-places", "page-place"] as const;
+export const PAGE_NAMESPACES = [
+  "page-home",
+  "page-qr-code-reader",
+  "page-places",
+  "page-place",
+  "page-place-edit"
+] as const;
 export const DEFAULT_LOCALE = LOCALES[0];
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;
 export const NAMESPACES = [...BASE_NAMESPACES, ...PAGE_NAMESPACES] as const;
@@ -10,9 +16,7 @@ export type IPageNamespace = (typeof PAGE_NAMESPACES)[number];
 export type INameSpace = IBaseNamespace | IPageNamespace;
 
 export type IDefaultNamespace = Exclude<IBaseNamespace, "@repo/ui">;
-export type IActionableNameSpace =
-  | IDefaultNamespace
-  | IPageNamespace;
+export type IActionableNameSpace = IDefaultNamespace | IPageNamespace;
 
 export function isLocale(input: unknown): input is ILocale {
   return LOCALES.includes(input as ILocale);

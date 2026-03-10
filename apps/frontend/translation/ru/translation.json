@@ -1,9 +1,5 @@
 {
   "pages": {
-    "place_edit": {
-      "title": "Редактирование Места",
-      "heading": "Редактирование Места"
-    },
     "stats_places": {
       "title": "Статистика мест",
       "heading": "Статистика Мест",
@@ -199,30 +195,54 @@
     }
   },
   "place": {
-      "title": "Заглавие",
-      "description": "Описание",
-      "no_description": "Без описания",
-      "created_at": "Дата создания",
-      "updated_at": "Последнее обновление",
-      "add": "Добавить место",
-      "adding": "Добавляем место...",
-      "details": "Детали",
-      "Place": "Место",
-      "Edit": "Редактировать",
-      "Tasks": "Задачи",
-      "No places found": "Места не найдены",
-      "edit": {
-        "Confirm changes": "Применить изменения",
-        "Applying changes...": "Применяем изменения..."
-      },
-      "search": {
-        "Query": "Запрос",
-        "Search": "Искать",
-        "Searching...": "Ищем..."
-      }
+    "title": "Заглавие",
+    "description": "Описание",
+    "no_description": "Без описания",
+    "created_at": "Дата создания",
+    "updated_at": "Последнее обновление",
+    "add": "Добавить место",
+    "adding": "Добавляем место...",
+    "details": "Детали",
+    "Place": "Место",
+    "Edit": "Редактировать",
+    "Tasks": "Задачи",
+    "No places found": "Места не найдены",
+    "edit": {
+      "Confirm changes": "Применить изменения",
+      "Applying changes...": "Применяем изменения..."
     },
+    "search": {
+      "Query": "Запрос",
+      "Search": "Искать",
+      "Searching...": "Ищем..."
+    }
+  },
+  "task": {
+    "description": "Описание",
+    "no_description": "Без описания",
+    "creation_date": "Дата создания",
+    "last_updated": "Последнее обновление",
+    "edit": "Редактировать",
+    "place": "Место",
+    "place_unknown": "Неизвестно",
+    "status": "Статус",
+    "status_values": {
+      "all": "Все",
+      "pending": "В ожидании",
+      "in-progress": "В ходе выполнения",
+      "finished": "Завершена",
+      "failed": "Провалена"
+    },
+    "actions": {
+      "fail": "Провалить",
+      "delay": "Отложить",
+      "start": "Начать",
+      "complete": "Завершить"
+    },
+    "delete": "Удалить",
+    "details": "Детали"
+  },
   "entities": {
-    
     "planned_event": {
       "Planned event": "Планируемое событие",
       "Title": "Заглавие",
