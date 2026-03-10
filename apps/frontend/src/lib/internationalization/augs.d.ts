@@ -5,6 +5,8 @@ import type pagePlace from "#translation/en/pages/place.json";
 import type pagePlaceEdit from "#translation/en/pages/place-edit.json";
 import type pagePlaces from "#translation/en/pages/places.json";
 import type pageQRReader from "#translation/en/pages/qr-code-reader.json";
+import type pageStatsPlaces from "#translation/en/pages/stats-places.json";
+import type pageStatsTasks from "#translation/en/pages/stats-tasks.json";
 import type translation from "#translation/en/translation.json";
 import type { IActionableNameSpace } from "./types";
 
@@ -19,7 +21,9 @@ declare module "i18next" {
       "page-qr-code-reader": typeof pageQRReader;
       "page-places": typeof pagePlaces;
       "page-place": typeof pagePlace;
-      "page-place-edit": typeof pagePlaceEdit
+      "page-place-edit": typeof pagePlaceEdit;
+      "page-stats-tasks": typeof pageStatsTasks;
+      "page-stats-places": typeof pageStatsPlaces;
     };
     enableSelector: "optimize";
   }

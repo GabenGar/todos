@@ -1,26 +1,5 @@
 {
   "pages": {
-    "stats_places": {
-      "title": "Stats of places",
-      "heading": "Stats of Places",
-      "description": "View the stats of places.",
-      "stats": {
-        "All": "All",
-        "Eventless": "Eventless"
-      }
-    },
-    "stats_tasks": {
-      "title": "Task stats",
-      "heading": "Task Stats",
-      "description": "Rundown of the tasks",
-      "status_values": {
-        "all": "All",
-        "pending": "Pending",
-        "in-progress": "In progress",
-        "finished": "Finished",
-        "failed": "Failed"
-      }
-    },
     "task": {
       "title": "Task",
       "heading": "Task"

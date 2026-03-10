@@ -5,7 +5,9 @@ export const PAGE_NAMESPACES = [
   "page-qr-code-reader",
   "page-places",
   "page-place",
-  "page-place-edit"
+  "page-place-edit",
+  "page-stats-places",
+  "page-stats-tasks"
 ] as const;
 export const DEFAULT_LOCALE = LOCALES[0];
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;

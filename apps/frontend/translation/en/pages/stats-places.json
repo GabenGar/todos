@@ -1,0 +1,9 @@
+{
+  "title": "Stats of places",
+  "heading": "Stats of Places",
+  "description": "View the stats of places.",
+  "stats": {
+    "All": "All",
+    "Eventless": "Eventless"
+  }
+}
