@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Form, type IFormEvent } from "#components/form";
 import { InputOption } from "#components/form/input";
 import { InputSectionSelect, InputSectionText } from "#components/form/section";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
 import { type IPlace, PlaceSection } from "#entities/place";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { type ITask, isTaskStatus } from "./types";
 //
 
@@ -16,12 +16,8 @@ export interface ITaskSearchQuery {
   place_id?: IPlace["id"];
 }
 
-export interface ISearchTasksFormProps
-  extends ILocalizableProps,
-    ITranslatableProps {
+export interface ISearchTasksFormProps extends ILocalizableProps {
   id: string;
-  translation: ILocalization["pages"]["tasks"];
-  statusTranslation: ILocalization["pages"]["stats_tasks"]["status_values"];
   defaultQuery?: ITaskSearchQuery;
   onSearch: (newSearchQuery: ITaskSearchQuery) => Promise<void>;
   place?: IPlace;
@@ -29,19 +25,15 @@ export interface ISearchTasksFormProps
 
 export function SearchTasksForm({
   language,
-  commonTranslation,
-  translation,
-  statusTranslation,
   id,
   defaultQuery,
   place,
   onSearch,
 }: ISearchTasksFormProps) {
+  const { t } = useTranslation("translation");
   const [oldQuery, changeOldQuery] = useState<ITaskSearchQuery | undefined>(
     defaultQuery,
   );
-  const { query, search, searching } = translation.search_tasks;
-  const { status } = translation;
   const FIELD = {
     QUERY: { name: "query", label: query },
     PLACE: { name: "place_id", label: translation.search_tasks["Place"] },
@@ -79,7 +71,6 @@ export function SearchTasksForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
       submitButton={(_, isSubmitting) => (!isSubmitting ? search : searching)}

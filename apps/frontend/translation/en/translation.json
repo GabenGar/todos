@@ -1,50 +1,5 @@
 {
   "pages": {
-    "task": {
-      "title": "Task",
-      "heading": "Task"
-    },
-    "task_edit": {
-      "title": "Edit task",
-      "heading": "Edit Task",
-      "description": "Edit task details.",
-      "task": "Task",
-      "Delete": "Delete"
-    },
-    "tasks": {
-      "title": "Tasks",
-      "heading": "Tasks",
-      "new_todo": {
-        "title": "Title",
-        "description": "Description",
-        "status": "Status",
-        "add": "Add",
-        "adding": "Adding...",
-        "place": "Place"
-      },
-      "status": "Status",
-      "status_values": {
-        "pending": "Pending",
-        "in-progress": "In progress",
-        "finished": "Finished",
-        "failed": "Failed"
-      },
-      "export_tasks": "Export tasks",
-      "click_to_file": "Click to upload a file",
-      "import_tasks": "Import tasks",
-      "importing_tasks": "Importing tasks...",
-      "details": "Details",
-      "search": "Search",
-      "add": "Add",
-      "search_tasks": {
-        "query": "Query",
-        "Place": "Place",
-        "search": "Search",
-        "searching": "Searching..."
-      },
-      "edit": "Edit",
-      "editing": "Editing..."
-    },
     "account": {
       "title": "Account",
       "heading": "Account",
@@ -196,9 +151,24 @@
       "start": "Start",
       "complete": "Complete"
     },
-    
+    "new_todo": {
+      "title": "Title",
+      "description": "Description",
+      "status": "Status",
+      "add": "Add",
+      "adding": "Adding...",
+      "place": "Place"
+    },
+    "search_tasks": {
+      "query": "Query",
+      "Place": "Place",
+      "search": "Search",
+      "searching": "Searching..."
+    },
     "delete": "Delete",
-    "details": "Details"
+    "details": "Details",
+    "search": "Search",
+    "add": "Add"
   },
   "entities": {
     "planned_event": {

@@ -10,9 +10,9 @@ import {
   OverviewHeader,
 } from "#components/overview";
 import { PreviewList } from "#components/preview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
 import { getPlace, type IPlace } from "#entities/place";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { getSingleValueFromQuery } from "#lib/pages";
 import { createPlacePageURL, createTasksPageURL } from "#lib/urls";
 import { createTask } from "./lib/create";
@@ -28,26 +28,14 @@ import { type ITask, type ITaskInit, isTaskStatus } from "./types";
 
 interface IProps
   extends ILocalizableProps,
-    ITranslatableProps,
     Pick<IOverviewProps, "headingLevel"> {
-  translation: ILocalization["pages"]["tasks"];
-  taskTranslation: ILocalization["pages"]["task"];
-  statusTranslation: ILocalization["pages"]["stats_tasks"]["status_values"];
   id: string;
 }
 
 /**
  * @TODO move the state out of the component
  */
-export function TaskList({
-  language,
-  commonTranslation,
-  translation,
-  taskTranslation,
-  statusTranslation,
-  id,
-  headingLevel,
-}: IProps) {
+export function TaskList({ language, id, headingLevel }: IProps) {
   const router = useRouter();
   const { isReady, query: pageQuery } = router;
   const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
@@ -142,9 +130,6 @@ export function TaskList({
     <>
       <Forms
         language={language}
-        commonTranslation={commonTranslation}
-        translation={translation}
-        statusTranslation={statusTranslation}
         headingLevel={headingLevel}
         id={id}
         query={query}
@@ -164,7 +149,6 @@ export function TaskList({
         </Overview>
       ) : (
         <PreviewList
-          commonTranslation={commonTranslation}
           pagination={tasks.pagination}
           buildURL={(page) => {
             const url = createTasksPageURL(language, {
@@ -180,9 +164,7 @@ export function TaskList({
             <TaskPreview
               key={task.id}
               language={language}
-              commonTranslation={commonTranslation}
               headingLevel={headingLevel}
-              translation={taskTranslation}
               task={task}
             />
           ))}
@@ -193,15 +175,7 @@ export function TaskList({
 }
 
 interface IFormsProps
-  extends Pick<
-      IProps,
-      | "language"
-      | "commonTranslation"
-      | "translation"
-      | "statusTranslation"
-      | "id"
-      | "headingLevel"
-    >,
+  extends Pick<IProps, "language" | "id" | "headingLevel">,
     Pick<INewTaskFormProps, "onNewTask">,
     Pick<ISearchTasksFormProps, "onSearch"> {
   query?: string;
@@ -211,9 +185,6 @@ interface IFormsProps
 
 function Forms({
   language,
-  commonTranslation,
-  translation,
-  statusTranslation,
   headingLevel,
   id,
   query,
@@ -222,8 +193,8 @@ function Forms({
   onNewTask,
   onSearch,
 }: IFormsProps) {
+  const { t } = useTranslation("translation");
   const [place, changePlace] = useState<Awaited<ReturnType<typeof getPlace>>>();
-  const { add, search } = translation;
   const newFormID = `${id}-task-list-new`;
   const searchFormID = `${id}-task-list-search`;
 
@@ -249,7 +220,7 @@ function Forms({
               <List>
                 <ListItem>
                   <Link href={createPlacePageURL(language, place.id)}>
-                    {translation.new_todo.place}
+                    {t(t => t.task.new_todo.place)}
                   </Link>
                 </ListItem>
               </List>
@@ -257,12 +228,9 @@ function Forms({
           )}
 
           <OverviewBody>
-            <Details summary={search}>
+            <Details summary={t(t => t.task.search)}>
               <SearchTasksForm
                 language={language}
-                commonTranslation={commonTranslation}
-                translation={translation}
-                statusTranslation={statusTranslation}
                 id={searchFormID}
                 defaultQuery={{ query, status }}
                 place={place}
@@ -270,11 +238,9 @@ function Forms({
               />
             </Details>
 
-            <Details summary={add}>
+            <Details summary={t(t => t.task.add)}>
               <NewTaskForm
                 language={language}
-                commonTranslation={commonTranslation}
-                translation={translation}
                 id={newFormID}
                 place={place}
                 onNewTask={onNewTask}

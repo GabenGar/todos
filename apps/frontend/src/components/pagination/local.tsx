@@ -2,19 +2,15 @@ import type { CSSProperties } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import { Button } from "#components/button";
 import { List, ListItem } from "#components/list";
-import type {
-  IBaseComponentProps,
-  ITranslatableProps,
-} from "#components/types";
+import type { IBaseComponentProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import type { IPositiveInteger } from "#lib/numbers";
 import type { IPagination } from "#lib/pagination";
 //
 
 import styles from "./local.module.scss";
 
-export interface IPaginationLocalProps
-  extends IBaseComponentProps<"ul">,
-    ITranslatableProps {
+export interface IPaginationLocalProps extends IBaseComponentProps<"ul"> {
   pagination: IPagination;
   onPageChange: (nextPage: IPositiveInteger) => Promise<void>;
 }
@@ -22,19 +18,18 @@ export interface IPaginationLocalProps
 export const PaginationLocal = createBlockComponent(styles, Component);
 
 function Component({
-  commonTranslation,
   pagination,
   onPageChange,
   ...props
 }: IPaginationLocalProps) {
-  const { first, previous, current, next, last } = commonTranslation.pagination;
+  const { t } = useTranslation("common");
   const { currentPage, totalPages } = pagination;
   const buttonWidth = Math.max(
-    first.length,
-    previous.length,
-    current.length,
-    next.length,
-    last.length,
+    t((t) => t.pagination.first).length,
+    t((t) => t.pagination.previous).length,
+    t((t) => t.pagination.current).length,
+    t((t) => t.pagination.next).length,
+    t((t) => t.pagination.last).length,
   );
 
   async function handlePageChange(page: IPositiveInteger) {
@@ -54,7 +49,7 @@ function Component({
             await handlePageChange(1);
           }}
         >
-          {first}
+          {t((t) => t.pagination.first)}
         </Button>
       </ListItem>
 
@@ -66,7 +61,7 @@ function Component({
             await handlePageChange(currentPage - 1);
           }}
         >
-          {previous}
+          {t((t) => t.pagination.previous)}
         </Button>
       </ListItem>
 
@@ -78,7 +73,7 @@ function Component({
             await handlePageChange(currentPage + 1);
           }}
         >
-          {next}
+          {t((t) => t.pagination.next)}
         </Button>
       </ListItem>
 
@@ -90,7 +85,7 @@ function Component({
             await handlePageChange(totalPages);
           }}
         >
-          {last}
+          {t((t) => t.pagination.last)}
         </Button>
       </ListItem>
     </List>

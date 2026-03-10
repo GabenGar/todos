@@ -45,6 +45,21 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-tasks": {
+          translation = await import("#translation/en/pages/tasks.json");
+          break;
+        }
+
+        case "page-task": {
+          translation = await import("#translation/en/pages/task.json");
+          break;
+        }
+
+        case "page-task-edit": {
+          translation = await import("#translation/en/pages/task-edit.json");
+          break;
+        }
+
         default: {
           throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
@@ -86,6 +101,21 @@ export async function fetchPageTranslation(
 
         case "page-stats-tasks": {
           translation = await import("#translation/ru/pages/stats-tasks.json");
+          break;
+        }
+
+        case "page-tasks": {
+          translation = await import("#translation/ru/pages/tasks.json");
+          break;
+        }
+
+        case "page-task": {
+          translation = await import("#translation/ru/pages/task.json");
+          break;
+        }
+
+        case "page-task-edit": {
+          translation = await import("#translation/ru/pages/task-edit.json");
           break;
         }
 

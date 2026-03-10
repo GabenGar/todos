@@ -10,8 +10,8 @@ import {
   PreviewFooter,
   PreviewHeader,
 } from "#components/preview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import type { ILocalization } from "#lib/localization";
+import type { ILocalizableProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import { createPlacePageURL, createTaskPageURL } from "#lib/urls";
 import { TaskStatus } from "./status";
 import type { ITask } from "./types";
@@ -19,9 +19,8 @@ import type { ITask } from "./types";
 
 import styles from "./preview.module.scss";
 
-interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
+interface IProps extends ILocalizableProps, IPreviewProps {
   task: ITask;
-  translation: ILocalization["pages"]["task"];
 }
 
 /**
@@ -31,13 +30,8 @@ interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
  */
 export const TaskPreview = createBlockComponent(styles, Component);
 
-function Component({
-  language,
-  commonTranslation,
-  translation,
-  task,
-  ...props
-}: IProps) {
+function Component({ language, task, ...props }: IProps) {
+  const { t } = useTranslation("translation");
   const { id, title, description, status, place } = task;
 
   return (
@@ -49,24 +43,19 @@ function Component({
           </PreviewHeader>
 
           <PreviewBody>
-            <EntityID commonTranslation={commonTranslation} entityID={id} />
+            <EntityID entityID={id} />
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
-                dKey={translation.status}
-                dValue={
-                  <TaskStatus
-                    translation={translation.status_values}
-                    status={status}
-                  />
-                }
+                dKey={t((t) => t.task.status)}
+                dValue={<TaskStatus status={status} />}
               />
 
               <DescriptionSection
-                dKey={translation.description}
+                dKey={t((t) => t.task.description)}
                 dValue={
                   !description ? (
-                    translation.no_description
+                    t((t) => t.task.no_description)
                   ) : (
                     <EntityDescription>{description}</EntityDescription>
                   )
@@ -74,16 +63,17 @@ function Component({
               />
 
               <DescriptionSection
-                dKey={translation.place}
+                dKey={t((t) => t.task.place)}
                 dValue={
                   !place ? (
-                    translation.place_unknown
+                    t((t) => t.task.place_unknown)
                   ) : (
                     <Link
                       href={createPlacePageURL(language, place.id)}
                       target="_blank"
                     >
-                      {place.title ?? translation.place_unknown} ({place.id})
+                      {place.title ?? t((t) => t.task.place_unknown)} (
+                      {place.id})
                     </Link>
                   )
                 }
@@ -96,7 +86,7 @@ function Component({
               className={styles.link}
               href={createTaskPageURL(language, id)}
             >
-              {translation.details}
+              {t((t) => t.task.details)}
             </Link>
           </PreviewFooter>
         </>

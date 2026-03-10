@@ -1,0 +1,18 @@
+{
+  "title": "Tasks",
+  "heading": "Tasks",
+  "status": "Status",
+  "status_values": {
+    "pending": "Pending",
+    "in-progress": "In progress",
+    "finished": "Finished",
+    "failed": "Failed"
+  },
+  "export_tasks": "Export tasks",
+  "click_to_file": "Click to upload a file",
+  "import_tasks": "Import tasks",
+  "importing_tasks": "Importing tasks...",
+  "details": "Details",
+  "edit": "Edit",
+  "editing": "Editing..."
+}

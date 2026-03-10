@@ -16,7 +16,8 @@ import {
 import { Link } from "#components/link";
 import { ListItem } from "#components/list";
 import { Pre } from "#components/pre";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import type { IEntityItem } from "#lib/entities";
 import { createPlacePageURL } from "#lib/urls";
 import { getPlaces } from "../lib/get";
@@ -25,10 +26,7 @@ import type { IPlace } from "../types";
 
 import styles from "./place-section.module.scss";
 
-interface IProps
-  extends ILocalizableProps,
-    ITranslatableProps,
-    IInputSectionProps {
+interface IProps extends ILocalizableProps, IInputSectionProps {
   place?: IEntityItem;
 }
 
@@ -36,7 +34,6 @@ export const PlaceSection = createBlockComponent(styles, Component);
 
 function Component({
   language,
-  commonTranslation,
   id,
   form,
   name,
@@ -45,6 +42,7 @@ function Component({
   children,
   ...props
 }: IProps) {
+  const { t } = useTranslation("common");
   const [selectedPlace, changeSelectedPlace] = useState(place);
 
   return (
@@ -63,19 +61,18 @@ function Component({
                 </Link>
                 <MenuButtons>
                   <MenuItem onClick={() => changeSelectedPlace(undefined)}>
-                    {commonTranslation.list["Select"]}
+                    {t((t) => t.list["Select"])}
                   </MenuItem>
                   <MenuItem
                     disabled={selectedPlace.id === place?.id}
                     onClick={() => changeSelectedPlace(place)}
                   >
-                    {commonTranslation.list["Reset"]}
+                    {t((t) => t.list["Reset"])}
                   </MenuItem>
                 </MenuButtons>
               </>
             ) : (
               <PlaceSelector
-                commonTranslation={commonTranslation}
                 onSelect={async (newPlace) => {
                   changeSelectedPlace(newPlace);
                 }}
@@ -97,20 +94,17 @@ function Component({
   );
 }
 
-interface IPlaceSelectorProps extends Pick<IProps, "commonTranslation"> {
+interface IPlaceSelectorProps {
   selectedPlace?: IPlace;
   onSelect: (place: IPlace) => Promise<void>;
 }
 
-function PlaceSelector({
-  commonTranslation,
-  selectedPlace,
-  onSelect,
-}: IPlaceSelectorProps) {
+function PlaceSelector({ selectedPlace, onSelect }: IPlaceSelectorProps) {
+  const { t } = useTranslation("common");
+
   return (
     <EntityList<IPlace>
       className={styles.list}
-      commonTranslation={commonTranslation}
       fetchEntities={async (page) => await getPlaces({ page })}
       mapEntity={(place) => (
         <ListItem key={place.id} className={styles.item}>
@@ -129,7 +123,7 @@ function PlaceSelector({
               await onSelect(place);
             }}
           >
-            {commonTranslation.list["Select"]}
+            {t((t) => t.list["Select"])}
           </Button>
         </ListItem>
       )}

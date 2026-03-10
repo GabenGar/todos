@@ -7,6 +7,9 @@ import type pagePlaces from "#translation/en/pages/places.json";
 import type pageQRReader from "#translation/en/pages/qr-code-reader.json";
 import type pageStatsPlaces from "#translation/en/pages/stats-places.json";
 import type pageStatsTasks from "#translation/en/pages/stats-tasks.json";
+import type pageTasks from "#translation/en/pages/stats-tasks.json";
+import type pageTask from "#translation/en/pages/stats-tasks.json";
+import type pageTaskEdit from "#translation/en/pages/stats-tasks.json";
 import type translation from "#translation/en/translation.json";
 import type { IActionableNameSpace } from "./types";
 
@@ -24,6 +27,9 @@ declare module "i18next" {
       "page-place-edit": typeof pagePlaceEdit;
       "page-stats-tasks": typeof pageStatsTasks;
       "page-stats-places": typeof pageStatsPlaces;
+      "page-tasks": typeof pageTasks;
+      "page-task": typeof pageTask;
+      "page-task-edit": typeof pageTaskEdit;
     };
     enableSelector: "optimize";
   }
