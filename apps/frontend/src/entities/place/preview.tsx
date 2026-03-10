@@ -10,16 +10,15 @@ import {
   PreviewFooter,
   PreviewHeader,
 } from "#components/preview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import type { ILocalization } from "#lib/localization";
+import type { ILocalizableProps } from "#components/types";
 import { createPlacePageURL } from "#lib/urls";
 import type { IPlace } from "./types";
+import { useTranslation } from "#hooks";
 //
 
 import styles from "./preview.module.scss";
 
-interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
-  translation: ILocalization["place"];
+interface IProps extends ILocalizableProps, IPreviewProps {
   place: IPlace;
 }
 
@@ -28,13 +27,8 @@ interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
  */
 export const PlacePreview = createBlockComponent(styles, Component);
 
-function Component({
-  language,
-  commonTranslation,
-  translation,
-  place,
-  ...props
-}: IProps) {
+function Component({ language, place, ...props }: IProps) {
+  const { t } = useTranslation("translation");
   const { id, title, description } = place;
 
   return (
@@ -46,14 +40,14 @@ function Component({
           </PreviewHeader>
 
           <PreviewBody>
-            <EntityID commonTranslation={commonTranslation} entityID={id} />
+            <EntityID entityID={id} />
 
             <DescriptionList>
               <DescriptionSection
-                dKey={translation.description}
+                dKey={t((t) => t.place.description)}
                 dValue={
                   <EntityDescription>
-                    {description ?? translation.no_description}
+                    {description ?? t((t) => t.place.no_description)}
                   </EntityDescription>
                 }
               />
@@ -65,7 +59,7 @@ function Component({
               className={styles.link}
               href={createPlacePageURL(language, id)}
             >
-              {translation.details}
+              {t((t) => t.place.details)}
             </Link>
           </PreviewFooter>
         </>

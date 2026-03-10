@@ -1,25 +1,5 @@
 {
   "pages": {
-    "qr_code_reader": {
-      "title": "Считыватель QR кодов",
-      "heading": "Считыватель QR Кодов",
-      "description": "Считывайте любой QR код для его просмотра",
-      "result": "Результат",
-      "no_result": "Ничего",
-      "form": {
-        "file_label": "Кликните для загрузки файла",
-        "scan": "Сканировать",
-        "scanning": "Сканируем..."
-      }
-    },
-    "places": {
-      "title": "Места",
-      "heading": "Места"
-    },
-    "place": {
-      "title": "Место",
-      "heading": "Место"
-    },
     "place_edit": {
       "title": "Редактирование Места",
       "heading": "Редактирование Места"
@@ -218,7 +198,31 @@
       "heading": "Конфиги YT-DLP"
     }
   },
+  "place": {
+      "title": "Заглавие",
+      "description": "Описание",
+      "no_description": "Без описания",
+      "created_at": "Дата создания",
+      "updated_at": "Последнее обновление",
+      "add": "Добавить место",
+      "adding": "Добавляем место...",
+      "details": "Детали",
+      "Place": "Место",
+      "Edit": "Редактировать",
+      "Tasks": "Задачи",
+      "No places found": "Места не найдены",
+      "edit": {
+        "Confirm changes": "Применить изменения",
+        "Applying changes...": "Применяем изменения..."
+      },
+      "search": {
+        "Query": "Запрос",
+        "Search": "Искать",
+        "Searching...": "Ищем..."
+      }
+    },
   "entities": {
+    
     "planned_event": {
       "Planned event": "Планируемое событие",
       "Title": "Заглавие",
@@ -235,29 +239,6 @@
       "Recently created": "Недавно добавленные",
       "Filter": "Фильтровать",
       "Filtering...": "Фильтруем..."
-    }
-  },
-  "place": {
-    "title": "Заглавие",
-    "description": "Описание",
-    "no_description": "Без описания",
-    "created_at": "Дата создания",
-    "updated_at": "Последнее обновление",
-    "add": "Добавить место",
-    "adding": "Добавляем место...",
-    "details": "Детали",
-    "Place": "Место",
-    "Edit": "Редактировать",
-    "Tasks": "Задачи",
-    "No places found": "Места не найдены",
-    "edit": {
-      "Confirm changes": "Применить изменения",
-      "Applying changes...": "Применяем изменения..."
-    },
-    "search": {
-      "Query": "Запрос",
-      "Search": "Искать",
-      "Searching...": "Ищем..."
     }
   }
 }

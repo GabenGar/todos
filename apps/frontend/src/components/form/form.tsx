@@ -5,8 +5,8 @@ import { createBlockComponent } from "@repo/ui/meta";
 import { List, ListItem } from "#components/list";
 import { Pre } from "#components/pre";
 import type { IBaseComponentProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import { isError, validateError } from "#lib/errors";
-import type { ILocalizationCommon } from "#lib/localization";
 import { logError } from "#lib/logs";
 import { InputSection } from "./section";
 import type { IFormEvent } from "./types";
@@ -16,7 +16,6 @@ import styles from "./form.module.scss";
 
 export interface IFormProps<InputName extends string = string>
   extends IBaseComponentProps<"form"> {
-  commonTranslation: ILocalizationCommon;
   id: string;
   children?: (formID: string, isSubmitting: boolean) => ReactNode;
   isNested?: boolean;
@@ -33,7 +32,6 @@ export interface IFormProps<InputName extends string = string>
 export const Form = createBlockComponent(styles, Component);
 
 function Component<InputName extends string>({
-  commonTranslation,
   id,
   isNested,
   className,
@@ -44,6 +42,7 @@ function Component<InputName extends string>({
   children,
   ...props
 }: IFormProps<InputName>) {
+  const { t } = useTranslation("common");
   const [isSubmitting, switchSubmitting] = useState(false);
   const [errors, changeErrors] = useState<(Error | string)[]>();
   const formID = `${id}-form`;
@@ -113,8 +112,8 @@ function Component<InputName extends string>({
                 disabled={isSubmitting}
               >
                 {!isSubmitting
-                  ? commonTranslation.form.submit
-                  : commonTranslation.form.submitting}
+                  ? t((t) => t.form.submit)
+                  : t((t) => t.form.submitting)}
               </ButtonSubmit>
             ) : (
               <CustomButton

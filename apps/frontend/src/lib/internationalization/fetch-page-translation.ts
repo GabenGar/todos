@@ -15,8 +15,23 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-qr-code-reader": {
+          translation = await import("#translation/en/pages/home.json");
+          break;
+        }
+
+        case "page-places": {
+          translation = await import("#translation/en/pages/places.json");
+          break;
+        }
+
+        case "page-place": {
+          translation = await import("#translation/en/pages/place.json");
+          break;
+        }
+
         default: {
-          throw new Error(`Unknown namespace "${namespace}"`);
+          throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
       }
       break;
@@ -29,8 +44,23 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-qr-code-reader": {
+          translation = await import("#translation/ru/pages/home.json");
+          break;
+        }
+
+        case "page-places": {
+          translation = await import("#translation/ru/pages/places.json");
+          break;
+        }
+
+        case "page-place": {
+          translation = await import("#translation/ru/pages/place.json");
+          break;
+        }
+
         default: {
-          throw new Error(`Unknown namespace "${namespace}"`);
+          throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
       }
       break;

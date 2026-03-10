@@ -2,23 +2,22 @@ import { useState } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import { Button } from "#components/button";
 import { Pre } from "#components/pre";
-import type {
-  IBaseComponentProps,
-  ITranslatableProps,
-} from "#components/types";
+import type { IBaseComponentProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import type { IEntityItem } from "#lib/entities";
 import { logError } from "#lib/logs";
 //
 
 import styles from "./id.module.scss";
 
-interface IProps extends IBaseComponentProps<"div">, ITranslatableProps {
+interface IProps extends IBaseComponentProps<"div"> {
   entityID: IEntityItem["id"];
 }
 
 export const EntityID = createBlockComponent(styles, Component);
 
-function Component({ entityID, commonTranslation, ...props }: IProps) {
+function Component({ entityID, ...props }: IProps) {
+  const { t } = useTranslation("common");
   const [isCopied, switchCopiedStatus] = useState(false);
 
   return (
@@ -39,9 +38,7 @@ function Component({ entityID, commonTranslation, ...props }: IProps) {
           }
         }}
       >
-        {!isCopied
-          ? commonTranslation.entity["Copy"]
-          : commonTranslation.entity["Copied"]}
+        {t((t) => (!isCopied ? t.entity["Copy"] : t.entity["Copied"]))}
       </Button>
     </div>
   );

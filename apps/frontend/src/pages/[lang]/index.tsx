@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Page } from "#components";
 import { Heading } from "#components/heading";
@@ -6,7 +6,6 @@ import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { Overview, OverviewHeader } from "#components/overview";
 import { usePageTranslation } from "#hooks";
-import { getTranslation } from "#lib/internationalization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import {
   createAccountPageURL,
@@ -18,7 +17,7 @@ import {
   createURLViewerPageURL,
   createYTDLPConfigPage,
 } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 //
 
 import styles from "./index.module.scss";
@@ -142,21 +141,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const translation = await getTranslation(lang, "page-home");
-  const props = {
-    lang,
-    translation,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-home")
 
 export const getStaticPaths = getStaticExportPaths;
 
