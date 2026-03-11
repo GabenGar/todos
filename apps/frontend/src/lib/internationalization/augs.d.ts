@@ -1,5 +1,6 @@
 import "i18next";
 import type common from "#translation/en/common.json";
+import type pageAccount from "#translation/en/pages/account.json";
 import type pageHome from "#translation/en/pages/home.json";
 import type pagePlace from "#translation/en/pages/place.json";
 import type pagePlaceEdit from "#translation/en/pages/place-edit.json";
@@ -30,6 +31,7 @@ declare module "i18next" {
       "page-tasks": typeof pageTasks;
       "page-task": typeof pageTask;
       "page-task-edit": typeof pageTaskEdit;
+      "page-account": typeof pageAccount
     };
     enableSelector: "optimize";
   }

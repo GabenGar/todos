@@ -1,32 +1,5 @@
 {
   "pages": {
-    "account": {
-      "title": "Учётная запись",
-      "heading": "Учётная Запись",
-      "Compatibility": "Совместимость",
-      "Supported": "Поддерживается",
-      "Not supported": "Не поддерживается",
-      "Data": "Данные",
-      "Export": "Экспорт",
-      "Import": "Импорт",
-      "Export Data": "Экпортировать данные",
-      "Click to upload a file": "Кликните для загрузки файла",
-      "Import data": "Импортировать данные",
-      "Importing data...": "Импортируем данные...",
-      "Settings": "Настройки",
-      "Update": "Обновить",
-      "Updating...": "Обновляем...",
-      "logger": {
-        "Log level": "Уровень логов",
-        "levels": {
-          "Debug": "Отладка",
-          "Logs": "Сообщения",
-          "Information": "Информация",
-          "Warnings": "Предупреждения",
-          "Errors": "Ошибки"
-        }
-      }
-    },
     "url-viewer": {
       "title": "Просмотрщик Ссылок",
       "heading": "Просмотрщик Ссылок",

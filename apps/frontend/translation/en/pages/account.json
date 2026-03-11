@@ -1,0 +1,27 @@
+{
+  "title": "Account",
+  "heading": "Account",
+  "Compatibility": "Compatibility",
+  "Supported": "Supported",
+  "Not supported": "Not supported",
+  "Data": "Data",
+  "Export": "Export",
+  "Import": "Import",
+  "Export Data": "Export Data",
+  "Click to upload a file": "Click to upload a file",
+  "Import data": "Import data",
+  "Importing data...": "Importing data...",
+  "Settings": "Settings",
+  "Update": "Update",
+  "Updating...": "Updating...",
+  "logger": {
+    "Log level": "Log level",
+    "levels": {
+      "Debug": "Debug",
+      "Logs": "Logs",
+      "Information": "Information",
+      "Warnings": "Warnings",
+      "Errors": "Errors"
+    }
+  }
+}
