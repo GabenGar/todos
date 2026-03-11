@@ -1,1 +1,32 @@
-{}
+{
+  "url": {
+    "URL": "Ссылка",
+    "Decoded URL": "Раскодированная ссылка",
+    "Parse": "Анализировать",
+    "Parsing...": "Анализируем...",
+    "URLs": "Ссылки",
+    "Origin Details": "Детали Источника",
+    "Pathname Details": "Детали Пути",
+    "Search Parameters Details": "Детали Поисковых Параметров",
+    "Fragment Details": "Детали Фрагмента",
+    "No URL selected.": "Ссылка не выбрана.",
+    "Full URL": "Полная ссылка",
+    "Transformed URL": "Изменённая ссылка",
+    "Origin": "Источник",
+    "Protocol": "Протокол",
+    "Username": "Имя пользователя",
+    "Password": "Пароль",
+    "Host": "Хост",
+    "Hostname": "Имя хоста",
+    "Port": "Порт",
+    "Pathname": "Путь",
+    "Segments": "Сегменты",
+    "Search": "Поиск",
+    "Search parameters": "Поисковые параметры",
+    "Hash": "Идентификатор фрагмента"
+  },
+  "button": {
+    "copy": "Копировать",
+    "copy-success": "Скопировано"
+  }
+}

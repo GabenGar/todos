@@ -8,28 +8,21 @@ import { InputSection } from "@repo/ui/forms/sections";
 import { List, ListItem } from "@repo/ui/lists";
 import { getPathnameSegments } from "@repo/ui/url";
 import { Form, type IFormEvent } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationPage } from "#lib/localization";
+import { usePageTranslation, useTranslation } from "#hooks";
 //
 
 import styles from "./pathname.module.scss";
 
-interface IProps extends ITranslatableProps {
-  t: ILocalizationPage["url-editor"];
+interface IProps {
   id: string;
   formID: string;
   name: string;
   defaultValue: string | undefined;
 }
 
-export function Pathname({
-  commonTranslation,
-  t,
-  id,
-  formID,
-  name,
-  defaultValue,
-}: IProps) {
+export function Pathname({ id, formID, name, defaultValue }: IProps) {
+  const { t } = usePageTranslation("page-url-edit");
+  const { t: cT } = useTranslation("common");
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentPathname, changeCurrentPathname] = useState(() => {
     if (inputRef.current) {
@@ -38,7 +31,7 @@ export function Pathname({
     return getPathnameSegments(defaultValue);
   });
   const FIELD = {
-    SEGMENT: { name: "segment", label: t["Segment"] },
+    SEGMENT: { name: "segment", label: t((t) => t["Segment"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
   const editFormID = `${id}-edit-path`;
@@ -85,28 +78,29 @@ export function Pathname({
       <InputHidden ref={inputRef} form={formID} name={name} />
       <DescriptionList>
         <DescriptionSection
-          dKey={t["Pathname"]}
+          dKey={t((t) => t["Pathname"])}
           dValue={
             <Details
               summary={
                 isEmptyPath ? (
-                  t["Empty"]
+                  t((t) => t["Empty"])
                 ) : (
                   <>
-                    {t["Segments"]}:{" "}
+                    {t((t) => t["Segments"])}:{" "}
                     <Preformatted>{currentPathname.length}</Preformatted>
                   </>
                 )
               }
             >
               <Form<IFieldName>
-                commonTranslation={commonTranslation}
                 id={editFormID}
                 isNested
                 submitButton={(_, isSubmitting) =>
-                  isSubmitting
-                    ? commonTranslation.form["Applying changes..."]
-                    : commonTranslation.form["Confirm changes"]
+                  cT((t) =>
+                    isSubmitting
+                      ? t.form["Applying changes..."]
+                      : t.form["Confirm changes"],
+                  )
                 }
                 onSubmit={handlePathnameChange}
               >
@@ -138,7 +132,7 @@ export function Pathname({
                               changePathname(nextPathname);
                             }}
                           >
-                            {t["Delete"]}
+                            {t((t) => t["Delete"])}
                           </Button>
                         </ListItem>
                       ))}

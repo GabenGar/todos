@@ -5,25 +5,18 @@ import { Preformatted } from "@repo/ui/formatting";
 import { InputHidden } from "@repo/ui/forms/inputs";
 import { InputSection, InputSectionText } from "@repo/ui/forms/sections";
 import { Form, type IFormEvent } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationPage } from "#lib/localization";
+import { usePageTranslation, useTranslation } from "#hooks";
 
-interface IProps extends ITranslatableProps {
-  t: ILocalizationPage["url-editor"];
+interface IProps {
   id: string;
   formID: string;
   name: string;
   defaultValue: string | undefined;
 }
 
-export function Origin({
-  commonTranslation,
-  t,
-  id,
-  formID,
-  name,
-  defaultValue,
-}: IProps) {
+export function Origin({ id, formID, name, defaultValue }: IProps) {
+  const { t } = usePageTranslation("page-url-edit");
+  const { t: cT } = useTranslation("common");
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentOrigin, changeCurrentOrigin] = useState(() => {
     if (inputRef.current) {
@@ -32,11 +25,11 @@ export function Origin({
     return defaultValue;
   });
   const FIELD = {
-    PROTOCOL: { name: "protocol", label: t["Protocol"] },
-    HOSTNAME: { name: "hostname", label: t["Hostname"] },
-    PORT: { name: "port", label: t["Port"] },
-    USERNAME: { name: "username", label: t["Username"] },
-    PASSWORD: { name: "password", label: t["Password"] },
+    PROTOCOL: { name: "protocol", label: t((t) => t["Protocol"]) },
+    HOSTNAME: { name: "hostname", label: t((t) => t["Hostname"]) },
+    PORT: { name: "port", label: t((t) => t["Port"]) },
+    USERNAME: { name: "username", label: t((t) => t["Username"]) },
+    PASSWORD: { name: "password", label: t((t) => t["Password"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -88,25 +81,26 @@ export function Origin({
       <InputHidden ref={inputRef} form={formID} name={name} />
       <DescriptionList>
         <DescriptionSection
-          dKey={t["Origin"]}
+          dKey={t((t) => t["Origin"])}
           dValue={
             <Details
               summary={
                 !currentOrigin ? (
-                  t["Unknown"]
+                  t((t) => t["Unknown"])
                 ) : (
                   <Preformatted>{currentOrigin}</Preformatted>
                 )
               }
             >
               <Form<IFieldName>
-                commonTranslation={commonTranslation}
                 id={nestedFormID}
                 isNested
                 submitButton={(_, isSubmitting) =>
-                  isSubmitting
-                    ? commonTranslation.form["Applying changes..."]
-                    : commonTranslation.form["Confirm changes"]
+                  cT((t) =>
+                    isSubmitting
+                      ? t.form["Applying changes..."]
+                      : t.form["Confirm changes"],
+                  )
                 }
                 onSubmit={handleSubmit}
               >

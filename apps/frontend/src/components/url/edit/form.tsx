@@ -3,35 +3,28 @@ import {
   type IFormComponentProps,
   type IFormEvent,
 } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationPage } from "#lib/localization";
+import { usePageTranslation } from "#hooks";
 import type { IBaseURLFormProps } from "./base";
 import { Hash } from "./hash";
 import { Origin } from "./origin";
 import { Pathname } from "./pathname";
 import { SearchParams } from "./search-params";
 
-interface IURLEditorFormProps extends ITranslatableProps, IFormComponentProps {
-  t: ILocalizationPage["url-editor"];
+interface IURLEditorFormProps extends IFormComponentProps {
   baseURL: Parameters<IBaseURLFormProps["onNewURL"]>[0];
   onNewURL: (newURL: URL) => Promise<void>;
 }
 
-export function URLEditorForm({
-  commonTranslation,
-  t,
-  id,
-  baseURL,
-  onNewURL,
-}: IURLEditorFormProps) {
+export function URLEditorForm({ id, baseURL, onNewURL }: IURLEditorFormProps) {
+  const { t } = usePageTranslation("page-url-edit");
   const FIELD = {
-    ORIGIN: { name: "origin", label: t["Origin"] },
-    PATHNAME: { name: "pathname", label: t["Pathname"] },
+    ORIGIN: { name: "origin", label: t((t) => t["Origin"]) },
+    PATHNAME: { name: "pathname", label: t((t) => t["Pathname"]) },
     SEARCHPARAMS: {
       name: "search-params",
-      label: t["Search parameters"],
+      label: t((t) => t["Search parameters"]),
     },
-    HASH: { name: "hash", label: t["Hash"] },
+    HASH: { name: "hash", label: t((t) => t["Hash"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
   const baseOrigin = baseURL === true ? undefined : baseURL.origin;
@@ -56,10 +49,9 @@ export function URLEditorForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting ? t["Parse"] : t["Parsing..."]
+        t((t) => (!isSubmitting ? t["Parse"] : t["Parsing..."]))
       }
       onSubmit={handleSubmit}
       isResetOnSuccess={false}
@@ -67,8 +59,6 @@ export function URLEditorForm({
       {(formID) => (
         <>
           <Origin
-            commonTranslation={commonTranslation}
-            t={t}
             id={`${formID}-${FIELD.ORIGIN.name}`}
             formID={formID}
             name={FIELD.ORIGIN.name}
@@ -76,8 +66,6 @@ export function URLEditorForm({
           />
 
           <Pathname
-            commonTranslation={commonTranslation}
-            t={t}
             id={`${formID}-${FIELD.PATHNAME.name}`}
             formID={formID}
             name={FIELD.PATHNAME.name}
@@ -85,8 +73,6 @@ export function URLEditorForm({
           />
 
           <SearchParams
-            commonTranslation={commonTranslation}
-            t={t}
             id={`${formID}-${FIELD.SEARCHPARAMS.name}`}
             formID={formID}
             name={FIELD.SEARCHPARAMS.name}
@@ -94,8 +80,6 @@ export function URLEditorForm({
           />
 
           <Hash
-            commonTranslation={commonTranslation}
-            t={t}
             id={`${formID}-${FIELD.HASH.name}`}
             formID={formID}
             name={FIELD.HASH.name}

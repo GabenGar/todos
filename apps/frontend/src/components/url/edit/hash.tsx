@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { Label } from "@repo/ui/forms";
 import { InputTextArea } from "@repo/ui/forms/inputs";
 import { InputSection } from "@repo/ui/forms/sections";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationPage } from "#lib/localization";
 
-interface IProps extends ITranslatableProps {
-  t: ILocalizationPage["url-editor"];
+interface IProps {
   id: string;
   formID: string;
   name: string;
@@ -33,6 +30,7 @@ export function Hash({ formID, name, label, defaultValue }: IProps) {
         rows={1}
         // using controllable input in there because it's the only way
         // to avoid synchronization bugs caused by `defaultValue`
+        // @TODO make it uncontrollable
         value={currentHash}
         onChange={(event) => {
           const nextHash = event.currentTarget.value;

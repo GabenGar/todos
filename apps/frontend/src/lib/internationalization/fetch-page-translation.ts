@@ -65,6 +65,16 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-url": {
+          translation = await import("#translation/en/pages/url.json");
+          break;
+        }
+
+        case "page-url-edit": {
+          translation = await import("#translation/en/pages/url-edit.json");
+          break;
+        }
+
         default: {
           throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
@@ -126,6 +136,16 @@ export async function fetchPageTranslation(
 
         case "page-account": {
           translation = await import("#translation/ru/pages/account.json");
+          break;
+        }
+
+        case "page-url": {
+          translation = await import("#translation/ru/pages/url.json");
+          break;
+        }
+
+        case "page-url-edit": {
+          translation = await import("#translation/ru/pages/url-edit.json");
           break;
         }
 

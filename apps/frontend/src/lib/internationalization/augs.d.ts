@@ -11,6 +11,8 @@ import type pageStatsTasks from "#translation/en/pages/stats-tasks.json";
 import type pageTask from "#translation/en/pages/task.json";
 import type pageTaskEdit from "#translation/en/pages/task-edit.json";
 import type pageTasks from "#translation/en/pages/tasks.json";
+import type pageURL from "#translation/en/pages/url.json";
+import type pageURLEdit from "#translation/en/pages/url-edit.json";
 import type translation from "#translation/en/translation.json";
 import type { IActionableNameSpace } from "./types";
 
@@ -31,7 +33,9 @@ declare module "i18next" {
       "page-tasks": typeof pageTasks;
       "page-task": typeof pageTask;
       "page-task-edit": typeof pageTaskEdit;
-      "page-account": typeof pageAccount
+      "page-account": typeof pageAccount;
+      "page-url": typeof pageURL;
+      "page-url-edit": typeof pageURLEdit;
     };
     enableSelector: "optimize";
   }

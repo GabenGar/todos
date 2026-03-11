@@ -19,6 +19,7 @@
     "./*": "./src/*/index.ts"
   },
   "imports": {
+    "#translation/*": "./translation/*",
     "#*": "./src/*/index.ts"
   },
   "dependencies": {

@@ -1,4 +1,3 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import {
   Overview,
@@ -11,21 +10,15 @@ import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
 import { Page } from "#components";
 import { BaseURLForm, URLEditorForm } from "#components/url";
-import { getDictionary } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
+import { usePageTranslation } from "#hooks";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-interface IProps extends ILocalizedProps<"url-editor"> {}
-
-interface IParams extends ILocalizedParams {}
-
-function URLViewerPage({
-  translation,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function URLEditorPage() {
+  const { t } = usePageTranslation("page-url-edit");
   const [baseURL, changeBaseURL] = useState<URL | true>();
   const [finalURL, changeFinalURL] = useState<URL>();
-  const { common, t } = translation;
-  const title = t.title;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
   const baseID = "base-url";
   const editID = "edit-url";
   const fullURL = !finalURL ? undefined : String(finalURL);
@@ -33,15 +26,13 @@ function URLViewerPage({
   const encodedFullURL = !fullURL ? undefined : encodeURI(fullURL);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
             <OverviewHeader isFilled>
               <BaseURLForm
                 id={baseID}
-                commonTranslation={common}
-                translation={t}
                 onNewURL={async (newURL) => changeBaseURL(newURL)}
               />
             </OverviewHeader>
@@ -50,8 +41,6 @@ function URLViewerPage({
               <OverviewBody isFilled>
                 <URLEditorForm
                   id={editID}
-                  commonTranslation={common}
-                  t={t}
                   baseURL={baseURL}
                   onNewURL={async (newURL) => changeFinalURL(newURL)}
                 />
@@ -63,12 +52,11 @@ function URLViewerPage({
                 <DescriptionList>
                   {decodedFullURL === encodedFullURL ? (
                     <DescriptionSection
-                      dKey={t["Full URL"]}
+                      dKey={t((t) => t["Full URL"])}
                       dValue={
                         <>
                           <Preformatted>{decodedFullURL}</Preformatted>
                           <ButtonCopy
-                            translation={common.button}
                             // biome-ignore lint/style/noNonNullAssertion: blah
                             valueToCopy={decodedFullURL!}
                           />
@@ -78,12 +66,11 @@ function URLViewerPage({
                   ) : (
                     <>
                       <DescriptionSection
-                        dKey={t["Decoded URL"]}
+                        dKey={t((t) => t["Decoded URL"])}
                         dValue={
                           <>
                             <Preformatted>{decodedFullURL}</Preformatted>
                             <ButtonCopy
-                              translation={common.button}
                               // biome-ignore lint/style/noNonNullAssertion: blah
                               valueToCopy={decodedFullURL!}
                             />
@@ -91,12 +78,11 @@ function URLViewerPage({
                         }
                       />
                       <DescriptionSection
-                        dKey={t["Encoded URL"]}
+                        dKey={t((t) => t["Encoded URL"])}
                         dValue={
                           <>
                             <Preformatted>{encodedFullURL}</Preformatted>
                             <ButtonCopy
-                              translation={common.button}
                               // biome-ignore lint/style/noNonNullAssertion: blah
                               valueToCopy={encodedFullURL!}
                             />
@@ -115,25 +101,8 @@ function URLViewerPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["url-editor"],
-    },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-url-edit");
 
 export const getStaticPaths = getStaticExportPaths;
 
-export default URLViewerPage;
+export default URLEditorPage;

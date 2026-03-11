@@ -11,7 +11,9 @@ export const PAGE_NAMESPACES = [
   "page-tasks",
   "page-task",
   "page-task-edit",
-  "page-account"
+  "page-account",
+  "page-url",
+  "page-url-edit"
 ] as const;
 export const DEFAULT_LOCALE = LOCALES[0];
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;

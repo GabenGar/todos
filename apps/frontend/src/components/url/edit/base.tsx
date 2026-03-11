@@ -4,23 +4,15 @@ import {
   type IFormComponentProps,
   type IFormEvent,
 } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationPage } from "#lib/localization";
+import { usePageTranslation } from "#hooks";
 
-export interface IBaseURLFormProps
-  extends ITranslatableProps,
-    IFormComponentProps {
-  translation: ILocalizationPage["url-editor"];
+export interface IBaseURLFormProps extends IFormComponentProps {
   onNewURL: (newURL: URL | true) => Promise<void>;
 }
-export function BaseURLForm({
-  commonTranslation,
-  translation,
-  id,
-  onNewURL,
-}: IBaseURLFormProps) {
+export function BaseURLForm({ id, onNewURL }: IBaseURLFormProps) {
+  const { t } = usePageTranslation("page-url-edit");
   const FIELD = {
-    URL: { name: "url", label: translation["Base URL"] },
+    URL: { name: "url", label: t((t) => t["Base URL"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -34,10 +26,9 @@ export function BaseURLForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting ? translation["Parse"] : translation["Parsing..."]
+        t((t) => (!isSubmitting ? t["Parse"] : t["Parsing..."]))
       }
       onSubmit={handleSubmit}
     >
@@ -51,11 +42,12 @@ export function BaseURLForm({
             {FIELD.URL.label}
           </InputSectionText>
           <p>
-            {
-              translation[
-                "A URL which will be used as a base for editing, if provided."
-              ]
-            }
+            {t(
+              (t) =>
+                t[
+                  "A URL which will be used as a base for editing, if provided."
+                ],
+            )}
           </p>
         </>
       )}

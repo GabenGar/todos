@@ -1,4 +1,5 @@
 import type { ResourceKey } from "i18next";
+import { fetchUITranslation } from "@repo/ui/internationalization";
 import { fetchPageTranslation } from "./fetch-page-translation";
 import type { ILocale, INameSpace } from "./types";
 
@@ -15,12 +16,14 @@ export async function fetchTranslation(
           translation = await import("#translation/en/common.json");
           break;
         }
+
         case "translation": {
           translation = await import("#translation/en/translation.json");
           break;
         }
+
         case "@repo/ui": {
-          translation = await import("@repo/ui/translation/en.json");
+          translation = await fetchUITranslation(language);
           break;
         }
 
@@ -37,12 +40,14 @@ export async function fetchTranslation(
           translation = await import("#translation/ru/common.json");
           break;
         }
+
         case "translation": {
           translation = await import("#translation/ru/translation.json");
           break;
         }
+
         case "@repo/ui": {
-          translation = await import("@repo/ui/translation/ru.json");
+          translation = await fetchUITranslation(language);
           break;
         }
 
