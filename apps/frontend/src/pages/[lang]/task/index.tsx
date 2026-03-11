@@ -1,28 +1,21 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { OverviewPlaceHolder } from "@repo/ui/articles";
 import { Page } from "#components";
 import { TaskOverview } from "#entities/task";
-import { getDictionary } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"task"> {}
-
-interface IParams extends ILocalizedParams {}
+import { usePageTranslation } from "#hooks";
+import { getSingleValueFromQuery } from "#lib/pages";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function TaskDetailsPage({
-  translation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-task");
   const router = useRouter();
   const { isReady, query } = router;
-  const { lang, common, t } = translation;
-  const title = t.title;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
   const taskID = getSingleValueFromQuery(query, "task_id");
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
@@ -38,41 +31,17 @@ function TaskDetailsPage({
   }, [isReady, taskID]);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       {!taskID ? (
         <OverviewPlaceHolder headingLevel={2} />
       ) : (
-        <TaskOverview
-          language={lang}
-          commonTranslation={common}
-          translation={t}
-          headingLevel={2}
-          taskID={taskID}
-        />
+        <TaskOverview language={lang} headingLevel={2} taskID={taskID} />
       )}
     </Page>
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["task"],
-    },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-task");
 export const getStaticPaths = getStaticExportPaths;
 
 export default TaskDetailsPage;

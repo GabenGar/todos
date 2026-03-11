@@ -17,7 +17,6 @@ function TasksPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
 }
 
 export const getStaticProps = createGetStaticProps("page-tasks");
-
 export const getStaticPaths = getStaticExportPaths;
 
 export default TasksPage;

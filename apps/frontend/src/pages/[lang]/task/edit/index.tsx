@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Loading, Page } from "#components";
@@ -12,32 +12,22 @@ import {
   OverviewHeader,
 } from "#components/overview";
 import { EditTaskForm, editTask, getTask, removeTask } from "#entities/task";
-import { getDictionary, type ILocalization } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
+import { usePageTranslation } from "#hooks";
+import { getSingleValueFromQuery } from "#lib/pages";
 import { createTaskPageURL, createTasksPageURL } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"task_edit"> {
-  todosTranslation: ILocalization["pages"]["tasks"];
-}
-
-interface IParams extends ILocalizedParams {}
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function TaskEditPage({
-  translation,
-  todosTranslation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-task-edit");
   const router = useRouter();
   const [currentTask, changeCurrentTask] =
     useState<Awaited<ReturnType<typeof getTask>>>();
   const { isReady, query } = router;
-  const { lang, common, t } = translation;
   const taskID = getSingleValueFromQuery(query, "task_id");
-  const title = t.title;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
@@ -57,7 +47,7 @@ function TaskEditPage({
   }, [isReady, taskID]);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
@@ -68,7 +58,7 @@ function TaskEditPage({
                     <Loading />
                   ) : (
                     <Link href={createTaskPageURL(lang, currentTask.id)}>
-                      {t.task}
+                      {t((t) => t.task)}
                     </Link>
                   )}
                 </ListItem>
@@ -81,8 +71,6 @@ function TaskEditPage({
               ) : (
                 <EditTaskForm
                   language={lang}
-                  commonTranslation={common}
-                  translation={todosTranslation}
                   id="edit-task"
                   currentTask={currentTask}
                   onTaskEdit={async (taskUpdate) => {
@@ -109,7 +97,7 @@ function TaskEditPage({
                         router.push(url);
                       }}
                     >
-                      {t["Delete"]}
+                      {t((t) => t["Delete"])}
                     </Button>
                   )}
                 </ListItem>
@@ -122,25 +110,7 @@ function TaskEditPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["task_edit"],
-    },
-    todosTranslation: dict.pages.tasks,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-task-edit");
 
 export const getStaticPaths = getStaticExportPaths;
 
