@@ -1,35 +1,23 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Page } from "#components";
 import { OverviewPlaceHolder } from "#components/overview";
 import { getPlace, type IPlace, PlaceOverview } from "#entities/place";
-import { getDictionary, type ILocalization } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
+import { usePageTranslation } from "#hooks";
+import { getSingleValueFromQuery } from "#lib/pages";
 import { notFoundURL } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"place"> {
-  taskTranslation: ILocalization["pages"]["stats_tasks"];
-  placeTranslation: ILocalization["place"];
-}
-
-interface IParams extends ILocalizedParams {}
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function PlaceDetailsPage({
-  translation,
-  taskTranslation,
-  placeTranslation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-place");
   const router = useRouter();
   const { isReady, query } = router;
   const [place, changePlace] = useState<IPlace>();
-  const { lang, common, t } = translation;
-  const title = t.title;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
   const placeID = getSingleValueFromQuery(query, "place_id");
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
@@ -50,41 +38,17 @@ function PlaceDetailsPage({
   }, [isReady, placeID]);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       {!place ? (
         <OverviewPlaceHolder headingLevel={2} />
       ) : (
-        <PlaceOverview
-          language={lang}
-          commonTranslation={common}
-          translation={placeTranslation}
-          taskTranslation={taskTranslation}
-          headingLevel={2}
-          place={place}
-        />
+        <PlaceOverview language={lang} headingLevel={2} place={place} />
       )}
     </Page>
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const { place } = dict.pages;
-  const props = {
-    translation: { lang, common: dict.common, t: place },
-    taskTranslation: dict.pages.stats_tasks,
-    placeTranslation: dict.place,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-place");
 export const getStaticPaths = getStaticExportPaths;
 
 export default PlaceDetailsPage;

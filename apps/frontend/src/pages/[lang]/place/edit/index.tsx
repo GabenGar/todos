@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Loading, Page } from "#components";
@@ -6,31 +6,23 @@ import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { EditPlaceForm, editPlace, getPlace } from "#entities/place";
-import { getDictionary, type ILocalization } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
+import { usePageTranslation, useTranslation } from "#hooks";
+import { getSingleValueFromQuery } from "#lib/pages";
 import { createPlacePageURL } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"place_edit"> {
-  placeTranslation: ILocalization["place"];
-}
-
-interface IParams extends ILocalizedParams {}
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function PlaceEditPage({
-  translation,
-  placeTranslation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-place-edit");
+  const { t: pT } = useTranslation("translation");
   const router = useRouter();
   const [currentPlace, changePlace] =
     useState<Awaited<ReturnType<typeof getPlace>>>();
   const { isReady, query } = router;
-  const { lang, common, t } = translation;
   const placeID = getSingleValueFromQuery(query, "place_id");
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
@@ -50,7 +42,7 @@ function PlaceEditPage({
   }, [isReady, placeID]);
 
   return (
-    <Page heading={t.heading} title={t.title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
@@ -61,7 +53,7 @@ function PlaceEditPage({
                     <Loading />
                   ) : (
                     <Link href={createPlacePageURL(lang, currentPlace.id)}>
-                      {placeTranslation["Place"]}
+                      {pT((t) => t.place["Place"])}
                     </Link>
                   )}
                 </ListItem>
@@ -73,8 +65,6 @@ function PlaceEditPage({
                 <Loading />
               ) : (
                 <EditPlaceForm
-                  commonTranslation={common}
-                  translation={placeTranslation}
                   id={`edit-place-${currentPlace.id}`}
                   currentPlace={currentPlace}
                   onPlaceEdit={async (placeUpdate) => {
@@ -92,22 +82,7 @@ function PlaceEditPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const { place } = dict.pages;
-  const props = {
-    translation: { lang, common: dict.common, t: place },
-    placeTranslation: dict.place,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-place-edit");
 
 export const getStaticPaths = getStaticExportPaths;
 

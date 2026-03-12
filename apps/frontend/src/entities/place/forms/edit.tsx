@@ -3,28 +3,24 @@ import {
   InputSectionDescription,
   InputSectionTitle,
 } from "#components/form/section";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import type { IPlace, IPlaceUpdate } from "../types";
 
-export interface IEditPlaceFormProps extends ITranslatableProps {
-  translation: ILocalization["place"];
+export interface IEditPlaceFormProps {
   id: string;
   currentPlace: IPlace;
   onPlaceEdit: (placeUpdate: IPlaceUpdate) => Promise<void>;
 }
 
 export function EditPlaceForm({
-  commonTranslation,
-  translation,
-  currentPlace: currentTask,
+  currentPlace,
   id,
   onPlaceEdit,
 }: IEditPlaceFormProps) {
-  const { title, description, edit } = translation;
+  const { t } = useTranslation("translation");
   const FIELD = {
-    TITLE: { name: "title", label: title },
-    DESCRIPTION: { name: "description", label: description },
+    TITLE: { name: "title", label: t((t) => t.place.title) },
+    DESCRIPTION: { name: "description", label: t((t) => t.place.description) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -34,18 +30,18 @@ export function EditPlaceForm({
     const description = formElements.description.value.trim();
 
     const update: IPlaceUpdate = {
-      id: currentTask.id,
+      id: currentPlace.id,
     };
 
     if (!title && !description) {
       return;
     }
 
-    if (title && title !== currentTask.title) {
+    if (title && title !== currentPlace.title) {
       update.title = title;
     }
 
-    if (description && description !== currentTask.description) {
+    if (description && description !== currentPlace.description) {
       update.description = description;
     }
 
@@ -54,10 +50,13 @@ export function EditPlaceForm({
 
   return (
     <Form
-      commonTranslation={commonTranslation}
       id={id}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting ? edit["Confirm changes"] : edit["Applying changes..."]
+        t((t) =>
+          !isSubmitting
+            ? t.place.edit["Confirm changes"]
+            : t.place.edit["Applying changes..."],
+        )
       }
       onSubmit={handleSubmit}
     >
@@ -68,7 +67,7 @@ export function EditPlaceForm({
             form={formID}
             name={FIELD.TITLE.name}
             rows={2}
-            defaultValue={currentTask.title}
+            defaultValue={currentPlace.title}
           >
             {FIELD.TITLE.label}
           </InputSectionTitle>
@@ -78,7 +77,7 @@ export function EditPlaceForm({
             form={formID}
             name={FIELD.DESCRIPTION.name}
             rows={4}
-            defaultValue={currentTask.description}
+            defaultValue={currentPlace.description}
           >
             {FIELD.DESCRIPTION.label}
           </InputSectionDescription>

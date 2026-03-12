@@ -1,32 +1,24 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { Page } from "#components";
 import { Overview, OverviewHeader } from "#components/overview";
 import { TasksStats } from "#entities/task";
-import { getDictionary } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"stats_tasks"> {}
-
-interface IParams extends ILocalizedParams {}
+import { usePageTranslation } from "#hooks";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function TasksStatsPage({
-  translation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { lang, common, t } = translation;
-  const title = t.title;
-  const description = t.description;
+  const { t } = usePageTranslation("page-stats-tasks");
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
+  const description = t((t) => t.description);
 
   return (
-    <Page heading={t.heading} title={title} description={description}>
+    <Page heading={heading} title={title} description={description}>
       <Overview headingLevel={2}>
         {() => (
           <OverviewHeader>
-            <TasksStats
-              language={lang}
-              commonTranslation={common}
-              translation={t}
-            />
+            <TasksStats language={lang} />
           </OverviewHeader>
         )}
       </Overview>
@@ -34,24 +26,7 @@ function TasksStatsPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["stats_tasks"],
-    },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-stats-tasks");
 
 export const getStaticPaths = getStaticExportPaths;
 

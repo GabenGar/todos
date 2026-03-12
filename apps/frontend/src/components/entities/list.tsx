@@ -2,10 +2,8 @@ import { type ReactNode, useEffect, useState } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import { Loading } from "#components";
 import { ListLocal } from "#components/list";
-import type {
-  IBaseComponentProps,
-  ITranslatableProps,
-} from "#components/types";
+import type { IBaseComponentProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import type { IEntityItem } from "#lib/entities";
 import {
   createClientPagination,
@@ -14,8 +12,7 @@ import {
 } from "#lib/pagination";
 
 interface IProps<IEntityType extends IEntityItem>
-  extends IBaseComponentProps<"div">,
-    ITranslatableProps {
+  extends IBaseComponentProps<"div"> {
   fetchEntities: (
     serverPage: number,
   ) => Promise<IPaginatedCollection<IEntityType>>;
@@ -26,12 +23,12 @@ interface IProps<IEntityType extends IEntityItem>
 export const EntityList = createBlockComponent(undefined, Component);
 
 function Component<IEntityType extends IEntityItem>({
-  commonTranslation,
   fetchEntities,
   mapEntity,
   limit = 5,
   ...props
 }: IProps<IEntityType>) {
+  const { t } = useTranslation("common");
   const [entityData, changeEntityData] =
     useState<Awaited<ReturnType<typeof fetchEntities>>>();
 
@@ -110,10 +107,9 @@ function Component<IEntityType extends IEntityItem>({
       {!entityData ? (
         <Loading />
       ) : entityData.pagination.totalCount === 0 ? (
-        <p>{commonTranslation.list.no_items}</p>
+        <p>{t((t) => t.list.no_items)}</p>
       ) : (
         <ListLocal
-          commonTranslation={commonTranslation}
           pagination={entityData.pagination}
           onPageChange={handlePageChange}
           {...props}

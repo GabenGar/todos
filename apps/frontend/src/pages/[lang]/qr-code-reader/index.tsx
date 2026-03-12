@@ -1,5 +1,4 @@
 import { Html5Qrcode } from "html5-qrcode";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useEffect, useState } from "react";
 import { DescriptionList, DescriptionSection, Page } from "#components";
 import {
@@ -9,31 +8,22 @@ import {
 } from "#components/form";
 import { InputSectionFile } from "#components/form/section";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
-import type { ITranslatableProps } from "#components/types";
-import { getDictionary, type ILocalization } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
+import { usePageTranslation } from "#hooks";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-interface IProps extends ILocalizedProps<"qr_code_reader"> {}
-
-interface IParams extends ILocalizedParams {}
-
-function QRCodeReaderPage({
-  translation,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function QRCodeReaderPage() {
+  const { t } = usePageTranslation("page-qr-code-reader");
   const [content, changeContent] = useState<string>();
-  const { common, t } = translation;
-  const title = t.title;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
             <OverviewHeader>
               <QRCodeReaderForm
-                commonTranslation={common}
-                translation={t}
                 id="qr-code-reader"
                 onSuccessfulScan={async (result) => changeContent(result)}
               />
@@ -42,8 +32,8 @@ function QRCodeReaderPage({
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={t.result}
-                  dValue={content ?? t.no_result}
+                  dKey={t((t) => t.result)}
+                  dValue={content ?? t((t) => t.no_result)}
                 />
               </DescriptionList>
             </OverviewBody>
@@ -54,21 +44,15 @@ function QRCodeReaderPage({
   );
 }
 
-interface IFormProps extends ITranslatableProps, IFormComponentProps {
-  translation: ILocalization["pages"]["qr_code_reader"];
+interface IFormProps extends IFormComponentProps {
   onSuccessfulScan: (result: string) => Promise<void>;
 }
 
-function QRCodeReaderForm({
-  commonTranslation,
-  translation,
-  id,
-  onSuccessfulScan,
-}: IFormProps) {
+function QRCodeReaderForm({ id, onSuccessfulScan }: IFormProps) {
+  const { t } = usePageTranslation("page-qr-code-reader");
   const [qrReader, changeQRreader] = useState<Html5Qrcode>();
-  const { form } = translation;
   const FIELD = {
-    FILE: { name: "file", label: form.file_label },
+    FILE: { name: "file", label: t((t) => t.form.file_label) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
   const readerID = `${id}-qr-reader`;
@@ -95,10 +79,9 @@ function QRCodeReaderForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting ? form.scan : form.scanning
+        t((t) => (!isSubmitting ? t.form.scan : t.form.scanning))
       }
       onSubmit={handleSubmit}
     >
@@ -120,25 +103,7 @@ function QRCodeReaderForm({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["qr_code_reader"],
-    },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-qr-code-reader");
 export const getStaticPaths = getStaticExportPaths;
 
 export default QRCodeReaderPage;

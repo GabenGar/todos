@@ -5,18 +5,15 @@ import {
   Pagination,
   PaginationOverview,
 } from "#components/pagination";
-import type {
-  IBaseComponentPropsWithChildren,
-  ITranslatableProps,
-} from "#components/types";
+import type { IBaseComponentPropsWithChildren } from "#components/types";
+import { useTranslation } from "#hooks";
 //
 
 import styles from "./list.module.scss";
 
 interface IProps
   extends IBaseComponentPropsWithChildren<"div">,
-    Pick<IPaginationProps, "pagination" | "buildURL">,
-    ITranslatableProps {
+    Pick<IPaginationProps, "pagination" | "buildURL"> {
   sortingOrder?: "ascending" | "descending";
 }
 
@@ -26,13 +23,13 @@ interface IProps
 export const PreviewList = createBlockComponent(styles, Component);
 
 function Component({
-  commonTranslation,
   pagination,
   buildURL,
   sortingOrder = "ascending",
   children,
   ...props
 }: IProps) {
+  const { t } = useTranslation("common");
   const listClass = clsx(
     styles.list,
     sortingOrder === "descending" && styles.descending,
@@ -41,20 +38,15 @@ function Component({
   return (
     <div {...props}>
       {pagination.totalCount === 0 ? (
-        <p className={styles.nothing}>{commonTranslation.list.no_items}</p>
+        <p className={styles.nothing}>{t((t) => t.list.no_items)}</p>
       ) : (
         <>
-          <PaginationOverview
-            className={styles.info}
-            commonTranslation={commonTranslation}
-            pagination={pagination}
-          />
+          <PaginationOverview className={styles.info} pagination={pagination} />
 
           <div className={listClass}>{children}</div>
 
           <Pagination
             className={styles.pagination}
-            commonTranslation={commonTranslation}
             pagination={pagination}
             buildURL={buildURL}
           />

@@ -11,25 +11,19 @@ import {
   PreviewFooter,
   PreviewHeader,
 } from "#components/preview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import type { ILocalizationEntities } from "#lib/localization";
+import type { ILocalizableProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import { createPlannedEventPageURL } from "#lib/urls";
 import type { IPlannedEvent } from "./types";
 
-interface IProps extends ILocalizableProps, ITranslatableProps, IPreviewProps {
-  translation: ILocalizationEntities["planned_event"];
+interface IProps extends ILocalizableProps, IPreviewProps {
   plannedEvent: IPlannedEvent;
 }
 
 export const PlannedEventPreview = createBlockComponent(undefined, Component);
 
-function Component({
-  language,
-  commonTranslation,
-  translation,
-  plannedEvent,
-  ...props
-}: IProps) {
+function Component({ language, plannedEvent, ...props }: IProps) {
+  const { t } = useTranslation("translation");
   const { id, title, description, created_at, updated_at } = plannedEvent;
 
   return (
@@ -38,19 +32,16 @@ function Component({
         <>
           <PreviewHeader>
             <Heading level={headingLevel}>{title}</Heading>
-            <EntityID
-              commonTranslation={commonTranslation}
-              entityID={String(id)}
-            />
+            <EntityID entityID={String(id)} />
           </PreviewHeader>
 
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={translation["Description"]}
+                dKey={t((t) => t.planned_event["Description"])}
                 dValue={
                   !description ? (
-                    translation["No description provided"]
+                    t((t) => t.planned_event["No description provided"])
                   ) : (
                     <EntityDescription>{description}</EntityDescription>
                   )
@@ -60,29 +51,19 @@ function Component({
 
             <DescriptionList>
               <DescriptionSection
-                dKey={translation["Date of creation"]}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={created_at}
-                  />
-                }
+                dKey={t((t) => t.planned_event["Date of creation"])}
+                dValue={<DateTime dateTime={created_at} />}
               />
               <DescriptionSection
-                dKey={translation["Last updated"]}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={updated_at}
-                  />
-                }
+                dKey={t((t) => t.planned_event["Last updated"])}
+                dValue={<DateTime dateTime={updated_at} />}
               />
             </DescriptionList>
           </PreviewBody>
 
           <PreviewFooter>
             <Link href={createPlannedEventPageURL(language, id)}>
-              {translation["Details"]}
+              {t((t) => t.planned_event["Details"])}
             </Link>
           </PreviewFooter>
         </>

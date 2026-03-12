@@ -1,20 +1,15 @@
 import { useState } from "react";
 import { createBlockComponent } from "@repo/ui/meta";
 import { Button } from "#components/button";
-import type {
-  IBaseComponentPropsWithChildren,
-  ITranslatableProps,
-} from "#components/types";
-import { useClient } from "#hooks";
+import type { IBaseComponentPropsWithChildren } from "#components/types";
+import { useClient, useTranslation } from "#hooks";
 import { formatDateTime } from "#lib/dates";
 import { logError } from "#lib/logs";
 //
 
 import styles from "./datetime.module.scss";
 
-interface IProps
-  extends IBaseComponentPropsWithChildren<"div">,
-    ITranslatableProps {
+interface IProps extends IBaseComponentPropsWithChildren<"div"> {
   dateTime: string;
 }
 
@@ -23,12 +18,8 @@ interface IProps
  */
 export const DateTime = createBlockComponent(styles, Component);
 
-function Component({
-  commonTranslation,
-  dateTime,
-  children,
-  ...props
-}: IProps) {
+function Component({ dateTime, children, ...props }: IProps) {
+  const { t } = useTranslation("common");
   const client = useClient();
   const [isCopied, switchCopiedStatus] = useState(false);
   const formattedDateTime = !client
@@ -55,9 +46,7 @@ function Component({
           }
         }}
       >
-        {!isCopied
-          ? commonTranslation.datetime["Copy"]
-          : commonTranslation.datetime["Copied"]}
+        {t((t) => (!isCopied ? t.datetime["Copy"] : t.datetime["Copied"]))}
       </Button>
     </div>
   );

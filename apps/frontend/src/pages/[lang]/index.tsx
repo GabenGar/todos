@@ -1,12 +1,11 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Page } from "#components";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { Overview, OverviewHeader } from "#components/overview";
-import { getDictionary } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { usePageTranslation } from "#hooks";
 import {
   createAccountPageURL,
   createPlannedEventsPageURL,
@@ -17,31 +16,27 @@ import {
   createURLViewerPageURL,
   createYTDLPConfigPage,
 } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 //
 
 import styles from "./index.module.scss";
 
-interface IProps extends ILocalizedProps<"home"> {}
-
-interface IParams extends ILocalizedParams {}
-
-function FrontPage({
-  translation,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { lang, t } = translation;
+function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-home");
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   return (
-    <Page heading={t.heading} title={t.title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {(headinglevel) => (
           <OverviewHeader className={styles.header}>
-            <Heading level={headinglevel + 1}>{t["Tools"]}</Heading>
+            <Heading level={headinglevel + 1}>{t((t) => t["Tools"])}</Heading>
             <List className={styles.list}>
               <ListItem>
                 <DescriptionList>
                   <DescriptionSection
-                    dKey={t["Planned events"]}
+                    dKey={t((t) => t["Planned events"])}
                     dValue={
                       <List className={styles.list}>
                         <ListItem>
@@ -51,7 +46,7 @@ function FrontPage({
                               order: "recently_updated",
                             })}
                           >
-                            {t["Recently updated"]}
+                            {t((t) => t["Recently updated"])}
                           </Link>
                         </ListItem>
 
@@ -60,7 +55,7 @@ function FrontPage({
                             className={styles.link}
                             href={createPlannedEventsPageURL(lang)}
                           >
-                            {t["Recently created"]}
+                            {t((t) => t["Recently created"])}
                           </Link>
                         </ListItem>
                       </List>
@@ -74,7 +69,7 @@ function FrontPage({
                   className={styles.link}
                   href={createStatsPlacesPageURL(lang)}
                 >
-                  {t["Places"]}
+                  {t((t) => t["Places"])}
                 </Link>
               </ListItem>
 
@@ -83,7 +78,7 @@ function FrontPage({
                   className={styles.link}
                   href={createTaskStatsPageURL(lang)}
                 >
-                  {t["Tasks"]}
+                  {t((t) => t["Tasks"])}
                 </Link>
               </ListItem>
 
@@ -92,7 +87,7 @@ function FrontPage({
                   className={styles.link}
                   href={createQRCodeReaderURL(lang)}
                 >
-                  {t["QR code reader"]}
+                  {t((t) => t["QR code reader"])}
                 </Link>
               </ListItem>
 
@@ -101,7 +96,7 @@ function FrontPage({
                   className={styles.link}
                   href={createURLViewerPageURL(lang)}
                 >
-                  {t["URL Viewer"]}
+                  {t((t) => t["URL Viewer"])}
                 </Link>
               </ListItem>
 
@@ -110,25 +105,27 @@ function FrontPage({
                   className={styles.link}
                   href={createURLEditorPageURL(lang)}
                 >
-                  {t["URL Editor"]}
+                  {t((t) => t["URL Editor"])}
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link className={styles.link} href={createAccountPageURL(lang)}>
-                  {t["Account"]}
+                  {t((t) => t["Account"])}
                 </Link>
               </ListItem>
             </List>
 
-            <Heading level={headinglevel + 1}>{t["Miscellaneous"]}</Heading>
+            <Heading level={headinglevel + 1}>
+              {t((t) => t["Miscellaneous"])}
+            </Heading>
             <List className={styles.list}>
               <ListItem>
                 <Link
                   className={styles.link}
                   href={createYTDLPConfigPage(lang)}
                 >
-                  {t["YT-DLP configs"]}
+                  {t((t) => t["YT-DLP configs"])}
                 </Link>
               </ListItem>
             </List>
@@ -139,21 +136,7 @@ function FrontPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const { home } = dict.pages;
-  const props = {
-    translation: { lang, common: dict.common, t: home },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-home");
 
 export const getStaticPaths = getStaticExportPaths;
 

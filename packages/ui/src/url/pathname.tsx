@@ -1,32 +1,33 @@
 import { DescriptionList, DescriptionSection } from "#description-list";
 import { Details } from "#details";
 import { Preformatted } from "#formatting";
+import { useTranslation } from "#hooks";
 import { List, ListItem } from "#lists";
-import type { IURLViewerProps } from "./viewer";
 
-interface IProps extends Pick<IURLViewerProps, "t"> {
+interface IProps {
   pathname: string;
 }
-export function Pathname({ t, pathname }: IProps) {
+export function Pathname({ pathname }: IProps) {
+  const { t } = useTranslation();
   const segments = pathname.split("/").slice(1);
   const totalSegments = segments.length;
 
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={t("Pathname")}
+        dKey={t((t) => t.url["Pathname"])}
         dValue={<Preformatted>{pathname}</Preformatted>}
       />
 
       {totalSegments === 0 ? (
         <DescriptionSection
-          dKey={t("Segments")}
+          dKey={t((t) => t.url["Segments"])}
           dValue={<Preformatted>{totalSegments}</Preformatted>}
           isHorizontal
         />
       ) : (
         <DescriptionSection
-          dKey={t("Segments")}
+          dKey={t((t) => t.url["Segments"])}
           dValue={
             <Details summary={<Preformatted>{totalSegments}</Preformatted>}>
               <List isOrdered>

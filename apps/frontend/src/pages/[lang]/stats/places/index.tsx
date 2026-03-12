@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useEffect, useState } from "react";
 import {
   DescriptionList,
@@ -9,23 +9,19 @@ import {
 import { Link } from "#components/link";
 import { Overview, OverviewHeader } from "#components/overview";
 import { getPlacesStats } from "#entities/place";
-import { getDictionary } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { usePageTranslation } from "#hooks";
 import { createPlacesPageURL } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"stats_places"> {}
-
-interface IParams extends ILocalizedParams {}
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function PlacesStatsPage({
-  translation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { lang, t } = translation;
-  const title = t.title;
-  const description = t.description;
+  const { t } = usePageTranslation("page-stats-places");
   const [stats, changeStats] =
     useState<Awaited<ReturnType<typeof getPlacesStats>>>();
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
+  const description = t((t) => t.description);
 
   useEffect(() => {
     (async () => {
@@ -35,14 +31,14 @@ function PlacesStatsPage({
   }, []);
 
   return (
-    <Page heading={t.heading} title={title} description={description}>
+    <Page heading={heading} title={title} description={description}>
       <Overview headingLevel={2}>
         {() => (
           <OverviewHeader>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
-                dKey={t.stats["All"]}
+                dKey={t((t) => t.stats["All"])}
                 dValue={
                   !stats ? (
                     <Loading />
@@ -53,7 +49,7 @@ function PlacesStatsPage({
               />
               <DescriptionSection
                 isHorizontal
-                dKey={t.stats["Eventless"]}
+                dKey={t((t) => t.stats["Eventless"])}
                 dValue={
                   !stats ? (
                     <Loading />
@@ -78,24 +74,7 @@ function PlacesStatsPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["stats_places"],
-    },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-stats-places");
 
 export const getStaticPaths = getStaticExportPaths;
 

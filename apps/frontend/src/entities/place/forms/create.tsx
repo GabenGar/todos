@@ -4,25 +4,18 @@ import {
   type IFormEvent,
 } from "#components/form";
 import { InputSectionText } from "#components/form/section";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import type { IPlaceInit } from "../types";
 
-interface IProps extends IFormComponentProps, ITranslatableProps {
-  translation: ILocalization["place"];
+interface IProps extends IFormComponentProps {
   onNewPlace: (init: IPlaceInit) => Promise<void>;
 }
 
-export function PlaceCreateForm({
-  commonTranslation,
-  translation,
-  id,
-  onNewPlace,
-}: IProps) {
-  const { title, description, add, adding } = translation;
+export function PlaceCreateForm({ id, onNewPlace }: IProps) {
+  const { t } = useTranslation("translation");
   const FIELD = {
-    TITLE: { name: "title", label: title },
-    DESCRIPTION: { name: "description", label: description },
+    TITLE: { name: "title", label: t((t) => t.place.title) },
+    DESCRIPTION: { name: "description", label: t((t) => t.place.description) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -44,10 +37,11 @@ export function PlaceCreateForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
-      submitButton={(_formID, isSubmitting) => (!isSubmitting ? add : adding)}
+      submitButton={(_formID, isSubmitting) =>
+        t((t) => (!isSubmitting ? t.place.add : t.place.adding))
+      }
     >
       {(formID) => (
         <>

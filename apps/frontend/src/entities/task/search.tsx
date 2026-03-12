@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Form, type IFormEvent } from "#components/form";
 import { InputOption } from "#components/form/input";
 import { InputSectionSelect, InputSectionText } from "#components/form/section";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
 import { type IPlace, PlaceSection } from "#entities/place";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { type ITask, isTaskStatus } from "./types";
 //
 
@@ -16,12 +16,8 @@ export interface ITaskSearchQuery {
   place_id?: IPlace["id"];
 }
 
-export interface ISearchTasksFormProps
-  extends ILocalizableProps,
-    ITranslatableProps {
+export interface ISearchTasksFormProps extends ILocalizableProps {
   id: string;
-  translation: ILocalization["pages"]["tasks"];
-  statusTranslation: ILocalization["pages"]["stats_tasks"]["status_values"];
   defaultQuery?: ITaskSearchQuery;
   onSearch: (newSearchQuery: ITaskSearchQuery) => Promise<void>;
   place?: IPlace;
@@ -29,23 +25,19 @@ export interface ISearchTasksFormProps
 
 export function SearchTasksForm({
   language,
-  commonTranslation,
-  translation,
-  statusTranslation,
   id,
   defaultQuery,
   place,
   onSearch,
 }: ISearchTasksFormProps) {
+  const { t } = useTranslation("translation");
   const [oldQuery, changeOldQuery] = useState<ITaskSearchQuery | undefined>(
     defaultQuery,
   );
-  const { query, search, searching } = translation.search_tasks;
-  const { status } = translation;
   const FIELD = {
-    QUERY: { name: "query", label: query },
-    PLACE: { name: "place_id", label: translation.search_tasks["Place"] },
-    STATUS: { name: "status", label: status },
+    QUERY: { name: "query", label: t((t) => t.task.search_tasks.query) },
+    PLACE: { name: "place_id", label: t((t) => t.task.search_tasks["Place"]) },
+    STATUS: { name: "status", label: t((t) => t.task.status) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -79,10 +71,15 @@ export function SearchTasksForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
-      submitButton={(_, isSubmitting) => (!isSubmitting ? search : searching)}
+      submitButton={(_, isSubmitting) =>
+        t((t) =>
+          !isSubmitting
+            ? t.task.search_tasks.search
+            : t.task.search_tasks.searching,
+        )
+      }
     >
       {(formID) => (
         <>
@@ -101,7 +98,6 @@ export function SearchTasksForm({
             // a dirty hack to force update on the component state
             key={place?.id}
             language={language}
-            commonTranslation={commonTranslation}
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}
             name={FIELD.PLACE.name}
@@ -117,25 +113,27 @@ export function SearchTasksForm({
             name={FIELD.STATUS.name}
             defaultValue={defaultQuery?.status ?? ""}
           >
-            <InputOption value="">{statusTranslation.all}</InputOption>
+            <InputOption value="">
+              {t((t) => t.task.status_values.all)}
+            </InputOption>
 
             <InputOption
               className={statusStyles["in-progress"]}
               value="in-progress"
             >
-              {statusTranslation["in-progress"]}
+              {t((t) => t.task.status_values["in-progress"])}
             </InputOption>
 
             <InputOption className={statusStyles.pending} value="pending">
-              {statusTranslation.pending}
+              {t((t) => t.task.status_values.pending)}
             </InputOption>
 
             <InputOption className={statusStyles.finished} value="finished">
-              {statusTranslation.finished}
+              {t((t) => t.task.status_values.finished)}
             </InputOption>
 
             <InputOption className={statusStyles.failed} value="failed">
-              {statusTranslation.failed}
+              {t((t) => t.task.status_values.failed)}
             </InputOption>
           </InputSectionSelect>
         </>

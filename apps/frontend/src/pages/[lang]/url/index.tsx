@@ -1,4 +1,3 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useState } from "react";
 import { URLViewer } from "@repo/ui/url";
 import { Page } from "#components";
@@ -9,37 +8,22 @@ import {
 } from "#components/form";
 import { InputSectionText } from "#components/form/section";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
-import type { ITranslatableProps } from "#components/types";
-import { getDictionary, type ILocalizationPage } from "#lib/localization";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
+import { usePageTranslation } from "#hooks";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-interface IProps extends ILocalizedProps<"url-viewer"> {}
-
-interface IParams extends ILocalizedParams {}
-
-function URLViewerPage({
-  translation,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function URLViewerPage() {
+  const { t } = usePageTranslation("page-url");
   const [currentURL, changeCurrentURL] = useState<URL>();
-  const { common, t } = translation;
-  const title = t.title;
-  /**
-   * t. Alberto Barbosa
-   */
-  function coreT(key: keyof typeof t) {
-    return t[key];
-  }
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
             <OverviewHeader>
               <URLViewerForm
-                commonTranslation={common}
-                translation={t}
                 id="url-viewer"
                 onNewURL={async (newURL) => changeCurrentURL(newURL)}
               />
@@ -47,13 +31,9 @@ function URLViewerPage({
 
             <OverviewBody>
               {!currentURL ? (
-                t["No URL selected."]
+                t((t) => t["No URL selected."])
               ) : (
-                <URLViewer
-                  t={coreT}
-                  headingLevel={headingLevel}
-                  url={currentURL}
-                />
+                <URLViewer headingLevel={headingLevel} url={currentURL} />
               )}
             </OverviewBody>
           </>
@@ -63,19 +43,14 @@ function URLViewerPage({
   );
 }
 
-interface IFormProps extends ITranslatableProps, IFormComponentProps {
-  translation: ILocalizationPage["url-viewer"];
+interface IFormProps extends IFormComponentProps {
   onNewURL: (newURL: URL) => Promise<void>;
 }
 
-export function URLViewerForm({
-  commonTranslation,
-  translation,
-  id,
-  onNewURL,
-}: IFormProps) {
+export function URLViewerForm({ id, onNewURL }: IFormProps) {
+  const { t } = usePageTranslation("page-url");
   const FIELD = {
-    URL: { name: "url", label: translation["URL"] },
+    URL: { name: "url", label: t((t) => t["URL"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -88,10 +63,9 @@ export function URLViewerForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting ? translation["Parse"] : translation["Parsing..."]
+        t((t) => (!isSubmitting ? t["Parse"] : t["Parsing..."]))
       }
       onSubmit={handleSubmit}
     >
@@ -110,25 +84,7 @@ export function URLViewerForm({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["url-viewer"],
-    },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-url");
 export const getStaticPaths = getStaticExportPaths;
 
 export default URLViewerPage;

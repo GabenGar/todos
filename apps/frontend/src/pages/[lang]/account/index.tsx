@@ -1,4 +1,3 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import {
   DescriptionList,
@@ -17,46 +16,40 @@ import { Heading } from "#components/heading";
 import { Link } from "#components/link";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { Pre } from "#components/pre";
-import type { ITranslatableProps } from "#components/types";
 import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
-import { useClient } from "#hooks";
-import type { ILocalizationPage } from "#lib/localization";
-import { getDictionary } from "#lib/localization";
+import { useClient, usePageTranslation } from "#hooks";
 import { type ILogLevel, validateLogLevel } from "#lib/logs";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 //
 
 import styles from "./index.module.scss";
 
-interface IProps extends ILocalizedProps<"account"> {}
-
-interface IParams extends ILocalizedParams {}
-
-function AccountPage({
-  translation,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function AccountPage() {
+  const { t } = usePageTranslation("page-account");
   const router = useRouter();
   const client = useClient();
-  const { common, t } = translation;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   return (
-    <Page heading={t.heading} title={t.title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>{t["Data"]}</Heading>
+              <Heading level={headingLevel + 1}>{t((t) => t["Data"])}</Heading>
             </OverviewHeader>
 
             <OverviewBody>
-              <Heading level={headingLevel + 2}>{t["Export"]}</Heading>
-              <DataExportForm translation={t} />
+              <Heading level={headingLevel + 2}>
+                {t((t) => t["Export"])}
+              </Heading>
+              <DataExportForm />
 
-              <Heading level={headingLevel + 2}>{t["Import"]}</Heading>
+              <Heading level={headingLevel + 2}>
+                {t((t) => t["Import"])}
+              </Heading>
               <ImportDataExportForm
-                commonTranslation={common}
-                translation={t}
                 id="import-data-export"
                 onSuccess={async () => router.reload()}
               />
@@ -69,10 +62,12 @@ function AccountPage({
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>{t["Compatibility"]}</Heading>
+              <Heading level={headingLevel + 1}>
+                {t((t) => t["Compatibility"])}
+              </Heading>
             </OverviewHeader>
             <OverviewBody>
-              <Compatibility translation={translation} />
+              <Compatibility />
             </OverviewBody>
           </>
         )}
@@ -82,7 +77,9 @@ function AccountPage({
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>{t["Settings"]}</Heading>
+              <Heading level={headingLevel + 1}>
+                {t((t) => t["Settings"])}
+              </Heading>
             </OverviewHeader>
             <OverviewBody>
               {!client ? (
@@ -90,8 +87,6 @@ function AccountPage({
               ) : (
                 <SettingsForm
                   key={client.logLevel}
-                  commonTranslation={common}
-                  translation={t}
                   id="edit-account-settings"
                   currentLogLevel={client.logLevel}
                   onSettingsUpdate={async (settingsUpdate) => {
@@ -107,14 +102,12 @@ function AccountPage({
   );
 }
 
-interface ICompatibilityProps extends Pick<IProps, "translation"> {}
-
 /**
  * @TODO colouring
  */
-function Compatibility({ translation }: ICompatibilityProps) {
+function Compatibility() {
+  const { t } = usePageTranslation("page-account");
   const client = useClient();
-  const { t } = translation;
 
   return (
     <DescriptionList>
@@ -129,9 +122,9 @@ function Compatibility({ translation }: ICompatibilityProps) {
           !client ? (
             <Loading />
           ) : client.compatibility.localStorage ? (
-            t["Supported"]
+            t((t) => t["Supported"])
           ) : (
-            t["Not supported"]
+            t((t) => t["Not supported"])
           )
         }
       />
@@ -147,9 +140,9 @@ function Compatibility({ translation }: ICompatibilityProps) {
           !client ? (
             <Loading />
           ) : client.compatibility.indexedDB ? (
-            t["Supported"]
+            t((t) => t["Supported"])
           ) : (
-            t["Not supported"]
+            t((t) => t["Not supported"])
           )
         }
       />
@@ -157,8 +150,7 @@ function Compatibility({ translation }: ICompatibilityProps) {
   );
 }
 
-interface ISettingsFormProps extends ITranslatableProps, IFormComponentProps {
-  translation: ILocalizationPage["account"];
+interface ISettingsFormProps extends IFormComponentProps {
   currentLogLevel: ILogLevel;
   onSettingsUpdate: (updatedSettings: ISettingsUpdate) => Promise<void>;
 }
@@ -180,14 +172,13 @@ const logLevelTranslation = {
  * Find a way to instantiate log level from the user setting on client.
  */
 export function SettingsForm({
-  commonTranslation,
-  translation,
   id,
   currentLogLevel,
   onSettingsUpdate,
 }: ISettingsFormProps) {
+  const { t } = usePageTranslation("page-account");
   const FIELD = {
-    LOG_LEVEL: { name: "log_level", label: translation.logger["Log level"] },
+    LOG_LEVEL: { name: "log_level", label: t((t) => t.logger["Log level"]) },
   } as const;
 
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
@@ -207,10 +198,9 @@ export function SettingsForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       submitButton={(_, isSubmitting) =>
-        isSubmitting ? translation["Updating..."] : translation["Update"]
+        t((t) => (isSubmitting ? t["Updating..."] : t["Update"]))
       }
       onSubmit={handleSubmit}
     >
@@ -230,7 +220,7 @@ export function SettingsForm({
                   className={styles[value]}
                   value={value}
                 >
-                  {translation.logger.levels[translatedValue]}
+                  {t((t) => t.logger.levels[translatedValue])}
                 </InputOption>
               ),
             )}
@@ -241,21 +231,7 @@ export function SettingsForm({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const { account } = dict.pages;
-  const props = {
-    translation: { lang, common: dict.common, t: account },
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
+export const getStaticProps = createGetStaticProps("page-account");
 
 export const getStaticPaths = getStaticExportPaths;
 

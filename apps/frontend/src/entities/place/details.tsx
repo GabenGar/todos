@@ -12,34 +12,23 @@ import {
   OverviewFooter,
   OverviewHeader,
 } from "#components/overview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
 import { TasksStats } from "#entities/task";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { createPlaceEditPageURL } from "#lib/urls";
 import type { IPlace } from "./types";
 //
 
 import styles from "./details.module.scss";
 
-export interface IPlaceOverviewProps
-  extends IOverviewProps,
-    ILocalizableProps,
-    ITranslatableProps {
-  translation: ILocalization["place"];
-  taskTranslation: ILocalization["pages"]["stats_tasks"];
+export interface IPlaceOverviewProps extends IOverviewProps, ILocalizableProps {
   place: IPlace;
 }
 
 export const PlaceOverview = createBlockComponent(styles, Component);
 
-function Component({
-  language,
-  commonTranslation,
-  translation,
-  taskTranslation,
-  place,
-  ...props
-}: IPlaceOverviewProps) {
+function Component({ language, place, ...props }: IPlaceOverviewProps) {
+  const { t } = useTranslation("translation");
   const { id, title, description, created_at, updated_at } = place;
 
   return (
@@ -48,20 +37,16 @@ function Component({
         <>
           <OverviewHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID
-              className={styles.id}
-              commonTranslation={commonTranslation}
-              entityID={id}
-            />
+            <EntityID className={styles.id} entityID={id} />
           </OverviewHeader>
 
           <OverviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={translation.description}
+                dKey={t((t) => t.place.description)}
                 dValue={
                   <EntityDescription>
-                    {description ?? translation.no_description}
+                    {description ?? t((t) => t.place.no_description)}
                   </EntityDescription>
                 }
               />
@@ -69,41 +54,26 @@ function Component({
 
             <DescriptionList>
               <DescriptionSection
-                dKey={translation.created_at}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={created_at}
-                  />
-                }
+                dKey={t((t) => t.place.created_at)}
+                dValue={<DateTime dateTime={created_at} />}
               />
               <DescriptionSection
-                dKey={translation.updated_at}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={updated_at}
-                  />
-                }
+                dKey={t((t) => t.place.updated_at)}
+                dValue={<DateTime dateTime={updated_at} />}
               />
             </DescriptionList>
 
             <Heading level={(headinglevel + 1) as IHeadingLevel}>
-              {translation["Tasks"]}
+              {t((t) => t.place["Tasks"])}
             </Heading>
-            <TasksStats
-              language={language}
-              commonTranslation={commonTranslation}
-              translation={taskTranslation}
-              placeID={place.id}
-            />
+            <TasksStats language={language} placeID={place.id} />
           </OverviewBody>
 
           <OverviewFooter>
             <List>
               <ListItem>
                 <LinkButton href={createPlaceEditPageURL(language, id)}>
-                  {translation["Edit"]}
+                  {t((t) => t.place["Edit"])}
                 </LinkButton>
               </ListItem>
             </List>

@@ -1,18 +1,11 @@
 import { Button } from "#components/button";
+import { usePageTranslation } from "#hooks";
 import { toJSONPretty } from "#lib/json";
-import type { ILocalization } from "#lib/localization";
 import { createDataExport } from "./lib";
 
-interface IProps {
-  translation: ILocalization["pages"]["account"];
-}
+export function DataExportForm() {
+  const { t } = usePageTranslation("page-account");
 
-/**
- * @TODO
- * move into `app` page folder as it's going to be used
- * only there.
- */
-export function DataExportForm({ translation }: IProps) {
   async function handleExportCreation() {
     const dataExport = await createDataExport();
     const dataExportJSON = toJSONPretty(dataExport);
@@ -30,12 +23,16 @@ export function DataExportForm({ translation }: IProps) {
   }
 
   return (
-    <Button onClick={handleExportCreation}>{translation["Export Data"]}</Button>
+    <Button onClick={handleExportCreation}>{t((t) => t["Export Data"])}</Button>
   );
 }
 
 /**
- * Stolen from [MDN article](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API/Non-cryptographic_uses_of_subtle_crypto).
+ * @TODO switch to [`hash-wasm`][2]
+ * Stolen from [MDN article][1]
+ *
+ * [1]: https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API/Non-cryptographic_uses_of_subtle_crypto.
+ * [2]: https://github.com/884882/254565236
  */
 async function getHash(data: string) {
   const encoder = new TextEncoder();

@@ -3,12 +3,10 @@ import {
   InputSectionDescription,
   InputSectionTitle,
 } from "#components/form/section";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationEntities } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import type { IPlannedEvent, IPlannedEventUpdate } from "../types";
 
-interface IProps extends ITranslatableProps {
-  translation: ILocalizationEntities["planned_event"];
+interface IProps {
   id: string;
   currentPlannedEvent: IPlannedEvent;
   onPlannedEventEdit: (
@@ -17,16 +15,18 @@ interface IProps extends ITranslatableProps {
 }
 
 export function EditPlannedEventForm({
-  commonTranslation,
-  translation,
   currentPlannedEvent,
   id,
   onPlannedEventEdit,
 }: IProps) {
-  const { form } = commonTranslation;
+  const { t } = useTranslation("translation");
+  const { t: cT } = useTranslation("common");
   const FIELD = {
-    TITLE: { name: "title", label: translation["Title"] },
-    DESCRIPTION: { name: "description", label: translation["Description"] },
+    TITLE: { name: "title", label: t((t) => t.planned_event["Title"]) },
+    DESCRIPTION: {
+      name: "description",
+      label: t((t) => t.planned_event["Description"]),
+    },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -56,10 +56,13 @@ export function EditPlannedEventForm({
 
   return (
     <Form
-      commonTranslation={commonTranslation}
       id={id}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting ? form["Confirm changes"] : form["Applying changes..."]
+        cT((t) =>
+          !isSubmitting
+            ? t.form["Confirm changes"]
+            : t.form["Applying changes..."],
+        )
       }
       onSubmit={handleSubmit}
     >

@@ -4,25 +4,22 @@ import {
   type IFormEvent,
 } from "#components/form";
 import { InputSectionText } from "#components/form/section";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationEntities } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { validatePlannedEventInit } from "../lib/validate";
 import type { IPlannedEventInit } from "../types";
 
-interface IProps extends IFormComponentProps, ITranslatableProps {
-  translation: ILocalizationEntities["planned_event"];
+interface IProps extends IFormComponentProps {
   onNewPlannedEvent: (init: IPlannedEventInit) => Promise<void>;
 }
 
-export function PlannedEventCreateForm({
-  commonTranslation,
-  translation,
-  id,
-  onNewPlannedEvent,
-}: IProps) {
+export function PlannedEventCreateForm({ id, onNewPlannedEvent }: IProps) {
+  const { t } = useTranslation("translation");
   const FIELD = {
-    TITLE: { name: "title", label: translation["Title"] },
-    DESCRIPTION: { name: "description", label: translation["Description"] },
+    TITLE: { name: "title", label: t((t) => t.planned_event["Title"]) },
+    DESCRIPTION: {
+      name: "description",
+      label: t((t) => t.planned_event["Description"]),
+    },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -45,13 +42,14 @@ export function PlannedEventCreateForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting
-          ? translation["Add planned event"]
-          : translation["Adding planned event..."]
+        t((t) =>
+          !isSubmitting
+            ? t.planned_event["Add planned event"]
+            : t.planned_event["Adding planned event..."],
+        )
       }
     >
       {(formID) => (

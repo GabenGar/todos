@@ -1,8 +1,7 @@
 import { InputOption } from "@repo/ui/forms/inputs";
 import { InputSectionSelect } from "@repo/ui/forms/sections";
 import { Form, type IFormEvent } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationEntities } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { isPlannedEventsOrder } from "../lib/get";
 import type { IPlannedEventOrder } from "../types";
 
@@ -10,22 +9,20 @@ export interface IPlannedEventSearchQuery {
   order?: IPlannedEventOrder;
 }
 
-interface ISearchPlannedEventFormProps extends ITranslatableProps {
+interface ISearchPlannedEventFormProps {
   id: string;
-  translation: ILocalizationEntities["planned_event"];
   defaultOrder?: IPlannedEventOrder;
   onSearch: (newSearchQuery: IPlannedEventSearchQuery) => Promise<void>;
 }
 
 export function SearchPlannedEventForm({
-  commonTranslation,
-  translation,
   id,
   defaultOrder,
   onSearch,
 }: ISearchPlannedEventFormProps) {
+  const { t } = useTranslation("translation");
   const FIELD = {
-    ORDER: { name: "order", label: translation["Order"] },
+    ORDER: { name: "order", label: t((t) => t.planned_event["Order"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -49,11 +46,14 @@ export function SearchPlannedEventForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
       submitButton={(_, isSubmitting) =>
-        !isSubmitting ? translation["Filter"] : translation["Filtering..."]
+        t((t) =>
+          !isSubmitting
+            ? t.planned_event["Filter"]
+            : t.planned_event["Filtering..."],
+        )
       }
     >
       {(formID) => (
@@ -68,10 +68,10 @@ export function SearchPlannedEventForm({
             <InputOption
               value={"recently_updated" satisfies IPlannedEventOrder}
             >
-              {translation["Recently updated"]}
+              {t((t) => t.planned_event["Recently updated"])}
             </InputOption>
             <InputOption value={""}>
-              {translation["Recently created"]}
+              {t((t) => t.planned_event["Recently created"])}
             </InputOption>
           </InputSectionSelect>
         </>

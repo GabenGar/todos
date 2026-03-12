@@ -1,0 +1,84 @@
+{
+  "place": {
+    "title": "Заглавие",
+    "description": "Описание",
+    "no_description": "Без описания",
+    "created_at": "Дата создания",
+    "updated_at": "Последнее обновление",
+    "add": "Добавить место",
+    "adding": "Добавляем место...",
+    "details": "Детали",
+    "Place": "Место",
+    "Edit": "Редактировать",
+    "Tasks": "Задачи",
+    "No places found": "Места не найдены",
+    "edit": {
+      "Confirm changes": "Применить изменения",
+      "Applying changes...": "Применяем изменения..."
+    },
+    "search": {
+      "Query": "Запрос",
+      "Search": "Искать",
+      "Searching...": "Ищем..."
+    }
+  },
+  "task": {
+    "description": "Описание",
+    "no_description": "Без описания",
+    "creation_date": "Дата создания",
+    "last_updated": "Последнее обновление",
+    "edit": "Редактировать",
+    "editing": "Редактируем...",
+    "place": "Место",
+    "place_unknown": "Неизвестно",
+    "status": "Статус",
+    "status_values": {
+      "all": "Все",
+      "pending": "В ожидании",
+      "in-progress": "В ходе выполнения",
+      "finished": "Завершена",
+      "failed": "Провалена"
+    },
+    "actions": {
+      "fail": "Провалить",
+      "delay": "Отложить",
+      "start": "Начать",
+      "complete": "Завершить"
+    },
+    "new_todo": {
+      "title": "Название",
+      "description": "Описание",
+      "status": "Статус",
+      "add": "Добавить",
+      "adding": "Добавляем...",
+      "place": "Место"
+    },
+    "search_tasks": {
+      "query": "Запрос",
+      "search": "Искать",
+      "Place": "Место",
+      "searching": "Ищем..."
+    },
+    "delete": "Удалить",
+    "details": "Детали",
+    "search": "Искать",
+    "add": "Добавить"
+  },
+  "planned_event": {
+    "Planned event": "Планируемое событие",
+    "Title": "Заглавие",
+    "Description": "Описание",
+    "No description provided": "Без описания",
+    "Date of creation": "Дата создания",
+    "Last updated": "Последнее обновление",
+    "Details": "Детали",
+    "Add planned event": "Добавить планируемое событие",
+    "Adding planned event...": "Добавляем планируемое событие...",
+    "No planned events found": "Планируемые события не найдены",
+    "Order": "Порядок",
+    "Recently updated": "Недавно обновлённые",
+    "Recently created": "Недавно добавленные",
+    "Filter": "Фильтровать",
+    "Filtering...": "Фильтруем..."
+  }
+}

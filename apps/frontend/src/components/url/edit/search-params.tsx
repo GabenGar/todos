@@ -13,28 +13,21 @@ import { InputHidden, InputTextArea } from "@repo/ui/forms/inputs";
 import { InputSection } from "@repo/ui/forms/sections";
 import { List, ListItem } from "@repo/ui/lists";
 import { Form, type IFormEvent } from "#components/form";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalizationPage } from "#lib/localization";
+import { usePageTranslation, useTranslation } from "#hooks";
 //
 
 import styles from "./search-params.module.scss";
 
-interface IProps extends ITranslatableProps {
-  t: ILocalizationPage["url-editor"];
+interface IProps {
   id: string;
   formID: string;
   name: string;
   defaultValue: string | undefined;
 }
 
-export function SearchParams({
-  commonTranslation,
-  t,
-  id,
-  formID,
-  name,
-  defaultValue,
-}: IProps) {
+export function SearchParams({ id, formID, name, defaultValue }: IProps) {
+  const { t } = usePageTranslation("page-url-edit");
+  const { t: cT } = useTranslation("common");
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentSearchParams, changeCurrentSearchParams] = useState(() => {
     if (inputRef.current) {
@@ -107,28 +100,29 @@ export function SearchParams({
       <InputHidden ref={inputRef} form={formID} name={name} />
       <DescriptionList>
         <DescriptionSection
-          dKey={t["Search parameters"]}
+          dKey={t((t) => t["Search parameters"])}
           dValue={
             <Details
               summary={
                 isEmptySearchParams ? (
-                  t["Empty"]
+                  t((t) => t["Empty"])
                 ) : (
                   <>
-                    {t["Keys"]}:{" "}
+                    {t((t) => t["Keys"])}:{" "}
                     <Preformatted>{currentSearchParams.size}</Preformatted>
                   </>
                 )
               }
             >
               <Form
-                commonTranslation={commonTranslation}
                 id={editFormID}
                 isNested
                 submitButton={(_, isSubmitting) =>
-                  isSubmitting
-                    ? commonTranslation.form["Applying changes..."]
-                    : commonTranslation.form["Confirm changes"]
+                  cT((t) =>
+                    isSubmitting
+                      ? t.form["Applying changes..."]
+                      : t.form["Confirm changes"],
+                  )
                 }
                 onSubmit={handleSearchParamsChange}
               >
@@ -140,7 +134,6 @@ export function SearchParams({
                       <ParamKey
                         key={paramKey}
                         formID={formID}
-                        t={t}
                         paramKey={paramKey}
                         values={values}
                         onKeyDelete={handleKeyDeletion}
@@ -158,7 +151,7 @@ export function SearchParams({
   );
 }
 
-interface IParamKeyProps extends Pick<IProps, "t"> {
+interface IParamKeyProps {
   paramKey: string;
   values: string[];
   formID: string;
@@ -167,20 +160,20 @@ interface IParamKeyProps extends Pick<IProps, "t"> {
 }
 
 function ParamKey({
-  t,
   formID,
   paramKey,
   values,
   onKeyDelete,
   onValueDelete,
 }: IParamKeyProps) {
+  const { t } = usePageTranslation("page-url-edit");
   return (
     <DescriptionList>
       <DescriptionSection>
         <DescriptionTerm className={styles.key}>
           <Preformatted>{paramKey}:</Preformatted>
           <Button onClick={async () => onKeyDelete(paramKey)}>
-            {t["Delete"]}
+            {t((t) => t["Delete"])}
           </Button>
         </DescriptionTerm>
 
@@ -188,7 +181,8 @@ function ParamKey({
           <Details
             summary={
               <>
-                {t["Values"]}: <Preformatted>{values.length}</Preformatted>
+                {t((t) => t["Values"])}:{" "}
+                <Preformatted>{values.length}</Preformatted>
               </>
             }
           >
@@ -207,7 +201,7 @@ function ParamKey({
                     className={styles.delete}
                     onClick={() => onValueDelete(paramKey, index)}
                   >
-                    {t["Delete"]}
+                    {t((t) => t["Delete"])}
                   </Button>
                 </ListItem>
               ))}

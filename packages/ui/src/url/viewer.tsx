@@ -2,7 +2,7 @@ import { DescriptionList, DescriptionSection } from "#description-list";
 import { Details } from "#details";
 import { Preformatted } from "#formatting";
 import { Heading, type IHeadingLevel } from "#headings";
-import type { ITranslatableProps } from "#meta";
+import { useTranslation } from "#hooks";
 import { Origin } from "./origin";
 import {
   type ITransformedSearchParams,
@@ -10,33 +10,13 @@ import {
 } from "./params";
 import { Pathname } from "./pathname";
 
-export interface IURLViewerProps extends ITranslatableProps<ITranslationKey> {
+export interface IURLViewerProps {
   url: URL;
   headingLevel: IHeadingLevel;
 }
 
-type ITranslationKey =
-  | "URLs"
-  | "Full URL"
-  | "Decoded URL"
-  | "Origin Details"
-  | "Origin"
-  | "Protocol"
-  | "Username"
-  | "Password"
-  | "Host"
-  | "Hostname"
-  | "Port"
-  | "Pathname Details"
-  | "Pathname"
-  | "Segments"
-  | "Search Parameters Details"
-  | "Search"
-  | "Search parameters"
-  | "Fragment Details"
-  | "Hash";
-
-export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
+export function URLViewer({ headingLevel, url }: IURLViewerProps) {
+  const { t } = useTranslation();
   const { href, origin, pathname, search, searchParams, hash } = url;
   const transformedSearchParams = transformSearchparams(searchParams);
   const transformedURL = transformURL(url);
@@ -44,15 +24,15 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
 
   return (
     <>
-      <Heading level={headingLevel}>{t("URLs")}</Heading>
+      <Heading level={headingLevel}>{t((t) => t.url["URLs"])}</Heading>
       <DescriptionList>
         <DescriptionSection
-          dKey={t("Full URL")}
+          dKey={t((t) => t.url["Full URL"])}
           dValue={<Preformatted>{href}</Preformatted>}
         />
         {href !== decodedURL && (
           <DescriptionSection
-            dKey={t("Decoded URL")}
+            dKey={t((t) => t.url["Decoded URL"])}
             dValue={<Preformatted>{decodedURL}</Preformatted>}
           />
         )}
@@ -61,35 +41,39 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
       {origin && (
         <Details
           summary={
-            <Heading level={headingLevel}>{t("Origin Details")}</Heading>
+            <Heading level={headingLevel}>
+              {t((t) => t.url["Origin Details"])}
+            </Heading>
           }
         >
-          <Origin t={t} url={url} />
+          <Origin url={url} />
         </Details>
       )}
 
       <Details
         summary={
-          <Heading level={headingLevel}>{t("Pathname Details")}</Heading>
+          <Heading level={headingLevel}>
+            {t((t) => t.url["Pathname Details"])}
+          </Heading>
         }
       >
-        <Pathname t={t} pathname={pathname} />
+        <Pathname pathname={pathname} />
       </Details>
 
       {transformedSearchParams.size !== 0 && (
         <>
           <Heading level={headingLevel}>
-            {t("Search Parameters Details")}
+            {t((t) => t.url["Search Parameters Details"])}
           </Heading>
 
           <DescriptionList>
             <DescriptionSection
-              dKey={t("Search")}
+              dKey={t((t) => t.url["Search"])}
               dValue={<Preformatted>{search}</Preformatted>}
             />
 
             <DescriptionSection
-              dKey={t("Search parameters")}
+              dKey={t((t) => t.url["Search parameters"])}
               dValue={
                 <TransformedSearchParams params={transformedSearchParams} />
               }
@@ -100,10 +84,12 @@ export function URLViewer({ t, headingLevel, url }: IURLViewerProps) {
 
       {hash.length === 0 ? undefined : (
         <>
-          <Heading level={headingLevel}>{t("Fragment Details")}</Heading>
+          <Heading level={headingLevel}>
+            {t((t) => t.url["Fragment Details"])}
+          </Heading>
           <DescriptionList>
             <DescriptionSection
-              dKey={t("Hash")}
+              dKey={t((t) => t.url["Hash"])}
               dValue={<Preformatted>{hash}</Preformatted>}
             />
           </DescriptionList>

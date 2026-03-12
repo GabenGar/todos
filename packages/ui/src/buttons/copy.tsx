@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { createBlockComponent, type ITranslationProps } from "#meta";
+import { useTranslation } from "#hooks";
+import { createBlockComponent } from "#meta";
 import { Button, type IButtonProps } from "./button";
 
 export interface IButtonCopyProps
-  extends Omit<IButtonProps, "onClick" | "disabled" | "children">,
-    ITranslationProps<ITranslationKey> {
+  extends Omit<IButtonProps, "onClick" | "disabled" | "children"> {
   valueToCopy: string;
 }
 
-type ITranslationKey = "Copy" | "Copied";
-
 export const ButtonCopy = createBlockComponent(undefined, Component);
 
-function Component({ translation, valueToCopy, ...props }: IButtonCopyProps) {
+function Component({ valueToCopy, ...props }: IButtonCopyProps) {
+  const { t } = useTranslation();
   const [isCopied, switchCopiedStatus] = useState(false);
 
   return (
@@ -31,7 +30,7 @@ function Component({ translation, valueToCopy, ...props }: IButtonCopyProps) {
         }
       }}
     >
-      {!isCopied ? translation["Copy"] : translation["Copied"]}
+      {t((t) => (!isCopied ? t.button.copy : t.button["copy-success"]))}
     </Button>
   );
 }

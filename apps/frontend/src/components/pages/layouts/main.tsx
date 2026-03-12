@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { GlobalNavigation } from "#components";
 import { Link } from "#components/link";
@@ -6,20 +7,17 @@ import { List, ListItem } from "#components/list";
 import { REPOSITORY_URL } from "#environment";
 import { ClientProvider, useServiceWorker } from "#hooks";
 import type { ILocale } from "#lib/internationalization";
-import type { ILocalizationCommon } from "#lib/localization";
 //
 
 import styles from "./main.module.scss";
 
 interface IProps {
-  lang: ILocale;
-  common: ILocalizationCommon;
   children: ReactNode;
 }
 
-export function MainLayout({ lang, common, children }: IProps) {
-  const { layout } = common;
-
+export function MainLayout({ children }: IProps) {
+  const { t, i18n } = useTranslation("common");
+  const lang = i18n.language as ILocale;
   /**
    * `pages` router doesn't allow to set `"lang"`
    * on `<html>` element during static rendering.
@@ -43,27 +41,28 @@ export function MainLayout({ lang, common, children }: IProps) {
       <footer className={styles.footer}>
         <List className={styles.list}>
           <ListItem>
-            <Link href={REPOSITORY_URL}>{layout.source_code}</Link>
+            <Link href={REPOSITORY_URL}>{t(($) => $.layout.source_code)}</Link>
           </ListItem>
         </List>
 
         <DescriptionList>
-          <ServiceWorkerOverview common={common} />
+          <ServiceWorkerOverview />
         </DescriptionList>
       </footer>
     </ClientProvider>
   );
 }
 
-interface IServiceWorkerOverviewProps extends Pick<IProps, "common"> {}
-function ServiceWorkerOverview({ common }: IServiceWorkerOverviewProps) {
+function ServiceWorkerOverview() {
+  const { t } = useTranslation("common");
   const serviceWorkerContext = useServiceWorker();
-  const t = common.layout.service_worker;
 
   return (
     <DescriptionSection
-      dKey={t["Service Worker"]}
-      dValue={t.status[serviceWorkerContext.status]}
+      dKey={t(($) => $.layout.service_worker["Service Worker"])}
+      dValue={t(
+        ($) => $.layout.service_worker.status[serviceWorkerContext.status],
+      )}
       isHorizontal
     />
   );

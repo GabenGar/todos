@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Link } from "#components/link";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
 import type { IPlace } from "#entities/place";
 import { getTasksStats, TaskStatus } from "#entities/task";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { createTasksPageURL } from "#lib/urls";
 
-interface IProps extends ILocalizableProps, ITranslatableProps {
-  translation: ILocalization["pages"]["stats_tasks"];
+interface IProps extends ILocalizableProps {
   placeID?: IPlace["id"];
 }
 
-export function TasksStats({ language, translation, placeID }: IProps) {
-  const { status_values } = translation;
+export function TasksStats({ language, placeID }: IProps) {
+  const { t } = useTranslation("translation");
   const [stats, changeStats] =
     useState<Awaited<ReturnType<typeof getTasksStats>>>();
 
@@ -28,7 +27,7 @@ export function TasksStats({ language, translation, placeID }: IProps) {
     <DescriptionList>
       <DescriptionSection
         isHorizontal
-        dKey={status_values.all}
+        dKey={t((t) => t.task.status_values.all)}
         dValue={
           !stats ? (
             <Loading />
@@ -42,7 +41,7 @@ export function TasksStats({ language, translation, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus translation={status_values} status={"in-progress"} />}
+        dKey={<TaskStatus status={"in-progress"} />}
         dValue={
           !stats ? (
             <Loading />
@@ -63,7 +62,7 @@ export function TasksStats({ language, translation, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus translation={status_values} status={"pending"} />}
+        dKey={<TaskStatus status={"pending"} />}
         dValue={
           !stats ? (
             <Loading />
@@ -84,7 +83,7 @@ export function TasksStats({ language, translation, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus translation={status_values} status={"finished"} />}
+        dKey={<TaskStatus status={"finished"} />}
         dValue={
           !stats ? (
             <Loading />
@@ -105,7 +104,7 @@ export function TasksStats({ language, translation, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus translation={status_values} status={"failed"} />}
+        dKey={<TaskStatus status={"failed"} />}
         dValue={
           !stats ? (
             <Loading />

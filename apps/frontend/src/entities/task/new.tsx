@@ -1,19 +1,16 @@
 import { Form, type IFormEvent } from "#components/form";
 import { InputOption } from "#components/form/input";
 import { InputSectionSelect, InputSectionText } from "#components/form/section";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
 import { type IPlace, PlaceSection } from "#entities/place";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 import { type ITaskInit, isTaskStatus } from "./types";
 //
 
 import styles from "./new.module.scss";
 import statusStyles from "./status.module.scss";
 
-export interface INewTaskFormProps
-  extends ILocalizableProps,
-    ITranslatableProps {
-  translation: ILocalization["pages"]["tasks"];
+export interface INewTaskFormProps extends ILocalizableProps {
   id: string;
   place?: IPlace;
   onNewTask: (taskInit: ITaskInit) => Promise<void>;
@@ -21,26 +18,19 @@ export interface INewTaskFormProps
 
 export function NewTaskForm({
   language,
-  commonTranslation,
-  translation,
   id,
   place,
   onNewTask,
 }: INewTaskFormProps) {
-  const {
-    title,
-    description,
-    add,
-    adding,
-    status,
-    place: placeTranslation,
-  } = translation.new_todo;
-  const { status_values } = translation;
+  const { t } = useTranslation("translation");
   const FIELD = {
-    TITLE: { name: "title", label: title },
-    DESCRIPTION: { name: "description", label: description },
-    STATUS: { name: "status", label: status },
-    PLACE: { name: "place_id", label: placeTranslation },
+    TITLE: { name: "title", label: t((t) => t.task.new_todo.title) },
+    DESCRIPTION: {
+      name: "description",
+      label: t((t) => t.task.new_todo.description),
+    },
+    STATUS: { name: "status", label: t((t) => t.task.new_todo.status) },
+    PLACE: { name: "place_id", label: t((t) => t.task.new_todo.place) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -72,11 +62,12 @@ export function NewTaskForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       className={styles.block}
       onSubmit={handleSubmit}
-      submitButton={(_formID, isSubmitting) => (!isSubmitting ? add : adding)}
+      submitButton={(_formID, isSubmitting) =>
+        t((t) => (!isSubmitting ? t.task.new_todo.add : t.task.new_todo.adding))
+      }
     >
       {(formID) => (
         <>
@@ -107,7 +98,6 @@ export function NewTaskForm({
             // a dirty hack to force update on the component state
             key={place?.id}
             language={language}
-            commonTranslation={commonTranslation}
             id={`${formID}-${FIELD.PLACE.name}`}
             form={formID}
             name={FIELD.PLACE.name}
@@ -127,19 +117,19 @@ export function NewTaskForm({
               className={statusStyles["in-progress"]}
               value="in-progress"
             >
-              {status_values["in-progress"]}
+              {t((t) => t.task.status_values["in-progress"])}
             </InputOption>
 
             <InputOption className={statusStyles.pending} value="pending">
-              {status_values.pending}
+              {t((t) => t.task.status_values.pending)}
             </InputOption>
 
             <InputOption className={statusStyles.finished} value="finished">
-              {status_values.finished}
+              {t((t) => t.task.status_values.finished)}
             </InputOption>
 
             <InputOption className={statusStyles.failed} value="failed">
-              {status_values.failed}
+              {t((t) => t.task.status_values.failed)}
             </InputOption>
           </InputSectionSelect>
         </>

@@ -1,0 +1,84 @@
+{
+  "place": {
+    "title": "Title",
+    "description": "Description",
+    "no_description": "No description provided",
+    "created_at": "Date of creation",
+    "updated_at": "Last updated",
+    "add": "Add place",
+    "adding": "Adding place...",
+    "details": "Details",
+    "Place": "Place",
+    "Edit": "Edit",
+    "Tasks": "Tasks",
+    "No places found": "No places found",
+    "edit": {
+      "Confirm changes": "Confirm changes",
+      "Applying changes...": "Applying changes..."
+    },
+    "search": {
+      "Query": "Query",
+      "Search": "Search",
+      "Searching...": "Searching..."
+    }
+  },
+  "task": {
+    "description": "Description",
+    "no_description": "No description provided",
+    "creation_date": "Creation date",
+    "last_updated": "Last updated",
+    "edit": "Edit",
+    "editing": "Editing...",
+    "place": "Place",
+    "place_unknown": "Unknown",
+    "status": "Status",
+    "status_values": {
+      "all": "All",
+      "pending": "Pending",
+      "in-progress": "In progress",
+      "finished": "Finished",
+      "failed": "Failed"
+    },
+    "actions": {
+      "fail": "Fail",
+      "delay": "Delay",
+      "start": "Start",
+      "complete": "Complete"
+    },
+    "new_todo": {
+      "title": "Title",
+      "description": "Description",
+      "status": "Status",
+      "add": "Add",
+      "adding": "Adding...",
+      "place": "Place"
+    },
+    "search_tasks": {
+      "query": "Query",
+      "Place": "Place",
+      "search": "Search",
+      "searching": "Searching..."
+    },
+    "delete": "Delete",
+    "details": "Details",
+    "search": "Search",
+    "add": "Add"
+  },
+  "planned_event": {
+    "Planned event": "Planned event",
+    "Title": "Title",
+    "Description": "Description",
+    "No description provided": "No description provided",
+    "Date of creation": "Date of creation",
+    "Last updated": "Last updated",
+    "Details": "Details",
+    "Add planned event": "Add planned event",
+    "Adding planned event...": "Adding planned event...",
+    "No planned events found": "No planned events found",
+    "Order": "Order",
+    "Recently updated": "Recently updated",
+    "Recently created": "Recently created",
+    "Filter": "Filter",
+    "Filtering...": "Filtering..."
+  }
+}

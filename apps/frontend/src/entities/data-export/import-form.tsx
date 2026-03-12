@@ -1,27 +1,24 @@
 import { Form, type IFormEvent } from "#components/form";
 import { InputSectionFile } from "#components/form/section";
+import { usePageTranslation } from "#hooks";
 import { fromJSON } from "#lib/json";
-import type { ILocalization, ILocalizationCommon } from "#lib/localization";
 import { importDataExport } from "./lib";
 //
 
 import styles from "./import-form.module.scss";
 
 export interface IImportDataExportFormProps {
-  commonTranslation: ILocalizationCommon;
-  translation: ILocalization["pages"]["account"];
   id: string;
   onSuccess?: () => Promise<void>;
 }
 
 export function ImportDataExportForm({
-  commonTranslation,
-  translation,
   id,
   onSuccess,
 }: IImportDataExportFormProps) {
+  const { t } = usePageTranslation("page-account");
   const FIELD = {
-    FILE: { name: "file", label: translation["Click to upload a file"] },
+    FILE: { name: "file", label: t((t) => t["Click to upload a file"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -48,13 +45,10 @@ export function ImportDataExportForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       className={styles.block}
       submitButton={(_formID, isSubmitting) =>
-        !isSubmitting
-          ? translation["Import data"]
-          : translation["Importing data..."]
+        t((t) => (!isSubmitting ? t["Import data"] : t["Importing data..."]))
       }
       onSubmit={handleImportDataExport}
     >

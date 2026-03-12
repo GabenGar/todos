@@ -1,35 +1,29 @@
-// not sure why it needs this directive considering
-// it's only called from the client component
-
 import { useState } from "react";
 import { Form, type IFormEvent } from "#components/form";
 import { InputSectionText } from "#components/form/section";
-import type { ITranslatableProps } from "#components/types";
-import type { ILocalization } from "#lib/localization";
+import { useTranslation } from "#hooks";
 
 export interface IPlaceSearchQuery {
   query?: string;
 }
 
-export interface ISearchPlacesFormProps extends ITranslatableProps {
+export interface ISearchPlacesFormProps {
   id: string;
-  translation: ILocalization["place"];
   defaultQuery?: IPlaceSearchQuery;
   onSearch: (newSearchQuery: IPlaceSearchQuery) => Promise<void>;
 }
 
 export function SearchPlacesForm({
-  commonTranslation,
-  translation,
   id,
   defaultQuery,
   onSearch,
 }: ISearchPlacesFormProps) {
+  const { t } = useTranslation("translation");
   const [oldQuery, changeOldQuery] = useState<IPlaceSearchQuery | undefined>(
     defaultQuery,
   );
   const FIELD = {
-    QUERY: { name: "query", label: translation.search["Query"] },
+    QUERY: { name: "query", label: t((t) => t.place.search["Query"]) },
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
@@ -51,13 +45,14 @@ export function SearchPlacesForm({
 
   return (
     <Form<IFieldName>
-      commonTranslation={commonTranslation}
       id={id}
       onSubmit={handleSubmit}
       submitButton={(_, isSubmitting) =>
-        !isSubmitting
-          ? translation.search["Search"]
-          : translation.search["Searching..."]
+        t((t) =>
+          !isSubmitting
+            ? t.place.search["Search"]
+            : t.place.search["Searching..."],
+        )
       }
     >
       {(formID) => (

@@ -15,9 +15,9 @@ import {
   OverviewFooter,
   OverviewHeader,
 } from "#components/overview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
+import type { ILocalizableProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import { isError } from "#lib/errors";
-import type { ILocalization } from "#lib/localization";
 import { logError } from "#lib/logs";
 import type { INanoidID } from "#lib/strings";
 import { createPlacePageURL, createTaskEditPageURL } from "#lib/urls";
@@ -29,11 +29,7 @@ import type { ITask } from "./types";
 
 import styles from "./details.module.scss";
 
-export interface ITaskOverviewProps
-  extends ILocalizableProps,
-    ITranslatableProps,
-    IOverviewProps {
-  translation: ILocalization["pages"]["task"];
+export interface ITaskOverviewProps extends ILocalizableProps, IOverviewProps {
   taskID: INanoidID;
   onEdit?: (editedTask: ITask) => Promise<void>;
 }
@@ -43,14 +39,8 @@ export interface ITaskOverviewProps
  */
 export const TaskOverview = createBlockComponent(styles, Component);
 
-function Component({
-  language,
-  commonTranslation,
-  translation,
-  taskID,
-  onEdit,
-  ...props
-}: ITaskOverviewProps) {
+function Component({ language, taskID, onEdit, ...props }: ITaskOverviewProps) {
+  const { t } = useTranslation("translation");
   const router = useRouter();
   const [task, changeTask] = useState<Awaited<ReturnType<typeof getTask>>>();
 
@@ -108,46 +98,38 @@ function Component({
         <>
           <OverviewHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID
-              className={styles.id}
-              commonTranslation={commonTranslation}
-              entityID={id}
-            />
+            <EntityID className={styles.id} entityID={id} />
           </OverviewHeader>
 
           <OverviewBody>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
-                dKey={translation.status}
-                dValue={
-                  <TaskStatus
-                    translation={translation.status_values}
-                    status={status}
-                  />
-                }
+                dKey={t((t) => t.task.status)}
+                dValue={<TaskStatus status={status} />}
               />
 
               <DescriptionSection
-                dKey={translation.description}
+                dKey={t((t) => t.task.description)}
                 dValue={
                   <EntityDescription>
-                    {description ?? translation.no_description}
+                    {description ?? t((t) => t.task.no_description)}
                   </EntityDescription>
                 }
               />
 
               <DescriptionSection
-                dKey={translation.place}
+                dKey={t((t) => t.task.place)}
                 dValue={
                   !place ? (
-                    translation.place_unknown
+                    t((t) => t.task.place_unknown)
                   ) : (
                     <Link
                       href={createPlacePageURL(language, place.id)}
                       target="_blank"
                     >
-                      {place.title ?? translation.place_unknown} ({place.id})
+                      {place.title ?? t((t) => t.task.place_unknown)} (
+                      {place.id})
                     </Link>
                   )
                 }
@@ -158,22 +140,12 @@ function Component({
 
             <DescriptionList>
               <DescriptionSection
-                dKey={translation.creation_date}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={created_at}
-                  />
-                }
+                dKey={t((t) => t.task.creation_date)}
+                dValue={<DateTime dateTime={created_at} />}
               />
               <DescriptionSection
-                dKey={translation.last_updated}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={updated_at}
-                  />
-                }
+                dKey={t((t) => t.task.last_updated)}
+                dValue={<DateTime dateTime={updated_at} />}
               />
             </DescriptionList>
           </OverviewBody>
@@ -195,7 +167,7 @@ function Component({
                     onEdit?.(editedTask);
                   }}
                 >
-                  {translation.actions.delay}
+                  {t((t) => t.task.actions.delay)}
                 </Button>
               </ListItem>
 
@@ -213,7 +185,7 @@ function Component({
                     onEdit?.(editedTask);
                   }}
                 >
-                  {translation.actions.start}
+                  {t((t) => t.task.actions.start)}
                 </Button>
               </ListItem>
             </List>
@@ -230,7 +202,7 @@ function Component({
                     onEdit?.(editedTask);
                   }}
                 >
-                  {translation.actions.fail}
+                  {t((t) => t.task.actions.fail)}
                 </Button>
               </ListItem>
 
@@ -248,7 +220,7 @@ function Component({
                     onEdit?.(editedTask);
                   }}
                 >
-                  {translation.actions.complete}
+                  {t((t) => t.task.actions.complete)}
                 </Button>
               </ListItem>
             </List>
@@ -258,7 +230,7 @@ function Component({
             <List>
               <ListItem>
                 <LinkButton href={createTaskEditPageURL(language, id)}>
-                  {translation.edit}
+                  {t((t) => t.task.edit)}
                 </LinkButton>
               </ListItem>
             </List>

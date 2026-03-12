@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Details, Loading, Page } from "#components";
@@ -14,31 +14,20 @@ import {
   PlacePreview,
   SearchPlacesForm,
 } from "#entities/place";
-import { getDictionary, type ILocalization } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
+import { usePageTranslation, useTranslation } from "#hooks";
+import { getSingleValueFromQuery } from "#lib/pages";
 import { createPlacesPageURL } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-interface IProps extends ILocalizedProps<"places"> {
-  placeTranslation: ILocalization["place"];
-}
-
-interface IParams extends ILocalizedParams {}
-
-function PlacesPage({
-  translation,
-  placeTranslation,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function PlacesPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-places");
+  const { t: otherT } = useTranslation("translation");
   const router = useRouter();
   const [places, changePlaces] =
     useState<Awaited<ReturnType<typeof getPlaces>>>();
   const { isReady, query: pathQuery } = router;
-  const { lang, common, t } = translation;
-  const title = t.title;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
   const inputPage = getSingleValueFromQuery(pathQuery, "page");
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
   const inputCategory = getSingleValueFromQuery(pathQuery, "category");
@@ -89,6 +78,7 @@ function PlacesPage({
         page: newPlaces.pagination.totalPages,
       });
       router.replace(url);
+
       return;
     }
 
@@ -112,26 +102,22 @@ function PlacesPage({
   }
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <OverviewHeader>
-            <Details summary={placeTranslation.add}>
+            <Details summary={otherT((t) => t.place.add)}>
               <PlaceCreateForm
-                commonTranslation={common}
-                translation={placeTranslation}
                 id="create-place"
                 onNewPlace={handlePlaceCreation}
               />
             </Details>
 
             <Details
-              summary={placeTranslation.search["Search"]}
+              summary={otherT((t) => t.place.search["Search"])}
               open={Boolean(query)}
             >
               <SearchPlacesForm
-                commonTranslation={common}
-                translation={placeTranslation}
                 id="search-places"
                 defaultQuery={options}
                 onSearch={handlePlaceSearch}
@@ -147,22 +133,19 @@ function PlacesPage({
         <Overview headingLevel={2}>
           {() => (
             <OverviewHeader>
-              {placeTranslation["No places found"]}
+              {otherT((t) => t.place["No places found"])}
             </OverviewHeader>
           )}
         </Overview>
       ) : (
         <PreviewList
           pagination={places.pagination}
-          commonTranslation={common}
           sortingOrder="descending"
           buildURL={(page) => createPlacesPageURL(lang, { ...options, page })}
         >
           {places.items.map((place) => (
             <PlacePreview
               language={lang}
-              commonTranslation={common}
-              translation={placeTranslation}
               headingLevel={2}
               key={place.id}
               place={place}
@@ -174,23 +157,7 @@ function PlacesPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const { places } = dict.pages;
-  const props = {
-    translation: { lang, common: dict.common, t: places },
-    placeTranslation: dict.place,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-places");
 export const getStaticPaths = getStaticExportPaths;
 
 export default PlacesPage;

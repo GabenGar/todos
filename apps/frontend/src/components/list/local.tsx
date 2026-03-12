@@ -4,10 +4,7 @@ import {
   PaginationLocal,
   PaginationOverview,
 } from "#components/pagination";
-import type {
-  IBaseComponentPropsWithChildren,
-  ITranslatableProps,
-} from "#components/types";
+import type { IBaseComponentPropsWithChildren } from "#components/types";
 import type { IPagination } from "#lib/pagination";
 import { List } from "./list";
 //
@@ -16,7 +13,6 @@ import styles from "./local.module.scss";
 
 export interface IListLocalProps
   extends IBaseComponentPropsWithChildren<"div">,
-    ITranslatableProps,
     Pick<IPaginationLocalProps, "onPageChange"> {
   pagination: IPagination;
 }
@@ -24,7 +20,6 @@ export interface IListLocalProps
 export const ListLocal = createBlockComponent(styles, Component);
 
 function Component({
-  commonTranslation,
   pagination,
   onPageChange,
   children,
@@ -32,20 +27,13 @@ function Component({
 }: IListLocalProps) {
   return (
     <div {...props}>
-      <PaginationOverview
-        commonTranslation={commonTranslation}
-        pagination={pagination}
-      />
+      <PaginationOverview pagination={pagination} />
 
       <List className={styles.list} isAlternating>
         {children}
       </List>
 
-      <PaginationLocal
-        commonTranslation={commonTranslation}
-        pagination={pagination}
-        onPageChange={onPageChange}
-      />
+      <PaginationLocal pagination={pagination} onPageChange={onPageChange} />
     </div>
   );
 }
