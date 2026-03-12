@@ -75,6 +75,27 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-planned-events": {
+          translation = await import(
+            "#translation/en/pages/planned-events.json"
+          );
+          break;
+        }
+
+        case "page-planned-event": {
+          translation = await import(
+            "#translation/en/pages/planned-event.json"
+          );
+          break;
+        }
+
+        case "page-planned-event-edit": {
+          translation = await import(
+            "#translation/en/pages/planned-event-edit.json"
+          );
+          break;
+        }
+
         default: {
           throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
@@ -146,6 +167,27 @@ export async function fetchPageTranslation(
 
         case "page-url-edit": {
           translation = await import("#translation/ru/pages/url-edit.json");
+          break;
+        }
+
+        case "page-planned-events": {
+          translation = await import(
+            "#translation/ru/pages/planned-events.json"
+          );
+          break;
+        }
+
+        case "page-planned-event": {
+          translation = await import(
+            "#translation/ru/pages/planned-event.json"
+          );
+          break;
+        }
+
+        case "page-planned-event-edit": {
+          translation = await import(
+            "#translation/ru/pages/planned-event-edit.json"
+          );
           break;
         }
 

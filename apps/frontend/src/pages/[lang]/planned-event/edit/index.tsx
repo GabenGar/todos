@@ -18,7 +18,7 @@ import {
   type IPlannedEvent,
   removePlannedEvent,
 } from "#entities/planned-event";
-import { useIndexedDB } from "#hooks";
+import { useIndexedDB, usePageTranslation, useTranslation } from "#hooks";
 import { getDictionary, type ILocalizationEntities } from "#lib/localization";
 import {
   getSingleValueFromQuery,
@@ -29,26 +29,24 @@ import {
   createPlannedEventPageURL,
   createPlannedEventsPageURL,
 } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"planned-event_edit"> {
-  plannedEventTranslation: ILocalizationEntities["planned_event"];
-}
-
-interface IParams extends ILocalizedParams {}
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function PlannedEventEditPage({
-  translation,
-  plannedEventTranslation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-planned-event-edit");
+  const { t: eT } = useTranslation("translation");
+  const { t: cT } = useTranslation("common");
   const router = useRouter();
   const runTransaction = useIndexedDB();
   const [currentPlannedEvent, changePlannedEvent] = useState<IPlannedEvent>();
-  const { lang, common, t } = translation;
+
   const { isReady, query } = router;
   const inputID = getSingleValueFromQuery(query, "planned_event_id");
   // consider an empty string as `undefined`
   const parsedID = !inputID?.length ? undefined : Number.parseInt(inputID, 10);
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
@@ -76,7 +74,7 @@ function PlannedEventEditPage({
   }, [isReady, parsedID]);
 
   return (
-    <Page heading={t.heading} title={t.title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
@@ -92,7 +90,7 @@ function PlannedEventEditPage({
                         currentPlannedEvent.id,
                       )}
                     >
-                      {plannedEventTranslation["Planned event"]}
+                      {eT((t) => t.planned_event["Planned event"])}
                     </Link>
                   )}
                 </ListItem>
@@ -104,8 +102,6 @@ function PlannedEventEditPage({
                 <Loading />
               ) : (
                 <EditPlannedEventForm
-                  commonTranslation={common}
-                  translation={plannedEventTranslation}
                   id={`edit-planned-event-${currentPlannedEvent.id}`}
                   currentPlannedEvent={currentPlannedEvent}
                   onPlannedEventEdit={async (update) => {
@@ -152,7 +148,7 @@ function PlannedEventEditPage({
                       );
                     }}
                   >
-                    {common.entity["Delete"]}
+                    {cT((t) => t.entity["Delete"])}
                   </MenuItem>
                 </MenuButtons>
               )}
@@ -164,26 +160,7 @@ function PlannedEventEditPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["planned-event_edit"],
-    },
-    plannedEventTranslation: dict.entities.planned_event,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-planned-event-edit");
 export const getStaticPaths = getStaticExportPaths;
 
 export default PlannedEventEditPage;

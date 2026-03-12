@@ -1,21 +1,5 @@
 {
   "pages": {
-    "planned-events": {
-      "title": "Планируемые события",
-      "heading": "Планируемые События",
-      "Recently updated planned events": "Недавно измененные планируемые события",
-      "Recently created planned events": "Недавно созданные планируемые события",
-      "Recently Updated Planned Events": "Недавно Измененные Планируемые События",
-      "Recently Created Planned Events": "Недавно Созданные Планируемые События"
-    },
-    "planned-event": {
-      "title": "Планируемое событие",
-      "heading": "Планируемое Событие"
-    },
-    "planned-event_edit": {
-      "title": "Редактирование планируемого события",
-      "heading": "Редактирование Планируемого События"
-    },
     "yt-dlp-configs": {
       "title": "Конфиги YT-DLP",
       "heading": "Конфиги YT-DLP"
@@ -86,23 +70,21 @@
     "search": "Искать",
     "add": "Добавить"
   },
-  "entities": {
-    "planned_event": {
-      "Planned event": "Планируемое событие",
-      "Title": "Заглавие",
-      "Description": "Описание",
-      "No description provided": "Без описания",
-      "Date of creation": "Дата создания",
-      "Last updated": "Последнее обновление",
-      "Details": "Детали",
-      "Add planned event": "Добавить планируемое событие",
-      "Adding planned event...": "Добавляем планируемое событие...",
-      "No planned events found": "Планируемые события не найдены",
-      "Order": "Порядок",
-      "Recently updated": "Недавно обновлённые",
-      "Recently created": "Недавно добавленные",
-      "Filter": "Фильтровать",
-      "Filtering...": "Фильтруем..."
-    }
+  "planned_event": {
+    "Planned event": "Планируемое событие",
+    "Title": "Заглавие",
+    "Description": "Описание",
+    "No description provided": "Без описания",
+    "Date of creation": "Дата создания",
+    "Last updated": "Последнее обновление",
+    "Details": "Детали",
+    "Add planned event": "Добавить планируемое событие",
+    "Adding planned event...": "Добавляем планируемое событие...",
+    "No planned events found": "Планируемые события не найдены",
+    "Order": "Порядок",
+    "Recently updated": "Недавно обновлённые",
+    "Recently created": "Недавно добавленные",
+    "Filter": "Фильтровать",
+    "Filtering...": "Фильтруем..."
   }
 }

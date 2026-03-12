@@ -12,25 +12,20 @@ import {
   OverviewFooter,
   OverviewHeader,
 } from "#components/overview";
-import type { ILocalizableProps, ITranslatableProps } from "#components/types";
-import type { ILocalizationEntities } from "#lib/localization";
+import type { ILocalizableProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import { createPlannedEventEditPageURL } from "#lib/urls";
 import type { IPlannedEvent } from "./types";
 
-interface IProps extends IOverviewProps, ILocalizableProps, ITranslatableProps {
-  translation: ILocalizationEntities["planned_event"];
+interface IProps extends IOverviewProps, ILocalizableProps {
   plannedEvent: IPlannedEvent;
 }
 
 export const PlannetEventOverview = createBlockComponent(undefined, Component);
 
-function Component({
-  language,
-  commonTranslation,
-  translation,
-  plannedEvent,
-  ...props
-}: IProps) {
+function Component({ language, plannedEvent, ...props }: IProps) {
+  const { t } = useTranslation("translation");
+  const { t: cT } = useTranslation("common");
   const { id, title, description, created_at, updated_at } = plannedEvent;
 
   return (
@@ -39,19 +34,16 @@ function Component({
         <>
           <OverviewHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID
-              commonTranslation={commonTranslation}
-              entityID={String(id)}
-            />
+            <EntityID entityID={String(id)} />
           </OverviewHeader>
 
           <OverviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={translation["Description"]}
+                dKey={t((t) => t.planned_event["Description"])}
                 dValue={
                   !description ? (
-                    translation["No description provided"]
+                    t((t) => t.planned_event["No description provided"])
                   ) : (
                     <EntityDescription>{description}</EntityDescription>
                   )
@@ -61,22 +53,12 @@ function Component({
 
             <DescriptionList>
               <DescriptionSection
-                dKey={translation["Date of creation"]}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={created_at}
-                  />
-                }
+                dKey={t((t) => t.planned_event["Date of creation"])}
+                dValue={<DateTime dateTime={created_at} />}
               />
               <DescriptionSection
-                dKey={translation["Last updated"]}
-                dValue={
-                  <DateTime
-                    commonTranslation={commonTranslation}
-                    dateTime={updated_at}
-                  />
-                }
+                dKey={t((t) => t.planned_event["Last updated"])}
+                dValue={<DateTime dateTime={updated_at} />}
               />
             </DescriptionList>
           </OverviewBody>
@@ -85,7 +67,7 @@ function Component({
             <List>
               <ListItem>
                 <LinkButton href={createPlannedEventEditPageURL(language, id)}>
-                  {commonTranslation.entity["Edit"]}
+                  {cT((t) => t.entity["Edit"])}
                 </LinkButton>
               </ListItem>
             </List>

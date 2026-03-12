@@ -1,21 +1,5 @@
 {
   "pages": {
-    "planned-events": {
-      "title": "Planned events",
-      "heading": "Planned Events",
-      "Recently updated planned events": "Recently updated planned events",
-      "Recently created planned events": "Recently created planned events",
-      "Recently Updated Planned Events": "Recently Updated Planned Events",
-      "Recently Created Planned Events": "Recently Created Planned Events"
-    },
-    "planned-event": {
-      "title": "Planned event",
-      "heading": "Planned Event"
-    },
-    "planned-event_edit": {
-      "title": "Edit planned event",
-      "heading": "Edit Planned Event"
-    },
     "yt-dlp-configs": {
       "title": "YT-DLP configs",
       "heading": "YT-DLP Configs"
@@ -86,23 +70,21 @@
     "search": "Search",
     "add": "Add"
   },
-  "entities": {
-    "planned_event": {
-      "Planned event": "Planned event",
-      "Title": "Title",
-      "Description": "Description",
-      "No description provided": "No description provided",
-      "Date of creation": "Date of creation",
-      "Last updated": "Last updated",
-      "Details": "Details",
-      "Add planned event": "Add planned event",
-      "Adding planned event...": "Adding planned event...",
-      "No planned events found": "No planned events found",
-      "Order": "Order",
-      "Recently updated": "Recently updated",
-      "Recently created": "Recently created",
-      "Filter": "Filter",
-      "Filtering...": "Filtering..."
-    }
+  "planned_event": {
+    "Planned event": "Planned event",
+    "Title": "Title",
+    "Description": "Description",
+    "No description provided": "No description provided",
+    "Date of creation": "Date of creation",
+    "Last updated": "Last updated",
+    "Details": "Details",
+    "Add planned event": "Add planned event",
+    "Adding planned event...": "Adding planned event...",
+    "No planned events found": "No planned events found",
+    "Order": "Order",
+    "Recently updated": "Recently updated",
+    "Recently created": "Recently created",
+    "Filter": "Filter",
+    "Filtering...": "Filtering..."
   }
 }

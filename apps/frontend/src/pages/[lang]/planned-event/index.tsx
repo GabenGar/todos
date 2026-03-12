@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Page } from "#components";
@@ -8,32 +8,21 @@ import {
   type IPlannedEvent,
   PlannetEventOverview,
 } from "#entities/planned-event";
-import { useIndexedDB } from "#hooks";
-import { getDictionary, type ILocalizationEntities } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
+import { useIndexedDB, usePageTranslation } from "#hooks";
+import { getSingleValueFromQuery } from "#lib/pages";
 import { notFoundURL } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"planned-event"> {
-  plannedEventTranslation: ILocalizationEntities["planned_event"];
-}
-
-interface IParams extends ILocalizedParams {}
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function PlannedEventPage({
-  translation,
-  plannedEventTranslation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-planned-event");
   const router = useRouter();
   const runTransaction = useIndexedDB();
   const [plannedEvent, changePlannedEvent] = useState<IPlannedEvent>();
   const { isReady, query } = router;
-  const { lang, common, t } = translation;
-  const title = t.title;
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
   const plannedEventID = getSingleValueFromQuery(query, "planned_event_id");
   const parsedPlannedEventID = !plannedEventID
     ? undefined
@@ -66,14 +55,12 @@ function PlannedEventPage({
   }, [isReady, parsedPlannedEventID]);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       {!plannedEvent ? (
         <OverviewPlaceHolder headingLevel={2} />
       ) : (
         <PlannetEventOverview
           language={lang}
-          commonTranslation={common}
-          translation={plannedEventTranslation}
           headingLevel={2}
           plannedEvent={plannedEvent}
         />
@@ -82,22 +69,7 @@ function PlannedEventPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: { lang, common: dict.common, t: dict.pages["planned-event"] },
-    plannedEventTranslation: dict.entities.planned_event,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-planned-event");
 export const getStaticPaths = getStaticExportPaths;
 
 export default PlannedEventPage;

@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Details, Loading, Page } from "#components";
@@ -16,47 +16,36 @@ import {
   PlannedEventPreview,
   SearchPlannedEventForm,
 } from "#entities/planned-event";
-import { useIndexedDB } from "#hooks";
-import { getDictionary, type ILocalizationEntities } from "#lib/localization";
-import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
-} from "#lib/pages";
+import { useIndexedDB, usePageTranslation, useTranslation } from "#hooks";
+import { getSingleValueFromQuery } from "#lib/pages";
 import type { IPaginatedCollection } from "#lib/pagination";
 import { createPlannedEventsPageURL } from "#lib/urls";
-import { getStaticExportPaths } from "#server";
-
-interface IProps extends ILocalizedProps<"planned-events"> {
-  plannedEventTranslation: ILocalizationEntities["planned_event"];
-}
-
-interface IParams extends ILocalizedParams {}
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function PlannedEventsPage({
-  translation,
-  plannedEventTranslation,
+  lang,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = usePageTranslation("page-planned-events");
+  const { t: eT } = useTranslation("translation");
   const router = useRouter();
   const runTransaction = useIndexedDB();
   const [plannedEvents, changePlannedEvents] =
     useState<IPaginatedCollection<IPlannedEvent>>();
   const [isLoading, switchLoading] = useState(true);
   const { isReady, query } = router;
-  const { lang, common, t } = translation;
   const inputPage = getSingleValueFromQuery(query, "page");
   const page = !inputPage ? undefined : parseInt(inputPage, 10);
   const inputOrder = getSingleValueFromQuery(query, "order");
   const order = !isPlannedEventsOrder(inputOrder) ? undefined : inputOrder;
   const title =
     !isReady || !order || order === "recently_created"
-      ? t["Recently created planned events"]
-      : t["Recently updated planned events"];
+      ? t((t) => t["Recently created planned events"])
+      : t((t) => t["Recently updated planned events"]);
   // it has to be this way to avoid hydration errors
   const heading =
     !isReady || !order || order === "recently_created"
-      ? t["Recently Created Planned Events"]
-      : t["Recently Updated Planned Events"];
+      ? t((t) => t["Recently Created Planned Events"])
+      : t((t) => t["Recently Updated Planned Events"]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
@@ -135,7 +124,7 @@ function PlannedEventsPage({
           countPlannedEvents({ transaction }, (count) => {
             if (count === 0) {
               reject(
-                new Error(plannedEventTranslation["No planned events found"]),
+                new Error(eT(t => t.planned_event["No planned events found"])),
               );
 
               return;
@@ -165,21 +154,17 @@ function PlannedEventsPage({
       <Overview headingLevel={2}>
         {() => (
           <OverviewHeader>
-            <Details summary={plannedEventTranslation["Filter"]}>
+            <Details summary={eT(t => t.planned_event["Filter"])}>
               <SearchPlannedEventForm
                 key={order}
-                commonTranslation={common}
-                translation={plannedEventTranslation}
                 id="search-planned-event"
                 onSearch={handlePlannedEventsSearch}
                 defaultOrder={order}
               />
             </Details>
 
-            <Details summary={plannedEventTranslation["Add planned event"]}>
+            <Details summary={eT(t => t.planned_event["Add planned event"])}>
               <PlannedEventCreateForm
-                commonTranslation={common}
-                translation={plannedEventTranslation}
                 id="create-planned-event"
                 onNewPlannedEvent={handlePlannedEventCreation}
               />
@@ -194,22 +179,19 @@ function PlannedEventsPage({
         <Overview headingLevel={2}>
           {() => (
             <OverviewHeader>
-              {plannedEventTranslation["No planned events found"]}
+              {eT(t => t.planned_event["No planned events found"])}
             </OverviewHeader>
           )}
         </Overview>
       ) : (
         <PreviewList
           pagination={plannedEvents.pagination}
-          commonTranslation={common}
           sortingOrder="descending"
           buildURL={(page) => createPlannedEventsPageURL(lang, { page, order })}
         >
           {plannedEvents.items.map((plannedEvent) => (
             <PlannedEventPreview
               language={lang}
-              commonTranslation={common}
-              translation={plannedEventTranslation}
               headingLevel={2}
               key={plannedEvent.id}
               plannedEvent={plannedEvent}
@@ -221,26 +203,7 @@ function PlannedEventsPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["planned-events"],
-    },
-    plannedEventTranslation: dict.entities.planned_event,
-  } satisfies IProps;
-
-  return {
-    props,
-  };
-};
-
+export const getStaticProps = createGetStaticProps("page-planned-events");
 export const getStaticPaths = getStaticExportPaths;
 
 export default PlannedEventsPage;
