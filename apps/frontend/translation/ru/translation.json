@@ -1,10 +1,4 @@
 {
-  "pages": {
-    "yt-dlp-configs": {
-      "title": "Конфиги YT-DLP",
-      "heading": "Конфиги YT-DLP"
-    }
-  },
   "place": {
     "title": "Заглавие",
     "description": "Описание",

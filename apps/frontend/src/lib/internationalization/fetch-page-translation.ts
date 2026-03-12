@@ -96,6 +96,13 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-yt-dlp-configs": {
+          translation = await import(
+            "#translation/en/pages/yt-dlp-configs.json"
+          );
+          break;
+        }
+
         default: {
           throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
@@ -187,6 +194,13 @@ export async function fetchPageTranslation(
         case "page-planned-event-edit": {
           translation = await import(
             "#translation/ru/pages/planned-event-edit.json"
+          );
+          break;
+        }
+
+        case "page-yt-dlp-configs": {
+          translation = await import(
+            "#translation/ru/pages/yt-dlp-configs.json"
           );
           break;
         }

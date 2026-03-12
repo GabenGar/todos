@@ -1,4 +1,4 @@
-import type { GetStaticProps } from "next";
+import type { GetStaticProps, GetStaticPropsContext } from "next";
 import { getTranslation, type IPageNamespace } from "#lib/internationalization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 
@@ -7,7 +7,10 @@ export function createGetStaticProps<
   Params extends ILocalizedParams,
 >(
   pageNamespace: IPageNamespace,
-  callback?: GetStaticProps<Props, Params>,
+  callback?: (
+    context: GetStaticPropsContext<Params>,
+    langProps: ILocalizedProps,
+  ) => Promise<Props>,
 ): GetStaticProps<Props, Params> {
   return async (context) => {
     const lang = context.params?.lang;
@@ -17,13 +20,14 @@ export function createGetStaticProps<
     }
 
     const translation = await getTranslation(lang, pageNamespace);
+    const langProps: ILocalizedProps = {
+      lang,
+      translation,
+    };
     // @ts-expect-error something something generic type
     const props: Props = !callback
-      ? {
-          lang,
-          translation,
-        }
-      : await callback(context);
+      ? langProps
+      : { ...(await callback(context, langProps)), ...langProps };
 
     return {
       props,

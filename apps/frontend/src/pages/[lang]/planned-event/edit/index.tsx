@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Loading, Page } from "#components";
@@ -19,11 +19,8 @@ import {
   removePlannedEvent,
 } from "#entities/planned-event";
 import { useIndexedDB, usePageTranslation, useTranslation } from "#hooks";
-import { getDictionary, type ILocalizationEntities } from "#lib/localization";
 import {
-  getSingleValueFromQuery,
-  type ILocalizedParams,
-  type ILocalizedProps,
+  getSingleValueFromQuery
 } from "#lib/pages";
 import {
   createPlannedEventPageURL,

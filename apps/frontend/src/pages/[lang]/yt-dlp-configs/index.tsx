@@ -1,14 +1,15 @@
 import { promises as fs } from "node:fs";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
+import { LinkExternal } from "@repo/ui/links";
 import { Page } from "#components";
 import { Heading } from "#components/heading";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { Pre } from "#components/pre";
-import { getDictionary } from "#lib/localization";
+import { usePageTranslation } from "#hooks";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
-import { getStaticExportPaths } from "#server";
+import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-interface IProps extends ILocalizedProps<"yt-dlp-configs"> {
+interface IProps extends ILocalizedProps {
   windowsConfig: string;
   linuxConfig: string;
 }
@@ -16,22 +17,24 @@ interface IProps extends ILocalizedProps<"yt-dlp-configs"> {
 interface IParams extends ILocalizedParams {}
 
 function YTDLPConfigsPage({
-  translation,
   linuxConfig,
   windowsConfig,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = translation;
-
-  const title = t.title;
+  const { t } = usePageTranslation("page-yt-dlp-configs");
+  const title = t((t) => t.title);
+  const heading = t((t) => t.heading);
 
   return (
-    <Page heading={t.heading} title={title}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={1}>
         {(headingLevel) => (
           <>
             <OverviewHeader>
-              Full-ish `yt-dlp` configs because I always have to look up its
-              docs to reproduce.
+              Full-ish{" "}
+              <LinkExternal href={"https://github.com/79589310/307260205"}>
+                `yt-dlp`
+              </LinkExternal>{" "}
+              configs because I always have to look up its docs to reproduce.
             </OverviewHeader>
             <OverviewBody>
               <Heading level={headingLevel + 1}>Linux</Heading>
@@ -47,35 +50,27 @@ function YTDLPConfigsPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  params,
-}) => {
-  // biome-ignore lint/style/noNonNullAssertion: blah
-  const { lang } = params!;
-  const dict = await getDictionary(lang);
-  const windowsConfig = await fs.readFile(
-    `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/windows.conf`,
-    "utf8",
-  );
-  const linuxConfig = await fs.readFile(
-    `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/linux.conf`,
-    "utf8",
-  );
+export const getStaticProps = createGetStaticProps<IProps, IParams>(
+  "page-yt-dlp-configs",
+  async (_, langProps) => {
+    const windowsConfig = await fs.readFile(
+      `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/windows.conf`,
+      "utf8",
+    );
+    const linuxConfig = await fs.readFile(
+      `${process.cwd()}/src/pages/[lang]/yt-dlp-configs/linux.conf`,
+      "utf8",
+    );
 
-  const props = {
-    translation: {
-      lang,
-      common: dict.common,
-      t: dict.pages["yt-dlp-configs"],
-    },
-    windowsConfig,
-    linuxConfig,
-  } satisfies IProps;
+    const props = {
+      ...langProps,
+      windowsConfig,
+      linuxConfig,
+    } satisfies IProps;
 
-  return {
-    props,
-  };
-};
+    return props;
+  },
+);
 
 export const getStaticPaths = getStaticExportPaths;
 
