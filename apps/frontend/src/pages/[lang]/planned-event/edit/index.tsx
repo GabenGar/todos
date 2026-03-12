@@ -19,9 +19,7 @@ import {
   removePlannedEvent,
 } from "#entities/planned-event";
 import { useIndexedDB, usePageTranslation, useTranslation } from "#hooks";
-import {
-  getSingleValueFromQuery
-} from "#lib/pages";
+import { getSingleValueFromQuery } from "#lib/pages";
 import {
   createPlannedEventPageURL,
   createPlannedEventsPageURL,

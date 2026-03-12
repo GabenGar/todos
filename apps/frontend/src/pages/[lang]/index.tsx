@@ -6,7 +6,6 @@ import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { Overview, OverviewHeader } from "#components/overview";
 import { usePageTranslation } from "#hooks";
-import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
 import {
   createAccountPageURL,
   createPlannedEventsPageURL,
@@ -21,10 +20,6 @@ import { createGetStaticProps, getStaticExportPaths } from "#server";
 //
 
 import styles from "./index.module.scss";
-
-interface IProps extends ILocalizedProps {}
-
-interface IParams extends ILocalizedParams {}
 
 function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = usePageTranslation("page-home");
@@ -141,7 +136,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-home")
+export const getStaticProps = createGetStaticProps("page-home");
 
 export const getStaticPaths = getStaticExportPaths;
 

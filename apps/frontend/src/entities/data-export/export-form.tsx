@@ -30,7 +30,7 @@ export function DataExportForm() {
 /**
  * @TODO switch to [`hash-wasm`][2]
  * Stolen from [MDN article][1]
- * 
+ *
  * [1]: https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API/Non-cryptographic_uses_of_subtle_crypto.
  * [2]: https://github.com/884882/254565236
  */

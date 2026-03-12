@@ -124,7 +124,9 @@ function PlannedEventsPage({
           countPlannedEvents({ transaction }, (count) => {
             if (count === 0) {
               reject(
-                new Error(eT(t => t.planned_event["No planned events found"])),
+                new Error(
+                  eT((t) => t.planned_event["No planned events found"]),
+                ),
               );
 
               return;
@@ -154,7 +156,7 @@ function PlannedEventsPage({
       <Overview headingLevel={2}>
         {() => (
           <OverviewHeader>
-            <Details summary={eT(t => t.planned_event["Filter"])}>
+            <Details summary={eT((t) => t.planned_event["Filter"])}>
               <SearchPlannedEventForm
                 key={order}
                 id="search-planned-event"
@@ -163,7 +165,7 @@ function PlannedEventsPage({
               />
             </Details>
 
-            <Details summary={eT(t => t.planned_event["Add planned event"])}>
+            <Details summary={eT((t) => t.planned_event["Add planned event"])}>
               <PlannedEventCreateForm
                 id="create-planned-event"
                 onNewPlannedEvent={handlePlannedEventCreation}
@@ -179,7 +181,7 @@ function PlannedEventsPage({
         <Overview headingLevel={2}>
           {() => (
             <OverviewHeader>
-              {eT(t => t.planned_event["No planned events found"])}
+              {eT((t) => t.planned_event["No planned events found"])}
             </OverviewHeader>
           )}
         </Overview>

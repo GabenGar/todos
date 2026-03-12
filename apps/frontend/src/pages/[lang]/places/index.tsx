@@ -114,7 +114,7 @@ function PlacesPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
             </Details>
 
             <Details
-              summary={otherT(t => t.place.search["Search"])}
+              summary={otherT((t) => t.place.search["Search"])}
               open={Boolean(query)}
             >
               <SearchPlacesForm
@@ -133,7 +133,7 @@ function PlacesPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
         <Overview headingLevel={2}>
           {() => (
             <OverviewHeader>
-              {otherT(t => t.place["No places found"])}
+              {otherT((t) => t.place["No places found"])}
             </OverviewHeader>
           )}
         </Overview>

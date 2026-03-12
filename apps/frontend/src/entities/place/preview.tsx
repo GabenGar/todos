@@ -11,9 +11,9 @@ import {
   PreviewHeader,
 } from "#components/preview";
 import type { ILocalizableProps } from "#components/types";
+import { useTranslation } from "#hooks";
 import { createPlacePageURL } from "#lib/urls";
 import type { IPlace } from "./types";
-import { useTranslation } from "#hooks";
 //
 
 import styles from "./preview.module.scss";

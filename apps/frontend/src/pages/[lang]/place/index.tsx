@@ -42,11 +42,7 @@ function PlaceDetailsPage({
       {!place ? (
         <OverviewPlaceHolder headingLevel={2} />
       ) : (
-        <PlaceOverview
-          language={lang}
-          headingLevel={2}
-          place={place}
-        />
+        <PlaceOverview language={lang} headingLevel={2} place={place} />
       )}
     </Page>
   );

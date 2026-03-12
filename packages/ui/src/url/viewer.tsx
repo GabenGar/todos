@@ -46,7 +46,7 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
             </Heading>
           }
         >
-          <Origin t={t} url={url} />
+          <Origin url={url} />
         </Details>
       )}
 
@@ -57,7 +57,7 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
           </Heading>
         }
       >
-        <Pathname t={t} pathname={pathname} />
+        <Pathname pathname={pathname} />
       </Details>
 
       {transformedSearchParams.size !== 0 && (

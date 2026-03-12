@@ -37,19 +37,16 @@ function Component({ language, place, ...props }: IPlaceOverviewProps) {
         <>
           <OverviewHeader>
             <Heading level={headinglevel}>{title}</Heading>
-            <EntityID
-              className={styles.id}
-              entityID={id}
-            />
+            <EntityID className={styles.id} entityID={id} />
           </OverviewHeader>
 
           <OverviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={t(t => t.place.description)}
+                dKey={t((t) => t.place.description)}
                 dValue={
                   <EntityDescription>
-                    {description ?? t(t => t.place.no_description)}
+                    {description ?? t((t) => t.place.no_description)}
                   </EntityDescription>
                 }
               />
@@ -57,37 +54,26 @@ function Component({ language, place, ...props }: IPlaceOverviewProps) {
 
             <DescriptionList>
               <DescriptionSection
-                dKey={t(t => t.place.created_at)}
-                dValue={
-                  <DateTime
-                    dateTime={created_at}
-                  />
-                }
+                dKey={t((t) => t.place.created_at)}
+                dValue={<DateTime dateTime={created_at} />}
               />
               <DescriptionSection
-                dKey={t(t => t.place.updated_at)}
-                dValue={
-                  <DateTime
-                    dateTime={updated_at}
-                  />
-                }
+                dKey={t((t) => t.place.updated_at)}
+                dValue={<DateTime dateTime={updated_at} />}
               />
             </DescriptionList>
 
             <Heading level={(headinglevel + 1) as IHeadingLevel}>
-              {t(t => t.place["Tasks"])}
+              {t((t) => t.place["Tasks"])}
             </Heading>
-            <TasksStats
-              language={language}
-              placeID={place.id}
-            />
+            <TasksStats language={language} placeID={place.id} />
           </OverviewBody>
 
           <OverviewFooter>
             <List>
               <ListItem>
                 <LinkButton href={createPlaceEditPageURL(language, id)}>
-                  {t(t => t.place["Edit"])}
+                  {t((t) => t.place["Edit"])}
                 </LinkButton>
               </ListItem>
             </List>

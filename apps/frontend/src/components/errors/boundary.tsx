@@ -148,10 +148,7 @@ export class ErrorBoundary extends Component<IProps, IState> {
                   )}
                 </DescriptionList>
 
-                <ButtonCopy
-                  translation={{ ["Copied"]: "Copied", ["Copy"]: "Copy" }}
-                  valueToCopy={serializedError}
-                />
+                <ButtonCopy valueToCopy={serializedError} />
               </OverviewBody>
 
               <OverviewFooter>

@@ -220,7 +220,7 @@ function Forms({
               <List>
                 <ListItem>
                   <Link href={createPlacePageURL(language, place.id)}>
-                    {t(t => t.task.new_todo.place)}
+                    {t((t) => t.task.new_todo.place)}
                   </Link>
                 </ListItem>
               </List>
@@ -228,7 +228,7 @@ function Forms({
           )}
 
           <OverviewBody>
-            <Details summary={t(t => t.task.search)}>
+            <Details summary={t((t) => t.task.search)}>
               <SearchTasksForm
                 language={language}
                 id={searchFormID}
@@ -238,7 +238,7 @@ function Forms({
               />
             </Details>
 
-            <Details summary={t(t => t.task.add)}>
+            <Details summary={t((t) => t.task.add)}>
               <NewTaskForm
                 language={language}
                 id={newFormID}
