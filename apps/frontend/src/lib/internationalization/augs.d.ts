@@ -1,5 +1,4 @@
 import "i18next";
-import type ui from "@repo/ui/translation/en.json";
 import type common from "#translation/en/common.json";
 import type pageAccount from "#translation/en/pages/account.json";
 import type pageHome from "#translation/en/pages/home.json";
@@ -26,7 +25,10 @@ declare module "i18next" {
     returnNull: false;
     defaultNS: IActionableNameSpace;
     resources: {
-      "@repo/ui": typeof ui;
+      /**
+       * biome-ignore lint/suspicious/noExplicitAny: a bandaid for type check and build script
+       */
+      "@repo/ui": any;
       common: typeof common;
       translation: typeof translation;
       "page-home": typeof pageHome;
