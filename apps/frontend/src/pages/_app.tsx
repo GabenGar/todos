@@ -1,6 +1,6 @@
 import "@repo/ui/styles/global/nextjs/pages";
-
 //
+
 import { useSSR } from "react-i18next";
 import { ErrorBoundary } from "#components/errors";
 import { type AppPropsWithLayout, MainLayout } from "#components/pages/layouts";

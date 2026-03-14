@@ -15,45 +15,34 @@ import {
   selectInvitationIDs,
 } from "#database/queries/invitations";
 import { InvitationPreview } from "#entities/account";
-import type {
-  IEntityTranslationProps,
-  ITranslationPageProps,
-} from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { authenticateAdmin, createLocalizedLoader } from "#server/lib/router";
 //
 
 import type { Route } from "./+types/invitations-list";
 
-interface IProps
-  extends IEntityTranslationProps<"invitation">,
-    ITranslationPageProps<"invitations"> {
+interface IProps extends ILocalizedProps {
   invitations: IPaginatedCollection<IInvitationDB>;
-}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation, invitations } = loaderData;
-  const { current_page, total_pages } = invitations.pagination;
-  const title = createMetaTitle(
-    `${translation["Invitations page"]} ${current_page} ${translation["out of"]} ${total_pages}`,
-  );
-
-  return [{ title }];
 }
 
 /**
  * @TODO client render
  */
 function InvitationsListPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, entityTranslation, invitations } = loaderData;
-  const heading = translation["Invitations"];
+  const { t } = useTranslation();
+  const { language, invitations } = loaderData;
+  const heading = t((t) => t.pages.invitations["Invitations"]);
+  const title = createMetaTitle(
+    `${t((t) => t.pages.invitations["Invitations page"])} ${invitations.pagination.current_page} ${t((t) => t.pages.invitations["out of"])} ${invitations.pagination.total_pages}`,
+  );
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <PreviewList
         LinkButtonComponent={LinkButton}
-        noItemsElement={translation["No invitations found."]}
+        noItemsElement={t((t) => t.pages.invitations["No invitations found."])}
         pagination={invitations.pagination}
         buildURL={(page) =>
           href("/:language/account/role/administrator/invitations/:page", {
@@ -66,7 +55,6 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
           <InvitationPreview
             key={invitation.id}
             language={language}
-            entityTranslation={entityTranslation}
             headingLevel={2}
             invitation={invitation}
           />
@@ -83,7 +71,7 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
                   { language },
                 )}
               >
-                {translation["Create invitation"]}
+                {t((t) => t.pages.invitations["Create invitation"])}
               </LinkInternal>
             </OverviewHeader>
           </>
@@ -93,12 +81,12 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
+export const loader = createLocalizedLoader(async function loader(
+  { request, params }: Route.LoaderArgs,
+  localizedProps,
+) {
   await authenticateAdmin(request);
 
-  const language = getLanguage(params);
-  const { pages, entities } = await getTranslation(language);
-  const translation = pages["invitations"];
   const page = params.page;
 
   const invitations = await runTransaction(async (transaction) => {
@@ -117,13 +105,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   });
 
   const props: IProps = {
-    language,
-    translation,
-    entityTranslation: { invitation: entities.invitation },
+    ...localizedProps,
     invitations,
   };
 
   return props;
-}
+});
 
 export default InvitationsListPage;

@@ -1,4 +1,4 @@
-import type IBaseTranslation from "#localization/en";
+import type IBaseTranslation from "#localization/en.json";
 
 export const LANGUAGES = ["en", "ru"] as const;
 

@@ -46,6 +46,7 @@ function LanguageSelectPage() {
 interface ILocalLinkProps {
   locale: ILanguage;
 }
+
 function LocaleLink({ locale }: ILocalLinkProps) {
   const language = parseLocale(locale).language;
 

@@ -13,7 +13,9 @@
     "develop-database-purge": "node scripts/develop/database/purge.mjs"
   },
   "imports": {
-    "#localization/*": "./localization/*.json",
+    "#localization/*": "./src/translation/language/*",
+    "#translation/lib": "./src/translation/lib/index.ts",
+    "#translation/*": "./src/translation/language/*",
     "#environment": "./src/environment/index.ts",
     "#environment/*": "./src/environment/*/index.ts",
     "#lib/*": "./src/lib/*/index.ts",

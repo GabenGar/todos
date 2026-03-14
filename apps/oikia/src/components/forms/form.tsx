@@ -13,13 +13,12 @@ import { Preformatted } from "@repo/ui/formatting";
 import { baseFormStyles } from "@repo/ui/forms";
 import { InputSection } from "@repo/ui/forms/sections";
 import { List, ListItem } from "@repo/ui/lists";
+import { useTranslation } from "#hooks";
 import { isFailedAPIResponse } from "#lib/api";
-import type { ICommonTranslationProps } from "#lib/internationalization";
 import type { IFormMethod } from "./types";
 
 export interface IFormProps<ActionData>
-  extends Omit<FormProps, "children" | "method">,
-    ICommonTranslationProps {
+  extends Omit<FormProps, "children" | "method"> {
   id: string;
   method?: IFormMethod;
   children?: (formID: string) => ReactNode;
@@ -34,7 +33,6 @@ export interface IFormProps<ActionData>
 }
 
 export function Form<ActionData>({
-  commonTranslation,
   id,
   className,
   submitButton,
@@ -43,6 +41,7 @@ export function Form<ActionData>({
   children,
   ...props
 }: IFormProps<ActionData>) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   navigation.state;
   const data = useActionData<ActionData>();
@@ -74,7 +73,7 @@ export function Form<ActionData>({
           ) : (
             <InputSection>
               <ButtonReset disabled={navigation.state !== "idle"} form={formID}>
-                {commonTranslation["Reset"]}
+                {t((t) => t.common["Reset"])}
               </ButtonReset>
             </InputSection>
           )}
@@ -85,9 +84,9 @@ export function Form<ActionData>({
 
           <InputSection>
             {navigation.state === "loading" ? (
-              commonTranslation["Initializing..."]
+              t((t) => t.common["Initializing..."])
             ) : navigation.state === "submitting" ? (
-              commonTranslation["Submitting..."]
+              t((t) => t.common["Submitting..."])
             ) : data instanceof Error ? (
               <List isOrdered>
                 <ListItem>
@@ -100,13 +99,13 @@ export function Form<ActionData>({
                   <ListItem key={`${index}-${name}-${message}`}>
                     <DescriptionList>
                       <DescriptionSection
-                        dKey={commonTranslation["Name"]}
+                        dKey={t((t) => t.common["Name"])}
                         dValue={<Preformatted>{name}</Preformatted>}
                         isHorizontal
                       />
 
                       <DescriptionSection
-                        dKey={commonTranslation["Message"]}
+                        dKey={t((t) => t.common["Message"])}
                         dValue={<Preformatted>{message}</Preformatted>}
                         isHorizontal
                       />
@@ -115,14 +114,14 @@ export function Form<ActionData>({
                 ))}
               </List>
             ) : (
-              commonTranslation["Ready to submit."]
+              t((t) => t.common["Ready to submit."])
             )}
           </InputSection>
 
           <InputSection>
             <ButtonSubmit form={formID} disabled={navigation.state !== "idle"}>
               {!submitButton
-                ? commonTranslation["Submit"]
+                ? t((t) => t.common["Submit"])
                 : submitButton(navigation.state)}
             </ButtonSubmit>
           </InputSection>

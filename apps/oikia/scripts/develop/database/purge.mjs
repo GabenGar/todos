@@ -8,7 +8,7 @@ async function run() {
   log("Purging development database...");
 
   const config = await parseConfig(true);
-  const connectionData = config.database.migrations;
+  const connectionData = config.server.database.migrations;
   /**
    * @type {import("pg-promise").IInitOptions}
    */

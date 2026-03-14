@@ -16,16 +16,13 @@ import {
 } from "@repo/ui/previews";
 import { LinkInternal } from "#components/link";
 import type { IInvitationDB } from "#database/queries/invitations";
-import type {
-  IEntityTranslationProps,
-  ILanguageProps,
-} from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILanguageProps } from "#lib/internationalization";
+//
+
 import styles from "./invitation-preview.module.scss";
 
-interface IProps
-  extends ILanguageProps,
-    IEntityTranslationProps<"invitation">,
-    IPreviewProps {
+interface IProps extends ILanguageProps, IPreviewProps {
   invitation: IInvitationDB;
 }
 
@@ -33,13 +30,8 @@ export const InvitationPreview: ReturnType<
   typeof createBlockComponent<IProps>
 > = createBlockComponent(undefined, Component);
 
-function Component({
-  language,
-  entityTranslation,
-  invitation,
-  ...props
-}: IProps) {
-  const translation = entityTranslation.invitation;
+function Component({ language, invitation, ...props }: IProps) {
+  const { t } = useTranslation();
   const { id, title, description, code, is_active, target_role, created_by } =
     invitation;
   const parsedTitle = parseTitle(title);
@@ -70,28 +62,28 @@ function Component({
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={translation["Code"]}
+                dKey={t((t) => t.entities.invitation["Code"])}
                 dValue={code}
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={translation["Target role"]}
+                dKey={t((t) => t.entities.invitation["Target role"])}
                 dValue={target_role}
                 isValuePreformatted
                 isHorizontal
               />
 
               <DescriptionSection
-                dKey={translation["Status"]}
+                dKey={t((t) => t.entities.invitation["Status"])}
                 dValue={
                   is_active ? (
                     <span className={styles.active}>
-                      {translation["Active"]}
+                      {t((t) => t.entities.invitation["Active"])}
                     </span>
                   ) : (
                     <span className={styles.inactive}>
-                      {translation["Inactive"]}
+                      {t((t) => t.entities.invitation["Inactive"])}
                     </span>
                   )
                 }
@@ -99,10 +91,10 @@ function Component({
               />
 
               <DescriptionSection
-                dKey={translation["Description"]}
+                dKey={t((t) => t.entities.invitation["Description"])}
                 dValue={
                   !description ? (
-                    translation["No description provided"]
+                    t((t) => t.entities.invitation["No description provided"])
                   ) : (
                     <EntityDescription>{description}</EntityDescription>
                   )
@@ -110,7 +102,7 @@ function Component({
               />
 
               <DescriptionSection
-                dKey={translation["Creator"]}
+                dKey={t((t) => t.entities.invitation["Creator"])}
                 dValue={
                   !created_by ? undefined : (
                     <LinkInternal

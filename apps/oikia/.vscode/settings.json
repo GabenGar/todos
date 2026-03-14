@@ -1,6 +1,9 @@
 {
-  "typescript.preferences.autoImportFileExcludePatterns": ["**/src/routes"],
+  "js/ts.preferences.autoImportFileExcludePatterns": ["**/src/routes"],
   "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescriptreact]": {
@@ -20,6 +23,14 @@
         "schema/server.example.json"
       ],
       "url": "./schema/server.schema.json"
+    },
+    {
+      "fileMatch": [
+        "config/public.json",
+        "config/public.development.json",
+        "schema/public.example.json"
+      ],
+      "url": "./schema/public.schema.json"
     }
   ]
 }

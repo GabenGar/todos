@@ -12,31 +12,18 @@ import {
 } from "@repo/ui/previews";
 import { LinkInternal } from "#components/link";
 import type { IAccountDBPreview } from "#database/queries/accounts";
-import type {
-  ICommonTranslationProps,
-  IEntityTranslationProps,
-  ILanguageProps,
-} from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILanguageProps } from "#lib/internationalization";
 
-interface IProps
-  extends ILanguageProps,
-    ICommonTranslationProps,
-    IEntityTranslationProps<"account">,
-    IPreviewProps {
+interface IProps extends ILanguageProps, IPreviewProps {
   account: IAccountDBPreview;
 }
 
 export const AccountPreview: ReturnType<typeof createBlockComponent<IProps>> =
   createBlockComponent(undefined, Component);
 
-function Component({
-  language,
-  commonTranslation,
-  entityTranslation,
-  account,
-  ...props
-}: IProps) {
-  const translation = entityTranslation.account;
+function Component({ language, account, ...props }: IProps) {
+  const { t } = useTranslation();
   const { id, name, role, created_at } = account;
   const parsedName = parseName(name);
 
@@ -65,20 +52,15 @@ function Component({
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={translation["Role"]}
+                dKey={t((t) => t.entities.account["Role"])}
                 dValue={role}
                 isValuePreformatted
                 isHorizontal
               />
 
               <DescriptionSection
-                dKey={translation["Join date"]}
-                dValue={
-                  <DateTimeView
-                    translation={commonTranslation}
-                    dateTime={created_at}
-                  />
-                }
+                dKey={t((t) => t.entities.account["Join date"])}
+                dValue={<DateTimeView dateTime={created_at} />}
               />
             </DescriptionList>
           </PreviewBody>

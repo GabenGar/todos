@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useSSR, useTranslation } from "react-i18next";
 import {
   href,
   isRouteErrorResponse,
@@ -7,7 +8,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useParams,
+  useLoaderData,
   useRouteLoaderData,
 } from "react-router";
 import {
@@ -20,15 +21,13 @@ import { Preformatted } from "@repo/ui/formatting";
 import { ClientProvider as BaseClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
 import { LinkInternal } from "#components/link";
-import { IS_DEVELOPMENT } from "#environment";
-import {
-  DEFAULT_LANGUAGE,
-  type ICommonTranslationProps,
-  type ILanguageProps,
-} from "#lib/internationalization";
-import englishTranslation from "#localization/en";
+import { IS_BROWSER, IS_DEVELOPMENT } from "#environment";
+import { DEFAULT_LANGUAGE } from "#lib/internationalization";
+import type { ILocalizedProps } from "#lib/pages";
 import { getLanguage } from "#server/lib/router";
-import { getCommonTranslation } from "#server/localization";
+import { getTranslation, initClientTranslation } from "#translation/lib";
+//
+
 import type { Route } from "./+types/root";
 import styles from "./root.module.scss";
 
@@ -36,7 +35,7 @@ interface ILayoutProps {
   children: ReactNode;
 }
 
-interface ILoaderProps extends ILanguageProps, ICommonTranslationProps {}
+interface ILoaderProps extends ILocalizedProps {}
 
 export const links: Route.LinksFunction = () => [];
 
@@ -63,8 +62,13 @@ export function Layout({ children }: ILayoutProps) {
 }
 
 function App() {
-  const params = useParams();
-  const language = params.language;
+  const { language, translation } = useLoaderData<typeof loader>();
+
+  if (IS_BROWSER) {
+    initClientTranslation(language, translation);
+  }
+
+  useSSR(translation, language);
 
   return (
     <BaseClientProvider serverLanguage={language}>
@@ -74,19 +78,18 @@ function App() {
 }
 
 export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
+  const { t } = useTranslation("translation");
   const language = loaderData?.language ?? DEFAULT_LANGUAGE;
-  const commonTranslation =
-    loaderData?.commonTranslation ?? englishTranslation.common;
-  const heading = commonTranslation["Error"];
-  let message = commonTranslation["Error"];
-  let details = commonTranslation["An unexpected error occurred."];
+  const heading = t((t) => t.common["Error"]);
+  let message = t((t) => t.common["Error"]);
+  let details = t((t) => t.common["An unexpected error occurred."]);
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : commonTranslation["Error"];
+    message = error.status === 404 ? "404" : t((t) => t.common["Error"]);
     details =
       error.status === 404
-        ? commonTranslation["The requested page could not be found."]
+        ? t((t) => t.common["The requested page could not be found."])
         : error.statusText || details;
   } else if (IS_DEVELOPMENT && error && error instanceof Error) {
     details = error.message;
@@ -125,11 +128,11 @@ export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const language = getLanguage(params);
-  const commonTranslation = await getCommonTranslation(language);
+  const translation = await getTranslation(language);
 
   const props: ILoaderProps = {
     language,
-    commonTranslation,
+    translation,
   };
 
   return props;

@@ -14,52 +14,35 @@ import {
   selectAccountPreviews,
 } from "#database/queries/accounts";
 import { AccountPreview } from "#entities/account";
-import type {
-  ICommonTranslationPageProps,
-  IEntityTranslationProps,
-} from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { authenticateAdmin, createLocalizedLoader } from "#server/lib/router";
 //
 
 import type { Route } from "./+types/accounts-list";
 
-interface IProps
-  extends IEntityTranslationProps<"account">,
-    ICommonTranslationPageProps<"accounts"> {
+interface IProps extends ILocalizedProps {
   accounts: IPaginatedCollection<IAccountDBPreview>;
-}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation, accounts } = loaderData;
-  const { current_page, total_pages } = accounts.pagination;
-  const title = createMetaTitle(
-    `${translation["Accounts page"]} ${current_page} ${translation["out of"]} ${total_pages}`,
-  );
-
-  return [{ title }];
 }
 
 /**
  * @TODO client render
  */
 function InvitationsListPage({ loaderData }: Route.ComponentProps) {
-  const {
-    language,
-    commonTranslation,
-    translation,
-    entityTranslation,
-    accounts,
-  } = loaderData;
+  const { t } = useTranslation();
+  const { language, accounts } = loaderData;
   const { pagination, items } = accounts;
-  const heading = translation["Accounts"];
+  const heading = t((t) => t.pages.accounts["Accounts"]);
+  const title = createMetaTitle(
+    `${t((t) => t.pages.accounts["Accounts page"])} ${accounts.pagination.current_page} ${t((t) => t.pages.accounts["out of"])} ${accounts.pagination.total_pages}`,
+  );
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <PreviewList
         LinkButtonComponent={LinkButton}
-        noItemsElement={translation["No accounts found."]}
+        noItemsElement={t((t) => t.pages.accounts["No accounts found."])}
         pagination={pagination}
         buildURL={(page) =>
           href("/:language/account/role/administrator/accounts/:page", {
@@ -72,8 +55,6 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
           <AccountPreview
             key={account.id}
             language={language}
-            commonTranslation={commonTranslation}
-            entityTranslation={entityTranslation}
             headingLevel={2}
             account={account}
           />
@@ -83,42 +64,34 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
+export const loader = createLocalizedLoader<IProps, Route.LoaderArgs>(
+  async ({ request, params }, localizedProps) => {
+    await authenticateAdmin(request);
 
-  const language = getLanguage(params);
-  const {
-    pages,
-    entities,
-    common: commonTranslation,
-  } = await getTranslation(language);
-  const translation = pages["accounts"];
-  const page = params.page;
+    const page = params.page;
 
-  const accounts = await runTransaction(async (transaction) => {
-    const count = await selectAccountCount(transaction);
+    const accounts = await runTransaction(async (transaction) => {
+      const count = await selectAccountCount(transaction);
 
-    const pagination = createPagination(count, page);
-    const ids = await selectAccountIDs(transaction, { pagination });
-    const items = await selectAccountPreviews(transaction, ids);
+      const pagination = createPagination(count, page);
+      const ids = await selectAccountIDs(transaction, { pagination });
+      const items = await selectAccountPreviews(transaction, ids);
 
-    const accounts = {
-      pagination,
-      items,
-    } satisfies IProps["accounts"];
+      const accounts = {
+        pagination,
+        items,
+      } satisfies IProps["accounts"];
 
-    return accounts;
-  });
+      return accounts;
+    });
 
-  const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-    entityTranslation: { account: entities.account },
-    accounts,
-  };
+    const props: IProps = {
+      ...localizedProps,
+      accounts,
+    };
 
-  return props;
-}
+    return props;
+  },
+);
 
 export default InvitationsListPage;

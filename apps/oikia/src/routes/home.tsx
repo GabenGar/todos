@@ -5,45 +5,36 @@ import { List, ListItem } from "@repo/ui/lists";
 import { Page } from "@repo/ui/pages";
 import { Form } from "#components/forms";
 import { LinkInternal } from "#components/link";
-import type {
-  ICommonTranslationProps,
-  ITranslationPageProps,
-} from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
 import { authenticateRequest, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { getTranslation } from "#translation/lib";
 //
 
 import type { Route } from "./+types/home";
 import styles from "./home.module.scss";
 
-interface IProps
-  extends ICommonTranslationProps,
-    ITranslationPageProps<"home"> {
+interface IProps extends ILocalizedProps {
   isRegistered: boolean;
 }
 
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation } = loaderData;
-  const title = createMetaTitle(translation["Welcome"]);
-
-  return [{ title }];
-}
-
 function HomePage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation, isRegistered } = loaderData;
-  const heading = translation["Welcome"];
+  const { t } = useTranslation();
+  const { language, isRegistered } = loaderData;
+  const title = createMetaTitle(t((t) => t.pages.home.Welcome));
+  const heading = t((t) => t.pages.home["Welcome"]);
   const formID = "logout";
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
             <OverviewHeader>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={translation["Authentication"]}
+                  dKey={t((t) => t.pages.home["Authentication"])}
                   dValue={
                     isRegistered ? (
                       <List>
@@ -51,19 +42,20 @@ function HomePage({ loaderData }: Route.ComponentProps) {
                           <LinkInternal
                             href={href("/:language/account", { language })}
                           >
-                            {translation["Account"]}
+                            {t((t) => t.pages.home["Account"])}
                           </LinkInternal>
                         </ListItem>
 
                         <ListItem className={styles.logout}>
                           <Form
-                            commonTranslation={commonTranslation}
                             id={formID}
                             method="POST"
                             action={href("/:language/authentication/logout", {
                               language,
                             })}
-                            submitButton={() => translation["Log out"]}
+                            submitButton={() =>
+                              t((t) => t.pages.home["Log out"])
+                            }
                           />
                         </ListItem>
                       </List>
@@ -76,7 +68,7 @@ function HomePage({ loaderData }: Route.ComponentProps) {
                               { language },
                             )}
                           >
-                            {translation["Register"]}
+                            {t((t) => t.pages.home["Register"])}
                           </LinkInternal>
                         </ListItem>
 
@@ -86,7 +78,7 @@ function HomePage({ loaderData }: Route.ComponentProps) {
                               language,
                             })}
                           >
-                            {translation["Log in"]}
+                            {t((t) => t.pages.home["Log in"])}
                           </LinkInternal>
                         </ListItem>
                       </List>
@@ -104,8 +96,7 @@ function HomePage({ loaderData }: Route.ComponentProps) {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const language = getLanguage(params);
-  const { common: commonTranslation, pages } = await getTranslation(language);
-  const translation = pages.home;
+  const translation = await getTranslation(language);
   let isRegistered: boolean;
 
   try {
@@ -118,7 +109,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
   const props: IProps = {
     language,
-    commonTranslation,
     translation,
     isRegistered,
   };

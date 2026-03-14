@@ -1,7 +1,15 @@
 import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig, type UserConfig } from "vite";
+import { parseConfig } from "./scripts/lib/parse-configuration.mjs";
 
-const config = defineConfig(({ isSsrBuild }) => {
+const config = defineConfig(async ({ mode, isSsrBuild }) => {
+  const publicConfig = (await parseConfig()).public
+
+  if (publicConfig.is_translation_debug_enabled) {
+    process.env.VITE_IS_TRANSLATION_DEBUG_ENABLED = JSON.stringify(publicConfig.is_translation_debug_enabled)
+  }
+
+
   const finalConfig: UserConfig = {
     plugins: [reactRouter()],
     css: {
@@ -12,6 +20,8 @@ const config = defineConfig(({ isSsrBuild }) => {
       },
     },
     build: {
+      // fixes style ordering for prod-only
+      cssCodeSplit: false,
       sourcemap: true,
       rollupOptions: {
         /**

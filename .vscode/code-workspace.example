@@ -57,9 +57,9 @@
       ".env.*": "dotenv"
     },
     "editor.wordWrapColumn": 80,
-    "typescript.referencesCodeLens.enabled": true,
-    "typescript.preferences.preferTypeOnlyAutoImports": true,
-    "typescript.preferences.jsxAttributeCompletionStyle": "braces",
+    "js/ts.referencesCodeLens.enabled":true,
+    "js/ts.preferences.preferTypeOnlyAutoImports":true,
+    "js/ts.preferences.jsxAttributeCompletionStyle": "braces",
     "json.schemaDownload.trustedDomains": {
       "https://v2-8-10.turborepo.dev/schema.json": true
     }

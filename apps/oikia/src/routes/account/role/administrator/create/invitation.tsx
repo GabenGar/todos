@@ -18,12 +18,13 @@ import {
   insertInvitations,
   selectInvitationEntities,
 } from "#database/queries/invitations";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { useTranslation } from "#hooks";
 import { createMetaTitle } from "#lib/router";
 import { createSuccessfullAPIResponse } from "#server/lib/api";
 import { ClientInputError } from "#server/lib/errors";
 import {
   authenticateAdmin,
+  createLocalizedLoader,
   createServerAction,
   getLanguage,
   parseMethod,
@@ -33,38 +34,34 @@ import { getTranslation } from "#server/localization";
 
 import type { Route } from "./+types/invitation";
 
-interface IProps extends ICommonTranslationPageProps<"create-invitation"> {}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation } = loaderData;
-  const title = createMetaTitle(translation["Create invitation"]);
-
-  return [{ title }];
-}
-
 /**
  * @TODO client render
  */
 function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation } = loaderData;
-  const heading = translation["Create Invitation"];
+  const { t } = useTranslation();
+  const { language } = loaderData;
+  const heading = t((t) => t.pages["create-invitation"]["Create Invitation"]);
   const formID = "create-invitation";
+  const title = createMetaTitle(
+    t((t) => t.pages["create-invitation"]["Create invitation"]),
+  );
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
             <OverviewHeader>
               <Form<Route.ComponentProps["actionData"]>
-                commonTranslation={commonTranslation}
                 id={formID}
                 method="POST"
-                submitButton={() => translation["Create"]}
+                submitButton={() =>
+                  t((t) => t.pages["create-invitation"]["Create"])
+                }
                 successElement={(_formID, data) => {
                   if (!data.is_successful) {
                     throw new Error(
-                      commonTranslation["Success element is unsuccessful."],
+                      t((t) => t.common["Success element is unsuccessful."]),
                     );
                   }
 
@@ -73,11 +70,12 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
 
                   return (
                     <p>
-                      {
-                        translation[
-                          "You have successfully created an invitation"
-                        ]
-                      }{" "}
+                      {t(
+                        (t) =>
+                          t.pages["create-invitation"][
+                            "You have successfully created an invitation"
+                          ],
+                      )}{" "}
                       <LinkInternal
                         href={href(
                           "/:language/account/role/administrator/invitation/:id",
@@ -98,7 +96,7 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
                       form={formID}
                       name="title"
                     >
-                      {translation["Title"]}
+                      {t((t) => t.pages["create-invitation"]["Title"])}
                     </InputSectionText>
 
                     <InputSectionText
@@ -106,7 +104,7 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
                       form={formID}
                       name="description"
                     >
-                      {translation["Description"]}
+                      {t((t) => t.pages["create-invitation"]["Description"])}
                     </InputSectionText>
 
                     <InputSectionDatetime
@@ -114,7 +112,9 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
                       form={formID}
                       name="expires_at"
                     >
-                      {translation["Expiration date"]}
+                      {t(
+                        (t) => t.pages["create-invitation"]["Expiration date"],
+                      )}
                     </InputSectionDatetime>
 
                     <InputSectionInteger
@@ -123,7 +123,7 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
                       name="max_uses"
                       min={BIGINT_ONE}
                     >
-                      {translation["Maximum uses"]}
+                      {t((t) => t.pages["create-invitation"]["Maximum uses"])}
                     </InputSectionInteger>
                   </>
                 )}
@@ -136,31 +136,17 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
-
-  const language = getLanguage(params);
-  const { common: commonTranslation, pages } = await getTranslation(language);
-  const translation = pages["create-invitation"];
-
-  const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-  };
-
-  return props;
-}
+export const loader = createLocalizedLoader();
 
 export const action = createServerAction(
   async ({ request, params }: Route.LoaderArgs) => {
     const account = await authenticateAdmin(request);
 
     const language = getLanguage(params);
-    const { common: commonTranslation, pages } = await getTranslation(language);
+    const { pages } = await getTranslation(language);
     const translation = pages["create-invitation"];
 
-    parseMethod(request, "POST", commonTranslation);
+    parseMethod(request, "POST");
 
     const formData = (await request.formData()) as IFormData<
       "expires_at" | "max_uses" | "title" | "description"

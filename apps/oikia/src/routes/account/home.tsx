@@ -7,36 +7,31 @@ import { Heading } from "@repo/ui/headings";
 import { Page } from "@repo/ui/pages";
 import { LinkInternal } from "#components/link";
 import type { IAccount } from "#entities/account";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
-import { authenticateRequest, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { authenticateRequest, createLocalizedLoader } from "#server/lib/router";
 //
 
 import type { Route } from "./+types/home";
 
-interface IProps extends ICommonTranslationPageProps<"account-home"> {
+interface IProps extends ILocalizedProps {
   account: IAccount;
-}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation } = loaderData;
-  const title = createMetaTitle(translation["Account"]);
-
-  return [{ title }];
 }
 
 /**
  * @TODO client render
  */
 function AccountPage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation, account } = loaderData;
+  const { t } = useTranslation();
+  const { language, account } = loaderData;
   const { name, role, created_at } = account;
   const parsedName = parseName(name);
-  const heading = translation["Account"];
+  const title = createMetaTitle(t((t) => t.pages["account-home"]["Account"]));
+  const heading = t((t) => t.pages["account-home"]["Account"]);
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
@@ -47,7 +42,7 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={translation["Role"]}
+                  dKey={t((t) => t.pages["account-home"]["Role"])}
                   dValue={
                     role !== "administrator" ? (
                       role
@@ -57,7 +52,7 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
                           language,
                         })}
                       >
-                        {translation[role]}
+                        {t((t) => t.pages["account-home"][role])}
                       </LinkInternal>
                     )
                   }
@@ -65,10 +60,9 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
                 />
 
                 <DescriptionSection
-                  dKey={translation["Joined"]}
+                  dKey={t((t) => t.pages["account-home"]["Joined"])}
                   dValue={
                     <DateTimeView
-                      translation={commonTranslation}
                       dateTime={created_at}
                     />
                   }
@@ -82,20 +76,16 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  const language = getLanguage(params);
-  const { pages, common: commonTranslation } = await getTranslation(language);
-  const translation = pages["account-home"];
-  const { id: _, ...account } = await authenticateRequest(request);
+export const loader = createLocalizedLoader<IProps, Route.LoaderArgs>(
+  async ({ request }: Route.LoaderArgs, localizedProps) => {
+    const { id: _, ...account } = await authenticateRequest(request);
+    const props: IProps = {
+      ...localizedProps,
+      account,
+    };
 
-  const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-    account,
-  };
-
-  return props;
-}
+    return props;
+  },
+);
 
 export default AccountPage;
