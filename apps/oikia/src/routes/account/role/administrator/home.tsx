@@ -6,42 +6,39 @@ import { LinkInternal } from "#components/link";
 import { runTransaction } from "#database";
 import { selectAccountCount } from "#database/queries/accounts";
 import { selectInvitationCount } from "#database/queries/invitations";
-import type { ITranslationPageProps } from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { authenticateAdmin, createLocalizedLoader } from "#server/lib/router";
 //
 
 import type { Route } from "./+types/home";
 
-interface IProps extends ITranslationPageProps<"administrator-home"> {
+interface IProps extends ILocalizedProps {
   accounts: string;
   invitations: string;
-}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation } = loaderData;
-  const title = createMetaTitle(translation["Administrator"]);
-
-  return [{ title }];
 }
 
 /**
  * @TODO client render
  */
 function AdministratorPage({ loaderData }: Route.ComponentProps) {
-  const { language, translation, accounts, invitations } = loaderData;
-  const heading = translation["Administrator"];
+  const { t } = useTranslation();
+  const { language, accounts, invitations } = loaderData;
+  const heading = t((t) => t.pages["administrator-home"]["Administrator"]);
+  const title = createMetaTitle(
+    t((t) => t.pages["administrator-home"]["Administrator"]),
+  );
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
             <OverviewHeader>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={translation["Accounts"]}
+                  dKey={t((t) => t.pages["administrator-home"]["Accounts"])}
                   dValue={
                     <LinkInternal
                       href={href(
@@ -56,7 +53,7 @@ function AdministratorPage({ loaderData }: Route.ComponentProps) {
                 />
 
                 <DescriptionSection
-                  dKey={translation["Invitations"]}
+                  dKey={t((t) => t.pages["administrator-home"]["Invitations"])}
                   dValue={
                     <LinkInternal
                       href={href(
@@ -78,11 +75,11 @@ function AdministratorPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
+export const loader = createLocalizedLoader(async function loader(
+  { request }: Route.LoaderArgs,
+  localizedProps,
+) {
   await authenticateAdmin(request);
-  const language = getLanguage(params);
-  const { pages } = await getTranslation(language);
-  const translation = pages["administrator-home"];
 
   const { accounts, invitations } = await runTransaction(
     async (transaction) => {
@@ -95,13 +92,12 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   );
 
   const props: IProps = {
-    language,
-    translation,
+    ...localizedProps,
     accounts,
     invitations,
   };
 
   return props;
-}
+});
 
 export default AdministratorPage;

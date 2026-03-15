@@ -11,71 +11,63 @@ import { Form } from "#components/forms";
 import { LinkInternal } from "#components/link";
 import { runTransaction } from "#database";
 import type { IAccountInit } from "#entities/account";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { useTranslation } from "#hooks";
 import { createMetaTitle } from "#lib/router";
 import { registerAccount } from "#server/entities/accounts";
 import { ClientInputError } from "#server/lib/errors";
 import {
+  createLocalizedLoader,
   createServerAction,
-  getLanguage,
   parseMethod,
 } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
 //
 
 import type { Route } from "./+types/registration";
 
-interface IProps extends ICommonTranslationPageProps<"registration"> {}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation } = loaderData;
-  const title = createMetaTitle(translation["Registration"]);
-
-  return [{ title }];
-}
-
 function RegistrationPage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation } = loaderData;
-  const heading = translation["Registration"];
+  const { t } = useTranslation();
+  const { language } = loaderData;
+  const title = createMetaTitle(t((t) => t.pages.registration["Registration"]));
+  const heading = t((t) => t.pages.registration["Registration"]);
   const formID = "registration";
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
             <OverviewHeader>
               <p>
-                {translation["Already registered?"]}{" "}
+                {t((t) => t.pages.registration["Already registered?"])}{" "}
                 <LinkInternal
                   href={href("/:language/authentication/login", { language })}
                 >
-                  {translation["Log in."]}
+                  {t((t) => t.pages.registration["Log in."])}
                 </LinkInternal>
               </p>
             </OverviewHeader>
 
             <OverviewBody>
               <Form<Route.ComponentProps["actionData"]>
-                commonTranslation={commonTranslation}
                 id={formID}
                 method="POST"
-                submitButton={() => translation["Register"]}
+                submitButton={() => t((t) => t.pages.registration["Register"])}
                 resetButton={null}
                 successElement={() => (
                   <>
                     <p>
-                      {
-                        translation[
-                          "You have successfully created an account, now you can"
-                        ]
-                      }{" "}
+                      {t(
+                        (t) =>
+                          t.pages.registration[
+                            "You have successfully created an account, now you can"
+                          ],
+                      )}{" "}
                       <LinkInternal
                         href={href("/:language/authentication/login", {
                           language,
                         })}
                       >
-                        {translation["log in"]}
+                        {t((t) => t.pages.registration["log in"])}
                       </LinkInternal>
                       .
                     </p>
@@ -92,7 +84,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       maxLength={20}
                       required
                     >
-                      {translation["Login"]}
+                      {t((t) => t.pages.registration["Login"])}
                     </InputSectionText>
 
                     <InputSectionPassword
@@ -105,7 +97,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       maxLength={49}
                       required
                     >
-                      {translation["Password"]}
+                      {t((t) => t.pages.registration["Password"])}
                     </InputSectionPassword>
 
                     <InputSectionNanoID
@@ -114,7 +106,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       name="invitation_code"
                       required
                     >
-                      {translation["Invitation code"]}
+                      {t((t) => t.pages.registration["Invitation code"])}
                     </InputSectionNanoID>
 
                     <InputSectionText
@@ -124,7 +116,7 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
                       minLength={1}
                       maxLength={128}
                     >
-                      {translation["Display name"]}
+                      {t((t) => t.pages.registration["Display name"])}
                     </InputSectionText>
                   </>
                 )}
@@ -137,27 +129,11 @@ function RegistrationPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const language = getLanguage(params);
-  const { common: commonTranslation, pages } = await getTranslation(language);
-  const translation = pages.registration;
-
-  const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-  };
-
-  return props;
-}
+export const loader = createLocalizedLoader();
 
 export const action = createServerAction(
   async ({ request, params }: Route.ActionArgs) => {
-    const language = getLanguage(params);
-    const { common: commonTranslation, pages } = await getTranslation(language);
-    const translation = pages.registration;
-
-    parseMethod(request, "POST", commonTranslation);
+    parseMethod(request, "POST");
 
     const formData = await request.formData();
 
@@ -166,11 +142,11 @@ export const action = createServerAction(
       const value = parseStringValueFromFormData(formData, "login");
 
       if (!value) {
-        throw new ClientInputError(translation["Login is required."]);
+        throw new ClientInputError("Login is required.");
       }
 
       if (value.length < 5 && value.length > 20) {
-        throw new ClientInputError(translation["Invalid login length."]);
+        throw new ClientInputError("Invalid login length.");
       }
 
       login = value;
@@ -181,11 +157,11 @@ export const action = createServerAction(
       const value = parseStringValueFromFormData(formData, "password");
 
       if (!value) {
-        throw new ClientInputError(translation["Password is required."]);
+        throw new ClientInputError("Password is required.");
       }
 
       if (value.length < 8 && value.length > 49) {
-        throw new ClientInputError(translation["Invalid password length."]);
+        throw new ClientInputError("Invalid password length.");
       }
 
       password = value;
@@ -196,13 +172,11 @@ export const action = createServerAction(
       const value = parseStringValueFromFormData(formData, "invitation_code");
 
       if (!value) {
-        throw new ClientInputError(translation["Invitation code is required."]);
+        throw new ClientInputError("Invitation code is required.");
       }
 
       if (value.length !== 21) {
-        throw new ClientInputError(
-          translation["Invalid invitation code length."],
-        );
+        throw new ClientInputError("Invalid invitation code length.");
       }
 
       invitation_code = value;
@@ -211,7 +185,7 @@ export const action = createServerAction(
     const name = parseStringValueFromFormData(formData, "name");
 
     if (name && (name.length < 1 || name.length > 128)) {
-      throw new ClientInputError(translation["Invalid display name length."]);
+      throw new ClientInputError("Invalid display name length.");
     }
 
     const accountInit: IAccountInit = {

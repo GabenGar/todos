@@ -12,7 +12,7 @@ const configSymbol = Symbol.for("server-config");
 // @ts-expect-error
 globalThis[configSymbol] = config;
 
-const PORT = config.server.port;
+const PORT = config.server.server.port;
 
 const app = express();
 

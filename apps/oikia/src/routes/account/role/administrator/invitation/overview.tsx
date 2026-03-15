@@ -13,31 +13,21 @@ import {
   type IInvitationDB,
   selectInvitationEntities,
 } from "#database/queries/invitations";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { authenticateAdmin, createLocalizedLoader } from "#server/lib/router";
 //
 
 import type { Route } from "./+types/overview";
 import styles from "./overview.module.scss";
 
-interface IProps extends ICommonTranslationPageProps<"invitation"> {
+interface IProps extends ILocalizedProps {
   invitation: IInvitationDB;
 }
 
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation, invitation } = loaderData;
-  const parsedTitle = parseTitle(invitation.title, invitation.id);
-  const title = createMetaTitle(
-    `${translation["Invitation"]} ${parsedTitle} ${translation["overview"]}`,
-  );
-
-  return [{ title }];
-}
-
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation, invitation } = loaderData;
+  const { language, invitation } = loaderData;
   const {
     id,
     title,
@@ -50,11 +40,15 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
     expires_at,
     target_role,
   } = invitation;
+  const { t } = useTranslation();
   const parsedTitle = parseTitle(title);
-  const heading = translation["Invitation Overview"];
+  const heading = t((t) => t.pages.invitation["Invitation Overview"]);
+  const pageTitle = createMetaTitle(
+    `${t((t) => t.pages.invitation["Invitation"])} ${parsedTitle} ${t((t) => t.pages.invitation["overview"])}`,
+  );
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={pageTitle}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
@@ -66,35 +60,32 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={translation["Code"]}
+                  dKey={t((t) => t.pages.invitation["Code"])}
                   dValue={
                     <>
                       <Preformatted>{code}</Preformatted>
-                      <ButtonCopy
-                        translation={commonTranslation}
-                        valueToCopy={code}
-                      />
+                      <ButtonCopy valueToCopy={code} />
                     </>
                   }
                 />
 
                 <DescriptionSection
-                  dKey={translation["Target role"]}
+                  dKey={t((t) => t.pages.invitation["Target role"])}
                   dValue={target_role}
                   isValuePreformatted
                   isHorizontal
                 />
 
                 <DescriptionSection
-                  dKey={translation["Status"]}
+                  dKey={t((t) => t.pages.invitation["Status"])}
                   dValue={
                     is_active ? (
                       <span className={styles.active}>
-                        {translation["Active"]}
+                        {t((t) => t.pages.invitation["Active"])}
                       </span>
                     ) : (
                       <span className={styles.inactive}>
-                        {translation["Inactive"]}
+                        {t((t) => t.pages.invitation["Inactive"])}
                       </span>
                     )
                   }
@@ -102,7 +93,7 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                 />
 
                 <DescriptionSection
-                  dKey={translation["Creator"]}
+                  dKey={t((t) => t.pages.invitation["Creator"])}
                   dValue={
                     !created_by ? undefined : (
                       <LinkInternal
@@ -123,27 +114,21 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 
                 {description && (
                   <DescriptionSection
-                    dKey={translation["Description"]}
+                    dKey={t((t) => t.pages.invitation["Description"])}
                     dValue={description}
                   />
                 )}
 
                 {expires_at && (
                   <DescriptionSection
-                    dKey={translation["Expires at"]}
-                    dValue={
-                      <DateTimeView
-                        translation={commonTranslation}
-                        dateTime={expires_at}
-                      />
-                    }
+                    dKey={t((t) => t.pages.invitation["Expires at"])}
+                    dValue={<DateTimeView dateTime={expires_at} />}
                   />
                 )}
 
                 {invitation.max_uses && (
                   <UsesStat
                     language={language}
-                    translation={translation}
                     id={id}
                     max_uses={invitation.max_uses}
                     // biome-ignore lint/style/noNonNullAssertion: just correlated values things
@@ -152,23 +137,13 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
                 )}
 
                 <DescriptionSection
-                  dKey={translation["Created at"]}
-                  dValue={
-                    <DateTimeView
-                      translation={commonTranslation}
-                      dateTime={created_at}
-                    />
-                  }
+                  dKey={t((t) => t.pages.invitation["Created at"])}
+                  dValue={<DateTimeView dateTime={created_at} />}
                 />
 
                 <DescriptionSection
-                  dKey={translation["Latest updated at"]}
-                  dValue={
-                    <DateTimeView
-                      translation={commonTranslation}
-                      dateTime={updated_at}
-                    />
-                  }
+                  dKey={t((t) => t.pages.invitation["Latest updated at"])}
+                  dValue={<DateTimeView dateTime={updated_at} />}
                 />
               </DescriptionList>
             </OverviewBody>
@@ -180,19 +155,15 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
 }
 
 interface IUsesStatProps
-  extends Pick<IProps, "language" | "translation">,
+  extends Pick<IProps, "language">,
     Pick<Required<IInvitationDB>, "id" | "max_uses" | "current_uses"> {}
 
-function UsesStat({
-  language,
-  translation,
-  id,
-  max_uses,
-  current_uses,
-}: IUsesStatProps) {
+function UsesStat({ language, id, max_uses, current_uses }: IUsesStatProps) {
+  const { t } = useTranslation();
+
   return (
     <DescriptionSection
-      dKey={translation["Uses"]}
+      dKey={t((t) => t.pages.invitation["Uses"])}
       dValue={
         <LinkInternal
           href={href(
@@ -203,7 +174,7 @@ function UsesStat({
             },
           )}
         >
-          {current_uses} {translation["out of"]} {max_uses}
+          {current_uses} {t((t) => t.pages.invitation["out of"])} {max_uses}
         </LinkInternal>
       }
       isHorizontal
@@ -211,29 +182,25 @@ function UsesStat({
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
+export const loader = createLocalizedLoader<IProps, Route.LoaderArgs>(
+  async ({ request, params }, localizedProps) => {
+    await authenticateAdmin(request);
 
-  const { id } = params;
+    const { id } = params;
 
-  const language = getLanguage(params);
-  const { pages, common: commonTranslation } = await getTranslation(language);
-  const translation = pages["invitation"];
+    const invitation = await runTransaction(async (transaction) => {
+      const [invitation] = await selectInvitationEntities(transaction, [id]);
 
-  const invitation = await runTransaction(async (transaction) => {
-    const [invitation] = await selectInvitationEntities(transaction, [id]);
+      return invitation;
+    });
 
-    return invitation;
-  });
+    const props: IProps = {
+      ...localizedProps,
+      invitation,
+    };
 
-  const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-    invitation,
-  };
-
-  return props;
-}
+    return props;
+  },
+);
 
 export default InvitationOverviewPage;

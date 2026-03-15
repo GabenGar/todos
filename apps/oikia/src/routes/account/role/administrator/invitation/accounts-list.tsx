@@ -21,56 +21,38 @@ import {
   selectInvitedAccountIDs,
 } from "#database/queries/invitations";
 import { AccountPreview } from "#entities/account";
-import type {
-  ICommonTranslationPageProps,
-  IEntityTranslationProps,
-} from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
 import { NotFoundError } from "#server/lib/errors";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { authenticateAdmin, createLocalizedLoader } from "#server/lib/router";
 //
 
 import type { Route } from "./+types/accounts-list";
 
-interface IProps
-  extends IEntityTranslationProps<"account">,
-    ICommonTranslationPageProps<"invited-accounts"> {
+interface IProps extends ILocalizedProps {
   invitation: IInvitationDB;
   accounts: IPaginatedCollection<IAccountDBPreview>;
 }
 
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation, invitation, accounts } = loaderData;
-  const { current_page, total_pages } = accounts.pagination;
+function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
+  const { t } = useTranslation();
+  const { language, invitation, accounts } = loaderData;
   const parsedTitle = parseTitle(invitation.title, invitation.id);
+  const invitationTitle = parseTitle(invitation.title, invitation.id);
+  const heading = t((t) => t.pages["invited-accounts"]["Invited Accounts"]);
   const title = createMetaTitle(
-    `${translation["Invited accounts for invitation"]} ${parsedTitle} ${translation["page"]} ${current_page} ${translation["out of"]} ${total_pages}`,
+    `${t((t) => t.pages["invited-accounts"]["Invited accounts for invitation"])} ${parsedTitle} ${t((t) => t.pages["invited-accounts"]["page"])} ${accounts.pagination.current_page} ${t((t) => t.pages["invited-accounts"]["out of"])} ${accounts.pagination.total_pages}`,
   );
 
-  return [{ title }];
-}
-
-function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
-  const {
-    language,
-    commonTranslation,
-    translation,
-    entityTranslation,
-    invitation,
-    accounts,
-  } = loaderData;
-  const invitationTitle = parseTitle(invitation.title, invitation.id);
-  const heading = translation["Invited Accounts"];
-
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <OverviewHeader>
             <DescriptionList>
               <DescriptionSection
-                dKey={translation["Invitation"]}
+                dKey={t((t) => t.pages["invited-accounts"]["Invitation"])}
                 dValue={
                   <LinkInternal
                     href={href(
@@ -92,7 +74,9 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
 
       <PreviewList
         LinkButtonComponent={LinkButton}
-        noItemsElement={translation["No accounts found."]}
+        noItemsElement={t(
+          (t) => t.pages["invited-accounts"]["No accounts found."],
+        )}
         pagination={accounts.pagination}
         buildURL={(page) =>
           href(
@@ -109,8 +93,6 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
           <AccountPreview
             key={account.id}
             language={language}
-            commonTranslation={commonTranslation}
-            entityTranslation={entityTranslation}
             headingLevel={2}
             account={account}
           />
@@ -120,18 +102,13 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
+export const loader = createLocalizedLoader(async function loader(
+  { request, params }: Route.LoaderArgs,
+  localizedProps,
+) {
   await authenticateAdmin(request);
 
   const { id, page } = params;
-
-  const language = getLanguage(params);
-  const {
-    pages,
-    entities,
-    common: commonTranslation,
-  } = await getTranslation(language);
-  const translation = pages["invited-accounts"];
 
   parsePositiveInteger(params.id);
   parsePositiveInteger(params.page);
@@ -162,15 +139,12 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   });
 
   const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-    entityTranslation: { account: entities.account },
+    ...localizedProps,
     invitation: result.invitation,
     accounts: result.accounts,
   };
 
   return props;
-}
+});
 
 export default InvitedAccountsListPage;

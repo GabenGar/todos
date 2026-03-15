@@ -1,0 +1,7 @@
+{
+  "site_title": "Oikia Dev",
+  "supported_languages": ["en", "ru"],
+  "default_language": "en",
+  "source_code_url": "https://github.com/GabenGar/todos/tree/master/apps/oikia",
+  "is_translation_debug_enabled": false
+}

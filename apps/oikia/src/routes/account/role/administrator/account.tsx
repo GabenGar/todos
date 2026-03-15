@@ -12,37 +12,30 @@ import {
   type IAccountDB,
   selectAccountEntities,
 } from "#database/queries/accounts";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { useTranslation } from "#hooks";
+import type { ILocalizedProps } from "#lib/pages";
 import { createMetaTitle } from "#lib/router";
-import { authenticateAdmin, getLanguage } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
+import { authenticateAdmin, createLocalizedLoader } from "#server/lib/router";
 //
 
 import type { Route } from "./+types/account";
 
-interface IProps extends ICommonTranslationPageProps<"account-overview"> {
+interface IProps extends ILocalizedProps {
   account: IAccountDB;
 }
 
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation, account } = loaderData;
-  const { id, name } = account;
-  const parsedName = parseName(name, id);
-  const title = createMetaTitle(
-    `${translation["Account"]} ${parsedName} ${translation["overview"]}`,
-  );
-
-  return [{ title }];
-}
-
 function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation, account } = loaderData;
+  const { t } = useTranslation();
+  const { language, account } = loaderData;
   const { id, role, name, created_at, invited_through } = account;
   const parsedName = parseName(name);
-  const heading = translation["Account Overview"];
+  const title = createMetaTitle(
+    `${t((t) => t.pages["account-overview"]["Account"])} ${parsedName} ${t((t) => t.pages["account-overview"]["overview"])}`,
+  );
+  const heading = t((t) => t.pages["account-overview"]["Account Overview"]);
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {(headingLevel) => (
           <>
@@ -54,24 +47,21 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={translation["Role"]}
+                  dKey={t((t) => t.pages["account-overview"]["Role"])}
                   dValue={role}
                   isHorizontal
                 />
 
                 <DescriptionSection
-                  dKey={translation["Join date"]}
-                  dValue={
-                    <DateTimeView
-                      translation={commonTranslation}
-                      dateTime={created_at}
-                    />
-                  }
+                  dKey={t((t) => t.pages["account-overview"]["Join date"])}
+                  dValue={<DateTimeView dateTime={created_at} />}
                 />
 
                 {invited_through && (
                   <DescriptionSection
-                    dKey={translation["Invited through"]}
+                    dKey={t(
+                      (t) => t.pages["account-overview"]["Invited through"],
+                    )}
                     dValue={
                       <LinkInternal
                         href={href(
@@ -93,28 +83,25 @@ function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
+export const loader = createLocalizedLoader(
+  async ({ request, params }: Route.LoaderArgs, localizedProps) => {
+    await authenticateAdmin(request);
 
-  const { id } = params;
-  const language = getLanguage(params);
-  const { pages, common: commonTranslation } = await getTranslation(language);
-  const translation = pages["account-overview"];
+    const { id } = params;
 
-  const account = await runTransaction(async (transaction) => {
-    const [account] = await selectAccountEntities(transaction, [id]);
+    const account = await runTransaction(async (transaction) => {
+      const [account] = await selectAccountEntities(transaction, [id]);
 
-    return account;
-  });
+      return account;
+    });
 
-  const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-    account,
-  };
+    const props: IProps = {
+      ...localizedProps,
+      account,
+    };
 
-  return props;
-}
+    return props;
+  },
+);
 
 export default InvitationOverviewPage;

@@ -10,54 +10,46 @@ import { Form } from "#components/forms";
 import { LinkInternal } from "#components/link";
 import { runTransaction } from "#database";
 import type { IAccountLogin } from "#entities/account";
-import type { ICommonTranslationPageProps } from "#lib/internationalization";
+import { useTranslation } from "#hooks";
 import { createMetaTitle } from "#lib/router";
 import { loginAccount } from "#server/entities/accounts";
 import { createSuccessfullAPIResponse } from "#server/lib/api";
 import { ClientInputError } from "#server/lib/errors";
 import {
+  createLocalizedLoader,
   createServerAction,
-  getLanguage,
   parseMethod,
 } from "#server/lib/router";
 import { commitSession, getSession } from "#server/lib/sessions";
-import { getTranslation } from "#server/localization";
 //
 
 import type { Route } from "./+types/login";
-
-interface IProps extends ICommonTranslationPageProps<"login"> {}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-  const { translation } = loaderData;
-  const title = createMetaTitle(translation["Login"]);
-
-  return [{ title }];
-}
 
 export function headers({ actionHeaders, loaderHeaders }: Route.HeadersArgs) {
   return loaderHeaders ? loaderHeaders : actionHeaders;
 }
 
 function LoginPage({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation, translation } = loaderData;
-  const heading = translation["Login"];
+  const { t } = useTranslation();
+  const { language } = loaderData;
+  const title = createMetaTitle(t((t) => t.pages.login["Login"]));
+  const heading = t((t) => t.pages.login["Login"]);
   const formID = "login";
 
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <>
             <OverviewHeader>
               <p>
-                {translation["Not registered?"]}{" "}
+                {t((t) => t.pages.login["Not registered?"])}{" "}
                 <LinkInternal
                   href={href("/:language/authentication/registration", {
                     language,
                   })}
                 >
-                  {translation["Register"]}
+                  {t((t) => t.pages.login["Register"])}
                 </LinkInternal>
                 .
               </p>
@@ -65,23 +57,23 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
 
             <OverviewBody>
               <Form<Route.ComponentProps["actionData"]>
-                commonTranslation={commonTranslation}
                 id={formID}
                 method="POST"
-                submitButton={() => translation["Login"]}
+                submitButton={() => t((t) => t.pages.login["Login"])}
                 resetButton={null}
                 successElement={() => (
                   <>
                     <p>
-                      {
-                        translation[
-                          "You have successfully logged in, now you can visit"
-                        ]
-                      }
+                      {t(
+                        (t) =>
+                          t.pages.login[
+                            "You have successfully logged in, now you can visit"
+                          ],
+                      )}
                       <LinkInternal
                         href={href("/:language/account", { language })}
                       >
-                        {translation["account page"]}
+                        {t((t) => t.pages.login["account page"])}
                       </LinkInternal>
                       .
                     </p>
@@ -98,7 +90,7 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
                       maxLength={20}
                       required
                     >
-                      {translation.form["Login"]}
+                      {t((t) => t.pages.login.form["Login"])}
                     </InputSectionText>
 
                     <InputSectionPassword
@@ -111,7 +103,7 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
                       maxLength={49}
                       required
                     >
-                      {translation.form["Password"]}
+                      {t((t) => t.pages.login.form["Password"])}
                     </InputSectionPassword>
                   </>
                 )}
@@ -124,27 +116,11 @@ function LoginPage({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const language = getLanguage(params);
-  const { common: commonTranslation, pages } = await getTranslation(language);
-  const translation = pages.login;
-
-  const props: IProps = {
-    language,
-    commonTranslation,
-    translation,
-  };
-
-  return props;
-}
+export const loader = createLocalizedLoader();
 
 export const action = createServerAction(
   async ({ request, params }: Route.ActionArgs) => {
-    const language = getLanguage(params);
-    const { common: commonTranslation, pages } = await getTranslation(language);
-    const translation = pages.login;
-
-    parseMethod(request, "POST", commonTranslation);
+    parseMethod(request, "POST");
 
     const formData = await request.formData();
 
@@ -153,11 +129,11 @@ export const action = createServerAction(
       const value = parseStringValueFromFormData(formData, "login");
 
       if (!value) {
-        throw new ClientInputError(translation["Login is required."]);
+        throw new ClientInputError("Login is required.");
       }
 
       if (value.length < 5 && value.length > 20) {
-        throw new ClientInputError(translation["Invalid login length."]);
+        throw new ClientInputError("Invalid login length.");
       }
 
       login = value;
@@ -168,11 +144,11 @@ export const action = createServerAction(
       const value = parseStringValueFromFormData(formData, "password");
 
       if (!value) {
-        throw new ClientInputError(translation["Password is required."]);
+        throw new ClientInputError("Password is required.");
       }
 
       if (value.length < 8 && value.length > 49) {
-        throw new ClientInputError(translation["Invalid password length."]);
+        throw new ClientInputError("Invalid password length.");
       }
 
       password = value;

@@ -3,9 +3,15 @@
   "root": false,
   "extends": ["@repo/biome-config/base", "@repo/biome-config/react"],
   "files": {
-    "includes": ["**", "!!**/build", "!**/.react-router"]
+    "includes": [
+      "**",
+      "!!**/build",
+      "!**/.react-router",
+      "!**/src/.vite-env.d.ts"
+    ]
   },
   "linter": {
+    "includes": ["**", "!**/src/.vite-env.d.ts"],
     "rules": {
       "correctness": {
         // server endpoints feature a lot of `req`/`res` arguments

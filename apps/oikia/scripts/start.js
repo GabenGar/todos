@@ -20,9 +20,9 @@ const config = await parseConfig();
 // within react router code
 const configSymbol = Symbol.for("server-config");
 // @ts-expect-error
-globalThis[configSymbol] = config;
+globalThis[configSymbol] = config.server;
 
-const PORT = config.server.port;
+const PORT = config.server.server.port;
 
 const app = express();
 
