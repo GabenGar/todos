@@ -3,12 +3,20 @@ import { defineConfig, type UserConfig } from "vite";
 import { parseConfig } from "./scripts/lib/parse-configuration.mjs";
 
 const config = defineConfig(async ({ mode, isSsrBuild }) => {
-  const publicConfig = (await parseConfig()).public
+  const publicConfig = (await parseConfig(mode === "development")).public;
+
+  process.env.VITE_SITE_TITLE = publicConfig.site_title;
+  process.env.VITE_SUPPORTED_LANGUAGES = JSON.stringify(
+    publicConfig.supported_languages,
+  );
+  process.env.VITE_DEFAULT_LANGUAGE = publicConfig.default_language;
+  process.env.VITE_SOURCE_CODE_URL = publicConfig.source_code_url;
 
   if (publicConfig.is_translation_debug_enabled) {
-    process.env.VITE_IS_TRANSLATION_DEBUG_ENABLED = JSON.stringify(publicConfig.is_translation_debug_enabled)
+    process.env.VITE_IS_TRANSLATION_DEBUG_ENABLED = JSON.stringify(
+      publicConfig.is_translation_debug_enabled,
+    );
   }
-
 
   const finalConfig: UserConfig = {
     plugins: [reactRouter()],

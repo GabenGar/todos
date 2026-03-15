@@ -1,17 +1,16 @@
-export const LOCALES = ["en", "ru"] as const;
+import { SUPPORTED_LANGUAGES } from "#environment";
+
 export const BASE_NAMESPACES = ["translation", "@repo/ui"] as const;
-export const DEFAULT_LOCALE = LOCALES[0];
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;
-export const NAMESPACES = BASE_NAMESPACES ;
-export type ILocale = (typeof LOCALES)[number];
+export const NAMESPACES = BASE_NAMESPACES;
+export type ILocale = (typeof SUPPORTED_LANGUAGES)[number];
 export type IBaseNamespace = (typeof BASE_NAMESPACES)[number];
 export type INameSpace = IBaseNamespace;
-
 export type IDefaultNamespace = Exclude<IBaseNamespace, "@repo/ui">;
 export type IActionableNameSpace = IDefaultNamespace;
 
 export function isLocale(input: unknown): input is ILocale {
-  return LOCALES.includes(input as ILocale);
+  return SUPPORTED_LANGUAGES.includes(input as ILocale);
 }
 
 export function validateLocale(input: unknown): asserts input is ILocale {

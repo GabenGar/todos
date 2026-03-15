@@ -18,3 +18,13 @@ export const IS_BROWSER =
   (typeof globalThis["document"] === "undefined" &&
     // @ts-ignore-error typescript types for worker do not like `document` access for checking
     typeof globalThis["importScripts"] !== "undefined");
+
+export const SOURCE_CODE_URL = import.meta.env.VITE_SOURCE_CODE_URL;
+
+export const SUPPORTED_LANGUAGES = JSON.parse(
+  import.meta.env.VITE_SUPPORTED_LANGUAGES,
+) as ("en" | "ru")[];
+export const DEFAULT_LANGUAGE = import.meta.env.VITE_DEFAULT_LANGUAGE as
+  | "en"
+  | "ru";
+export const SITE_TITLE = import.meta.env.VITE_SITE_TITLE;

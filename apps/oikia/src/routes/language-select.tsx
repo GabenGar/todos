@@ -5,32 +5,26 @@ import { Overview, OverviewBody } from "@repo/ui/articles";
 import { List, ListItem } from "@repo/ui/lists";
 import { Page } from "@repo/ui/pages";
 import { LinkButton } from "#components/link";
-import { type ILanguage, LANGUAGES } from "#lib/internationalization";
+import { SITE_TITLE, SUPPORTED_LANGUAGES } from "#environment";
 import { createMetaTitle } from "#lib/router";
+import type { ILocale } from "#translation/lib";
 //
 
 // biome-ignore lint/correctness/noUnusedImports: fuck off biome
 import type { Route } from "./+types/language-select";
 import styles from "./language-select.module.scss";
 
-export function meta(
-  // args: Route.MetaArgs
-) {
+function LanguageSelectPage() {
+  const heading = SITE_TITLE;
   const title = createMetaTitle();
 
-  return [{ title }];
-}
-
-function LanguageSelectPage() {
-  const heading = "Oikia";
-
   return (
-    <Page heading={heading}>
+    <Page heading={heading} title={title}>
       <Overview headingLevel={2}>
         {() => (
           <OverviewBody>
             <List className={styles.list}>
-              {LANGUAGES.map((locale) => (
+              {SUPPORTED_LANGUAGES.map((locale) => (
                 <ListItem key={locale} className={styles.item}>
                   <LocaleLink locale={locale} />
                 </ListItem>
@@ -44,7 +38,7 @@ function LanguageSelectPage() {
 }
 
 interface ILocalLinkProps {
-  locale: ILanguage;
+  locale: ILocale;
 }
 
 function LocaleLink({ locale }: ILocalLinkProps) {

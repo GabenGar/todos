@@ -26,10 +26,8 @@ import {
   authenticateAdmin,
   createLocalizedLoader,
   createServerAction,
-  getLanguage,
   parseMethod,
 } from "#server/lib/router";
-import { getTranslation } from "#server/localization";
 //
 
 import type { Route } from "./+types/invitation";
@@ -142,10 +140,6 @@ export const action = createServerAction(
   async ({ request, params }: Route.LoaderArgs) => {
     const account = await authenticateAdmin(request);
 
-    const language = getLanguage(params);
-    const { pages } = await getTranslation(language);
-    const translation = pages["create-invitation"];
-
     parseMethod(request, "POST");
 
     const formData = (await request.formData()) as IFormData<
@@ -159,7 +153,7 @@ export const action = createServerAction(
 
     if (!expiresAt && !maxUses) {
       throw new ClientInputError(
-        translation["Must have at least expiration date or maximum uses."],
+        "Must have at least expiration date or maximum uses.",
       );
     }
 

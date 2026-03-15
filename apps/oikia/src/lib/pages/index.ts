@@ -6,6 +6,10 @@ export interface ILocalizedProps {
   translation: Resource;
 }
 
+export interface ILanguageProps {
+  language: ILocale;
+}
+
 export interface ILocalizedArgs {
   params: {
     language: string;

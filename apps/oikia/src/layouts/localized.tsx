@@ -5,23 +5,17 @@ import { LinkExternal } from "@repo/ui/links";
 import { List, ListItem } from "@repo/ui/lists";
 import { Loading } from "@repo/ui/loading";
 import { LinkInternal } from "#components/link";
-import { useClient } from "#hooks";
-import {
-  type ICommonTranslationProps,
-  type ILanguageProps,
-  LANGUAGES,
-} from "#lib/internationalization";
-import { getLanguage } from "#server/lib/router";
-import { getCommonTranslation } from "#server/localization";
-import type { Route } from "./+types/localized";
+import { SITE_TITLE, SOURCE_CODE_URL, SUPPORTED_LANGUAGES } from "#environment";
+import { useClient, useTranslation } from "#hooks";
+import { createLocalizedLoader } from "#server/lib/router";
+//
 
-import "@repo/ui/styles/global";
+import type { Route } from "./+types/localized";
 import styles from "./localized.module.scss";
 
-interface IProps extends ILanguageProps, ICommonTranslationProps {}
-
 export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
-  const { language, commonTranslation } = loaderData;
+  const { t } = useTranslation();
+  const { language } = loaderData;
   const location = useLocation();
   const client = useClient();
   const currentURL = `${location.pathname}${location.search}${location.hash}`;
@@ -44,13 +38,13 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
           <List className={styles.list}>
             <ListItem>
               <LinkInternal href={href("/:language", { language })}>
-                Oikia
+                {SITE_TITLE}
               </LinkInternal>
             </ListItem>
 
             <ListItem>
               <LanguageSwitcher
-                locales={LANGUAGES}
+                locales={SUPPORTED_LANGUAGES}
                 currentLocale={language}
                 currentURL={currentURL}
                 getLocalizedURL={getLocalizedURL}
@@ -68,17 +62,15 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
       <footer className={styles.footer}>
         <List className={styles.flist}>
           <ListItem>
-            <LinkExternal
-              href={"https://github.com/GabenGar/todos/tree/master/apps/oikia"}
-            >
-              {commonTranslation["Source Code"]}
+            <LinkExternal href={SOURCE_CODE_URL}>
+              {t((t) => t.common["Source Code"])}
             </LinkExternal>
           </ListItem>
 
           <ListItem>
             <DescriptionList className={styles.client}>
               <DescriptionSection
-                dKey={commonTranslation["Client language"]}
+                dKey={t((t) => t.common["Client language"])}
                 dValue={
                   !client ? (
                     <Loading />
@@ -95,15 +87,6 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const language = getLanguage(params);
-  const commonTranslation = await getCommonTranslation(language);
-  const props: IProps = {
-    language,
-    commonTranslation,
-  };
-
-  return props;
-}
+export const loader = createLocalizedLoader();
 
 export default LocalizedLayout;

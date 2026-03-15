@@ -1,3 +1,6 @@
+import "@repo/ui/styles/global";
+// 
+
 import type { ReactNode } from "react";
 import { useSSR, useTranslation } from "react-i18next";
 import {
@@ -21,11 +24,10 @@ import { Preformatted } from "@repo/ui/formatting";
 import { ClientProvider as BaseClientProvider } from "@repo/ui/hooks";
 import { Page } from "@repo/ui/pages";
 import { LinkInternal } from "#components/link";
-import { IS_BROWSER, IS_DEVELOPMENT } from "#environment";
-import { DEFAULT_LANGUAGE } from "#lib/internationalization";
+import { DEFAULT_LANGUAGE, IS_BROWSER, IS_DEVELOPMENT } from "#environment";
 import type { ILocalizedProps } from "#lib/pages";
-import { getLanguage } from "#server/lib/router";
-import { getTranslation, initClientTranslation } from "#translation/lib";
+import { createLocalizedLoader } from "#server/lib/router";
+import { initClientTranslation } from "#translation/lib";
 //
 
 import type { Route } from "./+types/root";
@@ -126,16 +128,6 @@ export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
   );
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const language = getLanguage(params);
-  const translation = await getTranslation(language);
-
-  const props: ILoaderProps = {
-    language,
-    translation,
-  };
-
-  return props;
-}
+export const loader = createLocalizedLoader();
 
 export default App;

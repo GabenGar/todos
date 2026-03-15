@@ -24,8 +24,13 @@ declare module "react-router" {
   }
 }
 
+let isMigrated = false;
+
 export async function createApp() {
-  await migrateDatabase();
+  if (!isMigrated) {
+    await migrateDatabase();
+    isMigrated = true;
+  }
   await runStrictTransaction(async (transaction) => {
     await handleAdminInvitation(transaction);
   });

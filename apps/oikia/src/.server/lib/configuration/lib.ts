@@ -1,9 +1,9 @@
-import type { IServerConfiguration } from "./types";
+import type { IConfiguration } from "./types";
 
-export function getConfiguration(): IServerConfiguration {
+export function getConfiguration(): IConfiguration {
   const symbol = Symbol.for("server-config");
   // @ts-expect-error just global namespace juggling
-  const config: IServerConfiguration = globalThis[symbol];
+  const config: IConfiguration = globalThis[symbol];
 
   return config;
 }

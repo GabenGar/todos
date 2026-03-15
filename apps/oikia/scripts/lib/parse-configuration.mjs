@@ -11,6 +11,10 @@ import { lint, parser } from "@exodus/schemasafe";
 
 /**
  * @typedef IPublicConfiguration
+ * @property {string} site_title 
+ * @property {string} source_code_url
+ * @property {string[]} supported_languages
+ * @property {string} default_language
  * @property {boolean} [is_translation_debug_enabled]
  */
 
@@ -81,7 +85,7 @@ export async function parseConfig(isDevelopment) {
 
   if (publicSchemaErrors.length !== 0) {
     throw new AggregateError(
-      schemaErrors,
+      publicSchemaErrors,
       "Failed to validate public configuration schema.",
     );
   }

@@ -1,14 +1,13 @@
 import i18next, { type InitOptions, type Resource } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
-import { IS_TRANSLATION_DEBUG_ENABLED } from "#environment";
-import { fetchTranslation } from "./fetch-translation";
 import {
-  DEFAULT_LOCALE,
-  DEFAULT_NAMESPACES,
-  type ILocale,
-  LOCALES,
-} from "./types";
+  DEFAULT_LANGUAGE,
+  IS_TRANSLATION_DEBUG_ENABLED,
+  SUPPORTED_LANGUAGES,
+} from "#environment";
+import { fetchTranslation } from "./fetch-translation";
+import { DEFAULT_NAMESPACES, type ILocale } from "./types";
 
 i18next
   .use(resourcesToBackend(fetchTranslation))
@@ -18,10 +17,10 @@ i18next
   );
 
 const options = {
-  supportedLngs: LOCALES,
+  supportedLngs: SUPPORTED_LANGUAGES,
   load: "currentOnly",
   ns: DEFAULT_NAMESPACES,
-  fallbackLng: DEFAULT_LOCALE,
+  fallbackLng: DEFAULT_LANGUAGE,
   interpolation: {
     // react already safes from xss =>
     // https://www.i18next.com/translation-function/interpolation#unescape
@@ -35,9 +34,7 @@ const options = {
   returnNull: false,
 } satisfies InitOptions;
 
-export async function getTranslation(
-  language: ILocale,
-): Promise<Resource> {
+export async function getTranslation(language: ILocale): Promise<Resource> {
   await initServerTranslation();
 
   await i18next.changeLanguage(language);
@@ -71,4 +68,8 @@ export function initClientTranslation(locale: ILocale, translation: Resource) {
 
     i18next.changeLanguage(locale);
   }
+}
+
+export function isSupportedLanguage(input?: unknown): input is ILocale {
+  return !input ? false : SUPPORTED_LANGUAGES.includes(input as ILocale);
 }
