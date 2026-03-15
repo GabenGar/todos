@@ -13,7 +13,7 @@ import {
 import { LinkInternal } from "#components/link";
 import type { IAccountDBPreview } from "#database/queries/accounts";
 import { useTranslation } from "#hooks";
-import type { ILanguageProps } from "#lib/internationalization";
+import type { ILanguageProps } from "#lib/pages";
 
 interface IProps extends ILanguageProps, IPreviewProps {
   account: IAccountDBPreview;

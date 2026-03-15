@@ -22,5 +22,5 @@ export interface IServerConfiguration {
 }
 
 export interface IConfiguration {
-  server: IServerConfiguration
+  server: IServerConfiguration;
 }

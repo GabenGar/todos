@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-// 
+//
 
 import styles from "./language-select.module.scss";
 

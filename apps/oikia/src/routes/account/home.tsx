@@ -61,11 +61,7 @@ function AccountPage({ loaderData }: Route.ComponentProps) {
 
                 <DescriptionSection
                   dKey={t((t) => t.pages["account-home"]["Joined"])}
-                  dValue={
-                    <DateTimeView
-                      dateTime={created_at}
-                    />
-                  }
+                  dValue={<DateTimeView dateTime={created_at} />}
                 />
               </DescriptionList>
             </OverviewBody>

@@ -11,7 +11,7 @@ import { lint, parser } from "@exodus/schemasafe";
 
 /**
  * @typedef IPublicConfiguration
- * @property {string} site_title 
+ * @property {string} site_title
  * @property {string} source_code_url
  * @property {string[]} supported_languages
  * @property {string} default_language
@@ -46,7 +46,10 @@ export async function parseConfig(isDevelopment) {
   const schemaBasePath = path.join(cwd(), "schema");
   const configBasePath = path.join(cwd(), "config");
   const configSchemaPath = path.join(schemaBasePath, "server.schema.json");
-  const publicConfigSchemaPath = path.join(schemaBasePath, "public.schema.json");
+  const publicConfigSchemaPath = path.join(
+    schemaBasePath,
+    "public.schema.json",
+  );
   const configPath = path.join(
     configBasePath,
     isDevelopment ? "server.development.json" : "server.json",
@@ -94,7 +97,9 @@ export async function parseConfig(isDevelopment) {
   const parsePublicConfig = parser(publicSchema, { includeErrors: true });
 
   const configContent = await fs.readFile(configPath, { encoding: "utf-8" });
-  const publicConfigContent = await fs.readFile(publicConfigPath, { encoding: "utf-8" });
+  const publicConfigContent = await fs.readFile(publicConfigPath, {
+    encoding: "utf-8",
+  });
 
   const result = parseConfig(configContent);
 
@@ -122,7 +127,6 @@ export async function parseConfig(isDevelopment) {
    */
   // @ts-expect-error just generic shit
   const publicConfig = publicResult.value;
-  
 
   return { server: serverConfig, public: publicConfig };
 }

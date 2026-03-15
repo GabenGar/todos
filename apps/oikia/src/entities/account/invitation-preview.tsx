@@ -17,7 +17,7 @@ import {
 import { LinkInternal } from "#components/link";
 import type { IInvitationDB } from "#database/queries/invitations";
 import { useTranslation } from "#hooks";
-import type { ILanguageProps } from "#lib/internationalization";
+import type { ILanguageProps } from "#lib/pages";
 //
 
 import styles from "./invitation-preview.module.scss";

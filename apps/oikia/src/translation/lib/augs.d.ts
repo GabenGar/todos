@@ -7,7 +7,8 @@ declare module "i18next" {
     returnNull: false;
     defaultNS: IActionableNameSpace;
     resources: {
-      // "@repo/ui": any;
+      // required for typecheck to pass
+      "@repo/ui": any;
       translation: typeof translation;
     };
     enableSelector: "optimize";

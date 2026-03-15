@@ -5,7 +5,7 @@ import { runTransaction } from "#database";
 import { selectAccountCount } from "#database/queries/accounts";
 import { NotFoundError } from "#server/lib/errors";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
-// 
+//
 
 import type { Route } from "./+types/accounts";
 

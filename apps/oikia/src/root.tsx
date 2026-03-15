@@ -1,5 +1,5 @@
 import "@repo/ui/styles/global";
-// 
+//
 
 import type { ReactNode } from "react";
 import { useSSR, useTranslation } from "react-i18next";
