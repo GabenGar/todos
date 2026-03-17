@@ -35,6 +35,7 @@
     "check": "turbo run check",
     "dev": "turbo run dev",
     "dev-pages": "turbo run frontend#dev",
+    "dev-extension": "turbo run \"link-overwatch\"#dev",
     "dev-oikia": "turbo run oikia#dev",
     "prep": "npm install && npm run format && npm run build",
     "codegen": "turbo run codegen",
