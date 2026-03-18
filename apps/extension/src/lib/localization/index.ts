@@ -1,1 +1,1 @@
-export { getLocalizedMessage } from "./lib";
+export { getCurrentLocale, getLocalizedMessage } from "./lib";

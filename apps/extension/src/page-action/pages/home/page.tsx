@@ -20,7 +20,7 @@ export function HomePage() {
               {!url || !(url instanceof URL) ? (
                 getLocalizedMessage("No URL is selected.")
               ) : (
-                <URLViewer t={getLocalizedMessage} headingLevel={2} url={url} />
+                <URLViewer headingLevel={2} url={url} />
               )}
             </OverviewBody>
           </>

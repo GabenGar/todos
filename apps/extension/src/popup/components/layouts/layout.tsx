@@ -29,7 +29,6 @@ export function Layout() {
           </li>
         </ul>
       </footer>
-
       <ScrollRestoration />
     </ClientProvider>
   );
