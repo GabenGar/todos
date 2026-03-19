@@ -18,6 +18,10 @@ const config = {
       "http://localhost:8002",
       "http://localhost:9001",
     ],
+    pref: [
+      // do not show the loicense popup
+      "termsofuse.bypassNotification=true"
+    ]
   },
   lint: {
     output: "json",
