@@ -16,7 +16,7 @@ export function HomePage() {
       <Overview headingLevel={2}>
         {() => (
           <>
-            <OverviewHeader>
+            <OverviewHeader isFilled>
               <Form
                 id={formID}
                 method="POST"

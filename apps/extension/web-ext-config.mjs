@@ -20,7 +20,10 @@ const config = {
     ],
     pref: [
       // do not show the loicense popup
-      "termsofuse.bypassNotification=true"
+      "termsofuse.bypassNotification=true",
+      // normalize font sizes
+      "font.minimum-size.x-cyrillic=18",
+      "font.minimum-size.x-western=18"
     ]
   },
   lint: {
