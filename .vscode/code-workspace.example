@@ -16,7 +16,11 @@
       "name": "@repo/ui",
       "path": "packages/ui"
     },
-     {
+    {
+      "name": "@repo/react-router",
+      "path": "packages/react-router"
+    },
+    {
       "name": "@repo/nodejs",
       "path": "packages/nodejs"
     },
@@ -58,8 +62,8 @@
     },
     "editor.wordWrap": "bounded",
     "editor.wordWrapColumn": 80,
-    "js/ts.referencesCodeLens.enabled":true,
-    "js/ts.preferences.preferTypeOnlyAutoImports":true,
+    "js/ts.referencesCodeLens.enabled": true,
+    "js/ts.preferences.preferTypeOnlyAutoImports": true,
     "js/ts.preferences.jsxAttributeCompletionStyle": "braces",
     "json.schemaDownload.trustedDomains": {
       "https://v2-8-20.turborepo.dev/schema.json": true
