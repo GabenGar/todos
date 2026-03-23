@@ -89,7 +89,7 @@ npm run dev
    git remote set-url --push origin git@github.com:<username>/todos.git
    ```
 
-## Turborepo
+### Turborepo
 Turborepo claims that [the invocation from global install will invoke local install if applicable](https://turbo.build/repo/docs/installing#install-per-repository), so it can be installed globally:
 
 ```sh

@@ -62,7 +62,7 @@
     "js/ts.preferences.preferTypeOnlyAutoImports":true,
     "js/ts.preferences.jsxAttributeCompletionStyle": "braces",
     "json.schemaDownload.trustedDomains": {
-      "https://v2-8-10.turborepo.dev/schema.json": true
+      "https://v2-8-20.turborepo.dev/schema.json": true
     }
   },
   "extensions": {
