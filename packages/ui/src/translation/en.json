@@ -1,4 +1,10 @@
 {
+  "form": {
+    "state": {
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    }
+  },
   "url": {
     "URL": "URL",
     "Decoded URL": "Decoded URL",
