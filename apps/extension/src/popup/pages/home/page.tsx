@@ -1,9 +1,9 @@
 import { type ActionFunctionArgs, useActionData } from "react-router";
+import { FormClient } from "@repo/react-router/forms";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { URLViewer } from "@repo/ui/url";
 import { getLocalizedMessage } from "#lib/localization";
-import { Form } from "#popup/components/forms";
 import { InputSectionText } from "#popup/components/forms/section";
 
 export function HomePage() {
@@ -17,7 +17,7 @@ export function HomePage() {
         {() => (
           <>
             <OverviewHeader isFilled>
-              <Form
+              <FormClient
                 id={formID}
                 method="POST"
                 submitButton={() => getLocalizedMessage("Analyze")}
@@ -33,8 +33,9 @@ export function HomePage() {
                     </InputSectionText>
                   </>
                 )}
-              </Form>
+              </FormClient>
             </OverviewHeader>
+
             <OverviewBody>
               {!url || !(url instanceof URL) ? (
                 getLocalizedMessage("No URL is selected.")

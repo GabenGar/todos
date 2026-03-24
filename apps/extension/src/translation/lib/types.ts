@@ -1,12 +1,15 @@
-export const SUPPORTED_LANGUAGES = ["en", "ru"] as const
+export const SUPPORTED_LANGUAGES = ["en", "ru"] as const;
 
-export const BASE_NAMESPACES = ["@repo/ui"] as const;
+export const BASE_NAMESPACES = ["@repo/ui", "@repo/react-router"] as const;
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;
 export const NAMESPACES = BASE_NAMESPACES;
 export type ILocale = (typeof SUPPORTED_LANGUAGES)[number];
 export type IBaseNamespace = (typeof BASE_NAMESPACES)[number];
 export type INameSpace = IBaseNamespace;
-export type IDefaultNamespace = Exclude<IBaseNamespace, "@repo/ui">;
+export type IDefaultNamespace = Exclude<
+  IBaseNamespace,
+  "@repo/ui" | "@repo/react-router"
+>;
 export type IActionableNameSpace = IDefaultNamespace;
 
 export function isLocale(input: unknown): input is ILocale {

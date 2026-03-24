@@ -8,6 +8,7 @@ declare module "i18next" {
     resources: {
       // required for typecheck to pass
       "@repo/ui": any;
+      "@repo/react-router": any;
     };
     enableSelector: "optimize";
   }

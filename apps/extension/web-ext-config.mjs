@@ -23,8 +23,8 @@ const config = {
       "termsofuse.bypassNotification=true",
       // normalize font sizes
       "font.minimum-size.x-cyrillic=18",
-      "font.minimum-size.x-western=18"
-    ]
+      "font.minimum-size.x-western=18",
+    ],
   },
   lint: {
     output: "json",

@@ -9,7 +9,7 @@ import type { IFormProps } from "./types";
 
 import styles from "./form.module.scss";
 
-export const baseFormStyles = styles
+export const baseFormStyles = styles;
 
 /**
  * Basic wrapper over `<form>` element.
@@ -28,7 +28,11 @@ function Component<InputName extends string>({
 }: IFormProps<InputName>) {
   const { t } = useTranslation();
   const formID = `${id}-form`;
-  const resolvedClassname = clsx(styles.form, className, isNested && styles.nested);
+  const resolvedClassname = clsx(
+    styles.form,
+    className,
+    isNested && styles.nested,
+  );
 
   return (
     <div id={id} className={resolvedClassname}>

@@ -3,9 +3,37 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "echo 'Add dev script here'",
-    "build": "echo 'Add build script here'",
-    "test": "echo 'Add test script here'",
-    "lint": "echo 'Add lint script here'"
+    "lint": "biome lint",
+    "format": "biome format --write",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit"
+  },
+  "exports": {
+    "./translation/lib": "./src/translation/lib/index.ts",
+    "./translation/*": "./src/translation/language/*",
+    "./*": "./src/*/index.ts"
+  },
+  "imports": {
+    "#translation/lib": "./src/translation/lib/index.ts",
+    "#translation/*": "./src/translation/language/*",
+    "#*": "./src/*/index.ts"
+  },
+  "dependencies": {
+    "@repo/ui": "*",
+    "clsx": "^2.1.1",
+    "i18next": "25.8.18",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-i18next": "16.5.8",
+    "react-router": "7.13.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.4",
+    "@react-router/dev": "7.13.2",
+    "@repo/biome-config": "*",
+    "@types/node": "^22.14.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "sass": "^1.97.3",
+    "typescript": "^5.9.3"
   }
 }

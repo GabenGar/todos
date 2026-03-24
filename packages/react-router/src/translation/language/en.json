@@ -1,0 +1,10 @@
+{
+  "form": {
+    "state": {
+      "initializing": "Initializing...",
+      "submitting": "Submitting...",
+      "ready": "Ready to submit."
+    },
+    "submit": "Submit"
+  }
+}
