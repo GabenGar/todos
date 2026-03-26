@@ -7,6 +7,7 @@
   },
   "url": {
     "URL": "Ссылка",
+    "encoded": "Закодированная ссылка",
     "Decoded URL": "Раскодированная ссылка",
     "Parse": "Анализировать",
     "Parsing...": "Анализируем...",
@@ -29,7 +30,15 @@
     "Segments": "Сегменты",
     "Search": "Поиск",
     "Search parameters": "Поисковые параметры",
-    "Hash": "Идентификатор фрагмента"
+    "hash": {
+      "hash": "Хэш",
+      "type": "Тип",
+      "fragment": "фрагмент",
+      "temporal-dimension-media-fragment": "фрагмент временных рамок медиа",
+      "spatial-dimension-media-fragment": "фрагмент пространственных рамок медиа",
+      "text-fragment": "текстовой фрагмент",
+      "value": "Значение"
+    }
   },
   "button": {
     "copy": "Копировать",

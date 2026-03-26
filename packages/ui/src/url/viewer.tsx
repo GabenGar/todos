@@ -3,6 +3,7 @@ import { Details } from "#details";
 import { Preformatted } from "#formatting";
 import { Heading, type IHeadingLevel } from "#headings";
 import { useTranslation } from "#hooks";
+import { Hash } from "./hash";
 import { Origin } from "./origin";
 import {
   type ITransformedSearchParams,
@@ -21,16 +22,17 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
   const transformedSearchParams = transformSearchparams(searchParams);
   const transformedURL = transformURL(url);
   const decodedURL = decodeURIComponent(String(transformedURL));
+  const isEncodedURL = href !== decodedURL
 
   return (
     <>
       <Heading level={headingLevel}>{t((t) => t.url["URLs"])}</Heading>
       <DescriptionList>
         <DescriptionSection
-          dKey={t((t) => t.url["Full URL"])}
+          dKey={t((t) => isEncodedURL ? t.url.encoded : t.url["Full URL"])}
           dValue={<Preformatted>{href}</Preformatted>}
         />
-        {href !== decodedURL && (
+        {isEncodedURL && (
           <DescriptionSection
             dKey={t((t) => t.url["Decoded URL"])}
             dValue={<Preformatted>{decodedURL}</Preformatted>}
@@ -83,17 +85,15 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
       )}
 
       {hash.length === 0 ? undefined : (
-        <>
-          <Heading level={headingLevel}>
-            {t((t) => t.url["Fragment Details"])}
-          </Heading>
-          <DescriptionList>
-            <DescriptionSection
-              dKey={t((t) => t.url["Hash"])}
-              dValue={<Preformatted>{hash}</Preformatted>}
-            />
-          </DescriptionList>
-        </>
+        <Details
+          summary={
+            <Heading level={headingLevel}>
+              {t((t) => t.url["Fragment Details"])}
+            </Heading>
+          }
+        >
+          <Hash hash={hash} />
+        </Details>
       )}
     </>
   );

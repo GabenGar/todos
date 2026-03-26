@@ -1,3 +1,4 @@
+// @ts-check
 import concurrently from "concurrently";
 
 develop();

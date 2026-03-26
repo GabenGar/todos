@@ -1,3 +1,9 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
 .article {
-  padding: 0
+  padding: 0;
+}
+
+.body {
+  border-radius: $radius-small;
 }

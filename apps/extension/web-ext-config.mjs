@@ -19,6 +19,13 @@ const config = {
       "http://localhost:9001",
     ],
     pref: [
+      // disable popup for autostart
+      "browser.startup.windowsLaunchOnLogin.disableLaunchOnLoginPrompt=true",
+      // enable resist fingerprinting
+      "privacy.resistFingerprinting=true",
+      "privacy.resistFingerprinting.target_video_res=720",
+      // disable language change popup due to aforementioned fingerprinting option
+      "intl.accept_languages=en-US, en",
       // do not show the loicense popup
       "termsofuse.bypassNotification=true",
       // normalize font sizes

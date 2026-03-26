@@ -7,7 +7,7 @@ import { getLocalizedMessage } from "#lib/localization";
 import { InputSectionText } from "#popup/components/forms/section";
 
 export function HomePage() {
-  const url = useActionData() as Awaited<ReturnType<typeof action>>;
+  const url = useActionData<typeof action>();
   const heading = getLocalizedMessage("URL parser");
   const formID = "input-url";
 

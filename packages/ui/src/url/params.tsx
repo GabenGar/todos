@@ -21,7 +21,7 @@ export function TransformedSearchParams({
   params,
 }: ITransformedSearchParamsProps) {
   return (
-    <DescriptionList>
+    <DescriptionList isNested>
       {Array.from(params).map(([key, value]) => (
         <DescriptionSection key={key}>
           <DescriptionTerm>
