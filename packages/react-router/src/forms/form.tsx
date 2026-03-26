@@ -1,29 +1,27 @@
 import type { ReactNode } from "react";
 import {
   type FormMethod,
-  type FormProps,
+  type FormProps as IBaseFormProps,
   type Navigation,
   Form as RouterForm,
-  useActionData,
   useNavigation,
 } from "react-router";
 import { ButtonSubmit } from "@repo/ui/buttons";
-import { Preformatted } from "@repo/ui/formatting";
+import { baseFormStyles } from "@repo/ui/forms";
+import { InputSection } from "@repo/ui/forms/sections";
 import { createBlockComponent } from "@repo/ui/meta";
-import { getLocalizedMessage } from "#lib/localization";
-import { InputSection } from "./section";
+import { useTranslation } from "#hooks";
 //
 
-import styles from "./form.module.scss";
-
-export interface IFormProps extends Omit<FormProps, "children" | "method"> {
+export interface IFormProps
+  extends Omit<IBaseFormProps, "children" | "method"> {
   id: string;
   method?: Uppercase<FormMethod>;
   children?: (formID: string) => ReactNode;
   submitButton?: (state: Navigation["state"]) => ReactNode;
 }
-
-export const Form = createBlockComponent(styles, Component);
+export const Form: ReturnType<typeof createBlockComponent<IFormProps>> =
+  createBlockComponent(baseFormStyles.block, Component);
 
 function Component({
   id,
@@ -32,9 +30,8 @@ function Component({
   children,
   ...props
 }: IFormProps) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
-  navigation.state;
-  const data = useActionData() as unknown;
   const formID = `${id}-form`;
 
   return (
@@ -42,25 +39,17 @@ function Component({
       {children?.(formID)}
 
       <InputSection>
-        {navigation.state === "loading" ? (
-          getLocalizedMessage("Initializing...")
-        ) : navigation.state === "submitting" ? (
-          getLocalizedMessage("Submitting...")
-        ) : data instanceof Error ? (
-          <ol>
-            <li>
-              <Preformatted>{String(data)}</Preformatted>
-            </li>
-          </ol>
-        ) : (
-          getLocalizedMessage("Ready to submit.")
-        )}
+        {navigation.state === "loading"
+          ? t((t) => t.form.state.initializing)
+          : navigation.state === "submitting"
+            ? t((t) => t.form.state.submitting)
+            : t((t) => t.form.state.ready)}
       </InputSection>
 
       <InputSection>
         <ButtonSubmit form={formID} disabled={navigation.state !== "idle"}>
           {!submitButton
-            ? getLocalizedMessage("Submit")
+            ? t((t) => t.form.submit)
             : submitButton(navigation.state)}
         </ButtonSubmit>
       </InputSection>

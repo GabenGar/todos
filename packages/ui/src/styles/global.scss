@@ -29,6 +29,13 @@ html {
   margin: 0;
 }
 
+// style text fragment selections
+// https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::target-text
+::target-text {
+  color: var(--colour-background-primary);
+  background-color: var(--colour-text-primary);
+}
+
 body {
   position: relative;
   display: grid;

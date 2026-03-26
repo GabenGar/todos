@@ -30,11 +30,13 @@
     "build-extension": "turbo run \"link-overwatch\"#build",
     "build-oikia": "turbo run oikia#build",
     "start": "turbo run start",
+    "start-oikia": "turbo run oikia#start",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "check": "turbo run check",
     "dev": "turbo run dev",
     "dev-pages": "turbo run frontend#dev",
+    "dev-extension": "turbo run \"link-overwatch\"#dev",
     "dev-oikia": "turbo run oikia#dev",
     "prep": "npm install && npm run format && npm run build",
     "codegen": "turbo run codegen",
@@ -42,7 +44,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
-    "turbo": "2.8.10"
+    "turbo": "2.8.20"
   },
   "packageManager": "npm@11.10.1"
 }

@@ -1,6 +1,13 @@
 {
+  "form": {
+    "state": {
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    }
+  },
   "url": {
     "URL": "URL",
+    "encoded": "Encoded URL",
     "Decoded URL": "Decoded URL",
     "Parse": "Parse",
     "Parsing...": "Parsing...",
@@ -23,7 +30,16 @@
     "Segments": "Segments",
     "Search": "Search",
     "Search parameters": "Search parameters",
-    "Hash": "Hash"
+    "Hash": "Hash",
+    "hash": {
+      "hash": "Hash",
+      "type": "Type",
+      "fragment": "fragment",
+      "temporal-dimension-media-fragment": "temporal dimension media fragment",
+      "spatial-dimension-media-fragment": "spatial dimension media fragment",
+      "text-fragment": "text fragment",
+      "value": "Value"
+    }
   },
   "button": {
     "copy": "Copy",

@@ -6,6 +6,8 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router/dom";
 import { routes } from "./routes";
 
+import "#translation/lib";
+
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {

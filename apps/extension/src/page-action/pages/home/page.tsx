@@ -9,18 +9,18 @@ import { getActiveTab } from "#lib/tabs";
 import styles from "./page.module.scss";
 
 export function HomePage() {
-  const url = useLoaderData() as URL | undefined;
+  const url = useLoaderData<typeof loader>();
 
   return (
     <Page>
       <Overview className={styles.article} headingLevel={2}>
         {() => (
           <>
-            <OverviewBody>
+            <OverviewBody className={styles.body}>
               {!url || !(url instanceof URL) ? (
                 getLocalizedMessage("No URL is selected.")
               ) : (
-                <URLViewer t={getLocalizedMessage} headingLevel={2} url={url} />
+                <URLViewer headingLevel={2} url={url} />
               )}
             </OverviewBody>
           </>

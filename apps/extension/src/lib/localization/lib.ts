@@ -12,5 +12,5 @@ export function getLocalizedMessage(
 }
 
 export function getCurrentLocale() {
-  return browser.i18n.getUILanguage();
+  return getLocalizedMessage("@@ui_locale");
 }

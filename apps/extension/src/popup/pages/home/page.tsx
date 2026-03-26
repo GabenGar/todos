@@ -1,13 +1,13 @@
 import { type ActionFunctionArgs, useActionData } from "react-router";
+import { FormClient } from "@repo/react-router/forms";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { URLViewer } from "@repo/ui/url";
 import { getLocalizedMessage } from "#lib/localization";
-import { Form } from "#popup/components/forms";
 import { InputSectionText } from "#popup/components/forms/section";
 
 export function HomePage() {
-  const url = useActionData() as Awaited<ReturnType<typeof action>>;
+  const url = useActionData<typeof action>();
   const heading = getLocalizedMessage("URL parser");
   const formID = "input-url";
 
@@ -16,8 +16,8 @@ export function HomePage() {
       <Overview headingLevel={2}>
         {() => (
           <>
-            <OverviewHeader>
-              <Form
+            <OverviewHeader isFilled>
+              <FormClient
                 id={formID}
                 method="POST"
                 submitButton={() => getLocalizedMessage("Analyze")}
@@ -33,13 +33,14 @@ export function HomePage() {
                     </InputSectionText>
                   </>
                 )}
-              </Form>
+              </FormClient>
             </OverviewHeader>
+
             <OverviewBody>
               {!url || !(url instanceof URL) ? (
                 getLocalizedMessage("No URL is selected.")
               ) : (
-                <URLViewer t={getLocalizedMessage} headingLevel={2} url={url} />
+                <URLViewer headingLevel={2} url={url} />
               )}
             </OverviewBody>
           </>
