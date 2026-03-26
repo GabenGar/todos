@@ -22,14 +22,14 @@ export function URLViewer({ headingLevel, url }: IURLViewerProps) {
   const transformedSearchParams = transformSearchparams(searchParams);
   const transformedURL = transformURL(url);
   const decodedURL = decodeURIComponent(String(transformedURL));
-  const isEncodedURL = href !== decodedURL
+  const isEncodedURL = href !== decodedURL;
 
   return (
     <>
       <Heading level={headingLevel}>{t((t) => t.url["URLs"])}</Heading>
       <DescriptionList>
         <DescriptionSection
-          dKey={t((t) => isEncodedURL ? t.url.encoded : t.url["Full URL"])}
+          dKey={t((t) => (isEncodedURL ? t.url.encoded : t.url["Full URL"]))}
           dValue={<Preformatted>{href}</Preformatted>}
         />
         {isEncodedURL && (
