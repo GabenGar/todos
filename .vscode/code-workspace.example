@@ -9,6 +9,10 @@
       "path": "apps/frontend"
     },
     {
+      "name": "blog",
+      "path": "apps/blog"
+    },
+    {
       "name": "link-overwatch",
       "path": "apps/extension"
     },

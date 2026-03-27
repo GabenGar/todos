@@ -1,0 +1,42 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
+    "dev": "vite dev",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write"
+  },
+  "imports": {
+    "#translation/lib": "./src/translation/lib/index.ts",
+    "#translation/*": "./src/translation/language/*",
+    "#*": "./src/*/index.ts"
+  },
+  "dependencies": {
+    "@repo/ui": "*",
+    "@tanstack/react-router": "^1.168.7",
+    "@tanstack/react-start": "^1.167.12",
+    "bcp-47": "^2.1.0",
+    "clsx": "^2.1.1",
+    "i18next": "25.8.18",
+    "i18next-resources-to-backend": "^1.2.1",
+    "iso-639-1": "^3.1.5",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-i18next": "16.5.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.4",
+    "@repo/biome-config": "*",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}

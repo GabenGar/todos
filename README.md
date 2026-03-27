@@ -100,6 +100,7 @@ And then instead of `npm run ...` commands it can be used as `turbo run ...`.
 ### Create a Package
 ```sh
 turbo generate workspace --type=package --name=<name> --empty --destination=<path>
+npm install
 ```
 
 ## Troubleshooting
