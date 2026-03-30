@@ -86,8 +86,6 @@ function LocalizedLayout() {
   );
 }
 
-export default LocalizedLayout;
-
 export const Route = createFileRoute("/$language")({
   component: LocalizedLayout,
 });
