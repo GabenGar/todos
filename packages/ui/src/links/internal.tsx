@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
@@ -12,7 +13,9 @@ export interface ILinkInternalProps
   href?: URL | string;
 }
 
-export const LinkInternal = createBlockComponent(styles, Component);
+export const LinkInternal = forwardRef<HTMLAnchorElement, ILinkInternalProps>(
+  createBlockComponent(styles, Component),
+);
 
 function Component({ href, ...props }: ILinkInternalProps) {
   const urlString = href instanceof URL ? href.toString() : href;

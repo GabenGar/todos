@@ -13,8 +13,6 @@ import type { ILocale } from "#translation/lib";
 import styles from "./index.module.scss";
 
 function LanguageSelectPage() {
-  const router = useRouter();
-  const state = Route.useLoaderData();
   const title = createMetaTitle();
   const heading = createMetaTitle();
 
@@ -42,6 +40,7 @@ interface ILocalLinkProps {
 }
 
 function LocaleLink({ locale }: ILocalLinkProps) {
+  const router = useRouter();
   const language = parseLocale(locale).language;
 
   if (!language) {
@@ -51,7 +50,14 @@ function LocaleLink({ locale }: ILocalLinkProps) {
   return (
     <LinkButton
       className={styles.link}
-      href={href("/:language", { language: locale })}
+      href={
+        router.buildLocation({
+          to: "/$language",
+          params: () => {
+            return { language };
+          },
+        }).href
+      }
     >
       <span>
         <span className={styles.language}>{language}</span>{" "}

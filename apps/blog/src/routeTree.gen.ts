@@ -9,38 +9,120 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LanguageRouteRouteImport } from './routes/$language/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LanguageIndexRouteImport } from './routes/$language/index'
+import { Route as LanguageBlogPostsPageRouteImport } from './routes/$language/blog/posts/$page'
+import { Route as LanguageBlogPostPost_idRouteImport } from './routes/$language/blog/post/$post_id'
+import { Route as LanguageBlogAuthorsPageRouteImport } from './routes/$language/blog/authors/$page'
+import { Route as LanguageBlogAuthorPageRouteImport } from './routes/$language/blog/author/$page'
 
+const LanguageRouteRoute = LanguageRouteRouteImport.update({
+  id: '/$language',
+  path: '/$language',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LanguageIndexRoute = LanguageIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LanguageRouteRoute,
+} as any)
+const LanguageBlogPostsPageRoute = LanguageBlogPostsPageRouteImport.update({
+  id: '/blog/posts/$page',
+  path: '/blog/posts/$page',
+  getParentRoute: () => LanguageRouteRoute,
+} as any)
+const LanguageBlogPostPost_idRoute = LanguageBlogPostPost_idRouteImport.update({
+  id: '/blog/post/$post_id',
+  path: '/blog/post/$post_id',
+  getParentRoute: () => LanguageRouteRoute,
+} as any)
+const LanguageBlogAuthorsPageRoute = LanguageBlogAuthorsPageRouteImport.update({
+  id: '/blog/authors/$page',
+  path: '/blog/authors/$page',
+  getParentRoute: () => LanguageRouteRoute,
+} as any)
+const LanguageBlogAuthorPageRoute = LanguageBlogAuthorPageRouteImport.update({
+  id: '/blog/author/$page',
+  path: '/blog/author/$page',
+  getParentRoute: () => LanguageRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$language': typeof LanguageRouteRouteWithChildren
+  '/$language/': typeof LanguageIndexRoute
+  '/$language/blog/author/$page': typeof LanguageBlogAuthorPageRoute
+  '/$language/blog/authors/$page': typeof LanguageBlogAuthorsPageRoute
+  '/$language/blog/post/$post_id': typeof LanguageBlogPostPost_idRoute
+  '/$language/blog/posts/$page': typeof LanguageBlogPostsPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$language': typeof LanguageIndexRoute
+  '/$language/blog/author/$page': typeof LanguageBlogAuthorPageRoute
+  '/$language/blog/authors/$page': typeof LanguageBlogAuthorsPageRoute
+  '/$language/blog/post/$post_id': typeof LanguageBlogPostPost_idRoute
+  '/$language/blog/posts/$page': typeof LanguageBlogPostsPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$language': typeof LanguageRouteRouteWithChildren
+  '/$language/': typeof LanguageIndexRoute
+  '/$language/blog/author/$page': typeof LanguageBlogAuthorPageRoute
+  '/$language/blog/authors/$page': typeof LanguageBlogAuthorsPageRoute
+  '/$language/blog/post/$post_id': typeof LanguageBlogPostPost_idRoute
+  '/$language/blog/posts/$page': typeof LanguageBlogPostsPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/$language'
+    | '/$language/'
+    | '/$language/blog/author/$page'
+    | '/$language/blog/authors/$page'
+    | '/$language/blog/post/$post_id'
+    | '/$language/blog/posts/$page'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/$language'
+    | '/$language/blog/author/$page'
+    | '/$language/blog/authors/$page'
+    | '/$language/blog/post/$post_id'
+    | '/$language/blog/posts/$page'
+  id:
+    | '__root__'
+    | '/'
+    | '/$language'
+    | '/$language/'
+    | '/$language/blog/author/$page'
+    | '/$language/blog/authors/$page'
+    | '/$language/blog/post/$post_id'
+    | '/$language/blog/posts/$page'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LanguageRouteRoute: typeof LanguageRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/$language': {
+      id: '/$language'
+      path: '/$language'
+      fullPath: '/$language'
+      preLoaderRoute: typeof LanguageRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +130,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$language/': {
+      id: '/$language/'
+      path: '/'
+      fullPath: '/$language/'
+      preLoaderRoute: typeof LanguageIndexRouteImport
+      parentRoute: typeof LanguageRouteRoute
+    }
+    '/$language/blog/posts/$page': {
+      id: '/$language/blog/posts/$page'
+      path: '/blog/posts/$page'
+      fullPath: '/$language/blog/posts/$page'
+      preLoaderRoute: typeof LanguageBlogPostsPageRouteImport
+      parentRoute: typeof LanguageRouteRoute
+    }
+    '/$language/blog/post/$post_id': {
+      id: '/$language/blog/post/$post_id'
+      path: '/blog/post/$post_id'
+      fullPath: '/$language/blog/post/$post_id'
+      preLoaderRoute: typeof LanguageBlogPostPost_idRouteImport
+      parentRoute: typeof LanguageRouteRoute
+    }
+    '/$language/blog/authors/$page': {
+      id: '/$language/blog/authors/$page'
+      path: '/blog/authors/$page'
+      fullPath: '/$language/blog/authors/$page'
+      preLoaderRoute: typeof LanguageBlogAuthorsPageRouteImport
+      parentRoute: typeof LanguageRouteRoute
+    }
+    '/$language/blog/author/$page': {
+      id: '/$language/blog/author/$page'
+      path: '/blog/author/$page'
+      fullPath: '/$language/blog/author/$page'
+      preLoaderRoute: typeof LanguageBlogAuthorPageRouteImport
+      parentRoute: typeof LanguageRouteRoute
+    }
   }
 }
 
+interface LanguageRouteRouteChildren {
+  LanguageIndexRoute: typeof LanguageIndexRoute
+  LanguageBlogAuthorPageRoute: typeof LanguageBlogAuthorPageRoute
+  LanguageBlogAuthorsPageRoute: typeof LanguageBlogAuthorsPageRoute
+  LanguageBlogPostPost_idRoute: typeof LanguageBlogPostPost_idRoute
+  LanguageBlogPostsPageRoute: typeof LanguageBlogPostsPageRoute
+}
+
+const LanguageRouteRouteChildren: LanguageRouteRouteChildren = {
+  LanguageIndexRoute: LanguageIndexRoute,
+  LanguageBlogAuthorPageRoute: LanguageBlogAuthorPageRoute,
+  LanguageBlogAuthorsPageRoute: LanguageBlogAuthorsPageRoute,
+  LanguageBlogPostPost_idRoute: LanguageBlogPostPost_idRoute,
+  LanguageBlogPostsPageRoute: LanguageBlogPostsPageRoute,
+}
+
+const LanguageRouteRouteWithChildren = LanguageRouteRoute._addFileChildren(
+  LanguageRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LanguageRouteRoute: LanguageRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

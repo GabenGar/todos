@@ -1,21 +1,23 @@
-import { href, Outlet, useLocation } from "react-router";
+import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Language, LanguageSwitcher } from "@repo/ui/internationalization";
 import { LinkExternal } from "@repo/ui/links";
 import { List, ListItem } from "@repo/ui/lists";
 import { Loading } from "@repo/ui/loading";
-import { LinkInternal } from "#components/link";
+import { LinkInternal } from "#components/links";
 import { SITE_TITLE, SOURCE_CODE_URL, SUPPORTED_LANGUAGES } from "#environment";
 import { useClient, useTranslation } from "#hooks";
 //
 
-import styles from "./localized.module.scss";
+import styles from "./route.module.scss";
 
-export function LocalizedLayout() {
-  const { t } = useTranslation();
-  const location = useLocation();
+function LocalizedLayout() {
+  const { t, i18n } = useTranslation();
   const client = useClient();
-  const currentURL = `${location.pathname}${location.search}${location.hash}`;
+  const location = useLocation();
+  const language = i18n.language;
+  const search = new URLSearchParams(location.search);
+  const currentURL = `${location.pathname}${search}${location.hash}`;
 
   function getLocalizedURL(locale: string, currentURL: string): string {
     const segments = currentURL.split("/");
@@ -34,7 +36,7 @@ export function LocalizedLayout() {
         <nav className={styles.nav}>
           <List className={styles.list}>
             <ListItem>
-              <LinkInternal href={href("/:language", { language })}>
+              <LinkInternal to={"/$language"} params={{ language }}>
                 {SITE_TITLE}
               </LinkInternal>
             </ListItem>
@@ -42,7 +44,7 @@ export function LocalizedLayout() {
             <ListItem>
               <LanguageSwitcher
                 locales={SUPPORTED_LANGUAGES}
-                currentLocale={language}
+                currentLocale={i18n.language}
                 currentURL={currentURL}
                 getLocalizedURL={getLocalizedURL}
                 InternalLinkComponent={LinkInternal}
@@ -84,6 +86,8 @@ export function LocalizedLayout() {
   );
 }
 
-export const loader = createLocalizedLoader();
-
 export default LocalizedLayout;
+
+export const Route = createFileRoute("/$language")({
+  component: LocalizedLayout,
+});

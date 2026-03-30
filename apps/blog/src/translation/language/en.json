@@ -1,1 +1,16 @@
-{}
+{
+  "common": {
+    "layout": {
+      "source-code": "Source Code",
+      "client-language": "Client language"
+    }
+  },
+  "page": {
+    "home": {
+      "title": "Home",
+      "heading": "Welcome to my blog",
+      "link-posts": "Posts",
+      "link-authors": "Authors"
+    }
+  }
+}
