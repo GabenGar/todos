@@ -1,14 +1,14 @@
 {
   "common": {
     "layout": {
-      "source-code": "Source Code",
+      "source-code": "Source code",
       "client-language": "Client language"
     }
   },
   "page": {
     "home": {
       "title": "Home",
-      "heading": "Welcome to my blog",
+      "heading": "Welcome to my blog!",
       "link-posts": "Posts",
       "link-authors": "Authors"
     }

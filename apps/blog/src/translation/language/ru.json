@@ -1,1 +1,16 @@
-{}
+{
+  "common": {
+    "layout": {
+      "source-code": "Иходный код",
+      "client-language": "Клиентский язык"
+    }
+  },
+  "page": {
+    "home": {
+      "title": "Домашняя страница",
+      "heading": "Добро пожаловать на мой блог!",
+      "link-posts": "Посты",
+      "link-authors": "Авторы"
+    }
+  }
+}

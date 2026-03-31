@@ -9,23 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as BaseRouteImport } from './routes/_base'
 import { Route as LanguageRouteRouteImport } from './routes/$language/route'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as BaseIndexRouteImport } from './routes/_base.index'
 import { Route as LanguageIndexRouteImport } from './routes/$language/index'
 import { Route as LanguageBlogPostsPageRouteImport } from './routes/$language/blog/posts/$page'
 import { Route as LanguageBlogPostPost_idRouteImport } from './routes/$language/blog/post/$post_id'
 import { Route as LanguageBlogAuthorsPageRouteImport } from './routes/$language/blog/authors/$page'
 import { Route as LanguageBlogAuthorPageRouteImport } from './routes/$language/blog/author/$page'
 
+const BaseRoute = BaseRouteImport.update({
+  id: '/_base',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LanguageRouteRoute = LanguageRouteRouteImport.update({
   id: '/$language',
   path: '/$language',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const BaseIndexRoute = BaseIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => BaseRoute,
 } as any)
 const LanguageIndexRoute = LanguageIndexRouteImport.update({
   id: '/',
@@ -54,8 +59,8 @@ const LanguageBlogAuthorPageRoute = LanguageBlogAuthorPageRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/$language': typeof LanguageRouteRouteWithChildren
+  '/': typeof BaseIndexRoute
   '/$language/': typeof LanguageIndexRoute
   '/$language/blog/author/$page': typeof LanguageBlogAuthorPageRoute
   '/$language/blog/authors/$page': typeof LanguageBlogAuthorsPageRoute
@@ -63,8 +68,8 @@ export interface FileRoutesByFullPath {
   '/$language/blog/posts/$page': typeof LanguageBlogPostsPageRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/$language': typeof LanguageIndexRoute
+  '/': typeof BaseIndexRoute
   '/$language/blog/author/$page': typeof LanguageBlogAuthorPageRoute
   '/$language/blog/authors/$page': typeof LanguageBlogAuthorsPageRoute
   '/$language/blog/post/$post_id': typeof LanguageBlogPostPost_idRoute
@@ -72,9 +77,10 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/$language': typeof LanguageRouteRouteWithChildren
+  '/_base': typeof BaseRouteWithChildren
   '/$language/': typeof LanguageIndexRoute
+  '/_base/': typeof BaseIndexRoute
   '/$language/blog/author/$page': typeof LanguageBlogAuthorPageRoute
   '/$language/blog/authors/$page': typeof LanguageBlogAuthorsPageRoute
   '/$language/blog/post/$post_id': typeof LanguageBlogPostPost_idRoute
@@ -83,8 +89,8 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/$language'
+    | '/'
     | '/$language/'
     | '/$language/blog/author/$page'
     | '/$language/blog/authors/$page'
@@ -92,17 +98,18 @@ export interface FileRouteTypes {
     | '/$language/blog/posts/$page'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/$language'
+    | '/'
     | '/$language/blog/author/$page'
     | '/$language/blog/authors/$page'
     | '/$language/blog/post/$post_id'
     | '/$language/blog/posts/$page'
   id:
     | '__root__'
-    | '/'
     | '/$language'
+    | '/_base'
     | '/$language/'
+    | '/_base/'
     | '/$language/blog/author/$page'
     | '/$language/blog/authors/$page'
     | '/$language/blog/post/$post_id'
@@ -110,12 +117,19 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   LanguageRouteRoute: typeof LanguageRouteRouteWithChildren
+  BaseRoute: typeof BaseRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_base': {
+      id: '/_base'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof BaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$language': {
       id: '/$language'
       path: '/$language'
@@ -123,12 +137,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_base/': {
+      id: '/_base/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof BaseIndexRouteImport
+      parentRoute: typeof BaseRoute
     }
     '/$language/': {
       id: '/$language/'
@@ -188,9 +202,19 @@ const LanguageRouteRouteWithChildren = LanguageRouteRoute._addFileChildren(
   LanguageRouteRouteChildren,
 )
 
+interface BaseRouteChildren {
+  BaseIndexRoute: typeof BaseIndexRoute
+}
+
+const BaseRouteChildren: BaseRouteChildren = {
+  BaseIndexRoute: BaseIndexRoute,
+}
+
+const BaseRouteWithChildren = BaseRoute._addFileChildren(BaseRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   LanguageRouteRoute: LanguageRouteRouteWithChildren,
+  BaseRoute: BaseRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

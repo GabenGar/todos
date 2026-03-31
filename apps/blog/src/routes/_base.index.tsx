@@ -10,7 +10,7 @@ import { createMetaTitle } from "#lib/pages";
 import type { ILocale } from "#translation/lib";
 //
 
-import styles from "./index.module.scss";
+import styles from "./_base.index.module.scss";
 
 function LanguageSelectPage() {
   const title = createMetaTitle();
@@ -67,6 +67,6 @@ function LocaleLink({ locale }: ILocalLinkProps) {
   );
 }
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_base/")({
   component: LanguageSelectPage,
 });
