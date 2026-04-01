@@ -10,14 +10,11 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { SITE_TITLE } from "#environment";
-import { ClientProvider } from "#hooks";
 
 function RootComponent() {
   return (
     <RootDocument>
-      <ClientProvider>
-        <Outlet />
-      </ClientProvider>
+      <Outlet />
     </RootDocument>
   );
 }

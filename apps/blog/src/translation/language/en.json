@@ -5,12 +5,23 @@
       "client-language": "Client language"
     }
   },
+  "entities": {
+    "blog-post": {
+      "description": "Description",
+      "created-at": "Creation date"
+    }
+  },
   "page": {
     "home": {
       "title": "Home",
-      "heading": "Welcome to my blog!",
+      "heading": "Welcome",
       "link-posts": "Posts",
       "link-authors": "Authors"
+    },
+    "posts": {
+      "title": "Blog posts",
+      "heading": "Blog Posts",
+      "no-posts-found": "No posts found."
     }
   }
 }

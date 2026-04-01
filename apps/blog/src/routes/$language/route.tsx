@@ -12,7 +12,7 @@ import {
   SOURCE_CODE_URL,
   SUPPORTED_LANGUAGES,
 } from "#environment";
-import { useClient, useTranslation } from "#hooks";
+import { ClientProvider, useClient, useTranslation } from "#hooks";
 import {
   getTranslation,
   initClientTranslation,
@@ -48,7 +48,7 @@ function LocalizedLayout() {
   }
 
   return (
-    <>
+    <ClientProvider serverLanguage={language}>
       <header className={styles.header}>
         <nav className={styles.nav}>
           <List className={styles.list}>
@@ -100,7 +100,7 @@ function LocalizedLayout() {
           </ListItem>
         </List>
       </footer>
-    </>
+    </ClientProvider>
   );
 }
 
