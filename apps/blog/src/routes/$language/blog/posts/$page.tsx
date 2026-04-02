@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Page } from "@repo/ui/pages";
+import { createPagination } from "@repo/ui/pagination";
+import { PreviewList } from "@repo/ui/previews";
 import {
   BlogPostPreview,
   getBlogPosts,
@@ -7,8 +9,6 @@ import {
 } from "#entities/post";
 import { useTranslation } from "#hooks";
 import { isSupportedLanguage } from "#translation/lib";
-import { PreviewList } from "@repo/ui/previews";
-import { createPagination } from "@repo/ui/pagination";
 
 interface IProps {
   posts: IBlogPostPreview[];
@@ -20,6 +20,7 @@ function PostListPage() {
   const title = t((t) => t.page.posts.title);
   const heading = t((t) => t.page.posts.heading);
   const pagination = createPagination(String(posts.length));
+
   return (
     <Page title={title} heading={heading}>
       <PreviewList

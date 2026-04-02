@@ -6,6 +6,7 @@ import {
   type IPreviewProps,
   Preview,
   PreviewBody,
+  PreviewFooter,
   PreviewHeader,
 } from "@repo/ui/previews";
 import { useTranslation } from "#hooks";
@@ -42,8 +43,36 @@ export function BlogPostPreview({ post, ...props }: IProps) {
                 dValue={<DateTimeView dateTime={created_at} />}
                 isKeyPreformatted
               />
+
+              {!published_at ? (
+                <DescriptionSection
+                  dKey={t((t) => t.entities["blog-post"]["published-at"])}
+                  isKeyPreformatted
+                />
+              ) : (
+                <DescriptionSection
+                  dKey={t((t) => t.entities["blog-post"]["published-at"])}
+                  dValue={<DateTimeView dateTime={published_at} />}
+                  isKeyPreformatted
+                />
+              )}
+
+              {!edited_at ? (
+                <DescriptionSection
+                  dKey={t((t) => t.entities["blog-post"]["edited-at"])}
+                  isKeyPreformatted
+                />
+              ) : (
+                <DescriptionSection
+                  dKey={t((t) => t.entities["blog-post"]["edited-at"])}
+                  dValue={<DateTimeView dateTime={edited_at} />}
+                  isKeyPreformatted
+                />
+              )}
             </DescriptionList>
           </PreviewBody>
+
+          <PreviewFooter></PreviewFooter>
         </>
       )}
     </Preview>

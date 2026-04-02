@@ -1,6 +1,6 @@
-import type { INanoidID, ITitle } from "#strings";
+import type { ITitle } from "#strings";
 
 export interface IEntityItem {
-  id: INanoidID;
+  id: string;
   title?: ITitle;
 }

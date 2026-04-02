@@ -3,4 +3,4 @@ export {
   initClientTranslation,
   isSupportedLanguage,
 } from "./lib";
-export { ILocale } from "./types";
+export type { ILocale } from "./types";

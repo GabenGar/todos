@@ -5,6 +5,14 @@
       "client-language": "Клиентский язык"
     }
   },
+  "entities": {
+    "blog-post": {
+      "description": "Описание",
+      "created-at": "Дата создания",
+      "published-at": "Дата публикации",
+      "edited-at": "Дата последнего редактирования"
+    }
+  },
   "page": {
     "home": {
       "title": "Домашняя страница",
@@ -14,7 +22,8 @@
     },
     "posts": {
       "title": "Посты блога",
-      "heading": "Посты Блога"
+      "heading": "Посты Блога",
+      "no-posts-found": "Посты не найдены."
     }
   }
 }

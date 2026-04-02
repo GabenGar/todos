@@ -12,7 +12,7 @@ import {
   SOURCE_CODE_URL,
   SUPPORTED_LANGUAGES,
 } from "#environment";
-import { ClientProvider, useClient, useTranslation } from "#hooks";
+import { useClient, useTranslation } from "#hooks";
 import {
   getTranslation,
   initClientTranslation,
@@ -48,7 +48,7 @@ function LocalizedLayout() {
   }
 
   return (
-    <ClientProvider serverLanguage={language}>
+    <>
       <header className={styles.header}>
         <nav className={styles.nav}>
           <List className={styles.list}>
@@ -64,7 +64,6 @@ function LocalizedLayout() {
                 currentLocale={language}
                 currentURL={currentURL}
                 getLocalizedURL={getLocalizedURL}
-                // @ts-expect-error
                 InternalLinkComponent={LinkInternal}
               />
             </ListItem>
@@ -100,7 +99,7 @@ function LocalizedLayout() {
           </ListItem>
         </List>
       </footer>
-    </ClientProvider>
+    </>
   );
 }
 

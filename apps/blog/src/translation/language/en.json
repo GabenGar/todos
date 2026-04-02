@@ -8,7 +8,9 @@
   "entities": {
     "blog-post": {
       "description": "Description",
-      "created-at": "Creation date"
+      "created-at": "Creation date",
+      "published-at": "Publication date",
+      "edited-at": "Last edit date"
     }
   },
   "page": {
