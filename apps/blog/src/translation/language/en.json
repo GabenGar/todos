@@ -10,7 +10,8 @@
       "description": "Description",
       "created-at": "Creation date",
       "published-at": "Publication date",
-      "edited-at": "Last edit date"
+      "edited-at": "Last edit date",
+      "read-more": "Read more"
     }
   },
   "page": {

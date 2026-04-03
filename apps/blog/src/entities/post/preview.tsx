@@ -9,6 +9,7 @@ import {
   PreviewFooter,
   PreviewHeader,
 } from "@repo/ui/previews";
+import { LinkInternal } from "#components/links";
 import { useTranslation } from "#hooks";
 import type { IBlogPostPreview } from "./types";
 
@@ -17,7 +18,8 @@ interface IProps extends IPreviewProps {
 }
 
 export function BlogPostPreview({ post, ...props }: IProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language;
   const { id, title, description, created_at, edited_at, published_at } = post;
 
   return (
@@ -72,7 +74,14 @@ export function BlogPostPreview({ post, ...props }: IProps) {
             </DescriptionList>
           </PreviewBody>
 
-          <PreviewFooter></PreviewFooter>
+          <PreviewFooter>
+            <LinkInternal
+              to={"/$language/blog/post/$post_id"}
+              params={{ language, post_id: id }}
+            >
+              {t((t) => t.entities["blog-post"]["read-more"])}
+            </LinkInternal>
+          </PreviewFooter>
         </>
       )}
     </Preview>
