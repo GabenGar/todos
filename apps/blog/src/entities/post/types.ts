@@ -9,3 +9,7 @@ export interface IBlogPostPreview extends IBlogPostItem {
   published_at?: string
   edited_at?: string;
 }
+
+export interface IBlogPostOverview extends IBlogPostPreview {
+  content: string
+}

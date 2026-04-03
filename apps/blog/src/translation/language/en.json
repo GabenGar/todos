@@ -24,7 +24,12 @@
     "posts": {
       "title": "Blog posts",
       "heading": "Blog Posts",
-      "no-posts-found": "No posts found."
+      "no-posts-found": "No blog posts found."
+    },
+    "post": {
+      "title": "Blog post",
+      "heading": "Blog Post",
+      "no-post-found": "No blog post found."
     }
   }
 }

@@ -1,9 +1,7 @@
-import Markdown from 'react-markdown'
+import Markdown, { type Options } from "react-markdown";
 
-interface IProps {
-  content: string;
-}
+interface IProps extends Pick<Options, "children"> {}
 
-export function MarkdownView({ content }: IProps) {
-  return <Markdown>{content}</Markdown>
+export function MarkdownView({ children }: IProps) {
+  return <Markdown>{children}</Markdown>;
 }

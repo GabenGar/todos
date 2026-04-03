@@ -1,9 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { cwd } from "node:process";
 import { createServerFn } from "@tanstack/react-start";
 import extractGrayMatter from "gray-matter";
 import type { ILocale } from "#translation/lib";
+import { getBlogsFolderPath } from "./lib";
 import type { IBlogPostItem, IBlogPostPreview } from "./types";
 
 interface IData {
@@ -29,7 +29,7 @@ export const getBlogPosts = createServerFn({ method: "GET" })
   });
 
 async function collectBlogPostIDs(): Promise<IBlogPostItem["id"][]> {
-  const blogPostsFolderPath = getBlogsFolder();
+  const blogPostsFolderPath = getBlogsFolderPath();
 
   const blogPostsFolder = await fs.opendir(blogPostsFolderPath);
   const ids: IBlogPostItem["id"][] = [];
@@ -45,10 +45,6 @@ async function collectBlogPostIDs(): Promise<IBlogPostItem["id"][]> {
   return ids;
 }
 
-function getBlogsFolder() {
-  return path.join(cwd(), "src", "blog");
-}
-
 async function getBlogPostsInfo(
   ids: IBlogPostItem["id"][],
   language: ILocale,
@@ -56,7 +52,7 @@ async function getBlogPostsInfo(
   const previews: IBlogPostPreview[] = [];
 
   for await (const id of ids) {
-    const blogPostFilePath = path.join(getBlogsFolder(), id, `${language}.md`);
+    const blogPostFilePath = path.join(getBlogsFolderPath(), id, `${language}.md`);
 
     try {
       const markdownContent = await fs.readFile(blogPostFilePath, {
@@ -72,7 +68,7 @@ async function getBlogPostsInfo(
         edited_at,
         published_at,
       };
-      
+
       previews.push(preview);
     } catch (_error) {
       // @TODO filter for ENOENT error
