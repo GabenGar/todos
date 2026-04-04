@@ -1,6 +1,7 @@
 import i18next, { type InitOptions, type Resource } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
+import { getPathnameSegments } from "@repo/ui/url";
 import {
   DEFAULT_LANGUAGE,
   IS_TRANSLATION_DEBUG_ENABLED,
@@ -72,4 +73,28 @@ export function initClientTranslation(locale: ILocale, translation: Resource) {
 
 export function isSupportedLanguage(input?: unknown): input is ILocale {
   return !input ? false : SUPPORTED_LANGUAGES.includes(input as ILocale);
+}
+
+export function getLanguageFromPathname(pathname?: string): ILocale {
+  if (!pathname) {
+    return DEFAULT_LANGUAGE;
+  }
+
+  const segments = getPathnameSegments(pathname);
+
+  if (!segments) {
+    return DEFAULT_LANGUAGE;
+  }
+
+  const language = segments[0];
+
+  if (!language) {
+    return DEFAULT_LANGUAGE;
+  }
+
+  if (!isSupportedLanguage(language)) {
+    throw new Error(`Unknown locale "${language}".`);
+  }
+
+  return language;
 }
