@@ -4,11 +4,12 @@ import { List, ListItem } from "@repo/ui/lists";
 import { Page } from "@repo/ui/pages";
 import { LinkInternal } from "#components/links";
 import { useTranslation } from "#hooks";
+import { createMetaTitle } from "#lib/pages";
 
 function HomePage() {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
-  const title = t((t) => t.page.home.title);
+  const title = createMetaTitle(t((t) => t.page.home.title));
   const heading = t((t) => t.page.home.heading);
 
   return (

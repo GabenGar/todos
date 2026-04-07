@@ -3,19 +3,39 @@ import "@repo/ui/styles/global";
 //
 
 import {
-  createRootRoute,
+  createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
+import type { Resource } from "i18next";
 import type { ReactNode } from "react";
-import { SITE_TITLE } from "#environment";
+import { useSSR } from "react-i18next";
+import { DEFAULT_LANGUAGE, IS_BROWSER, SITE_TITLE } from "#environment";
 import { ClientProvider } from "#hooks";
+import {
+  getTranslation,
+  type ILocale,
+  initClientTranslation,
+} from "#translation/lib";
+
+interface IRootContext {
+  language: ILocale;
+  translation: Resource;
+}
 
 function RootComponent() {
+  const { language, translation } = Route.useRouteContext();
+
+  if (IS_BROWSER) {
+    initClientTranslation(language, translation);
+  }
+
+  useSSR(translation, language);
+
   return (
     <RootDocument>
-      <ClientProvider>
+      <ClientProvider serverLanguage={language}>
         <Outlet />
       </ClientProvider>
     </RootDocument>
@@ -27,8 +47,10 @@ interface IRootDocumentProps {
 }
 
 function RootDocument({ children }: Readonly<IRootDocumentProps>) {
+  const { language } = Route.useRouteContext();
+
   return (
-    <html>
+    <html lang={language}>
       <head>
         <HeadContent />
       </head>
@@ -41,7 +63,16 @@ function RootDocument({ children }: Readonly<IRootDocumentProps>) {
   );
 }
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<IRootContext>()({
+  beforeLoad: async ({ params }) => {
+    const language = (params["language"] as ILocale) ?? DEFAULT_LANGUAGE;
+    const translation = await getTranslation(language);
+
+    return {
+      language,
+      translation,
+    };
+  },
   head: async () => {
     return {
       meta: [

@@ -8,6 +8,7 @@ import {
   type IBlogPostPreview,
 } from "#entities/post";
 import { useTranslation } from "#hooks";
+import { createMetaTitle } from "#lib/pages";
 import { isSupportedLanguage } from "#translation/lib";
 
 interface IProps {
@@ -17,7 +18,7 @@ interface IProps {
 function PostListPage() {
   const { t } = useTranslation();
   const { posts } = Route.useLoaderData();
-  const title = t((t) => t.page.posts.title);
+  const title = createMetaTitle(t((t) => t.page.posts.title));
   const heading = t((t) => t.page.posts.heading);
   const pagination = createPagination(String(posts.length));
 
