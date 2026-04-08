@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { Page } from "@repo/ui/pages";
 import { createPagination } from "@repo/ui/pagination";
 import { PreviewList } from "@repo/ui/previews";
@@ -25,7 +26,15 @@ function PostListPage() {
   return (
     <Page title={title} heading={heading}>
       <PreviewList
-        noItemsElement={t((t) => t.page.posts["no-posts-found"])}
+        noItemsElement={
+          <Overview headingLevel={2}>
+            {() => (
+              <OverviewHeader>
+                {t((t) => t.page.posts["no-posts-found"])}
+              </OverviewHeader>
+            )}
+          </Overview>
+        }
         buildURL={() => ""}
         pagination={pagination}
       >

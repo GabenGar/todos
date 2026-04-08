@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { ReactNode } from "react";
+import { useTranslation } from "#hooks";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
@@ -18,7 +19,7 @@ interface IProps
   extends IBaseComponentPropsWithChildren<"div">,
     Pick<IPaginationProps, "pagination" | "buildURL" | "LinkButtonComponent"> {
   sortingOrder?: "ascending" | "descending";
-  noItemsElement: ReactNode;
+  noItemsElement?: ReactNode;
 }
 
 /**
@@ -35,6 +36,7 @@ function Component({
   children,
   ...props
 }: IProps) {
+  const { t } = useTranslation();
   const parsedTotalCount = BigInt(pagination.total_count);
   const listClass = clsx(
     styles.list,
@@ -44,7 +46,11 @@ function Component({
   return (
     <div {...props}>
       {parsedTotalCount === BIGINT_ZERO ? (
-        <p className={styles.nothing}>{noItemsElement}</p>
+        !noItemsElement ? (
+          <p className={styles.nothing}>{t((t) => t.list["empty-list"])}</p>
+        ) : (
+          noItemsElement
+        )
       ) : (
         <>
           <PaginationOverview className={styles.info} pagination={pagination} />
