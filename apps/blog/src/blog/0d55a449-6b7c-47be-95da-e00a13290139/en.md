@@ -19,9 +19,20 @@ Possible sources of locale value:
 - `lang` attribute on `<html>` element 
 - various system envionment variables and APIs (on server)
 - request headers
+- CLI options
 
 Possible environments translation can exist at:
 - server
 - server page
 - client page
 - client
+- CLI
+
+All of these environments have different limits on how they can retrieve languages and resources,<br>
+some of them have to manage several languages across their lifespan.<br>
+The tricky part is a sufficiently developed monorepo has to deal with all these environments and has to be structured to accomodate for that.
+
+## Environments
+
+### Server
+The difficulty integrating translations varies between super easy to a gigantic pain. But it all depends on the business logic of the server, so we first separate them into two categories: api server and template rendering server.

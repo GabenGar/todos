@@ -71,6 +71,14 @@
     "js/ts.preferences.jsxAttributeCompletionStyle": "braces",
     "json.schemaDownload.trustedDomains": {
       "https://v2-8-20.turborepo.dev/schema.json": true
+    },
+    // redeclaring settings for markdown because defaults overwrite
+    // the top level setting
+    "[markdown]": {
+      "editor.unicodeHighlight.ambiguousCharacters": true,
+      "editor.unicodeHighlight.invisibleCharacters": true,
+      "editor.wordWrap": "bounded",
+      "editor.wordWrapColumn": 80
     }
   },
   "extensions": {
