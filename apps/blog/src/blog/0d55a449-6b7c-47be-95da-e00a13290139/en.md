@@ -45,4 +45,9 @@ Template rendering servers are a complete clusterfuck however, since they involv
 It basically includes everything "fun" about integrating translations.
 
 ### Page
-While technically not a separate environment, due to its hybrid render nature it has to be treated as a separate one from its host environment, if only to keep things manageable.
+While technically not a separate environment, due to its hybrid render nature it has to be treated as a separate one from its host environment, if only to keep things manageable. I.e. if the page throws an error during server render, you most likely need different messages for client and server. Same logic as API server except server render tends to be hidden behind several layers of abstractions on top of bundling, so it gets very not obvious when an error pertains to server or client logic.
+
+## Monorepo setup
+
+### Quick Rundown
+It is assumed the monorepo is managed by `turborepo` with `npm` package manager (and therefore its workspace logic), `i18next` as translation management library and `react` as rendering library. Turborepo has a concept of "application" workspaces and "package" ones, the main difference being the application workspaces do not get dependent on. i18next operates mostly on a singleton structure, an instance of which manages translation groups, called "namespaces". The objective is to allow managing translations coming from different packages without too much boilerplate and pain. 
