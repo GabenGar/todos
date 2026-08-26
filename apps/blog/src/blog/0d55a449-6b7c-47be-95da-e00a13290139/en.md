@@ -50,4 +50,41 @@ While technically not a separate environment, due to its hybrid render nature it
 ## Monorepo setup
 
 ### Quick Rundown
-It is assumed the monorepo is managed by `turborepo` with `npm` package manager (and therefore its workspace logic), `i18next` as translation management library and `react` as rendering library. Turborepo has a concept of "application" workspaces and "package" ones, the main difference being the application workspaces do not get dependent on. i18next operates mostly on a singleton structure, an instance of which manages translation groups, called "namespaces". The objective is to allow managing translations coming from different packages without too much boilerplate and pain. 
+It is assumed the monorepo is managed by `turborepo` with `npm` package manager (and therefore its workspace logic), `i18next` as translation management library and `react` as rendering library. Turborepo has a concept of "application" workspaces and "package" ones, the main difference being the application workspaces do not get dependent on. i18next operates mostly on a singleton structure, an instance of which manages translation groups called "namespaces". The objective is to allow managing translations coming from different packages without too much boilerplate and pain. 
+
+### Workspace Structure
+Each workspace has to have `translation` folder inside `src` folder where translation files and various library functions reside. It is a good idea to have a subfolder just for translation files, such as `language`, so there won't be any potential locale namespace collision with library files. All translation-specific symbols must be available from `#translation`/`translation` paths, while translation resources must be available at `#translation/*`/`translation/*` paths.<br>
+Thus at minimum a workspace must have these values in `package.json`:
+```json
+{
+  "exports": {
+    "./translation": "./src/translation/lib/index.ts",
+    "./translation/*": "./src/translation/language/*",
+  },
+  "imports": {
+    "#translation": "./src/translation/lib/index.ts",
+    "#translation/*": "./src/translation/language/*",
+  },
+}
+```
+The `lib` must have at least this file:<br>
+`augs.d.ts`
+```typescript
+import "i18next";
+import type translation from "#translation/en.json";
+
+declare module "i18next" {
+  interface CustomTypeOptions {
+    resources: {
+      "<workspace_name>": typeof translation;
+    };
+    enableSelector: "optimize";
+  }
+}
+```
+The index file has to export at least one symbol with this signature:
+```typescript
+interface IFetchTranslationFunction<Locale, ResourceShape> {
+  (language: Locale): Promise<ResourceShape>
+}
+```
