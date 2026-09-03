@@ -9,7 +9,7 @@ import styles from "./language-list.module.scss";
 
 export interface ILanguageListProps
   extends IUnorderedListProps,
-    Pick<ILinkProps, "InternalLinkComponent"> {
+    Pick<ILinkProps, "internalLinkElement"> {
   locales: readonly string[];
   currentLocale: string;
   currentURL: string;
@@ -23,7 +23,7 @@ function Component({
   currentLocale,
   currentURL,
   getLocalizedURL,
-  InternalLinkComponent,
+  internalLinkElement,
   ...props
 }: ILanguageListProps) {
   return (
@@ -35,7 +35,7 @@ function Component({
           currentLocale={currentLocale}
           currentURL={currentURL}
           getLocalizedURL={getLocalizedURL}
-          InternalLinkComponent={InternalLinkComponent}
+          internalLinkElement={internalLinkElement}
         />
       ))}
     </ListUnordered>
@@ -45,7 +45,7 @@ function Component({
 interface ILocaleItemsProps
   extends Pick<
     ILanguageListProps,
-    "currentLocale" | "currentURL" | "getLocalizedURL" | "InternalLinkComponent"
+    "currentLocale" | "currentURL" | "getLocalizedURL" | "internalLinkElement"
   > {
   locale: string;
 }
@@ -55,7 +55,7 @@ function LocaleItem({
   currentLocale,
   currentURL,
   getLocalizedURL,
-  InternalLinkComponent,
+  internalLinkElement,
 }: ILocaleItemsProps) {
   // biome-ignore lint/style/noNonNullAssertion: just typescript things
   const language = parseLocale(locale).language!;
@@ -69,7 +69,7 @@ function LocaleItem({
         <Link
           className={styles.link}
           href={href}
-          InternalLinkComponent={InternalLinkComponent}
+          internalLinkElement={internalLinkElement}
         >
           <Language language={language} />
         </Link>

@@ -88,3 +88,4 @@ interface IFetchTranslationFunction<Locale, ResourceShape> {
   (language: Locale): Promise<ResourceShape>
 }
 ```
+This way all workspaces have (almost) everything translation-related stored in predictable paths and dependencies can invoke translations of dependants according to their needs.

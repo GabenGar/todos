@@ -17,7 +17,7 @@ import {
   getTranslation,
   initClientTranslation,
   isSupportedLanguage,
-} from "#translation/lib";
+} from "#translation";
 //
 
 import styles from "./route.module.scss";

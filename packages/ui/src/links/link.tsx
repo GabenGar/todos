@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { createBlockComponent } from "#meta";
 import { type ILinkExternalProps, LinkExternal } from "./external";
 import { type ILinkInternalProps, LinkInternal } from "./internal";
@@ -5,10 +6,9 @@ import { type ILinkInternalProps, LinkInternal } from "./internal";
 const linkTypes = ["internal", "external"] as const;
 type ILinkType = (typeof linkTypes)[number];
 
-export type ILinkProps = { InternalLinkComponent?: typeof LinkInternal } & (
-  | ILinkExternalProps
-  | ILinkInternalProps
-);
+export type ILinkProps = {
+  internalLinkElement?: (props: ILinkInternalProps) => ReactElement;
+} & (ILinkExternalProps | ILinkInternalProps);
 
 export const Link = createBlockComponent(undefined, Component);
 
@@ -17,15 +17,19 @@ function Component({ ...props }: ILinkProps) {
 
   switch (linkType) {
     case "external": {
-      const { ...linkProps } = props;
+      const { internalLinkElement, ...linkProps } = props;
 
       return <LinkExternal {...linkProps} />;
     }
 
     case "internal": {
-      const { InternalLinkComponent = LinkInternal, ...linkProps } = props;
+      const { internalLinkElement, ...linkProps } = props;
 
-      return <InternalLinkComponent {...linkProps} />;
+      return !internalLinkElement ? (
+        <LinkInternal {...linkProps} />
+      ) : (
+        internalLinkElement(linkProps)
+      );
     }
 
     default: {

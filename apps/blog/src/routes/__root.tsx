@@ -17,7 +17,7 @@ import {
   getTranslation,
   type ILocale,
   initClientTranslation,
-} from "#translation/lib";
+} from "#translation";
 
 interface IRootContext {
   language: ILocale;

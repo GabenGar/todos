@@ -10,7 +10,7 @@ import {
 } from "#entities/post";
 import { useTranslation } from "#hooks";
 import { createMetaTitle } from "#lib/pages";
-import { isSupportedLanguage } from "#translation/lib";
+import { isSupportedLanguage } from "#translation";
 
 interface IProps {
   posts: IBlogPostPreview[];
