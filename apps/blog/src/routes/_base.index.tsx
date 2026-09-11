@@ -5,9 +5,10 @@ import { Overview, OverviewHeader } from "@repo/ui/articles";
 import { LinkButton } from "@repo/ui/links";
 import { List, ListItem } from "@repo/ui/lists";
 import { Page } from "@repo/ui/pages";
+import { LinkInternal } from "#components/links";
 import { SUPPORTED_LANGUAGES } from "#environment";
 import { createMetaTitle } from "#lib/pages";
-import type { ILocale } from "#translation/lib";
+import type { ILocale } from "#translation";
 //
 
 import styles from "./_base.index.module.scss";
@@ -58,6 +59,9 @@ function LocaleLink({ locale }: ILocalLinkProps) {
           },
         }).href
       }
+      internalLinkElement={() => (
+        <LinkInternal to={"/$language"} params={{ language }} />
+      )}
     >
       <span>
         <span className={styles.language}>{language}</span>{" "}

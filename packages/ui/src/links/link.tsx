@@ -1,35 +1,39 @@
 import type { ReactElement } from "react";
-import { createBlockComponent } from "#meta";
 import { type ILinkExternalProps, LinkExternal } from "./external";
 import { type ILinkInternalProps, LinkInternal } from "./internal";
 
 const linkTypes = ["internal", "external"] as const;
 type ILinkType = (typeof linkTypes)[number];
+interface ILinkElementProps {
+  className?: string;
+  children?: ReactElement;
+}
 
-export type ILinkProps = {
-  internalLinkElement?: (props: ILinkInternalProps) => ReactElement;
-} & (ILinkExternalProps | ILinkInternalProps);
+export type ILinkProps = ILinkElementProps &
+  (
+    | {
+        internalLinkElement: (props: ILinkElementProps) => ReactElement;
+      }
+    | ILinkExternalProps
+    | ILinkInternalProps
+  );
 
-export const Link = createBlockComponent(undefined, Component);
+export function Link(props: ILinkProps) {
+  if ("internalLinkElement" in props) {
+    const { internalLinkElement, ...restProps } = props;
 
-function Component({ ...props }: ILinkProps) {
+    return internalLinkElement(restProps);
+  }
+
   const linkType = guessLinkType(props.href);
 
   switch (linkType) {
     case "external": {
-      const { internalLinkElement, ...linkProps } = props;
-
-      return <LinkExternal {...linkProps} />;
+      return <LinkExternal {...props} />;
     }
 
     case "internal": {
-      const { internalLinkElement, ...linkProps } = props;
-
-      return !internalLinkElement ? (
-        <LinkInternal {...linkProps} />
-      ) : (
-        internalLinkElement(linkProps)
-      );
+      return <LinkInternal {...props} />;
     }
 
     default: {
@@ -38,7 +42,7 @@ function Component({ ...props }: ILinkProps) {
   }
 }
 
-function guessLinkType(href: ILinkProps["href"]): ILinkType {
+function guessLinkType(href: ILinkExternalProps["href"]): ILinkType {
   if (typeof href === "undefined" || href instanceof URL) {
     return "external";
   }
