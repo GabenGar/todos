@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { parse as parseLocale } from "bcp-47";
 import iso6391 from "iso-639-1";
 import { Overview, OverviewHeader } from "@repo/ui/articles";
@@ -41,7 +41,6 @@ interface ILocalLinkProps {
 }
 
 function LocaleLink({ locale }: ILocalLinkProps) {
-  const router = useRouter();
   const language = parseLocale(locale).language;
 
   if (!language) {
@@ -50,17 +49,14 @@ function LocaleLink({ locale }: ILocalLinkProps) {
 
   return (
     <LinkButton
-      className={styles.link}
-      href={
-        router.buildLocation({
-          to: "/$language",
-          params: () => {
-            return { language };
-          },
-        }).href
-      }
-      internalLinkElement={() => (
-        <LinkInternal to={"/$language"} params={{ language }} />
+      internalLinkElement={({ children }) => (
+        <LinkInternal
+          className={styles.link}
+          to={"/$language"}
+          params={{ language }}
+        >
+          {children}
+        </LinkInternal>
       )}
     >
       <span>

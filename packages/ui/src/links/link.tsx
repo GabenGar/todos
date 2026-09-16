@@ -5,22 +5,22 @@ import { type ILinkInternalProps, LinkInternal } from "./internal";
 const linkTypes = ["internal", "external"] as const;
 type ILinkType = (typeof linkTypes)[number];
 interface ILinkElementProps {
-  className?: string;
+  className?: string
   children?: ReactElement;
 }
 
 export type ILinkProps = ILinkElementProps &
   (
-    | {
-        internalLinkElement: (props: ILinkElementProps) => ReactElement;
-      }
     | ILinkExternalProps
-    | ILinkInternalProps
+    | ({
+        internalLinkElement: (props: ILinkElementProps) => ReactElement;
+      } | ILinkInternalProps)
   );
 
 export function Link(props: ILinkProps) {
   if ("internalLinkElement" in props) {
-    const { internalLinkElement, ...restProps } = props;
+    const { internalLinkElement, className, children } = props;
+    const restProps = {className, children}
 
     return internalLinkElement(restProps);
   }
