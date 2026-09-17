@@ -46,6 +46,7 @@ export const getBlogPostOverview = createServerFn({ method: "GET" })
         );
       }
     }
+    
     const result = extractGrayMatter(markdownContent);
     const { title, description, created_at, edited_at, published_at } =
       result.data as IMeta;
