@@ -1,6 +1,6 @@
-import type { ReactElement } from "react";
 import { parse as parseLocale } from "bcp-47";
-import { Link, type ILinkElementProps } from "#links";
+import type { ReactElement } from "react";
+import { type ILinkElementProps, Link } from "#links";
 import { type IUnorderedListProps, ListItem, ListUnordered } from "#lists";
 import { createBlockComponent } from "#meta";
 import { Language } from "./language";

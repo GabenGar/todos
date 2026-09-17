@@ -1,7 +1,7 @@
-import type { CSSProperties, FunctionComponent, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { LinkButton } from "#links";
-import { List, ListItem } from "#lists";
-import { createBlockComponent, type IBaseComponentProps } from "#meta";
+import { type IUnorderedListProps, List, ListItem } from "#lists";
+import { createBlockComponent } from "#meta";
 import { BIGINT_ONE, BIGINT_ZERO } from "#numbers/bigint";
 import { PaginationOverview } from "./overview";
 import type { IPagination } from "./types";
@@ -9,10 +9,10 @@ import type { IPagination } from "./types";
 
 import styles from "./pagination.module.scss";
 
-export interface IPaginationProps extends IBaseComponentProps<"ul"> {
+export interface IPaginationProps extends IUnorderedListProps {
   pagination: IPagination;
   buildURL: (page: string) => string;
-  LinkButtonComponent?: FunctionComponent<IBaseLinkButtonProps>;
+  // internalLinkComponent;
 }
 
 interface IBaseLinkButtonProps {
@@ -23,12 +23,7 @@ interface IBaseLinkButtonProps {
 
 export const Pagination = createBlockComponent(styles, Component);
 
-function Component({
-  pagination,
-  buildURL,
-  LinkButtonComponent = LinkButton,
-  ...props
-}: IPaginationProps) {
+function Component({ pagination, buildURL, ...props }: IPaginationProps) {
   const { current_page, total_pages } = pagination;
   const parsedCurrentPage = BigInt(current_page);
   const parsedTotalPages = BigInt(total_pages);
@@ -57,12 +52,13 @@ function Component({
             <span>|&lt;</span> <span>{first}</span>
           </span>
         ) : (
-          <LinkButtonComponent
+          <LinkButton
             href={buildURL(String(BIGINT_ONE))}
             className={styles.button}
+            // internalLinkElement={}
           >
             <span>|&lt;</span> <span>{first}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
 
@@ -72,12 +68,12 @@ function Component({
             <span>&lt;</span> <span>{previous}</span>
           </span>
         ) : (
-          <LinkButtonComponent
+          <LinkButton
             href={buildURL(String(parsedCurrentPage - BIGINT_ONE))}
             className={styles.button}
           >
             <span>&lt;</span> <span>{previous}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
 
@@ -91,12 +87,12 @@ function Component({
             <span>&gt;</span> <span>{next}</span>
           </span>
         ) : (
-          <LinkButtonComponent
+          <LinkButton
             href={buildURL(String(parsedCurrentPage + BIGINT_ONE))}
             className={styles.button}
           >
             <span>&gt;</span> <span>{next}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
 
@@ -106,12 +102,9 @@ function Component({
             <span>&gt;|</span> <span>{last}</span>
           </span>
         ) : (
-          <LinkButtonComponent
-            href={buildURL(total_pages)}
-            className={styles.button}
-          >
+          <LinkButton href={buildURL(total_pages)} className={styles.button}>
             <span>&gt;|</span> <span>{last}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
     </List>
