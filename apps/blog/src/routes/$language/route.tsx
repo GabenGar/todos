@@ -1,4 +1,8 @@
-import { createFileRoute, Outlet, useLocation, useRouter } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Outlet,
+  useLocation,
+} from "@tanstack/react-router";
 import { useSSR } from "react-i18next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Language, LanguageSwitcher } from "@repo/ui/internationalization";
@@ -23,7 +27,6 @@ import {
 import styles from "./route.module.scss";
 
 function LocalizedLayout() {
-  const router = useRouter()
   const { language, translation } = Route.useLoaderData();
   const { t } = useTranslation();
   const client = useClient();
@@ -65,7 +68,9 @@ function LocalizedLayout() {
                 currentLocale={language}
                 currentURL={currentURL}
                 getLocalizedURL={getLocalizedURL}
-                internalLinkElement={(language, localizedURL) => <LinkInternal to={localizedURL}/>}
+                internalLinkElement={({ children, localizedURL }) => (
+                  <LinkInternal to={localizedURL}>{children}</LinkInternal>
+                )}
               />
             </ListItem>
           </List>

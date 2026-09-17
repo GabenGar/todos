@@ -31,6 +31,10 @@
     "./json-schema-to-typescript": {
       "types": "./api/json-schema-to-typescript/index.ts",
       "default": "./dist/api/json-schema-to-typescript/index.js"
+    },
+    "./errors": {
+      "types": "./api/errors/index.ts",
+      "default": "./dist/api/errors/index.js"
     }
   },
   "imports": {

@@ -2,6 +2,9 @@
 title: "Translations in a Javascript Monorepo"
 description: "A step-by-step guide on implementing translations in a monorepo."
 created_at: "2026-04-01T16:37:05.718Z"
+edited_at: "2026-04-01T16:37:05.718Z"
+published_at: "2026-04-01T16:37:05.718Z"
+
 ---
 ## Introduction
 Any translation logic operates on two values:

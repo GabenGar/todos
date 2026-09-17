@@ -4,6 +4,9 @@
   "tasks": {
     "build": {
       "outputs": ["dist/**"]
+    },
+    "dev": {
+      "with": ["@repo/nodejs#dev"]
     }
   }
 }

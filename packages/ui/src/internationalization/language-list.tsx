@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { parse as parseLocale } from "bcp-47";
-import { Link } from "#links";
+import { Link, type ILinkElementProps } from "#links";
 import { type IUnorderedListProps, ListItem, ListUnordered } from "#lists";
 import { createBlockComponent } from "#meta";
 import { Language } from "./language";
@@ -8,13 +8,17 @@ import { Language } from "./language";
 
 import styles from "./language-list.module.scss";
 
-export interface ILanguageListProps
-  extends IUnorderedListProps {
+export interface ILanguageListProps extends IUnorderedListProps {
   locales: readonly string[];
   currentLocale: string;
   currentURL: string;
-  getLocalizedURL: (locale: string, currentURL: string) => string;
-  internalLinkElement?: (locale: string, localizedURL: string) => ReactElement
+  getLocalizedURL: (language: string, currentURL: string) => string;
+  internalLinkElement?: (props: IInternalLinkElementProps) => ReactElement;
+}
+
+interface IInternalLinkElementProps extends ILinkElementProps {
+  language: string;
+  localizedURL: string;
 }
 
 export const LanguageList = createBlockComponent(styles, Component);
@@ -70,7 +74,16 @@ function LocaleItem({
         <Link
           className={styles.link}
           href={href}
-          internalLinkElement={!internalLinkElement ? undefined : () => internalLinkElement(language, href)}
+          internalLinkElement={
+            !internalLinkElement
+              ? undefined
+              : (props) =>
+                  internalLinkElement({
+                    ...props,
+                    language,
+                    localizedURL: href,
+                  })
+          }
         >
           <Language language={language} />
         </Link>
