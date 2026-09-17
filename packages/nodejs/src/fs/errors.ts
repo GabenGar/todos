@@ -1,5 +1,4 @@
 import { isError } from "#errors";
-import { getSystemErrorName } from "node:util";
 
 /**
  * NodeJS doesn't export [`SystemError`][1] class,

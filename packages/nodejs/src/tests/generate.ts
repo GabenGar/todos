@@ -3,9 +3,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import {
+  compiledGeneratorFilename,
   type ITestModule,
   type ITestModuleOutput,
-  compiledGeneratorFilename,
   inputFolderName,
   outputFolderName,
 } from "./types.js";
@@ -68,7 +68,6 @@ async function runGenerators(entries: Dirent[]): Promise<IOutputMap> {
 
       throw new Error(
         `Failed to generate outputs for generator "${generatorName}"`,
-        // @ts-expect-error Typescript version disagreement
         { cause: error },
       );
     }
