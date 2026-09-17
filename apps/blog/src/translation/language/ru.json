@@ -28,7 +28,7 @@
       "no-posts-found": "Посты не найдены."
     },
     "post": {
-      "title": "Пост блога",
+      "title": "Пост блога \"{{post_title}}\"",
       "heading": "Пост Блога",
       "no-post-found": "Пост не найден."
     }

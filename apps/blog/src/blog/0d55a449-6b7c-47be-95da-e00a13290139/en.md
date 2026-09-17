@@ -1,6 +1,7 @@
 ---
 title: "Translations in a Javascript Monorepo"
 description: "A step-by-step guide on implementing translations in a monorepo."
+version: 1
 created_at: "2026-04-01T16:37:05.718Z"
 edited_at: "2026-04-01T16:37:05.718Z"
 published_at: "2026-04-01T16:37:05.718Z"
@@ -80,7 +81,7 @@ Thus at minimum a workspace must have these values in `package.json`:
 }
 ```
 
-The `lib` must have at least this file:<br>
+The `lib` must have at least this file:\
 `augs.d.ts`
 
 ```typescript
@@ -97,12 +98,109 @@ declare module "i18next" {
 }
 ```
 
+This augments translation types for the workspace and allows to typecheck translation logic. For the purpose of the example, english translation is assumed to be the "default" language both in the logic and resource completeness.
+
 The index file has to export at least one symbol with this signature:
 
 ```typescript
-interface IFetchTranslationFunction<Locale, ResourceShape> {
+interface IGetTranslationFunction<Locale, ResourceShape> {
   (language: Locale): Promise<ResourceShape>;
 }
 ```
 
 This way all workspaces have (almost) everything translation-related stored in predictable paths and dependencies can invoke translations of dependants according to their needs.
+
+## `i18next`
+
+Due to abstract setup of monorepo workspaces and singletone nature of `i18next`, none of its plugins are applicable to our situation, due to package workspaces also having their own translation files, which is not easily expressable as a path template string it uses for various configs.
+Except for [`i18next-resources-to-backend`][1] which allows to fetch translations in an asynchronous manner, leaving us writing glue code on how to shove it into the end workspace.\
+It is assumed package workspaces have a `i18next` namespace with the same name as the workspace, while apps have at least a generic `translation` namespace, so it's obvious which namespaces an app have to fetch in order to translate fully.
+
+So let's start from implementing a callback function for `i18next-resources-to-backend`:
+
+`/src/translation/fetch-translation.ts`
+
+```typescript
+import type { ResourceKey } from "i18next";
+
+export async function fetchTranslation(
+  language: ILocale,
+  namespace: INameSpace,
+) {
+  let translation: ResourceKey;
+
+  switch (language) {
+    case "en": {
+      switch (namespace) {
+        // for apps
+        case "<workspace_name>": {
+          translation = await import("#translation/en.json");
+          break;
+        }
+
+        default: {
+          throw new Error(
+            `Unknown translation namespace "${namespace satisfies never}"`,
+          );
+        }
+      }
+    }
+
+    default: {
+      throw new Error(`Unknown language "${language satisfies never}".`);
+    }
+  }
+
+  return translation;
+}
+```
+
+It is important to write dynamic imports in this static manner, this way any bundler can statically optimize them for lazy loading and non-bundled apps can load them as is. Any smart trick is either non-portable due to dependency on a specific bundler, such as `require.context()` or opts out of bundler optimizations in case of storing namespace/locale name pairs in the object and then accessing them dynamically.\
+It does suck the function has to be expanded manually, hence why it is written in a separate file at least.
+
+Now create actual file implementing `IGetTranslationFunction`:\
+`/src/translation/lib.ts`
+
+```typescript
+import i18next, { type InitOptions, type Resource } from "i18next";
+import resourcesToBackend from "i18next-resources-to-backend";
+import { fetchTranslation } from "./fetch-translation";
+
+const DEFAULT_LANGUAGE = "en";
+const SUPPORTED_LANGUAGES = ["en"];
+const DEFAULT_NAMESPACES = ["translation"];
+type ILocale = (typeof SUPPORTED_LANGUAGES)[number];
+
+i18next
+  .use(resourcesToBackend(fetchTranslation))
+  .on("failedLoading", (_language, _namespace, message) =>
+    console.error(message),
+  );
+
+const options = {
+  supportedLngs: SUPPORTED_LANGUAGES,
+  load: "currentOnly",
+  ns: DEFAULT_NAMESPACES,
+  fallbackLng: DEFAULT_LANGUAGE,
+  returnEmptyString: false,
+  returnNull: false,
+} satisfies InitOptions;
+
+export async function getTranslation(language: ILocale): Promise<Resource> {
+  if (!i18next.isInitialized) {
+    await i18next.init({ ...options });
+  }
+
+  await i18next.changeLanguage(language);
+  await i18next.loadNamespaces(DEFAULT_NAMESPACES);
+
+  return i18next.store.data;
+}
+```
+Reexport `getTranslation()` from `/src/translation/lib/index.ts`.
+
+Again, due to singleton nature of `i18next`, we can't write "pure" functions which return some resources according to locale, so it has to manipulate `i18next` object as a side effect.
+
+This is a very basic setup, which gets more complicated according to needs of the end apps, so they will have separate articles.
+
+[1]: https://github.com/8546082/370316758

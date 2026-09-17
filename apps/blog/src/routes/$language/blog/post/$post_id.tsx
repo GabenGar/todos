@@ -16,7 +16,9 @@ interface IProps {
 function PostOverviewPage() {
   const { t } = useTranslation();
   const { post } = Route.useLoaderData();
-  const title = createMetaTitle(t((t) => t.page.post.title));
+  const title = createMetaTitle(
+    t((t) => t.page.post.title, { post_title: post.title }),
+  );
   const heading = t((t) => t.page.post.heading);
 
   return (
