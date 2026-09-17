@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly SITE_TITLE: string
+  readonly SITE_TITLE: string;
 }
 
 interface ImportMeta {

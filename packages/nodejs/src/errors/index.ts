@@ -1,2 +1,2 @@
-export { isError, validateError } from "./lib.js"
-export { UnknownError } from "./unknown.js"
+export { isError, validateError } from "./lib.js";
+export { UnknownError } from "./unknown.js";

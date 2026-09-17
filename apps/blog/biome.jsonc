@@ -3,9 +3,18 @@
   "root": false,
   "extends": ["@repo/biome-config/base", "@repo/biome-config/react"],
   "files": {
-    "includes": ["**", "!**/node_modules", "!**/.tanstack", "!!**/dist"]
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**//src/routeTree.gen.ts",
+      "!**/.tanstack",
+      "!!**/dist"
+    ]
   },
   "linter": {
     "includes": ["**", "!**/src/routeTree.gen.ts", "!**/src/env.d.ts"]
+  },
+  "formatter": {
+    "includes": ["**", "!**/src/routeTree.gen.ts"]
   }
 }

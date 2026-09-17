@@ -70,7 +70,8 @@
     "js/ts.preferences.preferTypeOnlyAutoImports": true,
     "js/ts.preferences.jsxAttributeCompletionStyle": "braces",
     "json.schemaDownload.trustedDomains": {
-      "https://v2-8-20.turborepo.dev/schema.json": true
+      "https://v2-8-20.turborepo.dev/schema.json": true,
+      "https://biomejs.dev/schemas/2.4.4/schema.json": true
     },
     // redeclaring settings for markdown because defaults overwrite
     // the top level setting

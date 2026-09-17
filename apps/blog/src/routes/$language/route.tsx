@@ -1,8 +1,4 @@
-import {
-  createFileRoute,
-  Outlet,
-  useLocation,
-} from "@tanstack/react-router";
+import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { useSSR } from "react-i18next";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Language, LanguageSwitcher } from "@repo/ui/internationalization";

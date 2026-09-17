@@ -4,7 +4,7 @@ import { type ILinkProps, Link } from "./link";
 
 import styles from "./button.module.scss";
 
-export type ILinkButtonProps = ILinkProps
+export type ILinkButtonProps = ILinkProps;
 
 export const LinkButton = createBlockComponent(styles.block, Component);
 
