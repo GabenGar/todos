@@ -41,11 +41,14 @@ export function BlogPostOverview({ post, ...props }: IProps) {
                 dValue={<EntityID entityID={id} />}
                 isKeyPreformatted
               />
-              <DescriptionSection
-                dKey={t((t) => t.entities["blog-post"]["created-at"])}
-                dValue={<DateTimeView dateTime={created_at} />}
-                isKeyPreformatted
-              />
+
+              {!created_at ? undefined : (
+                <DescriptionSection
+                  dKey={t((t) => t.entities["blog-post"]["created-at"])}
+                  dValue={<DateTimeView dateTime={created_at} />}
+                  isKeyPreformatted
+                />
+              )}
 
               {!published_at ? (
                 <DescriptionSection
@@ -60,12 +63,7 @@ export function BlogPostOverview({ post, ...props }: IProps) {
                 />
               )}
 
-              {!edited_at ? (
-                <DescriptionSection
-                  dKey={t((t) => t.entities["blog-post"]["edited-at"])}
-                  isKeyPreformatted
-                />
-              ) : (
+              {edited_at === published_at ? undefined : (
                 <DescriptionSection
                   dKey={t((t) => t.entities["blog-post"]["edited-at"])}
                   dValue={<DateTimeView dateTime={edited_at} />}

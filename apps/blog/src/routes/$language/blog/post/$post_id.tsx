@@ -17,7 +17,7 @@ function PostOverviewPage() {
   const { t } = useTranslation();
   const { post } = Route.useLoaderData();
   const title = createMetaTitle(
-    t((t) => t.page.post.title, { post_title: post.title }),
+    t((t) => t.page.post.title, { post_title: post.title, post_id: post.id }),
   );
   const heading = t((t) => t.page.post.heading);
 

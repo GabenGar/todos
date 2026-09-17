@@ -2,7 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { createServerFn } from "@tanstack/react-start";
 import extractGrayMatter from "gray-matter";
-import type { ILocale } from "#translation/lib";
+import { IS_DEVELOPMENT } from "#environment";
+import type { ILocale } from "#translation";
 import { getBlogsFolderPath } from "./lib";
 import type { IBlogPostItem, IBlogPostPreview } from "./types";
 
@@ -13,7 +14,12 @@ interface IData {
 interface IMeta
   extends Pick<
     IBlogPostPreview,
-    "title" | "description" | "created_at" | "edited_at" | "published_at"
+    | "title"
+    | "description"
+    | "created_at"
+    | "edited_at"
+    | "published_at"
+    | "version"
   > {}
 
 export const getBlogPosts = createServerFn({ method: "GET" })
@@ -52,19 +58,30 @@ async function getBlogPostsInfo(
   const previews: IBlogPostPreview[] = [];
 
   for await (const id of ids) {
-    const blogPostFilePath = path.join(getBlogsFolderPath(), id, `${language}.md`);
+    const blogPostFilePath = path.join(
+      getBlogsFolderPath(),
+      id,
+      `${language}.md`,
+    );
 
     try {
       const markdownContent = await fs.readFile(blogPostFilePath, {
         encoding: "utf8",
       });
-      const { title, description, created_at, edited_at, published_at } =
-        extractGrayMatter(markdownContent).data as IMeta;
+      const {
+        title,
+        description,
+        created_at,
+        edited_at,
+        published_at,
+        version,
+      } = extractGrayMatter(markdownContent).data as IMeta;
       const preview: IBlogPostPreview = {
         id,
         title,
         description,
-        created_at,
+        version,
+        created_at: !IS_DEVELOPMENT ? undefined : created_at,
         edited_at,
         published_at,
       };

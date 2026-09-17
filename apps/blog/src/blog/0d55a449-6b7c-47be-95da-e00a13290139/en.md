@@ -3,8 +3,8 @@ title: "Translations in a Javascript Monorepo"
 description: "A step-by-step guide on implementing translations in a monorepo."
 version: 1
 created_at: "2026-04-01T16:37:05.718Z"
-edited_at: "2026-04-01T16:37:05.718Z"
-published_at: "2026-04-01T16:37:05.718Z"
+published_at: "2026-09-17T16:53:38.747Z"
+edited_at: "2026-09-17T16:53:38.747Z"
 ---
 
 ## Introduction

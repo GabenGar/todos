@@ -4,6 +4,7 @@ import { getSystemErrorName } from "node:util";
 import { createServerFn } from "@tanstack/react-start";
 import extractGrayMatter from "gray-matter";
 import { isFileSystemError } from "@repo/nodejs/fs";
+import { IS_DEVELOPMENT } from "#environment";
 import type { ILocale } from "#translation";
 import { getBlogsFolderPath } from "./lib";
 import type { IBlogPostOverview, IBlogPostPreview } from "./types";
@@ -16,7 +17,12 @@ interface IData {
 interface IMeta
   extends Pick<
     IBlogPostPreview,
-    "title" | "description" | "created_at" | "edited_at" | "published_at"
+    | "title"
+    | "description"
+    | "created_at"
+    | "edited_at"
+    | "published_at"
+    | "version"
   > {}
 
 export const getBlogPostOverview = createServerFn({ method: "GET" })
@@ -46,15 +52,16 @@ export const getBlogPostOverview = createServerFn({ method: "GET" })
         );
       }
     }
-    
+
     const result = extractGrayMatter(markdownContent);
-    const { title, description, created_at, edited_at, published_at } =
+    const { title, description, created_at, edited_at, published_at, version } =
       result.data as IMeta;
     const overview: IBlogPostOverview = {
       id,
       title,
       description,
-      created_at,
+      version,
+      created_at: !IS_DEVELOPMENT ? undefined : created_at,
       edited_at,
       published_at,
       content: result.content,

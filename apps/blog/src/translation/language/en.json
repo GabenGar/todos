@@ -28,7 +28,7 @@
       "no-posts-found": "No blog posts found."
     },
     "post": {
-      "title": "Blog post \"{{post_title}}\"",
+      "title": "Blog post \"{{post_title}}\" ({{post_id}})",
       "heading": "Blog Post",
       "no-post-found": "No blog post found."
     }
