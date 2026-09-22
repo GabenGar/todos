@@ -17,7 +17,7 @@ import styles from "./list.module.scss";
 
 interface IProps
   extends IBaseComponentPropsWithChildren<"div">,
-    Pick<IPaginationProps, "pagination" | "buildURL" | "LinkButtonComponent"> {
+    Pick<IPaginationProps, "pagination" | "buildURL" | "internalLinkElement"> {
   sortingOrder?: "ascending" | "descending";
   noItemsElement?: ReactNode;
 }
@@ -30,7 +30,7 @@ export const PreviewList = createBlockComponent(styles, Component);
 function Component({
   pagination,
   buildURL,
-  LinkButtonComponent,
+  internalLinkElement,
   sortingOrder = "ascending",
   noItemsElement,
   children,
@@ -61,7 +61,7 @@ function Component({
             className={styles.pagination}
             pagination={pagination}
             buildURL={buildURL}
-            LinkButtonComponent={LinkButtonComponent}
+            internalLinkElement={internalLinkElement}
           />
         </>
       )}

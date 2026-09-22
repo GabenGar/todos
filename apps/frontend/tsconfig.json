@@ -11,6 +11,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "types": [],
     // adding webworker there to have IDE support for service worker file
     // otherwise nextjs overwrites the config file
     // when used with project references

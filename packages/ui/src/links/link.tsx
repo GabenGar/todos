@@ -1,17 +1,18 @@
-import type { ReactElement } from "react";
+import type { ReactNode } from "react";
 import { type ILinkExternalProps, LinkExternal } from "./external";
 import { type ILinkInternalProps, LinkInternal } from "./internal";
 
 const linkTypes = ["internal", "external"] as const;
 type ILinkType = (typeof linkTypes)[number];
+
 export interface ILinkElementProps {
   className?: string;
-  children?: ReactElement;
-  internalLinkElement?: (props: ILinkElementProps) => ReactElement;
+  children?: ReactNode;
 }
 
-export type ILinkProps = ILinkElementProps &
-  (ILinkExternalProps | ILinkInternalProps);
+export type ILinkProps = {
+  internalLinkElement?: (props: ILinkElementProps) => ReactNode;
+} & (ILinkExternalProps | ILinkInternalProps);
 
 export function Link(props: ILinkProps) {
   if (
@@ -19,9 +20,8 @@ export function Link(props: ILinkProps) {
     props.internalLinkElement !== undefined
   ) {
     const { internalLinkElement, className, children } = props;
-    const restProps = { className, children };
 
-    return internalLinkElement(restProps);
+    return internalLinkElement({ className, children });
   }
 
   const linkType = guessLinkType(props.href);

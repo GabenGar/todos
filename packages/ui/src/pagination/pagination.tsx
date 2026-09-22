@@ -1,5 +1,5 @@
-import type { CSSProperties } from "react";
-import { LinkButton } from "#links";
+import type { CSSProperties, ReactNode } from "react";
+import { type ILinkElementProps, LinkButton } from "#links";
 import { type IUnorderedListProps, List, ListItem } from "#lists";
 import { createBlockComponent } from "#meta";
 import { BIGINT_ONE, BIGINT_ZERO } from "#numbers/bigint";
@@ -12,11 +12,21 @@ import styles from "./pagination.module.scss";
 export interface IPaginationProps extends IUnorderedListProps {
   pagination: IPagination;
   buildURL: (page: string) => string;
+  internalLinkElement?: (props: ILinkInternalElementProps) => ReactNode;
+}
+
+interface ILinkInternalElementProps extends ILinkElementProps {
+  page: string;
 }
 
 export const Pagination = createBlockComponent(styles, Component);
 
-function Component({ pagination, buildURL, ...props }: IPaginationProps) {
+function Component({
+  pagination,
+  buildURL,
+  internalLinkElement,
+  ...props
+}: IPaginationProps) {
   const { current_page, total_pages } = pagination;
   const parsedCurrentPage = BigInt(current_page);
   const parsedTotalPages = BigInt(total_pages);
@@ -45,12 +55,12 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>|&lt;</span> <span>{first}</span>
           </span>
         ) : (
-          // @ts-expect-error no idea why it is upset
           <LinkButton
-
             href={buildURL(String(BIGINT_ONE))}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({ ...props, page: String(BIGINT_ONE) })
+            }
             className={styles.button}
-            // internalLinkElement={}
           >
             <span>|&lt;</span> <span>{first}</span>
           </LinkButton>
@@ -63,10 +73,15 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>&lt;</span> <span>{previous}</span>
           </span>
         ) : (
-          // @ts-expect-error no idea why it is upset
           <LinkButton
             href={buildURL(String(parsedCurrentPage - BIGINT_ONE))}
             className={styles.button}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({
+                ...props,
+                page: String(parsedCurrentPage - BIGINT_ONE),
+              })
+            }
           >
             <span>&lt;</span> <span>{previous}</span>
           </LinkButton>
@@ -83,10 +98,15 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>&gt;</span> <span>{next}</span>
           </span>
         ) : (
-          // @ts-expect-error no idea why it is upset
           <LinkButton
             href={buildURL(String(parsedCurrentPage + BIGINT_ONE))}
             className={styles.button}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({
+                ...props,
+                page: String(parsedCurrentPage + BIGINT_ONE),
+              })
+            }
           >
             <span>&gt;</span> <span>{next}</span>
           </LinkButton>
@@ -99,8 +119,16 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>&gt;|</span> <span>{last}</span>
           </span>
         ) : (
-          // @ts-expect-error no idea why it is upset
-          <LinkButton href={buildURL(total_pages)} className={styles.button}>
+          <LinkButton
+            href={buildURL(total_pages)}
+            className={styles.button}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({
+                ...props,
+                page: total_pages,
+              })
+            }
+          >
             <span>&gt;|</span> <span>{last}</span>
           </LinkButton>
         )}

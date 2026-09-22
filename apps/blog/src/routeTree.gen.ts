@@ -10,13 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as BaseRouteImport } from './routes/_base'
-import { Route as LanguageRouteRouteImport } from './routes/$language/route'
 import { Route as BaseIndexRouteImport } from './routes/_base.index'
-import { Route as LanguageIndexRouteImport } from './routes/$language/index'
-import { Route as LanguageBlogPostsPageRouteImport } from './routes/$language/blog/posts/$page'
-import { Route as LanguageBlogPostPost_idRouteImport } from './routes/$language/blog/post/$post_id'
-import { Route as LanguageBlogAuthorsPageRouteImport } from './routes/$language/blog/authors/$page'
 import { Route as LanguageBlogAuthorPageRouteImport } from './routes/$language/blog/author/$page'
+import { Route as LanguageBlogAuthorsPageRouteImport } from './routes/$language/blog/authors/$page'
+import { Route as LanguageBlogPostPost_idRouteImport } from './routes/$language/blog/post/$post_id'
+import { Route as LanguageBlogPostsPageRouteImport } from './routes/$language/blog/posts/$page'
+import { Route as LanguageIndexRouteImport } from './routes/$language/index'
+import { Route as LanguageRouteRouteImport } from './routes/$language/route'
 
 const BaseRoute = BaseRouteImport.update({
   id: '/_base',
@@ -222,6 +222,7 @@ export const routeTree = rootRouteImport
 
 import type { getRouter } from './router.tsx'
 import type { startInstance } from './start.ts'
+
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
