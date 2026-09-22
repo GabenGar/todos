@@ -7,21 +7,17 @@ type ILinkType = (typeof linkTypes)[number];
 export interface ILinkElementProps {
   className?: string;
   children?: ReactElement;
+  internalLinkElement?: (props: ILinkElementProps) => ReactElement;
 }
 
 export type ILinkProps = ILinkElementProps &
-  (
-    | ILinkExternalProps
-    | (
-        | {
-            internalLinkElement: (props: ILinkElementProps) => ReactElement;
-          }
-        | ILinkInternalProps
-      )
-  );
+  (ILinkExternalProps | ILinkInternalProps);
 
 export function Link(props: ILinkProps) {
-  if ("internalLinkElement" in props) {
+  if (
+    "internalLinkElement" in props &&
+    props.internalLinkElement !== undefined
+  ) {
     const { internalLinkElement, className, children } = props;
     const restProps = { className, children };
 

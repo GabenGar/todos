@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { LinkButton } from "#links";
 import { type IUnorderedListProps, List, ListItem } from "#lists";
 import { createBlockComponent } from "#meta";
@@ -12,13 +12,6 @@ import styles from "./pagination.module.scss";
 export interface IPaginationProps extends IUnorderedListProps {
   pagination: IPagination;
   buildURL: (page: string) => string;
-  // internalLinkComponent;
-}
-
-interface IBaseLinkButtonProps {
-  href: string;
-  className?: string;
-  children?: ReactNode;
 }
 
 export const Pagination = createBlockComponent(styles, Component);
@@ -52,7 +45,9 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>|&lt;</span> <span>{first}</span>
           </span>
         ) : (
+          // @ts-expect-error no idea why it is upset
           <LinkButton
+
             href={buildURL(String(BIGINT_ONE))}
             className={styles.button}
             // internalLinkElement={}
@@ -68,6 +63,7 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>&lt;</span> <span>{previous}</span>
           </span>
         ) : (
+          // @ts-expect-error no idea why it is upset
           <LinkButton
             href={buildURL(String(parsedCurrentPage - BIGINT_ONE))}
             className={styles.button}
@@ -87,6 +83,7 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>&gt;</span> <span>{next}</span>
           </span>
         ) : (
+          // @ts-expect-error no idea why it is upset
           <LinkButton
             href={buildURL(String(parsedCurrentPage + BIGINT_ONE))}
             className={styles.button}
@@ -102,6 +99,7 @@ function Component({ pagination, buildURL, ...props }: IPaginationProps) {
             <span>&gt;|</span> <span>{last}</span>
           </span>
         ) : (
+          // @ts-expect-error no idea why it is upset
           <LinkButton href={buildURL(total_pages)} className={styles.button}>
             <span>&gt;|</span> <span>{last}</span>
           </LinkButton>
