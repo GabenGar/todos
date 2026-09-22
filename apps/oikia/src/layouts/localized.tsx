@@ -48,7 +48,14 @@ export function LocalizedLayout({ loaderData }: Route.ComponentProps) {
                 currentLocale={language}
                 currentURL={currentURL}
                 getLocalizedURL={getLocalizedURL}
-                InternalLinkComponent={LinkInternal}
+                internalLinkElement={({ className, children, language }) => (
+                  <LinkInternal
+                    className={className}
+                    href={href("/:language", { language })}
+                  >
+                    {children}
+                  </LinkInternal>
+                )}
               />
             </ListItem>
           </List>
