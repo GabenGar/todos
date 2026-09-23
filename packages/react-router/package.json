@@ -8,7 +8,7 @@
     "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit"
   },
   "exports": {
-    "./translation/lib": "./src/translation/lib/index.ts",
+    "./translation": "./src/translation/lib/index.ts",
     "./translation/*": "./src/translation/language/*",
     "./*": "./src/*/index.ts"
   },

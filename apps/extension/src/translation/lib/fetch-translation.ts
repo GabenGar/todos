@@ -1,6 +1,6 @@
 import type { ResourceKey } from "i18next";
-import { fetchTranslation as fetchReactRouterTranslation } from "@repo/react-router/translation/lib";
-import { fetchUITranslation } from "@repo/ui/internationalization";
+import { fetchTranslation as fetchReactRouterTranslation } from "@repo/react-router/translation";
+import { fetchUITranslation } from "@repo/ui/translation";
 import type { ILocale, INameSpace } from "./types";
 
 export async function fetchTranslation(

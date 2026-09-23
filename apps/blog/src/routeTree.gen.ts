@@ -9,42 +9,37 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LanguageRouteRouteImport } from './routes/$language/route'
 import { Route as BaseRouteImport } from './routes/_base'
+import { Route as LanguageIndexRouteImport } from './routes/$language/index'
 import { Route as BaseIndexRouteImport } from './routes/_base.index'
 import { Route as LanguageBlogAuthorPageRouteImport } from './routes/$language/blog/author/$page'
 import { Route as LanguageBlogAuthorsPageRouteImport } from './routes/$language/blog/authors/$page'
 import { Route as LanguageBlogPostPost_idRouteImport } from './routes/$language/blog/post/$post_id'
 import { Route as LanguageBlogPostsPageRouteImport } from './routes/$language/blog/posts/$page'
-import { Route as LanguageIndexRouteImport } from './routes/$language/index'
-import { Route as LanguageRouteRouteImport } from './routes/$language/route'
 
-const BaseRoute = BaseRouteImport.update({
-  id: '/_base',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LanguageRouteRoute = LanguageRouteRouteImport.update({
   id: '/$language',
   path: '/$language',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BaseIndexRoute = BaseIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BaseRoute,
+const BaseRoute = BaseRouteImport.update({
+  id: '/_base',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LanguageIndexRoute = LanguageIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LanguageRouteRoute,
 } as any)
-const LanguageBlogPostsPageRoute = LanguageBlogPostsPageRouteImport.update({
-  id: '/blog/posts/$page',
-  path: '/blog/posts/$page',
-  getParentRoute: () => LanguageRouteRoute,
+const BaseIndexRoute = BaseIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BaseRoute,
 } as any)
-const LanguageBlogPostPost_idRoute = LanguageBlogPostPost_idRouteImport.update({
-  id: '/blog/post/$post_id',
-  path: '/blog/post/$post_id',
+const LanguageBlogAuthorPageRoute = LanguageBlogAuthorPageRouteImport.update({
+  id: '/blog/author/$page',
+  path: '/blog/author/$page',
   getParentRoute: () => LanguageRouteRoute,
 } as any)
 const LanguageBlogAuthorsPageRoute = LanguageBlogAuthorsPageRouteImport.update({
@@ -52,9 +47,14 @@ const LanguageBlogAuthorsPageRoute = LanguageBlogAuthorsPageRouteImport.update({
   path: '/blog/authors/$page',
   getParentRoute: () => LanguageRouteRoute,
 } as any)
-const LanguageBlogAuthorPageRoute = LanguageBlogAuthorPageRouteImport.update({
-  id: '/blog/author/$page',
-  path: '/blog/author/$page',
+const LanguageBlogPostPost_idRoute = LanguageBlogPostPost_idRouteImport.update({
+  id: '/blog/post/$post_id',
+  path: '/blog/post/$post_id',
+  getParentRoute: () => LanguageRouteRoute,
+} as any)
+const LanguageBlogPostsPageRoute = LanguageBlogPostsPageRouteImport.update({
+  id: '/blog/posts/$page',
+  path: '/blog/posts/$page',
   getParentRoute: () => LanguageRouteRoute,
 } as any)
 
@@ -123,13 +123,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_base': {
-      id: '/_base'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof BaseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/$language': {
       id: '/$language'
       path: '/$language'
@@ -137,12 +130,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_base/': {
-      id: '/_base/'
-      path: '/'
+    '/_base': {
+      id: '/_base'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof BaseIndexRouteImport
-      parentRoute: typeof BaseRoute
+      preLoaderRoute: typeof BaseRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/$language/': {
       id: '/$language/'
@@ -151,18 +144,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageIndexRouteImport
       parentRoute: typeof LanguageRouteRoute
     }
-    '/$language/blog/posts/$page': {
-      id: '/$language/blog/posts/$page'
-      path: '/blog/posts/$page'
-      fullPath: '/$language/blog/posts/$page'
-      preLoaderRoute: typeof LanguageBlogPostsPageRouteImport
-      parentRoute: typeof LanguageRouteRoute
+    '/_base/': {
+      id: '/_base/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof BaseIndexRouteImport
+      parentRoute: typeof BaseRoute
     }
-    '/$language/blog/post/$post_id': {
-      id: '/$language/blog/post/$post_id'
-      path: '/blog/post/$post_id'
-      fullPath: '/$language/blog/post/$post_id'
-      preLoaderRoute: typeof LanguageBlogPostPost_idRouteImport
+    '/$language/blog/author/$page': {
+      id: '/$language/blog/author/$page'
+      path: '/blog/author/$page'
+      fullPath: '/$language/blog/author/$page'
+      preLoaderRoute: typeof LanguageBlogAuthorPageRouteImport
       parentRoute: typeof LanguageRouteRoute
     }
     '/$language/blog/authors/$page': {
@@ -172,11 +165,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageBlogAuthorsPageRouteImport
       parentRoute: typeof LanguageRouteRoute
     }
-    '/$language/blog/author/$page': {
-      id: '/$language/blog/author/$page'
-      path: '/blog/author/$page'
-      fullPath: '/$language/blog/author/$page'
-      preLoaderRoute: typeof LanguageBlogAuthorPageRouteImport
+    '/$language/blog/post/$post_id': {
+      id: '/$language/blog/post/$post_id'
+      path: '/blog/post/$post_id'
+      fullPath: '/$language/blog/post/$post_id'
+      preLoaderRoute: typeof LanguageBlogPostPost_idRouteImport
+      parentRoute: typeof LanguageRouteRoute
+    }
+    '/$language/blog/posts/$page': {
+      id: '/$language/blog/posts/$page'
+      path: '/blog/posts/$page'
+      fullPath: '/$language/blog/posts/$page'
+      preLoaderRoute: typeof LanguageBlogPostsPageRouteImport
       parentRoute: typeof LanguageRouteRoute
     }
   }
@@ -222,7 +222,6 @@ export const routeTree = rootRouteImport
 
 import type { getRouter } from './router.tsx'
 import type { startInstance } from './start.ts'
-
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true

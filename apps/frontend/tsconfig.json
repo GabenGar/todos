@@ -1,4 +1,8 @@
 {
+  // apparently this bails out of whatever config rewriting
+  // nextjs does
+  // https://github.com/vercel/next.js/discussions/39942#discussioncomment-16676508
+  "references": [],
   "compilerOptions": {
     "checkJs": true,
     "skipLibCheck": true,
@@ -15,7 +19,7 @@
     // https://github.com/vercel/next.js/discussions/70165
     // did not fix it
     "noUncheckedSideEffectImports": false,
-    "types": [],
+    "types": ["node"],
     // adding webworker there to have IDE support for service worker file
     // otherwise nextjs overwrites the config file
     // when used with project references
