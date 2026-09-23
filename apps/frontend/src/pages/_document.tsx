@@ -1,6 +1,6 @@
 import { Head, Html, Main, NextScript } from "next/document";
 import { SITE_BASE_PATHNAME } from "#environment";
-import { DEFAULT_LOCALE } from "#lib/internationalization";
+import { DEFAULT_LOCALE } from "#translation";
 
 const manifestURL = `${SITE_BASE_PATHNAME}/manifest.json`;
 

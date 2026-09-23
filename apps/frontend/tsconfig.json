@@ -11,6 +11,10 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // updating over 1.6.2 as per this discussion:
+    // https://github.com/vercel/next.js/discussions/70165
+    // did not fix it
+    "noUncheckedSideEffectImports": false,
     "types": [],
     // adding webworker there to have IDE support for service worker file
     // otherwise nextjs overwrites the config file

@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef, JSX, ReactNode } from "react";
-import type { ILocale } from "#lib/internationalization";
+import type { ILocale } from "#translation";
 
 /**
  * Base props for components.

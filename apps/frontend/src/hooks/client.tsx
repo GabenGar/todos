@@ -8,7 +8,6 @@ import {
 } from "react";
 import { registerServiceWorker } from "#browser/workers";
 import { DEFAULT_LOG_LEVEL } from "#environment";
-import type { ILocale } from "#lib/internationalization";
 import {
   changeCurrentLogLevel,
   type ILogLevel,
@@ -16,6 +15,7 @@ import {
 } from "#lib/logs";
 import { isIndexedDBAvailable } from "#store/indexed";
 import { createLocalStorage, isLocalStorageAvailable } from "#store/local";
+import type { ILocale } from "#translation";
 import { IndexedDBProvider } from "./indexed-db";
 
 type IClientContext =

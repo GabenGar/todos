@@ -6,7 +6,7 @@ import { ErrorBoundary } from "#components/errors";
 import { type AppPropsWithLayout, MainLayout } from "#components/pages/layouts";
 import { IS_BROWSER } from "#environment";
 import { ClientProvider, ServiceWorkerProvider } from "#hooks";
-import { initClientTranslation } from "#lib/internationalization";
+import { initClientTranslation } from "#translation";
 
 function App({ Component, pageProps, ...appProps }: AppPropsWithLayout) {
   if (!Component.getLayout) {

@@ -1,6 +1,6 @@
 import type { GetStaticProps, GetStaticPropsContext } from "next";
-import { getTranslation, type IPageNamespace } from "#lib/internationalization";
 import type { ILocalizedParams, ILocalizedProps } from "#lib/pages";
+import { getTranslation, type IPageNamespace } from "#translation";
 
 export function createGetStaticProps<
   Props extends ILocalizedProps,

@@ -5,7 +5,7 @@ import {
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
 import { PreviewList } from "@repo/ui/previews";
-import { LinkButton } from "#components/link";
+import { LinkInternal } from "#components/link";
 import { runTransaction } from "#database";
 import {
   type IAccountDBPreview,
@@ -41,7 +41,6 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
   return (
     <Page heading={heading} title={title}>
       <PreviewList
-        LinkButtonComponent={LinkButton}
         noItemsElement={t((t) => t.pages.accounts["No accounts found."])}
         pagination={pagination}
         buildURL={(page) =>
@@ -50,6 +49,17 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
             page,
           })
         }
+        internalLinkElement={({ page, children, className }) => (
+          <LinkInternal
+            className={className}
+            href={href("/:language/account/role/administrator/accounts/:page", {
+              language,
+              page,
+            })}
+          >
+            {children}
+          </LinkInternal>
+        )}
       >
         {items.map((account) => (
           <AccountPreview

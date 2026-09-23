@@ -1,8 +1,5 @@
 import { useTranslation as useBaseTranslation } from "react-i18next";
-import type {
-  IDefaultNamespace,
-  IPageNamespace,
-} from "#lib/internationalization";
+import type { IDefaultNamespace, IPageNamespace } from "#translation";
 
 export function useTranslation<DefaultNamespace extends IDefaultNamespace>(
   namespace: DefaultNamespace,

@@ -6,7 +6,7 @@ import { Link } from "#components/link";
 import { List, ListItem } from "#components/list";
 import { REPOSITORY_URL } from "#environment";
 import { ClientProvider, useServiceWorker } from "#hooks";
-import type { ILocale } from "#lib/internationalization";
+import type { ILocale } from "#translation";
 //
 
 import styles from "./main.module.scss";

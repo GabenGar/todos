@@ -1,6 +1,6 @@
 import type { ParsedUrlQuery } from "node:querystring";
 import type { Resource } from "i18next";
-import type { ILocale } from "#lib/internationalization";
+import type { ILocale } from "#translation";
 
 export interface ILocalizedParams extends ParsedUrlQuery {
   lang: ILocale;

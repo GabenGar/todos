@@ -7,8 +7,8 @@ import { List, ListItem } from "#components/list";
 import { Overview, OverviewBody } from "#components/overview";
 import { RootLayout } from "#components/pages/layouts";
 import { SITE_TITLE } from "#environment";
-import { type ILocale, LOCALES } from "#lib/internationalization";
 import { createHomePageURL } from "#lib/urls";
+import { type ILocale, LOCALES } from "#translation";
 //
 
 import styles from "./index.module.scss";

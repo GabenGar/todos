@@ -1,5 +1,5 @@
 import type { ResourceKey } from "i18next";
-import { fetchUITranslation } from "@repo/ui/internationalization";
+import { fetchUITranslation } from "@repo/ui/translation";
 import { fetchPageTranslation } from "./fetch-page-translation";
 import type { ILocale, INameSpace } from "./types";
 
