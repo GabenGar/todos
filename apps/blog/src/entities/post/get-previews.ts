@@ -87,8 +87,9 @@ async function getBlogPostsInfo(
       };
 
       previews.push(preview);
-    } catch (_error) {
-      // @TODO filter for ENOENT error
+    } catch (error) {
+      // biome-ignore lint/complexity/noUselessCatch: bleh
+      throw error;
     }
   }
 

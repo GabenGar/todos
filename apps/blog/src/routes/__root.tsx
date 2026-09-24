@@ -17,6 +17,7 @@ import {
   getTranslation,
   type ILocale,
   initClientTranslation,
+  isSupportedLanguage,
 } from "#translation";
 
 interface IRootContext {
@@ -65,7 +66,14 @@ function RootDocument({ children }: Readonly<IRootDocumentProps>) {
 
 export const Route = createRootRouteWithContext<IRootContext>()({
   beforeLoad: async ({ params }) => {
-    const language = (params["language"] as ILocale) ?? DEFAULT_LANGUAGE;
+    let language: ILocale;
+
+    if ("language" in params && isSupportedLanguage(params.language)) {
+      language = params.language;
+    } else {
+      language = DEFAULT_LANGUAGE;
+    }
+
     const translation = await getTranslation(language);
 
     return {
