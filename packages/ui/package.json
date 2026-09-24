@@ -2,6 +2,9 @@
   "name": "@repo/ui",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.23.3"
+  },
   "scripts": {
     "lint": "biome lint",
     "format": "biome format --write",
@@ -38,7 +41,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
     "@repo/biome-config": "*",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.20.4",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "typescript": "^6.0.3"
