@@ -3,6 +3,9 @@
   "version": "0.39.0",
   "description": "NextJS frontend for todo list.",
   "private": true,
+  "engines": {
+    "node": ">=22.23.3"
+  },
   "scripts": {
     "build-pages": "next build --webpack",
     "build-codegen": "cd ./codegen/generators && npm run build",
@@ -57,7 +60,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
     "@repo/biome-config": "*",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.20.4",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@types/stringify-object": "^4.0.5",

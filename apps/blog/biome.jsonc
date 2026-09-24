@@ -6,7 +6,7 @@
     "includes": [
       "**",
       "!**/node_modules",
-      "!**//src/routeTree.gen.ts",
+      "!**/src/routeTree.gen.ts",
       "!**/.tanstack",
       "!!**/dist"
     ]

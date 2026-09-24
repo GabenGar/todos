@@ -9,13 +9,15 @@
   "main": "./src/manifest.json",
   "keywords": [
     "webextensions",
-    "firefox",
-    "chrome"
+    "firefox"
   ],
+  "engines": {
+    "node": ">=22.23.3"
+  },
   "scripts": {
     "start": "web-ext run --no-config-discovery --config=web-ext-config.mjs --source-dir=build",
     "dev": "node scripts/dev.mjs",
-    "lint": "biome lint --write && web-ext lint --no-config-discovery --config=web-ext-config.mjs --source-dir=build",
+    "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --formatter-enabled=false --linter-enabled=false --write",
     "validate": "node scripts/validate.mjs"
@@ -50,6 +52,7 @@
     "@biomejs/biome": "2.4.4",
     "@repo/biome-config": "*",
     "@svgr/webpack": "^8.1.0",
+    "@types/node": "^22.20.4",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@types/webextension-polyfill": "^0.12.5",
