@@ -1,0 +1,36 @@
+{
+  "common": {
+    "layout": {
+      "source-code": "Source code",
+      "client-language": "Client language"
+    }
+  },
+  "entities": {
+    "blog-post": {
+      "id": "ID",
+      "description": "Description",
+      "created-at": "Creation date",
+      "published-at": "Publication date",
+      "edited-at": "Last edit date",
+      "read-more": "Read more"
+    }
+  },
+  "page": {
+    "home": {
+      "title": "Welcome",
+      "heading": "Welcome",
+      "link-posts": "Posts",
+      "link-authors": "Authors"
+    },
+    "posts": {
+      "title": "Blog posts",
+      "heading": "Blog Posts",
+      "no-posts-found": "No blog posts found."
+    },
+    "post": {
+      "title": "Blog post \"{{post_title}}\" ({{post_id}})",
+      "heading": "Blog Post",
+      "no-post-found": "No blog post found."
+    }
+  }
+}

@@ -9,6 +9,10 @@
       "path": "apps/frontend"
     },
     {
+      "name": "blog",
+      "path": "apps/blog"
+    },
+    {
       "name": "link-overwatch",
       "path": "apps/extension"
     },
@@ -66,7 +70,16 @@
     "js/ts.preferences.preferTypeOnlyAutoImports": true,
     "js/ts.preferences.jsxAttributeCompletionStyle": "braces",
     "json.schemaDownload.trustedDomains": {
-      "https://v2-8-20.turborepo.dev/schema.json": true
+      "https://v2-8-20.turborepo.dev/schema.json": true,
+      "https://biomejs.dev/schemas/2.4.4/schema.json": true
+    },
+    // redeclaring settings for markdown because defaults overwrite
+    // the top level setting
+    "[markdown]": {
+      "editor.unicodeHighlight.ambiguousCharacters": true,
+      "editor.unicodeHighlight.invisibleCharacters": true,
+      "editor.wordWrap": "bounded",
+      "editor.wordWrapColumn": 80
     }
   },
   "extensions": {

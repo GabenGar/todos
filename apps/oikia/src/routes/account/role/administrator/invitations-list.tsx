@@ -6,7 +6,7 @@ import {
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
 import { PreviewList } from "@repo/ui/previews";
-import { LinkButton, LinkInternal } from "#components/link";
+import { LinkInternal } from "#components/link";
 import { runTransaction } from "#database";
 import {
   type IInvitationDB,
@@ -41,7 +41,6 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
   return (
     <Page heading={heading} title={title}>
       <PreviewList
-        LinkButtonComponent={LinkButton}
         noItemsElement={t((t) => t.pages.invitations["No invitations found."])}
         pagination={invitations.pagination}
         buildURL={(page) =>
@@ -50,6 +49,18 @@ function InvitationsListPage({ loaderData }: Route.ComponentProps) {
             page,
           })
         }
+        internalLinkElement={({ page, ...props }) => (
+          <LinkInternal
+            {...props}
+            href={href(
+              "/:language/account/role/administrator/invitations/:page",
+              {
+                language,
+                page,
+              },
+            )}
+          ></LinkInternal>
+        )}
       >
         {invitations.items.map((invitation) => (
           <InvitationPreview

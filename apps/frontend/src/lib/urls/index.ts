@@ -5,7 +5,7 @@ import type {
   IPlannedEventOrder,
 } from "#entities/planned-event";
 import type { ITask } from "#entities/task";
-import type { ILocale } from "#lib/internationalization";
+import type { ILocale } from "#translation";
 import type { IMultiPageParams } from "./types";
 
 export function createRootPageURL(): Route {

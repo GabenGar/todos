@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { createBlockComponent, type IBaseComponentProps } from "@repo/ui/meta";
-import { Button } from "#buttons";
+import { ButtonCopy } from "#buttons";
 import type { IEntityItem } from "#entities";
 import { Preformatted } from "#formatting";
 //
@@ -14,28 +13,10 @@ interface IProps extends IBaseComponentProps<"div"> {
 export const EntityID = createBlockComponent(styles, Component);
 
 function Component({ entityID, ...props }: IProps) {
-  const [isCopied, switchCopiedStatus] = useState(false);
-
   return (
     <div {...props}>
       <Preformatted className={styles.id}>{entityID}</Preformatted>
-      <Button
-        className={styles.button}
-        disabled={isCopied}
-        onClick={async () => {
-          try {
-            await navigator.clipboard.writeText(entityID);
-            switchCopiedStatus(true);
-            setTimeout(() => {
-              switchCopiedStatus(false);
-            }, 3000);
-          } catch (error) {
-            console.error(error);
-          }
-        }}
-      >
-        {!isCopied ? "Copy" : "Copied"}
-      </Button>
+      <ButtonCopy className={styles.button} valueToCopy={entityID} />
     </div>
   );
 }

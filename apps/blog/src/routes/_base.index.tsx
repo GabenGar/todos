@@ -1,0 +1,72 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { parse as parseLocale } from "bcp-47";
+import iso6391 from "iso-639-1";
+import { Overview, OverviewHeader } from "@repo/ui/articles";
+import { LinkButton } from "@repo/ui/links";
+import { List, ListItem } from "@repo/ui/lists";
+import { Page } from "@repo/ui/pages";
+import { LinkInternal } from "#components/links";
+import { SUPPORTED_LANGUAGES } from "#environment";
+import { createMetaTitle } from "#lib/pages";
+import type { ILocale } from "#translation";
+//
+
+import styles from "./_base.index.module.scss";
+
+function LanguageSelectPage() {
+  const title = createMetaTitle();
+  const heading = createMetaTitle();
+
+  return (
+    <Page title={title} heading={heading}>
+      <Overview headingLevel={2}>
+        {() => (
+          <OverviewHeader>
+            <List className={styles.list}>
+              {SUPPORTED_LANGUAGES.map((locale) => (
+                <ListItem key={locale} className={styles.item}>
+                  <LocaleLink locale={locale} />
+                </ListItem>
+              ))}
+            </List>
+          </OverviewHeader>
+        )}
+      </Overview>
+    </Page>
+  );
+}
+
+interface ILocalLinkProps {
+  locale: ILocale;
+}
+
+function LocaleLink({ locale }: ILocalLinkProps) {
+  const language = parseLocale(locale).language;
+
+  if (!language) {
+    throw new Error(`No language was found for locale "${locale}".`);
+  }
+
+  return (
+    <LinkButton
+      internalLinkElement={({ children }) => (
+        <LinkInternal
+          className={styles.link}
+          to={"/$language"}
+          params={{ language }}
+        >
+          {children}
+        </LinkInternal>
+      )}
+    >
+      <span>
+        <span className={styles.language}>{language}</span>{" "}
+        {iso6391.getNativeName(language)} ({iso6391.getName(language)})
+      </span>
+    </LinkButton>
+  );
+}
+
+export const Route = createFileRoute("/_base/")({
+  component: LanguageSelectPage,
+});

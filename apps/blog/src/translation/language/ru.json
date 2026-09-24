@@ -1,0 +1,36 @@
+{
+  "common": {
+    "layout": {
+      "source-code": "Иходный код",
+      "client-language": "Клиентский язык"
+    }
+  },
+  "entities": {
+    "blog-post": {
+      "id": "Идентификатор",
+      "description": "Описание",
+      "created-at": "Дата создания",
+      "published-at": "Дата публикации",
+      "edited-at": "Дата последнего редактирования",
+      "read-more": "Читать дальше"
+    }
+  },
+  "page": {
+    "home": {
+      "title": "Добро пожаловать",
+      "heading": "Добро Пожаловать",
+      "link-posts": "Посты",
+      "link-authors": "Авторы"
+    },
+    "posts": {
+      "title": "Посты блога",
+      "heading": "Посты Блога",
+      "no-posts-found": "Посты не найдены."
+    },
+    "post": {
+      "title": "Пост блога \"{{post_title}}\" ({{post_id}})",
+      "heading": "Пост Блога",
+      "no-post-found": "Пост не найден."
+    }
+  }
+}

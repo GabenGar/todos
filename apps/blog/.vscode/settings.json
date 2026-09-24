@@ -1,0 +1,31 @@
+{
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["**/*.schema.json"],
+      "url": "https://json-schema.org/draft/2020-12/schema"
+    },
+    {
+      "fileMatch": ["src/manifest.json"],
+      "url": "./src/manifest.schema.json"
+    },
+    {
+      "fileMatch": ["src/_locales/*/messages.json"],
+      "url": "./src/_locales.schema.json"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 // @ts-check
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+// import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { merge } from "webpack-merge";
 import commonConfiguration from "./webpack.common.mjs";
 
@@ -13,9 +13,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const prodConfig = {
   mode: "production",
   devtool: "source-map",
-  plugins: [
-    new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: false }),
-  ],
+  // plugins: [
+  //   new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: false }),
+  // ],
   optimization: {
     moduleIds: "deterministic",
     minimize: false,

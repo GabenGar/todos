@@ -51,14 +51,7 @@ export function Form<ActionData>({
   );
 
   return (
-    <div
-      id={id}
-      className={clsx(
-        // @ts-expect-error css modules issue
-        baseFormStyles.block,
-        className,
-      )}
-    >
+    <div id={id} className={clsx(baseFormStyles.block, className)}>
       {isSuccessElementVisible ? (
         <>
           <InputSection>

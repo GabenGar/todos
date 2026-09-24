@@ -1,6 +1,6 @@
 import type { GetStaticPathsResult } from "next";
-import { LOCALES } from "#lib/internationalization";
 import type { ILocalizedParams } from "#lib/pages";
+import { LOCALES } from "#translation";
 
 /**
  * Generates locale path params for the route.

@@ -1,5 +1,6 @@
 import { parse as parseLocale } from "bcp-47";
-import { type ILinkProps, Link } from "#links";
+import type { ReactElement } from "react";
+import { type ILinkElementProps, Link } from "#links";
 import { type IUnorderedListProps, ListItem, ListUnordered } from "#lists";
 import { createBlockComponent } from "#meta";
 import { Language } from "./language";
@@ -7,13 +8,17 @@ import { Language } from "./language";
 
 import styles from "./language-list.module.scss";
 
-export interface ILanguageListProps
-  extends IUnorderedListProps,
-    Pick<ILinkProps, "InternalLinkComponent"> {
+export interface ILanguageListProps extends IUnorderedListProps {
   locales: readonly string[];
   currentLocale: string;
   currentURL: string;
-  getLocalizedURL: (locale: string, currentURL: string) => string;
+  getLocalizedURL: (language: string, currentURL: string) => string;
+  internalLinkElement?: (props: IInternalLinkElementProps) => ReactElement;
+}
+
+interface IInternalLinkElementProps extends ILinkElementProps {
+  language: string;
+  localizedURL: string;
 }
 
 export const LanguageList = createBlockComponent(styles, Component);
@@ -23,7 +28,7 @@ function Component({
   currentLocale,
   currentURL,
   getLocalizedURL,
-  InternalLinkComponent,
+  internalLinkElement,
   ...props
 }: ILanguageListProps) {
   return (
@@ -35,7 +40,7 @@ function Component({
           currentLocale={currentLocale}
           currentURL={currentURL}
           getLocalizedURL={getLocalizedURL}
-          InternalLinkComponent={InternalLinkComponent}
+          internalLinkElement={internalLinkElement}
         />
       ))}
     </ListUnordered>
@@ -45,7 +50,7 @@ function Component({
 interface ILocaleItemsProps
   extends Pick<
     ILanguageListProps,
-    "currentLocale" | "currentURL" | "getLocalizedURL" | "InternalLinkComponent"
+    "currentLocale" | "currentURL" | "getLocalizedURL" | "internalLinkElement"
   > {
   locale: string;
 }
@@ -55,7 +60,7 @@ function LocaleItem({
   currentLocale,
   currentURL,
   getLocalizedURL,
-  InternalLinkComponent,
+  internalLinkElement,
 }: ILocaleItemsProps) {
   // biome-ignore lint/style/noNonNullAssertion: just typescript things
   const language = parseLocale(locale).language!;
@@ -69,7 +74,16 @@ function LocaleItem({
         <Link
           className={styles.link}
           href={href}
-          InternalLinkComponent={InternalLinkComponent}
+          internalLinkElement={
+            !internalLinkElement
+              ? undefined
+              : (props) =>
+                  internalLinkElement({
+                    ...props,
+                    language,
+                    localizedURL: href,
+                  })
+          }
         >
           <Language language={language} />
         </Link>

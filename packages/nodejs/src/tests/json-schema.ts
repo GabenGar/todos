@@ -94,7 +94,6 @@ export async function generateJSONSchemaTests(
 
       throw new Error(
         `Failed to transform schema "${id}" at "${fullPath}" into typescript module.`,
-        // @ts-expect-error Typescript version disagreement
         { cause: error },
       );
     }

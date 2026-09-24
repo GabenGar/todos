@@ -1,0 +1,1 @@
+export { LinkInternal } from "./internal";

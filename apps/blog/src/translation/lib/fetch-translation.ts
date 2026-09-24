@@ -1,6 +1,5 @@
 import type { ResourceKey } from "i18next";
-import { fetchUITranslation } from "@repo/ui/internationalization";
-import { fetchPageTranslation } from "./fetch-page-translation";
+import { fetchUITranslation } from "@repo/ui/translation";
 import type { ILocale, INameSpace } from "./types";
 
 export async function fetchTranslation(
@@ -12,13 +11,8 @@ export async function fetchTranslation(
   switch (language) {
     case "en": {
       switch (namespace) {
-        case "common": {
-          translation = await import("#translation/en/common.json");
-          break;
-        }
-
         case "translation": {
-          translation = await import("#translation/en/translation.json");
+          translation = await import("#translation/en.json");
           break;
         }
 
@@ -28,7 +22,9 @@ export async function fetchTranslation(
         }
 
         default: {
-          translation = await fetchPageTranslation(language, namespace);
+          throw new Error(
+            `Unknown translation namespace "${namespace satisfies never}"`,
+          );
         }
       }
       break;
@@ -36,13 +32,8 @@ export async function fetchTranslation(
 
     case "ru": {
       switch (namespace) {
-        case "common": {
-          translation = await import("#translation/ru/common.json");
-          break;
-        }
-
         case "translation": {
-          translation = await import("#translation/ru/translation.json");
+          translation = await import("#translation/ru.json");
           break;
         }
 
@@ -52,7 +43,9 @@ export async function fetchTranslation(
         }
 
         default: {
-          translation = await fetchPageTranslation(language, namespace);
+          throw new Error(
+            `Unknown translation namespace "${namespace satisfies never}"`,
+          );
         }
       }
       break;

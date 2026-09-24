@@ -9,7 +9,7 @@ import {
   type IPaginatedCollection,
 } from "@repo/ui/pagination";
 import { PreviewList } from "@repo/ui/previews";
-import { LinkButton, LinkInternal } from "#components/link";
+import { LinkInternal } from "#components/link";
 import { runReadOnlyTransaction } from "#database";
 import {
   type IAccountDBPreview,
@@ -73,7 +73,6 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
       </Overview>
 
       <PreviewList
-        LinkButtonComponent={LinkButton}
         noItemsElement={t(
           (t) => t.pages["invited-accounts"]["No accounts found."],
         )}
@@ -88,6 +87,19 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
             },
           )
         }
+        internalLinkElement={({ page, ...props }) => (
+          <LinkInternal
+            {...props}
+            href={href(
+              "/:language/account/role/administrator/invitation/:id/accounts/:page",
+              {
+                language,
+                id: invitation.id,
+                page,
+              },
+            )}
+          />
+        )}
       >
         {accounts.items.map((account) => (
           <AccountPreview

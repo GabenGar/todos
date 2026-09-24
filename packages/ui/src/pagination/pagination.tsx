@@ -1,7 +1,7 @@
-import type { CSSProperties, FunctionComponent, ReactNode } from "react";
-import { LinkButton } from "#links";
-import { List, ListItem } from "#lists";
-import { createBlockComponent, type IBaseComponentProps } from "#meta";
+import type { CSSProperties, ReactNode } from "react";
+import { type ILinkElementProps, LinkButton } from "#links";
+import { type IUnorderedListProps, List, ListItem } from "#lists";
+import { createBlockComponent } from "#meta";
 import { BIGINT_ONE, BIGINT_ZERO } from "#numbers/bigint";
 import { PaginationOverview } from "./overview";
 import type { IPagination } from "./types";
@@ -9,16 +9,14 @@ import type { IPagination } from "./types";
 
 import styles from "./pagination.module.scss";
 
-export interface IPaginationProps extends IBaseComponentProps<"ul"> {
+export interface IPaginationProps extends IUnorderedListProps {
   pagination: IPagination;
   buildURL: (page: string) => string;
-  LinkButtonComponent?: FunctionComponent<IBaseLinkButtonProps>;
+  internalLinkElement?: (props: ILinkInternalElementProps) => ReactNode;
 }
 
-interface IBaseLinkButtonProps {
-  href: string;
-  className?: string;
-  children?: ReactNode;
+interface ILinkInternalElementProps extends ILinkElementProps {
+  page: string;
 }
 
 export const Pagination = createBlockComponent(styles, Component);
@@ -26,7 +24,7 @@ export const Pagination = createBlockComponent(styles, Component);
 function Component({
   pagination,
   buildURL,
-  LinkButtonComponent = LinkButton,
+  internalLinkElement,
   ...props
 }: IPaginationProps) {
   const { current_page, total_pages } = pagination;
@@ -57,12 +55,15 @@ function Component({
             <span>|&lt;</span> <span>{first}</span>
           </span>
         ) : (
-          <LinkButtonComponent
+          <LinkButton
             href={buildURL(String(BIGINT_ONE))}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({ ...props, page: String(BIGINT_ONE) })
+            }
             className={styles.button}
           >
             <span>|&lt;</span> <span>{first}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
 
@@ -72,12 +73,18 @@ function Component({
             <span>&lt;</span> <span>{previous}</span>
           </span>
         ) : (
-          <LinkButtonComponent
+          <LinkButton
             href={buildURL(String(parsedCurrentPage - BIGINT_ONE))}
             className={styles.button}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({
+                ...props,
+                page: String(parsedCurrentPage - BIGINT_ONE),
+              })
+            }
           >
             <span>&lt;</span> <span>{previous}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
 
@@ -91,12 +98,18 @@ function Component({
             <span>&gt;</span> <span>{next}</span>
           </span>
         ) : (
-          <LinkButtonComponent
+          <LinkButton
             href={buildURL(String(parsedCurrentPage + BIGINT_ONE))}
             className={styles.button}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({
+                ...props,
+                page: String(parsedCurrentPage + BIGINT_ONE),
+              })
+            }
           >
             <span>&gt;</span> <span>{next}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
 
@@ -106,12 +119,18 @@ function Component({
             <span>&gt;|</span> <span>{last}</span>
           </span>
         ) : (
-          <LinkButtonComponent
+          <LinkButton
             href={buildURL(total_pages)}
             className={styles.button}
+            internalLinkElement={(props) =>
+              internalLinkElement?.({
+                ...props,
+                page: total_pages,
+              })
+            }
           >
             <span>&gt;|</span> <span>{last}</span>
-          </LinkButtonComponent>
+          </LinkButton>
         )}
       </ListItem>
     </List>

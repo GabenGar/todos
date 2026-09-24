@@ -15,7 +15,7 @@ interface IProps
       | "currentLocale"
       | "currentURL"
       | "getLocalizedURL"
-      | "InternalLinkComponent"
+      | "internalLinkElement"
     > {}
 
 export const LanguageSwitcher = createBlockComponent(styles, Component);
@@ -25,7 +25,7 @@ function Component({
   currentLocale,
   currentURL,
   getLocalizedURL,
-  InternalLinkComponent,
+  internalLinkElement,
   ...props
 }: IProps) {
   // biome-ignore lint/style/noNonNullAssertion: just typescript things
@@ -42,7 +42,7 @@ function Component({
         currentLocale={currentLocale}
         currentURL={currentURL}
         getLocalizedURL={getLocalizedURL}
-        InternalLinkComponent={InternalLinkComponent}
+        internalLinkElement={internalLinkElement}
       />
     </Details>
   );

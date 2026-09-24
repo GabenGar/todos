@@ -6,7 +6,7 @@ export type IFuncComponent<PropsType> = (
   ref?: any,
 ) => JSX.Element;
 
-interface IBaseProps {
+export interface IBaseProps {
   className?: string;
 }
 

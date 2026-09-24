@@ -44,5 +44,8 @@
   "button": {
     "copy": "Copy",
     "copy-success": "Copied"
+  },
+  "list": {
+    "empty-list": "No items in the list."
   }
 }
