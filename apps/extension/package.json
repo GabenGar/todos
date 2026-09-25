@@ -15,11 +15,12 @@
     "node": ">=22.23.3"
   },
   "scripts": {
+    "build": "webpack --config webpack.prod.mjs && web-ext build --no-config-discovery --config=web-ext-config.mjs --source-dir=build --artifacts-dir=dist",
     "start": "web-ext run --no-config-discovery --config=web-ext-config.mjs --source-dir=build",
     "dev": "node scripts/dev.mjs",
     "lint": "biome lint --write",
     "format": "biome format --write",
-    "check": "biome check --formatter-enabled=false --linter-enabled=false --write",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit",
     "validate": "node scripts/validate.mjs"
   },
   "imports": {

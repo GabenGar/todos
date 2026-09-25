@@ -12,8 +12,10 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    // too annoying to configure pacakge css imports
+    "noUncheckedSideEffectImports": false
   },
-  "include": ["src/**/*"],
+  "include": ["custom.d.ts", "src/**/*"],
   "exclude": ["./dev", "./build", "./dist"]
 }
