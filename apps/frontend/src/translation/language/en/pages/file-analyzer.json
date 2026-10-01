@@ -1,0 +1,9 @@
+{
+  "title": "File analyzer",
+  "heading": "File Analyzer",
+  "form": {
+    "label": "File",
+    "submit": "Analyze",
+    "submitting": "Analyzing..."
+  }
+}

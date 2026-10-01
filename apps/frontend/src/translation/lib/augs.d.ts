@@ -1,6 +1,7 @@
 import "i18next";
 import type common from "#translation/en/common.json";
 import type pageAccount from "#translation/en/pages/account.json";
+import type pageFileAnalyzer from "#translation/en/pages/file-analyzer.json";
 import type pageHome from "#translation/en/pages/home.json";
 import type pagePlace from "#translation/en/pages/place.json";
 import type pagePlaceEdit from "#translation/en/pages/place-edit.json";
@@ -48,6 +49,7 @@ declare module "i18next" {
       "page-planned-event": typeof pagePlannedEvent;
       "page-planned-event-edit": typeof pagePlannedEventEdit;
       "page-yt-dlp-configs": typeof pageYTDLPConfigs;
+      "page-file-analyzer": typeof pageFileAnalyzer;
     };
     enableSelector: "optimize";
   }

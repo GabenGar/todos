@@ -92,7 +92,6 @@ function QRCodeReaderForm({ id, onSuccessfulScan }: IFormProps) {
             id={`${formID}-${FIELD.FILE.name}`}
             form={formID}
             name={FIELD.FILE.name}
-            accept="image/*"
             required
           >
             {FIELD.FILE.label}

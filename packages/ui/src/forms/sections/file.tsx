@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { List, ListItem } from "#lists";
 import { createBlockComponent } from "#meta";
 import { type IInputFileProps, InputFile } from "../inputs";
 import { Label } from "../label";
@@ -103,13 +104,13 @@ function Component({
           {children}
         </Label>
       ) : (
-        <ul>
+        <List>
           {currentFiles.map(({ name, size, type }, index) => (
-            <li key={index} className={styles.file}>
+            <ListItem key={index} className={styles.file}>
               {type} - {name} - {size}
-            </li>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       )}
     </InputSection>
   );

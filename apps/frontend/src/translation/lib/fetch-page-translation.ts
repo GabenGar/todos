@@ -16,7 +16,7 @@ export async function fetchPageTranslation(
         }
 
         case "page-qr-code-reader": {
-          translation = await import("#translation/en/pages/home.json");
+          translation = await import("#translation/en/pages/qr-code-reader.json");
           break;
         }
 
@@ -103,6 +103,13 @@ export async function fetchPageTranslation(
           break;
         }
 
+        case "page-file-analyzer": {
+          translation = await import(
+            "#translation/en/pages/file-analyzer.json"
+          );
+          break;
+        }
+
         default: {
           throw new Error(`Unknown namespace "${namespace satisfies never}"`);
         }
@@ -118,7 +125,7 @@ export async function fetchPageTranslation(
         }
 
         case "page-qr-code-reader": {
-          translation = await import("#translation/ru/pages/home.json");
+          translation = await import("#translation/ru/pages/qr-code-reader.json");
           break;
         }
 
@@ -201,6 +208,13 @@ export async function fetchPageTranslation(
         case "page-yt-dlp-configs": {
           translation = await import(
             "#translation/ru/pages/yt-dlp-configs.json"
+          );
+          break;
+        }
+
+        case "page-file-analyzer": {
+          translation = await import(
+            "#translation/ru/pages/file-analyzer.json"
           );
           break;
         }

@@ -18,6 +18,7 @@ export const PAGE_NAMESPACES = [
   "page-planned-event",
   "page-planned-event-edit",
   "page-yt-dlp-configs",
+  "page-file-analyzer"
 ] as const;
 export const DEFAULT_LOCALE = LOCALES[0];
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;
