@@ -5,6 +5,11 @@
       "submitting": "Submitting..."
     }
   },
+  "input": {
+    "file": {
+      "label": "Click to upload a file"
+    }
+  },
   "url": {
     "URL": "URL",
     "encoded": "Encoded URL",
@@ -47,5 +52,11 @@
   },
   "list": {
     "empty-list": "No items in the list."
+  },
+  "file": {
+    "name": "Name",
+    "type": "Type",
+    "size": "Size",
+    "last-modified": "Last modification date"
   }
 }

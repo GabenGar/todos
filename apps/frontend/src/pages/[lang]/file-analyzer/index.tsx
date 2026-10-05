@@ -1,3 +1,4 @@
+import { NotImplementedError } from "@repo/ui/errors";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
 import { InputSectionFile } from "@repo/ui/forms/sections";
 import { DescriptionList, DescriptionSection, Page } from "#components";
@@ -46,7 +47,9 @@ function FileForm({ id }: IFileProps) {
   } as const;
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {}
+  async function handleSubmit(event: IFormEvent<IFieldName>) {
+    throw new NotImplementedError();
+  }
 
   return (
     <FormClient<IFieldName>
@@ -61,9 +64,10 @@ function FileForm({ id }: IFileProps) {
           id={`${formID}-${FIELD.FILE.name}`}
           form={formID}
           name={FIELD.FILE.name}
+          label={FIELD.FILE.label}
           required
         >
-          {FIELD.FILE.label}
+          {}
         </InputSectionFile>
       )}
     </FormClient>
