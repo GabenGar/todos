@@ -5,7 +5,6 @@ import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
 } from "#meta";
-import { formatDateTime, formatRelativeDateTime } from "./format";
 //
 
 import styles from "./datetime.module.scss";
@@ -28,8 +27,8 @@ function Component({ dateTime, children, ...props }: IProps) {
           <Loading />
         ) : (
           <>
-            {formatRelativeDateTime(client.locale, dateTime)} (
-            {formatDateTime(client.locale, dateTime)})
+            {client.formatRelativeDateTime(dateTime)} (
+            {client.formatDateTime(dateTime)})
           </>
         )}
       </time>

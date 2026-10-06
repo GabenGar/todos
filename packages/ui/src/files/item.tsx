@@ -1,8 +1,10 @@
+import { DateTimeView, toISODateTime } from "#dates";
 import { DescriptionList, DescriptionSection } from "#description-list";
 import { Details } from "#details";
 import { Preformatted } from "#formatting";
-import { useTranslation } from "#hooks";
+import { useClient, useTranslation } from "#hooks";
 import { ListItem } from "#lists";
+import { Loading } from "#loading";
 //
 
 import styles from "./item.module.scss";
@@ -13,7 +15,9 @@ interface IProps {
 
 export function FileItem({ file }: IProps) {
   const { t } = useTranslation();
+  const client = useClient();
   const { type, name, size, lastModified } = file;
+  const lastModifiedDateTime = toISODateTime(new Date(lastModified));
 
   return (
     <ListItem className={styles.file}>
@@ -37,7 +41,13 @@ export function FileItem({ file }: IProps) {
 
           <DescriptionSection
             dKey={t((t) => t.file["last-modified"])}
-            dValue={lastModified}
+            dValue={
+              !client ? (
+                <Loading />
+              ) : (
+                <DateTimeView dateTime={lastModifiedDateTime} />
+              )
+            }
             isKeyPreformatted
             isValuePreformatted
           />

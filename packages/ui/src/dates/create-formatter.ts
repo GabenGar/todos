@@ -12,12 +12,20 @@ const formatDateTimeOptions: Intl.DateTimeFormatOptions = {
   second: "2-digit",
   timeZoneName: "long",
 };
-export function formatDateTime(locale: Intl.Locale, dateTime: IDateTime) {
+
+export function createDateTimeFormatter(
+  locale: Intl.Locale,
+): (dateTime: IDateTime) => string {
   const formatter = new Intl.DateTimeFormat(
     String(locale),
     formatDateTimeOptions,
   );
-  const formattedDateTime = formatter.format(new Date(dateTime));
 
-  return formattedDateTime;
+  function formatDateTime(dateTime: IDateTime) {
+    const formattedDateTime = formatter.format(new Date(dateTime));
+
+    return formattedDateTime;
+  }
+
+  return formatDateTime;
 }

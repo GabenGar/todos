@@ -1,4 +1,4 @@
-import type { IDateTime } from "#lib/dates";
+import type { IDateTime } from "@repo/ui/dates";
 import type { IDescription, ITitle } from "#lib/strings";
 
 export interface IPlannedEvent {

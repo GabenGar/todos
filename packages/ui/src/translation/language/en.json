@@ -58,5 +58,8 @@
     "type": "Type",
     "size": "Size",
     "last-modified": "Last modification date"
+  },
+  "loading": {
+    "loading": "Loading..."
   }
 }

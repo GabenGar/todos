@@ -1,3 +1,4 @@
+import { useTranslation } from "#hooks";
 import {
   createBlockComponent,
   type IBaseComponentPropsWithChildren,
@@ -8,5 +9,7 @@ interface IProps extends IBaseComponentPropsWithChildren<"div"> {}
 export const Loading = createBlockComponent(undefined, Component);
 
 function Component({ children, ...props }: IProps) {
-  return <div {...props}>{children ?? "Loading..."}</div>;
+  const { t } = useTranslation();
+
+  return <div {...props}>{children ?? t((t) => t.loading.loading)}</div>;
 }

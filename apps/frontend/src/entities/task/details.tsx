@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { DateTimeView } from "@repo/ui/dates";
 import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection, Loading } from "#components";
 import { Button } from "#components/button";
-import { DateTime } from "#components/date";
 import { EntityDescription, EntityID } from "#components/entities";
 import { Heading } from "#components/heading";
 import { Link, LinkButton } from "#components/link";
@@ -141,11 +141,11 @@ function Component({ language, taskID, onEdit, ...props }: ITaskOverviewProps) {
             <DescriptionList>
               <DescriptionSection
                 dKey={t((t) => t.task.creation_date)}
-                dValue={<DateTime dateTime={created_at} />}
+                dValue={<DateTimeView dateTime={created_at} />}
               />
               <DescriptionSection
                 dKey={t((t) => t.task.last_updated)}
-                dValue={<DateTime dateTime={updated_at} />}
+                dValue={<DateTimeView dateTime={updated_at} />}
               />
             </DescriptionList>
           </OverviewBody>

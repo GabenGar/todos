@@ -1,5 +1,5 @@
+import type { IDateTime } from "@repo/ui/dates";
 import type { IPlace } from "#entities/place";
-import type { IDateTime } from "#lib/dates";
 import type { IEntityItem } from "#lib/entities";
 import type { INonNegativeInteger } from "#lib/numbers";
 import { type INanoidID, toQuotedStrings } from "#lib/strings";

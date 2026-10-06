@@ -5,12 +5,19 @@ import {
   useEffect,
   useState,
 } from "react";
+import {
+  createDateTimeFormatter,
+  createRelativeDateTimeFormatter,
+  type IDateTime,
+} from "#dates";
 
 type IClientContext =
   | undefined
   | {
       locale: Intl.Locale;
       serverLanguage?: string;
+      formatDateTime: (dateTime: IDateTime) => string;
+      formatRelativeDateTime: (dateTime: IDateTime) => string;
     };
 
 const defaultContext: IClientContext = undefined;
@@ -30,10 +37,14 @@ export function ClientProvider({ children, serverLanguage }: IProps) {
     const localeValue =
       serverLanguage ?? new Intl.NumberFormat().resolvedOptions().locale;
     const newLocale = new Intl.Locale(localeValue);
+    const formatDateTime = createDateTimeFormatter(newLocale);
+    const formatRelativeDateTime = createRelativeDateTimeFormatter(newLocale);
 
-    const client = {
+    const client: IClientContext = {
       locale: newLocale,
       serverLanguage,
+      formatDateTime,
+      formatRelativeDateTime,
     };
 
     changeClient(client);

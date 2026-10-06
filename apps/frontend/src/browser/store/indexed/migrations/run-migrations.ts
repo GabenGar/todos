@@ -1,5 +1,5 @@
+import { toJavascriptDate } from "@repo/ui/dates";
 import type { IPlannedEvent } from "#entities/planned-event";
-import { toJavascriptDate } from "#lib/dates";
 import { logInfo } from "#lib/logs";
 import { databaseVersion, type IIDBTransaction } from "../types";
 
