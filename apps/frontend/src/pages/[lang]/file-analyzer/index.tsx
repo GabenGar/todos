@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
 import { InputSectionFile } from "@repo/ui/forms/sections";
 import { Page } from "#components";
-import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 import type { IPageNamespace } from "#translation";
@@ -22,7 +22,7 @@ function QRCodeReaderPage() {
       <Overview headingLevel={2}>
         {() => (
           <>
-            <OverviewHeader>
+            <OverviewHeader isFilled>
               <FileForm
                 id={formID}
                 onSuccess={async (overview) => changeFileOverview(overview)}

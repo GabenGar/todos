@@ -4,7 +4,7 @@ import {
   OverviewBody,
   OverviewFooter,
   OverviewHeader,
-} from "#articles";
+} from "@repo/ui/articles";
 import { DateTimeView, toISODateTime } from "#dates";
 import { DescriptionList, DescriptionSection } from "#description-list";
 import { Preformatted } from "#formatting";
