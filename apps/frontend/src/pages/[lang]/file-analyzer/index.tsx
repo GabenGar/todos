@@ -1,7 +1,8 @@
-import { NotImplementedError } from "@repo/ui/errors";
+import { useState } from "react";
+import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
 import { InputSectionFile } from "@repo/ui/forms/sections";
-import { DescriptionList, DescriptionSection, Page } from "#components";
+import { Page } from "#components";
 import { Overview, OverviewBody, OverviewHeader } from "#components/overview";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
@@ -11,6 +12,7 @@ const namespace = "page-file-analyzer" satisfies IPageNamespace;
 
 function QRCodeReaderPage() {
   const { t } = usePageTranslation(namespace);
+  const [fileOverview, changeFileOverview] = useState<IFileOverview>();
   const title = t((t) => t.title);
   const heading = t((t) => t.heading);
   const formID = "file-analyzer";
@@ -21,14 +23,17 @@ function QRCodeReaderPage() {
         {() => (
           <>
             <OverviewHeader>
-              <FileForm id={formID} />
+              <FileForm
+                id={formID}
+                onSuccess={async (overview) => changeFileOverview(overview)}
+              />
             </OverviewHeader>
 
-            <OverviewBody>
-              <DescriptionList>
-                <DescriptionSection />
-              </DescriptionList>
-            </OverviewBody>
+            {!fileOverview ? undefined : (
+              <OverviewBody>
+                <FileOverview headingLevel={3} overview={fileOverview} />
+              </OverviewBody>
+            )}
           </>
         )}
       </Overview>
@@ -38,9 +43,10 @@ function QRCodeReaderPage() {
 
 interface IFileProps {
   id: string;
+  onSuccess: (overview: IFileOverview) => Promise<void>;
 }
 
-function FileForm({ id }: IFileProps) {
+function FileForm({ id, onSuccess }: IFileProps) {
   const { t } = usePageTranslation(namespace);
   const FIELD = {
     FILE: { name: "file", label: t((t) => t.form.label) },
@@ -48,7 +54,18 @@ function FileForm({ id }: IFileProps) {
   type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
 
   async function handleSubmit(event: IFormEvent<IFieldName>) {
-    throw new NotImplementedError();
+    const filesInput = event.currentTarget.elements.file;
+    const files = filesInput.files;
+
+    if (files === null) {
+      return;
+    }
+
+    // biome-ignore lint/style/noNonNullAssertion: blah
+    const file = files.item(0)!;
+    const overview = { file } satisfies IFileOverview;
+
+    await onSuccess(overview);
   }
 
   return (
@@ -65,6 +82,7 @@ function FileForm({ id }: IFileProps) {
           form={formID}
           name={FIELD.FILE.name}
           label={FIELD.FILE.label}
+          multiple={false}
           required
         >
           {}

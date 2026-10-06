@@ -2,9 +2,8 @@ import { DateTimeView, toISODateTime } from "#dates";
 import { DescriptionList, DescriptionSection } from "#description-list";
 import { Details } from "#details";
 import { Preformatted } from "#formatting";
-import { useClient, useTranslation } from "#hooks";
+import { useTranslation } from "#hooks";
 import { ListItem } from "#lists";
-import { Loading } from "#loading";
 import { DigitalSize } from "#numbers";
 //
 
@@ -16,7 +15,6 @@ interface IProps {
 
 export function FileItem({ file }: IProps) {
   const { t } = useTranslation();
-  const client = useClient();
   const { type, name, size, lastModified } = file;
   const lastModifiedDateTime = toISODateTime(new Date(lastModified));
 
@@ -41,13 +39,7 @@ export function FileItem({ file }: IProps) {
 
           <DescriptionSection
             dKey={t((t) => t.file["last-modified"])}
-            dValue={
-              !client ? (
-                <Loading />
-              ) : (
-                <DateTimeView dateTime={lastModifiedDateTime} />
-              )
-            }
+            dValue={<DateTimeView dateTime={lastModifiedDateTime} />}
             isKeyPreformatted
           />
         </DescriptionList>
