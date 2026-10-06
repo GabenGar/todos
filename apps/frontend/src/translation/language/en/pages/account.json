@@ -23,5 +23,14 @@
       "Warnings": "Warnings",
       "Errors": "Errors"
     }
+  },
+  "feature-support": {
+    "heading":  "Feature support",
+    "units": "Units",
+    "calendars": "Calendars",
+    "collations": "Collations",
+    "currencies": "Currencies",
+    "numbering-systems": "Numbering systems",
+    "time-zones": "Time zones"
   }
 }

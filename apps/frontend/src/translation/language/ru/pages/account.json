@@ -23,5 +23,14 @@
       "Warnings": "Предупреждения",
       "Errors": "Ошибки"
     }
+  },
+  "feature-support": {
+    "heading":  "Поддержка свойств",
+    "units": "Единицы измерения",
+    "calendars": "Календари",
+    "collations": "Сопоставления",
+    "currencies": "Валюты",
+    "numbering-systems": "Системы исчисления",
+    "time-zones": "Часовые пояса"
   }
 }

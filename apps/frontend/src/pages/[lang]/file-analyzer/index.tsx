@@ -84,9 +84,7 @@ function FileForm({ id, onSuccess }: IFileProps) {
           label={FIELD.FILE.label}
           multiple={false}
           required
-        >
-          {}
-        </InputSectionFile>
+        />
       )}
     </FormClient>
   );

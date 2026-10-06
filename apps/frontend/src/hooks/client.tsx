@@ -65,6 +65,7 @@ export function ClientProvider({ lang, children }: IProps) {
     changeLogLevel(newLevel);
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
     if (!isReady || !uiClient) {
       return;
@@ -83,7 +84,7 @@ export function ClientProvider({ lang, children }: IProps) {
       changeCompatiblity(newCompatibility);
       changeLogLevel(newLogLevel);
     })();
-  }, [isReady, uiClient]);
+  }, [lang, isReady, uiClient]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
