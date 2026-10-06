@@ -5,6 +5,7 @@ import { Preformatted } from "#formatting";
 import { useClient, useTranslation } from "#hooks";
 import { ListItem } from "#lists";
 import { Loading } from "#loading";
+import { DigitalSize } from "#numbers";
 //
 
 import styles from "./item.module.scss";
@@ -33,9 +34,8 @@ export function FileItem({ file }: IProps) {
 
           <DescriptionSection
             dKey={t((t) => t.file.size)}
-            dValue={size}
+            dValue={<DigitalSize size={size} />}
             isKeyPreformatted
-            isValuePreformatted
             isHorizontal
           />
 
@@ -49,7 +49,6 @@ export function FileItem({ file }: IProps) {
               )
             }
             isKeyPreformatted
-            isValuePreformatted
           />
         </DescriptionList>
       </Details>

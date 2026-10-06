@@ -10,6 +10,7 @@ import {
   createRelativeDateTimeFormatter,
   type IDateTime,
 } from "#dates";
+import { createDigitialSizeFormatter } from "#numbers";
 
 type IClientContext =
   | undefined
@@ -18,6 +19,7 @@ type IClientContext =
       serverLanguage?: string;
       formatDateTime: (dateTime: IDateTime) => string;
       formatRelativeDateTime: (dateTime: IDateTime) => string;
+      formatDigitalSize: (size: number) => string;
     };
 
 const defaultContext: IClientContext = undefined;
@@ -39,12 +41,14 @@ export function ClientProvider({ children, serverLanguage }: IProps) {
     const newLocale = new Intl.Locale(localeValue);
     const formatDateTime = createDateTimeFormatter(newLocale);
     const formatRelativeDateTime = createRelativeDateTimeFormatter(newLocale);
+    const formatDigitalSize = createDigitialSizeFormatter(newLocale);
 
     const client: IClientContext = {
       locale: newLocale,
       serverLanguage,
       formatDateTime,
       formatRelativeDateTime,
+      formatDigitalSize,
     };
 
     changeClient(client);
