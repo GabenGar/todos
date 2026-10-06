@@ -35,22 +35,32 @@ export function createDigitialSizeFormatter(
     }
 
     if (size < DIGITAL_SIZE.MEGABYTE) {
-      return kiloByteFormatter.format(size);
+      const resolvedSize = size / DIGITAL_SIZE.KILOBYTE;
+
+      return kiloByteFormatter.format(resolvedSize);
     }
 
     if (size < DIGITAL_SIZE.GIGABYTE) {
-      return megaByteFormatter.format(size);
+      const resolvedSize = size / DIGITAL_SIZE.MEGABYTE;
+
+      return megaByteFormatter.format(resolvedSize);
     }
 
     if (size < DIGITAL_SIZE.TERABYTE) {
-      return gigaByteFormatter.format(size);
+      const resolvedSize = size / DIGITAL_SIZE.GIGABYTE;
+
+      return gigaByteFormatter.format(resolvedSize);
     }
 
     if (size < DIGITAL_SIZE.PETABYTE) {
-      return teraByteFormatter.format(size);
+      const resolvedSize = size / DIGITAL_SIZE.TERABYTE;
+
+      return teraByteFormatter.format(resolvedSize);
     }
 
-    return petaByteFormatter.format(size);
+    const resolvedSize = size / DIGITAL_SIZE.PETABYTE;
+
+    return petaByteFormatter.format(resolvedSize);
   }
 
   return formatDigitalSize;
