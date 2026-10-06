@@ -6,6 +6,10 @@ import {
   useEffect,
   useState,
 } from "react";
+import {
+  ClientProvider as UIClientProvider,
+  useClient as useUIClient,
+} from "@repo/ui/hooks";
 import { registerServiceWorker } from "#browser/workers";
 import { DEFAULT_LOG_LEVEL } from "#environment";
 import {
@@ -48,7 +52,7 @@ interface IProps {
 
 export function ClientProvider({ lang, children }: IProps) {
   const { isReady } = useRouter();
-  const [isClient, switchIsClient] = useState(false);
+  const uiClient = useUIClient();
   const [locale, changeLocale] = useState<Intl.Locale>();
   const [logLevel, changeLogLevel] = useState<ILogLevel>();
   const [compatibility, changeCompatiblity] = useState<ICompatibility>();
@@ -61,8 +65,9 @@ export function ClientProvider({ lang, children }: IProps) {
     changeLogLevel(newLevel);
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
-    if (!isReady) {
+    if (!isReady || !uiClient) {
       return;
     }
 
@@ -78,9 +83,8 @@ export function ClientProvider({ lang, children }: IProps) {
 
       changeCompatiblity(newCompatibility);
       changeLogLevel(newLogLevel);
-      switchIsClient(true);
     })();
-  }, [isReady]);
+  }, [lang, isReady, uiClient]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   useEffect(() => {
@@ -92,26 +96,28 @@ export function ClientProvider({ lang, children }: IProps) {
 
     const newLocale = new Intl.Locale(lang);
     changeLocale(newLocale);
-  }, [isClient, lang]);
+  }, [uiClient, lang]);
 
   return (
-    <ClientContext.Provider
-      value={
-        !isReady || !isClient || !locale
-          ? defaultContext
-          : {
-              isClient,
-              locale,
-              // biome-ignore lint/style/noNonNullAssertion: blah
-              logLevel: logLevel!,
-              changeLoglevel: switchLogLevel,
-              // biome-ignore lint/style/noNonNullAssertion: blah
-              compatibility: compatibility!,
-            }
-      }
-    >
-      <IndexedDBProvider>{children}</IndexedDBProvider>
-    </ClientContext.Provider>
+    <UIClientProvider>
+      <ClientContext.Provider
+        value={
+          !isReady || !uiClient || !locale
+            ? defaultContext
+            : {
+                isClient: true,
+                locale,
+                // biome-ignore lint/style/noNonNullAssertion: blah
+                logLevel: logLevel!,
+                changeLoglevel: switchLogLevel,
+                // biome-ignore lint/style/noNonNullAssertion: blah
+                compatibility: compatibility!,
+              }
+        }
+      >
+        <IndexedDBProvider>{children}</IndexedDBProvider>
+      </ClientContext.Provider>
+    </UIClientProvider>
   );
 }
 

@@ -1,6 +1,6 @@
+import { DateTimeView } from "@repo/ui/dates";
 import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection } from "#components";
-import { DateTime } from "#components/date";
 import { EntityDescription, EntityID } from "#components/entities";
 import { Heading, type IHeadingLevel } from "#components/heading";
 import { LinkButton } from "#components/link";
@@ -55,11 +55,11 @@ function Component({ language, place, ...props }: IPlaceOverviewProps) {
             <DescriptionList>
               <DescriptionSection
                 dKey={t((t) => t.place.created_at)}
-                dValue={<DateTime dateTime={created_at} />}
+                dValue={<DateTimeView dateTime={created_at} />}
               />
               <DescriptionSection
                 dKey={t((t) => t.place.updated_at)}
-                dValue={<DateTime dateTime={updated_at} />}
+                dValue={<DateTimeView dateTime={updated_at} />}
               />
             </DescriptionList>
 

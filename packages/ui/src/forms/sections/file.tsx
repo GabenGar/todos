@@ -1,4 +1,7 @@
-import { useRef, useState } from "react";
+import { type ChangeEvent, type ReactNode, useRef, useState } from "react";
+import { FileItem } from "#files";
+import { useTranslation } from "#hooks";
+import { List } from "#lists";
 import { createBlockComponent } from "#meta";
 import { type IInputFileProps, InputFile } from "../inputs";
 import { Label } from "../label";
@@ -9,7 +12,9 @@ import styles from "./file.module.scss";
 
 interface IProps
   extends IInputSectionProps,
-    Pick<IInputFileProps, "accept" | "multiple"> {}
+    Pick<IInputFileProps, "accept" | "multiple"> {
+  label?: ReactNode;
+}
 
 /**
  * @TODOs
@@ -28,14 +33,30 @@ function Component({
   readOnly,
   required,
   disabled,
+  label,
   children,
   onDragEnter,
   onDragOver,
   onDrop,
   ...props
 }: IProps) {
+  const { t } = useTranslation();
   const [currentFiles, changeCurrentFiles] = useState<File[]>();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  async function handleChange(
+    event: ChangeEvent<HTMLInputElement, HTMLInputElement>,
+  ) {
+    const fileList = event.target.files;
+
+    if (!fileList) {
+      changeCurrentFiles(undefined);
+      return;
+    }
+
+    const files = Array.from(fileList);
+    changeCurrentFiles(files);
+  }
 
   return (
     <InputSection
@@ -74,6 +95,8 @@ function Component({
       }}
       {...props}
     >
+      {!label ? undefined : <Label htmlFor={id}>{label}</Label>}
+
       <InputFile
         ref={inputRef}
         id={id}
@@ -85,31 +108,19 @@ function Component({
         readOnly={readOnly}
         disabled={disabled}
         required={required}
-        onChange={async (event) => {
-          const fileList = event.target.files;
-
-          if (!fileList) {
-            changeCurrentFiles(undefined);
-            return;
-          }
-
-          const files = Array.from(fileList);
-          changeCurrentFiles(files);
-        }}
+        onChange={handleChange}
       />
 
-      {!currentFiles ? (
-        <Label className={styles.label} htmlFor={id}>
-          {children}
-        </Label>
-      ) : (
-        <ul>
-          {currentFiles.map(({ name, size, type }, index) => (
-            <li key={index} className={styles.file}>
-              {type} - {name} - {size}
-            </li>
+      <Label className={styles.label} htmlFor={id} separator={null}>
+        {children ?? t((t) => t.input.file.label)}
+      </Label>
+
+      {!currentFiles ? undefined : (
+        <List className={styles.list}>
+          {currentFiles.map((file, index) => (
+            <FileItem key={index} file={file} />
           ))}
-        </ul>
+        </List>
       )}
     </InputSection>
   );

@@ -198,3 +198,7 @@ export function createPlannedEventEditPageURL(
 export function createYTDLPConfigPage(language: ILocale): Route {
   return `/${language}/yt-dlp-configs` as Route;
 }
+
+export function createFileAnalyzerPageURL(language: ILocale): Route {
+  return `/${language}/file-analyzer` as Route;
+}

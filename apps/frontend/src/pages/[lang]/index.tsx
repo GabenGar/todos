@@ -8,6 +8,7 @@ import { Overview, OverviewHeader } from "#components/overview";
 import { usePageTranslation } from "#hooks";
 import {
   createAccountPageURL,
+  createFileAnalyzerPageURL,
   createPlannedEventsPageURL,
   createQRCodeReaderURL,
   createStatsPlacesPageURL,
@@ -81,6 +82,16 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   {t((t) => t["Tasks"])}
                 </Link>
               </ListItem>
+              
+              <ListItem>
+                <Link
+                  className={styles.link}
+                  href={createFileAnalyzerPageURL(lang)}
+                >
+                  {t((t) => t["file-analyzer"])}
+                </Link>
+              </ListItem>
+
 
               <ListItem>
                 <Link

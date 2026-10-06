@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
-import {
-  DescriptionList,
-  DescriptionSection,
-  Loading,
-  Page,
-} from "#components";
+import { useEffect, useState } from "react";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Details } from "@repo/ui/details";
+import { Preformatted } from "@repo/ui/formatting";
+import { List, ListItem } from "@repo/ui/lists";
+import { Loading } from "@repo/ui/loading";
+import { Page } from "#components";
 import {
   Form,
   type IFormComponentProps,
@@ -20,12 +21,15 @@ import { DataExportForm, ImportDataExportForm } from "#entities/data-export";
 import { useClient, usePageTranslation } from "#hooks";
 import { type ILogLevel, validateLogLevel } from "#lib/logs";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
+import type { IPageNamespace } from "#translation";
 //
 
 import styles from "./index.module.scss";
 
+const namespace = "page-account" satisfies IPageNamespace;
+
 function AccountPage() {
-  const { t } = usePageTranslation("page-account");
+  const { t } = usePageTranslation(namespace);
   const router = useRouter();
   const client = useClient();
   const title = t((t) => t.title);
@@ -63,11 +67,11 @@ function AccountPage() {
           <>
             <OverviewHeader>
               <Heading level={headingLevel + 1}>
-                {t((t) => t["Compatibility"])}
+                {t((t) => t["feature-support"].heading)}
               </Heading>
             </OverviewHeader>
             <OverviewBody>
-              <Compatibility />
+              <FeatureSupport />
             </OverviewBody>
           </>
         )}
@@ -81,6 +85,7 @@ function AccountPage() {
                 {t((t) => t["Settings"])}
               </Heading>
             </OverviewHeader>
+
             <OverviewBody>
               {!client ? (
                 <Loading />
@@ -106,7 +111,7 @@ function AccountPage() {
  * @TODO colouring
  */
 function Compatibility() {
-  const { t } = usePageTranslation("page-account");
+  const { t } = usePageTranslation(namespace);
   const client = useClient();
 
   return (
@@ -176,7 +181,7 @@ export function SettingsForm({
   currentLogLevel,
   onSettingsUpdate,
 }: ISettingsFormProps) {
-  const { t } = usePageTranslation("page-account");
+  const { t } = usePageTranslation(namespace);
   const FIELD = {
     LOG_LEVEL: { name: "log_level", label: t((t) => t.logger["Log level"]) },
   } as const;
@@ -231,7 +236,172 @@ export function SettingsForm({
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-account");
+interface IFeatureSupport {
+  calendar: string[];
+  collation: string[];
+  currency: string[];
+  numberingSystem: string[];
+  timeZone: string[];
+  unit: string[];
+}
+
+function FeatureSupport() {
+  const client = useClient();
+  const { t } = usePageTranslation("page-account");
+  const [featureSupport, changeFeatureSupport] = useState<IFeatureSupport>();
+
+  useEffect(() => {
+    if (!client) {
+      return;
+    }
+
+    const nextFeatureSupport = collectFeatureSupport();
+
+    changeFeatureSupport(nextFeatureSupport);
+  }, [client]);
+
+  return !featureSupport ? (
+    <Loading />
+  ) : (
+    <DescriptionList>
+      <DescriptionSection
+        dKey={t((t) => t["feature-support"].calendars)}
+        dValue={
+          <Details
+            summary={
+              <Preformatted>{featureSupport.calendar.length}</Preformatted>
+            }
+          >
+            <List>
+              {featureSupport.calendar.map((calendar, index) => (
+                <ListItem key={`${calendar}${index}`}>
+                  <Preformatted>{calendar}</Preformatted>
+                </ListItem>
+              ))}
+            </List>
+          </Details>
+        }
+      />
+
+      <DescriptionSection
+        dKey={t((t) => t["feature-support"].collations)}
+        dValue={
+          <Details
+            summary={
+              <Preformatted>{featureSupport.collation.length}</Preformatted>
+            }
+          >
+            <List>
+              {featureSupport.collation.map((collation, index) => (
+                <ListItem key={`${collation}${index}`}>
+                  <Preformatted>{collation}</Preformatted>
+                </ListItem>
+              ))}
+            </List>
+          </Details>
+        }
+      />
+
+      <DescriptionSection
+        dKey={t((t) => t["feature-support"].currencies)}
+        dValue={
+          <Details
+            summary={
+              <Preformatted>{featureSupport.currency.length}</Preformatted>
+            }
+          >
+            <List>
+              {featureSupport.currency.map((currency, index) => (
+                <ListItem key={`${currency}${index}`}>
+                  <Preformatted>{currency}</Preformatted>
+                </ListItem>
+              ))}
+            </List>
+          </Details>
+        }
+      />
+
+      <DescriptionSection
+        dKey={t((t) => t["feature-support"]["numbering-systems"])}
+        dValue={
+          <Details
+            summary={
+              <Preformatted>
+                {featureSupport.numberingSystem.length}
+              </Preformatted>
+            }
+          >
+            <List>
+              {featureSupport.numberingSystem.map((system, index) => (
+                <ListItem key={`${system}${index}`}>
+                  <Preformatted>{system}</Preformatted>
+                </ListItem>
+              ))}
+            </List>
+          </Details>
+        }
+      />
+
+      <DescriptionSection
+        dKey={t((t) => t["feature-support"]["time-zones"])}
+        dValue={
+          <Details
+            summary={
+              <Preformatted>{featureSupport.timeZone.length}</Preformatted>
+            }
+          >
+            <List>
+              {featureSupport.timeZone.map((zone, index) => (
+                <ListItem key={`${zone}${index}`}>
+                  <Preformatted>{zone}</Preformatted>
+                </ListItem>
+              ))}
+            </List>
+          </Details>
+        }
+      />
+
+      <DescriptionSection
+        dKey={t((t) => t["feature-support"].units)}
+        dValue={
+          <Details
+            summary={<Preformatted>{featureSupport.unit.length}</Preformatted>}
+          >
+            <List>
+              {featureSupport.unit.map((unit, index) => (
+                <ListItem key={`${unit}${index}`}>
+                  <Preformatted>{unit}</Preformatted>
+                </ListItem>
+              ))}
+            </List>
+          </Details>
+        }
+      />
+    </DescriptionList>
+  );
+}
+
+function collectFeatureSupport(): IFeatureSupport {
+  const calendar = Intl.supportedValuesOf("calendar");
+  const collation = Intl.supportedValuesOf("collation");
+  const currency = Intl.supportedValuesOf("currency");
+  const numberingSystem = Intl.supportedValuesOf("numberingSystem");
+  const timeZone = Intl.supportedValuesOf("timeZone");
+  const unit = Intl.supportedValuesOf("unit");
+
+  const featureSupport = {
+    calendar,
+    collation,
+    currency,
+    numberingSystem,
+    timeZone,
+    unit,
+  } satisfies IFeatureSupport;
+
+  return featureSupport;
+}
+
+export const getStaticProps = createGetStaticProps(namespace);
 
 export const getStaticPaths = getStaticExportPaths;
 

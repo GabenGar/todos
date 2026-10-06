@@ -1,6 +1,6 @@
+import { DateTimeView } from "@repo/ui/dates";
 import { createBlockComponent } from "@repo/ui/meta";
 import { DescriptionList, DescriptionSection } from "#components";
-import { DateTime } from "#components/date";
 import { EntityDescription, EntityID } from "#components/entities";
 import { Heading } from "#components/heading";
 import { Link } from "#components/link";
@@ -52,11 +52,11 @@ function Component({ language, plannedEvent, ...props }: IProps) {
             <DescriptionList>
               <DescriptionSection
                 dKey={t((t) => t.planned_event["Date of creation"])}
-                dValue={<DateTime dateTime={created_at} />}
+                dValue={<DateTimeView dateTime={created_at} />}
               />
               <DescriptionSection
                 dKey={t((t) => t.planned_event["Last updated"])}
-                dValue={<DateTime dateTime={updated_at} />}
+                dValue={<DateTimeView dateTime={updated_at} />}
               />
             </DescriptionList>
           </PreviewBody>

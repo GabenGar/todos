@@ -1,5 +1,5 @@
+import type { IDateTime } from "@repo/ui/dates";
 import type { ITasksStats } from "#entities/task";
-import type { IDateTime } from "#lib/dates";
 import type { INonNegativeInteger } from "#lib/numbers";
 import type { IDescription, INanoidID, ITitle } from "#lib/strings";
 
