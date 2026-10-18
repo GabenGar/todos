@@ -1,0 +1,306 @@
+{
+  "$id": "firefox-manifest",
+  "$comment": "Required properties:\nhttps://developer.chrome.com/docs/extensions/reference/manifest#required-platform",
+  "title": "WebExtensionManifestFirefox",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_version", "name", "version"],
+  "properties": {
+    "manifest_version": {
+      "description": "An integer specifying the version of the manifest file format that your extension uses.",
+      "const": 3
+    },
+    "version": {
+      "description": "A string that identifies the extension's version number.",
+      "type": "string"
+    },
+    "name": {
+      "description": "A string that identifies the extension in the Chrome Web Store, the install dialog, and the user's Chrome Extensions page (chrome://extensions).",
+      "type": "string"
+    },
+    "short_name": {
+      "description": "Short name for the extension. If given, this will be used in contexts where the `name` field is too long. It's recommended that the short name should not exceed 12 characters. If the short name field is not included in manifest.json, then name will be used instead and may be truncated."
+    },
+    "description": {
+      "type": "string"
+    },
+    "default_locale": {
+      "const": "en"
+    },
+    "browser_specific_settings": {
+      "description": "Keys that are specific to a particular host application.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gecko": {
+          "description": "For the desktop and (when enabled) Android versions of Firefox.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "data_collection_permissions"],
+          "properties": {
+            "id": {
+              "description": "The extension ID.",
+              "type": "string"
+            },
+            "strict_min_version": {
+              "description": "Minimum version of Gecko to support.",
+              "type": "string"
+            },
+            "strict_max_version": {
+              "description": "Maximum version of Gecko to support.",
+              "type": "string"
+            },
+            "data_collection_permissions": {
+              "description": "Data types that the extension collects and transmits for storage and processing outside the extension/",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "required": {
+                  "description": "The data that the extension requires to be collected and transmitted for its operation.",
+                  "any": [
+                    { "const": ["none"] },
+                    {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "authenticationInfo",
+                          "bookmarksInfo",
+                          "browsingActivity",
+                          "financialAndPaymentInfo",
+                          "healthInfo",
+                          "locationInfo",
+                          "personalCommunications",
+                          "personallyIdentifyingInfo",
+                          "searchTerms",
+                          "websiteActivity",
+                          "websiteContent"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "optional": {
+                  "description": "The data that the user can opt to provide.",
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "authenticationInfo",
+                      "bookmarksInfo",
+                      "browsingActivity",
+                      "financialAndPaymentInfo",
+                      "healthInfo",
+                      "locationInfo",
+                      "personalCommunications",
+                      "personallyIdentifyingInfo",
+                      "searchTerms",
+                      "websiteActivity",
+                      "websiteContent"
+                    ]
+                  }
+                }
+              }
+            },
+            "update_url": {
+              "description": "A link to an extension update manifest. Note that the link must begin with \"https\". This key is for managing extension updates yourself (i.e., not through AMO)."
+            }
+          }
+        },
+        "gecko_android": {
+          "description": "For the Android version of Firefox.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {}
+        }
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "anyOf": [{ "const": "activeTab" }, { "const": "storage" }]
+      }
+    },
+    "optional_permissions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "anyOf": [{ "const": "activeTab" }]
+      }
+    },
+    "options_ui": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string"
+        },
+        "open_in_tab": {
+          "type": "boolean"
+        }
+      }
+    },
+    "icons": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "512": { "type": "string" },
+        "128": { "type": "string" },
+        "64": { "type": "string" },
+        "48": { "type": "string" },
+        "32": { "type": "string" }
+      }
+    },
+    "background": {
+      "description": "Use the background key to include one or more `background` scripts, a background page, or a Service worker in your extension.",
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scripts"],
+          "properties": {
+            "scripts": {
+              "description": "An Array of Strings, each of which is a path to a JavaScript source. The path is relative to the manifest.json file itself. These are the scripts that are executed in the extension's background page.\n\nThe scripts share the same window global context.\n\nThe scripts are loaded in the order they appear in the array.",
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "type": {
+              "description": "Determines whether the scripts specified in \"scripts\" are loaded as ES modules.",
+              "anyOf": [
+                {
+                  "description": "Indicates the background scripts or service workers are included as an ES Module. This enables the background page or service worker to import code.",
+                  "const": "module"
+                },
+                {
+                  "description": "Indicates the background scripts or service workers are not included as an ES Module.",
+                  "const": "classic"
+                }
+              ]
+            },
+            "service_worker": {
+              "description": "A JavaScript file as the extension service worker. A service worker is a background script that acts as the extension's main event handler.",
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["page"],
+          "properties": {
+            "page": {
+              "description": "If you need specific content in the background page, you can define a page using the page property. This is a `String` representing a path relative to the manifest.json file to an HTML document included in your extension bundle."
+            }
+          }
+        }
+      ]
+    },
+    "action": {
+      "description": "An action is a button that your extension adds to the browser's toolbar. The button has an icon, and may optionally have a popup whose content is specified using HTML, CSS, and JavaScript.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_icon": {
+          "anyOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "512": { "type": "string" },
+                "128": { "type": "string" },
+                "64": { "type": "string" },
+                "48": { "type": "string" },
+                "38": { "type": "string" },
+                "32": { "type": "string" },
+                "19": { "type": "string" },
+                "16": { "type": "string" }
+              }
+            }
+          ]
+        },
+        "default_title": {
+          "type": "string"
+        },
+        "default_popup": {
+          "type": "string"
+        }
+      }
+    },
+    "content_scripts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "all_frames": {
+            "type": "boolean"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "js": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "css": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "web_accessible_resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resources": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "matches": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "page_action": {
+      "description": "A page action is an icon that your extension adds inside the browser's URL bar.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_icon": {
+          "description": "Use this to specify an icon for the action.",
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "propertyNames": { "enum": ["19", "38"] }
+        },
+        "default_title": {
+          "description": "Tooltip for the icon, displayed when the user moves their mouse over it.",
+          "type": "string"
+        },
+        "default_popup": {
+          "description": "The path to an HTML file containing the specification of the popup.",
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "default_icon": {
+            "19": "button/geo-19.png",
+            "38": "button/geo-38.png"
+          },
+          "default_title": "Whereami?",
+          "default_popup": "popup/geo.html"
+        }
+      ]
+    }
+  }
+}

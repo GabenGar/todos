@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extension_title__",
+  "short_name": "__MSG_extension_short_title__",
+  "description": "__MSG_extension_description__",
+  "version": "0.0.1",
+  "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@spooder.gabengar",
+      "data_collection_permissions": {
+        "required": ["none"]
+      },
+      "strict_min_version": "115.0"
+    }
+  },
+  "icons": {
+    "64": "icons/icon.png"
+  },
+  "background": {
+    "scripts": ["service_worker.js"],
+    "service_worker": "service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.mozilla.org/*"],
+      "js": ["content_script.js"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "64": "icons/icon.png"
+    },
+    "default_popup": "popup/index.html",
+    "default_title": "spooder"
+  },
+  "options_ui": {
+    "page": "options/index.html"
+  }
+}

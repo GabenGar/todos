@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "module": "es2020",
+    "target": "es2021",
+    "moduleResolution": "bundler",
+    "types": [],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "jsx": "react-jsx",
+    "noImplicitAny": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    // too annoying to configure pacakge css imports
+    "noUncheckedSideEffectImports": false
+  },
+  "include": ["custom.d.ts", "src/**/*"],
+  "exclude": ["./dev", "./build", "./dist"]
+}
