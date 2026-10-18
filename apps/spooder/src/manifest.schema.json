@@ -25,6 +25,7 @@
       "type": "string"
     },
     "default_locale": {
+      "description": "Identifies a subdirectory of `\\_locales` where the i18n system finds the extension's default localization strings.",
       "const": "en"
     },
     "browser_specific_settings": {
@@ -198,9 +199,11 @@
       "additionalProperties": false,
       "properties": {
         "default_icon": {
+          "description": "Specify one or more icons for the action. The icon is shown in the browser toolbar by default. Icons are specified as URLs relative to the manifest.json file itself.",
           "anyOf": [
             { "type": "string" },
             {
+              "description": "The name of each property is the icon's height in pixels, and must be convertible to an integer. The value is the URL.",
               "type": "object",
               "additionalProperties": false,
               "properties": {
@@ -217,10 +220,33 @@
           ]
         },
         "default_title": {
+          "description": "Tooltip for the button, displayed when the user moves their mouse over it. If the button is added to the browser's menu panel, this is also shown under the app icon.\nThis is a localizable property.",
           "type": "string"
         },
         "default_popup": {
+          "description": "The path to an HTML file containing the specification of the popup. The HTML file may include CSS and JavaScript files using `<link>` and `<script>` elements, just like a normal web page. However, `<script>` must have a `src` attribute to load a file. Don't use `<script>` with embedded code, because you'll get a confusing Content Security Policy error. Unlike a normal web page, JavaScript running in the popup can access all the WebExtension APIs (subject, of course, to the extension having the appropriate permissions).\nThis is a localizable property.",
           "type": "string"
+        },
+        "default_area": {
+          "description": "Defines the part of the browser in which the button is initially placed.",
+          "anyOf": [
+            {
+              "description": "The button is placed in the main browser toolbar, alongside the URL bar.",
+              "const": "navbar"
+            },
+            {
+              "description": "The button is placed in a popup panel.",
+              "const": "menupanel"
+            },
+            {
+              "description": "The button is placed in the toolbar that contains browser tabs.",
+              "const": "tabstrip"
+            },
+            {
+              "description": "The button is placed in the bookmarks toolbar.",
+              "const": "personaltoolbar"
+            }
+          ]
         }
       }
     },
@@ -280,7 +306,7 @@
           "description": "Use this to specify an icon for the action.",
           "type": "object",
           "additionalProperties": { "type": "string" },
-          "propertyNames": { "enum": ["19", "38"] }
+          "propertyNames": { "enum": ["19", "38", "64"] }
         },
         "default_title": {
           "description": "Tooltip for the icon, displayed when the user moves their mouse over it.",

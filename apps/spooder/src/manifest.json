@@ -14,27 +14,35 @@
       "strict_min_version": "115.0"
     }
   },
-  "icons": {
-    "64": "icons/icon.png"
-  },
-  "background": {
-    "scripts": ["service_worker.js"],
-    "service_worker": "service_worker.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["*://*.mozilla.org/*"],
-      "js": ["content_script.js"]
-    }
-  ],
   "action": {
     "default_icon": {
       "64": "icons/icon.png"
     },
-    "default_popup": "popup/index.html",
-    "default_title": "spooder"
+    "default_popup": "action/index.html",
+    "default_title": "__MSG_extension_title__",
+    "default_area": "menupanel"
+  },
+  "page_action": {
+    "default_icon": {
+      "64": "icons/icon.png"
+    },
+    "default_title": "__MSG_extension_title__",
+    "default_popup": "page-action/index.html"
   },
   "options_ui": {
     "page": "options/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.mozilla.org/*"],
+      "js": ["content-script/index.js"]
+    }
+  ],
+  "icons": {
+    "64": "icons/icon.png"
+  },
+  "background": {
+    "scripts": ["background/index.js"],
+    "service_worker": "background/index.js"
   }
 }

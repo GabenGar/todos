@@ -1,0 +1,66 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.header {
+  grid-area: header;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background-secondary);
+  padding: $size-small $size-normal;
+
+  @media (min-width: $width-tablet) {
+    padding: $size-small $size-big;
+  }
+}
+
+.nav {
+  width: 100%;
+}
+
+.header_list {
+
+  display: flex;
+  flex-flow: row nowrap;
+  gap: $size-normal;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 100%;
+  align-content: baseline;
+  gap: $size-normal;
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background-tertiary);
+  padding: 0 0 $size-normal 0;
+}
+
+.footer {
+  grid-area: footer;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $size-normal;
+  color: var(--colour-text-primary);
+  background-color: var(--colour-background-secondary);
+  padding: $size-small $size-normal;
+
+  @media (min-width: $width-tablet) {
+    padding: $size-small $size-big;
+  }
+}
+
+.list {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+  width: 100%;
+}

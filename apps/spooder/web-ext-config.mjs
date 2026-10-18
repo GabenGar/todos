@@ -16,6 +16,7 @@ const config = {
   run: {
     startUrl: [
       "about:debugging#/runtime/this-firefox",
+      "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json",
     ],
     pref: [
       // disable popup for autostart
