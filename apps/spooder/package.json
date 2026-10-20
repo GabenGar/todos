@@ -9,9 +9,13 @@
     "node": ">=22.23.3"
   },
   "scripts": {
-    "build": "web-ext build --no-config-discovery --config=./web-ext-config.mjs",
-    "dev": "web-ext run --no-config-discovery --config=./web-ext-config.mjs",
-    "lint": "web-ext lint --no-config-discovery --config=./web-ext-config.mjs"
+    "build": "webpack --config webpack.prod.mjs && web-ext build --no-config-discovery --config=./web-ext-config.mjs --source-dir=build --artifacts-dir=dist",
+    "start": "web-ext run --no-config-discovery --config=web-ext-config.mjs --source-dir=build",
+    "dev": "node scripts/dev.mjs",
+    "lint": "web-ext lint --no-config-discovery --config=./web-ext-config.mjs",
+    "format": "biome format --write",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit",
+    "validate": "node scripts/validate.mjs"
   },
   "imports": {
     "#translation": "./src/translation/lib/index.ts",
@@ -47,7 +51,7 @@
     "typescript": "^6.0.3",
     "web-ext": "^10.0.0",
     "webextension-polyfill": "^0.12.0",
-    "webpack": "^5.105.2",
+    "webpack": "^5.112.0",
     "webpack-bundle-analyzer": "^5.2.0",
     "webpack-cli": "^6.0.1",
     "webpack-merge": "^6.0.1"
