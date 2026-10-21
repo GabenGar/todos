@@ -12,6 +12,11 @@ export async function fetchTranslation(
   switch (language) {
     case "en": {
       switch (namespace) {
+        case "common": {
+          translation = await import("#translation/en.json");
+          break;
+        }
+
         case "@repo/ui": {
           translation = await fetchUITranslation(language);
           break;
@@ -33,6 +38,11 @@ export async function fetchTranslation(
 
     case "ru": {
       switch (namespace) {
+        case "common": {
+          translation = await import("#translation/ru.json");
+          break;
+        }
+
         case "@repo/ui": {
           translation = await fetchUITranslation(language);
           break;

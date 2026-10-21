@@ -5,7 +5,7 @@ import {
 } from "react-router";
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
-import { page as HomePage, action as HomePageAction } from "#action/pages/home";
+import { HomePage, homePageLoader } from "#action/pages/home";
 import { ActionLayout } from "#components/layout";
 
 export const routes = createMemoryRouter([
@@ -16,7 +16,7 @@ export const routes = createMemoryRouter([
       {
         index: true,
         element: <HomePage />,
-        action: HomePageAction,
+        loader: homePageLoader,
       },
     ],
   },
@@ -67,9 +67,7 @@ function RootError() {
     <DescriptionList>
       <DescriptionSection
         dKey={"Name"}
-        dValue={
-          <Preformatted>{"Unknown Error"}</Preformatted>
-        }
+        dValue={<Preformatted>{"Unknown Error"}</Preformatted>}
       />
       <DescriptionSection
         dKey={"Message"}

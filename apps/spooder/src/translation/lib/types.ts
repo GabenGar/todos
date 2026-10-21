@@ -1,6 +1,10 @@
 export const SUPPORTED_LANGUAGES = ["en", "ru"] as const;
 
-export const BASE_NAMESPACES = ["@repo/ui", "@repo/react-router"] as const;
+export const BASE_NAMESPACES = [
+  "common",
+  "@repo/ui",
+  "@repo/react-router",
+] as const;
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;
 export const NAMESPACES = BASE_NAMESPACES;
 export type ILocale = (typeof SUPPORTED_LANGUAGES)[number];

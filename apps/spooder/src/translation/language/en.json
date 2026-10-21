@@ -1,1 +1,9 @@
-{}
+{
+  "layout": {
+    "options": "Options",
+    "source-code": "Source code"
+  },
+  "action": {
+    "heading": "Fake Crawler"
+  }
+}
