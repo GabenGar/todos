@@ -10,7 +10,7 @@ import {
 
 import styles from "./description-list.module.scss";
 
-type IDescriptionListProps = IBaseComponentProps<"dl"> & {
+export type IDescriptionListProps = IBaseComponentProps<"dl"> & {
   isNested?: boolean;
 } & ({ sections: IDescriptionMap } | { children: ReactNode });
 
@@ -19,7 +19,7 @@ type IDescriptionListProps = IBaseComponentProps<"dl"> & {
  * without being equal.
  */
 interface IDescriptionMap extends Array<[ReactNode, ReactNode]> {}
-type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
+export type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
   isHorizontal?: boolean;
 } & (
     | { children?: ReactNode }

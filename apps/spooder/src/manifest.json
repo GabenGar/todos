@@ -14,6 +14,7 @@
       "strict_min_version": "115.0"
     }
   },
+  "permissions": ["activeTab", "scripting"],
   "action": {
     "default_icon": {
       "64": "icons/icon.png"
@@ -22,27 +23,7 @@
     "default_title": "__MSG_extension_title__",
     "default_area": "menupanel"
   },
-  "page_action": {
-    "default_icon": {
-      "64": "icons/icon.png"
-    },
-    "default_title": "__MSG_extension_title__",
-    "default_popup": "page-action/index.html"
-  },
-  "options_ui": {
-    "page": "options/index.html"
-  },
-  "content_scripts": [
-    {
-      "matches": ["*://*.mozilla.org/*"],
-      "js": ["content-script/index.js"]
-    }
-  ],
   "icons": {
     "64": "icons/icon.png"
-  },
-  "background": {
-    "scripts": ["background/index.js"],
-    "service_worker": "background/index.js"
   }
 }

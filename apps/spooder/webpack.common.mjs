@@ -9,6 +9,7 @@ const commonConfiguration = {
   target: "web",
   entry: {
     action: "./src/action/index.tsx",
+    "content-script": "./src/content-script/index.ts"
   },
   plugins: [
     new MiniCssExtractPlugin({

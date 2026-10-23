@@ -19,7 +19,7 @@ async function develop() {
     {
       restartTries: 3,
       restartDelay: 5000,
-      killOthers: "failure",
+      killOthersOn: "failure"
     },
   );
 }
