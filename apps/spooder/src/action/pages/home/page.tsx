@@ -1,9 +1,13 @@
 import { useLoaderData } from "react-router";
 import browser, { type Scripting } from "webextension-polyfill";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import { ErrorView, isError, validateError } from "@repo/ui/errors";
 import { JavascriptValue } from "@repo/ui/javascript";
+import { List } from "@repo/ui/lists";
 import { Page } from "@repo/ui/pages";
+import { MetaTagView } from "#components/seo";
 import { useTranslation } from "#hooks";
+import { type IMessage, parseMessage } from "#lib/messages";
 import { getCurrentTabID } from "#lib/tabs";
 
 export function HomePage() {
@@ -19,6 +23,18 @@ export function HomePage() {
             <OverviewHeader>
               <JavascriptValue data={data} />
             </OverviewHeader>
+
+            <OverviewBody>
+              {isError(data) ? (
+                <ErrorView error={data} />
+              ) : (
+                <List isOrdered>
+                  {data.map((metaTag, index) => (
+                    <MetaTagView key={index} metaTag={metaTag} />
+                  ))}
+                </List>
+              )}
+            </OverviewBody>
           </>
         )}
       </Overview>
@@ -35,9 +51,21 @@ export async function loader() {
     },
   };
 
-  const results = await browser.scripting.executeScript(injectionDetails);
+  await browser.scripting.executeScript(injectionDetails);
 
-  
+  const result = await new Promise<IMessage["data"]>((resolve) => {
+    browser.runtime.onMessage.addListener(listenForSEO);
 
-  return results;
+    async function listenForSEO(message: unknown) {
+      const data = parseMessage(message, "seo");
+
+      resolve(data);
+    }
+  }).catch((error) => {
+    validateError(error);
+
+    return error;
+  });
+
+  return result;
 }
