@@ -37,5 +37,7 @@ export async function loader() {
 
   const results = await browser.scripting.executeScript(injectionDetails);
 
+  
+
   return results;
 }
