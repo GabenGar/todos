@@ -1,14 +1,19 @@
 import { useLoaderData } from "react-router";
 import browser, { type Scripting } from "webextension-polyfill";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
-import { ErrorView, isError, validateError } from "@repo/ui/errors";
-import { JavascriptValue } from "@repo/ui/javascript";
-import { List } from "@repo/ui/lists";
+import { ErrorView, isError, UnknownError } from "@repo/ui/errors";
+import { Heading } from "@repo/ui/headings";
+import { List, ListItem } from "@repo/ui/lists";
 import { Page } from "@repo/ui/pages";
 import { MetaTagView } from "#components/seo";
 import { useTranslation } from "#hooks";
 import { type IMessage, parseMessage } from "#lib/messages";
 import { getCurrentTabID } from "#lib/tabs";
+import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
+import { Preformatted } from "@repo/ui/formatting";
+//
+
+import styles from "./page.module.scss";
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -18,21 +23,54 @@ export function HomePage() {
   return (
     <Page heading={heading}>
       <Overview headingLevel={2}>
-        {() => (
+        {(headingLevel) => (
           <>
-            <OverviewHeader>
-              <JavascriptValue data={data} />
-            </OverviewHeader>
+            <OverviewHeader></OverviewHeader>
 
             <OverviewBody>
               {isError(data) ? (
                 <ErrorView error={data} />
               ) : (
-                <List isOrdered>
-                  {data.map((metaTag, index) => (
-                    <MetaTagView key={index} metaTag={metaTag} />
-                  ))}
-                </List>
+                <>
+                  <Heading level={headingLevel}>
+                    {t((t) => t.action["base-info"])}
+                  </Heading>
+
+                  <DescriptionList>
+                    <DescriptionSection
+                      dKey={t(t => t.action.title)}
+                      dValue={
+                        !data.seo.title ? undefined : !Array.isArray(
+                            data.seo.title,
+                          ) ? (
+                          <Preformatted>{data.seo.title}</Preformatted>
+                        ) : (
+                          <List>
+                            {data.seo.title.map((title, index) => (
+                              <ListItem key={index}>
+                                <Preformatted>{title}</Preformatted>
+                              </ListItem>
+                            ))}
+                          </List>
+                        )
+                      }
+                      isKeyPreformatted
+                    />
+                  </DescriptionList>
+
+                  <Heading level={headingLevel}>
+                    {t((t) => t.action["meta-elements"], {
+                      count: data.seo.metaTags.length,
+                    })}
+                  </Heading>
+                  <List className={styles.list} isOrdered>
+                    {data.seo.metaTags.map((metaTag, index) => (
+                      <ListItem key={index}>
+                        <MetaTagView metaTag={metaTag} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </>
               )}
             </OverviewBody>
           </>
@@ -51,21 +89,16 @@ export async function loader() {
     },
   };
 
-  await browser.scripting.executeScript(injectionDetails);
-
   const result = await new Promise<IMessage["data"]>((resolve) => {
     browser.runtime.onMessage.addListener(listenForSEO);
+    browser.scripting.executeScript(injectionDetails);
 
     async function listenForSEO(message: unknown) {
       const data = parseMessage(message, "seo");
 
       resolve(data);
     }
-  }).catch((error) => {
-    validateError(error);
-
-    return error;
-  });
+  }).catch((error) => (isError(error) ? error : new UnknownError(error)));
 
   return result;
 }

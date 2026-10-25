@@ -1,1 +1,1 @@
-export { IMetaTag } from "./types";
+export { IMetaTag, ISEO } from "./types";

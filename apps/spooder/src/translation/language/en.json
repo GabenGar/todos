@@ -4,6 +4,9 @@
     "source-code": "Source code"
   },
   "action": {
-    "heading": "Fake Crawler"
+    "heading": "Fake Crawler",
+    "base-info": "Base info",
+    "title": "Title (<title>)",
+    "meta-elements": "Meta elements: {{count}}"
   }
 }
