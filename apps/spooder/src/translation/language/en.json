@@ -5,8 +5,11 @@
   },
   "action": {
     "heading": "Fake Crawler",
-    "base-info": "Base info",
+    "base-info": "Base info"
+  },
+  "seo": {
     "title": "Title (<title>)",
-    "meta-elements": "Meta elements: {{count}}"
+    "description": "Description",
+    "meta-elements": "Meta elements"
   }
 }

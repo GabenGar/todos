@@ -1,3 +1,4 @@
+import { parseString } from "@repo/ui/strings";
 import type { IMetaTag, ISEO } from "#lib/seo";
 
 interface IResult {
@@ -8,6 +9,7 @@ interface IResult {
 export async function collectSEO(): Promise<IResult> {
   const errors: Error[] = [];
   const title = collectTitle(errors);
+  const description = collectDescription(errors);
   const metaElements = document.querySelectorAll("meta");
   const metaTags: IMetaTag[] = [];
 
@@ -37,6 +39,7 @@ export async function collectSEO(): Promise<IResult> {
 
   const seo: ISEO = {
     title,
+    description,
     metaTags,
   };
 
@@ -52,7 +55,9 @@ export async function collectSEO(): Promise<IResult> {
 }
 
 function collectTitle(errors: Error[]): ISEO["title"] {
-  const elements = document.querySelectorAll("title");
+  // exclude <title> descendats of <svg> elements
+  // since they have a different semantic meaning
+  const elements = document.querySelectorAll("title:not(svg title)");
   const count = elements.length;
 
   if (count === 0) {
@@ -70,6 +75,37 @@ function collectTitle(errors: Error[]): ISEO["title"] {
     for (const element of elements) {
       const textContent = element.textContent.trim();
       const title = textContent.length === 0 ? undefined : textContent;
+
+      if (title) {
+        titles.push(title);
+      }
+    }
+
+    return titles;
+  }
+}
+
+function collectDescription(errors: Error[]): ISEO["description"] {
+  // exclude <title> descendats of <svg> elements
+  // since they have a different semantic meaning
+  const elements = document.querySelectorAll<HTMLMetaElement>(
+    `meta[name="description"]`,
+  );
+  const count = elements.length;
+
+  if (count === 0) {
+    errors.push(new Error("Failed to find a single description element."));
+
+    return;
+  } else if (count === 1) {
+    const title = parseString(elements[0].content);
+
+    return title;
+  } else {
+    const titles: string[] = [];
+
+    for (const element of elements) {
+      const title = parseString(element.content);
 
       if (title) {
         titles.push(title);

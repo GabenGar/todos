@@ -1,19 +1,12 @@
 import { useLoaderData } from "react-router";
 import browser, { type Scripting } from "webextension-polyfill";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
-import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { ErrorView, isError, UnknownError } from "@repo/ui/errors";
-import { Preformatted } from "@repo/ui/formatting";
-import { Heading } from "@repo/ui/headings";
-import { List, ListItem } from "@repo/ui/lists";
 import { Page } from "@repo/ui/pages";
-import { MetaTagView } from "#components/seo";
+import { SEOView } from "#components/seo";
 import { useTranslation } from "#hooks";
 import { type IMessage, parseMessage } from "#lib/messages";
 import { getCurrentTabID } from "#lib/tabs";
-//
-
-import styles from "./page.module.scss";
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -31,46 +24,7 @@ export function HomePage() {
               {isError(data) ? (
                 <ErrorView error={data} />
               ) : (
-                <>
-                  <Heading level={headingLevel}>
-                    {t((t) => t.action["base-info"])}
-                  </Heading>
-
-                  <DescriptionList>
-                    <DescriptionSection
-                      dKey={t((t) => t.action.title)}
-                      dValue={
-                        !data.seo.title ? undefined : !Array.isArray(
-                            data.seo.title,
-                          ) ? (
-                          <Preformatted>{data.seo.title}</Preformatted>
-                        ) : (
-                          <List>
-                            {data.seo.title.map((title, index) => (
-                              <ListItem key={index}>
-                                <Preformatted>{title}</Preformatted>
-                              </ListItem>
-                            ))}
-                          </List>
-                        )
-                      }
-                      isKeyPreformatted
-                    />
-                  </DescriptionList>
-
-                  <Heading level={headingLevel}>
-                    {t((t) => t.action["meta-elements"], {
-                      count: data.seo.metaTags.length,
-                    })}
-                  </Heading>
-                  <List className={styles.list} isOrdered>
-                    {data.seo.metaTags.map((metaTag, index) => (
-                      <ListItem key={index}>
-                        <MetaTagView metaTag={metaTag} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </>
+                <SEOView seo={data.seo} />
               )}
             </OverviewBody>
           </>

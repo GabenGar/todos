@@ -5,8 +5,11 @@
   },
   "action": {
     "heading": "Фальшивый Ползунок",
-    "base-info": "Основная информация",
+    "base-info": "Основная информация"
+  },
+  "seo": {
     "title": "Заголовок (<title>)",
-    "meta-elements": "Мета элементы: {{count}}"
+    "description": "Описание",
+    "meta-elements": "Мета элементы"
   }
 }

@@ -6,6 +6,12 @@ export type IDescription = string;
 
 type IStringCollection = readonly string[] | Set<string>;
 
+export function parseString(input: string): string | undefined {
+  const normalizedString = input.trim();
+
+  return normalizedString.length === 0 ? undefined : normalizedString;
+}
+
 export function toQuotedStrings(
   stringCollection: IStringCollection,
   joiner = ",",
