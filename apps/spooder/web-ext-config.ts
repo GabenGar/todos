@@ -32,6 +32,12 @@ export interface IWebExtConfig extends IGeneralConfig {
      * e.g., the build output from a module bundler.
      */
     watchFiles?: string | string[];
+    /**
+     * The base Firefox profile to run the extension in as a string containing your profile name or an absolute path to its directory. The profile you specify is copied into a new temporary profile, and the settings required for `web-ext` to function are added.
+     * 
+     * If a profile is not specified, it runs the extension using a new temporary profile.
+     */
+    firefoxProfile?: string
   };
   /**
    * Reports errors in the extension manifest or other source code files.
