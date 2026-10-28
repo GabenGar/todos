@@ -10,6 +10,7 @@
   "seo": {
     "title": "Title (<title>)",
     "description": "Description",
-    "meta-elements": "Meta elements"
+    "application-name": "Application name",
+    "unknown-meta-elements": "Unknown meta elements"
   }
 }

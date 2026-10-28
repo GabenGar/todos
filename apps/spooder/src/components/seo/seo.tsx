@@ -4,7 +4,8 @@ import { Preformatted } from "@repo/ui/formatting";
 import { List, ListItem } from "@repo/ui/lists";
 import { useTranslation } from "#hooks";
 import type { ISEO } from "#lib/seo";
-import { MetaTagView } from "./meta-tag";
+import { MetaTagView } from "./meta";
+import { UnknownMetaTagView } from "./unknown-meta";
 //
 
 import styles from "./seo.module.scss";
@@ -15,7 +16,7 @@ interface ISEOViewProps {
 
 export function SEOView({ seo }: ISEOViewProps) {
   const { t } = useTranslation();
-  const { title, description, metaTags } = seo;
+  const { title, description, applicationName, unknownMetaTags } = seo;
 
   return (
     <DescriptionList>
@@ -36,31 +37,55 @@ export function SEOView({ seo }: ISEOViewProps) {
         }
         isKeyPreformatted
       />
+
+      {!description ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo.description)}
+          dValue={
+            !Array.isArray(description) ? (
+              <MetaTagView metaTag={description} />
+            ) : (
+              <List>
+                {description.map((description, index) => (
+                  <ListItem key={index}>
+                    <MetaTagView metaTag={description} />
+                  </ListItem>
+                ))}
+              </List>
+            )
+          }
+          isKeyPreformatted
+        />
+      )}
+
+      {!applicationName ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo["application-name"])}
+          dValue={
+            !Array.isArray(applicationName) ? (
+              <MetaTagView metaTag={applicationName} />
+            ) : (
+              <List>
+                {applicationName.map((applicationName, index) => (
+                  <ListItem key={index}>
+                    <MetaTagView metaTag={applicationName} />
+                  </ListItem>
+                ))}
+              </List>
+            )
+          }
+          isKeyPreformatted
+        />
+      )}
+
       <DescriptionSection
-        dKey={t((t) => t.seo.description)}
+        dKey={t((t) => t.seo["unknown-meta-elements"])}
         dValue={
-          !description ? undefined : !Array.isArray(description) ? (
-            <Preformatted>{description}</Preformatted>
-          ) : (
-            <List>
-              {description.map((description, index) => (
-                <ListItem key={index}>
-                  <Preformatted>{description}</Preformatted>
-                </ListItem>
-              ))}
-            </List>
-          )
-        }
-        isKeyPreformatted
-      />
-      <DescriptionSection
-        dKey={t((t) => t.seo["meta-elements"])}
-        dValue={
-          <Details summary={metaTags.length}>
+          <Details summary={unknownMetaTags.length}>
             <List className={styles.list} isOrdered>
-              {metaTags.map((metaTag, index) => (
+              {unknownMetaTags.map((metaTag, index) => (
                 <ListItem key={index}>
-                  <MetaTagView metaTag={metaTag} />
+                  <UnknownMetaTagView metaTag={metaTag} />
                 </ListItem>
               ))}
             </List>

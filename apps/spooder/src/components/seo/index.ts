@@ -1,2 +1,2 @@
-export { MetaTagView } from "./meta-tag";
+export { MetaTagView } from "./unknown-meta";
 export { SEOView } from "./seo";

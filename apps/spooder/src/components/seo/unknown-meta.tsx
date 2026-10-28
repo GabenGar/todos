@@ -1,13 +1,13 @@
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { Preformatted } from "@repo/ui/formatting";
 import { List, ListItem } from "@repo/ui/lists";
-import type { IMetaTag } from "#lib/seo";
+import type { IUnknownMetaTag } from "#lib/seo";
 
 interface IProps {
-  metaTag: IMetaTag;
+  metaTag: IUnknownMetaTag;
 }
 
-export function MetaTagView({ metaTag }: IProps) {
+export function UnknownMetaTagView({ metaTag }: IProps) {
   return (
     <DescriptionList>
       {Array.from(metaTag.entries()).map(([key, valueOrValues]) => (

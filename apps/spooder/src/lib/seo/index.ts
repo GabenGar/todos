@@ -1,1 +1,7 @@
-export { IMetaTag, ISEO } from "./types";
+export {
+  IKnownMetaName,
+  IMetaTag,
+  ISEO,
+  IUnknownMetaTag,
+  isKnownMetaName,
+} from "./types";

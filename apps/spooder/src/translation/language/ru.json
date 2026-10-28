@@ -10,6 +10,7 @@
   "seo": {
     "title": "Заголовок (<title>)",
     "description": "Описание",
-    "meta-elements": "Мета элементы"
+    "application-name": "Название приложения",
+    "unknown-meta-elements": "Неизвестные мета элементы"
   }
 }
