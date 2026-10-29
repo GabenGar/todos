@@ -1,7 +1,6 @@
+export { IKnownMetaName, isKnownMetaName } from "./known-meta-names";
 export {
-  IKnownMetaName,
   IMetaTag,
   ISEO,
   IUnknownMetaTag,
-  isKnownMetaName,
 } from "./types";

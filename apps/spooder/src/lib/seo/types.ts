@@ -1,33 +1,24 @@
-import type { IElementType, IOneOrMany } from "@repo/ui/types";
-
-const knownBaseMetaNames = new Set([
-  "description",
-  "application-name",
-  "author",
-  "color-scheme",
-  "generator",
-  "keywords",
-  "referrer",
-  "theme-color",
-  "responsive-embedded-sizing",
-  "text-scale",
-  "viewport",
-  "creator",
-  "googlebot",
-  "publisher",
-  "robots",
-] as const);
-
-export type IKnownMetaName = IElementType<typeof knownBaseMetaNames>;
-
-export function isKnownMetaName(input: unknown): input is IKnownMetaName {
-  return knownBaseMetaNames.has(input as IKnownMetaName);
-}
+import type { IOneOrMany } from "@repo/ui/types";
+import type { IKnownMetaName } from "./known-meta-names";
 
 export interface ISEO {
   title?: IOneOrMany<string>;
   description?: IOneOrMany<IMetaTag>;
   applicationName?: IOneOrMany<IMetaTag>;
+  author?: IOneOrMany<IMetaTag>;
+  generator?: IOneOrMany<IMetaTag>;
+  keywords?: IOneOrMany<IMetaTag>;
+  referrer?: IOneOrMany<IMetaTag>;
+  themeColor?: IOneOrMany<IMetaTag>;
+  colorScheme?: IOneOrMany<IMetaTag>;
+  responsiveEmbeddedSizing?: IOneOrMany<IMetaTag>;
+  textScale?: IOneOrMany<IMetaTag>;
+  viewport?: IOneOrMany<IMetaTag>;
+  creator?: IOneOrMany<IMetaTag>;
+  publisher?: IOneOrMany<IMetaTag>;
+  googlebot?: IOneOrMany<IMetaTag>;
+  robots?: IOneOrMany<IMetaTag>;
+
   unknownMetaTags: IUnknownMetaTag[];
 }
 

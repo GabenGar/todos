@@ -13,7 +13,23 @@ export async function collectSEO(): Promise<IResult> {
   const title = collectTitle(errors);
   const { known, unknown } = selectMetaElements();
   const unknownMetaTags = collectUnknownMetaTags(unknown);
-  const { description } = collectKnownMetaTags(known);
+  const {
+    description,
+    applicationName,
+    author,
+    colorScheme,
+    creator,
+    generator,
+    googlebot,
+    keywords,
+    publisher,
+    referrer,
+    responsiveEmbeddedSizing,
+    robots,
+    textScale,
+    themeColor,
+    viewport,
+  } = collectKnownMetaTags(known);
 
   const seo: ISEO = {
     title,
@@ -22,6 +38,62 @@ export async function collectSEO(): Promise<IResult> {
 
   if (description) {
     seo.description = description;
+  }
+
+  if (applicationName) {
+    seo.applicationName = applicationName;
+  }
+
+  if (author) {
+    seo.author = author;
+  }
+
+  if (colorScheme) {
+    seo.colorScheme = colorScheme;
+  }
+
+  if (creator) {
+    seo.creator = creator;
+  }
+
+  if (generator) {
+    seo.generator = generator;
+  }
+
+  if (googlebot) {
+    seo.googlebot = googlebot;
+  }
+
+  if (keywords) {
+    seo.keywords = keywords;
+  }
+
+  if (publisher) {
+    seo.publisher = publisher;
+  }
+
+  if (referrer) {
+    seo.referrer = referrer;
+  }
+
+  if (responsiveEmbeddedSizing) {
+    seo.responsiveEmbeddedSizing = responsiveEmbeddedSizing;
+  }
+
+  if (robots) {
+    seo.robots = robots;
+  }
+
+  if (textScale) {
+    seo.textScale = textScale;
+  }
+
+  if (themeColor) {
+    seo.themeColor = themeColor;
+  }
+
+  if (viewport) {
+    seo.viewport = viewport;
   }
 
   const result: IResult = {
@@ -100,17 +172,47 @@ function collectUnknownMetaTags(elements: HTMLMetaElement[]) {
 const supportedNames = new Set([
   "description",
   "application-name",
+  "author",
+  "color-scheme",
+  "generator",
+  "keywords",
+  "referrer",
+  "theme-color",
+  "responsive-embedded-sizing",
+  "text-scale",
+  "viewport",
+  "creator",
+  "publisher",
+  "googlebot",
+  "robots",
 ] satisfies IKnownMetaName[]);
 
-function isSupportedName(
-  input: unknown,
-): input is IElementType<typeof supportedNames> {
-  return supportedNames.has(input as IElementType<typeof supportedNames>);
+type ISupportedName = IElementType<typeof supportedNames>;
+type ISEOMeta = Pick<
+  ISEO,
+  | "description"
+  | "applicationName"
+  | "author"
+  | "colorScheme"
+  | "generator"
+  | "keywords"
+  | "referrer"
+  | "themeColor"
+  | "responsiveEmbeddedSizing"
+  | "textScale"
+  | "viewport"
+  | "creator"
+  | "publisher"
+  | "googlebot"
+  | "robots"
+>;
+type ISEOKey = keyof ISEOMeta;
+
+function isSupportedName(input: unknown): input is ISupportedName {
+  return supportedNames.has(input as ISupportedName);
 }
 
-function collectKnownMetaTags(
-  elements: HTMLMetaElement[],
-): Pick<ISEO, "description" | "applicationName"> {
+function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
   const result: ReturnType<typeof collectKnownMetaTags> = {};
 
   for (const element of elements) {
@@ -157,7 +259,7 @@ function collectKnownMetaTags(
       metaTag.unknownAttributes = unkownAttributes;
     }
 
-    const lookupKey = name === "application-name" ? "applicationName" : name;
+    const lookupKey = normalizeLookupKey(name);
     const oldMeta = result[lookupKey];
 
     if (!oldMeta) {
@@ -174,4 +276,31 @@ function collectKnownMetaTags(
   }
 
   return result;
+}
+
+function normalizeLookupKey(name: ISupportedName): ISEOKey {
+  switch (name) {
+    case "application-name": {
+      return "applicationName";
+    }
+    case "color-scheme": {
+      return "colorScheme";
+    }
+
+    case "theme-color": {
+      return "themeColor";
+    }
+
+    case "responsive-embedded-sizing": {
+      return "responsiveEmbeddedSizing";
+    }
+
+    case "text-scale": {
+      return "textScale";
+    }
+
+    default: {
+      return name;
+    }
+  }
 }

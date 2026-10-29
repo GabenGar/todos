@@ -11,6 +11,19 @@
     "title": "Title (<title>)",
     "description": "Description",
     "application-name": "Application name",
+    "author": "Author",
+    "creator": "Creator",
+    "publisher": "Publisher",
+    "robots": "Robots",
+    "googlebot": "Googlebot",
+    "theme-color": "Theme color",
+    "color-scheme": "Color scheme",
+    "responsive-embedded-sizing": "Responsive embedded sizing",
+    "text-scale": "Text scale",
+    "viewport": "Viewport",
+    "generator": "Generator",
+    "keywords": "Keywords",
+    "referrer": "Referrer",
     "unknown-meta-elements": "Unknown meta elements"
   }
 }

@@ -11,6 +11,19 @@
     "title": "Заголовок (<title>)",
     "description": "Описание",
     "application-name": "Название приложения",
+    "author": "Автор",
+    "creator": "Создатель",
+    "publisher": "Издатель",
+    "robots": "Роботы",
+    "googlebot": "Гугловский робот",
+    "theme-color": "Цвет темы",
+    "color-scheme": "Схема цвета",
+    "responsive-embedded-sizing": "Адаптивный встроенный замер",
+    "text-scale": "Масштаб текста",
+    "viewport": "Видимая область",
+    "generator": "Генератор",
+    "keywords": "Ключевые слова",
+    "referrer": "Реферрер",
     "unknown-meta-elements": "Неизвестные мета элементы"
   }
 }
