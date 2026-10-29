@@ -28,3 +28,38 @@ export function selectMetaElements(): IResult {
 
   return result;
 }
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta
+ */
+export function isValidMetaElement(element: HTMLMetaElement): boolean {
+  const isDocumentLevelMetadata = element.hasAttribute("name");
+  const isPragmaDirective = element.hasAttribute("http-equiv");
+  const isCharsetDeclaration = element.hasAttribute("charset");
+  const isUserDefinedMetadata = element.hasAttribute("itemprop");
+
+  // The itemprop attribute must not be set on a `<meta>` element
+  // that includes a `name`, `http-equiv`, or `charset` attribute.
+  if (
+    isUserDefinedMetadata &&
+    (isDocumentLevelMetadata || isPragmaDirective || isCharsetDeclaration)
+  ) {
+    return false;
+  }
+
+  if (isCharsetDeclaration) {
+    const value = element.getAttribute("charset");
+
+    return value?.toLowerCase() === "utf-8";
+ }
+
+  if (isDocumentLevelMetadata || isPragmaDirective) {
+    if (!element.hasAttribute("content")) {
+      return false;
+    }
+
+    return true
+  }
+
+  return false;
+}

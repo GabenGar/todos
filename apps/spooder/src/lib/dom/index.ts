@@ -1,1 +1,1 @@
-export { selectMetaElements } from "./meta";
+export { isValidMetaElement, selectMetaElements } from "./meta";
