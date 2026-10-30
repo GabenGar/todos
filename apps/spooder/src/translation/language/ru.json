@@ -8,6 +8,7 @@
     "base-info": "Основная информация"
   },
   "seo": {
+    "charset": "Набор букв",
     "title": "Заголовок (<title>)",
     "description": "Описание",
     "application-name": "Название приложения",

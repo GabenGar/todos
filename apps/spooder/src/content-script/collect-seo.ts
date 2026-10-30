@@ -1,5 +1,5 @@
 import { parseString } from "@repo/ui/strings";
-import type { IElementType } from "@repo/ui/types";
+import type { IElementType, IMaybe, IOneOrMany } from "@repo/ui/types";
 import { selectMetaElements } from "#lib/dom";
 import type { IKnownMetaName, IMetaTag, ISEO, IUnknownMetaTag } from "#lib/seo";
 
@@ -12,6 +12,7 @@ export async function collectSEO(): Promise<IResult> {
   const errors: Error[] = [];
   const title = collectTitle(errors);
   const { known, unknown, invalid } = selectMetaElements();
+  const charSet = collectCharset(unknown)
   const unknownMetaTags = collectUnknownMetaTags(unknown);
   const invalidMetaTags = collectInvalidMetaTags(invalid);
   const {
@@ -33,6 +34,7 @@ export async function collectSEO(): Promise<IResult> {
   } = collectKnownMetaTags(known);
 
   const seo: ISEO = {
+    charSet,
     title,
     unknownMetaTags,
     invalidMetaTags,
@@ -104,6 +106,35 @@ export async function collectSEO(): Promise<IResult> {
 
   if (errors.length !== 0) {
     result.errors = errors;
+  }
+
+  return result;
+}
+
+function collectCharset(
+  elements: HTMLMetaElement[],
+): IMaybe<IOneOrMany<string>> {
+  let result: IMaybe<IOneOrMany<string>> = undefined;
+
+  for (const element of elements) {
+    if (!element.hasAttribute("charset")) {
+      continue;
+    }
+
+    // biome-ignore lint/style/noNonNullAssertion: blah
+    const charSet = element.getAttribute("charset")!
+
+    if (!result) {
+      result = charSet
+      continue
+    }
+
+    if (Array.isArray(result)) {
+      result.push(charSet)
+      continue
+    }
+
+    result = [result, charSet]
   }
 
   return result;
@@ -224,7 +255,10 @@ const supportedNames = new Set([
 
 type ISupportedName = IElementType<typeof supportedNames>;
 
-type ISEOMeta = Omit<ISEO, "title" | "unknownMetaTags" | "invalidMetaTags">;
+type ISEOMeta = Omit<
+  ISEO,
+  "charSet" | "title" | "unknownMetaTags" | "invalidMetaTags"
+>;
 
 type ISEOKey = keyof ISEOMeta;
 
@@ -236,6 +270,13 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
   const result: ReturnType<typeof collectKnownMetaTags> = {};
 
   for (const element of elements) {
+    const isCharset = element.hasAttribute("charset");
+
+    if (isCharset) {
+      // charsets are already collected
+      continue;
+    }
+
     const name = element.name as IKnownMetaName;
 
     if (!isSupportedName(name)) {

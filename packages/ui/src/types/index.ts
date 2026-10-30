@@ -1,5 +1,7 @@
 export type IOneOrMany<Type> = Type | Type[];
 
+export type IMaybe<Type> = Type | undefined
+
 export type IPartialSome<Type, Key extends keyof Type> = Omit<Type, Key> &
   Pick<Partial<Type>, Key>;
 

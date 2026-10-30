@@ -17,6 +17,7 @@ interface ISEOViewProps {
 export function SEOView({ seo }: ISEOViewProps) {
   const { t } = useTranslation();
   const {
+    charSet,
     title,
     description,
     applicationName,
@@ -39,6 +40,24 @@ export function SEOView({ seo }: ISEOViewProps) {
 
   return (
     <DescriptionList>
+      <DescriptionSection
+        dKey={t((t) => t.seo.charset)}
+        dValue={
+          !charSet ? undefined : !Array.isArray(charSet) ? (
+            <Preformatted>{charSet}</Preformatted>
+          ) : (
+            <List>
+              {charSet.map((charSet, index) => (
+                <ListItem key={index}>
+                  <Preformatted>{charSet}</Preformatted>
+                </ListItem>
+              ))}
+            </List>
+          )
+        }
+        isKeyPreformatted
+      />
+
       <DescriptionSection
         dKey={t((t) => t.seo.title)}
         dValue={

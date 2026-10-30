@@ -2,6 +2,7 @@ import type { IOneOrMany } from "@repo/ui/types";
 import type { IKnownMetaName } from "./known-meta-names";
 
 export interface ISEO {
+  charSet?: IOneOrMany<string>;
   title?: IOneOrMany<string>;
   description?: IOneOrMany<IMetaTag>;
   applicationName?: IOneOrMany<IMetaTag>;
@@ -18,9 +19,8 @@ export interface ISEO {
   publisher?: IOneOrMany<IMetaTag>;
   googlebot?: IOneOrMany<IMetaTag>;
   robots?: IOneOrMany<IMetaTag>;
-
   unknownMetaTags: IUnknownMetaTag[];
-  invalidMetaTags: IInvalidMetaTag[]
+  invalidMetaTags: IInvalidMetaTag[];
 }
 
 export interface IMetaTag {

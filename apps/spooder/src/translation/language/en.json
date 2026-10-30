@@ -8,6 +8,7 @@
     "base-info": "Base info"
   },
   "seo": {
+    "charset": "Character set",
     "title": "Title (<title>)",
     "description": "Description",
     "application-name": "Application name",
