@@ -3,14 +3,21 @@ import { isKnownMetaName } from "#lib/seo";
 interface IResult {
   known: HTMLMetaElement[];
   unknown: HTMLMetaElement[];
+  invalid: HTMLMetaElement[];
 }
 
 export function selectMetaElements(): IResult {
-  const metaElements = document.querySelectorAll("meta");
+  const metaElements = document.querySelectorAll<HTMLMetaElement>("head meta");
   const known: HTMLMetaElement[] = [];
   const unknown: HTMLMetaElement[] = [];
+  const invalid: HTMLMetaElement[] = [];
 
   for (const element of metaElements) {
+    if (!isValidMetaElement(element)) {
+      invalid.push(element);
+      continue;
+    }
+
     const name = element.getAttribute("name");
 
     if (name === null || !isKnownMetaName(name)) {
@@ -24,6 +31,7 @@ export function selectMetaElements(): IResult {
   const result: IResult = {
     known,
     unknown,
+    invalid,
   };
 
   return result;
@@ -38,7 +46,7 @@ export function isValidMetaElement(element: HTMLMetaElement): boolean {
   const isCharsetDeclaration = element.hasAttribute("charset");
   const isUserDefinedMetadata = element.hasAttribute("itemprop");
 
-  // The itemprop attribute must not be set on a `<meta>` element
+  // The `itemprop` attribute must not be set on a `<meta>` element
   // that includes a `name`, `http-equiv`, or `charset` attribute.
   if (
     isUserDefinedMetadata &&
@@ -51,15 +59,20 @@ export function isValidMetaElement(element: HTMLMetaElement): boolean {
     const value = element.getAttribute("charset");
 
     return value?.toLowerCase() === "utf-8";
- }
+  }
 
   if (isDocumentLevelMetadata || isPragmaDirective) {
     if (!element.hasAttribute("content")) {
       return false;
     }
 
-    return true
+    return true;
   }
 
-  return false;
+  return (
+    isDocumentLevelMetadata ||
+    isPragmaDirective ||
+    isCharsetDeclaration ||
+    isUserDefinedMetadata
+  );
 }

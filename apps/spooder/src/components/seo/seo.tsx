@@ -34,6 +34,7 @@ export function SEOView({ seo }: ISEOViewProps) {
     textScale,
     themeColor,
     viewport,
+    invalidMetaTags,
   } = seo;
 
   return (
@@ -104,7 +105,7 @@ export function SEOView({ seo }: ISEOViewProps) {
         />
       )}
 
-            {!keywords ? undefined : (
+      {!keywords ? undefined : (
         <DescriptionSection
           dKey={t((t) => t.seo["keywords"])}
           dValue={<MetaTagView metaTag={keywords} />}
@@ -176,21 +177,41 @@ export function SEOView({ seo }: ISEOViewProps) {
         />
       )}
 
-      <DescriptionSection
-        dKey={t((t) => t.seo["unknown-meta-elements"])}
-        dValue={
-          <Details summary={unknownMetaTags.length}>
-            <List className={styles.list} isOrdered>
-              {unknownMetaTags.map((metaTag, index) => (
-                <ListItem key={index}>
-                  <UnknownMetaTagView metaTag={metaTag} />
-                </ListItem>
-              ))}
-            </List>
-          </Details>
-        }
-        isKeyPreformatted
-      />
+      {unknownMetaTags.length === 0 ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo["unknown-meta-elements"])}
+          dValue={
+            <Details summary={unknownMetaTags.length}>
+              <List className={styles.list} isOrdered>
+                {unknownMetaTags.map((metaTag, index) => (
+                  <ListItem key={index}>
+                    <UnknownMetaTagView metaTag={metaTag} />
+                  </ListItem>
+                ))}
+              </List>
+            </Details>
+          }
+          isKeyPreformatted
+        />
+      )}
+
+      {invalidMetaTags.length === 0 ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo["invalid-meta-elements"])}
+          dValue={
+            <Details summary={invalidMetaTags.length}>
+              <List className={styles.list} isOrdered>
+                {invalidMetaTags.map((metaTag, index) => (
+                  <ListItem key={index}>
+                    <UnknownMetaTagView metaTag={metaTag} />
+                  </ListItem>
+                ))}
+              </List>
+            </Details>
+          }
+          isKeyPreformatted
+        />
+      )}
     </DescriptionList>
   );
 }

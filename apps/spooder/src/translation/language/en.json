@@ -24,6 +24,7 @@
     "generator": "Generator",
     "keywords": "Keywords",
     "referrer": "Referrer",
-    "unknown-meta-elements": "Unknown meta elements"
+    "unknown-meta-elements": "Unknown meta elements",
+    "invalid-meta-elements": "Invalid meta elements"
   }
 }

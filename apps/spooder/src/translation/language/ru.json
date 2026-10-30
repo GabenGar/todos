@@ -24,6 +24,7 @@
     "generator": "Генератор",
     "keywords": "Ключевые слова",
     "referrer": "Реферрер",
-    "unknown-meta-elements": "Неизвестные мета элементы"
+    "unknown-meta-elements": "Неизвестные мета элементы",
+    "invalid-meta-elements": "Неправильные мета элементы"
   }
 }

@@ -11,8 +11,9 @@ interface IResult {
 export async function collectSEO(): Promise<IResult> {
   const errors: Error[] = [];
   const title = collectTitle(errors);
-  const { known, unknown } = selectMetaElements();
+  const { known, unknown, invalid } = selectMetaElements();
   const unknownMetaTags = collectUnknownMetaTags(unknown);
+  const invalidMetaTags = collectInvalidMetaTags(invalid);
   const {
     description,
     applicationName,
@@ -34,6 +35,7 @@ export async function collectSEO(): Promise<IResult> {
   const seo: ISEO = {
     title,
     unknownMetaTags,
+    invalidMetaTags,
   };
 
   if (description) {
@@ -169,6 +171,39 @@ function collectUnknownMetaTags(elements: HTMLMetaElement[]) {
   return unknownMetaTags;
 }
 
+function collectInvalidMetaTags(elements: HTMLMetaElement[]) {
+  const unknownMetaTags = elements.map<IUnknownMetaTag>((element) => {
+    const metaTag: IUnknownMetaTag = new Map();
+
+    for (const attribute of element.attributes) {
+      const name = attribute.name;
+      const value = parseString(attribute.value);
+
+      if (!value) {
+        continue;
+      }
+
+      if (!metaTag.has(name)) {
+        metaTag.set(name, value);
+        continue;
+      }
+
+      // biome-ignore lint/style/noNonNullAssertion: it just works
+      const currentValue = metaTag.get(name)!;
+
+      if (Array.isArray(currentValue)) {
+        currentValue.push(value);
+      } else {
+        metaTag.set(name, [currentValue, value]);
+      }
+    }
+
+    return metaTag;
+  });
+
+  return unknownMetaTags;
+}
+
 const supportedNames = new Set([
   "description",
   "application-name",
@@ -188,24 +223,9 @@ const supportedNames = new Set([
 ] satisfies IKnownMetaName[]);
 
 type ISupportedName = IElementType<typeof supportedNames>;
-type ISEOMeta = Pick<
-  ISEO,
-  | "description"
-  | "applicationName"
-  | "author"
-  | "colorScheme"
-  | "generator"
-  | "keywords"
-  | "referrer"
-  | "themeColor"
-  | "responsiveEmbeddedSizing"
-  | "textScale"
-  | "viewport"
-  | "creator"
-  | "publisher"
-  | "googlebot"
-  | "robots"
->;
+
+type ISEOMeta = Omit<ISEO, "title" | "unknownMetaTags" | "invalidMetaTags">;
+
 type ISEOKey = keyof ISEOMeta;
 
 function isSupportedName(input: unknown): input is ISupportedName {

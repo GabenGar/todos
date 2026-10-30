@@ -20,6 +20,7 @@ export interface ISEO {
   robots?: IOneOrMany<IMetaTag>;
 
   unknownMetaTags: IUnknownMetaTag[];
+  invalidMetaTags: IInvalidMetaTag[]
 }
 
 export interface IMetaTag {
@@ -29,4 +30,7 @@ export interface IMetaTag {
 }
 
 export interface IUnknownMetaTag
+  extends Map<string, undefined | string | string[]> {}
+
+export interface IInvalidMetaTag
   extends Map<string, undefined | string | string[]> {}
