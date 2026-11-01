@@ -18,7 +18,15 @@ export function selectMetaElements(): IResult {
       continue;
     }
 
-    const name = element.getAttribute("name");
+    if (element.hasAttribute("charset")) {
+      known.push(element);
+      continue;
+    }
+
+    const name =
+      element.getAttribute("name") ||
+      // opengraph tags rely on this value
+      element.getAttribute("property");
 
     if (name === null || !isKnownMetaName(name)) {
       unknown.push(element);
@@ -41,7 +49,10 @@ export function selectMetaElements(): IResult {
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta
  */
 export function isValidMetaElement(element: HTMLMetaElement): boolean {
-  const isDocumentLevelMetadata = element.hasAttribute("name");
+  const isDocumentLevelMetadata =
+    element.hasAttribute("name") ||
+    // OpenGraph tags rely on this atribute as a key
+    element.hasAttribute("property");
   const isPragmaDirective = element.hasAttribute("http-equiv");
   const isCharsetDeclaration = element.hasAttribute("charset");
   const isUserDefinedMetadata = element.hasAttribute("itemprop");

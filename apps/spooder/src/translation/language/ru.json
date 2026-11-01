@@ -25,7 +25,17 @@
     "generator": "Генератор",
     "keywords": "Ключевые слова",
     "referrer": "Реферрер",
+    "opengraph": "OpenGraph",
     "unknown-meta-elements": "Неизвестные мета элементы",
-    "invalid-meta-elements": "Неправильные мета элементы"
+    "invalid-meta-elements": "Неправильные мета элементы",
+    "opengraph-overview": {
+      "unknown-tags": "Неизвестные тэги",
+      "meta-tag-overview": {
+        "name": "Имя",
+        "property": "Свойство",
+        "content": "Наполнение",
+        "unknown-attributes": "Неизвестные аттрибуты"
+      }
+    }
   }
 }

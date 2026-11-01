@@ -1,7 +1,14 @@
 import { parseString } from "@repo/ui/strings";
 import type { IElementType, IMaybe, IOneOrMany } from "@repo/ui/types";
-import { selectMetaElements } from "#lib/dom";
-import type { IKnownMetaName, IMetaTag, ISEO, IUnknownMetaTag } from "#lib/seo";
+import { collectUnknownElementAttributes, selectMetaElements } from "#lib/dom";
+import {
+  type IKnownMetaName,
+  type IMetaTag,
+  type IOpenGraphMetaTag,
+  type ISEO,
+  type IUnknownMetaTag,
+  isOpenGraphElement,
+} from "#lib/seo";
 
 interface IResult {
   seo: ISEO;
@@ -12,7 +19,7 @@ export async function collectSEO(): Promise<IResult> {
   const errors: Error[] = [];
   const title = collectTitle(errors);
   const { known, unknown, invalid } = selectMetaElements();
-  const charSet = collectCharset(unknown)
+  const charSet = collectCharset(known);
   const unknownMetaTags = collectUnknownMetaTags(unknown);
   const invalidMetaTags = collectInvalidMetaTags(invalid);
   const {
@@ -31,6 +38,7 @@ export async function collectSEO(): Promise<IResult> {
     textScale,
     themeColor,
     viewport,
+    openGraph,
   } = collectKnownMetaTags(known);
 
   const seo: ISEO = {
@@ -100,6 +108,10 @@ export async function collectSEO(): Promise<IResult> {
     seo.viewport = viewport;
   }
 
+  if (openGraph) {
+    seo.openGraph = openGraph;
+  }
+
   const result: IResult = {
     seo,
   };
@@ -122,19 +134,19 @@ function collectCharset(
     }
 
     // biome-ignore lint/style/noNonNullAssertion: blah
-    const charSet = element.getAttribute("charset")!
+    const charSet = element.getAttribute("charset")!;
 
     if (!result) {
-      result = charSet
-      continue
+      result = charSet;
+      continue;
     }
 
     if (Array.isArray(result)) {
-      result.push(charSet)
-      continue
+      result.push(charSet);
+      continue;
     }
 
-    result = [result, charSet]
+    result = [result, charSet];
   }
 
   return result;
@@ -268,16 +280,22 @@ function isSupportedName(input: unknown): input is ISupportedName {
 
 function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
   const result: ReturnType<typeof collectKnownMetaTags> = {};
+  const openGraph: Required<ISEO>["openGraph"] = {};
 
   for (const element of elements) {
-    const isCharset = element.hasAttribute("charset");
+    if (isOpenGraphElement(element)) {
+      const openGraphTag = collectOpenGraphElement(element);
 
-    if (isCharset) {
-      // charsets are already collected
+      if (!openGraph.unknownTags) {
+        openGraph.unknownTags = [openGraphTag];
+      } else {
+        openGraph.unknownTags.push(openGraphTag);
+      }
+
       continue;
     }
 
-    const name = element.name as IKnownMetaName;
+    const name = element.name;
 
     if (!isSupportedName(name)) {
       continue;
@@ -309,11 +327,16 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
       const oldValue = unkownAttributes.get(attrName)!;
 
       if (Array.isArray(oldValue)) {
+        // @ts-expect-error
         oldValue.push(attrValue);
         continue;
       }
 
-      unkownAttributes.set(attrName, [oldValue, attrValue]);
+      unkownAttributes.set(attrName, [
+        oldValue,
+        // @ts-expect-error
+        attrValue,
+      ]);
     }
 
     if (unkownAttributes.size !== 0) {
@@ -336,10 +359,16 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
     result[lookupKey] = [oldMeta, metaTag];
   }
 
+  if (Object.keys(openGraph).length !== 0) {
+    result.openGraph = openGraph;
+  }
+
   return result;
 }
 
-function normalizeLookupKey(name: ISupportedName): ISEOKey {
+function normalizeLookupKey(
+  name: ISupportedName,
+): Exclude<ISEOKey, "openGraph"> {
   switch (name) {
     case "application-name": {
       return "applicationName";
@@ -364,4 +393,35 @@ function normalizeLookupKey(name: ISupportedName): ISEOKey {
       return name;
     }
   }
+}
+
+const openGraphAttributes = new Set(["name", "property", "content"] as const);
+
+function collectOpenGraphElement(element: HTMLMetaElement): IOpenGraphMetaTag {
+  const name = element.getAttribute("name") ?? undefined;
+  const property = element.getAttribute("property") ?? undefined;
+  const content = element.getAttribute("content") ?? undefined;
+  const unknownAttributes = collectUnknownElementAttributes(
+    element,
+    openGraphAttributes,
+  );
+  const tag: IOpenGraphMetaTag = {};
+
+  if (name) {
+    tag.name = name;
+  }
+
+  if (property) {
+    tag.property = property;
+  }
+
+  if (content) {
+    tag.content = content;
+  }
+
+  if (unknownAttributes?.size !== 0) {
+    tag.unknownAttributes = unknownAttributes;
+  }
+
+  return tag;
 }

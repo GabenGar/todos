@@ -1,4 +1,4 @@
-import type { IOneOrMany } from "@repo/ui/types";
+import type { IMaybe, IOneOrMany } from "@repo/ui/types";
 import type { IKnownMetaName } from "./known-meta-names";
 
 export interface ISEO {
@@ -19,14 +19,26 @@ export interface ISEO {
   publisher?: IOneOrMany<IMetaTag>;
   googlebot?: IOneOrMany<IMetaTag>;
   robots?: IOneOrMany<IMetaTag>;
+  openGraph?: IOpenGraph;
   unknownMetaTags: IUnknownMetaTag[];
   invalidMetaTags: IInvalidMetaTag[];
+}
+
+export interface IOpenGraph {
+  unknownTags?: IOpenGraphMetaTag[];
 }
 
 export interface IMetaTag {
   name: IKnownMetaName;
   content?: string;
-  unknownAttributes?: Map<string, undefined | IOneOrMany<undefined | string>>;
+  unknownAttributes?: Map<string, IMaybe<IOneOrMany<string>>>;
+}
+
+export interface IOpenGraphMetaTag {
+  name?: string;
+  property?: string;
+  content?: string;
+  unknownAttributes?: Map<string, IMaybe<IOneOrMany<string>>>;
 }
 
 export interface IUnknownMetaTag

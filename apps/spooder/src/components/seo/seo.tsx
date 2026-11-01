@@ -6,9 +6,7 @@ import { useTranslation } from "#hooks";
 import type { ISEO } from "#lib/seo";
 import { MetaTagView } from "./meta";
 import { UnknownMetaTagView } from "./unknown-meta";
-//
-
-import styles from "./seo.module.scss";
+import { OpenGraphView } from "./open-graph";
 
 interface ISEOViewProps {
   seo: ISEO;
@@ -35,6 +33,7 @@ export function SEOView({ seo }: ISEOViewProps) {
     textScale,
     themeColor,
     viewport,
+    openGraph,
     invalidMetaTags,
   } = seo;
 
@@ -196,12 +195,24 @@ export function SEOView({ seo }: ISEOViewProps) {
         />
       )}
 
+      {!openGraph ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo["opengraph"])}
+          dValue={
+            <Details summary={Object.keys(openGraph).length}>
+              <OpenGraphView openGraph={openGraph} />
+            </Details>
+          }
+          isKeyPreformatted
+        />
+      )}
+
       {unknownMetaTags.length === 0 ? undefined : (
         <DescriptionSection
           dKey={t((t) => t.seo["unknown-meta-elements"])}
           dValue={
             <Details summary={unknownMetaTags.length}>
-              <List className={styles.list} isOrdered>
+              <List isOrdered>
                 {unknownMetaTags.map((metaTag, index) => (
                   <ListItem key={index}>
                     <UnknownMetaTagView metaTag={metaTag} />
@@ -219,7 +230,7 @@ export function SEOView({ seo }: ISEOViewProps) {
           dKey={t((t) => t.seo["invalid-meta-elements"])}
           dValue={
             <Details summary={invalidMetaTags.length}>
-              <List className={styles.list} isOrdered>
+              <List isOrdered>
                 {invalidMetaTags.map((metaTag, index) => (
                   <ListItem key={index}>
                     <UnknownMetaTagView metaTag={metaTag} />

@@ -117,7 +117,13 @@ function DescriptionSectionComponent({
       </DescriptionTerm>
 
       <DescriptionDetails className={styles.value}>
-        {isValuePreformatted ? <Preformatted>{dValue}</Preformatted> : dValue}
+        {!dValue ? (
+          dValue
+        ) : isValuePreformatted ? (
+          <Preformatted>{dValue}</Preformatted>
+        ) : (
+          dValue
+        )}
       </DescriptionDetails>
     </div>
   );
