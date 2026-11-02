@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
 import { createMessage } from "#lib/messages";
-import { collectSEO } from "./collect-seo";
+import { collectSEO } from "#lib/seo";
 
 runContentScript();
 

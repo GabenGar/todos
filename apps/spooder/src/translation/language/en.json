@@ -29,7 +29,20 @@
     "unknown-meta-elements": "Unknown meta elements",
     "invalid-meta-elements": "Invalid meta elements",
     "opengraph-overview": {
+      "locale": "Locale (\"og:locale\")",
+      "type": "Type (\"og:type\")",
+      "site-name": "Site name (\"og:site_name\")",
+      "title": "Title (\"og:title\")",
+      "description": "Description (\"og:description\")",
+      "image": "Image (\"og:image\")",
+      "url": "Uniform resource locator (\"og:url\")",
       "unknown-tags": "Unknown tags",
+      "image-overview": {
+        "type": "Type (\"og:image:type\")",
+        "width": "Width (\"og:image:width\")",
+        "height": "Height (\"og:image:height\")",
+        "alt": "Alt (\"og:image:alt\")"
+      },
       "meta-tag-overview": {
         "name": "Name",
         "property": "Property",

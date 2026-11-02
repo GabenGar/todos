@@ -1,5 +1,7 @@
+export { collectSEO } from "./collect-seo";
 export { IKnownMetaName, isKnownMetaName } from "./known-meta-names";
 export {
+  collectOpenGraphElement,
   isOpenGraphElement,
   isOpenGraphMetaName,
   openGraphMetaNames,

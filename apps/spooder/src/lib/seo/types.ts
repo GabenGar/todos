@@ -25,6 +25,19 @@ export interface ISEO {
 }
 
 export interface IOpenGraph {
+  locale?: string
+  type?: string;
+  siteName?: string;
+  title?: string;
+  description?: string;
+  image?: {
+    url?: string
+    width?: string
+    height?: string
+    alt?: string
+    type?: string
+  }
+  url?: string;
   unknownTags?: IOpenGraphMetaTag[];
 }
 

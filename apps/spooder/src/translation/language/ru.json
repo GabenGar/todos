@@ -9,7 +9,7 @@
   },
   "seo": {
     "charset": "Набор букв",
-    "title": "Заголовок (<title>)",
+    "title": "Название (<title>)",
     "description": "Описание",
     "application-name": "Название приложения",
     "author": "Автор",
@@ -29,7 +29,20 @@
     "unknown-meta-elements": "Неизвестные мета элементы",
     "invalid-meta-elements": "Неправильные мета элементы",
     "opengraph-overview": {
+      "locale": "Локаль (\"og:locale\")",
+      "type": "Тип (\"og:type\")",
+      "site-name": "Имя сайта (\"og:site_name\")",
+      "title": "Название (\"og:title\")",
+      "description": "Описание (\"og:description\")",
+      "image": "Изображение (\"og:image\")",
+      "url": "Униформный локатор ресурса (\"og:url\")",
       "unknown-tags": "Неизвестные тэги",
+      "image-overview": {
+        "type": "Тип (\"og:image:type\")",
+        "width": "Ширина (\"og:image:width\")",
+        "height": "Высота (\"og:image:height\")",
+        "alt": "Описание (\"og:image:alt\")"
+      },
       "meta-tag-overview": {
         "name": "Имя",
         "property": "Свойство",

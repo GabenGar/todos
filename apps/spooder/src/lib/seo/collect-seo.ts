@@ -2,9 +2,9 @@ import { parseString } from "@repo/ui/strings";
 import type { IElementType, IMaybe, IOneOrMany } from "@repo/ui/types";
 import { collectUnknownElementAttributes, selectMetaElements } from "#lib/dom";
 import {
+  collectOpenGraphElement,
   type IKnownMetaName,
   type IMetaTag,
-  type IOpenGraphMetaTag,
   type ISEO,
   type IUnknownMetaTag,
   isOpenGraphElement,
@@ -284,14 +284,7 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
 
   for (const element of elements) {
     if (isOpenGraphElement(element)) {
-      const openGraphTag = collectOpenGraphElement(element);
-
-      if (!openGraph.unknownTags) {
-        openGraph.unknownTags = [openGraphTag];
-      } else {
-        openGraph.unknownTags.push(openGraphTag);
-      }
-
+      collectOpenGraphElement(openGraph, element);
       continue;
     }
 
@@ -307,40 +300,13 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
       name,
       content,
     };
-    const unkownAttributes: Required<IMetaTag>["unknownAttributes"] = new Map();
+    const unknownAttributes = collectUnknownElementAttributes(
+      element,
+      new Set(["name", "content"]),
+    );
 
-    for (const attribute of element.attributes) {
-      const attrName = attribute.name;
-
-      if (attrName === "name" || attrName === "content") {
-        continue;
-      }
-
-      const attrValue = parseString(attribute.value);
-
-      if (!unkownAttributes.has(attrName)) {
-        unkownAttributes.set(attrName, attrValue);
-        continue;
-      }
-
-      // biome-ignore lint/style/noNonNullAssertion: it just works
-      const oldValue = unkownAttributes.get(attrName)!;
-
-      if (Array.isArray(oldValue)) {
-        // @ts-expect-error
-        oldValue.push(attrValue);
-        continue;
-      }
-
-      unkownAttributes.set(attrName, [
-        oldValue,
-        // @ts-expect-error
-        attrValue,
-      ]);
-    }
-
-    if (unkownAttributes.size !== 0) {
-      metaTag.unknownAttributes = unkownAttributes;
+    if (unknownAttributes && unknownAttributes.size !== 0) {
+      metaTag.unknownAttributes = unknownAttributes;
     }
 
     const lookupKey = normalizeLookupKey(name);
@@ -393,35 +359,4 @@ function normalizeLookupKey(
       return name;
     }
   }
-}
-
-const openGraphAttributes = new Set(["name", "property", "content"] as const);
-
-function collectOpenGraphElement(element: HTMLMetaElement): IOpenGraphMetaTag {
-  const name = element.getAttribute("name") ?? undefined;
-  const property = element.getAttribute("property") ?? undefined;
-  const content = element.getAttribute("content") ?? undefined;
-  const unknownAttributes = collectUnknownElementAttributes(
-    element,
-    openGraphAttributes,
-  );
-  const tag: IOpenGraphMetaTag = {};
-
-  if (name) {
-    tag.name = name;
-  }
-
-  if (property) {
-    tag.property = property;
-  }
-
-  if (content) {
-    tag.content = content;
-  }
-
-  if (unknownAttributes?.size !== 0) {
-    tag.unknownAttributes = unknownAttributes;
-  }
-
-  return tag;
 }

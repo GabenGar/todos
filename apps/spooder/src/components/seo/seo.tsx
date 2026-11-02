@@ -5,8 +5,8 @@ import { List, ListItem } from "@repo/ui/lists";
 import { useTranslation } from "#hooks";
 import type { ISEO } from "#lib/seo";
 import { MetaTagView } from "./meta";
+import { OpenGraphView } from "./opengraph";
 import { UnknownMetaTagView } from "./unknown-meta";
-import { OpenGraphView } from "./open-graph";
 
 interface ISEOViewProps {
   seo: ISEO;
