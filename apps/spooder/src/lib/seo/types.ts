@@ -28,6 +28,7 @@ export interface ISEO {
 export interface IOpenGraph {
   prefix?: string
   locale?: string
+  alternateLocales?: string[]
   type?: string;
   siteName?: string;
   title?: string;

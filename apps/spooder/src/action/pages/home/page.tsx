@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router";
 import browser, { type Scripting } from "webextension-polyfill";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
+import { Details } from "@repo/ui/details";
 import { ErrorView, isError, UnknownError } from "@repo/ui/errors";
 import { Page } from "@repo/ui/pages";
 import { SEOView } from "#components/seo";
@@ -16,9 +17,13 @@ export function HomePage() {
   return (
     <Page heading={heading}>
       <Overview headingLevel={2}>
-        {(headingLevel) => (
+        {() => (
           <>
-            <OverviewHeader></OverviewHeader>
+            <OverviewHeader>
+              <Details summary={t((t) => t.action["faq-why-false"].question)}>
+                {t((t) => t.action["faq-why-false"].answer)}
+              </Details>
+            </OverviewHeader>
 
             <OverviewBody>
               {isError(data) ? (

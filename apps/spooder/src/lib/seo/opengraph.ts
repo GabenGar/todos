@@ -10,6 +10,7 @@ export const openGraphMetaNames = new Set([
   "og:description",
   "og:image",
   "og:locale",
+  "og:locale:alternate",
   "og:image:type",
   "og:image:width",
   "og:image:height",
@@ -145,6 +146,18 @@ export function collectOpenGraphElement(
 
     case "og:locale": {
       openGraph.locale = content;
+      break;
+    }
+
+    case "og:locale:alternate": {
+      if (!openGraph.alternateLocales) {
+        openGraph.alternateLocales = [];
+      }
+
+      if (content) {
+        openGraph.alternateLocales.push(content);
+      }
+
       break;
     }
 

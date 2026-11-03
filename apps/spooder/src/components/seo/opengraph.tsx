@@ -18,6 +18,7 @@ export function OpenGraphView({ openGraph }: IProps) {
   const {
     prefix,
     locale,
+    alternateLocales,
     description,
     image,
     siteName,
@@ -44,6 +45,26 @@ export function OpenGraphView({ openGraph }: IProps) {
           dValue={locale}
           isKeyPreformatted
           isValuePreformatted
+        />
+      )}
+
+      {!alternateLocales ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo["opengraph-overview"]["alternate-locales"])}
+          dValue={
+            <Details
+              summary={<Preformatted>{alternateLocales.length}</Preformatted>}
+            >
+              <List isOrdered>
+                {alternateLocales.map((locale, index) => (
+                  <ListItem key={index}>
+                    <Preformatted>{locale}</Preformatted>
+                  </ListItem>
+                ))}
+              </List>
+            </Details>
+          }
+          isKeyPreformatted
         />
       )}
 

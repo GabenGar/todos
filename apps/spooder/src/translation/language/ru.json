@@ -5,7 +5,11 @@
   },
   "action": {
     "heading": "Фальшивый Ползунок",
-    "base-info": "Основная информация"
+    "base-info": "Основная информация",
+    "faq-why-false": {
+      "question": "Почему фальшивый?",
+      "answer": "Потому что оперирует на уже на распарсенном браузере документе."
+    }
   },
   "seo": {
     "charset": "Набор букв",
@@ -31,6 +35,7 @@
     "opengraph-overview": {
       "prefix": "Префикс",
       "locale": "Локаль (\"og:locale\")",
+      "alternate-locales": "Другие локали (\"og:locale:alternate\")",
       "type": "Тип (\"og:type\")",
       "site-name": "Имя сайта (\"og:site_name\")",
       "title": "Название (\"og:title\")",

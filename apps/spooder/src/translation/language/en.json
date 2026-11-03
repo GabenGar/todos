@@ -8,7 +8,7 @@
     "base-info": "Base info",
     "faq-why-false": {
       "question": "Why false?",
-      "answer": ""
+      "answer": "Because it operates on already parsed data by the browser."
     }
   },
   "seo": {
@@ -35,6 +35,7 @@
     "opengraph-overview": {
       "prefix": "Prefix",
       "locale": "Locale (\"og:locale\")",
+      "alternate-locales": "Alternate locales (\"og:locale:alternate\")",
       "type": "Type (\"og:type\")",
       "site-name": "Site name (\"og:site_name\")",
       "title": "Title (\"og:title\")",
