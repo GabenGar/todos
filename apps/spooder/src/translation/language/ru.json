@@ -29,6 +29,7 @@
     "unknown-meta-elements": "Неизвестные мета элементы",
     "invalid-meta-elements": "Неправильные мета элементы",
     "opengraph-overview": {
+      "prefix": "Префикс",
       "locale": "Локаль (\"og:locale\")",
       "type": "Тип (\"og:type\")",
       "site-name": "Имя сайта (\"og:site_name\")",

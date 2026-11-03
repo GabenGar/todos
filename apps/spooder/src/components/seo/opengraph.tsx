@@ -16,6 +16,7 @@ interface IMetaTagProps {
 export function OpenGraphView({ openGraph }: IProps) {
   const { t } = useTranslation();
   const {
+    prefix,
     locale,
     description,
     image,
@@ -28,6 +29,15 @@ export function OpenGraphView({ openGraph }: IProps) {
 
   return (
     <DescriptionList>
+      {!prefix ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo["opengraph-overview"].prefix)}
+          dValue={prefix}
+          isKeyPreformatted
+          isValuePreformatted
+        />
+      )}
+
       {!locale ? undefined : (
         <DescriptionSection
           dKey={t((t) => t.seo["opengraph-overview"].locale)}

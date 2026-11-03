@@ -20,11 +20,13 @@ export interface ISEO {
   googlebot?: IOneOrMany<IMetaTag>;
   robots?: IOneOrMany<IMetaTag>;
   openGraph?: IOpenGraph;
+  // twitter?: ITwitterTags
   unknownMetaTags: IUnknownMetaTag[];
   invalidMetaTags: IInvalidMetaTag[];
 }
 
 export interface IOpenGraph {
+  prefix?: string
   locale?: string
   type?: string;
   siteName?: string;
@@ -40,6 +42,8 @@ export interface IOpenGraph {
   url?: string;
   unknownTags?: IOpenGraphMetaTag[];
 }
+
+export interface ITwitterTags {}
 
 export interface IMetaTag {
   name: IKnownMetaName;

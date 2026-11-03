@@ -280,7 +280,12 @@ function isSupportedName(input: unknown): input is ISupportedName {
 
 function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
   const result: ReturnType<typeof collectKnownMetaTags> = {};
+  const openGraphPrefix = collectOpenGraphPrefix();
   const openGraph: Required<ISEO>["openGraph"] = {};
+
+  if (openGraphPrefix) {
+    openGraph.prefix = openGraphPrefix;
+  }
 
   for (const element of elements) {
     if (isOpenGraphElement(element)) {
@@ -359,4 +364,22 @@ function normalizeLookupKey(
       return name;
     }
   }
+}
+
+function collectOpenGraphPrefix(): IMaybe<string> {
+  const htmlElement = document.querySelector(`html[prefix]`);
+  const headElement = document.querySelector(`head[prefix]`);
+  const finalElement = htmlElement || headElement;
+
+  if (!finalElement) {
+    return undefined;
+  }
+
+  const prefix = finalElement.getAttribute("prefix");
+
+  if (!prefix) {
+    return undefined;
+  }
+
+  return prefix;
 }

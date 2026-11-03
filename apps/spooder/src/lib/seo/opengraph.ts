@@ -13,7 +13,7 @@ export const openGraphMetaNames = new Set([
   "og:image:type",
   "og:image:width",
   "og:image:height",
-  "og:image:alt"
+  "og:image:alt",
 ] as const);
 
 type IOpenGraphMetaName = IElementType<typeof openGraphMetaNames>;
@@ -104,46 +104,44 @@ export function collectOpenGraphElement(
       break;
     }
 
-    case "og:image": 
+    case "og:image":
     case "og:image:type":
     case "og:image:width":
     case "og:image:height":
     case "og:image:alt": {
       if (!openGraph.image) {
-        openGraph.image = {}
+        openGraph.image = {};
       }
 
       switch (resolvedName) {
-        case "og:image":  {
-          openGraph.image.url = content
-          break
+        case "og:image": {
+          openGraph.image.url = content;
+          break;
         }
         case "og:image:type": {
-          openGraph.image.type = content
-          break
+          openGraph.image.type = content;
+          break;
         }
         case "og:image:width": {
-          openGraph.image.width = content
-          break
+          openGraph.image.width = content;
+          break;
         }
         case "og:image:height": {
-          openGraph.image.height = content
-          break
+          openGraph.image.height = content;
+          break;
         }
         case "og:image:alt": {
-          openGraph.image.alt = content
-          break
+          openGraph.image.alt = content;
+          break;
         }
-      
+
         default: {
           break;
         }
-          
       }
 
-      break
+      break;
     }
-
 
     case "og:locale": {
       openGraph.locale = content;

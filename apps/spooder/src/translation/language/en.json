@@ -5,7 +5,11 @@
   },
   "action": {
     "heading": "Fake Crawler",
-    "base-info": "Base info"
+    "base-info": "Base info",
+    "faq-why-false": {
+      "question": "Why false?",
+      "answer": ""
+    }
   },
   "seo": {
     "charset": "Character set",
@@ -29,6 +33,7 @@
     "unknown-meta-elements": "Unknown meta elements",
     "invalid-meta-elements": "Invalid meta elements",
     "opengraph-overview": {
+      "prefix": "Prefix",
       "locale": "Locale (\"og:locale\")",
       "type": "Type (\"og:type\")",
       "site-name": "Site name (\"og:site_name\")",
