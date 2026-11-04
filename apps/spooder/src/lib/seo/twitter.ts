@@ -8,12 +8,14 @@ import {
 
 export const twitterMetaNames = new Set([
   "twitter:site",
+  "twitter:site:id",
   "twitter:creator",
   "twitter:title",
   "twitter:description",
   "twitter:image",
   "twitter:image:alt",
   "twitter:card",
+  "twitter:url",
 ] as const);
 
 type ITwitterMetaName = IElementType<typeof twitterMetaNames>;
@@ -67,14 +69,30 @@ export function collectTwitterElement(
   }
 
   switch (name) {
-    case "twitter:site": {
-      twitter.site = content;
+    case "twitter:site":
+    case "twitter:site:id": {
+      if (!twitter.site) {
+        twitter.site = {};
+      }
+
+      switch (name) {
+        case "twitter:site": {
+          twitter.site.url = content;
+          break;
+        }
+        case "twitter:site:id": {
+          twitter.site.id = content;
+          break;
+        }
+      }
       break;
     }
+
     case "twitter:title": {
       twitter.title = content;
       break;
     }
+
     case "twitter:description": {
       twitter.description = content;
       break;

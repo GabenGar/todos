@@ -31,6 +31,7 @@
     "referrer": "Реферрер",
     "opengraph": "OpenGraph",
     "twitter": "Twitter",
+    "json-ld": "JSON-LD",
     "unknown-meta-elements": "Неизвестные мета элементы",
     "invalid-meta-elements": "Неправильные мета элементы",
     "meta-tag-overview": {
@@ -64,9 +65,17 @@
       "image": "Изображение (\"twitter:image\")",
       "card": "Карточка (\"twitter:card\")",
       "creator": "Создатель (\"twitter:creator\")",
+      "site-overview": {
+        "id": "Идентификатор (\"twitter:site:id\")"
+      },
       "image-overview": {
         "alt": "Описание (\"twitter:image:alt\")"
       }
+    },
+    "json-ld-overview": {
+      "items": "Элементы",
+      "unknown-items": "Неизвестные элементы",
+      "invalid-items": "Неправильные элементы"
     }
   }
 }

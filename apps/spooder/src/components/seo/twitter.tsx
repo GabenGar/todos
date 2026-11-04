@@ -20,14 +20,7 @@ export function TwitterOverview({ twitter }: IProps) {
 
   return (
     <DescriptionList>
-      {!site ? undefined : (
-        <DescriptionSection
-          dKey={t((t) => t.seo["twitter-overview"].site)}
-          dValue={site}
-          isKeyPreformatted
-          isValuePreformatted
-        />
-      )}
+      <SiteSection site={site} />
 
       {!title ? undefined : (
         <DescriptionSection
@@ -88,11 +81,39 @@ export function TwitterOverview({ twitter }: IProps) {
   );
 }
 
-interface ImageDataProps {
+
+interface ISiteDataProps {
+  site: ITwitterTags["site"];
+}
+
+function SiteSection({ site }: ISiteDataProps) {
+  const { t } = useTranslation();
+  return !site ? undefined : (
+    <DescriptionSection
+      dKey={t((t) => t.seo["twitter-overview"].site)}
+      dValue={
+        <Details summary={<Preformatted>{site.url}</Preformatted>}>
+          <DescriptionList>
+            <DescriptionSection
+              dKey={t(
+                (t) => t["seo"]["twitter-overview"]["site-overview"].id,
+              )}
+              dValue={site.id}
+              isKeyPreformatted
+              isValuePreformatted
+            />
+          </DescriptionList>
+        </Details>
+      }
+      isKeyPreformatted
+    />
+  );
+}
+interface IImageDataProps {
   image: ITwitterTags["image"];
 }
 
-function ImageSection({ image }: ImageDataProps) {
+function ImageSection({ image }: IImageDataProps) {
   const { t } = useTranslation();
   return !image ? undefined : (
     <DescriptionSection

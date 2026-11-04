@@ -29,6 +29,7 @@ export interface ISEO {
   robots?: IOneOrMany<IMetaTag>;
   openGraph?: IOpenGraph;
   twitter?: ITwitterTags;
+  jsonLD?: IJSONLD;
   unknownMetaTags: IUnknownMetaTag[];
   invalidMetaTags: IInvalidMetaTag[];
 }
@@ -53,16 +54,25 @@ export interface IOpenGraph {
 }
 
 export interface ITwitterTags {
-  site?: string;
+  site?: {
+    url?: string;
+    id?: string;
+  };
   title?: string;
   description?: string;
   image?: {
-    url?: string
-    alt?: string
+    url?: string;
+    alt?: string;
   };
   creator?: string;
   card?: string;
   unknownTags?: ITwitterMetaTag[];
+}
+
+export interface IJSONLD {
+  items?: IOneOrMany<unknown>;
+  unknownItems?: IOneOrMany<unknown>;
+  invalidItems?: IOneOrMany<string>;
 }
 
 export interface IMetaTag {
@@ -82,6 +92,10 @@ export interface ITwitterMetaTag {
   name?: string;
   content?: string;
   unknownAttributes?: Map<string, IMaybe<IOneOrMany<string>>>;
+}
+
+export interface IBaseJSONLDItem {
+  unknownKeys?: Map<string, IOneOrMany<unknown>>
 }
 
 export interface IUnknownMetaTag

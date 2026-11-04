@@ -31,6 +31,7 @@
     "referrer": "Referrer",
     "opengraph": "OpenGraph",
     "twitter": "Twitter",
+    "json-ld": "JSON-LD",
     "unknown-meta-elements": "Unknown meta elements",
     "invalid-meta-elements": "Invalid meta elements",
     "meta-tag-overview": {
@@ -64,9 +65,17 @@
       "image": "Image (\"twitter:image\")",
       "card": "Card (\"twitter:card\")",
       "creator": "Creator (\"twitter:creator\")",
+      "site-overview": {
+        "id": "ID (\"twitter:site:id\")"
+      },
       "image-overview": {
         "alt": "Alt (\"twitter:image:alt\")"
       }
+    },
+    "json-ld-overview": {
+      "items": "Items",
+      "unknown-items": "Unknown items",
+      "invalid-items": "Invalid items"
     }
   }
 }

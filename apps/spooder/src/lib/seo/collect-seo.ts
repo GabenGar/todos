@@ -9,6 +9,7 @@ import {
   type IUnknownMetaTag,
   isOpenGraphElement,
 } from "#lib/seo";
+import { collectJSONLD } from "./json-ld";
 import { collectTwitterElement, isTwitterElement } from "./twitter";
 
 interface IResult {
@@ -42,6 +43,7 @@ export async function collectSEO(): Promise<IResult> {
     openGraph,
     twitter,
   } = collectKnownMetaTags(known);
+  const jsonLD = collectJSONLD();
 
   const seo: ISEO = {
     charSet,
@@ -116,6 +118,10 @@ export async function collectSEO(): Promise<IResult> {
 
   if (twitter) {
     seo.twitter = twitter;
+  }
+
+  if (jsonLD) {
+    seo.jsonLD = jsonLD;
   }
 
   const result: IResult = {
@@ -275,7 +281,7 @@ type ISupportedName = IElementType<typeof supportedNames>;
 
 type ISEOMeta = Omit<
   ISEO,
-  "charSet" | "title" | "unknownMetaTags" | "invalidMetaTags"
+  "charSet" | "title" | "unknownMetaTags" | "invalidMetaTags" | "jsonLD"
 >;
 
 type ISEOKey = keyof ISEOMeta;
@@ -355,7 +361,7 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
 
 function normalizeLookupKey(
   name: ISupportedName,
-): Exclude<ISEOKey, "openGraph" | "twitter"> {
+): Exclude<ISEOKey, "openGraph" | "twitter" | "jsonLD"> {
   switch (name) {
     case "application-name": {
       return "applicationName";

@@ -6,8 +6,9 @@ import { useTranslation } from "#hooks";
 import type { ISEO } from "#lib/seo";
 import { MetaTagView } from "./meta";
 import { OpenGraphView } from "./opengraph";
-import { UnknownMetaTagView } from "./unknown-meta";
 import { TwitterOverview } from "./twitter";
+import { UnknownMetaTagView } from "./unknown-meta";
+import { JSONLDOverview } from "./json-ld";
 
 interface ISEOViewProps {
   seo: ISEO;
@@ -36,6 +37,7 @@ export function SEOView({ seo }: ISEOViewProps) {
     viewport,
     openGraph,
     twitter,
+    jsonLD,
     invalidMetaTags,
   } = seo;
 
@@ -220,6 +222,16 @@ export function SEOView({ seo }: ISEOViewProps) {
           isKeyPreformatted
         />
       )}
+
+      {!jsonLD ? undefined : <DescriptionSection
+          dKey={t((t) => t.seo["json-ld"])}
+          dValue={
+            <Details summary={Object.keys(jsonLD).length}>
+              <JSONLDOverview jsonLD={jsonLD} />
+            </Details>
+          }
+          isKeyPreformatted
+        />}
 
       {unknownMetaTags.length === 0 ? undefined : (
         <DescriptionSection
