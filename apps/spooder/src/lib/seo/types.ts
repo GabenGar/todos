@@ -1,5 +1,13 @@
-import type { IMaybe, IOneOrMany } from "@repo/ui/types";
+import type { IElementType, IMaybe, IOneOrMany } from "@repo/ui/types";
 import type { IKnownMetaName } from "./known-meta-names";
+
+export const knownMetaAttributes = new Set(["name", "content"] as const);
+
+export function isKnownMetaAttribute(input: unknown) {
+  return knownMetaAttributes.has(
+    input as IElementType<typeof knownMetaAttributes>,
+  );
+}
 
 export interface ISEO {
   charSet?: IOneOrMany<string>;
@@ -20,31 +28,42 @@ export interface ISEO {
   googlebot?: IOneOrMany<IMetaTag>;
   robots?: IOneOrMany<IMetaTag>;
   openGraph?: IOpenGraph;
-  // twitter?: ITwitterTags
+  twitter?: ITwitterTags;
   unknownMetaTags: IUnknownMetaTag[];
   invalidMetaTags: IInvalidMetaTag[];
 }
 
 export interface IOpenGraph {
-  prefix?: string
-  locale?: string
-  alternateLocales?: string[]
+  prefix?: string;
+  locale?: string;
+  alternateLocales?: string[];
   type?: string;
   siteName?: string;
   title?: string;
   description?: string;
   image?: {
-    url?: string
-    width?: string
-    height?: string
-    alt?: string
-    type?: string
-  }
+    url?: string;
+    width?: string;
+    height?: string;
+    alt?: string;
+    type?: string;
+  };
   url?: string;
   unknownTags?: IOpenGraphMetaTag[];
 }
 
-export interface ITwitterTags {}
+export interface ITwitterTags {
+  site?: string;
+  title?: string;
+  description?: string;
+  image?: {
+    url?: string
+    alt?: string
+  };
+  creator?: string;
+  card?: string;
+  unknownTags?: ITwitterMetaTag[];
+}
 
 export interface IMetaTag {
   name: IKnownMetaName;
@@ -55,6 +74,12 @@ export interface IMetaTag {
 export interface IOpenGraphMetaTag {
   name?: string;
   property?: string;
+  content?: string;
+  unknownAttributes?: Map<string, IMaybe<IOneOrMany<string>>>;
+}
+
+export interface ITwitterMetaTag {
+  name?: string;
   content?: string;
   unknownAttributes?: Map<string, IMaybe<IOneOrMany<string>>>;
 }

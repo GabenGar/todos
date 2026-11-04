@@ -1,5 +1,6 @@
 import { mergeSets } from "@repo/ui/sets";
 import { openGraphMetaNames } from "./opengraph";
+import { twitterMetaNames } from "./twitter";
 
 const baseWHATWGMetaNames = new Set([
   "creator",
@@ -16,4 +17,5 @@ const baseWHATWGMetaNames = new Set([
 export const whatwgMetaNames = mergeSets(
   baseWHATWGMetaNames,
   openGraphMetaNames,
+  twitterMetaNames
 );

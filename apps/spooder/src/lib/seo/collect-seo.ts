@@ -9,6 +9,7 @@ import {
   type IUnknownMetaTag,
   isOpenGraphElement,
 } from "#lib/seo";
+import { collectTwitterElement, isTwitterElement } from "./twitter";
 
 interface IResult {
   seo: ISEO;
@@ -39,6 +40,7 @@ export async function collectSEO(): Promise<IResult> {
     themeColor,
     viewport,
     openGraph,
+    twitter,
   } = collectKnownMetaTags(known);
 
   const seo: ISEO = {
@@ -110,6 +112,10 @@ export async function collectSEO(): Promise<IResult> {
 
   if (openGraph) {
     seo.openGraph = openGraph;
+  }
+
+  if (twitter) {
+    seo.twitter = twitter;
   }
 
   const result: IResult = {
@@ -282,6 +288,7 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
   const result: ReturnType<typeof collectKnownMetaTags> = {};
   const openGraphPrefix = collectOpenGraphPrefix();
   const openGraph: Required<ISEO>["openGraph"] = {};
+  const twitter: Required<ISEO>["twitter"] = {};
 
   if (openGraphPrefix) {
     openGraph.prefix = openGraphPrefix;
@@ -290,6 +297,11 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
   for (const element of elements) {
     if (isOpenGraphElement(element)) {
       collectOpenGraphElement(openGraph, element);
+      continue;
+    }
+
+    if (isTwitterElement(element)) {
+      collectTwitterElement(twitter, element);
       continue;
     }
 
@@ -334,12 +346,16 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
     result.openGraph = openGraph;
   }
 
+  if (Object.keys(twitter).length !== 0) {
+    result.twitter = twitter;
+  }
+
   return result;
 }
 
 function normalizeLookupKey(
   name: ISupportedName,
-): Exclude<ISEOKey, "openGraph"> {
+): Exclude<ISEOKey, "openGraph" | "twitter"> {
   switch (name) {
     case "application-name": {
       return "applicationName";

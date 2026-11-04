@@ -204,7 +204,7 @@ function MetaTag({ tag }: IMetaTagProps) {
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={t((t) => t.seo["opengraph-overview"]["meta-tag-overview"].name)}
+        dKey={t((t) => t.seo["meta-tag-overview"].name)}
         dValue={name}
         isKeyPreformatted
         isValuePreformatted
@@ -212,7 +212,7 @@ function MetaTag({ tag }: IMetaTagProps) {
 
       <DescriptionSection
         dKey={t(
-          (t) => t.seo["opengraph-overview"]["meta-tag-overview"].property,
+          (t) => t.seo["meta-tag-overview"].property,
         )}
         dValue={property}
         isKeyPreformatted
@@ -221,7 +221,7 @@ function MetaTag({ tag }: IMetaTagProps) {
 
       <DescriptionSection
         dKey={t(
-          (t) => t.seo["opengraph-overview"]["meta-tag-overview"].content,
+          (t) => t.seo["meta-tag-overview"].content,
         )}
         dValue={content}
         isKeyPreformatted
@@ -232,7 +232,7 @@ function MetaTag({ tag }: IMetaTagProps) {
         <DescriptionSection
           dKey={t(
             (t) =>
-              t.seo["opengraph-overview"]["meta-tag-overview"][
+              t.seo["meta-tag-overview"][
                 "unknown-attributes"
               ],
           )}

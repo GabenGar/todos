@@ -11,5 +11,7 @@ export {
   IOpenGraph,
   IOpenGraphMetaTag,
   ISEO,
+  ITwitterMetaTag,
+  ITwitterTags,
   IUnknownMetaTag,
 } from "./types";

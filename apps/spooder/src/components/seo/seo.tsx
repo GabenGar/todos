@@ -7,6 +7,7 @@ import type { ISEO } from "#lib/seo";
 import { MetaTagView } from "./meta";
 import { OpenGraphView } from "./opengraph";
 import { UnknownMetaTagView } from "./unknown-meta";
+import { TwitterOverview } from "./twitter";
 
 interface ISEOViewProps {
   seo: ISEO;
@@ -34,6 +35,7 @@ export function SEOView({ seo }: ISEOViewProps) {
     themeColor,
     viewport,
     openGraph,
+    twitter,
     invalidMetaTags,
   } = seo;
 
@@ -201,6 +203,18 @@ export function SEOView({ seo }: ISEOViewProps) {
           dValue={
             <Details summary={Object.keys(openGraph).length}>
               <OpenGraphView openGraph={openGraph} />
+            </Details>
+          }
+          isKeyPreformatted
+        />
+      )}
+
+      {!twitter ? undefined : (
+        <DescriptionSection
+          dKey={t((t) => t.seo["twitter"])}
+          dValue={
+            <Details summary={Object.keys(twitter).length}>
+              <TwitterOverview twitter={twitter} />
             </Details>
           }
           isKeyPreformatted

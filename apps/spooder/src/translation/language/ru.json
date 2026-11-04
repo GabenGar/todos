@@ -4,10 +4,10 @@
     "source-code": "Исходный код"
   },
   "action": {
-    "heading": "Неправильный Ползунок",
+    "heading": "Лжеползунок",
     "base-info": "Основная информация",
     "faq-why-false": {
-      "question": "Почему неправильный?",
+      "question": "Почему лживый?",
       "answer": "Потому что оперирует на уже на распарсенном браузере документе."
     }
   },
@@ -30,8 +30,15 @@
     "keywords": "Ключевые слова",
     "referrer": "Реферрер",
     "opengraph": "OpenGraph",
+    "twitter": "Twitter",
     "unknown-meta-elements": "Неизвестные мета элементы",
     "invalid-meta-elements": "Неправильные мета элементы",
+    "meta-tag-overview": {
+      "name": "Имя",
+      "property": "Свойство",
+      "content": "Наполнение",
+      "unknown-attributes": "Неизвестные аттрибуты"
+    },
     "opengraph-overview": {
       "prefix": "Префикс",
       "locale": "Локаль (\"og:locale\")",
@@ -48,12 +55,17 @@
         "width": "Ширина (\"og:image:width\")",
         "height": "Высота (\"og:image:height\")",
         "alt": "Описание (\"og:image:alt\")"
-      },
-      "meta-tag-overview": {
-        "name": "Имя",
-        "property": "Свойство",
-        "content": "Наполнение",
-        "unknown-attributes": "Неизвестные аттрибуты"
+      }
+    },
+    "twitter-overview": {
+      "site": "Сайт (\"twitter:site\")",
+      "title": "Название (\"twitter:title\")",
+      "description": "Описание (\"twitter:description\")",
+      "image": "Изображение (\"twitter:image\")",
+      "card": "Карточка (\"twitter:card\")",
+      "creator": "Создатель (\"twitter:creator\")",
+      "image-overview": {
+        "alt": "Описание (\"twitter:image:alt\")"
       }
     }
   }

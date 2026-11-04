@@ -30,8 +30,15 @@
     "keywords": "Keywords",
     "referrer": "Referrer",
     "opengraph": "OpenGraph",
+    "twitter": "Twitter",
     "unknown-meta-elements": "Unknown meta elements",
     "invalid-meta-elements": "Invalid meta elements",
+    "meta-tag-overview": {
+      "name": "Name",
+      "property": "Property",
+      "content": "Content",
+      "unknown-attributes": "Unknown attributes"
+    },
     "opengraph-overview": {
       "prefix": "Prefix",
       "locale": "Locale (\"og:locale\")",
@@ -48,12 +55,17 @@
         "width": "Width (\"og:image:width\")",
         "height": "Height (\"og:image:height\")",
         "alt": "Alt (\"og:image:alt\")"
-      },
-      "meta-tag-overview": {
-        "name": "Name",
-        "property": "Property",
-        "content": "Content",
-        "unknown-attributes": "Unknown attributes"
+      }
+    },
+    "twitter-overview": {
+      "site": "Site (\"twitter:site\")",
+      "title": "Title (\"twitter:title\")",
+      "description": "Description (\"twitter:description\")",
+      "image": "Image (\"twitter:image\")",
+      "card": "Card (\"twitter:card\")",
+      "creator": "Creator (\"twitter:creator\")",
+      "image-overview": {
+        "alt": "Alt (\"twitter:image:alt\")"
       }
     }
   }

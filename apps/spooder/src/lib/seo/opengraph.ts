@@ -63,7 +63,7 @@ export function collectOpenGraphElement(
     tag.content = content;
   }
 
-  if (unknownAttributes?.size !== 0) {
+  if (unknownAttributes && unknownAttributes.size !== 0) {
     tag.unknownAttributes = unknownAttributes;
   }
 
@@ -137,7 +137,9 @@ export function collectOpenGraphElement(
         }
 
         default: {
-          break;
+          throw new Error(
+            `Unknown opengraph tag name "${resolvedName satisfies never}".`,
+          );
         }
       }
 
