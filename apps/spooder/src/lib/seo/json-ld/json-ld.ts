@@ -1,18 +1,20 @@
-import type { IMaybe, IOneOrMany } from "@repo/ui/types";
 import { isObject } from "@repo/ui/objects";
+import type { IMaybe } from "@repo/ui/types";
+import {
+  type IJSONLD,
+  type IJSONLDMeta,
+  type IKnownJSONLD,
+  type IValidJSONLD,
+  isKnownJSONLDType,
+} from "./types";
+import { parseKnownJSONLD } from "./parse";
 
-interface IResult {
-  items?: IOneOrMany<unknown>;
-  unknownItems?: IOneOrMany<unknown>;
-  invalidItems?: IOneOrMany<string>;
-}
-
-export function collectJSONLD(): IMaybe<IResult> {
+export function collectJSONLD(): IMaybe<IJSONLDMeta> {
   const elements = document.querySelectorAll<HTMLScriptElement>(
     `script[type="application/ld+json"]`,
   );
-  const items: unknown[] = [];
-  const unknownItems: unknown[] = [];
+  const items: IJSONLD[] = [];
+  const unknownItems: IValidJSONLD[] = [];
   const invalidItems: string[] = [];
 
   for (const element of elements) {
@@ -36,10 +38,12 @@ export function collectJSONLD(): IMaybe<IResult> {
       continue;
     }
 
-    items.push(parsedContent);
+    const jsonLD = parseKnownJSONLD(parsedContent);
+
+    items.push(jsonLD);
   }
 
-  const result: IResult = {};
+  const result: IJSONLDMeta = {};
 
   if (items.length !== 0) {
     if (items.length === 1) {
@@ -68,10 +72,19 @@ export function collectJSONLD(): IMaybe<IResult> {
   return Object.keys(result).length === 0 ? undefined : result;
 }
 
-function isValidJSONLD(input: unknown): input is object {
-  return isObject(input);
+function isValidJSONLD(input: unknown): input is IValidJSONLD {
+  return (
+    isObject(input) &&
+    !Array.isArray(input) &&
+    "@context" in input &&
+    typeof input["@context"] === "string" &&
+    "@type" in input &&
+    typeof input["@type"] === "string"
+  );
 }
 
-function isKnownJSONLD(input: unknown): boolean {
-  return false;
+function isKnownJSONLD(input: IValidJSONLD): input is IKnownJSONLD {
+  return isKnownJSONLDType(input["@type"]);
 }
+
+

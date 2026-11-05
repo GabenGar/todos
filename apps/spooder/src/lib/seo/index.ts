@@ -7,7 +7,6 @@ export {
   openGraphMetaNames,
 } from "./opengraph";
 export {
-  IJSONLD,
   IMetaTag,
   IOpenGraph,
   IOpenGraphMetaTag,

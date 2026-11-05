@@ -28,6 +28,10 @@ export type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
         dValue?: ReactNode;
         isKeyPreformatted?: boolean;
         isValuePreformatted?: boolean;
+        /**
+         * The section won't render if the value of `dValue` is undefined
+         */
+        isOptional?: boolean;
       }
   );
 
@@ -103,10 +107,14 @@ function DescriptionSectionComponent({
     dValue,
     isKeyPreformatted,
     isValuePreformatted,
+    isOptional,
     ...blockProps
   } = props;
 
-  return (
+  return isOptional && dValue === undefined ? (
+    // biome-ignore lint/complexity/noUselessFragments: it has to be this way for decorator to work
+    <></>
+  ) : (
     <div className={blockClass} {...blockProps}>
       <DescriptionTerm className={styles.key}>
         {isKeyPreformatted ? (

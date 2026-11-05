@@ -1,4 +1,5 @@
 import type { IElementType, IMaybe, IOneOrMany } from "@repo/ui/types";
+import type { IJSONLDMeta } from "./json-ld/types";
 import type { IKnownMetaName } from "./known-meta-names";
 
 export const knownMetaAttributes = new Set(["name", "content"] as const);
@@ -29,7 +30,7 @@ export interface ISEO {
   robots?: IOneOrMany<IMetaTag>;
   openGraph?: IOpenGraph;
   twitter?: ITwitterTags;
-  jsonLD?: IJSONLD;
+  jsonLD?: IJSONLDMeta;
   unknownMetaTags: IUnknownMetaTag[];
   invalidMetaTags: IInvalidMetaTag[];
 }
@@ -69,12 +70,6 @@ export interface ITwitterTags {
   unknownTags?: ITwitterMetaTag[];
 }
 
-export interface IJSONLD {
-  items?: IOneOrMany<unknown>;
-  unknownItems?: IOneOrMany<unknown>;
-  invalidItems?: IOneOrMany<string>;
-}
-
 export interface IMetaTag {
   name: IKnownMetaName;
   content?: string;
@@ -92,10 +87,6 @@ export interface ITwitterMetaTag {
   name?: string;
   content?: string;
   unknownAttributes?: Map<string, IMaybe<IOneOrMany<string>>>;
-}
-
-export interface IBaseJSONLDItem {
-  unknownKeys?: Map<string, IOneOrMany<unknown>>
 }
 
 export interface IUnknownMetaTag

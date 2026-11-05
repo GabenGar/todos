@@ -4,11 +4,11 @@ import { Preformatted } from "@repo/ui/formatting";
 import { List, ListItem } from "@repo/ui/lists";
 import { useTranslation } from "#hooks";
 import type { ISEO } from "#lib/seo";
+import { JSONLDOverview } from "./json-ld/json-ld";
 import { MetaTagView } from "./meta";
 import { OpenGraphView } from "./opengraph";
 import { TwitterOverview } from "./twitter";
 import { UnknownMetaTagView } from "./unknown-meta";
-import { JSONLDOverview } from "./json-ld";
 
 interface ISEOViewProps {
   seo: ISEO;
@@ -223,7 +223,8 @@ export function SEOView({ seo }: ISEOViewProps) {
         />
       )}
 
-      {!jsonLD ? undefined : <DescriptionSection
+      {!jsonLD ? undefined : (
+        <DescriptionSection
           dKey={t((t) => t.seo["json-ld"])}
           dValue={
             <Details summary={Object.keys(jsonLD).length}>
@@ -231,7 +232,8 @@ export function SEOView({ seo }: ISEOViewProps) {
             </Details>
           }
           isKeyPreformatted
-        />}
+        />
+      )}
 
       {unknownMetaTags.length === 0 ? undefined : (
         <DescriptionSection

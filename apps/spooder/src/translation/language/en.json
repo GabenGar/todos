@@ -75,7 +75,47 @@
     "json-ld-overview": {
       "items": "Items",
       "unknown-items": "Unknown items",
-      "invalid-items": "Invalid items"
+      "invalid-items": "Invalid items",
+      "unknown-keys": "Unknown keys",
+      "context": "Context",
+      "type": "Type",
+      "id": "ID",
+      "type-overview": {
+        "organization": {
+          "type": "Organization",
+          "name": "Name",
+          "alternate-name": "Alternate name",
+          "url": "URL",
+          "logo": "Logo",
+          "description": "Description",
+          "same-as": "Same as"
+        },
+        "software-application": {
+          "type": "Software application"
+        },
+        "faq-page": {
+          "type": "FAQ page"
+        },
+        "website": {
+          "type": "Website",
+          "name": "Name",
+          "publisher": "Publisher",
+          "url":"URL",
+          "potential-action": "Potentian action",
+          "publisher-overview": {
+            "id": "ID"
+          },
+          "potential-action-overview" :{
+            "type": "Type",
+            "query-input": "Query input",
+            "target": "Target",
+            "target-overview": {
+              "type":"Type",
+              "url-template": "URL template"
+            }
+          }
+        }
+      }
     }
   }
 }

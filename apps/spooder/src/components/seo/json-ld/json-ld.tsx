@@ -3,15 +3,17 @@ import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
 import { OneOrManyItems } from "@repo/ui/lists";
 import { useTranslation } from "#hooks";
-import type { IJSONLD } from "#lib/seo";
+import type { IJSONLDMeta } from "#lib/seo/json-ld";
+import { KnownJSONLDOverview } from "./known";
 
 interface IProps {
-  jsonLD: IJSONLD;
+  jsonLD: IJSONLDMeta;
 }
 
 export function JSONLDOverview({ jsonLD }: IProps) {
   const { t } = useTranslation();
   const { items, unknownItems, invalidItems } = jsonLD;
+
   return (
     <DescriptionList>
       {!items ? undefined : (
@@ -26,11 +28,10 @@ export function JSONLDOverview({ jsonLD }: IProps) {
               }
             >
               <OneOrManyItems
+                isOrdered
                 item={items}
                 itemElement={(jsonLD) => (
-                  <Preformatted>
-                    {JSON.stringify(jsonLD, undefined, 2)}
-                  </Preformatted>
+                  <KnownJSONLDOverview jsonLD={jsonLD}/>
                 )}
               />
             </Details>

@@ -9,7 +9,7 @@ import {
   type IUnknownMetaTag,
   isOpenGraphElement,
 } from "#lib/seo";
-import { collectJSONLD } from "./json-ld";
+import { collectJSONLD } from "./json-ld/json-ld";
 import { collectTwitterElement, isTwitterElement } from "./twitter";
 
 interface IResult {
