@@ -91,7 +91,12 @@
           "same-as": "Same as"
         },
         "software-application": {
-          "type": "Software application"
+          "type": "Software application",
+          "name": "Name",
+          "url": "URL",
+          "description": "Description",
+          "application-category": "Application category",
+          "operating-system": "Operating system"
         },
         "faq-page": {
           "type": "FAQ page"
@@ -100,17 +105,17 @@
           "type": "Website",
           "name": "Name",
           "publisher": "Publisher",
-          "url":"URL",
+          "url": "URL",
           "potential-action": "Potentian action",
           "publisher-overview": {
             "id": "ID"
           },
-          "potential-action-overview" :{
+          "potential-action-overview": {
             "type": "Type",
             "query-input": "Query input",
             "target": "Target",
             "target-overview": {
-              "type":"Type",
+              "type": "Type",
               "url-template": "URL template"
             }
           }

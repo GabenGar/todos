@@ -46,8 +46,8 @@ export interface IFAQPageJSONLD extends IValidJSONLD {
     acceptedAnswer?: {
       "@type": "Answer";
       text?: string;
-    }[];
-  };
+    };
+  }[];
 }
 
 export interface IWebSiteJSONLD extends IValidJSONLD {
