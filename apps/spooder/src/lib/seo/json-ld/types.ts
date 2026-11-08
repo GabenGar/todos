@@ -1,10 +1,19 @@
 import type { IElementType, IOneOrMany } from "@repo/ui/types";
+import type { IArticleJSONLD } from "./types/article";
+import type { IFAQPageJSONLD } from "./types/faq-page";
+import type { IOrganizationJSONLD } from "./types/organization";
+import type { IProfilePageJSONLD } from "./types/profile-page";
+import type { ISoftwareApplicationJSONLD } from "./types/software-application";
+import type { IWebPageJSONLD } from "./types/web-page";
+import type { IWebSiteJSONLD } from "./types/web-site";
 
 const knownJSONLDTypes = new Set([
   "Organization",
   "SoftwareApplication",
   "FAQPage",
   "WebSite",
+  "ProfilePage",
+  "Article",
 ] satisfies IKnownJSONLD["@type"][]);
 
 type IKnownJSONLDType = IElementType<typeof knownJSONLDTypes>;
@@ -17,55 +26,10 @@ export type IKnownJSONLD =
   | IOrganizationJSONLD
   | ISoftwareApplicationJSONLD
   | IFAQPageJSONLD
-  | IWebSiteJSONLD;
-
-export interface IOrganizationJSONLD extends IValidJSONLD {
-  "@type": "Organization";
-  name?: string;
-  alternateName?: string;
-  url?: string;
-  logo?: string;
-  description?: string;
-  sameAs?: string[];
-}
-
-export interface ISoftwareApplicationJSONLD extends IValidJSONLD {
-  "@type": "SoftwareApplication";
-  name?: string;
-  url?: string;
-  applicationCategory?: string;
-  operatingSystem?: string;
-  description: string;
-}
-
-export interface IFAQPageJSONLD extends IValidJSONLD {
-  "@type": "FAQPage";
-  mainEntity?: {
-    "@type": "Question";
-    name?: string;
-    acceptedAnswer?: {
-      "@type": "Answer";
-      text?: string;
-    };
-  }[];
-}
-
-export interface IWebSiteJSONLD extends IValidJSONLD {
-  "@type": "WebSite";
-  name?: string;
-  publisher?: {
-    "@id"?: string;
-  };
-  url?: string;
-  potentialAction?: {
-    "@type": "SearchAction";
-    "query-input"?: string;
-    target?: {
-      "@type"?: "EntryPoint";
-      urlTemplate?: string;
-    };
-  };
-}
+  | IWebSiteJSONLD
+  | IProfilePageJSONLD
+  | IArticleJSONLD
+  | IWebPageJSONLD;
 
 export interface IValidJSONLD {
   "@context": string;

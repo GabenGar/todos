@@ -4,8 +4,10 @@ import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
 import { useTranslation } from "#hooks";
 import type { IJSONLD } from "#lib/seo/json-ld";
+import { ArticleJSONLD } from "./json-ld-types/article";
 import { FAQPageJSONLD } from "./json-ld-types/faq-page";
 import { OrganizationJSONLD } from "./json-ld-types/organization";
+import { ProfilePageJSONLD } from "./json-ld-types/profile-page";
 import { SoftwareApplicationJSONLD } from "./json-ld-types/software-application";
 import { WebsiteJSONLD } from "./json-ld-types/website";
 
@@ -51,6 +53,26 @@ export function KnownJSONLDOverview({ jsonLD }: IProps) {
       );
       component = <WebsiteJSONLD jsonLD={jsonLD} />;
       break;
+    }
+
+    case "ProfilePage": {
+      title = t(
+        (t) => t.seo["json-ld-overview"]["type-overview"]["profile-page"].type,
+      );
+      component = <ProfilePageJSONLD jsonLD={jsonLD} />;
+      break;
+    }
+
+    case "Article": {
+      title = t(
+        (t) =>
+          t.seo["json-ld-overview"]["type-overview"]["article"]["type-name"],
+      );
+      component = <ArticleJSONLD jsonLD={jsonLD} />;
+      break;
+    }
+
+    case "WebPage": {
     }
 
     default: {

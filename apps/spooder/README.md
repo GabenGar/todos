@@ -12,4 +12,6 @@
 - https://doc.ohreally.nl/metatag-translator
 - https://www.octolytics.com
 - https://schema.org
-- https://atproto.com/
+- https://atproto.com
+- https://bsky.app
+- https://en.wikipedia.org/wiki/Main_Page

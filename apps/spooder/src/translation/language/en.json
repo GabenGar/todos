@@ -119,6 +119,33 @@
               "url-template": "URL template"
             }
           }
+        },
+        "profile-page": {
+          "type": "Profile page",
+          "id": "ID",
+          "name": "Name",
+          "content-rating": "Content rating",
+          "additional-name": "Additional name",
+          "description": "Description",
+          "url": "URL",
+          "created-at": "Creation date",
+          "home-location": "Home location",
+          "home-location-type": "Type",
+          "home-location-name": "Name",
+          "image": "Image",
+          "image-type": "Type",
+          "image-content-url": "Content URL",
+          "image-thumbnail-url": "Thumbnail URL",
+          "interaction-statistic": "Interaction statistic",
+          "interaction-statistic-overview": {
+            "type": "Type",
+            "interaction-type": "Interaction type",
+            "name": "Name",
+            "user-interaction-count": "User interaction count"
+          }
+        },
+        "article": {
+          "type-name": "Article"
         }
       }
     }
