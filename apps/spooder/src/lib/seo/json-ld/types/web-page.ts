@@ -5,40 +5,40 @@ export interface IWebPageJSONLD extends IValidJSONLD {
   url: string;
   mainEntity: {
     "@type": "DiscussionForumPosting";
-    url: string;
-    identifier: string;
-    author: {
+    url?: string;
+    identifier?: string;
+    author?: {
       "@type": "Person";
-      name: string;
-      alternateName: string;
-      identifier: string;
-      url: string;
+      name?: string;
+      alternateName?: string;
+      identifier?: string;
+      url?: string;
     };
-    text: string;
-    image: string[];
-    thumbnailUrl: string;
-    datePublished: string;
-    interactionStatistic: {
+    text?: string;
+    image?: string[];
+    thumbnailUrl?: string;
+    datePublished?: string;
+    interactionStatistic?: {
       "@type": "InteractionCounter";
-      interactionType: string;
-      userInteractionCount: number;
+      interactionType?: string;
+      userInteractionCount?: number;
     }[];
-    commentCount: number;
-    comment: {
+    commentCount?: number;
+    comment?: {
       "@type": "Comment";
-      url: string;
-      identifier: string;
-      author: {
+      url?: string;
+      identifier?: string;
+      author?: {
         "@type": "Person";
-        name: string;
-        alternateName: string;
-        identifier: string;
-        url: string;
+        name?: string;
+        alternateName?: string;
+        identifier?: string;
+        url?: string;
         image?: string[];
         thumbnailUrl?: string;
       };
-      text: string;
-      datePublished: string;
+      text?: string;
+      datePublished?: string;
     }[];
   };
 }

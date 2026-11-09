@@ -14,6 +14,7 @@ const knownJSONLDTypes = new Set([
   "WebSite",
   "ProfilePage",
   "Article",
+  "WebPage",
 ] satisfies IKnownJSONLD["@type"][]);
 
 type IKnownJSONLDType = IElementType<typeof knownJSONLDTypes>;

@@ -1,7 +1,7 @@
 import { Details } from "@repo/ui/details";
 import { OneOrManyItems } from "@repo/ui/lists";
 // import { useTranslation } from "#hooks";
-import type { IFAQPageJSONLD } from "#lib/seo/json-ld";
+import type { IFAQPageJSONLD } from "#lib/seo/json-ld/types";
 
 interface IFAQPageProps {
   jsonLD: IFAQPageJSONLD;

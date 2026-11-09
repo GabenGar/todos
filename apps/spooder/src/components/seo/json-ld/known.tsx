@@ -10,6 +10,7 @@ import { OrganizationJSONLD } from "./json-ld-types/organization";
 import { ProfilePageJSONLD } from "./json-ld-types/profile-page";
 import { SoftwareApplicationJSONLD } from "./json-ld-types/software-application";
 import { WebsiteJSONLD } from "./json-ld-types/website";
+import { WebPageJSONLD } from "./json-ld-types/web-page";
 
 interface IProps {
   jsonLD: IJSONLD;
@@ -73,6 +74,12 @@ export function KnownJSONLDOverview({ jsonLD }: IProps) {
     }
 
     case "WebPage": {
+      title = t(
+        (t) =>
+          t.seo["json-ld-overview"]["type-overview"]["web-page"]["type-name"],
+      );
+      component = <WebPageJSONLD jsonLD={jsonLD} />;
+      break;
     }
 
     default: {

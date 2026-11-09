@@ -1,6 +1,6 @@
 import { DescriptionSection } from "@repo/ui/description-list";
 import { useTranslation } from "#hooks";
-import type { ISoftwareApplicationJSONLD } from "#lib/seo/json-ld";
+import type { ISoftwareApplicationJSONLD } from "#lib/seo/json-ld/types";
 
 interface ISoftwareApplicationProps {
   jsonLD: ISoftwareApplicationJSONLD;

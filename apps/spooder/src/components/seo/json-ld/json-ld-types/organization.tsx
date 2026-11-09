@@ -3,7 +3,7 @@ import { Details } from "@repo/ui/details";
 import { Preformatted } from "@repo/ui/formatting";
 import { OneOrManyItems } from "@repo/ui/lists";
 import { useTranslation } from "#hooks";
-import type { IOrganizationJSONLD } from "#lib/seo/json-ld";
+import type { IOrganizationJSONLD } from "#lib/seo/json-ld/types";
 
 interface IOrganizationProps {
   jsonLD: IOrganizationJSONLD;

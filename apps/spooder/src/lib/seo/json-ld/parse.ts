@@ -7,6 +7,7 @@ import type { IOrganizationJSONLD } from "./types/organization";
 import type { IProfilePageJSONLD } from "./types/profile-page";
 import type { ISoftwareApplicationJSONLD } from "./types/software-application";
 import type { IWebSiteJSONLD } from "./types/web-site";
+import type { IWebPageJSONLD } from "./types/web-page";
 
 const baseKnownKeys = new Set<keyof IValidJSONLD>(["@context", "@type", "@id"]);
 const organizationKeys = mergeSets(
@@ -67,6 +68,10 @@ const articlePageKeys = mergeSets(
     "url",
   ]),
 );
+const webPageKeys = mergeSets(
+  baseKnownKeys,
+  new Set<keyof IWebPageJSONLD>(["mainEntity", "url"]),
+);
 
 export function parseKnownJSONLD(input: IKnownJSONLD): IJSONLD {
   const type = input["@type"];
@@ -100,6 +105,11 @@ export function parseKnownJSONLD(input: IKnownJSONLD): IJSONLD {
 
     case "Article": {
       unknownKeys = collectUnknownObjectKeys(input, articlePageKeys);
+      break;
+    }
+
+    case "WebPage": {
+      unknownKeys = collectUnknownObjectKeys(input, webPageKeys);
       break;
     }
 

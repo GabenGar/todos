@@ -126,6 +126,7 @@
           "name": "Name",
           "content-rating": "Content rating",
           "additional-name": "Additional name",
+          "alternate-name":"Alternate name",
           "description": "Description",
           "url": "URL",
           "created-at": "Creation date",
@@ -137,6 +138,7 @@
           "image-content-url": "Content URL",
           "image-thumbnail-url": "Thumbnail URL",
           "interaction-statistic": "Interaction statistic",
+          "agent-interaction-statistic": "Agent interaction statistic",
           "interaction-statistic-overview": {
             "type": "Type",
             "interaction-type": "Interaction type",
@@ -145,7 +147,63 @@
           }
         },
         "article": {
-          "type-name": "Article"
+          "type-name": "Article",
+          "headline": "Headline",
+          "name": "Name",
+          "image": "Image",
+          "date-published": "Publication date",
+          "date-modified": "Modification date",
+          "url": "URL",
+          "author": "Author",
+          "author-type": "Type",
+          "author-name": "Name",
+          "publisher": "Publisher",
+          "publisher-type": "Type",
+          "publisher-name": "Name",
+          "publisher-logo": "Logo",
+          "main-entity": "Main entity",
+          "same-as": "Same as"
+        },
+        "web-page": {
+          "type-name": "Web page",
+          "url": "URL",
+          "main-entity": "Main entity",
+          "main-entity-overview": {
+            "type": "Type",
+            "identifier": "Identifier",
+            "body": "Body",
+            "thumbnail-url": "Thumbnail URL",
+            "images": "Images",
+            "date-published": "Publication date",
+            "author": "Author",
+            "author-type": "Type",
+            "author-alternate-name": "Alternate name",
+            "author-identifier": "identifier",
+            "author-url": "URL",
+            "url": "URL",
+            "interaction-statistic": "Interaction statistic",
+            "interaction-statistic-type": "Type",
+            "interaction-statistic-interaction-type": "Interaction type",
+            "interaction-statistic-user-interaction-count": "Interaction count",
+            "comment-count": "Comment count",
+            "comments": "Comments",
+            "comment-overview": {
+              "type": "Type",
+              "identifier":"Identifier",
+              "body":"Body",
+              "date-published":"Publication date",
+              "author":"Author",
+              "url": "URL",
+              "author-overview": {
+                "type":"Type",
+                "identifier":"Identifier",
+                "alternate-name":"Alternate name",
+                "thumbnail-url":"Thumbnail URL",
+                "images":"Images",
+                "url":"URL"
+              }
+            }
+          }
         }
       }
     }

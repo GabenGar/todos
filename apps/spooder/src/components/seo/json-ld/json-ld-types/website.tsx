@@ -1,6 +1,6 @@
 import { DescriptionList, DescriptionSection } from "@repo/ui/description-list";
 import { useTranslation } from "#hooks";
-import type { IWebSiteJSONLD } from "#lib/seo/json-ld";
+import type { IWebSiteJSONLD } from "#lib/seo/json-ld/types";
 
 interface IWebsiteProps {
   jsonLD: IWebSiteJSONLD;
