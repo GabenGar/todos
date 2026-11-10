@@ -3,7 +3,7 @@
   "name": "__MSG_extension_title__",
   "short_name": "__MSG_extension_short_title__",
   "description": "__MSG_extension_description__",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
