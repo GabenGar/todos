@@ -1,5 +1,6 @@
 import { isObject } from "@repo/ui/objects";
 import type { IMaybe } from "@repo/ui/types";
+import { parseKnownJSONLD } from "./parse";
 import {
   type IJSONLD,
   type IJSONLDMeta,
@@ -7,7 +8,6 @@ import {
   type IValidJSONLD,
   isKnownJSONLDType,
 } from "./types";
-import { parseKnownJSONLD } from "./parse";
 
 export function collectJSONLD(): IMaybe<IJSONLDMeta> {
   const elements = document.querySelectorAll<HTMLScriptElement>(
@@ -86,5 +86,3 @@ function isValidJSONLD(input: unknown): input is IValidJSONLD {
 function isKnownJSONLD(input: IValidJSONLD): input is IKnownJSONLD {
   return isKnownJSONLDType(input["@type"]);
 }
-
-

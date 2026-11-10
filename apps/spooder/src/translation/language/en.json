@@ -204,6 +204,20 @@
               }
             }
           }
+        },
+        "video-object": {
+          "type-name": "Video object",
+          "name":"Name",
+          "description":"Description",
+          "upload-date":"Upload date",
+          "is-family-friendly": "Is family friendly",
+          "url":"URL",
+          "thumbnail-url":"Thumbnail URL",
+          "duration": "Duration",
+          "content-url":"Content URL",
+          "actors": "Actors",
+          "actor-type": "Type",
+          "actor-name": "Name"
         }
       }
     }

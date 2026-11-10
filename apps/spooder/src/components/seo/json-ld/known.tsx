@@ -9,8 +9,9 @@ import { FAQPageJSONLD } from "./json-ld-types/faq-page";
 import { OrganizationJSONLD } from "./json-ld-types/organization";
 import { ProfilePageJSONLD } from "./json-ld-types/profile-page";
 import { SoftwareApplicationJSONLD } from "./json-ld-types/software-application";
-import { WebsiteJSONLD } from "./json-ld-types/website";
+import { VideoObjectJSONLD } from "./json-ld-types/video-object";
 import { WebPageJSONLD } from "./json-ld-types/web-page";
+import { WebsiteJSONLD } from "./json-ld-types/website";
 
 interface IProps {
   jsonLD: IJSONLD;
@@ -79,6 +80,17 @@ export function KnownJSONLDOverview({ jsonLD }: IProps) {
           t.seo["json-ld-overview"]["type-overview"]["web-page"]["type-name"],
       );
       component = <WebPageJSONLD jsonLD={jsonLD} />;
+      break;
+    }
+
+    case "VideoObject": {
+      title = t(
+        (t) =>
+          t.seo["json-ld-overview"]["type-overview"]["video-object"][
+            "type-name"
+          ],
+      );
+      component = <VideoObjectJSONLD jsonLD={jsonLD} />;
       break;
     }
 

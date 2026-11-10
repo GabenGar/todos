@@ -4,6 +4,7 @@ import type { IFAQPageJSONLD } from "./types/faq-page";
 import type { IOrganizationJSONLD } from "./types/organization";
 import type { IProfilePageJSONLD } from "./types/profile-page";
 import type { ISoftwareApplicationJSONLD } from "./types/software-application";
+import type { IVideoObjectJSONLD } from "./types/video-object";
 import type { IWebPageJSONLD } from "./types/web-page";
 import type { IWebSiteJSONLD } from "./types/web-site";
 
@@ -15,6 +16,7 @@ const knownJSONLDTypes = new Set([
   "ProfilePage",
   "Article",
   "WebPage",
+  "VideoObject",
 ] satisfies IKnownJSONLD["@type"][]);
 
 type IKnownJSONLDType = IElementType<typeof knownJSONLDTypes>;
@@ -30,7 +32,8 @@ export type IKnownJSONLD =
   | IWebSiteJSONLD
   | IProfilePageJSONLD
   | IArticleJSONLD
-  | IWebPageJSONLD;
+  | IWebPageJSONLD
+  | IVideoObjectJSONLD;
 
 export interface IValidJSONLD {
   "@context": string;
