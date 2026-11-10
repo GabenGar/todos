@@ -75,7 +75,151 @@
     "json-ld-overview": {
       "items": "Элементы",
       "unknown-items": "Неизвестные элементы",
-      "invalid-items": "Неправильные элементы"
+      "invalid-items": "Неправильные элементы",
+      "unknown-keys": "Неизвестные ключи",
+      "context": "Контекст",
+      "type": "Тип",
+      "id": "Идентификатор",
+      "type-overview": {
+        "organization": {
+          "type": "Организация",
+          "name": "Название",
+          "alternate-name": "Альтернативное название",
+          "url": "Униформный локатор ресурса",
+          "logo": "Логотип",
+          "description": "Описание",
+          "same-as": "Такое же как"
+        },
+        "software-application": {
+          "type": "Программное приложение",
+          "name": "Название",
+          "url": "Униформный локатор ресурса",
+          "description": "Описание",
+          "application-category": "Категория приложения",
+          "operating-system": "Операционная система"
+        },
+        "faq-page": {
+          "type": "Страниц вопросов и ответов"
+        },
+        "website": {
+          "type": "Сайт",
+          "name": "Название",
+          "publisher": "Издатель",
+          "url": "Униформный локатор ресурса",
+          "potential-action": "Потенциальное действие",
+          "publisher-overview": {
+            "id": "Идентификатор"
+          },
+          "potential-action-overview": {
+            "type": "Тип",
+            "query-input": "Поисковой запрос",
+            "target": "Цель",
+            "target-overview": {
+              "type": "Тип",
+              "url-template": "Шаблон униформного локатора ресурса"
+            }
+          }
+        },
+        "profile-page": {
+          "type": "Страница профиля",
+          "id": "Идентификатор",
+          "name": "Имя",
+          "content-rating": "Рейтинг наполнения",
+          "additional-name": "Дополнительное имя",
+          "alternate-name":"Альтернативное имя",
+          "description": "Описание",
+          "url": "Униформный локатор ресурса",
+          "created-at": "Дата создания",
+          "home-location": "Домашний адрес",
+          "home-location-type": "Тип",
+          "home-location-name": "Название",
+          "image": "Изображение",
+          "image-type": "Тип",
+          "image-content-url": "Униформный локатор ресурса для наполнения",
+          "image-thumbnail-url": "Униформный локатор ресурса для предпросмотра",
+          "interaction-statistic": "Статистика взаимодействий",
+          "agent-interaction-statistic": "Своя статистика взаимодействий",
+          "interaction-statistic-overview": {
+            "type": "Тип",
+            "interaction-type": "Тип взаимодействия",
+            "name": "Название",
+            "user-interaction-count": "Количетсво пользовательских вазимодействий"
+          }
+        },
+        "article": {
+          "type-name": "Статья",
+          "headline": "Заголовок",
+          "name": "Название",
+          "image": "Image",
+          "date-published": "Дата издания",
+          "date-modified": "Дата изменения",
+          "url": "Униформный локатор ресурса",
+          "author": "Автор",
+          "author-type": "Тип",
+          "author-name": "Имя",
+          "publisher": "Издатель",
+          "publisher-type": "Тип",
+          "publisher-name": "название",
+          "publisher-logo": "Логотип",
+          "main-entity": "Основная сущность",
+          "same-as": "Такое же как"
+        },
+        "web-page": {
+          "type-name": "Страница сайта",
+          "url": "Униформный локатор ресурса",
+          "main-entity": "Основная сущность",
+          "main-entity-overview": {
+            "type": "Тип",
+            "identifier": "Identifier",
+            "body": "Тело",
+            "thumbnail-url": "Униформный локатор ресурса для предпросмотра",
+            "images": "Изображения",
+            "date-published": "Дата издания",
+            "author": "Автор",
+            "author-type": "Тип",
+            "author-alternate-name": "Альтернативное имя",
+            "author-identifier": "Идентификатор",
+            "author-url": "Униформный локатор ресурса",
+            "url": "Униформный локатор ресурса",
+            "interaction-statistic": "Статистика взаимодействий",
+            "interaction-statistic-type": "Тип",
+            "interaction-statistic-interaction-type": "Тип взаимодействия",
+            "interaction-statistic-user-interaction-count": "Количество взаимодействий",
+            "comment-count": "Количество комментариев",
+            "comments": "Комментарии",
+            "comment-overview": {
+              "type": "Тип",
+              "identifier": "Идентификатор",
+              "body":"Тело",
+              "date-published":"Дата издания",
+              "author":"Автор",
+              "url": "Униформный локатор ресурса",
+              "author-overview": {
+                "type":"Тип",
+                "identifier":"Идентификатор",
+                "alternate-name":"Альтернативное имя",
+                "thumbnail-url":"Униформный локатор ресурса для предпросмотра",
+                "images":"Изображения",
+                "url":"Униформный локатор ресурса"
+              }
+            }
+          }
+        },
+        "video-object": {
+          "type-name": "Видеообъект",
+          "name":"Название",
+          "description":"Описание",
+          "upload-date":"Дата загрузки",
+          "is-family-friendly": "Является семейным",
+          "url":"Униформный локатор ресурса",
+          "thumbnail-url":"Униформный локатор ресурса для предпросмотра",
+          "duration": "Длительность",
+          "content-url":"Униформный локатор ресурса для наполнения",
+          "actors": "Актёры",
+          "actor-type": "Тип",
+          "actor-name": "Имя"
+        }
+      }
     }
   }
 }
