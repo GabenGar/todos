@@ -11,7 +11,7 @@ import { getLocalizedMessage } from "#translation";
 import styles from "./action.module.scss";
 
 export function ActionLayout() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <ClientProvider>
@@ -35,7 +35,7 @@ export function ActionLayout() {
                 "https://github.com/GabenGar/todos/tree/master/apps/spooder"
               }
             >
-              {t(t=> t.layout["source-code"])}
+              {t((t) => t.layout["source-code"])}
             </LinkExternal>
           </ListItem>
         </List>

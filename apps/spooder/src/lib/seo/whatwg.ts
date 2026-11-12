@@ -17,5 +17,5 @@ const baseWHATWGMetaNames = new Set([
 export const whatwgMetaNames = mergeSets(
   baseWHATWGMetaNames,
   openGraphMetaNames,
-  twitterMetaNames
+  twitterMetaNames,
 );

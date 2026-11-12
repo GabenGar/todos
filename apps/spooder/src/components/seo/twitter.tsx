@@ -81,7 +81,6 @@ export function TwitterOverview({ twitter }: IProps) {
   );
 }
 
-
 interface ISiteDataProps {
   site: ITwitterTags["site"];
 }
@@ -95,9 +94,7 @@ function SiteSection({ site }: ISiteDataProps) {
         <Details summary={<Preformatted>{site.url}</Preformatted>}>
           <DescriptionList>
             <DescriptionSection
-              dKey={t(
-                (t) => t["seo"]["twitter-overview"]["site-overview"].id,
-              )}
+              dKey={t((t) => t["seo"]["twitter-overview"]["site-overview"].id)}
               dValue={site.id}
               isKeyPreformatted
               isValuePreformatted

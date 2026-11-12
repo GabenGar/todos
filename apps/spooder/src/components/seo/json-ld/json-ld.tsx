@@ -31,7 +31,7 @@ export function JSONLDOverview({ jsonLD }: IProps) {
                 isOrdered
                 item={items}
                 itemElement={(jsonLD) => (
-                  <KnownJSONLDOverview jsonLD={jsonLD}/>
+                  <KnownJSONLDOverview jsonLD={jsonLD} />
                 )}
               />
             </Details>

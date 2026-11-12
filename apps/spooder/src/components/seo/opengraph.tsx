@@ -211,18 +211,14 @@ function MetaTag({ tag }: IMetaTagProps) {
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["meta-tag-overview"].property,
-        )}
+        dKey={t((t) => t.seo["meta-tag-overview"].property)}
         dValue={property}
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["meta-tag-overview"].content,
-        )}
+        dKey={t((t) => t.seo["meta-tag-overview"].content)}
         dValue={content}
         isKeyPreformatted
         isValuePreformatted
@@ -230,12 +226,7 @@ function MetaTag({ tag }: IMetaTagProps) {
 
       {!unknownAttributes ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["meta-tag-overview"][
-                "unknown-attributes"
-              ],
-          )}
+          dKey={t((t) => t.seo["meta-tag-overview"]["unknown-attributes"])}
           dValue={
             <Details
               summary={<Preformatted>{unknownAttributes.size}</Preformatted>}

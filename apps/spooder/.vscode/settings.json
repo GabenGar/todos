@@ -23,12 +23,15 @@
       "url": "https://json-schema.org/draft/2020-12/schema"
     },
     {
-      "fileMatch": ["**/manifest.json",],
+      "fileMatch": ["**/manifest.json"],
       "url": "./src/manifest.schema.json"
     },
-     {
-      "fileMatch": ["**/src/_locales/en/messages.json", "**/src/_locales/ru/messages.json"],
+    {
+      "fileMatch": [
+        "**/src/_locales/en/messages.json",
+        "**/src/_locales/ru/messages.json"
+      ],
       "url": "./src/_locales.schema.json"
-    },
+    }
   ]
 }

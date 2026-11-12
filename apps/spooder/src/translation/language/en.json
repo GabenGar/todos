@@ -126,7 +126,7 @@
           "name": "Name",
           "content-rating": "Content rating",
           "additional-name": "Additional name",
-          "alternate-name":"Alternate name",
+          "alternate-name": "Alternate name",
           "description": "Description",
           "url": "URL",
           "created-at": "Creation date",
@@ -189,32 +189,32 @@
             "comments": "Comments",
             "comment-overview": {
               "type": "Type",
-              "identifier":"Identifier",
-              "body":"Body",
-              "date-published":"Publication date",
-              "author":"Author",
+              "identifier": "Identifier",
+              "body": "Body",
+              "date-published": "Publication date",
+              "author": "Author",
               "url": "URL",
               "author-overview": {
-                "type":"Type",
-                "identifier":"Identifier",
-                "alternate-name":"Alternate name",
-                "thumbnail-url":"Thumbnail URL",
-                "images":"Images",
-                "url":"URL"
+                "type": "Type",
+                "identifier": "Identifier",
+                "alternate-name": "Alternate name",
+                "thumbnail-url": "Thumbnail URL",
+                "images": "Images",
+                "url": "URL"
               }
             }
           }
         },
         "video-object": {
           "type-name": "Video object",
-          "name":"Name",
-          "description":"Description",
-          "upload-date":"Upload date",
+          "name": "Name",
+          "description": "Description",
+          "upload-date": "Upload date",
           "is-family-friendly": "Is family friendly",
-          "url":"URL",
-          "thumbnail-url":"Thumbnail URL",
+          "url": "URL",
+          "thumbnail-url": "Thumbnail URL",
           "duration": "Duration",
-          "content-url":"Content URL",
+          "content-url": "Content URL",
           "actors": "Actors",
           "actor-type": "Type",
           "actor-name": "Name"

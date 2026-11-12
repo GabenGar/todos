@@ -16,7 +16,9 @@ export async function fetchPageTranslation(
         }
 
         case "page-qr-code-reader": {
-          translation = await import("#translation/en/pages/qr-code-reader.json");
+          translation = await import(
+            "#translation/en/pages/qr-code-reader.json"
+          );
           break;
         }
 
@@ -125,7 +127,9 @@ export async function fetchPageTranslation(
         }
 
         case "page-qr-code-reader": {
-          translation = await import("#translation/ru/pages/qr-code-reader.json");
+          translation = await import(
+            "#translation/ru/pages/qr-code-reader.json"
+          );
           break;
         }
 

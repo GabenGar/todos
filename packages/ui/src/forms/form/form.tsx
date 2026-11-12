@@ -28,10 +28,7 @@ function Component<InputName extends string>({
 }: IFormProps<InputName>) {
   const { t } = useTranslation();
   const formID = `${id}-form`;
-  const resolvedClassname = clsx(
-    className,
-    isNested && styles.nested,
-  );
+  const resolvedClassname = clsx(className, isNested && styles.nested);
 
   return (
     <div id={id} className={resolvedClassname}>
@@ -59,7 +56,13 @@ function Component<InputName extends string>({
         )
       }
 
-      <form {...props} id={formID} className={styles.form} onSubmit={onSubmit} onReset={onReset} />
+      <form
+        {...props}
+        id={formID}
+        className={styles.form}
+        onSubmit={onSubmit}
+        onReset={onReset}
+      />
     </div>
   );
 }

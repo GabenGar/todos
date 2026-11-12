@@ -48,5 +48,3 @@ type IUnitIdentifier =
 export interface INumberFormatOptions extends Intl.NumberFormatOptions {
   unit?: IUnitIdentifier;
 }
-
-

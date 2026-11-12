@@ -21,11 +21,7 @@ export function FAQPageJSONLD({ jsonLD }: IFAQPageProps) {
 
         const { name, acceptedAnswer } = entity;
 
-        return (
-          <Details summary={name}>
-            {acceptedAnswer?.text}
-          </Details>
-        );
+        return <Details summary={name}>{acceptedAnswer?.text}</Details>;
       }}
     />
   );

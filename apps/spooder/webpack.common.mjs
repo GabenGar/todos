@@ -9,7 +9,7 @@ const commonConfiguration = {
   target: "web",
   entry: {
     action: "./src/action/index.tsx",
-    "content-script": "./src/content-script/index.ts"
+    "content-script": "./src/content-script/index.ts",
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -62,20 +62,20 @@ const commonConfiguration = {
   },
   output: {
     copy: [
-        {
-          from: "./src/icons",
-          to: "./icons",
-        },
-        {
-          from: "./src/_locales",
-          to: "./_locales",
-        },
-        {
-          from: "./src/manifest.json",
-          to: "./",
-        },
-      ],
-  }
+      {
+        from: "./src/icons",
+        to: "./icons",
+      },
+      {
+        from: "./src/_locales",
+        to: "./_locales",
+      },
+      {
+        from: "./src/manifest.json",
+        to: "./",
+      },
+    ],
+  },
 };
 
 export default commonConfiguration;

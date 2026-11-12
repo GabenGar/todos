@@ -37,7 +37,7 @@ const config = {
     output: "json",
     pretty: true,
     metadata: true,
-    selfHosted: true
+    selfHosted: true,
   },
   build: {
     overwriteDest: true,

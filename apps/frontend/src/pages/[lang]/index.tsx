@@ -82,7 +82,7 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   {t((t) => t["Tasks"])}
                 </Link>
               </ListItem>
-              
+
               <ListItem>
                 <Link
                   className={styles.link}
@@ -91,7 +91,6 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
                   {t((t) => t["file-analyzer"])}
                 </Link>
               </ListItem>
-
 
               <ListItem>
                 <Link

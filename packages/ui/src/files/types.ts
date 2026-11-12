@@ -1,3 +1,3 @@
 export interface IFileOverview {
-  file: File
+  file: File;
 }
