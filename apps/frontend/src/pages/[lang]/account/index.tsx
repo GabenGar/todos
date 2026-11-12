@@ -110,7 +110,9 @@ function AccountPage() {
 /**
  * @TODO colouring
  */
-function Compatibility() {
+
+// biome-ignore lint/correctness/noUnusedVariables: @TODO reintroduce it
+function  Compatibility() {
   const { t } = usePageTranslation(namespace);
   const client = useClient();
 
