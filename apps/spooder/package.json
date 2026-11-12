@@ -14,7 +14,6 @@
     "dev": "node scripts/dev.mjs",
     "lint": "web-ext lint --no-config-discovery --config=./web-ext-config.mjs",
     "format": "biome format --write",
-    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit",
     "validate": "node scripts/validate.mjs"
   },
   "imports": {

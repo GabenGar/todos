@@ -20,7 +20,6 @@
     "dev": "node scripts/dev.mjs",
     "lint": "biome lint --write",
     "format": "biome format --write",
-    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit",
     "validate": "node scripts/validate.mjs"
   },
   "imports": {
