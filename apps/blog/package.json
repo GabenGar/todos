@@ -35,7 +35,7 @@
     "react-markdown": "^10.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.4",
+    "@biomejs/biome": "2.6.7",
     "@repo/biome-config": "*",
     "@repo/nodejs": "*",
     "@types/node": "^22.20.4",

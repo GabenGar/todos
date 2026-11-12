@@ -47,7 +47,7 @@
     "validate": "turbo run validate"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.4",
+    "@biomejs/biome": "2.6.7",
     "turbo": "2.11.11"
   },
   "packageManager": "npm@11.10.1",

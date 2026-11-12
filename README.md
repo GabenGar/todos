@@ -116,3 +116,5 @@ The repo has a bunch of singleteon packages or the packages which don't work wel
 The packages in question:
 - `turbo`
    Run `npx @turbo/codemod migrate` after updating to new version.
+- `biome`
+   Run `npx biome migrate --write` after updating to new version.

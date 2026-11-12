@@ -58,7 +58,7 @@
     "stringify-object": "^5.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.4",
+    "@biomejs/biome": "2.6.7",
     "@repo/biome-config": "*",
     "@types/node": "^22.20.4",
     "@types/react": "19.3.0",
