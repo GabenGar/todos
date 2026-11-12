@@ -118,3 +118,37 @@ The packages in question:
    Run `npx @turbo/codemod migrate` after updating to new version.
 - `biome`
    Run `npx biome migrate --write` after updating to new version.
+- `typescript`
+- `@types/node`
+   Must match `engines` field.
+
+- `i18next`
+- `i18next-resources-to-backend`
+- `react-i18next`
+   `i18next` stuff.
+
+- `react`
+- `react-dom`
+- `@types/react`
+- `@types/react-dom`
+   ReactJS stuff.
+
+- `@next/env`
+- `next`
+   NextJS stuff.
+
+- `@tanstack/react-router`
+- `@tanstack/react-start`
+   TankStack stuff.
+
+- `react-router`
+- `@react-router/express`
+- `@react-router/node`
+- `@react-router/serve`
+- `@react-router/dev`
+   React Router stuff.
+
+
+Always run `npm update` after all version manipualtions are complete.
+
+
