@@ -48,7 +48,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
-    "turbo": "2.8.20"
+    "turbo": "2.11.11"
   },
-  "packageManager": "npm@11.10.1"
+  "packageManager": "npm@11.10.1",
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": "11.10.1"
+    }
+  }
 }
