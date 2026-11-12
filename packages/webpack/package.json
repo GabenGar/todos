@@ -34,6 +34,6 @@
     "@repo/biome-config": "*",
     "@types/node": "^22.20.4",
     "typescript": "^6.0.3",
-    "webpack": "^5.105.2"
+    "webpack": "^5.112.0"
   }
 }

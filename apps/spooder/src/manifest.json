@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extension_title__",
+  "short_name": "__MSG_extension_short_title__",
+  "description": "__MSG_extension_description__",
+  "version": "0.1.0",
+  "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@spooder.gabengar",
+      "data_collection_permissions": {
+        "required": ["none"]
+      },
+      "strict_min_version": "115.0"
+    }
+  },
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_icon": {
+      "32": "icons/icon-32.png",
+      "64": "icons/icon.png"
+    },
+    "default_popup": "action/index.html",
+    "default_title": "__MSG_extension_title__",
+    "default_area": "menupanel"
+  },
+  "icons": {
+    "32": "icons/icon-32.png",
+    "64": "icons/icon.png"
+  }
+}

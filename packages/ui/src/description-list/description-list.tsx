@@ -10,7 +10,7 @@ import {
 
 import styles from "./description-list.module.scss";
 
-type IDescriptionListProps = IBaseComponentProps<"dl"> & {
+export type IDescriptionListProps = IBaseComponentProps<"dl"> & {
   isNested?: boolean;
 } & ({ sections: IDescriptionMap } | { children: ReactNode });
 
@@ -19,7 +19,7 @@ type IDescriptionListProps = IBaseComponentProps<"dl"> & {
  * without being equal.
  */
 interface IDescriptionMap extends Array<[ReactNode, ReactNode]> {}
-type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
+export type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
   isHorizontal?: boolean;
 } & (
     | { children?: ReactNode }
@@ -28,6 +28,10 @@ type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
         dValue?: ReactNode;
         isKeyPreformatted?: boolean;
         isValuePreformatted?: boolean;
+        /**
+         * The section won't render if the value of `dValue` is undefined
+         */
+        isOptional?: boolean;
       }
   );
 
@@ -103,10 +107,14 @@ function DescriptionSectionComponent({
     dValue,
     isKeyPreformatted,
     isValuePreformatted,
+    isOptional,
     ...blockProps
   } = props;
 
-  return (
+  return isOptional && dValue === undefined ? (
+    // biome-ignore lint/complexity/noUselessFragments: it has to be this way for decorator to work
+    <></>
+  ) : (
     <div className={blockClass} {...blockProps}>
       <DescriptionTerm className={styles.key}>
         {isKeyPreformatted ? (
@@ -117,7 +125,13 @@ function DescriptionSectionComponent({
       </DescriptionTerm>
 
       <DescriptionDetails className={styles.value}>
-        {isValuePreformatted ? <Preformatted>{dValue}</Preformatted> : dValue}
+        {!dValue ? (
+          dValue
+        ) : isValuePreformatted ? (
+          <Preformatted>{dValue}</Preformatted>
+        ) : (
+          dValue
+        )}
       </DescriptionDetails>
     </div>
   );

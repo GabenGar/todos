@@ -1,4 +1,6 @@
-export type IOneOrMany<Type> = Type | readonly Type[];
+export type IOneOrMany<Type> = Type | Type[];
+
+export type IMaybe<Type> = Type | undefined;
 
 export type IPartialSome<Type, Key extends keyof Type> = Omit<Type, Key> &
   Pick<Partial<Type>, Key>;
@@ -16,3 +18,13 @@ export type IJSONAble =
   | null
   | IJSONAble[]
   | { [key: string]: IJSONAble };
+
+/**
+ * Stolen from [stackoverflow answer][1].
+ *
+ * [1]: https://stackoverflow.com/a/76082750
+ */
+export type IElementType<Type extends Iterable<any>> =
+  Type extends Iterable<infer Element> ? Element : never;
+
+export interface IDictionary extends Map<string, unknown> {}

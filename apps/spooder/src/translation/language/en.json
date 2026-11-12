@@ -1,0 +1,225 @@
+{
+  "layout": {
+    "options": "Options",
+    "source-code": "Source code"
+  },
+  "action": {
+    "heading": "False Crawler",
+    "base-info": "Base info",
+    "faq-why-false": {
+      "question": "Why false?",
+      "answer": "Because it operates on already parsed data by the browser."
+    }
+  },
+  "seo": {
+    "charset": "Character set",
+    "title": "Title (<title>)",
+    "description": "Description",
+    "application-name": "Application name",
+    "author": "Author",
+    "creator": "Creator",
+    "publisher": "Publisher",
+    "robots": "Robots",
+    "googlebot": "Googlebot",
+    "theme-color": "Theme color",
+    "color-scheme": "Color scheme",
+    "responsive-embedded-sizing": "Responsive embedded sizing",
+    "text-scale": "Text scale",
+    "viewport": "Viewport",
+    "generator": "Generator",
+    "keywords": "Keywords",
+    "referrer": "Referrer",
+    "opengraph": "OpenGraph",
+    "twitter": "Twitter",
+    "json-ld": "JSON-LD",
+    "unknown-meta-elements": "Unknown meta elements",
+    "invalid-meta-elements": "Invalid meta elements",
+    "meta-tag-overview": {
+      "name": "Name",
+      "property": "Property",
+      "content": "Content",
+      "unknown-attributes": "Unknown attributes"
+    },
+    "opengraph-overview": {
+      "prefix": "Prefix",
+      "locale": "Locale (\"og:locale\")",
+      "alternate-locales": "Alternate locales (\"og:locale:alternate\")",
+      "type": "Type (\"og:type\")",
+      "site-name": "Site name (\"og:site_name\")",
+      "title": "Title (\"og:title\")",
+      "description": "Description (\"og:description\")",
+      "image": "Image (\"og:image\")",
+      "url": "Uniform resource locator (\"og:url\")",
+      "unknown-tags": "Unknown tags",
+      "image-overview": {
+        "type": "Type (\"og:image:type\")",
+        "width": "Width (\"og:image:width\")",
+        "height": "Height (\"og:image:height\")",
+        "alt": "Alt (\"og:image:alt\")"
+      }
+    },
+    "twitter-overview": {
+      "site": "Site (\"twitter:site\")",
+      "title": "Title (\"twitter:title\")",
+      "description": "Description (\"twitter:description\")",
+      "image": "Image (\"twitter:image\")",
+      "card": "Card (\"twitter:card\")",
+      "creator": "Creator (\"twitter:creator\")",
+      "site-overview": {
+        "id": "ID (\"twitter:site:id\")"
+      },
+      "image-overview": {
+        "alt": "Alt (\"twitter:image:alt\")"
+      }
+    },
+    "json-ld-overview": {
+      "items": "Items",
+      "unknown-items": "Unknown items",
+      "invalid-items": "Invalid items",
+      "unknown-keys": "Unknown keys",
+      "context": "Context",
+      "type": "Type",
+      "id": "ID",
+      "type-overview": {
+        "organization": {
+          "type": "Organization",
+          "name": "Name",
+          "alternate-name": "Alternate name",
+          "url": "URL",
+          "logo": "Logo",
+          "description": "Description",
+          "same-as": "Same as"
+        },
+        "software-application": {
+          "type": "Software application",
+          "name": "Name",
+          "url": "URL",
+          "description": "Description",
+          "application-category": "Application category",
+          "operating-system": "Operating system"
+        },
+        "faq-page": {
+          "type": "FAQ page"
+        },
+        "website": {
+          "type": "Website",
+          "name": "Name",
+          "publisher": "Publisher",
+          "url": "URL",
+          "potential-action": "Potentian action",
+          "publisher-overview": {
+            "id": "ID"
+          },
+          "potential-action-overview": {
+            "type": "Type",
+            "query-input": "Query input",
+            "target": "Target",
+            "target-overview": {
+              "type": "Type",
+              "url-template": "URL template"
+            }
+          }
+        },
+        "profile-page": {
+          "type": "Profile page",
+          "id": "ID",
+          "name": "Name",
+          "content-rating": "Content rating",
+          "additional-name": "Additional name",
+          "alternate-name": "Alternate name",
+          "description": "Description",
+          "url": "URL",
+          "created-at": "Creation date",
+          "home-location": "Home location",
+          "home-location-type": "Type",
+          "home-location-name": "Name",
+          "image": "Image",
+          "image-type": "Type",
+          "image-content-url": "Content URL",
+          "image-thumbnail-url": "Thumbnail URL",
+          "interaction-statistic": "Interaction statistic",
+          "agent-interaction-statistic": "Agent interaction statistic",
+          "interaction-statistic-overview": {
+            "type": "Type",
+            "interaction-type": "Interaction type",
+            "name": "Name",
+            "user-interaction-count": "User interaction count"
+          }
+        },
+        "article": {
+          "type-name": "Article",
+          "headline": "Headline",
+          "name": "Name",
+          "image": "Image",
+          "date-published": "Publication date",
+          "date-modified": "Modification date",
+          "url": "URL",
+          "author": "Author",
+          "author-type": "Type",
+          "author-name": "Name",
+          "publisher": "Publisher",
+          "publisher-type": "Type",
+          "publisher-name": "Name",
+          "publisher-logo": "Logo",
+          "main-entity": "Main entity",
+          "same-as": "Same as"
+        },
+        "web-page": {
+          "type-name": "Web page",
+          "url": "URL",
+          "main-entity": "Main entity",
+          "main-entity-overview": {
+            "type": "Type",
+            "identifier": "Identifier",
+            "body": "Body",
+            "thumbnail-url": "Thumbnail URL",
+            "images": "Images",
+            "date-published": "Publication date",
+            "author": "Author",
+            "author-type": "Type",
+            "author-alternate-name": "Alternate name",
+            "author-identifier": "identifier",
+            "author-url": "URL",
+            "url": "URL",
+            "interaction-statistic": "Interaction statistic",
+            "interaction-statistic-type": "Type",
+            "interaction-statistic-interaction-type": "Interaction type",
+            "interaction-statistic-user-interaction-count": "Interaction count",
+            "comment-count": "Comment count",
+            "comments": "Comments",
+            "comment-overview": {
+              "type": "Type",
+              "identifier": "Identifier",
+              "body": "Body",
+              "date-published": "Publication date",
+              "author": "Author",
+              "url": "URL",
+              "author-overview": {
+                "type": "Type",
+                "identifier": "Identifier",
+                "alternate-name": "Alternate name",
+                "thumbnail-url": "Thumbnail URL",
+                "images": "Images",
+                "url": "URL"
+              }
+            }
+          }
+        },
+        "video-object": {
+          "type-name": "Video object",
+          "name": "Name",
+          "description": "Description",
+          "upload-date": "Upload date",
+          "is-family-friendly": "Is family friendly",
+          "url": "URL",
+          "thumbnail-url": "Thumbnail URL",
+          "duration": "Duration",
+          "content-url": "Content URL",
+          "actors": "Actors",
+          "actor-type": "Type",
+          "actor-name": "Name"
+        }
+      }
+    }
+  }
+}

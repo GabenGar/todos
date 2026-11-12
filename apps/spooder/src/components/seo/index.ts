@@ -1,0 +1,1 @@
+export { SEOView } from "./seo";

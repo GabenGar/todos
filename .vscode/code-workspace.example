@@ -17,6 +17,10 @@
       "path": "apps/extension"
     },
     {
+      "name": "spooder",
+      "path": "apps/spooder"
+    },
+    {
       "name": "@repo/ui",
       "path": "packages/ui"
     },

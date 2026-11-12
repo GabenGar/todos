@@ -1,0 +1,89 @@
+import { isKnownMetaName } from "#lib/seo";
+
+interface IResult {
+  known: HTMLMetaElement[];
+  unknown: HTMLMetaElement[];
+  invalid: HTMLMetaElement[];
+}
+
+export function selectMetaElements(): IResult {
+  const metaElements = document.querySelectorAll<HTMLMetaElement>("head meta");
+  const known: HTMLMetaElement[] = [];
+  const unknown: HTMLMetaElement[] = [];
+  const invalid: HTMLMetaElement[] = [];
+
+  for (const element of metaElements) {
+    if (!isValidMetaElement(element)) {
+      invalid.push(element);
+      continue;
+    }
+
+    if (element.hasAttribute("charset")) {
+      known.push(element);
+      continue;
+    }
+
+    const name =
+      element.getAttribute("name") ||
+      // opengraph tags rely on this value
+      element.getAttribute("property");
+
+    if (name === null || !isKnownMetaName(name)) {
+      unknown.push(element);
+      continue;
+    }
+
+    known.push(element);
+  }
+
+  const result: IResult = {
+    known,
+    unknown,
+    invalid,
+  };
+
+  return result;
+}
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta
+ */
+export function isValidMetaElement(element: HTMLMetaElement): boolean {
+  const isDocumentLevelMetadata =
+    element.hasAttribute("name") ||
+    // OpenGraph tags rely on this atribute as a key
+    element.hasAttribute("property");
+  const isPragmaDirective = element.hasAttribute("http-equiv");
+  const isCharsetDeclaration = element.hasAttribute("charset");
+  const isUserDefinedMetadata = element.hasAttribute("itemprop");
+
+  // The `itemprop` attribute must not be set on a `<meta>` element
+  // that includes a `name`, `http-equiv`, or `charset` attribute.
+  if (
+    isUserDefinedMetadata &&
+    (isDocumentLevelMetadata || isPragmaDirective || isCharsetDeclaration)
+  ) {
+    return false;
+  }
+
+  if (isCharsetDeclaration) {
+    const value = element.getAttribute("charset");
+
+    return value?.toLowerCase() === "utf-8";
+  }
+
+  if (isDocumentLevelMetadata || isPragmaDirective) {
+    if (!element.hasAttribute("content")) {
+      return false;
+    }
+
+    return true;
+  }
+
+  return (
+    isDocumentLevelMetadata ||
+    isPragmaDirective ||
+    isCharsetDeclaration ||
+    isUserDefinedMetadata
+  );
+}
