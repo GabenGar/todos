@@ -17,6 +17,7 @@
   "permissions": ["activeTab", "scripting"],
   "action": {
     "default_icon": {
+      "32": "icons/icon-32.png",
       "64": "icons/icon.png"
     },
     "default_popup": "action/index.html",
@@ -24,6 +25,7 @@
     "default_area": "menupanel"
   },
   "icons": {
+    "32": "icons/icon-32.png",
     "64": "icons/icon.png"
   }
 }

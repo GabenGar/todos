@@ -143,6 +143,7 @@
       }
     },
     "icons": {
+      "description": "Specifies icons for your extension. Those icons represent the extension in components such as the add-ons manager `(about:addons)`. Consists of key-value pairs specifying the image size in pixels and the image path relative to the extension's root directory.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -151,7 +152,13 @@
         "64": { "type": "string" },
         "48": { "type": "string" },
         "32": { "type": "string" }
-      }
+      },
+      "examples": [
+        {
+          "32": "icon.png",
+          "64": "icon@2x.png"
+        }
+      ]
     },
     "background": {
       "description": "Use the background key to include one or more `background` scripts, a background page, or a Service worker in your extension.",
