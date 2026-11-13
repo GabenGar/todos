@@ -1,26 +1,26 @@
 const databaseName = "__test__";
 const databaseVersion = 1;
 
-export async function isIndexedDBAvailable(): Promise<boolean> {
-  const isAvailable = await new Promise<boolean>((resolve, reject) => {
-    const idbRequest = indexedDB.open(databaseName, databaseVersion);
+export async function isIndexedDBAvailable(): Promise< boolean > {
+  const isAvailable = await new Promise< boolean >( ( resolve, reject ) => {
+    const idbRequest = indexedDB.open( databaseName, databaseVersion );
 
-    idbRequest.onerror = (event) => {
+    idbRequest.onerror = ( event ) => {
       const error =
-        (event.target as IDBOpenDBRequest).error ??
+        ( event.target as IDBOpenDBRequest ).error ??
         new Error(
-          `Failed to connect to "${databaseName}" of version ${databaseVersion} IndexedDB.`,
+          `Failed to connect to "${ databaseName }" of version ${ databaseVersion } IndexedDB.`,
         );
 
-      reject(error);
+      reject( error );
     };
 
     idbRequest.onsuccess = () => {
-      resolve(true);
+      resolve( true );
     };
-  }).catch(() => {
+  } ).catch( () => {
     return false;
-  });
+  } );
 
   return isAvailable;
 }

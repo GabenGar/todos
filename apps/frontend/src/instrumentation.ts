@@ -1,3 +1,3 @@
 export async function register() {
-  console.log("Starting NextJS server...");
+  console.log( "Starting NextJS server..." );
 }

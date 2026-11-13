@@ -19,53 +19,54 @@ interface IProps extends ILanguageProps, IPreviewProps {
   account: IAccountDBPreview;
 }
 
-export const AccountPreview: ReturnType<typeof createBlockComponent<IProps>> =
-  createBlockComponent(undefined, Component);
+export const AccountPreview: ReturnType<
+  typeof createBlockComponent< IProps >
+> = createBlockComponent( undefined, Component );
 
-function Component({ language, account, ...props }: IProps) {
+function Component( { language, account, ...props }: IProps ) {
   const { t } = useTranslation();
   const { id, name, role, created_at } = account;
-  const parsedName = parseName(name);
+  const parsedName = parseName( name );
 
   return (
-    <Preview {...props}>
-      {(headingLevel) => (
+    <Preview { ...props }>
+      { ( headingLevel ) => (
         <>
           <PreviewHeader>
-            <Heading level={headingLevel}>
+            <Heading level={ headingLevel }>
               <LinkInternal
-                href={href(
+                href={ href(
                   "/:language/account/role/administrator/account/:id",
                   {
                     language,
                     id,
                   },
-                )}
+                ) }
               >
-                {parsedName}
+                { parsedName }
               </LinkInternal>
             </Heading>
 
-            <EntityID entityID={id} />
+            <EntityID entityID={ id } />
           </PreviewHeader>
 
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.entities.account["Role"])}
-                dValue={role}
+                dKey={ t( ( t ) => t.entities.account[ "Role" ] ) }
+                dValue={ role }
                 isValuePreformatted
                 isHorizontal
               />
 
               <DescriptionSection
-                dKey={t((t) => t.entities.account["Join date"])}
-                dValue={<DateTimeView dateTime={created_at} />}
+                dKey={ t( ( t ) => t.entities.account[ "Join date" ] ) }
+                dValue={ <DateTimeView dateTime={ created_at } /> }
               />
             </DescriptionList>
           </PreviewBody>
         </>
-      )}
+      ) }
     </Preview>
   );
 }

@@ -8,13 +8,13 @@ import { IS_BROWSER } from "#environment";
 import { ClientProvider, ServiceWorkerProvider } from "#hooks";
 import { initClientTranslation } from "#translation";
 
-function App({ Component, pageProps, ...appProps }: AppPropsWithLayout) {
-  if (!Component.getLayout) {
+function App( { Component, pageProps, ...appProps }: AppPropsWithLayout ) {
+  if ( ! Component.getLayout ) {
     return (
       <TranslatedApp
-        Component={Component}
-        pageProps={pageProps}
-        {...appProps}
+        Component={ Component }
+        pageProps={ pageProps }
+        { ...appProps }
       />
     );
   }
@@ -22,27 +22,27 @@ function App({ Component, pageProps, ...appProps }: AppPropsWithLayout) {
   return (
     <ErrorBoundary>
       <ServiceWorkerProvider>
-        {Component.getLayout(<Component {...pageProps} />)}
+        { Component.getLayout( <Component { ...pageProps } /> ) }
       </ServiceWorkerProvider>
     </ErrorBoundary>
   );
 }
 
-function TranslatedApp({ Component, pageProps }: AppPropsWithLayout) {
+function TranslatedApp( { Component, pageProps }: AppPropsWithLayout ) {
   const { translation, lang } = pageProps;
 
-  if (IS_BROWSER) {
-    initClientTranslation(lang, translation);
+  if ( IS_BROWSER ) {
+    initClientTranslation( lang, translation );
   }
 
-  useSSR(translation, lang);
+  useSSR( translation, lang );
 
   return (
     <ErrorBoundary>
       <ServiceWorkerProvider>
-        <ClientProvider lang={lang}>
+        <ClientProvider lang={ lang }>
           <MainLayout>
-            <Component {...pageProps} />
+            <Component { ...pageProps } />
           </MainLayout>
         </ClientProvider>
       </ServiceWorkerProvider>

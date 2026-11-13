@@ -17,24 +17,24 @@ import type { ILocalizableProps } from "./types";
 
 import styles from "./global-navigation.module.scss";
 
-export function GlobalNavigation({ language }: ILocalizableProps) {
+export function GlobalNavigation( { language }: ILocalizableProps ) {
   const pathName = usePathname();
-  const homePageURL = createHomePageURL(language);
+  const homePageURL = createHomePageURL( language );
   const isActive = pathName === homePageURL;
 
   return (
-    <nav className={styles.block}>
-      <List className={styles.list}>
+    <nav className={ styles.block }>
+      <List className={ styles.list }>
         <ListItem>
-          {!isActive ? (
-            <Link href={homePageURL}>{SITE_TITLE}</Link>
+          { ! isActive ? (
+            <Link href={ homePageURL }>{ SITE_TITLE }</Link>
           ) : (
-            <span>{SITE_TITLE}</span>
-          )}
+            <span>{ SITE_TITLE }</span>
+          ) }
         </ListItem>
 
         <ListItem>
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={ <Loading /> }>
             <LocaleSwitcher />
           </Suspense>
         </ListItem>
@@ -46,25 +46,25 @@ export function GlobalNavigation({ language }: ILocalizableProps) {
 export function LocaleSwitcher() {
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const currentLocale = pathName.split("/")[1];
+  const currentLocale = pathName.split( "/" )[ 1 ];
   // biome-ignore lint/style/noNonNullAssertion: blah
-  const language = parseLocale(currentLocale).language!;
+  const language = parseLocale( currentLocale ).language!;
 
   return (
     <Details
-      className={styles.locale}
-      summary={<Language language={language} />}
+      className={ styles.locale }
+      summary={ <Language language={ language } /> }
     >
-      <List className={styles.localeList}>
-        {LOCALES.map((locale) => (
+      <List className={ styles.localeList }>
+        { LOCALES.map( ( locale ) => (
           <LocaleItem
-            key={locale}
-            locale={locale}
-            currentLocale={currentLocale}
-            pathName={pathName}
-            searchParams={searchParams}
+            key={ locale }
+            locale={ locale }
+            currentLocale={ currentLocale }
+            pathName={ pathName }
+            searchParams={ searchParams }
           />
-        ))}
+        ) ) }
       </List>
     </Details>
   );
@@ -77,34 +77,34 @@ interface ILocaleItemsProps {
   searchParams: ReadonlyURLSearchParams;
 }
 
-function LocaleItem({
+function LocaleItem( {
   locale,
   currentLocale,
   pathName,
   searchParams,
-}: ILocaleItemsProps) {
+}: ILocaleItemsProps ) {
   // biome-ignore lint/style/noNonNullAssertion: blah
-  const language = parseLocale(locale).language!;
+  const language = parseLocale( locale ).language!;
   const serializedParams =
-    searchParams.size === 0 ? "" : `?${String(searchParams)}`;
-  const href = `${getRedirectedPathName(locale, pathName)}${serializedParams}`;
+    searchParams.size === 0 ? "" : `?${ String( searchParams ) }`;
+  const href = `${ getRedirectedPathName( locale, pathName ) }${ serializedParams }`;
 
   return (
     <ListItem>
-      {locale === currentLocale ? (
-        <Language language={language} />
+      { locale === currentLocale ? (
+        <Language language={ language } />
       ) : (
-        <Link className={styles.localeLink} href={href}>
-          <Language language={language} />
+        <Link className={ styles.localeLink } href={ href }>
+          <Language language={ language } />
         </Link>
-      )}
+      ) }
     </ListItem>
   );
 }
 
-function getRedirectedPathName(locale: string, pathName: string) {
-  const segments = pathName.split("/");
-  segments[1] = locale;
+function getRedirectedPathName( locale: string, pathName: string ) {
+  const segments = pathName.split( "/" );
+  segments[ 1 ] = locale;
 
-  return segments.join("/");
+  return segments.join( "/" );
 }

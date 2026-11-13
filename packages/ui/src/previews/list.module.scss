@@ -10,7 +10,7 @@
 }
 
 .info {
-  background-color: var(--colour-background-primary);
+  background-color: var( --colour-background-primary );
 }
 
 .list {
@@ -28,5 +28,5 @@
 .pagination {
   justify-self: center;
   max-width: $width-phone;
-  background-color: var(--colour-background-primary);
+  background-color: var( --colour-background-primary );
 }

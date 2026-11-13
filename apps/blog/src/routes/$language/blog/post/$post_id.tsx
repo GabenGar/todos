@@ -17,31 +17,36 @@ function PostOverviewPage() {
   const { t } = useTranslation();
   const { post } = Route.useLoaderData();
   const title = createMetaTitle(
-    t((t) => t.page.post.title, { post_title: post.title, post_id: post.id }),
+    t( ( t ) => t.page.post.title, {
+      post_title: post.title,
+      post_id: post.id,
+    } ),
   );
-  const heading = t((t) => t.page.post.heading);
+  const heading = t( ( t ) => t.page.post.heading );
 
   return (
-    <Page title={title} heading={heading}>
-      <BlogPostOverview headingLevel={2} post={post} />
+    <Page title={ title } heading={ heading }>
+      <BlogPostOverview headingLevel={ 2 } post={ post } />
     </Page>
   );
 }
 
-export const Route = createFileRoute("/$language/blog/post/$post_id")({
+export const Route = createFileRoute( "/$language/blog/post/$post_id" )( {
   component: PostOverviewPage,
-  loader: async ({ params }) => {
+  loader: async ( { params } ) => {
     const { language, post_id } = params;
 
-    if (!isSupportedLanguage(language)) {
-      throw new Error(`Unknown locale "${language}".`);
+    if ( ! isSupportedLanguage( language ) ) {
+      throw new Error( `Unknown locale "${ language }".` );
     }
 
-    const post = await getBlogPostOverview({ data: { id: post_id, language } });
+    const post = await getBlogPostOverview( {
+      data: { id: post_id, language },
+    } );
     const props: IProps = {
       post,
     };
 
     return props;
   },
-});
+} );

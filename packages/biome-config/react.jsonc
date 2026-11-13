@@ -14,7 +14,7 @@
       },
       "style": {
         // it trips up on `.scss` files bigly
-        "noDescendingSpecificity":"off"
+        "noDescendingSpecificity": "off"
       }
     }
   }

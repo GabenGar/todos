@@ -30,9 +30,9 @@ interface IProps extends ILocalizableProps, IInputSectionProps {
   place?: IEntityItem;
 }
 
-export const PlaceSection = createBlockComponent(styles, Component);
+export const PlaceSection = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   language,
   id,
   form,
@@ -41,54 +41,54 @@ function Component({
   required,
   children,
   ...props
-}: IProps) {
-  const { t } = useTranslation("common");
-  const [selectedPlace, changeSelectedPlace] = useState(place);
+}: IProps ) {
+  const { t } = useTranslation( "common" );
+  const [ selectedPlace, changeSelectedPlace ] = useState( place );
 
   return (
-    <InputSection {...props}>
+    <InputSection { ...props }>
       <DescriptionList>
-        <DescriptionSection className={styles.section}>
-          <DescriptionTerm>{children}</DescriptionTerm>
-          <DescriptionDetails className={styles.details}>
-            {selectedPlace ? (
+        <DescriptionSection className={ styles.section }>
+          <DescriptionTerm>{ children }</DescriptionTerm>
+          <DescriptionDetails className={ styles.details }>
+            { selectedPlace ? (
               <>
                 <Link
-                  href={createPlacePageURL(language, selectedPlace.id)}
+                  href={ createPlacePageURL( language, selectedPlace.id ) }
                   target="_blank"
                 >
-                  {selectedPlace.title} ({selectedPlace.id})
+                  { selectedPlace.title } ({ selectedPlace.id })
                 </Link>
                 <MenuButtons>
-                  <MenuItem onClick={() => changeSelectedPlace(undefined)}>
-                    {t((t) => t.list["Select"])}
+                  <MenuItem onClick={ () => changeSelectedPlace( undefined ) }>
+                    { t( ( t ) => t.list[ "Select" ] ) }
                   </MenuItem>
                   <MenuItem
-                    disabled={selectedPlace.id === place?.id}
-                    onClick={() => changeSelectedPlace(place)}
+                    disabled={ selectedPlace.id === place?.id }
+                    onClick={ () => changeSelectedPlace( place ) }
                   >
-                    {t((t) => t.list["Reset"])}
+                    { t( ( t ) => t.list[ "Reset" ] ) }
                   </MenuItem>
                 </MenuButtons>
               </>
             ) : (
               <PlaceSelector
-                onSelect={async (newPlace) => {
-                  changeSelectedPlace(newPlace);
-                }}
-                selectedPlace={selectedPlace}
+                onSelect={ async ( newPlace ) => {
+                  changeSelectedPlace( newPlace );
+                } }
+                selectedPlace={ selectedPlace }
               />
-            )}
+            ) }
           </DescriptionDetails>
         </DescriptionSection>
       </DescriptionList>
 
       <InputHidden
-        id={id}
-        form={form}
-        name={name}
-        required={required}
-        defaultValue={selectedPlace?.id}
+        id={ id }
+        form={ form }
+        name={ name }
+        required={ required }
+        defaultValue={ selectedPlace?.id }
       />
     </InputSection>
   );
@@ -96,37 +96,37 @@ function Component({
 
 interface IPlaceSelectorProps {
   selectedPlace?: IPlace;
-  onSelect: (place: IPlace) => Promise<void>;
+  onSelect: ( place: IPlace ) => Promise< void >;
 }
 
-function PlaceSelector({ selectedPlace, onSelect }: IPlaceSelectorProps) {
-  const { t } = useTranslation("common");
+function PlaceSelector( { selectedPlace, onSelect }: IPlaceSelectorProps ) {
+  const { t } = useTranslation( "common" );
 
   return (
-    <EntityList<IPlace>
-      className={styles.list}
-      fetchEntities={async (page) => await getPlaces({ page })}
-      mapEntity={(place) => (
-        <ListItem key={place.id} className={styles.item}>
-          <span className={styles.title}>{place.title}</span>
-          <span className={styles.id}>
-            <Pre>({place.id})</Pre>
+    <EntityList< IPlace >
+      className={ styles.list }
+      fetchEntities={ async ( page ) => await getPlaces( { page } ) }
+      mapEntity={ ( place ) => (
+        <ListItem key={ place.id } className={ styles.item }>
+          <span className={ styles.title }>{ place.title }</span>
+          <span className={ styles.id }>
+            <Pre>({ place.id })</Pre>
           </span>
           <Button
-            className={styles.select}
-            disabled={selectedPlace?.id === place.id}
-            onClick={async () => {
-              if (selectedPlace?.id === place.id) {
+            className={ styles.select }
+            disabled={ selectedPlace?.id === place.id }
+            onClick={ async () => {
+              if ( selectedPlace?.id === place.id ) {
                 return;
               }
 
-              await onSelect(place);
-            }}
+              await onSelect( place );
+            } }
           >
-            {t((t) => t.list["Select"])}
+            { t( ( t ) => t.list[ "Select" ] ) }
           </Button>
         </ListItem>
-      )}
+      ) }
     />
   );
 }

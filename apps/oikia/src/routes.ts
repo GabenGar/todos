@@ -6,18 +6,18 @@ import {
 } from "@react-router/dev/routes";
 
 const routes = [
-  layout("./layouts/language-select.tsx", [
-    index("./routes/language-select.tsx"),
-  ]),
-  route(":language", "./layouts/localized.tsx", [
-    index("./routes/home.tsx"),
+  layout( "./layouts/language-select.tsx", [
+    index( "./routes/language-select.tsx" ),
+  ] ),
+  route( ":language", "./layouts/localized.tsx", [
+    index( "./routes/home.tsx" ),
     route(
       "authentication/registration",
       "./routes/authentication/registration.tsx",
     ),
-    route("authentication/login", "./routes/authentication/login.tsx"),
-    route("authentication/logout", "./routes/authentication/logout.tsx"),
-    route("account", "./routes/account/home.tsx"),
+    route( "authentication/login", "./routes/authentication/login.tsx" ),
+    route( "authentication/logout", "./routes/authentication/logout.tsx" ),
+    route( "account", "./routes/account/home.tsx" ),
     route(
       "account/role/administrator",
       "./routes/account/role/administrator/home.tsx",
@@ -58,7 +58,7 @@ const routes = [
       "account/role/administrator/invitation/:id/accounts/:page",
       "./routes/account/role/administrator/invitation/accounts-list.tsx",
     ),
-  ]),
+  ] ),
 ] satisfies RouteConfig;
 
 export default routes;

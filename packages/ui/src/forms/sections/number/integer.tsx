@@ -4,12 +4,12 @@ import { Label } from "../../label";
 import { type IInputSectionProps, InputSection } from "../section";
 
 export interface IInputSectionIntegerProps
-  extends Omit<IInputSectionProps, "defaultValue">,
-    Pick<IInputIntegerProps, "defaultValue" | "min" | "max"> {}
+  extends Omit< IInputSectionProps, "defaultValue" >,
+    Pick< IInputIntegerProps, "defaultValue" | "min" | "max" > {}
 
-export const InputSectionInteger = createBlockComponent(undefined, Component);
+export const InputSectionInteger = createBlockComponent( undefined, Component );
 
-function Component({
+function Component( {
   id,
   form,
   name,
@@ -21,20 +21,20 @@ function Component({
   disabled,
   children,
   ...props
-}: IInputSectionIntegerProps) {
+}: IInputSectionIntegerProps ) {
   return (
-    <InputSection {...props}>
-      <Label htmlFor={id}>{children}</Label>
+    <InputSection { ...props }>
+      <Label htmlFor={ id }>{ children }</Label>
       <InputInteger
-        id={id}
-        form={form}
-        name={name}
-        required={required}
-        readOnly={readOnly}
-        disabled={disabled}
-        defaultValue={defaultValue}
-        min={min}
-        max={max}
+        id={ id }
+        form={ form }
+        name={ name }
+        required={ required }
+        readOnly={ readOnly }
+        disabled={ disabled }
+        defaultValue={ defaultValue }
+        min={ min }
+        max={ max }
       />
     </InputSection>
   );

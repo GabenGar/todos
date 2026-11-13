@@ -1,16 +1,16 @@
 import { IS_SERVICE_WORKER_ENABLED, SITE_BASE_PATHNAME } from "#environment";
 
-const serviceWorkerPath = `${SITE_BASE_PATHNAME}/service-worker.js`;
+const serviceWorkerPath = `${ SITE_BASE_PATHNAME }/service-worker.js`;
 
 export async function registerServiceWorker() {
-  if (!("serviceWorker" in navigator)) {
+  if ( ! ( "serviceWorker" in navigator ) ) {
     return;
   }
 
-  if (!IS_SERVICE_WORKER_ENABLED) {
+  if ( ! IS_SERVICE_WORKER_ENABLED ) {
     const registrations = await navigator.serviceWorker.getRegistrations();
 
-    for await (const registration of registrations) {
+    for await ( const registration of registrations ) {
       await registration.unregister();
     }
 
@@ -36,15 +36,15 @@ export async function registerServiceWorker() {
       undefined;
 
     console.log(
-      !worker
-        ? `Failed to register Service Worker at scope "${registration.scope}" for some reason.`
-        : `Service Worker registration successful with scope "${registration.scope}".`,
+      ! worker
+        ? `Failed to register Service Worker at scope "${ registration.scope }" for some reason.`
+        : `Service Worker registration successful with scope "${ registration.scope }".`,
     );
 
     return worker;
-  } catch (error) {
+  } catch ( error ) {
     console.error(
-      new Error("Service Worker registration failed", { cause: error }),
+      new Error( "Service Worker registration failed", { cause: error } ),
     );
   }
 }

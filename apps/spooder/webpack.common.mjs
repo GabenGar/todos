@@ -12,15 +12,15 @@ const commonConfiguration = {
     "content-script": "./src/content-script/index.ts",
   },
   plugins: [
-    new MiniCssExtractPlugin({
+    new MiniCssExtractPlugin( {
       filename: "[name]/[name].css",
-    }),
-    new HtmlWebpackPlugin({
+    } ),
+    new HtmlWebpackPlugin( {
       title: "Action",
       filename: "action/index.html",
       template: "./src/action/index.html",
-      chunks: ["action"],
-    }),
+      chunks: [ "action" ],
+    } ),
   ],
   module: {
     parser: {
@@ -50,12 +50,12 @@ const commonConfiguration = {
       },
       {
         test: /\.svg$/,
-        use: ["@svgr/webpack"],
+        use: [ "@svgr/webpack" ],
       },
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [ ".ts", ".tsx", ".js", ".jsx" ],
   },
   cache: {
     type: "filesystem",

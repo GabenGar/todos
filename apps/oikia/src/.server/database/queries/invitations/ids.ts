@@ -8,11 +8,11 @@ import type { IInvitation } from "#entities/account";
 import type { IPagination } from "#lib/pagination";
 import type { IInvitationDB } from "./types";
 
-const query = getQueryFile("invitations", "ids.sql");
+const query = getQueryFile( "invitations", "ids.sql" );
 
 interface IFilter
   extends Pick<
-    Partial<IInvitation>,
+    Partial< IInvitation >,
     "code" | "target_role" | "is_active" | "expires_at"
   > {
   pagination: IPagination;
@@ -21,7 +21,7 @@ interface IFilter
 export async function selectInvitationIDs(
   transaction: ITransaction,
   filter: IFilter,
-): Promise<IInvitationDB["id"][]> {
+): Promise< IInvitationDB[ "id" ][] > {
   const { limit, offset } = filter.pagination;
   const params = {
     offset,
@@ -31,8 +31,8 @@ export async function selectInvitationIDs(
     is_active: filter?.is_active,
     expires_at: filter?.expires_at,
   };
-  const result = await transaction.many<IEntityRow>(query, params);
-  const ids = toEntityIDs(result);
+  const result = await transaction.many< IEntityRow >( query, params );
+  const ids = toEntityIDs( result );
 
   return ids;
 }

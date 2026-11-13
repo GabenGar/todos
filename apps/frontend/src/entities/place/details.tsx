@@ -25,28 +25,28 @@ export interface IPlaceOverviewProps extends IOverviewProps, ILocalizableProps {
   place: IPlace;
 }
 
-export const PlaceOverview = createBlockComponent(styles, Component);
+export const PlaceOverview = createBlockComponent( styles, Component );
 
-function Component({ language, place, ...props }: IPlaceOverviewProps) {
-  const { t } = useTranslation("translation");
+function Component( { language, place, ...props }: IPlaceOverviewProps ) {
+  const { t } = useTranslation( "translation" );
   const { id, title, description, created_at, updated_at } = place;
 
   return (
-    <Overview {...props}>
-      {(headinglevel) => (
+    <Overview { ...props }>
+      { ( headinglevel ) => (
         <>
           <OverviewHeader>
-            <Heading level={headinglevel}>{title}</Heading>
-            <EntityID className={styles.id} entityID={id} />
+            <Heading level={ headinglevel }>{ title }</Heading>
+            <EntityID className={ styles.id } entityID={ id } />
           </OverviewHeader>
 
           <OverviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.place.description)}
+                dKey={ t( ( t ) => t.place.description ) }
                 dValue={
                   <EntityDescription>
-                    {description ?? t((t) => t.place.no_description)}
+                    { description ?? t( ( t ) => t.place.no_description ) }
                   </EntityDescription>
                 }
               />
@@ -54,32 +54,32 @@ function Component({ language, place, ...props }: IPlaceOverviewProps) {
 
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.place.created_at)}
-                dValue={<DateTimeView dateTime={created_at} />}
+                dKey={ t( ( t ) => t.place.created_at ) }
+                dValue={ <DateTimeView dateTime={ created_at } /> }
               />
               <DescriptionSection
-                dKey={t((t) => t.place.updated_at)}
-                dValue={<DateTimeView dateTime={updated_at} />}
+                dKey={ t( ( t ) => t.place.updated_at ) }
+                dValue={ <DateTimeView dateTime={ updated_at } /> }
               />
             </DescriptionList>
 
-            <Heading level={(headinglevel + 1) as IHeadingLevel}>
-              {t((t) => t.place["Tasks"])}
+            <Heading level={ ( headinglevel + 1 ) as IHeadingLevel }>
+              { t( ( t ) => t.place[ "Tasks" ] ) }
             </Heading>
-            <TasksStats language={language} placeID={place.id} />
+            <TasksStats language={ language } placeID={ place.id } />
           </OverviewBody>
 
           <OverviewFooter>
             <List>
               <ListItem>
-                <LinkButton href={createPlaceEditPageURL(language, id)}>
-                  {t((t) => t.place["Edit"])}
+                <LinkButton href={ createPlaceEditPageURL( language, id ) }>
+                  { t( ( t ) => t.place[ "Edit" ] ) }
                 </LinkButton>
               </ListItem>
             </List>
           </OverviewFooter>
         </>
-      )}
+      ) }
     </Overview>
   );
 }

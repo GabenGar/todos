@@ -9,27 +9,27 @@ import { authenticateAdmin, getLanguage } from "#server/lib/router";
 
 import type { Route } from "./+types/accounts";
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
+export async function loader( { request, params }: Route.LoaderArgs ) {
+  await authenticateAdmin( request );
 
-  const language = getLanguage(params);
+  const language = getLanguage( params );
 
-  const count = await runTransaction(async (transaction) => {
-    const count = await selectAccountCount(transaction);
+  const count = await runTransaction( async ( transaction ) => {
+    const count = await selectAccountCount( transaction );
 
     return count;
-  });
+  } );
 
   // accounts are not creatable by the admin
-  if (BigInt(count) === BIGINT_ZERO) {
+  if ( BigInt( count ) === BIGINT_ZERO ) {
     throw new NotFoundError();
   }
 
-  const pagination = createPagination(count);
-  const url = href("/:language/account/role/administrator/accounts/:page", {
+  const pagination = createPagination( count );
+  const url = href( "/:language/account/role/administrator/accounts/:page", {
     language,
     page: pagination.current_page,
-  });
+  } );
 
-  return replace(url);
+  return replace( url );
 }

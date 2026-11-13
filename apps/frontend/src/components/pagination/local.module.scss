@@ -10,10 +10,10 @@
     "first" auto;
   gap: $size-normal;
   border-radius: $radius-normal;
-  border: $size-thin solid var(--colour-text-secondary-transparent);
+  border: $size-thin solid var( --colour-text-secondary-transparent );
   padding: $size-small;
 
-  @media (min-width: $width-tablet) {
+  @media ( min-width: $width-tablet ) {
     grid:
       "current  current" auto
       "previous next" auto
@@ -22,47 +22,47 @@
 }
 
 .first {
-  min-width: var(--local-min-width);
+  min-width: var( --local-min-width );
   grid-area: first;
   justify-self: center;
 
-  @media (min-width: $width-tablet) {
+  @media ( min-width: $width-tablet ) {
     justify-self: flex-start;
   }
 }
 
 .previous {
-  min-width: var(--local-min-width);
+  min-width: var( --local-min-width );
   grid-area: previous;
   justify-self: center;
 
-  @media (min-width: $width-tablet) {
+  @media ( min-width: $width-tablet ) {
     justify-self: flex-start;
   }
 }
 
 .current {
-  min-width: var(--local-min-width);
+  min-width: var( --local-min-width );
   grid-area: current;
   justify-self: center;
 }
 
 .next {
-  min-width: var(--local-min-width);
+  min-width: var( --local-min-width );
   grid-area: next;
   justify-self: center;
 
-  @media (min-width: $width-tablet) {
+  @media ( min-width: $width-tablet ) {
     justify-self: flex-end;
   }
 }
 
 .last {
-  min-width: var(--local-min-width);
+  min-width: var( --local-min-width );
   grid-area: last;
   justify-self: center;
 
-  @media (min-width: $width-tablet) {
+  @media ( min-width: $width-tablet ) {
     justify-self: flex-end;
   }
 }

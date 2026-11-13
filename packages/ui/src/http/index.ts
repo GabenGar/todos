@@ -34,15 +34,17 @@ const HTTP_STATUS = {
   GATEWAY_TIMEOUT: { code: 504, title: "Gateway Timeout" },
 } as const;
 
-export const HTTP_STATUS_CODE = Object.entries(HTTP_STATUS).reduce(
-  (httpStatus, [key, { code }]) => {
+export const HTTP_STATUS_CODE = Object.entries( HTTP_STATUS ).reduce(
+  ( httpStatus, [ key, { code } ] ) => {
     // @ts-expect-error requires too much wrangling for "correct" type
     // due to `Object.entries()` casting keys to `string`
-    httpStatus[key] = code;
+    httpStatus[ key ] = code;
 
     return httpStatus;
   },
   {} as {
-    [Key in keyof typeof HTTP_STATUS]: (typeof HTTP_STATUS)[Key]["code"];
+    [ Key in keyof typeof HTTP_STATUS ]: ( typeof HTTP_STATUS )[ Key ][
+      "code"
+    ];
   },
 );

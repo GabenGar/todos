@@ -7,11 +7,11 @@ export async function fetchPageTranslation(
 ) {
   let translation: ResourceKey;
 
-  switch (language) {
+  switch ( language ) {
     case "en": {
-      switch (namespace) {
+      switch ( namespace ) {
         case "page-home": {
-          translation = await import("#translation/en/pages/home.json");
+          translation = await import( "#translation/en/pages/home.json" );
           break;
         }
 
@@ -23,57 +23,61 @@ export async function fetchPageTranslation(
         }
 
         case "page-places": {
-          translation = await import("#translation/en/pages/places.json");
+          translation = await import( "#translation/en/pages/places.json" );
           break;
         }
 
         case "page-place": {
-          translation = await import("#translation/en/pages/place.json");
+          translation = await import( "#translation/en/pages/place.json" );
           break;
         }
 
         case "page-place-edit": {
-          translation = await import("#translation/en/pages/place-edit.json");
+          translation = await import( "#translation/en/pages/place-edit.json" );
           break;
         }
 
         case "page-stats-places": {
-          translation = await import("#translation/en/pages/stats-places.json");
+          translation = await import(
+            "#translation/en/pages/stats-places.json"
+          );
           break;
         }
 
         case "page-stats-tasks": {
-          translation = await import("#translation/en/pages/stats-tasks.json");
+          translation = await import(
+            "#translation/en/pages/stats-tasks.json"
+          );
           break;
         }
 
         case "page-tasks": {
-          translation = await import("#translation/en/pages/tasks.json");
+          translation = await import( "#translation/en/pages/tasks.json" );
           break;
         }
 
         case "page-task": {
-          translation = await import("#translation/en/pages/task.json");
+          translation = await import( "#translation/en/pages/task.json" );
           break;
         }
 
         case "page-task-edit": {
-          translation = await import("#translation/en/pages/task-edit.json");
+          translation = await import( "#translation/en/pages/task-edit.json" );
           break;
         }
 
         case "page-account": {
-          translation = await import("#translation/en/pages/account.json");
+          translation = await import( "#translation/en/pages/account.json" );
           break;
         }
 
         case "page-url": {
-          translation = await import("#translation/en/pages/url.json");
+          translation = await import( "#translation/en/pages/url.json" );
           break;
         }
 
         case "page-url-edit": {
-          translation = await import("#translation/en/pages/url-edit.json");
+          translation = await import( "#translation/en/pages/url-edit.json" );
           break;
         }
 
@@ -113,16 +117,18 @@ export async function fetchPageTranslation(
         }
 
         default: {
-          throw new Error(`Unknown namespace "${namespace satisfies never}"`);
+          throw new Error(
+            `Unknown namespace "${ namespace satisfies never }"`,
+          );
         }
       }
       break;
     }
 
     case "ru": {
-      switch (namespace) {
+      switch ( namespace ) {
         case "page-home": {
-          translation = await import("#translation/ru/pages/home.json");
+          translation = await import( "#translation/ru/pages/home.json" );
           break;
         }
 
@@ -134,57 +140,61 @@ export async function fetchPageTranslation(
         }
 
         case "page-places": {
-          translation = await import("#translation/ru/pages/places.json");
+          translation = await import( "#translation/ru/pages/places.json" );
           break;
         }
 
         case "page-place": {
-          translation = await import("#translation/ru/pages/place.json");
+          translation = await import( "#translation/ru/pages/place.json" );
           break;
         }
 
         case "page-place-edit": {
-          translation = await import("#translation/ru/pages/place-edit.json");
+          translation = await import( "#translation/ru/pages/place-edit.json" );
           break;
         }
 
         case "page-stats-places": {
-          translation = await import("#translation/ru/pages/stats-places.json");
+          translation = await import(
+            "#translation/ru/pages/stats-places.json"
+          );
           break;
         }
 
         case "page-stats-tasks": {
-          translation = await import("#translation/ru/pages/stats-tasks.json");
+          translation = await import(
+            "#translation/ru/pages/stats-tasks.json"
+          );
           break;
         }
 
         case "page-tasks": {
-          translation = await import("#translation/ru/pages/tasks.json");
+          translation = await import( "#translation/ru/pages/tasks.json" );
           break;
         }
 
         case "page-task": {
-          translation = await import("#translation/ru/pages/task.json");
+          translation = await import( "#translation/ru/pages/task.json" );
           break;
         }
 
         case "page-task-edit": {
-          translation = await import("#translation/ru/pages/task-edit.json");
+          translation = await import( "#translation/ru/pages/task-edit.json" );
           break;
         }
 
         case "page-account": {
-          translation = await import("#translation/ru/pages/account.json");
+          translation = await import( "#translation/ru/pages/account.json" );
           break;
         }
 
         case "page-url": {
-          translation = await import("#translation/ru/pages/url.json");
+          translation = await import( "#translation/ru/pages/url.json" );
           break;
         }
 
         case "page-url-edit": {
-          translation = await import("#translation/ru/pages/url-edit.json");
+          translation = await import( "#translation/ru/pages/url-edit.json" );
           break;
         }
 
@@ -224,14 +234,16 @@ export async function fetchPageTranslation(
         }
 
         default: {
-          throw new Error(`Unknown namespace "${namespace satisfies never}"`);
+          throw new Error(
+            `Unknown namespace "${ namespace satisfies never }"`,
+          );
         }
       }
       break;
     }
 
     default: {
-      throw new Error(`Unknown language "${language satisfies never}".`);
+      throw new Error( `Unknown language "${ language satisfies never }".` );
     }
   }
 

@@ -12,25 +12,25 @@ export function createRootPageURL(): Route {
   return `/` as Route;
 }
 
-export function createHomePageURL(language: ILocale): Route {
-  return `/${language}` as Route;
+export function createHomePageURL( language: ILocale ): Route {
+  return `/${ language }` as Route;
 }
 
 export const notFoundURL = "/404" as Route;
 
-export function createTaskStatsPageURL(language: ILocale): Route {
-  return `/${language}/stats/tasks` as Route;
+export function createTaskStatsPageURL( language: ILocale ): Route {
+  return `/${ language }/stats/tasks` as Route;
 }
 
-export function createStatsPlacesPageURL(language: ILocale): Route {
-  return `/${language}/stats/places` as Route;
+export function createStatsPlacesPageURL( language: ILocale ): Route {
+  return `/${ language }/stats/places` as Route;
 }
 
 interface ICreateTasksPageURLParams {
   page?: number;
   query?: string;
-  status?: ITask["status"];
-  placeID?: IPlace["id"];
+  status?: ITask[ "status" ];
+  placeID?: IPlace[ "id" ];
 }
 
 export function createTasksPageURL(
@@ -39,50 +39,57 @@ export function createTasksPageURL(
 ): Route {
   const urlSearchParams = new URLSearchParams();
 
-  if (searchParams?.page) {
-    urlSearchParams.set("page", String(searchParams.page));
+  if ( searchParams?.page ) {
+    urlSearchParams.set( "page", String( searchParams.page ) );
   }
 
-  if (searchParams?.query) {
-    urlSearchParams.set("query", searchParams.query);
+  if ( searchParams?.query ) {
+    urlSearchParams.set( "query", searchParams.query );
   }
 
-  if (searchParams?.status) {
-    urlSearchParams.set("status", searchParams.status);
+  if ( searchParams?.status ) {
+    urlSearchParams.set( "status", searchParams.status );
   }
 
-  if (searchParams?.placeID) {
-    urlSearchParams.set("place_id", searchParams.placeID);
+  if ( searchParams?.placeID ) {
+    urlSearchParams.set( "place_id", searchParams.placeID );
   }
 
   urlSearchParams.sort();
 
-  const url = !urlSearchParams.size
-    ? `/${language}/tasks`
-    : `/${language}/tasks?${urlSearchParams.toString()}`;
+  const url = ! urlSearchParams.size
+    ? `/${ language }/tasks`
+    : `/${ language }/tasks?${ urlSearchParams.toString() }`;
 
   return url as Route;
 }
 
-export function createTaskPageURL(language: ILocale, id: ITask["id"]): Route {
-  const urlSearchParams = new URLSearchParams([["task_id", id]]).toString();
-  const url = `/${language}/task?${urlSearchParams}`;
+export function createTaskPageURL(
+  language: ILocale,
+  id: ITask[ "id" ],
+): Route {
+  const urlSearchParams = new URLSearchParams( [
+    [ "task_id", id ],
+  ] ).toString();
+  const url = `/${ language }/task?${ urlSearchParams }`;
 
   return url as Route;
 }
 
 export function createTaskEditPageURL(
   language: ILocale,
-  id: ITask["id"],
+  id: ITask[ "id" ],
 ): Route {
-  const urlSearchParams = new URLSearchParams([["task_id", id]]).toString();
-  const url = `/${language}/task/edit?${urlSearchParams}`;
+  const urlSearchParams = new URLSearchParams( [
+    [ "task_id", id ],
+  ] ).toString();
+  const url = `/${ language }/task/edit?${ urlSearchParams }`;
 
   return url as Route;
 }
 
-export function createQRCodeReaderURL(language: ILocale): Route {
-  return `/${language}/qr-code-reader` as Route;
+export function createQRCodeReaderURL( language: ILocale ): Route {
+  return `/${ language }/qr-code-reader` as Route;
 }
 
 interface ICreatePlacesPageURLParams {
@@ -96,56 +103,63 @@ export function createPlacesPageURL(
 ): Route {
   const urlSearchParams = new URLSearchParams();
 
-  if (searchParams?.page) {
-    urlSearchParams.set("page", String(searchParams.page));
+  if ( searchParams?.page ) {
+    urlSearchParams.set( "page", String( searchParams.page ) );
   }
 
-  if (searchParams?.category) {
-    urlSearchParams.set("category", searchParams.category);
+  if ( searchParams?.category ) {
+    urlSearchParams.set( "category", searchParams.category );
   }
 
-  if (searchParams?.query) {
-    urlSearchParams.set("query", searchParams.query);
+  if ( searchParams?.query ) {
+    urlSearchParams.set( "query", searchParams.query );
   }
 
   urlSearchParams.sort();
 
-  const url = !urlSearchParams.size
-    ? `/${language}/places`
-    : `/${language}/places?${urlSearchParams.toString()}`;
+  const url = ! urlSearchParams.size
+    ? `/${ language }/places`
+    : `/${ language }/places?${ urlSearchParams.toString() }`;
 
   return url as Route;
 }
 
-export function createPlacePageURL(language: ILocale, id: IPlace["id"]): Route {
-  const urlSearchParams = new URLSearchParams([["place_id", id]]).toString();
+export function createPlacePageURL(
+  language: ILocale,
+  id: IPlace[ "id" ],
+): Route {
+  const urlSearchParams = new URLSearchParams( [
+    [ "place_id", id ],
+  ] ).toString();
 
-  const url = `/${language}/place?${urlSearchParams}`;
+  const url = `/${ language }/place?${ urlSearchParams }`;
 
   return url as Route;
 }
 
 export function createPlaceEditPageURL(
   language: ILocale,
-  id: IPlace["id"],
+  id: IPlace[ "id" ],
 ): Route {
-  const urlSearchParams = new URLSearchParams([["place_id", id]]).toString();
+  const urlSearchParams = new URLSearchParams( [
+    [ "place_id", id ],
+  ] ).toString();
 
-  const url = `/${language}/place/edit?${urlSearchParams}`;
+  const url = `/${ language }/place/edit?${ urlSearchParams }`;
 
   return url as Route;
 }
 
-export function createAccountPageURL(language: ILocale): Route {
-  return `/${language}/account` as Route;
+export function createAccountPageURL( language: ILocale ): Route {
+  return `/${ language }/account` as Route;
 }
 
-export function createURLViewerPageURL(language: ILocale): Route {
-  return `/${language}/url` as Route;
+export function createURLViewerPageURL( language: ILocale ): Route {
+  return `/${ language }/url` as Route;
 }
 
-export function createURLEditorPageURL(language: ILocale): Route {
-  return `/${language}/url/edit` as Route;
+export function createURLEditorPageURL( language: ILocale ): Route {
+  return `/${ language }/url/edit` as Route;
 }
 
 interface ICreatePlannedEventsPageURLParams extends IMultiPageParams {
@@ -158,47 +172,47 @@ export function createPlannedEventsPageURL(
 ): Route {
   const urlSearchParams = new URLSearchParams();
 
-  if (params?.page) {
-    urlSearchParams.set("page", String(params.page));
+  if ( params?.page ) {
+    urlSearchParams.set( "page", String( params.page ) );
   }
 
-  if (params?.order) {
-    urlSearchParams.set("order", params.order);
+  if ( params?.order ) {
+    urlSearchParams.set( "order", params.order );
   }
 
-  const url = !urlSearchParams.size
-    ? `/${language}/planned-events`
-    : `/${language}/planned-events?${urlSearchParams.toString()}`;
+  const url = ! urlSearchParams.size
+    ? `/${ language }/planned-events`
+    : `/${ language }/planned-events?${ urlSearchParams.toString() }`;
 
   return url as Route;
 }
 
 export function createPlannedEventPageURL(
   language: ILocale,
-  id: IPlannedEvent["id"],
+  id: IPlannedEvent[ "id" ],
 ): Route {
-  const urlSearchParams = new URLSearchParams([
-    ["planned_event_id", String(id)],
-  ]).toString();
+  const urlSearchParams = new URLSearchParams( [
+    [ "planned_event_id", String( id ) ],
+  ] ).toString();
 
-  return `/${language}/planned-event?${urlSearchParams}` as Route;
+  return `/${ language }/planned-event?${ urlSearchParams }` as Route;
 }
 
 export function createPlannedEventEditPageURL(
   language: ILocale,
-  id: IPlannedEvent["id"],
+  id: IPlannedEvent[ "id" ],
 ): Route {
-  const urlSearchParams = new URLSearchParams([
-    ["planned_event_id", String(id)],
-  ]).toString();
+  const urlSearchParams = new URLSearchParams( [
+    [ "planned_event_id", String( id ) ],
+  ] ).toString();
 
-  return `/${language}/planned-event/edit?${urlSearchParams}` as Route;
+  return `/${ language }/planned-event/edit?${ urlSearchParams }` as Route;
 }
 
-export function createYTDLPConfigPage(language: ILocale): Route {
-  return `/${language}/yt-dlp-configs` as Route;
+export function createYTDLPConfigPage( language: ILocale ): Route {
+  return `/${ language }/yt-dlp-configs` as Route;
 }
 
-export function createFileAnalyzerPageURL(language: ILocale): Route {
-  return `/${language}/file-analyzer` as Route;
+export function createFileAnalyzerPageURL( language: ILocale ): Route {
+  return `/${ language }/file-analyzer` as Route;
 }

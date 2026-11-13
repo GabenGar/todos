@@ -6,13 +6,13 @@ import { type IInputSectionProps, InputSection } from "./section";
 
 interface IProps
   extends IInputSectionProps,
-    Pick<IInputSelectProps, "multiple" | "size"> {
+    Pick< IInputSelectProps, "multiple" | "size" > {
   label: ReactNode;
 }
 
-export const InputSectionSelect = createBlockComponent(undefined, Component);
+export const InputSectionSelect = createBlockComponent( undefined, Component );
 
-function Component({
+function Component( {
   id,
   form,
   name,
@@ -24,21 +24,21 @@ function Component({
   multiple,
   size,
   ...props
-}: IProps) {
+}: IProps ) {
   return (
-    <InputSection {...props}>
-      <Label htmlFor={id}>{label}</Label>
+    <InputSection { ...props }>
+      <Label htmlFor={ id }>{ label }</Label>
       <InputSelect
-        id={id}
-        form={form}
-        name={name}
-        required={required}
-        disabled={disabled}
-        multiple={multiple}
-        size={size}
-        defaultValue={defaultValue}
+        id={ id }
+        form={ form }
+        name={ name }
+        required={ required }
+        disabled={ disabled }
+        multiple={ multiple }
+        size={ size }
+        defaultValue={ defaultValue }
       >
-        {children}
+        { children }
       </InputSelect>
     </InputSection>
   );

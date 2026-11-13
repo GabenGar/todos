@@ -12,41 +12,41 @@ import { usePermissions } from "#options/hooks";
 
 export function HomePage() {
   const permissions = usePermissions();
-  const heading = getLocalizedMessage("Options");
+  const heading = getLocalizedMessage( "Options" );
 
   return (
-    <Page heading={heading}>
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
+    <Page heading={ heading }>
+      <Overview headingLevel={ 2 }>
+        { ( headingLevel ) => (
           <>
             <OverviewHeader>
               <List>
-                {settingKeys.map((key) => (
-                  <li key={key}>
-                    <Setting setting={key} />
+                { settingKeys.map( ( key ) => (
+                  <li key={ key }>
+                    <Setting setting={ key } />
                   </li>
-                ))}
+                ) ) }
               </List>
             </OverviewHeader>
 
             <OverviewBody>
-              <Heading level={headingLevel + 1}>
-                {getLocalizedMessage("Browser Permissions")}
+              <Heading level={ headingLevel + 1 }>
+                { getLocalizedMessage( "Browser Permissions" ) }
               </Heading>
-              {!permissions ? (
+              { ! permissions ? (
                 <Loading />
               ) : (
                 <List>
-                  {availablePermissions.map((perm) => (
-                    <li key={perm}>
-                      <Permission permission={perm} />
+                  { availablePermissions.map( ( perm ) => (
+                    <li key={ perm }>
+                      <Permission permission={ perm } />
                     </li>
-                  ))}
+                  ) ) }
                 </List>
-              )}
+              ) }
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );

@@ -16,28 +16,28 @@ const commonConfiguration = {
     "page-action": "./src/page-action/index.tsx",
   },
   plugins: [
-    new MiniCssExtractPlugin({
+    new MiniCssExtractPlugin( {
       filename: "[name]/[name].css",
-    }),
-    new HtmlWebpackPlugin({
+    } ),
+    new HtmlWebpackPlugin( {
       title: "Popup",
       filename: "popup/index.html",
       template: "./src/popup/index.html",
-      chunks: ["popup"],
-    }),
-    new HtmlWebpackPlugin({
+      chunks: [ "popup" ],
+    } ),
+    new HtmlWebpackPlugin( {
       title: "Options",
       filename: "options/index.html",
       template: "./src/options/index.html",
-      chunks: ["options"],
-    }),
-    new HtmlWebpackPlugin({
+      chunks: [ "options" ],
+    } ),
+    new HtmlWebpackPlugin( {
       title: "URL details",
       filename: "page-action/index.html",
       template: "./src/page-action/index.html",
-      chunks: ["page-action"],
-    }),
-    new CopyWebpackPlugin({
+      chunks: [ "page-action" ],
+    } ),
+    new CopyWebpackPlugin( {
       patterns: [
         {
           from: "./src/assets",
@@ -52,7 +52,7 @@ const commonConfiguration = {
           to: "./manifest.json",
         },
       ],
-    }),
+    } ),
   ],
   module: {
     parser: {
@@ -79,11 +79,11 @@ const commonConfiguration = {
           ,
           "sass-loader",
         ],
-      }
+      },
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [ ".ts", ".tsx", ".js", ".jsx" ],
   },
   cache: {
     type: "filesystem",

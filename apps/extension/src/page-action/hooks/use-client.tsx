@@ -12,32 +12,32 @@ type IClientContext =
       isClient: true;
     };
 
-const ClientContext = createContext<IClientContext>(undefined);
+const ClientContext = createContext< IClientContext >( undefined );
 
-export function ClientProvider({ children }: { children: ReactNode }) {
-  const [isClient, switchIsClient] = useState(false);
+export function ClientProvider( { children }: { children: ReactNode } ) {
+  const [ isClient, switchIsClient ] = useState( false );
 
-  useEffect(() => {
-    switchIsClient(true);
-  }, []);
+  useEffect( () => {
+    switchIsClient( true );
+  }, [] );
 
   return (
     <ClientContext.Provider
       value={
-        !isClient
+        ! isClient
           ? undefined
           : {
               isClient,
             }
       }
     >
-      {children}
+      { children }
     </ClientContext.Provider>
   );
 }
 
 export function useClient(): IClientContext {
-  const context = useContext(ClientContext);
+  const context = useContext( ClientContext );
 
   return context;
 }

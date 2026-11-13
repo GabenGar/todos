@@ -31,40 +31,46 @@ import styles from "./details.module.scss";
 
 export interface ITaskOverviewProps extends ILocalizableProps, IOverviewProps {
   taskID: INanoidID;
-  onEdit?: (editedTask: ITask) => Promise<void>;
+  onEdit?: ( editedTask: ITask ) => Promise< void >;
 }
 
 /**
  * @TODO move param logic out of it
  */
-export const TaskOverview = createBlockComponent(styles, Component);
+export const TaskOverview = createBlockComponent( styles, Component );
 
-function Component({ language, taskID, onEdit, ...props }: ITaskOverviewProps) {
-  const { t } = useTranslation("translation");
+function Component( {
+  language,
+  taskID,
+  onEdit,
+  ...props
+}: ITaskOverviewProps ) {
+  const { t } = useTranslation( "translation" );
   const router = useRouter();
-  const [task, changeTask] = useState<Awaited<ReturnType<typeof getTask>>>();
+  const [ task, changeTask ] =
+    useState< Awaited< ReturnType< typeof getTask > > >();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    (async () => {
+  useEffect( () => {
+    ( async () => {
       try {
-        const newTask = await getTask(taskID);
-        changeTask(newTask);
-      } catch (error) {
-        if (!isError(error)) {
+        const newTask = await getTask( taskID );
+        changeTask( newTask );
+      } catch ( error ) {
+        if ( ! isError( error ) ) {
           throw error;
         }
 
-        logError(error);
-        router.replace("/404");
+        logError( error );
+        router.replace( "/404" );
       }
-    })();
-  }, [taskID]);
+    } )();
+  }, [ taskID ] );
 
-  if (!task) {
+  if ( ! task ) {
     return (
-      <Overview {...props}>
-        {() => (
+      <Overview { ...props }>
+        { () => (
           <>
             <OverviewHeader>
               <Loading />
@@ -76,7 +82,7 @@ function Component({ language, taskID, onEdit, ...props }: ITaskOverviewProps) {
               <Loading />
             </OverviewFooter>
           </>
-        )}
+        ) }
       </Overview>
     );
   }
@@ -93,150 +99,153 @@ function Component({ language, taskID, onEdit, ...props }: ITaskOverviewProps) {
   } = task;
 
   return (
-    <Overview {...props}>
-      {(headinglevel) => (
+    <Overview { ...props }>
+      { ( headinglevel ) => (
         <>
           <OverviewHeader>
-            <Heading level={headinglevel}>{title}</Heading>
-            <EntityID className={styles.id} entityID={id} />
+            <Heading level={ headinglevel }>{ title }</Heading>
+            <EntityID className={ styles.id } entityID={ id } />
           </OverviewHeader>
 
           <OverviewBody>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
-                dKey={t((t) => t.task.status)}
-                dValue={<TaskStatus status={status} />}
+                dKey={ t( ( t ) => t.task.status ) }
+                dValue={ <TaskStatus status={ status } /> }
               />
 
               <DescriptionSection
-                dKey={t((t) => t.task.description)}
+                dKey={ t( ( t ) => t.task.description ) }
                 dValue={
                   <EntityDescription>
-                    {description ?? t((t) => t.task.no_description)}
+                    { description ?? t( ( t ) => t.task.no_description ) }
                   </EntityDescription>
                 }
               />
 
               <DescriptionSection
-                dKey={t((t) => t.task.place)}
+                dKey={ t( ( t ) => t.task.place ) }
                 dValue={
-                  !place ? (
-                    t((t) => t.task.place_unknown)
+                  ! place ? (
+                    t( ( t ) => t.task.place_unknown )
                   ) : (
                     <Link
-                      href={createPlacePageURL(language, place.id)}
+                      href={ createPlacePageURL( language, place.id ) }
                       target="_blank"
                     >
-                      {place.title ?? t((t) => t.task.place_unknown)} (
-                      {place.id})
+                      { place.title ?? t( ( t ) => t.task.place_unknown ) } (
+                      { place.id })
                     </Link>
                   )
                 }
               />
             </DescriptionList>
 
-            <hr style={{ width: "100%" }} />
+            <hr style={ { width: "100%" } } />
 
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.task.creation_date)}
-                dValue={<DateTimeView dateTime={created_at} />}
+                dKey={ t( ( t ) => t.task.creation_date ) }
+                dValue={ <DateTimeView dateTime={ created_at } /> }
               />
               <DescriptionSection
-                dKey={t((t) => t.task.last_updated)}
-                dValue={<DateTimeView dateTime={updated_at} />}
+                dKey={ t( ( t ) => t.task.last_updated ) }
+                dValue={ <DateTimeView dateTime={ updated_at } /> }
               />
             </DescriptionList>
           </OverviewBody>
 
-          <OverviewFooter className={styles.footer}>
-            {/* @TODO two-layer group */}
-            <List className={styles.actions}>
+          <OverviewFooter className={ styles.footer }>
+            { /* @TODO two-layer group */ }
+            <List className={ styles.actions }>
               <ListItem>
                 <Button
-                  className={styles.action}
+                  className={ styles.action }
                   viewType="reset"
-                  disabled={status === "pending"}
-                  onClick={async () => {
-                    const editedTask = await editTask({
+                  disabled={ status === "pending" }
+                  onClick={ async () => {
+                    const editedTask = await editTask( {
                       id,
                       status: "pending",
-                    });
-                    changeTask(editedTask);
-                    onEdit?.(editedTask);
-                  }}
+                    } );
+                    changeTask( editedTask );
+                    onEdit?.( editedTask );
+                  } }
                 >
-                  {t((t) => t.task.actions.delay)}
+                  { t( ( t ) => t.task.actions.delay ) }
                 </Button>
               </ListItem>
 
               <ListItem>
                 <Button
-                  className={styles.action}
+                  className={ styles.action }
                   viewType="submit"
-                  disabled={status === "in-progress"}
-                  onClick={async () => {
-                    const editedTask = await editTask({
+                  disabled={ status === "in-progress" }
+                  onClick={ async () => {
+                    const editedTask = await editTask( {
                       id,
                       status: "in-progress",
-                    });
-                    changeTask(editedTask);
-                    onEdit?.(editedTask);
-                  }}
+                    } );
+                    changeTask( editedTask );
+                    onEdit?.( editedTask );
+                  } }
                 >
-                  {t((t) => t.task.actions.start)}
+                  { t( ( t ) => t.task.actions.start ) }
                 </Button>
               </ListItem>
             </List>
 
-            <List className={styles.actions}>
+            <List className={ styles.actions }>
               <ListItem>
                 <Button
-                  className={styles.action}
+                  className={ styles.action }
                   viewType="negative"
-                  disabled={status === "failed"}
-                  onClick={async () => {
-                    const editedTask = await editTask({ id, status: "failed" });
-                    changeTask(editedTask);
-                    onEdit?.(editedTask);
-                  }}
+                  disabled={ status === "failed" }
+                  onClick={ async () => {
+                    const editedTask = await editTask( {
+                      id,
+                      status: "failed",
+                    } );
+                    changeTask( editedTask );
+                    onEdit?.( editedTask );
+                  } }
                 >
-                  {t((t) => t.task.actions.fail)}
+                  { t( ( t ) => t.task.actions.fail ) }
                 </Button>
               </ListItem>
 
               <ListItem>
                 <Button
-                  className={styles.action}
+                  className={ styles.action }
                   viewType="positive"
-                  disabled={status === "finished"}
-                  onClick={async () => {
-                    const editedTask = await editTask({
+                  disabled={ status === "finished" }
+                  onClick={ async () => {
+                    const editedTask = await editTask( {
                       id,
                       status: "finished",
-                    });
-                    changeTask(editedTask);
-                    onEdit?.(editedTask);
-                  }}
+                    } );
+                    changeTask( editedTask );
+                    onEdit?.( editedTask );
+                  } }
                 >
-                  {t((t) => t.task.actions.complete)}
+                  { t( ( t ) => t.task.actions.complete ) }
                 </Button>
               </ListItem>
             </List>
 
-            <hr style={{ width: "100%" }} />
+            <hr style={ { width: "100%" } } />
 
             <List>
               <ListItem>
-                <LinkButton href={createTaskEditPageURL(language, id)}>
-                  {t((t) => t.task.edit)}
+                <LinkButton href={ createTaskEditPageURL( language, id ) }>
+                  { t( ( t ) => t.task.edit ) }
                 </LinkButton>
               </ListItem>
             </List>
           </OverviewFooter>
         </>
-      )}
+      ) }
     </Overview>
   );
 }

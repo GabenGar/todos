@@ -5,45 +5,46 @@ import type { IPlace, IPlaceUpdate } from "../types";
 import { getAllPlaces } from "./get";
 import { setLocalStorePlaces } from "./storage";
 
-const validatePlaceUpdate: ReturnType<typeof createValidator<IPlaceUpdate>> =
-  createValidator<IPlaceUpdate>("/entities/place/update");
+const validatePlaceUpdate: ReturnType<
+  typeof createValidator< IPlaceUpdate >
+> = createValidator< IPlaceUpdate >( "/entities/place/update" );
 
-export async function editPlace(update: IPlaceUpdate): Promise<IPlace> {
-  const [place] = await editPlaces([update]);
+export async function editPlace( update: IPlaceUpdate ): Promise< IPlace > {
+  const [ place ] = await editPlaces( [ update ] );
 
   return place;
 }
 
-async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
-  logDebug(`Editing ${updates.length} places...`);
+async function editPlaces( updates: IPlaceUpdate[] ): Promise< IPlace[] > {
+  logDebug( `Editing ${ updates.length } places...` );
 
-  updates.forEach((update) => {
-    validatePlaceUpdate(update);
-  });
+  updates.forEach( ( update ) => {
+    validatePlaceUpdate( update );
+  } );
 
   const storedPlaces = await getAllPlaces();
-  const updateIDs = new Set(updates.map(({ id }) => id));
+  const updateIDs = new Set( updates.map( ( { id } ) => id ) );
 
-  if (updateIDs.size !== updates.length) {
+  if ( updateIDs.size !== updates.length ) {
     throw new Error(
-      `The amount of IDs (${updateIDs.size}) does not match the amount of updates (${updates.length}).`,
+      `The amount of IDs (${ updateIDs.size }) does not match the amount of updates (${ updates.length }).`,
     );
   }
 
-  const placesWithUpdatedApplied = storedPlaces.map<IPlace>((place) => {
-    if (!updateIDs.has(place.id)) {
+  const placesWithUpdatedApplied = storedPlaces.map< IPlace >( ( place ) => {
+    if ( ! updateIDs.has( place.id ) ) {
       return place;
     }
 
     // non-updates are filtered beforehand
     // biome-ignore lint/style/noNonNullAssertion: blah
-    const update = updates.find(({ id }) => id === place.id)!;
-    const updatedTitle = !update.title
+    const update = updates.find( ( { id } ) => id === place.id )!;
+    const updatedTitle = ! update.title
       ? place.title
       : place.title !== update.title
         ? update.title
         : place.title;
-    const updatedDescription = !update.description
+    const updatedDescription = ! update.description
       ? place.description
       : place.description !== update.description
         ? update.description
@@ -57,15 +58,15 @@ async function editPlaces(updates: IPlaceUpdate[]): Promise<IPlace[]> {
       deleted_at: updatedDeletionDate,
     };
     return updatedPlace;
-  });
+  } );
 
-  await setLocalStorePlaces(placesWithUpdatedApplied);
+  await setLocalStorePlaces( placesWithUpdatedApplied );
 
-  const editedPlaces = placesWithUpdatedApplied.filter(({ id }) =>
-    updateIDs.has(id),
+  const editedPlaces = placesWithUpdatedApplied.filter( ( { id } ) =>
+    updateIDs.has( id ),
   );
 
-  logDebug(`Edited ${editedPlaces.length} places.`);
+  logDebug( `Edited ${ editedPlaces.length } places.` );
 
   return editedPlaces;
 }

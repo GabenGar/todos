@@ -1,21 +1,21 @@
 @use "@repo/ui/styles/sass/variables" as *;
 
 .debug {
-  color: var(--colour-text-tertiary);
+  color: var( --colour-text-tertiary );
 }
 
 .log {
-  color: var(--colour-text-secondary);
+  color: var( --colour-text-secondary );
 }
 
 .info {
-  color: var(--colour-text-primary);
+  color: var( --colour-text-primary );
 }
 
 .warn {
-  color: var(--warning-colour-text-primary);
+  color: var( --warning-colour-text-primary );
 }
 
 .error {
-  color: var(--negative-colour-text-primary);
+  color: var( --negative-colour-text-primary );
 }

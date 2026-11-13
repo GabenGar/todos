@@ -4,22 +4,25 @@ import { type ISettingKey, type ISettings, settings } from "./types";
 
 export async function getSetting(
   setting: ISettingKey,
-): Promise<ISettings[ISettingKey]> {
-  const settingData = settings[setting];
-  const result = await getLocalStorageValue(setting, settingData.defaultValue);
+): Promise< ISettings[ ISettingKey ] > {
+  const settingData = settings[ setting ];
+  const result = await getLocalStorageValue(
+    setting,
+    settingData.defaultValue,
+  );
 
   return result;
 }
 
 export async function updateSetting(
   setting: ISettingKey,
-  data: ISettings[ISettingKey],
-): Promise<ISettings[ISettingKey]> {
-  const settingData = settings[setting];
+  data: ISettings[ ISettingKey ],
+): Promise< ISettings[ ISettingKey ] > {
+  const settingData = settings[ setting ];
 
-  await validatePermissions(settingData.requiredPermissions);
+  await validatePermissions( settingData.requiredPermissions );
 
-  const result = await setLocalStorageValue(setting, data);
+  const result = await setLocalStorageValue( setting, data );
 
   return result;
 }

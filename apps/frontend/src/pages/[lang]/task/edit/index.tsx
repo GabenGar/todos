@@ -17,100 +17,100 @@ import { getSingleValueFromQuery } from "#lib/pages";
 import { createTaskPageURL, createTasksPageURL } from "#lib/urls";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-function TaskEditPage({
+function TaskEditPage( {
   lang,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = usePageTranslation("page-task-edit");
+}: InferGetStaticPropsType< typeof getStaticProps > ) {
+  const { t } = usePageTranslation( "page-task-edit" );
   const router = useRouter();
-  const [currentTask, changeCurrentTask] =
-    useState<Awaited<ReturnType<typeof getTask>>>();
+  const [ currentTask, changeCurrentTask ] =
+    useState< Awaited< ReturnType< typeof getTask > > >();
   const { isReady, query } = router;
-  const taskID = getSingleValueFromQuery(query, "task_id");
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
+  const taskID = getSingleValueFromQuery( query, "task_id" );
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    if (!isReady) {
+  useEffect( () => {
+    if ( ! isReady ) {
       return;
     }
 
-    if (!taskID) {
-      router.replace("/404");
+    if ( ! taskID ) {
+      router.replace( "/404" );
       return;
     }
 
-    (async () => {
-      const task = await getTask(taskID);
-      changeCurrentTask(task);
-    })();
-  }, [isReady, taskID]);
+    ( async () => {
+      const task = await getTask( taskID );
+      changeCurrentTask( task );
+    } )();
+  }, [ isReady, taskID ] );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
               <List>
                 <ListItem>
-                  {!currentTask ? (
+                  { ! currentTask ? (
                     <Loading />
                   ) : (
-                    <Link href={createTaskPageURL(lang, currentTask.id)}>
-                      {t((t) => t.task)}
+                    <Link href={ createTaskPageURL( lang, currentTask.id ) }>
+                      { t( ( t ) => t.task ) }
                     </Link>
-                  )}
+                  ) }
                 </ListItem>
               </List>
             </OverviewHeader>
 
             <OverviewBody>
-              {!currentTask ? (
+              { ! currentTask ? (
                 <Loading />
               ) : (
                 <EditTaskForm
-                  language={lang}
+                  language={ lang }
                   id="edit-task"
-                  currentTask={currentTask}
-                  onTaskEdit={async (taskUpdate) => {
-                    const editedTask = await editTask(taskUpdate);
+                  currentTask={ currentTask }
+                  onTaskEdit={ async ( taskUpdate ) => {
+                    const editedTask = await editTask( taskUpdate );
 
-                    changeCurrentTask(editedTask);
-                  }}
+                    changeCurrentTask( editedTask );
+                  } }
                 />
-              )}
+              ) }
             </OverviewBody>
 
             <OverviewFooter>
               <List>
                 <ListItem>
-                  {!currentTask ? (
+                  { ! currentTask ? (
                     <Loading />
                   ) : (
                     <Button
                       viewType="negative"
-                      disabled={Boolean(currentTask.deleted_at)}
-                      onClick={async () => {
-                        await removeTask(currentTask.id);
-                        const url = createTasksPageURL(lang);
-                        router.push(url);
-                      }}
+                      disabled={ Boolean( currentTask.deleted_at ) }
+                      onClick={ async () => {
+                        await removeTask( currentTask.id );
+                        const url = createTasksPageURL( lang );
+                        router.push( url );
+                      } }
                     >
-                      {t((t) => t["Delete"])}
+                      { t( ( t ) => t[ "Delete" ] ) }
                     </Button>
-                  )}
+                  ) }
                 </ListItem>
               </List>
             </OverviewFooter>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-task-edit");
+export const getStaticProps = createGetStaticProps( "page-task-edit" );
 
 export const getStaticPaths = getStaticExportPaths;
 

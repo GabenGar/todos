@@ -24,96 +24,98 @@ import { authenticateAdmin, createLocalizedLoader } from "#server/lib/router";
 import type { Route } from "./+types/invitations-list";
 
 interface IProps extends ILocalizedProps {
-  invitations: IPaginatedCollection<IInvitationDB>;
+  invitations: IPaginatedCollection< IInvitationDB >;
 }
 
 /**
  * @TODO client render
  */
-function InvitationsListPage({ loaderData }: Route.ComponentProps) {
+function InvitationsListPage( { loaderData }: Route.ComponentProps ) {
   const { t } = useTranslation();
   const { language, invitations } = loaderData;
-  const heading = t((t) => t.pages.invitations["Invitations"]);
+  const heading = t( ( t ) => t.pages.invitations[ "Invitations" ] );
   const title = createMetaTitle(
-    `${t((t) => t.pages.invitations["Invitations page"])} ${invitations.pagination.current_page} ${t((t) => t.pages.invitations["out of"])} ${invitations.pagination.total_pages}`,
+    `${ t( ( t ) => t.pages.invitations[ "Invitations page" ] ) } ${ invitations.pagination.current_page } ${ t( ( t ) => t.pages.invitations[ "out of" ] ) } ${ invitations.pagination.total_pages }`,
   );
 
   return (
-    <Page heading={heading} title={title}>
+    <Page heading={ heading } title={ title }>
       <PreviewList
-        noItemsElement={t((t) => t.pages.invitations["No invitations found."])}
-        pagination={invitations.pagination}
-        buildURL={(page) =>
-          href("/:language/account/role/administrator/invitations/:page", {
+        noItemsElement={ t(
+          ( t ) => t.pages.invitations[ "No invitations found." ],
+        ) }
+        pagination={ invitations.pagination }
+        buildURL={ ( page ) =>
+          href( "/:language/account/role/administrator/invitations/:page", {
             language,
             page,
-          })
+          } )
         }
-        internalLinkElement={({ page, ...props }) => (
+        internalLinkElement={ ( { page, ...props } ) => (
           <LinkInternal
-            {...props}
-            href={href(
+            { ...props }
+            href={ href(
               "/:language/account/role/administrator/invitations/:page",
               {
                 language,
                 page,
               },
-            )}
+            ) }
           ></LinkInternal>
-        )}
+        ) }
       >
-        {invitations.items.map((invitation) => (
+        { invitations.items.map( ( invitation ) => (
           <InvitationPreview
-            key={invitation.id}
-            language={language}
-            headingLevel={2}
-            invitation={invitation}
+            key={ invitation.id }
+            language={ language }
+            headingLevel={ 2 }
+            invitation={ invitation }
           />
-        ))}
+        ) ) }
       </PreviewList>
 
-      <Overview headingLevel={2}>
-        {() => (
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
               <LinkInternal
-                href={href(
+                href={ href(
                   "/:language/account/role/administrator/create/invitation",
                   { language },
-                )}
+                ) }
               >
-                {t((t) => t.pages.invitations["Create invitation"])}
+                { t( ( t ) => t.pages.invitations[ "Create invitation" ] ) }
               </LinkInternal>
             </OverviewHeader>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export const loader = createLocalizedLoader(async function loader(
+export const loader = createLocalizedLoader( async function loader(
   { request, params }: Route.LoaderArgs,
   localizedProps,
 ) {
-  await authenticateAdmin(request);
+  await authenticateAdmin( request );
 
   const page = params.page;
 
-  const invitations = await runTransaction(async (transaction) => {
-    const count = await selectInvitationCount(transaction);
+  const invitations = await runTransaction( async ( transaction ) => {
+    const count = await selectInvitationCount( transaction );
 
-    const pagination = createPagination(count, page);
-    const ids = await selectInvitationIDs(transaction, { pagination });
-    const items = await selectInvitationEntities(transaction, ids);
+    const pagination = createPagination( count, page );
+    const ids = await selectInvitationIDs( transaction, { pagination } );
+    const items = await selectInvitationEntities( transaction, ids );
 
     const invitations = {
       pagination,
       items,
-    } satisfies IPaginatedCollection<IInvitationDB>;
+    } satisfies IPaginatedCollection< IInvitationDB >;
 
     return invitations;
-  });
+  } );
 
   const props: IProps = {
     ...localizedProps,
@@ -121,6 +123,6 @@ export const loader = createLocalizedLoader(async function loader(
   };
 
   return props;
-});
+} );
 
 export default InvitationsListPage;

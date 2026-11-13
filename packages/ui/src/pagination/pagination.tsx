@@ -11,25 +11,25 @@ import styles from "./pagination.module.scss";
 
 export interface IPaginationProps extends IUnorderedListProps {
   pagination: IPagination;
-  buildURL: (page: string) => string;
-  internalLinkElement?: (props: ILinkInternalElementProps) => ReactNode;
+  buildURL: ( page: string ) => string;
+  internalLinkElement?: ( props: ILinkInternalElementProps ) => ReactNode;
 }
 
 interface ILinkInternalElementProps extends ILinkElementProps {
   page: string;
 }
 
-export const Pagination = createBlockComponent(styles, Component);
+export const Pagination = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   pagination,
   buildURL,
   internalLinkElement,
   ...props
-}: IPaginationProps) {
+}: IPaginationProps ) {
   const { current_page, total_pages } = pagination;
-  const parsedCurrentPage = BigInt(current_page);
-  const parsedTotalPages = BigInt(total_pages);
+  const parsedCurrentPage = BigInt( current_page );
+  const parsedTotalPages = BigInt( total_pages );
   const first = "First";
   const previous = "Previous";
   const current = "Current";
@@ -45,93 +45,93 @@ function Component({
 
   return (
     <List
-      style={{ "--local-min-width": `${buttonWidth}em` } as CSSProperties}
-      {...props}
+      style={ { "--local-min-width": `${ buttonWidth }em` } as CSSProperties }
+      { ...props }
     >
-      <ListItem className={styles.first}>
-        {parsedCurrentPage === BIGINT_ONE ||
+      <ListItem className={ styles.first }>
+        { parsedCurrentPage === BIGINT_ONE ||
         parsedCurrentPage === BIGINT_ZERO ? (
-          <span className={styles.disabled}>
-            <span>|&lt;</span> <span>{first}</span>
+          <span className={ styles.disabled }>
+            <span>|&lt;</span> <span>{ first }</span>
           </span>
         ) : (
           <LinkButton
-            href={buildURL(String(BIGINT_ONE))}
-            internalLinkElement={(props) =>
-              internalLinkElement?.({ ...props, page: String(BIGINT_ONE) })
+            href={ buildURL( String( BIGINT_ONE ) ) }
+            internalLinkElement={ ( props ) =>
+              internalLinkElement?.( { ...props, page: String( BIGINT_ONE ) } )
             }
-            className={styles.button}
+            className={ styles.button }
           >
-            <span>|&lt;</span> <span>{first}</span>
+            <span>|&lt;</span> <span>{ first }</span>
           </LinkButton>
-        )}
+        ) }
       </ListItem>
 
-      <ListItem className={styles.previous}>
-        {parsedCurrentPage - BIGINT_ONE <= BIGINT_ZERO ? (
-          <span className={styles.disabled}>
-            <span>&lt;</span> <span>{previous}</span>
+      <ListItem className={ styles.previous }>
+        { parsedCurrentPage - BIGINT_ONE <= BIGINT_ZERO ? (
+          <span className={ styles.disabled }>
+            <span>&lt;</span> <span>{ previous }</span>
           </span>
         ) : (
           <LinkButton
-            href={buildURL(String(parsedCurrentPage - BIGINT_ONE))}
-            className={styles.button}
-            internalLinkElement={(props) =>
-              internalLinkElement?.({
+            href={ buildURL( String( parsedCurrentPage - BIGINT_ONE ) ) }
+            className={ styles.button }
+            internalLinkElement={ ( props ) =>
+              internalLinkElement?.( {
                 ...props,
-                page: String(parsedCurrentPage - BIGINT_ONE),
-              })
+                page: String( parsedCurrentPage - BIGINT_ONE ),
+              } )
             }
           >
-            <span>&lt;</span> <span>{previous}</span>
+            <span>&lt;</span> <span>{ previous }</span>
           </LinkButton>
-        )}
+        ) }
       </ListItem>
 
-      <ListItem className={styles.current}>
-        <PaginationOverview pagination={pagination} />
+      <ListItem className={ styles.current }>
+        <PaginationOverview pagination={ pagination } />
       </ListItem>
 
-      <ListItem className={styles.next}>
-        {parsedCurrentPage + BIGINT_ONE >= parsedTotalPages + BIGINT_ONE ? (
-          <span className={styles.disabled}>
-            <span>&gt;</span> <span>{next}</span>
+      <ListItem className={ styles.next }>
+        { parsedCurrentPage + BIGINT_ONE >= parsedTotalPages + BIGINT_ONE ? (
+          <span className={ styles.disabled }>
+            <span>&gt;</span> <span>{ next }</span>
           </span>
         ) : (
           <LinkButton
-            href={buildURL(String(parsedCurrentPage + BIGINT_ONE))}
-            className={styles.button}
-            internalLinkElement={(props) =>
-              internalLinkElement?.({
+            href={ buildURL( String( parsedCurrentPage + BIGINT_ONE ) ) }
+            className={ styles.button }
+            internalLinkElement={ ( props ) =>
+              internalLinkElement?.( {
                 ...props,
-                page: String(parsedCurrentPage + BIGINT_ONE),
-              })
+                page: String( parsedCurrentPage + BIGINT_ONE ),
+              } )
             }
           >
-            <span>&gt;</span> <span>{next}</span>
+            <span>&gt;</span> <span>{ next }</span>
           </LinkButton>
-        )}
+        ) }
       </ListItem>
 
-      <ListItem className={styles.last}>
-        {parsedCurrentPage === parsedTotalPages ? (
-          <span className={styles.disabled}>
-            <span>&gt;|</span> <span>{last}</span>
+      <ListItem className={ styles.last }>
+        { parsedCurrentPage === parsedTotalPages ? (
+          <span className={ styles.disabled }>
+            <span>&gt;|</span> <span>{ last }</span>
           </span>
         ) : (
           <LinkButton
-            href={buildURL(total_pages)}
-            className={styles.button}
-            internalLinkElement={(props) =>
-              internalLinkElement?.({
+            href={ buildURL( total_pages ) }
+            className={ styles.button }
+            internalLinkElement={ ( props ) =>
+              internalLinkElement?.( {
                 ...props,
                 page: total_pages,
-              })
+              } )
             }
           >
-            <span>&gt;|</span> <span>{last}</span>
+            <span>&gt;|</span> <span>{ last }</span>
           </LinkButton>
-        )}
+        ) }
       </ListItem>
     </List>
   );

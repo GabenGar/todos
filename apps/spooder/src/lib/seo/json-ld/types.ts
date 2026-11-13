@@ -8,7 +8,7 @@ import type { IVideoObjectJSONLD } from "./types/video-object";
 import type { IWebPageJSONLD } from "./types/web-page";
 import type { IWebSiteJSONLD } from "./types/web-site";
 
-const knownJSONLDTypes = new Set([
+const knownJSONLDTypes = new Set( [
   "Organization",
   "SoftwareApplication",
   "FAQPage",
@@ -17,12 +17,12 @@ const knownJSONLDTypes = new Set([
   "Article",
   "WebPage",
   "VideoObject",
-] satisfies IKnownJSONLD["@type"][]);
+] satisfies IKnownJSONLD[ "@type" ][] );
 
-type IKnownJSONLDType = IElementType<typeof knownJSONLDTypes>;
+type IKnownJSONLDType = IElementType< typeof knownJSONLDTypes >;
 
 export type IJSONLD = IKnownJSONLD & {
-  unknownKeys?: Map<string, IOneOrMany<unknown>>;
+  unknownKeys?: Map< string, IOneOrMany< unknown > >;
 };
 
 export type IKnownJSONLD =
@@ -41,12 +41,12 @@ export interface IValidJSONLD {
   "@id"?: string;
 }
 
-export function isKnownJSONLDType(input: unknown): input is IKnownJSONLDType {
-  return knownJSONLDTypes.has(input as IKnownJSONLDType);
+export function isKnownJSONLDType( input: unknown ): input is IKnownJSONLDType {
+  return knownJSONLDTypes.has( input as IKnownJSONLDType );
 }
 
 export interface IJSONLDMeta {
-  items?: IOneOrMany<IJSONLD>;
-  unknownItems?: IOneOrMany<IValidJSONLD>;
-  invalidItems?: IOneOrMany<string>;
+  items?: IOneOrMany< IJSONLD >;
+  unknownItems?: IOneOrMany< IValidJSONLD >;
+  invalidItems?: IOneOrMany< string >;
 }

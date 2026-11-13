@@ -10,19 +10,19 @@ type IProps = IDescriptionListProps & {
   data: object;
 };
 
-export const JavascriptObject = createBlockComponent(undefined, Component);
+export const JavascriptObject = createBlockComponent( undefined, Component );
 
-function Component({ data, ...props }: IProps) {
+function Component( { data, ...props }: IProps ) {
   return (
-    <DescriptionList {...props}>
-      {Object.entries(data).map(([key, value]) => (
+    <DescriptionList { ...props }>
+      { Object.entries( data ).map( ( [ key, value ] ) => (
         <DescriptionSection
-          key={key}
-          dKey={key}
-          dValue={<JavascriptValue data={value} />}
+          key={ key }
+          dKey={ key }
+          dValue={ <JavascriptValue data={ value } /> }
           isKeyPreformatted
         />
-      ))}
+      ) ) }
     </DescriptionList>
   );
 }

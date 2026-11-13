@@ -6,43 +6,48 @@ interface IWebsiteProps {
   jsonLD: IWebSiteJSONLD;
 }
 
-export function WebsiteJSONLD({ jsonLD }: IWebsiteProps) {
+export function WebsiteJSONLD( { jsonLD }: IWebsiteProps ) {
   const { t } = useTranslation();
   const { potentialAction, name, publisher, url } = jsonLD;
 
   return (
     <>
       <DescriptionSection
-        dKey={t((t) => t.seo["json-ld-overview"]["type-overview"].website.url)}
-        dValue={url}
+        dKey={ t(
+          ( t ) => t.seo[ "json-ld-overview" ][ "type-overview" ].website.url,
+        ) }
+        dValue={ url }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t((t) => t.seo["json-ld-overview"]["type-overview"].website.name)}
-        dValue={name}
+        dKey={ t(
+          ( t ) => t.seo[ "json-ld-overview" ][ "type-overview" ].website.name,
+        ) }
+        dValue={ name }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!publisher ? undefined : (
+      { ! publisher ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) => t.seo["json-ld-overview"]["type-overview"].website.publisher,
-          )}
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ].website.publisher,
+          ) }
           dValue={
             <DescriptionList isNested>
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].website[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].website[
                       "publisher-overview"
                     ].id,
-                )}
-                dValue={publisher["@id"]}
+                ) }
+                dValue={ publisher[ "@id" ] }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
@@ -51,74 +56,76 @@ export function WebsiteJSONLD({ jsonLD }: IWebsiteProps) {
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!potentialAction ? undefined : (
+      { ! potentialAction ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"].website[
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ].website[
                 "potential-action"
               ],
-          )}
+          ) }
           dValue={
             <DescriptionList isNested>
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].website[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].website[
                       "potential-action-overview"
                     ].type,
-                )}
-                dValue={potentialAction["@type"]}
+                ) }
+                dValue={ potentialAction[ "@type" ] }
                 isKeyPreformatted
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].website[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].website[
                       "potential-action-overview"
-                    ]["query-input"],
-                )}
-                dValue={potentialAction["query-input"]}
+                    ][ "query-input" ],
+                ) }
+                dValue={ potentialAction[ "query-input" ] }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
 
-              {!potentialAction.target ? undefined : (
+              { ! potentialAction.target ? undefined : (
                 <DescriptionSection
-                  dKey={t(
-                    (t) =>
-                      t.seo["json-ld-overview"]["type-overview"].website[
+                  dKey={ t(
+                    ( t ) =>
+                      t.seo[ "json-ld-overview" ][ "type-overview" ].website[
                         "potential-action-overview"
                       ].target,
-                  )}
+                  ) }
                   dValue={
                     <DescriptionList isNested>
                       <DescriptionSection
-                        dKey={t(
-                          (t) =>
-                            t.seo["json-ld-overview"]["type-overview"].website[
-                              "potential-action-overview"
-                            ]["target-overview"].type,
-                        )}
-                        dValue={potentialAction.target["@type"]}
+                        dKey={ t(
+                          ( t ) =>
+                            t.seo[ "json-ld-overview" ][ "type-overview" ]
+                              .website[ "potential-action-overview" ][
+                              "target-overview"
+                            ].type,
+                        ) }
+                        dValue={ potentialAction.target[ "@type" ] }
                         isOptional
                         isKeyPreformatted
                         isValuePreformatted
                       />
 
                       <DescriptionSection
-                        dKey={t(
-                          (t) =>
-                            t.seo["json-ld-overview"]["type-overview"].website[
-                              "potential-action-overview"
-                            ]["target-overview"]["url-template"],
-                        )}
-                        dValue={potentialAction.target.urlTemplate}
+                        dKey={ t(
+                          ( t ) =>
+                            t.seo[ "json-ld-overview" ][ "type-overview" ]
+                              .website[ "potential-action-overview" ][
+                              "target-overview"
+                            ][ "url-template" ],
+                        ) }
+                        dValue={ potentialAction.target.urlTemplate }
                         isOptional
                         isKeyPreformatted
                         isValuePreformatted
@@ -128,13 +135,13 @@ export function WebsiteJSONLD({ jsonLD }: IWebsiteProps) {
                   isKeyPreformatted
                   isValuePreformatted
                 />
-              )}
+              ) }
             </DescriptionList>
           }
           isKeyPreformatted
           isValuePreformatted
         />
-      )}
+      ) }
     </>
   );
 }

@@ -9,46 +9,46 @@ import { getSingleValueFromQuery } from "#lib/pages";
 import { notFoundURL } from "#lib/urls";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-function PlaceDetailsPage({
+function PlaceDetailsPage( {
   lang,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = usePageTranslation("page-place");
+}: InferGetStaticPropsType< typeof getStaticProps > ) {
+  const { t } = usePageTranslation( "page-place" );
   const router = useRouter();
   const { isReady, query } = router;
-  const [place, changePlace] = useState<IPlace>();
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
-  const placeID = getSingleValueFromQuery(query, "place_id");
+  const [ place, changePlace ] = useState< IPlace >();
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
+  const placeID = getSingleValueFromQuery( query, "place_id" );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    if (!isReady) {
+  useEffect( () => {
+    if ( ! isReady ) {
       return;
     }
 
-    if (!placeID) {
-      router.replace(notFoundURL);
+    if ( ! placeID ) {
+      router.replace( notFoundURL );
       return;
     }
 
-    (async () => {
-      const newPlace = await getPlace(placeID);
-      changePlace(newPlace);
-    })();
-  }, [isReady, placeID]);
+    ( async () => {
+      const newPlace = await getPlace( placeID );
+      changePlace( newPlace );
+    } )();
+  }, [ isReady, placeID ] );
 
   return (
-    <Page heading={heading} title={title}>
-      {!place ? (
-        <OverviewPlaceHolder headingLevel={2} />
+    <Page heading={ heading } title={ title }>
+      { ! place ? (
+        <OverviewPlaceHolder headingLevel={ 2 } />
       ) : (
-        <PlaceOverview language={lang} headingLevel={2} place={place} />
-      )}
+        <PlaceOverview language={ lang } headingLevel={ 2 } place={ place } />
+      ) }
     </Page>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-place");
+export const getStaticProps = createGetStaticProps( "page-place" );
 export const getStaticPaths = getStaticExportPaths;
 
 export default PlaceDetailsPage;

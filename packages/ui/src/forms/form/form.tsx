@@ -14,9 +14,9 @@ export const baseFormStyles = styles;
 /**
  * Basic wrapper over `<form>` element.
  */
-export const Form = createBlockComponent(styles, Component);
+export const Form = createBlockComponent( styles, Component );
 
-function Component<InputName extends string>({
+function Component< InputName extends string >( {
   id,
   isNested,
   className,
@@ -25,64 +25,68 @@ function Component<InputName extends string>({
   onReset,
   children,
   ...props
-}: IFormProps<InputName>) {
+}: IFormProps< InputName > ) {
   const { t } = useTranslation();
-  const formID = `${id}-form`;
-  const resolvedClassname = clsx(className, isNested && styles.nested);
+  const formID = `${ id }-form`;
+  const resolvedClassname = clsx( className, isNested && styles.nested );
 
   return (
-    <div id={id} className={resolvedClassname}>
-      {children?.(formID)}
+    <div id={ id } className={ resolvedClassname }>
+      { children?.( formID ) }
       {
         // don't render the button at all if `false`
         submitButton === false ? undefined : (
-          <InputSection className={styles.submit}>
-            {/* render default button if not a function */}
-            {submitButton === undefined ? (
+          <InputSection className={ styles.submit }>
+            { /* render default button if not a function */ }
+            { submitButton === undefined ? (
               <ButtonSubmit
-                form={formID}
-                viewType={isNested ? "button" : "submit"}
+                form={ formID }
+                viewType={ isNested ? "button" : "submit" }
               >
-                {t((t) => t.form.state.submit)}
+                { t( ( t ) => t.form.state.submit ) }
               </ButtonSubmit>
             ) : (
               <CustomButton
-                formID={formID}
-                isNested={isNested}
-                submitButton={submitButton}
+                formID={ formID }
+                isNested={ isNested }
+                submitButton={ submitButton }
               />
-            )}
+            ) }
           </InputSection>
         )
       }
 
       <form
-        {...props}
-        id={formID}
-        className={styles.form}
-        onSubmit={onSubmit}
-        onReset={onReset}
+        { ...props }
+        id={ formID }
+        className={ styles.form }
+        onSubmit={ onSubmit }
+        onReset={ onReset }
       />
     </div>
   );
 }
 
-interface ICustomButtonProps extends Pick<IFormProps, "isNested"> {
+interface ICustomButtonProps extends Pick< IFormProps, "isNested" > {
   formID: string;
-  submitButton: (formID: string) => ReactNode;
+  submitButton: ( formID: string ) => ReactNode;
 }
 
-function CustomButton({ formID, isNested, submitButton }: ICustomButtonProps) {
-  const result = submitButton(formID);
+function CustomButton( {
+  formID,
+  isNested,
+  submitButton,
+}: ICustomButtonProps ) {
+  const result = submitButton( formID );
 
   // render custom button if result is not a string
-  if (typeof result !== "string") {
-    return <>{result}</>;
+  if ( typeof result !== "string" ) {
+    return <>{ result }</>;
   }
 
   return (
-    <ButtonSubmit form={formID} viewType={isNested ? "button" : "submit"}>
-      {result}
+    <ButtonSubmit form={ formID } viewType={ isNested ? "button" : "submit" }>
+      { result }
     </ButtonSubmit>
   );
 }

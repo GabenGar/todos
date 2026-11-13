@@ -13,118 +13,123 @@ export async function generateCode(
   outputFolder: string,
   generators: IGeneratorMap,
 ) {
-  console.debug(`Generating code for ${generators.size} generators...`);
+  console.debug( `Generating code for ${ generators.size } generators...` );
 
-  console.debug("Creating a temporary folder...");
+  console.debug( "Creating a temporary folder..." );
 
   // creating temp folder manually because `mkdtemp()`
   // cannot into recursive creation
-  await mkdir(path.join(tmpdir(), "todos-codegen", "incoming"), {
+  await mkdir( path.join( tmpdir(), "todos-codegen", "incoming" ), {
     recursive: true,
-  });
+  } );
   const temporaryPath = await mkdtemp(
-    path.join(tmpdir(), "todos-codegen", "incoming", path.sep),
+    path.join( tmpdir(), "todos-codegen", "incoming", path.sep ),
   );
 
-  console.debug(`Created the temporary folder "${temporaryPath}".`);
+  console.debug( `Created the temporary folder "${ temporaryPath }".` );
 
   const generatorCount = 1;
-  for await (const [_, codeGenerator] of generators) {
+  for await ( const [ _, codeGenerator ] of generators ) {
     console.debug(
-      `Generating code for generator "${codeGenerator.name}" (${generatorCount} out of ${generators.size})...`,
+      `Generating code for generator "${ codeGenerator.name }" (${ generatorCount } out of ${ generators.size })...`,
     );
 
     const { name: generatorName, generate } = codeGenerator;
-    const generatorPath = path.join(temporaryPath, generatorName);
+    const generatorPath = path.join( temporaryPath, generatorName );
     const generatorModule = await generate();
 
-    if (!Array.isArray(generatorModule)) {
-      if (!("type" in generatorModule) || generatorModule.type !== "nested") {
+    if ( ! Array.isArray( generatorModule ) ) {
+      if (
+        ! ( "type" in generatorModule ) ||
+        generatorModule.type !== "nested"
+      ) {
         throw new Error(
-          `Generator module at "${generatorPath}" is not a valid nested generator module.`,
+          `Generator module at "${ generatorPath }" is not a valid nested generator module.`,
         );
       }
-      await generateNestedCode(generatorModule, generatorPath);
+      await generateNestedCode( generatorModule, generatorPath );
       continue;
     }
 
-    const indexModules = new Map<string, IModuleInfo["exports"]>();
-    await mkdir(generatorPath, { recursive: true });
+    const indexModules = new Map< string, IModuleInfo[ "exports" ] >();
+    await mkdir( generatorPath, { recursive: true } );
 
-    for await (const moduleInfo of generatorModule) {
-      await saveModule(generatorPath, moduleInfo);
-      indexModules.set(moduleInfo.name, moduleInfo.exports);
+    for await ( const moduleInfo of generatorModule ) {
+      await saveModule( generatorPath, moduleInfo );
+      indexModules.set( moduleInfo.name, moduleInfo.exports );
     }
 
-    await saveIndexFile(generatorPath, indexModules);
+    await saveIndexFile( generatorPath, indexModules );
 
-    console.debug(`Generated code for generator "${codeGenerator.name}".`);
+    console.debug( `Generated code for generator "${ codeGenerator.name }".` );
   }
 
   console.debug(
-    `Replacing the contents of folder "${outputFolder}" with folder "${temporaryPath}"...`,
+    `Replacing the contents of folder "${ outputFolder }" with folder "${ temporaryPath }"...`,
   );
 
   // not doing transactional replacement because
   // windows is upset over folder renames
-  await rm(outputFolder, { recursive: true, maxRetries: 5, retryDelay: 500 });
-  await rename(temporaryPath, outputFolder);
+  await rm( outputFolder, { recursive: true, maxRetries: 5, retryDelay: 500 } );
+  await rename( temporaryPath, outputFolder );
 
-  console.debug(`Replaced the contents of folder "${outputFolder}".`);
+  console.debug( `Replaced the contents of folder "${ outputFolder }".` );
 
-  console.debug(`Generated code for ${generators.size} generators.`);
+  console.debug( `Generated code for ${ generators.size } generators.` );
 }
 
 async function saveModule(
   generatorPath: string,
   { name, content }: IModuleInfo,
 ) {
-  console.debug(`Generating code for the module "${name}"...`);
+  console.debug( `Generating code for the module "${ name }"...` );
 
-  const modulePath = path.join(generatorPath, `${name}.ts`);
-  const fileContent = [codeMessage, content].join("\n");
+  const modulePath = path.join( generatorPath, `${ name }.ts` );
+  const fileContent = [ codeMessage, content ].join( "\n" );
 
   // generator folder is created ahead of time
   // so there is no need for ensuring folder existence
-  await writeFile(modulePath, fileContent, { encoding: "utf8" });
+  await writeFile( modulePath, fileContent, { encoding: "utf8" } );
 
-  console.debug(`Generated code for the module "${name}".`);
+  console.debug( `Generated code for the module "${ name }".` );
 }
 
 async function saveIndexFile(
   generatorPath: string,
-  indexModules: Map<string, IModuleInfo["exports"]>,
+  indexModules: Map< string, IModuleInfo[ "exports" ] >,
 ) {
-  console.debug(`Generating index file for generator "${generatorPath}"...`);
+  console.debug(
+    `Generating index file for generator "${ generatorPath }"...`,
+  );
 
-  const indexFilePath = path.join(generatorPath, indexFileName);
-  const indexContent = Array.from(indexModules)
-    .reduce<string[]>((lines, [moduleName, moduleExports]) => {
-      if (!moduleExports.length) {
+  const indexFilePath = path.join( generatorPath, indexFileName );
+  const indexContent = Array.from( indexModules )
+    .reduce< string[] >( ( lines, [ moduleName, moduleExports ] ) => {
+      if ( ! moduleExports.length ) {
         throw new Error(
-          `Generated code must export at least one symbol and the module "${moduleName}" exported none.`,
+          `Generated code must export at least one symbol and the module "${ moduleName }" exported none.`,
         );
       }
 
       const symbolExports = moduleExports
-        .map<string>(({ name, type, alias }) => {
-          const symbolString = `${type === "abstract" ? `type ${name}` : name}${
-            alias ? ` as ${alias}` : ""
+        .map< string >( ( { name, type, alias } ) => {
+          const symbolString = `${ type === "abstract" ? `type ${ name }` : name }${
+            alias ? ` as ${ alias }` : ""
           }`;
 
           return symbolString;
-        })
-        .join(", ");
+        } )
+        .join( ", " );
 
-      const exportStatement = `export {${symbolExports}} from "./${moduleName}"`;
+      const exportStatement = `export {${ symbolExports }} from "./${ moduleName }"`;
 
-      lines.push(exportStatement);
+      lines.push( exportStatement );
 
       return lines;
-    }, [])
-    .join("\n");
+    }, [] )
+    .join( "\n" );
 
-  await writeFile(indexFilePath, indexContent, { encoding: "utf8" });
+  await writeFile( indexFilePath, indexContent, { encoding: "utf8" } );
 
-  console.debug(`Generated index file for generator "${generatorPath}".`);
+  console.debug( `Generated index file for generator "${ generatorPath }".` );
 }

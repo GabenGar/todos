@@ -1,7 +1,7 @@
 import type { Dirent } from "node:fs";
 
 export interface ITestModuleGenerator {
-  (inputs: Dirent[]): Promise<ITestModuleOutput>;
+  ( inputs: Dirent[] ): Promise< ITestModuleOutput >;
 }
 
 export interface ITestModule {
@@ -11,7 +11,7 @@ export interface ITestModule {
 /**
  * A map of relative file paths and their contents.
  */
-export interface ITestModuleOutput extends Map<string, string> {}
+export interface ITestModuleOutput extends Map< string, string > {}
 
 export const inputFolderName = "input";
 export const outputFolderName = "output";

@@ -5,7 +5,7 @@ export interface IEntityItem {
   title?: ITitle;
 }
 
-export function toEntityItem<Type extends IEntityItem>(
+export function toEntityItem< Type extends IEntityItem >(
   entity: Type,
 ): IEntityItem {
   const item: IEntityItem = { id: entity.id, title: entity.title };

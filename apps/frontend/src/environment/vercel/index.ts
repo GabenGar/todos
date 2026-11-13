@@ -8,7 +8,9 @@
  * @example 1
  */
 export const VERCEL =
-  process.env.VERCEL && process.env.VERCEL !== "" && Number(process.env.VERCEL);
+  process.env.VERCEL &&
+  process.env.VERCEL !== "" &&
+  Number( process.env.VERCEL );
 
 export const VERCEL_ENV = process.env.VERCEL_ENV;
 export const VERCEL_URL = process.env.VERCEL_URL;
@@ -26,15 +28,17 @@ export const NEXT_PUBLIC_VERCEL_ENV = getVercelEnvironmentVariable(
  * The value does not include the protocol scheme `https://`.
  * @example '*.vercel.app'
  */
-export const NEXT_PUBLIC_VERCEL_URL = (() => {
-  const url = getVercelEnvironmentVariable(process.env.NEXT_PUBLIC_VERCEL_URL);
-  if (!url) {
+export const NEXT_PUBLIC_VERCEL_URL = ( () => {
+  const url = getVercelEnvironmentVariable(
+    process.env.NEXT_PUBLIC_VERCEL_URL,
+  );
+  if ( ! url ) {
     return;
   }
 
-  return `https://${url}`;
-})();
+  return `https://${ url }`;
+} )();
 
-function getVercelEnvironmentVariable(envVar: string | undefined) {
+function getVercelEnvironmentVariable( envVar: string | undefined ) {
   return typeof envVar === "undefined" || envVar === "" ? undefined : envVar;
 }

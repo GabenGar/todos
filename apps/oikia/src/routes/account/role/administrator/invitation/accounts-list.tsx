@@ -32,52 +32,56 @@ import type { Route } from "./+types/accounts-list";
 
 interface IProps extends ILocalizedProps {
   invitation: IInvitationDB;
-  accounts: IPaginatedCollection<IAccountDBPreview>;
+  accounts: IPaginatedCollection< IAccountDBPreview >;
 }
 
-function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
+function InvitedAccountsListPage( { loaderData }: Route.ComponentProps ) {
   const { t } = useTranslation();
   const { language, invitation, accounts } = loaderData;
-  const parsedTitle = parseTitle(invitation.title, invitation.id);
-  const invitationTitle = parseTitle(invitation.title, invitation.id);
-  const heading = t((t) => t.pages["invited-accounts"]["Invited Accounts"]);
+  const parsedTitle = parseTitle( invitation.title, invitation.id );
+  const invitationTitle = parseTitle( invitation.title, invitation.id );
+  const heading = t(
+    ( t ) => t.pages[ "invited-accounts" ][ "Invited Accounts" ],
+  );
   const title = createMetaTitle(
-    `${t((t) => t.pages["invited-accounts"]["Invited accounts for invitation"])} ${parsedTitle} ${t((t) => t.pages["invited-accounts"]["page"])} ${accounts.pagination.current_page} ${t((t) => t.pages["invited-accounts"]["out of"])} ${accounts.pagination.total_pages}`,
+    `${ t( ( t ) => t.pages[ "invited-accounts" ][ "Invited accounts for invitation" ] ) } ${ parsedTitle } ${ t( ( t ) => t.pages[ "invited-accounts" ][ "page" ] ) } ${ accounts.pagination.current_page } ${ t( ( t ) => t.pages[ "invited-accounts" ][ "out of" ] ) } ${ accounts.pagination.total_pages }`,
   );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <OverviewHeader>
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.pages["invited-accounts"]["Invitation"])}
+                dKey={ t(
+                  ( t ) => t.pages[ "invited-accounts" ][ "Invitation" ],
+                ) }
                 dValue={
                   <LinkInternal
-                    href={href(
+                    href={ href(
                       "/:language/account/role/administrator/invitation/:id",
                       {
                         language,
                         id: invitation.id,
                       },
-                    )}
+                    ) }
                   >
-                    {invitationTitle}
+                    { invitationTitle }
                   </LinkInternal>
                 }
               />
             </DescriptionList>
           </OverviewHeader>
-        )}
+        ) }
       </Overview>
 
       <PreviewList
-        noItemsElement={t(
-          (t) => t.pages["invited-accounts"]["No accounts found."],
-        )}
-        pagination={accounts.pagination}
-        buildURL={(page) =>
+        noItemsElement={ t(
+          ( t ) => t.pages[ "invited-accounts" ][ "No accounts found." ],
+        ) }
+        pagination={ accounts.pagination }
+        buildURL={ ( page ) =>
           href(
             "/:language/account/role/administrator/invitation/:id/accounts/:page",
             {
@@ -87,68 +91,70 @@ function InvitedAccountsListPage({ loaderData }: Route.ComponentProps) {
             },
           )
         }
-        internalLinkElement={({ page, ...props }) => (
+        internalLinkElement={ ( { page, ...props } ) => (
           <LinkInternal
-            {...props}
-            href={href(
+            { ...props }
+            href={ href(
               "/:language/account/role/administrator/invitation/:id/accounts/:page",
               {
                 language,
                 id: invitation.id,
                 page,
               },
-            )}
+            ) }
           />
-        )}
+        ) }
       >
-        {accounts.items.map((account) => (
+        { accounts.items.map( ( account ) => (
           <AccountPreview
-            key={account.id}
-            language={language}
-            headingLevel={2}
-            account={account}
+            key={ account.id }
+            language={ language }
+            headingLevel={ 2 }
+            account={ account }
           />
-        ))}
+        ) ) }
       </PreviewList>
     </Page>
   );
 }
 
-export const loader = createLocalizedLoader(async function loader(
+export const loader = createLocalizedLoader( async function loader(
   { request, params }: Route.LoaderArgs,
   localizedProps,
 ) {
-  await authenticateAdmin(request);
+  await authenticateAdmin( request );
 
   const { id, page } = params;
 
-  parsePositiveInteger(params.id);
-  parsePositiveInteger(params.page);
+  parsePositiveInteger( params.id );
+  parsePositiveInteger( params.page );
 
-  const result = await runReadOnlyTransaction(async (transaction) => {
-    const [invitation] = await selectInvitationEntities(transaction, [id]);
+  const result = await runReadOnlyTransaction( async ( transaction ) => {
+    const [ invitation ] = await selectInvitationEntities( transaction, [
+      id,
+    ] );
 
-    if (!invitation.current_uses) {
+    if ( ! invitation.current_uses ) {
       throw new NotFoundError();
     }
 
-    const pagination = createPagination(invitation.current_uses, page);
-    const ids = await selectInvitedAccountIDs(transaction, {
+    const pagination = createPagination( invitation.current_uses, page );
+    const ids = await selectInvitedAccountIDs( transaction, {
       invitation_id: id,
       pagination,
-    });
-    const items = await selectAccountPreviews(transaction, ids);
+    } );
+    const items = await selectAccountPreviews( transaction, ids );
 
     const result = {
       invitation,
       accounts: {
         pagination,
         items,
-      } satisfies IProps["accounts"],
+      } satisfies IProps[ "accounts" ],
     };
 
     return result;
-  });
+  } );
 
   const props: IProps = {
     ...localizedProps,
@@ -157,6 +163,6 @@ export const loader = createLocalizedLoader(async function loader(
   };
 
   return props;
-});
+} );
 
 export default InvitedAccountsListPage;

@@ -4,19 +4,19 @@ import type { IOneOrMany } from "@repo/ui/types";
 import type { IMetaTag } from "#lib/seo";
 
 interface IProps {
-  metaTag: IOneOrMany<IMetaTag>;
+  metaTag: IOneOrMany< IMetaTag >;
 }
 
-export function MetaTagView({ metaTag }: IProps) {
-  return !Array.isArray(metaTag) ? (
-    <Preformatted>{metaTag.content}</Preformatted>
+export function MetaTagView( { metaTag }: IProps ) {
+  return ! Array.isArray( metaTag ) ? (
+    <Preformatted>{ metaTag.content }</Preformatted>
   ) : (
     <List>
-      {metaTag.map((metaTag, index) => (
-        <ListItem key={index}>
-          <Preformatted>{metaTag.content}</Preformatted>
+      { metaTag.map( ( metaTag, index ) => (
+        <ListItem key={ index }>
+          <Preformatted>{ metaTag.content }</Preformatted>
         </ListItem>
-      ))}
+      ) ) }
     </List>
   );
 }

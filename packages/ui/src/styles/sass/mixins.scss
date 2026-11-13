@@ -19,37 +19,37 @@
   width: auto;
   font-family: inherit;
   font-size: 100%;
-  color: var(--local-colour-text-primary);
-  background-color: var(--local-colour-background-secondary);
+  color: var( --local-colour-text-primary );
+  background-color: var( --local-colour-background-secondary );
   border-radius: vars.$radius-small;
-  border: vars.$size-nano solid var(--local-colour-text-tertiary);
+  border: vars.$size-nano solid var( --local-colour-text-tertiary );
   box-shadow:
-    inset 2px 2px 3px hsla(0, 0%, 90%, 20%),
-    inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
+    inset 2px 2px 3px hsla( 0, 0%, 90%, 20% ),
+    inset -2px -2px 3px hsla( 0, 0%, 0%, 50% );
   padding: vars.$size-small;
   margin: 0;
   cursor: pointer;
 
-  transition-duration: var(--duration-global);
+  transition-duration: var( --duration-global );
   transition-property: opacity, box-shadow, background-color, border-color;
 
   &:focus,
   &:hover {
-    background-color: var(--local-colour-background-primary);
+    background-color: var( --local-colour-background-primary );
   }
 
   &:active {
     box-shadow:
-      inset 2px 2px 3px hsla(0, 0%, 0%, 50%),
-      inset -2px -2px 3px hsla(0, 0%, 90%, 20%);
+      inset 2px 2px 3px hsla( 0, 0%, 0%, 50% ),
+      inset -2px -2px 3px hsla( 0, 0%, 90%, 20% );
   }
 
   &:disabled {
     opacity: 0.5;
-    background-color: var(--local-colour-background-secondary);
+    background-color: var( --local-colour-background-secondary );
     box-shadow:
-      inset 2px 2px 3px hsla(0, 0%, 90%, 20%),
-      inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
+      inset 2px 2px 3px hsla( 0, 0%, 90%, 20% ),
+      inset -2px -2px 3px hsla( 0, 0%, 0%, 50% );
     cursor: not-allowed;
   }
 }
@@ -72,30 +72,30 @@
   // small padding so the letters won't spill out horizontally
   padding: 0 2px;
   transition-property: color, border-color, background-color;
-  transition-duration: var(--duration-global);
+  transition-duration: var( --duration-global );
 
   &:link {
-    color: var(--local-text-primary);
+    color: var( --local-text-primary );
   }
 
   &:visited {
-    color: var(--local-text-secondary);
+    color: var( --local-text-secondary );
   }
 
   &:focus {
-    background-color: var(--local-background-primary);
-    border-bottom-color: var(--local-text-primary);
+    background-color: var( --local-background-primary );
+    border-bottom-color: var( --local-text-primary );
   }
 
   &:hover {
-    background-color: var(--local-background-secondary);
-    border-bottom-color: var(--local-text-primary);
+    background-color: var( --local-background-secondary );
+    border-bottom-color: var( --local-text-primary );
   }
 
   &:active {
-    color: var(--local-background-primary);
-    background-color: var(--local-text-primary);
-    border-bottom-color: var(--local-background-primary);
+    color: var( --local-background-primary );
+    background-color: var( --local-text-primary );
+    border-bottom-color: var( --local-background-primary );
   }
 }
 
@@ -104,32 +104,32 @@
   min-height: 44px;
   min-width: 44px;
   width: 100%;
-  color: var(--colour-text-secondary);
+  color: var( --colour-text-secondary );
   caret-color: inherit;
-  background-color: var(--colour-background-secondary);
+  background-color: var( --colour-background-secondary );
   font-family: inherit;
   font-size: 100%;
   border-radius: $border-radius;
-  border: vars.$size-thin solid var(--colour-background-tertiary);
+  border: vars.$size-thin solid var( --colour-background-tertiary );
   padding: vars.$size-small;
   margin: 0;
 
-  transition-duration: var(--duration-global);
+  transition-duration: var( --duration-global );
   transition-property: color, background-color, border-color, box-shadow;
 
   &:hover {
-    color: var(--colour-text-primary);
+    color: var( --colour-text-primary );
   }
 
   &:focus {
-    color: var(--colour-text-primary);
-    background-color: var(--colour-background-primary);
-    border-color: var(--submit-colour-text-primary);
+    color: var( --colour-text-primary );
+    background-color: var( --colour-background-primary );
+    border-color: var( --submit-colour-text-primary );
     outline: none;
   }
 
   &:read-only {
-    color: var(--colour-text-primary);
-    background-color: var(--colour-background-secondary);
+    color: var( --colour-text-primary );
+    background-color: var( --colour-background-secondary );
   }
 }

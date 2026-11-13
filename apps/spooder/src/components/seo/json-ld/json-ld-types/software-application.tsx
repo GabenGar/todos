@@ -6,9 +6,9 @@ interface ISoftwareApplicationProps {
   jsonLD: ISoftwareApplicationJSONLD;
 }
 
-export function SoftwareApplicationJSONLD({
+export function SoftwareApplicationJSONLD( {
   jsonLD,
-}: ISoftwareApplicationProps) {
+}: ISoftwareApplicationProps ) {
   const { t } = useTranslation();
   const { description, applicationCategory, name, operatingSystem, url } =
     jsonLD;
@@ -16,62 +16,65 @@ export function SoftwareApplicationJSONLD({
   return (
     <>
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["software-application"]
-              .name,
-        )}
-        dValue={name}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][
+              "software-application"
+            ].name,
+        ) }
+        dValue={ name }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["software-application"]
-              .description,
-        )}
-        dValue={description}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][
+              "software-application"
+            ].description,
+        ) }
+        dValue={ description }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["software-application"]
-              .url,
-        )}
-        dValue={url}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][
+              "software-application"
+            ].url,
+        ) }
+        dValue={ url }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["software-application"][
-              "application-category"
-            ],
-        )}
-        dValue={applicationCategory}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][
+              "software-application"
+            ][ "application-category" ],
+        ) }
+        dValue={ applicationCategory }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["software-application"][
-              "operating-system"
-            ],
-        )}
-        dValue={operatingSystem}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][
+              "software-application"
+            ][ "operating-system" ],
+        ) }
+        dValue={ operatingSystem }
         isOptional
         isKeyPreformatted
         isValuePreformatted

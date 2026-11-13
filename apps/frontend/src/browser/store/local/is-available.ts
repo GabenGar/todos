@@ -10,15 +10,15 @@ export function isLocalStorageAvailable() {
       LOCAL_STORAGE_KEYS.STORAGE_TEST,
       LOCAL_STORAGE_KEYS.STORAGE_TEST,
     );
-    localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE_TEST);
+    localStorage.removeItem( LOCAL_STORAGE_KEYS.STORAGE_TEST );
     return true;
-  } catch (e) {
+  } catch ( e ) {
     return (
       e instanceof DOMException &&
       // everything except Firefox
-      (e.name === "QuotaExceededError" ||
+      ( e.name === "QuotaExceededError" ||
         // Firefox
-        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED" ) &&
       // acknowledge QuotaExceededError only if there's something already stored
       localStorage?.length !== 0
     );

@@ -1,4 +1,4 @@
-export type IArrayElement<ElementType> =
-  ElementType extends ReadonlyArray<infer InferredType>
+export type IArrayElement< ElementType > =
+  ElementType extends ReadonlyArray< infer InferredType >
     ? InferredType
     : ElementType;

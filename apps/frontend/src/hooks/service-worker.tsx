@@ -31,7 +31,7 @@ const defaultContext = (
 ) satisfies IServiceWorkerContext;
 
 const ServiceWorkerContext =
-  createContext<IServiceWorkerContext>(defaultContext);
+  createContext< IServiceWorkerContext >( defaultContext );
 
 interface IProps {
   children: ReactNode;
@@ -47,72 +47,72 @@ type IServiceWorkerStatus =
 /**
  * @TODO render errors because there is no console on mobiles
  */
-export function ServiceWorkerProvider({ children }: IProps) {
-  const [context, changeContext] =
-    useState<IServiceWorkerContext>(defaultContext);
+export function ServiceWorkerProvider( { children }: IProps ) {
+  const [ context, changeContext ] =
+    useState< IServiceWorkerContext >( defaultContext );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
+  useEffect( () => {
     let worker: ServiceWorker | undefined = undefined;
     // this interface is different from the one returned by registration
     // so has to be checked for existence too
-    navigator.serviceWorker?.addEventListener("message", listenForMessages);
+    navigator.serviceWorker?.addEventListener( "message", listenForMessages );
 
-    registerServiceWorker().then((nextServiceWorker) => {
-      if (!nextServiceWorker) {
-        changeContext({ status: "unavailable" });
+    registerServiceWorker().then( ( nextServiceWorker ) => {
+      if ( ! nextServiceWorker ) {
+        changeContext( { status: "unavailable" } );
       } else {
-        nextServiceWorker.addEventListener("statechange", listenForState);
-        nextServiceWorker.addEventListener("error", listenForErrors);
+        nextServiceWorker.addEventListener( "statechange", listenForState );
+        nextServiceWorker.addEventListener( "error", listenForErrors );
 
         worker = nextServiceWorker;
-        changeContext({
+        changeContext( {
           status: nextServiceWorker.state,
           serviceWorker: nextServiceWorker,
-        });
+        } );
       }
-    });
+    } );
 
     return () => {
-      worker?.removeEventListener("statechange", listenForState);
-      worker?.removeEventListener("error", listenForErrors);
+      worker?.removeEventListener( "statechange", listenForState );
+      worker?.removeEventListener( "error", listenForErrors );
       navigator.serviceWorker?.removeEventListener(
         "message",
         listenForMessages,
       );
     };
-  }, []);
+  }, [] );
 
-  function listenForState(event: Event) {
-    const state = (event.target as unknown as { state: ServiceWorkerState })
+  function listenForState( event: Event ) {
+    const state = ( event.target as unknown as { state: ServiceWorkerState } )
       .state;
 
-    if (state) {
-      changeContext({
+    if ( state ) {
+      changeContext( {
         status: state,
         // @ts-expect-error fuck off with these types
         serviceWorker: context.serviceWorker,
-      } as IActiveServiceWorkerContext);
+      } as IActiveServiceWorkerContext );
     }
   }
 
-  function listenForErrors(event: ErrorEvent) {
-    console.error(event.error);
+  function listenForErrors( event: ErrorEvent ) {
+    console.error( event.error );
   }
 
-  function listenForMessages(event: MessageEvent) {
-    console.log(event.data);
+  function listenForMessages( event: MessageEvent ) {
+    console.log( event.data );
   }
 
   return (
-    <ServiceWorkerContext.Provider value={context}>
-      {children}
+    <ServiceWorkerContext.Provider value={ context }>
+      { children }
     </ServiceWorkerContext.Provider>
   );
 }
 
 export function useServiceWorker(): IServiceWorkerContext {
-  const context = useContext(ServiceWorkerContext);
+  const context = useContext( ServiceWorkerContext );
 
   return context;
 }

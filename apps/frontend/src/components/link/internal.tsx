@@ -4,13 +4,13 @@ import { createBlockComponent } from "@repo/ui/meta";
 
 import styles from "./internal.module.scss";
 
-export interface ILinkInternalProps<RouteInferType>
-  extends LinkProps<RouteInferType> {}
+export interface ILinkInternalProps< RouteInferType >
+  extends LinkProps< RouteInferType > {}
 
-export const LinkInternal = createBlockComponent(styles, Component);
+export const LinkInternal = createBlockComponent( styles, Component );
 
-function Component<RouteInferType>({
+function Component< RouteInferType >( {
   ...props
-}: ILinkInternalProps<RouteInferType>) {
-  return <Link<RouteInferType> {...props} />;
+}: ILinkInternalProps< RouteInferType > ) {
+  return <Link< RouteInferType > { ...props } />;
 }

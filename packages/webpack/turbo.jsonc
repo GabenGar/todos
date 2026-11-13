@@ -1,12 +1,12 @@
 {
   "$schema": "https://v2-11-11.turborepo.dev/schema.json",
-  "extends": ["//"],
+  "extends": [ "//" ],
   "tasks": {
     "build": {
-      "outputs": ["dist/**"]
+      "outputs": [ "dist/**" ]
     },
     "dev": {
-      "with": ["@repo/nodejs#dev"]
+      "with": [ "@repo/nodejs#dev" ]
     }
   }
 }

@@ -20,7 +20,7 @@ html {
   margin: 0;
   overflow-wrap: break-word;
 
-  @media (min-width: $width-laptop) {
+  @media ( min-width: $width-laptop ) {
     font-size: 110%;
   }
 }
@@ -43,13 +43,12 @@ body {
   margin: 0;
 }
 
-*[id="root"] {
+*[ id="root" ] {
   display: grid;
   grid-template:
     "header" auto
     "main" 1fr
-    "footer" auto
-    / 100%;
+    "footer" auto / 100%;
   justify-items: stretch;
   min-height: 100%;
   width: 100%;
@@ -77,7 +76,7 @@ hr {
 }
 
 // Add the correct text decoration in Chrome, Edge, and Safari.
-abbr:where([title]) {
+abbr:where( [ title ] ) {
   text-decoration: underline dotted;
 }
 
@@ -98,8 +97,16 @@ kbd,
 samp,
 pre {
   // Use the `mono` font family by default.
-  font-family: "fontFamily.mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family:
+    "fontFamily.mono",
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace;
   // Correct the odd `em` font sizing in all browsers.
   font-size: 1em;
 }
@@ -159,9 +166,9 @@ select {
 }
 
 button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
+[ type="button" ],
+[ type="reset" ],
+[ type="submit" ] {
   // Correct the inability to style clickable types in iOS and Safari.
   -webkit-appearance: button;
   // Remove default button styles.
@@ -190,7 +197,7 @@ progress {
   height: auto;
 }
 
-[type="search"] {
+[ type="search" ] {
   // Correct the odd appearance in Chrome and Safari.
   -webkit-appearance: textfield;
   // Correct the outline style in Safari.
@@ -258,12 +265,12 @@ textarea::placeholder {
   // Reset the default placeholder opacity in Firefox.
   opacity: 1;
   // Set the default placeholder color.
-  color: hsl(100, 100%, 100%);
+  color: hsl( 100, 100%, 100% );
 }
 
 // Set the default cursor for buttons.
 button,
-[role="button"] {
+[ role="button" ] {
   cursor: pointer;
 }
 

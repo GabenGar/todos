@@ -12,9 +12,9 @@ export interface IPagination {
   offset: string;
 }
 
-export interface IPaginatedCollection<ItemType> {
+export interface IPaginatedCollection< ItemType > {
   pagination: IPagination;
   items: ItemType[];
 }
 
-export const PAGINATION_LIMIT = BigInt(25);
+export const PAGINATION_LIMIT = BigInt( 25 );

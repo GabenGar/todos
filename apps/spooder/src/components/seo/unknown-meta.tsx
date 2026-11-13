@@ -7,29 +7,29 @@ interface IProps {
   metaTag: IUnknownMetaTag;
 }
 
-export function UnknownMetaTagView({ metaTag }: IProps) {
+export function UnknownMetaTagView( { metaTag }: IProps ) {
   return (
     <DescriptionList>
-      {Array.from(metaTag.entries()).map(([key, valueOrValues]) => (
+      { Array.from( metaTag.entries() ).map( ( [ key, valueOrValues ] ) => (
         <DescriptionSection
-          key={key}
-          dKey={key}
+          key={ key }
+          dKey={ key }
           dValue={
-            !Array.isArray(valueOrValues) ? (
-              <Preformatted>{valueOrValues}</Preformatted>
+            ! Array.isArray( valueOrValues ) ? (
+              <Preformatted>{ valueOrValues }</Preformatted>
             ) : (
               <List isOrdered>
-                {valueOrValues.map((value, index) => (
-                  <ListItem key={`${value}-${index}`}>
-                    <Preformatted>{value}</Preformatted>
+                { valueOrValues.map( ( value, index ) => (
+                  <ListItem key={ `${ value }-${ index }` }>
+                    <Preformatted>{ value }</Preformatted>
                   </ListItem>
-                ))}
+                ) ) }
               </List>
             )
           }
           isKeyPreformatted
         />
-      ))}
+      ) ) }
     </DescriptionList>
   );
 }

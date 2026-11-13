@@ -9,11 +9,11 @@ import { getAllTasks } from "./get";
 import { setLocalStoreTasks } from "./storage";
 import { toTasks } from "./to-tasks";
 
-const validateTaskInit: ReturnType<typeof createValidator<ITaskInit>> =
-  createValidator<ITaskInit>("/entities/task/init");
+const validateTaskInit: ReturnType< typeof createValidator< ITaskInit > > =
+  createValidator< ITaskInit >( "/entities/task/init" );
 
-export async function createTask(init: ITaskInit): Promise<ITask> {
-  const [newTask] = await createTasks([init]);
+export async function createTask( init: ITaskInit ): Promise< ITask > {
+  const [ newTask ] = await createTasks( [ init ] );
 
   return newTask;
 }
@@ -22,29 +22,32 @@ export async function createTask(init: ITaskInit): Promise<ITask> {
  * @param inits
  * @returns Added tasks.
  */
-async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
-  logDebug(`Creating ${inits.length} tasks...`);
+async function createTasks( inits: ITaskInit[] ): Promise< ITask[] > {
+  logDebug( `Creating ${ inits.length } tasks...` );
 
-  inits.forEach((init) => {
-    validateTaskInit(init);
-  });
+  inits.forEach( ( init ) => {
+    validateTaskInit( init );
+  } );
 
   // validate place IDs
-  const placeIDs = inits.reduce<Set<IPlace["id"]>>((placeIDs, { place_id }) => {
-    if (place_id) {
-      placeIDs.add(place_id);
-    }
+  const placeIDs = inits.reduce< Set< IPlace[ "id" ] > >(
+    ( placeIDs, { place_id } ) => {
+      if ( place_id ) {
+        placeIDs.add( place_id );
+      }
 
-    return placeIDs;
-  }, new Set());
+      return placeIDs;
+    },
+    new Set(),
+  );
 
-  if (placeIDs.size) {
+  if ( placeIDs.size ) {
     const storedPlaces = await getAllPlaces();
-    const inputIDs = storedPlaces.map(({ id }) => id);
-    const invalidIDs = Array.from(placeIDs).reduce<IPlace["id"][]>(
-      (invalidIDs, placeID) => {
-        if (!inputIDs.includes(placeID)) {
-          invalidIDs.push(placeID);
+    const inputIDs = storedPlaces.map( ( { id } ) => id );
+    const invalidIDs = Array.from( placeIDs ).reduce< IPlace[ "id" ][] >(
+      ( invalidIDs, placeID ) => {
+        if ( ! inputIDs.includes( placeID ) ) {
+          invalidIDs.push( placeID );
         }
 
         return invalidIDs;
@@ -52,17 +55,17 @@ async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
       [],
     );
 
-    if (invalidIDs.length) {
-      const message = `These places do not exist: ${toQuotedStrings(
+    if ( invalidIDs.length ) {
+      const message = `These places do not exist: ${ toQuotedStrings(
         invalidIDs,
-      )}.`;
+      ) }.`;
 
-      throw new Error(message);
+      throw new Error( message );
     }
   }
 
   const incomingTasks = inits.map(
-    ({ title, description, status, place_id }) => {
+    ( { title, description, status, place_id } ) => {
       const newTask: ITaskStore = {
         id: nanoid(),
         title,
@@ -79,11 +82,11 @@ async function createTasks(inits: ITaskInit[]): Promise<ITask[]> {
 
   const currentTasks = await getAllTasks();
 
-  const newTasks = [...currentTasks, ...incomingTasks];
-  await setLocalStoreTasks(newTasks);
-  const createdTasks = await toTasks(incomingTasks);
+  const newTasks = [ ...currentTasks, ...incomingTasks ];
+  await setLocalStoreTasks( newTasks );
+  const createdTasks = await toTasks( incomingTasks );
 
-  logDebug(`Created ${inits.length} tasks.`);
+  logDebug( `Created ${ inits.length } tasks.` );
 
   return createdTasks;
 }

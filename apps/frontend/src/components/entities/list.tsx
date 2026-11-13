@@ -11,46 +11,46 @@ import {
   PAGINATION_LIMIT,
 } from "#lib/pagination";
 
-interface IProps<IEntityType extends IEntityItem>
-  extends IBaseComponentProps<"div"> {
+interface IProps< IEntityType extends IEntityItem >
+  extends IBaseComponentProps< "div" > {
   fetchEntities: (
     serverPage: number,
-  ) => Promise<IPaginatedCollection<IEntityType>>;
-  mapEntity: (entity: IEntityType, index?: number) => ReactNode;
+  ) => Promise< IPaginatedCollection< IEntityType > >;
+  mapEntity: ( entity: IEntityType, index?: number ) => ReactNode;
   limit?: number;
 }
 
-export const EntityList = createBlockComponent(undefined, Component);
+export const EntityList = createBlockComponent( undefined, Component );
 
-function Component<IEntityType extends IEntityItem>({
+function Component< IEntityType extends IEntityItem >( {
   fetchEntities,
   mapEntity,
   limit = 5,
   ...props
-}: IProps<IEntityType>) {
-  const { t } = useTranslation("common");
-  const [entityData, changeEntityData] =
-    useState<Awaited<ReturnType<typeof fetchEntities>>>();
+}: IProps< IEntityType > ) {
+  const { t } = useTranslation( "common" );
+  const [ entityData, changeEntityData ] =
+    useState< Awaited< ReturnType< typeof fetchEntities > > >();
 
-  useEffect(() => {
-    fetchEntities(1).then((data) => {
+  useEffect( () => {
+    fetchEntities( 1 ).then( ( data ) => {
       const { pagination, items } = data;
       const clientPagination = createClientPagination(
         pagination.totalCount,
         limit,
         1,
       );
-      const clientItems = items.slice(clientPagination.offset, limit);
-      const clientData: IPaginatedCollection<IEntityType> = {
+      const clientItems = items.slice( clientPagination.offset, limit );
+      const clientData: IPaginatedCollection< IEntityType > = {
         pagination: clientPagination,
         items: clientItems,
       };
-      changeEntityData(clientData);
-    });
-  }, [limit, fetchEntities]);
+      changeEntityData( clientData );
+    } );
+  }, [ limit, fetchEntities ] );
 
-  async function handlePageChange(clientPage: number) {
-    if (!entityData) {
+  async function handlePageChange( clientPage: number ) {
+    if ( ! entityData ) {
       return;
     }
 
@@ -63,14 +63,14 @@ function Component<IEntityType extends IEntityItem>({
 
     // figure server pages for it
     const { offset, currentMax } = clientPagination;
-    const minPage = Math.floor(offset / PAGINATION_LIMIT);
+    const minPage = Math.floor( offset / PAGINATION_LIMIT );
     const minServerPage = minPage === 0 ? 1 : minPage;
-    const maxServerPage = Math.ceil(currentMax / PAGINATION_LIMIT);
-    let clientCollection: IPaginatedCollection<IEntityType>;
+    const maxServerPage = Math.ceil( currentMax / PAGINATION_LIMIT );
+    let clientCollection: IPaginatedCollection< IEntityType >;
 
-    if (minServerPage === maxServerPage) {
+    if ( minServerPage === maxServerPage ) {
       // create collection off a single server page
-      const pageCollection = await fetchEntities(minServerPage);
+      const pageCollection = await fetchEntities( minServerPage );
       const minimumBoundary = offset - pageCollection.pagination.offset;
       const maximumBoundary = minimumBoundary + limit;
       const clientItems = pageCollection.items.slice(
@@ -84,39 +84,39 @@ function Component<IEntityType extends IEntityItem>({
       };
     } else {
       // create collection off 2 server pages
-      const leftCollection = await fetchEntities(minServerPage);
-      const rightCollection = await fetchEntities(maxServerPage);
+      const leftCollection = await fetchEntities( minServerPage );
+      const rightCollection = await fetchEntities( maxServerPage );
       const minimumBoundary = offset - leftCollection.pagination.offset;
       const maximumBoundary =
         rightCollection.pagination.currentMax - currentMax;
 
-      const leftItems = leftCollection.items.slice(minimumBoundary);
-      const rightItems = rightCollection.items.slice(0, maximumBoundary);
+      const leftItems = leftCollection.items.slice( minimumBoundary );
+      const rightItems = rightCollection.items.slice( 0, maximumBoundary );
 
       clientCollection = {
         pagination: clientPagination,
-        items: [...leftItems, ...rightItems],
+        items: [ ...leftItems, ...rightItems ],
       };
     }
 
-    changeEntityData(clientCollection);
+    changeEntityData( clientCollection );
   }
 
   return (
     <>
-      {!entityData ? (
+      { ! entityData ? (
         <Loading />
       ) : entityData.pagination.totalCount === 0 ? (
-        <p>{t((t) => t.list.no_items)}</p>
+        <p>{ t( ( t ) => t.list.no_items ) }</p>
       ) : (
         <ListLocal
-          pagination={entityData.pagination}
-          onPageChange={handlePageChange}
-          {...props}
+          pagination={ entityData.pagination }
+          onPageChange={ handlePageChange }
+          { ...props }
         >
-          {entityData.items.map(mapEntity)}
+          { entityData.items.map( mapEntity ) }
         </ListLocal>
-      )}
+      ) }
     </>
   );
 }

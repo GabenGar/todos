@@ -14,11 +14,14 @@ export interface IInputSectionDateTimeProps
       IInputSectionProps,
       "defaultValue" | "readOnly" | "required" | "disabled"
     >,
-    Pick<IInputDateTimeProps, "defaultValue" | "min" | "max"> {}
+    Pick< IInputDateTimeProps, "defaultValue" | "min" | "max" > {}
 
-export const InputSectionDatetime = createBlockComponent(undefined, Component);
+export const InputSectionDatetime = createBlockComponent(
+  undefined,
+  Component,
+);
 
-function Component({
+function Component( {
   id,
   form,
   name,
@@ -27,33 +30,33 @@ function Component({
   max,
   children,
   ...props
-}: IInputSectionDateTimeProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+}: IInputSectionDateTimeProps ) {
+  const inputRef = useRef< HTMLInputElement >( null );
 
-  async function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    if (!inputRef.current) {
+  async function handleChange( event: ChangeEvent< HTMLInputElement > ) {
+    if ( ! inputRef.current ) {
       return;
     }
 
     const value = event.currentTarget.value;
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const date = new TZDate(value, timezone);
+    const date = new TZDate( value, timezone );
     const isoDateTime = date.toISOString();
 
     inputRef.current.value = isoDateTime;
   }
 
   return (
-    <InputSection {...props}>
-      <Label htmlFor={id}>{children}</Label>
-      <InputDateTime id={id} form="" name="" onChange={handleChange} />
+    <InputSection { ...props }>
+      <Label htmlFor={ id }>{ children }</Label>
+      <InputDateTime id={ id } form="" name="" onChange={ handleChange } />
       <InputHidden
-        ref={inputRef}
-        form={form}
-        name={name}
-        defaultValue={defaultValue}
-        min={min}
-        max={max}
+        ref={ inputRef }
+        form={ form }
+        name={ name }
+        defaultValue={ defaultValue }
+        min={ min }
+        max={ max }
       />
     </InputSection>
   );

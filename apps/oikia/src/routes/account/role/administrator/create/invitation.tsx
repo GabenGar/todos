@@ -35,100 +35,113 @@ import type { Route } from "./+types/invitation";
 /**
  * @TODO client render
  */
-function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
+function InvitationCreatePage( { loaderData }: Route.ComponentProps ) {
   const { t } = useTranslation();
   const { language } = loaderData;
-  const heading = t((t) => t.pages["create-invitation"]["Create Invitation"]);
+  const heading = t(
+    ( t ) => t.pages[ "create-invitation" ][ "Create Invitation" ],
+  );
   const formID = "create-invitation";
   const title = createMetaTitle(
-    t((t) => t.pages["create-invitation"]["Create invitation"]),
+    t( ( t ) => t.pages[ "create-invitation" ][ "Create invitation" ] ),
   );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
-              <Form<Route.ComponentProps["actionData"]>
-                id={formID}
+              <Form< Route.ComponentProps[ "actionData" ] >
+                id={ formID }
                 method="POST"
-                submitButton={() =>
-                  t((t) => t.pages["create-invitation"]["Create"])
+                submitButton={ () =>
+                  t( ( t ) => t.pages[ "create-invitation" ][ "Create" ] )
                 }
-                successElement={(_formID, data) => {
-                  if (!data.is_successful) {
+                successElement={ ( _formID, data ) => {
+                  if ( ! data.is_successful ) {
                     throw new Error(
-                      t((t) => t.common["Success element is unsuccessful."]),
+                      t(
+                        ( t ) => t.common[ "Success element is unsuccessful." ],
+                      ),
                     );
                   }
 
                   const { id, title } = data.data;
-                  const parsedTitle = parseTitle(title);
+                  const parsedTitle = parseTitle( title );
 
                   return (
                     <p>
-                      {t(
-                        (t) =>
-                          t.pages["create-invitation"][
+                      { t(
+                        ( t ) =>
+                          t.pages[ "create-invitation" ][
                             "You have successfully created an invitation"
                           ],
-                      )}{" "}
+                      ) }{ " " }
                       <LinkInternal
-                        href={href(
+                        href={ href(
                           "/:language/account/role/administrator/invitation/:id",
                           { language, id },
-                        )}
+                        ) }
                       >
-                        {parsedTitle} ({id})
+                        { parsedTitle } ({ id })
                       </LinkInternal>
                       .
                     </p>
                   );
-                }}
+                } }
               >
-                {(formID) => (
+                { ( formID ) => (
                   <>
                     <InputSectionText
-                      id={`${formID}-title`}
-                      form={formID}
+                      id={ `${ formID }-title` }
+                      form={ formID }
                       name="title"
                     >
-                      {t((t) => t.pages["create-invitation"]["Title"])}
+                      { t(
+                        ( t ) => t.pages[ "create-invitation" ][ "Title" ],
+                      ) }
                     </InputSectionText>
 
                     <InputSectionText
-                      id={`${formID}-description`}
-                      form={formID}
+                      id={ `${ formID }-description` }
+                      form={ formID }
                       name="description"
                     >
-                      {t((t) => t.pages["create-invitation"]["Description"])}
+                      { t(
+                        ( t ) =>
+                          t.pages[ "create-invitation" ][ "Description" ],
+                      ) }
                     </InputSectionText>
 
                     <InputSectionDatetime
-                      id={`${formID}-expires_at`}
-                      form={formID}
+                      id={ `${ formID }-expires_at` }
+                      form={ formID }
                       name="expires_at"
                     >
-                      {t(
-                        (t) => t.pages["create-invitation"]["Expiration date"],
-                      )}
+                      { t(
+                        ( t ) =>
+                          t.pages[ "create-invitation" ][ "Expiration date" ],
+                      ) }
                     </InputSectionDatetime>
 
                     <InputSectionInteger
-                      id={`${formID}-max_uses`}
-                      form={formID}
+                      id={ `${ formID }-max_uses` }
+                      form={ formID }
                       name="max_uses"
-                      min={BIGINT_ONE}
+                      min={ BIGINT_ONE }
                     >
-                      {t((t) => t.pages["create-invitation"]["Maximum uses"])}
+                      { t(
+                        ( t ) =>
+                          t.pages[ "create-invitation" ][ "Maximum uses" ],
+                      ) }
                     </InputSectionInteger>
                   </>
-                )}
+                ) }
               </Form>
             </OverviewHeader>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
@@ -137,27 +150,27 @@ function InvitationCreatePage({ loaderData }: Route.ComponentProps) {
 export const loader = createLocalizedLoader();
 
 export const action = createServerAction(
-  async ({ request, params }: Route.LoaderArgs) => {
-    const account = await authenticateAdmin(request);
+  async ( { request, params }: Route.LoaderArgs ) => {
+    const account = await authenticateAdmin( request );
 
-    parseMethod(request, "POST");
+    parseMethod( request, "POST" );
 
-    const formData = (await request.formData()) as IFormData<
+    const formData = ( await request.formData() ) as IFormData<
       "expires_at" | "max_uses" | "title" | "description"
     >;
 
-    const expiresAt = parseStringValueFromFormData(formData, "expires_at");
-    const maxUses = parseStringValueFromFormData(formData, "max_uses");
-    const title = parseStringValueFromFormData(formData, "title");
-    const description = parseStringValueFromFormData(formData, "description");
+    const expiresAt = parseStringValueFromFormData( formData, "expires_at" );
+    const maxUses = parseStringValueFromFormData( formData, "max_uses" );
+    const title = parseStringValueFromFormData( formData, "title" );
+    const description = parseStringValueFromFormData( formData, "description" );
 
-    if (!expiresAt && !maxUses) {
+    if ( ! expiresAt && ! maxUses ) {
       throw new ClientInputError(
         "Must have at least expiration date or maximum uses.",
       );
     }
 
-    const invitation = await runTransaction(async (transaction) => {
+    const invitation = await runTransaction( async ( transaction ) => {
       const createdBy = account.id;
       const code = nanoid();
       const init: IInvitationDBInit = {
@@ -170,13 +183,15 @@ export const action = createServerAction(
         description,
       };
 
-      const [id] = await insertInvitations(transaction, [init]);
-      const [invitation] = await selectInvitationEntities(transaction, [id]);
+      const [ id ] = await insertInvitations( transaction, [ init ] );
+      const [ invitation ] = await selectInvitationEntities( transaction, [
+        id,
+      ] );
 
       return invitation;
-    });
+    } );
 
-    const response = createSuccessfullAPIResponse(invitation);
+    const response = createSuccessfullAPIResponse( invitation );
 
     return response;
   },

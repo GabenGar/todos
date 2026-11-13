@@ -4,6 +4,6 @@ function AuthorListPage() {
   return null;
 }
 
-export const Route = createFileRoute("/$language/blog/authors/$page")({
+export const Route = createFileRoute( "/$language/blog/authors/$page" )( {
   component: AuthorListPage,
-});
+} );

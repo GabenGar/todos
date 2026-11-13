@@ -13,89 +13,91 @@ interface IMetaTagProps {
   tag: ITwitterMetaTag;
 }
 
-export function TwitterOverview({ twitter }: IProps) {
+export function TwitterOverview( { twitter }: IProps ) {
   const { t } = useTranslation();
   const { site, title, description, image, creator, card, unknownTags } =
     twitter;
 
   return (
     <DescriptionList>
-      <SiteSection site={site} />
+      <SiteSection site={ site } />
 
-      {!title ? undefined : (
+      { ! title ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["twitter-overview"].title)}
-          dValue={title}
+          dKey={ t( ( t ) => t.seo[ "twitter-overview" ].title ) }
+          dValue={ title }
           isKeyPreformatted
           isValuePreformatted
         />
-      )}
+      ) }
 
-      {!description ? undefined : (
+      { ! description ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["twitter-overview"].description)}
-          dValue={description}
+          dKey={ t( ( t ) => t.seo[ "twitter-overview" ].description ) }
+          dValue={ description }
           isKeyPreformatted
           isValuePreformatted
         />
-      )}
+      ) }
 
-      <ImageSection image={image} />
+      <ImageSection image={ image } />
 
-      {!creator ? undefined : (
+      { ! creator ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["twitter-overview"].creator)}
-          dValue={creator}
+          dKey={ t( ( t ) => t.seo[ "twitter-overview" ].creator ) }
+          dValue={ creator }
           isKeyPreformatted
           isValuePreformatted
         />
-      )}
+      ) }
 
-      {!card ? undefined : (
+      { ! card ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["twitter-overview"].card)}
-          dValue={card}
+          dKey={ t( ( t ) => t.seo[ "twitter-overview" ].card ) }
+          dValue={ card }
           isKeyPreformatted
           isValuePreformatted
         />
-      )}
+      ) }
 
-      {!unknownTags ? undefined : (
+      { ! unknownTags ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["opengraph-overview"]["unknown-tags"])}
+          dKey={ t( ( t ) => t.seo[ "opengraph-overview" ][ "unknown-tags" ] ) }
           dValue={
             <Details
-              summary={<Preformatted>{unknownTags.length}</Preformatted>}
+              summary={ <Preformatted>{ unknownTags.length }</Preformatted> }
             >
               <List isOrdered>
-                {unknownTags.map((tag, index) => (
-                  <MetaTag key={index} tag={tag} />
-                ))}
+                { unknownTags.map( ( tag, index ) => (
+                  <MetaTag key={ index } tag={ tag } />
+                ) ) }
               </List>
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
     </DescriptionList>
   );
 }
 
 interface ISiteDataProps {
-  site: ITwitterTags["site"];
+  site: ITwitterTags[ "site" ];
 }
 
-function SiteSection({ site }: ISiteDataProps) {
+function SiteSection( { site }: ISiteDataProps ) {
   const { t } = useTranslation();
-  return !site ? undefined : (
+  return ! site ? undefined : (
     <DescriptionSection
-      dKey={t((t) => t.seo["twitter-overview"].site)}
+      dKey={ t( ( t ) => t.seo[ "twitter-overview" ].site ) }
       dValue={
-        <Details summary={<Preformatted>{site.url}</Preformatted>}>
+        <Details summary={ <Preformatted>{ site.url }</Preformatted> }>
           <DescriptionList>
             <DescriptionSection
-              dKey={t((t) => t["seo"]["twitter-overview"]["site-overview"].id)}
-              dValue={site.id}
+              dKey={ t(
+                ( t ) => t[ "seo" ][ "twitter-overview" ][ "site-overview" ].id,
+              ) }
+              dValue={ site.id }
               isKeyPreformatted
               isValuePreformatted
             />
@@ -107,22 +109,23 @@ function SiteSection({ site }: ISiteDataProps) {
   );
 }
 interface IImageDataProps {
-  image: ITwitterTags["image"];
+  image: ITwitterTags[ "image" ];
 }
 
-function ImageSection({ image }: IImageDataProps) {
+function ImageSection( { image }: IImageDataProps ) {
   const { t } = useTranslation();
-  return !image ? undefined : (
+  return ! image ? undefined : (
     <DescriptionSection
-      dKey={t((t) => t.seo["twitter-overview"].image)}
+      dKey={ t( ( t ) => t.seo[ "twitter-overview" ].image ) }
       dValue={
-        <Details summary={<Preformatted>{image.url}</Preformatted>}>
+        <Details summary={ <Preformatted>{ image.url }</Preformatted> }>
           <DescriptionList>
             <DescriptionSection
-              dKey={t(
-                (t) => t["seo"]["twitter-overview"]["image-overview"].alt,
-              )}
-              dValue={image.alt}
+              dKey={ t(
+                ( t ) =>
+                  t[ "seo" ][ "twitter-overview" ][ "image-overview" ].alt,
+              ) }
+              dValue={ image.alt }
               isKeyPreformatted
               isValuePreformatted
             />
@@ -134,58 +137,64 @@ function ImageSection({ image }: IImageDataProps) {
   );
 }
 
-function MetaTag({ tag }: IMetaTagProps) {
+function MetaTag( { tag }: IMetaTagProps ) {
   const { t } = useTranslation();
   const { name, content, unknownAttributes } = tag;
 
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={t((t) => t.seo["meta-tag-overview"].name)}
-        dValue={name}
+        dKey={ t( ( t ) => t.seo[ "meta-tag-overview" ].name ) }
+        dValue={ name }
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t((t) => t.seo["meta-tag-overview"].content)}
-        dValue={content}
+        dKey={ t( ( t ) => t.seo[ "meta-tag-overview" ].content ) }
+        dValue={ content }
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!unknownAttributes ? undefined : (
+      { ! unknownAttributes ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["meta-tag-overview"]["unknown-attributes"])}
+          dKey={ t(
+            ( t ) => t.seo[ "meta-tag-overview" ][ "unknown-attributes" ],
+          ) }
           dValue={
             <Details
-              summary={<Preformatted>{unknownAttributes.size}</Preformatted>}
+              summary={
+                <Preformatted>{ unknownAttributes.size }</Preformatted>
+              }
             >
               <List>
-                {Object.entries(unknownAttributes).map(([key, value]) => (
-                  <ListItem key={key}>
-                    <DescriptionList>
-                      <DescriptionSection
-                        dKey={key}
-                        dValue={
-                          <OneOrManyItems
-                            item={value}
-                            itemElement={(value) => (
-                              <Preformatted>{value}</Preformatted>
-                            )}
-                          />
-                        }
-                        isKeyPreformatted
-                      />
-                    </DescriptionList>
-                  </ListItem>
-                ))}
+                { Object.entries( unknownAttributes ).map(
+                  ( [ key, value ] ) => (
+                    <ListItem key={ key }>
+                      <DescriptionList>
+                        <DescriptionSection
+                          dKey={ key }
+                          dValue={
+                            <OneOrManyItems
+                              item={ value }
+                              itemElement={ ( value ) => (
+                                <Preformatted>{ value }</Preformatted>
+                              ) }
+                            />
+                          }
+                          isKeyPreformatted
+                        />
+                      </DescriptionList>
+                    </ListItem>
+                  ),
+                ) }
               </List>
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
     </DescriptionList>
   );
 }

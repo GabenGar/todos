@@ -6,16 +6,15 @@
   grid-template:
     "header" auto
     "body" 1fr
-    "footer" auto
-    / minmax(100%, 1fr);
-  min-height: var(--local-min-height, 20em);
+    "footer" auto / minmax( 100%, 1fr );
+  min-height: var( --local-min-height, 20em );
   gap: $size-normal;
   overflow: hidden;
-  background-color: var(--colour-background-primary);
+  background-color: var( --colour-background-primary );
   border-radius: 10px;
   border: $size-thin solid transparent;
   transition-property: color, background-color, border, box-shadow;
-  transition-duration: var(--duration-global);
+  transition-duration: var( --duration-global );
 
   & > * {
     padding: $size-normal;
@@ -23,11 +22,11 @@
 
   &:hover,
   &:focus-within {
-    box-shadow: 0 0 5px var(--positive-colour-text-primary);
+    box-shadow: 0 0 5px var( --positive-colour-text-primary );
   }
 
-  @media (min-width: $width-laptop) {
-    flex-basis: calc(#{$width-mobile} * 1.1);
+  @media ( min-width: $width-laptop ) {
+    flex-basis: calc( #{$width-mobile} * 1.1 );
   }
 }
 

@@ -3,33 +3,33 @@ import type { IElementAttributeMapping } from "./types";
 
 export function collectAttributes(
   element: HTMLElement,
-  ignoreNames?: ReadonlySet<string>,
-): IMaybe<IElementAttributeMapping> {
+  ignoreNames?: ReadonlySet< string >,
+): IMaybe< IElementAttributeMapping > {
   const mapping: IElementAttributeMapping = new Map();
 
-  for (const attribute of element.attributes) {
+  for ( const attribute of element.attributes ) {
     const name = attribute.name;
 
-    if (ignoreNames?.has(name)) {
+    if ( ignoreNames?.has( name ) ) {
       continue;
     }
 
     const value = attribute.value;
 
-    if (!mapping.has(name)) {
-      mapping.set(name, value);
+    if ( ! mapping.has( name ) ) {
+      mapping.set( name, value );
       continue;
     }
 
     // biome-ignore lint/style/noNonNullAssertion: it just works
-    const oldValue = mapping.get(name)!;
+    const oldValue = mapping.get( name )!;
 
-    if (Array.isArray(oldValue)) {
-      oldValue.push(value);
+    if ( Array.isArray( oldValue ) ) {
+      oldValue.push( value );
       continue;
     }
 
-    mapping.set(name, [oldValue, value]);
+    mapping.set( name, [ oldValue, value ] );
   }
 
   return mapping.size === 0 ? undefined : mapping;

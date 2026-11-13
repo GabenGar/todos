@@ -9,31 +9,31 @@ import {
 
 import styles from "./datetime.module.scss";
 
-interface IProps extends IBaseComponentPropsWithChildren<"div"> {
+interface IProps extends IBaseComponentPropsWithChildren< "div" > {
   dateTime: string;
 }
 
-export const DateTimeView = createBlockComponent(styles, Component);
+export const DateTimeView = createBlockComponent( styles, Component );
 
-function Component({ dateTime, children, ...props }: IProps) {
+function Component( { dateTime, children, ...props }: IProps ) {
   const client = useClient();
 
   return (
-    <div {...props}>
-      <time className={styles.datetime} dateTime={dateTime}>
-        {children ? (
+    <div { ...props }>
+      <time className={ styles.datetime } dateTime={ dateTime }>
+        { children ? (
           children
-        ) : !client ? (
+        ) : ! client ? (
           <Loading />
         ) : (
           <>
-            {client.formatRelativeDateTime(dateTime)} (
-            {client.formatDateTime(dateTime)})
+            { client.formatRelativeDateTime( dateTime ) } (
+            { client.formatDateTime( dateTime ) })
           </>
-        )}
+        ) }
       </time>
 
-      <ButtonCopy className={styles.button} valueToCopy={dateTime} />
+      <ButtonCopy className={ styles.button } valueToCopy={ dateTime } />
     </div>
   );
 }

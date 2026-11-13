@@ -5,28 +5,28 @@ import { TasksStats } from "#entities/task";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-function TasksStatsPage({
+function TasksStatsPage( {
   lang,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = usePageTranslation("page-stats-tasks");
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
-  const description = t((t) => t.description);
+}: InferGetStaticPropsType< typeof getStaticProps > ) {
+  const { t } = usePageTranslation( "page-stats-tasks" );
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
+  const description = t( ( t ) => t.description );
 
   return (
-    <Page heading={heading} title={title} description={description}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title } description={ description }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <OverviewHeader>
-            <TasksStats language={lang} />
+            <TasksStats language={ lang } />
           </OverviewHeader>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-stats-tasks");
+export const getStaticProps = createGetStaticProps( "page-stats-tasks" );
 
 export const getStaticPaths = getStaticExportPaths;
 

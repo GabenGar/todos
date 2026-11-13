@@ -7,14 +7,14 @@ import { type IInputSectionProps, InputSection } from "../section";
 
 export interface IInputSectionTextProps
   extends IInputSectionProps,
-    Pick<IInputTextProps, "minLength" | "maxLength">,
-    Pick<IInputTextAreaProps, "rows"> {
-  inputRef?: Ref<HTMLInputElement | HTMLTextAreaElement>;
+    Pick< IInputTextProps, "minLength" | "maxLength" >,
+    Pick< IInputTextAreaProps, "rows" > {
+  inputRef?: Ref< HTMLInputElement | HTMLTextAreaElement >;
 }
 
-export const InputSectionText = createBlockComponent(undefined, Component);
+export const InputSectionText = createBlockComponent( undefined, Component );
 
-function Component({
+function Component( {
   id,
   form,
   name,
@@ -28,7 +28,7 @@ function Component({
   children,
   inputRef,
   ...props
-}: IInputSectionTextProps) {
+}: IInputSectionTextProps ) {
   // render a normal input if constraints fit a value
   // into a single row on a preview component
   const isShort = Boolean(
@@ -36,40 +36,40 @@ function Component({
   );
 
   return (
-    <InputSection {...props}>
-      <Label htmlFor={id}>{children}</Label>
-      {isShort ? (
+    <InputSection { ...props }>
+      <Label htmlFor={ id }>{ children }</Label>
+      { isShort ? (
         <InputText
           // @ts-expect-error probably easier to use single row
           // `<textarea>` for all text down the line
-          ref={inputRef}
-          id={id}
-          form={form}
-          name={name}
-          required={required}
-          readOnly={readOnly}
-          disabled={disabled}
-          minLength={minLength}
-          maxLength={maxLength}
-          defaultValue={defaultValue}
+          ref={ inputRef }
+          id={ id }
+          form={ form }
+          name={ name }
+          required={ required }
+          readOnly={ readOnly }
+          disabled={ disabled }
+          minLength={ minLength }
+          maxLength={ maxLength }
+          defaultValue={ defaultValue }
         />
       ) : (
         <InputTextArea
           // @ts-expect-error probably easier to use single row
           // `<textarea>` for all text down the line
-          ref={inputRef}
-          id={id}
-          form={form}
-          name={name}
-          required={required}
-          readOnly={readOnly}
-          disabled={disabled}
-          minLength={minLength}
-          maxLength={maxLength}
-          defaultValue={defaultValue}
-          rows={rows}
+          ref={ inputRef }
+          id={ id }
+          form={ form }
+          name={ name }
+          required={ required }
+          readOnly={ readOnly }
+          disabled={ disabled }
+          minLength={ minLength }
+          maxLength={ maxLength }
+          defaultValue={ defaultValue }
+          rows={ rows }
         />
-      )}
+      ) }
     </InputSection>
   );
 }

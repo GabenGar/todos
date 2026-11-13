@@ -14,47 +14,47 @@ import { useTranslation } from "#hooks";
 //
 
 export interface IFormProps
-  extends Omit<IBaseFormProps, "children" | "method"> {
+  extends Omit< IBaseFormProps, "children" | "method" > {
   id: string;
-  method?: Uppercase<FormMethod>;
-  children?: (formID: string) => ReactNode;
-  submitButton?: (state: Navigation["state"]) => ReactNode;
+  method?: Uppercase< FormMethod >;
+  children?: ( formID: string ) => ReactNode;
+  submitButton?: ( state: Navigation[ "state" ] ) => ReactNode;
 }
-export const Form: ReturnType<typeof createBlockComponent<IFormProps>> =
-  createBlockComponent(baseFormStyles.block, Component);
+export const Form: ReturnType< typeof createBlockComponent< IFormProps > > =
+  createBlockComponent( baseFormStyles.block, Component );
 
-function Component({
+function Component( {
   id,
   className,
   submitButton,
   children,
   ...props
-}: IFormProps) {
+}: IFormProps ) {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const formID = `${id}-form`;
+  const formID = `${ id }-form`;
 
   return (
-    <div id={id} className={className}>
-      {children?.(formID)}
+    <div id={ id } className={ className }>
+      { children?.( formID ) }
 
       <InputSection>
-        {navigation.state === "loading"
-          ? t((t) => t.form.state.initializing)
+        { navigation.state === "loading"
+          ? t( ( t ) => t.form.state.initializing )
           : navigation.state === "submitting"
-            ? t((t) => t.form.state.submitting)
-            : t((t) => t.form.state.ready)}
+            ? t( ( t ) => t.form.state.submitting )
+            : t( ( t ) => t.form.state.ready ) }
       </InputSection>
 
       <InputSection>
-        <ButtonSubmit form={formID} disabled={navigation.state !== "idle"}>
-          {!submitButton
-            ? t((t) => t.form.submit)
-            : submitButton(navigation.state)}
+        <ButtonSubmit form={ formID } disabled={ navigation.state !== "idle" }>
+          { ! submitButton
+            ? t( ( t ) => t.form.submit )
+            : submitButton( navigation.state ) }
         </ButtonSubmit>
       </InputSection>
 
-      <RouterForm {...props} id={formID} />
+      <RouterForm { ...props } id={ formID } />
     </div>
   );
 }

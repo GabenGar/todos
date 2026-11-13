@@ -12,28 +12,28 @@ export interface IPlannedEventSearchQuery {
 interface ISearchPlannedEventFormProps {
   id: string;
   defaultOrder?: IPlannedEventOrder;
-  onSearch: (newSearchQuery: IPlannedEventSearchQuery) => Promise<void>;
+  onSearch: ( newSearchQuery: IPlannedEventSearchQuery ) => Promise< void >;
 }
 
-export function SearchPlannedEventForm({
+export function SearchPlannedEventForm( {
   id,
   defaultOrder,
   onSearch,
-}: ISearchPlannedEventFormProps) {
-  const { t } = useTranslation("translation");
+}: ISearchPlannedEventFormProps ) {
+  const { t } = useTranslation( "translation" );
   const FIELD = {
-    ORDER: { name: "order", label: t((t) => t.planned_event["Order"]) },
+    ORDER: { name: "order", label: t( ( t ) => t.planned_event[ "Order" ] ) },
   } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const formElements = event.currentTarget.elements;
     const inputOrder = formElements.order.value.trim();
-    const parsedOrder = !isPlannedEventsOrder(inputOrder)
+    const parsedOrder = ! isPlannedEventsOrder( inputOrder )
       ? undefined
       : inputOrder;
 
-    if (defaultOrder && parsedOrder === defaultOrder) {
+    if ( defaultOrder && parsedOrder === defaultOrder ) {
       return;
     }
 
@@ -41,41 +41,41 @@ export function SearchPlannedEventForm({
       order: parsedOrder,
     };
 
-    await onSearch(newSearchQuery);
+    await onSearch( newSearchQuery );
   }
 
   return (
-    <Form<IFieldName>
-      id={id}
-      onSubmit={handleSubmit}
-      submitButton={(_, isSubmitting) =>
-        t((t) =>
-          !isSubmitting
-            ? t.planned_event["Filter"]
-            : t.planned_event["Filtering..."],
+    <Form< IFieldName >
+      id={ id }
+      onSubmit={ handleSubmit }
+      submitButton={ ( _, isSubmitting ) =>
+        t( ( t ) =>
+          ! isSubmitting
+            ? t.planned_event[ "Filter" ]
+            : t.planned_event[ "Filtering..." ],
         )
       }
     >
-      {(formID) => (
+      { ( formID ) => (
         <>
           <InputSectionSelect
-            id={`${formID}-${FIELD.ORDER.name}`}
-            form={formID}
-            name={FIELD.ORDER.name}
-            label={FIELD.ORDER.label}
-            defaultValue={defaultOrder ?? ""}
+            id={ `${ formID }-${ FIELD.ORDER.name }` }
+            form={ formID }
+            name={ FIELD.ORDER.name }
+            label={ FIELD.ORDER.label }
+            defaultValue={ defaultOrder ?? "" }
           >
             <InputOption
-              value={"recently_updated" satisfies IPlannedEventOrder}
+              value={ "recently_updated" satisfies IPlannedEventOrder }
             >
-              {t((t) => t.planned_event["Recently updated"])}
+              { t( ( t ) => t.planned_event[ "Recently updated" ] ) }
             </InputOption>
-            <InputOption value={""}>
-              {t((t) => t.planned_event["Recently created"])}
+            <InputOption value={ "" }>
+              { t( ( t ) => t.planned_event[ "Recently created" ] ) }
             </InputOption>
           </InputSectionSelect>
         </>
-      )}
+      ) }
     </Form>
   );
 }

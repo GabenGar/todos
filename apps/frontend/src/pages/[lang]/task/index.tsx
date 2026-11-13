@@ -8,40 +8,40 @@ import { usePageTranslation } from "#hooks";
 import { getSingleValueFromQuery } from "#lib/pages";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-function TaskDetailsPage({
+function TaskDetailsPage( {
   lang,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = usePageTranslation("page-task");
+}: InferGetStaticPropsType< typeof getStaticProps > ) {
+  const { t } = usePageTranslation( "page-task" );
   const router = useRouter();
   const { isReady, query } = router;
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
-  const taskID = getSingleValueFromQuery(query, "task_id");
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
+  const taskID = getSingleValueFromQuery( query, "task_id" );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    if (!isReady) {
+  useEffect( () => {
+    if ( ! isReady ) {
       return;
     }
-    if (!taskID) {
-      router.replace("/404");
+    if ( ! taskID ) {
+      router.replace( "/404" );
 
       return;
     }
-  }, [isReady, taskID]);
+  }, [ isReady, taskID ] );
 
   return (
-    <Page heading={heading} title={title}>
-      {!taskID ? (
-        <OverviewPlaceHolder headingLevel={2} />
+    <Page heading={ heading } title={ title }>
+      { ! taskID ? (
+        <OverviewPlaceHolder headingLevel={ 2 } />
       ) : (
-        <TaskOverview language={lang} headingLevel={2} taskID={taskID} />
-      )}
+        <TaskOverview language={ lang } headingLevel={ 2 } taskID={ taskID } />
+      ) }
     </Page>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-task");
+export const getStaticProps = createGetStaticProps( "page-task" );
 export const getStaticPaths = getStaticExportPaths;
 
 export default TaskDetailsPage;

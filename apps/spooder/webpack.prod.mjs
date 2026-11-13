@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { merge } from "webpack-merge";
 import commonConfiguration from "./webpack.common.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname( fileURLToPath( import.meta.url ) );
 
 /**
  * @type {import("webpack").Configuration}
@@ -22,11 +22,11 @@ const prodConfig = {
     runtimeChunk: false,
   },
   output: {
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve( __dirname, "build" ),
     filename: "[name]/[name].js",
   },
 };
 
-const finalConfig = merge(commonConfiguration, prodConfig);
+const finalConfig = merge( commonConfiguration, prodConfig );
 
 export default finalConfig;

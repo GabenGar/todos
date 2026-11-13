@@ -13,64 +13,64 @@ interface IProps {
   setting: ISettingKey;
 }
 
-export function Setting({ setting }: IProps) {
-  const [error, changeError] = useState<Error>();
-  const value = useSetting(setting);
-  const isEnabled = Boolean(value);
-  const message = getLocalizedMessage(settings[setting].message);
+export function Setting( { setting }: IProps ) {
+  const [ error, changeError ] = useState< Error >();
+  const value = useSetting( setting );
+  const isEnabled = Boolean( value );
+  const message = getLocalizedMessage( settings[ setting ].message );
 
   return (
     <Details
       summary={
         <>
-          {message}:{" "}
-          {isEnabled ? (
-            <span className={styles.enabled}>
-              {getLocalizedMessage("enabled")}
+          { message }:{ " " }
+          { isEnabled ? (
+            <span className={ styles.enabled }>
+              { getLocalizedMessage( "enabled" ) }
             </span>
           ) : (
-            <span className={styles.disabled}>
-              {getLocalizedMessage("disabled")}
+            <span className={ styles.disabled }>
+              { getLocalizedMessage( "disabled" ) }
             </span>
-          )}
+          ) }
         </>
       }
     >
       <MenuButtons>
         <MenuItem
           viewType="negative"
-          disabled={!isEnabled}
-          onClick={async () => {
+          disabled={ ! isEnabled }
+          onClick={ async () => {
             try {
-              await updateSetting(setting, false);
-              changeError(undefined);
-            } catch (error) {
+              await updateSetting( setting, false );
+              changeError( undefined );
+            } catch ( error ) {
               // @ts-expect-error
-              changeError(error);
+              changeError( error );
             }
-          }}
+          } }
         >
-          {getLocalizedMessage("Disable")}
+          { getLocalizedMessage( "Disable" ) }
         </MenuItem>
 
         <MenuItem
           viewType="positive"
-          disabled={isEnabled}
-          onClick={async () => {
+          disabled={ isEnabled }
+          onClick={ async () => {
             try {
-              await updateSetting(setting, true);
-              changeError(undefined);
-            } catch (error) {
+              await updateSetting( setting, true );
+              changeError( undefined );
+            } catch ( error ) {
               // @ts-expect-error
-              changeError(error);
+              changeError( error );
             }
-          }}
+          } }
         >
-          {getLocalizedMessage("Enable")}
+          { getLocalizedMessage( "Enable" ) }
         </MenuItem>
       </MenuButtons>
 
-      {error && <Preformatted>{String(error)}</Preformatted>}
+      { error && <Preformatted>{ String( error ) }</Preformatted> }
     </Details>
   );
 }

@@ -13,23 +13,25 @@ import type { IFormEvent, IFormProps } from "./types";
 
 import styles from "./client.module.scss";
 
-export interface IFormClientProps<InputName extends string = string>
-  extends Omit<IFormProps<InputName>, "children" | "submitButton"> {
+export interface IFormClientProps< InputName extends string = string >
+  extends Omit< IFormProps< InputName >, "children" | "submitButton" > {
   id: string;
-  children?: (formID: string, isSubmitting: boolean) => ReactNode;
+  children?: ( formID: string, isSubmitting: boolean ) => ReactNode;
   isNested?: boolean;
-  onSubmit: (event: IFormEvent<InputName>) => Promise<void>;
-  onReset?: (event: IFormEvent<InputName>) => Promise<void>;
-  submitButton?: false | ((formID: string, isSubmitting: boolean) => ReactNode);
+  onSubmit: ( event: IFormEvent< InputName > ) => Promise< void >;
+  onReset?: ( event: IFormEvent< InputName > ) => Promise< void >;
+  submitButton?:
+    | false
+    | ( ( formID: string, isSubmitting: boolean ) => ReactNode );
   isResetOnSuccess?: boolean;
 }
 
 /**
  * Client-only form.
  */
-export const FormClient = createBlockComponent(undefined, Component);
+export const FormClient = createBlockComponent( undefined, Component );
 
-function Component<InputName extends string>({
+function Component< InputName extends string >( {
   id,
   isNested,
   className,
@@ -39,132 +41,132 @@ function Component<InputName extends string>({
   isResetOnSuccess = true,
   children,
   ...props
-}: IFormClientProps<InputName>) {
+}: IFormClientProps< InputName > ) {
   const { t } = useTranslation();
-  const [isSubmitting, switchSubmitting] = useState(false);
-  const [errors, changeErrors] = useState<(Error | string)[]>();
+  const [ isSubmitting, switchSubmitting ] = useState( false );
+  const [ errors, changeErrors ] = useState< ( Error | string )[] >();
 
-  async function handleSubmit(event: IFormEvent<InputName>) {
+  async function handleSubmit( event: IFormEvent< InputName > ) {
     event.preventDefault();
 
-    if (isSubmitting) {
+    if ( isSubmitting ) {
       return;
     }
 
-    switchSubmitting(true);
-    changeErrors(undefined);
+    switchSubmitting( true );
+    changeErrors( undefined );
 
     try {
-      await onSubmit?.(event);
+      await onSubmit?.( event );
 
-      if (isResetOnSuccess) {
-        await handleReset(event);
+      if ( isResetOnSuccess ) {
+        await handleReset( event );
       }
-    } catch (error) {
-      validateError(error);
-      changeErrors([error]);
+    } catch ( error ) {
+      validateError( error );
+      changeErrors( [ error ] );
     } finally {
-      switchSubmitting(false);
+      switchSubmitting( false );
     }
   }
 
-  async function handleReset(event: IFormEvent<InputName>) {
-    if (isSubmitting) {
+  async function handleReset( event: IFormEvent< InputName > ) {
+    if ( isSubmitting ) {
       return;
     }
 
     try {
-      switchSubmitting(true);
-      await onReset?.(event);
-      (event.target as HTMLFormElement).reset();
+      switchSubmitting( true );
+      await onReset?.( event );
+      ( event.target as HTMLFormElement ).reset();
     } finally {
-      switchSubmitting(false);
+      switchSubmitting( false );
     }
   }
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={ <Loading /> }>
       <Form
-        id={id}
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-        submitButton={false}
-        {...props}
+        id={ id }
+        onSubmit={ handleSubmit }
+        onReset={ handleReset }
+        submitButton={ false }
+        { ...props }
       >
-        {(formID) => (
+        { ( formID ) => (
           <>
-            {children?.(formID, isSubmitting)}
-            {errors && (
+            { children?.( formID, isSubmitting ) }
+            { errors && (
               <List isOrdered>
-                {errors.map((error, index) => (
-                  <ListItem key={index}>
+                { errors.map( ( error, index ) => (
+                  <ListItem key={ index }>
                     <Preformatted>
-                      {isError(error) ? String(error) : error}
+                      { isError( error ) ? String( error ) : error }
                     </Preformatted>
                   </ListItem>
-                ))}
+                ) ) }
               </List>
-            )}
+            ) }
 
             {
               // don't render the button at all if `false`
               submitButton === false ? undefined : (
-                <InputSection className={styles.submit}>
-                  {/* render default button if not a function */}
-                  {submitButton === undefined ? (
+                <InputSection className={ styles.submit }>
+                  { /* render default button if not a function */ }
+                  { submitButton === undefined ? (
                     <ButtonSubmit
-                      form={formID}
-                      viewType={isNested ? "button" : "submit"}
-                      disabled={isSubmitting}
+                      form={ formID }
+                      viewType={ isNested ? "button" : "submit" }
+                      disabled={ isSubmitting }
                     >
-                      {!isSubmitting
-                        ? t((t) => t.form.state.submit)
-                        : t((t) => t.form.state.submitting)}
+                      { ! isSubmitting
+                        ? t( ( t ) => t.form.state.submit )
+                        : t( ( t ) => t.form.state.submitting ) }
                     </ButtonSubmit>
                   ) : (
                     <CustomButton
-                      formID={formID}
-                      isNested={isNested}
-                      isSubmitting={isSubmitting}
-                      submitButton={submitButton}
+                      formID={ formID }
+                      isNested={ isNested }
+                      isSubmitting={ isSubmitting }
+                      submitButton={ submitButton }
                     />
-                  )}
+                  ) }
                 </InputSection>
               )
             }
           </>
-        )}
+        ) }
       </Form>
     </Suspense>
   );
 }
 
-interface ICustomButtonProps extends Pick<IFormProps, "isNested"> {
+interface ICustomButtonProps extends Pick< IFormProps, "isNested" > {
   formID: string;
   isSubmitting: boolean;
-  submitButton: (formID: string, isSubmitting: boolean) => ReactNode;
+  submitButton: ( formID: string, isSubmitting: boolean ) => ReactNode;
 }
 
-function CustomButton({
+function CustomButton( {
   formID,
   isNested,
   isSubmitting,
   submitButton,
-}: ICustomButtonProps) {
-  const result = submitButton(formID, isSubmitting);
+}: ICustomButtonProps ) {
+  const result = submitButton( formID, isSubmitting );
 
   // render custom button if result is not a string
-  if (typeof result !== "string") {
-    return <>{result}</>;
+  if ( typeof result !== "string" ) {
+    return <>{ result }</>;
   }
 
   return (
     <ButtonSubmit
-      form={formID}
-      viewType={isNested ? "button" : "submit"}
-      disabled={isSubmitting}
+      form={ formID }
+      viewType={ isNested ? "button" : "submit" }
+      disabled={ isSubmitting }
     >
-      {result}
+      { result }
     </ButtonSubmit>
   );
 }

@@ -5,12 +5,12 @@ import styles from "./_base.module.scss";
 
 function LanguageSelectLayout() {
   return (
-    <main className={styles.main}>
+    <main className={ styles.main }>
       <Outlet />
     </main>
   );
 }
 
-export const Route = createFileRoute("/_base")({
+export const Route = createFileRoute( "/_base" )( {
   component: LanguageSelectLayout,
-});
+} );

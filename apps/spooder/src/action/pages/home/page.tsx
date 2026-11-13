@@ -11,29 +11,31 @@ import { getCurrentTabID } from "#lib/tabs";
 
 export function HomePage() {
   const { t } = useTranslation();
-  const data = useLoaderData<typeof loader>();
-  const heading = t((t) => t.action.heading);
+  const data = useLoaderData< typeof loader >();
+  const heading = t( ( t ) => t.action.heading );
 
   return (
-    <Page heading={heading}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
-              <Details summary={t((t) => t.action["faq-why-false"].question)}>
-                {t((t) => t.action["faq-why-false"].answer)}
+              <Details
+                summary={ t( ( t ) => t.action[ "faq-why-false" ].question ) }
+              >
+                { t( ( t ) => t.action[ "faq-why-false" ].answer ) }
               </Details>
             </OverviewHeader>
 
             <OverviewBody>
-              {isError(data) ? (
-                <ErrorView error={data} />
+              { isError( data ) ? (
+                <ErrorView error={ data } />
               ) : (
-                <SEOView seo={data.seo} />
-              )}
+                <SEOView seo={ data.seo } />
+              ) }
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
@@ -42,29 +44,33 @@ export function HomePage() {
 export async function loader() {
   const tabID = await getCurrentTabID();
   const injectionDetails: Scripting.ScriptInjection = {
-    files: ["/content-script/content-script.js"],
+    files: [ "/content-script/content-script.js" ],
     target: {
       tabId: tabID,
     },
   };
 
-  const result = await new Promise<IMessage["data"]>((resolve, reject) => {
-    browser.runtime.onMessage.addListener(listenForSEO);
-    browser.scripting.executeScript(injectionDetails);
+  const result = await new Promise< IMessage[ "data" ] >(
+    ( resolve, reject ) => {
+      browser.runtime.onMessage.addListener( listenForSEO );
+      browser.scripting.executeScript( injectionDetails );
 
-    async function listenForSEO(message: unknown) {
-      try {
-        const data = parseMessage(message, "seo");
-        resolve(data);
-      } catch (error) {
-        if (isError(error)) {
-          reject(error);
-        } else {
-          reject(new UnknownError(error));
+      async function listenForSEO( message: unknown ) {
+        try {
+          const data = parseMessage( message, "seo" );
+          resolve( data );
+        } catch ( error ) {
+          if ( isError( error ) ) {
+            reject( error );
+          } else {
+            reject( new UnknownError( error ) );
+          }
         }
       }
-    }
-  }).catch((error) => (isError(error) ? error : new UnknownError(error)));
+    },
+  ).catch( ( error ) =>
+    isError( error ) ? error : new UnknownError( error ),
+  );
 
   return result;
 }

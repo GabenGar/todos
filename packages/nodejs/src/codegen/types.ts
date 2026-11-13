@@ -10,18 +10,18 @@ export interface IGeneratedNestedModule {
   /**
    * A map of module folder names and their contents
    */
-  moduleMap: Map<string, IModuleInfo[]>;
+  moduleMap: Map< string, IModuleInfo[] >;
 }
 
 export interface IGeneratorModule {
-  default: () => Promise<IGeneratedModule>;
+  default: () => Promise< IGeneratedModule >;
 }
 
-export interface IGeneratorMap extends Map<string, ICodeGenerator> {}
+export interface IGeneratorMap extends Map< string, ICodeGenerator > {}
 
 export interface ICodeGenerator {
   name: string;
-  generate: () => Promise<IGeneratedModule>;
+  generate: () => Promise< IGeneratedModule >;
 }
 
 export interface IModuleInfo {

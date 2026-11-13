@@ -8,7 +8,7 @@ import { type ILanguageListProps, LanguageList } from "./language-list";
 import styles from "./switcher.module.scss";
 
 interface IProps
-  extends Omit<IDetailsProps, "summary" | "contentClassname">,
+  extends Omit< IDetailsProps, "summary" | "contentClassname" >,
     Pick<
       ILanguageListProps,
       | "locales"
@@ -18,31 +18,31 @@ interface IProps
       | "internalLinkElement"
     > {}
 
-export const LanguageSwitcher = createBlockComponent(styles, Component);
+export const LanguageSwitcher = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   locales,
   currentLocale,
   currentURL,
   getLocalizedURL,
   internalLinkElement,
   ...props
-}: IProps) {
+}: IProps ) {
   // biome-ignore lint/style/noNonNullAssertion: just typescript things
-  const language = parseLocale(currentLocale).language!;
+  const language = parseLocale( currentLocale ).language!;
 
   return (
     <Details
-      {...props}
-      contentClassname={styles.content}
-      summary={<Language language={language} />}
+      { ...props }
+      contentClassname={ styles.content }
+      summary={ <Language language={ language } /> }
     >
       <LanguageList
-        locales={locales}
-        currentLocale={currentLocale}
-        currentURL={currentURL}
-        getLocalizedURL={getLocalizedURL}
-        internalLinkElement={internalLinkElement}
+        locales={ locales }
+        currentLocale={ currentLocale }
+        currentURL={ currentURL }
+        getLocalizedURL={ getLocalizedURL }
+        internalLinkElement={ internalLinkElement }
       />
     </Details>
   );

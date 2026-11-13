@@ -8,11 +8,11 @@ export function toTypeBody(
 ): string {
   let body: string;
 
-  if (schema.$ref) {
-    const symbolData = refMap.get(schema.$ref);
+  if ( schema.$ref ) {
+    const symbolData = refMap.get( schema.$ref );
 
-    if (!symbolData) {
-      throw new Error(`Unknown \`"$ref"\` "${schema.$ref}".`);
+    if ( ! symbolData ) {
+      throw new Error( `Unknown \`"$ref"\` "${ schema.$ref }".` );
     }
 
     body = symbolData.symbolName;
@@ -20,7 +20,7 @@ export function toTypeBody(
     return body;
   }
 
-  switch (schema.type) {
+  switch ( schema.type ) {
     case "null": {
       body = "null";
       break;
@@ -42,37 +42,37 @@ export function toTypeBody(
       break;
     }
     case "object": {
-      body = createObjectBody(schema, refMap, isSymbolDeclaration);
+      body = createObjectBody( schema, refMap, isSymbolDeclaration );
       break;
     }
     case "array": {
-      body = createArrayBody(schema, refMap, isSymbolDeclaration);
+      body = createArrayBody( schema, refMap, isSymbolDeclaration );
       break;
     }
 
     default: {
-      if (schema.enum) {
-        body = createEnumBody(schema.enum, refMap, isSymbolDeclaration);
+      if ( schema.enum ) {
+        body = createEnumBody( schema.enum, refMap, isSymbolDeclaration );
         break;
       }
 
-      if (schema.const) {
-        body = createConstBody(schema.const, refMap, isSymbolDeclaration);
+      if ( schema.const ) {
+        body = createConstBody( schema.const, refMap, isSymbolDeclaration );
         break;
       }
 
-      if (schema.allOf) {
-        body = createAllOfBody(schema.allOf, refMap, isSymbolDeclaration);
+      if ( schema.allOf ) {
+        body = createAllOfBody( schema.allOf, refMap, isSymbolDeclaration );
         break;
       }
 
-      if (schema.anyOf) {
-        body = createAnyOfBody(schema.anyOf, refMap, isSymbolDeclaration);
+      if ( schema.anyOf ) {
+        body = createAnyOfBody( schema.anyOf, refMap, isSymbolDeclaration );
         break;
       }
 
-      if (schema.oneOf) {
-        body = createOneOfBody(schema.oneOf, refMap, isSymbolDeclaration);
+      if ( schema.oneOf ) {
+        body = createOneOfBody( schema.oneOf, refMap, isSymbolDeclaration );
         break;
       }
 
@@ -94,19 +94,19 @@ export function createObjectBody(
 
   const properties =
     schema.properties &&
-    Object.entries(schema.properties).map<string>(
-      ([propertyName, propertySchema]) => {
-        const fieldName = requiredProperties?.includes(propertyName)
+    Object.entries( schema.properties ).map< string >(
+      ( [ propertyName, propertySchema ] ) => {
+        const fieldName = requiredProperties?.includes( propertyName )
           ? propertyName
-          : `${propertyName}?`;
+          : `${ propertyName }?`;
         const body =
           typeof propertySchema !== "boolean"
-            ? toTypeBody(propertySchema, refMap)
+            ? toTypeBody( propertySchema, refMap )
             : propertySchema === true
               ? "unknown"
               : "never";
 
-        return `${fieldName}: ${body};`;
+        return `${ fieldName }: ${ body };`;
       },
     );
 
@@ -115,40 +115,40 @@ export function createObjectBody(
    * > By default any additional properties are allowed.
    */
   const additionalProperties = schema.additionalProperties ?? true;
-  const isRecordSchema = additionalProperties && !properties;
+  const isRecordSchema = additionalProperties && ! properties;
 
-  if (isRecordSchema) {
-    const body = createRecordBody(isSymbolDeclaration);
+  if ( isRecordSchema ) {
+    const body = createRecordBody( isSymbolDeclaration );
 
     return body;
   }
 
-  const lines = ["{"];
+  const lines = [ "{" ];
 
-  if (properties) {
-    lines.push(...properties);
+  if ( properties ) {
+    lines.push( ...properties );
   }
 
-  if (additionalProperties) {
-    if (additionalProperties !== true) {
-      throw new Error(`Unsupported "additionalProperties" value.`);
+  if ( additionalProperties ) {
+    if ( additionalProperties !== true ) {
+      throw new Error( `Unsupported "additionalProperties" value.` );
     }
 
-    if (isSymbolDeclaration) {
-      lines.unshift("extends Record<string, unknown>");
+    if ( isSymbolDeclaration ) {
+      lines.unshift( "extends Record<string, unknown>" );
     } else {
-      lines.push("[index: string]: unknown;");
+      lines.push( "[index: string]: unknown;" );
     }
   }
 
-  lines.push("}");
+  lines.push( "}" );
 
-  const body = createMultiLineString(...lines);
+  const body = createMultiLineString( ...lines );
 
   return body;
 }
 
-function createRecordBody(isSymbolDeclaration = false) {
+function createRecordBody( isSymbolDeclaration = false ) {
   return isSymbolDeclaration
     ? "extends Record<string, unknown> {}"
     : "Record<string, unknown>";
@@ -163,132 +163,133 @@ function createArrayBody(
   const prefixItems = schema.prefixItems;
   const contains = schema.contains;
   const containsType =
-    contains && (contains === true ? "unknown" : toTypeBody(contains, refMap));
+    contains &&
+    ( contains === true ? "unknown" : toTypeBody( contains, refMap ) );
   let itemType = "unknown";
 
-  if (prefixItems) {
-    const types = prefixItems.map((schema) => {
+  if ( prefixItems ) {
+    const types = prefixItems.map( ( schema ) => {
       const typeBody =
         typeof schema !== "boolean"
-          ? toTypeBody(schema, refMap)
+          ? toTypeBody( schema, refMap )
           : schema === true
             ? "unknown"
             : "never";
 
       return typeBody;
-    });
+    } );
 
     const extraItems = schema.items ?? true;
 
-    if (extraItems) {
-      if (extraItems === true) {
-        types.push("...unknown[]");
+    if ( extraItems ) {
+      if ( extraItems === true ) {
+        types.push( "...unknown[]" );
       } else {
-        types.push(`...(${toTypeBody(extraItems, refMap)})[]`);
+        types.push( `...(${ toTypeBody( extraItems, refMap ) })[]` );
       }
     }
 
-    const body = `[${types.join(",")}]`;
+    const body = `[${ types.join( "," ) }]`;
 
     return body;
   }
 
-  if (itemsSchema && itemsSchema !== true) {
-    const typeBody = toTypeBody(itemsSchema, refMap);
-    itemType = !containsType ? typeBody : `${typeBody} | ${containsType}`;
+  if ( itemsSchema && itemsSchema !== true ) {
+    const typeBody = toTypeBody( itemsSchema, refMap );
+    itemType = ! containsType ? typeBody : `${ typeBody } | ${ containsType }`;
   }
 
   const body = isSymbolDeclaration
-    ? `extends Array<${itemType}> {}`
-    : `Array<${itemType}>`;
+    ? `extends Array<${ itemType }> {}`
+    : `Array<${ itemType }>`;
 
   return body;
 }
 
 function createEnumBody(
-  enumValue: Required<IJSONSchemaObject>["enum"],
+  enumValue: Required< IJSONSchemaObject >[ "enum" ],
   // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   refMap: IRefMap,
   // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
-  const bodyLiterals = enumValue.map((value) => JSON.stringify(value));
-  const body = bodyLiterals.join("|");
+  const bodyLiterals = enumValue.map( ( value ) => JSON.stringify( value ) );
+  const body = bodyLiterals.join( "|" );
 
   return body;
 }
 
 function createConstBody(
-  constValue: Required<IJSONSchemaObject>["const"],
+  constValue: Required< IJSONSchemaObject >[ "const" ],
   // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   refMap: IRefMap,
   // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
-  const body = JSON.stringify(constValue);
+  const body = JSON.stringify( constValue );
 
   return body;
 }
 
 function createAllOfBody(
-  allOf: Required<IJSONSchemaObject>["allOf"],
+  allOf: Required< IJSONSchemaObject >[ "allOf" ],
   refMap: IRefMap,
   // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
-  const types = allOf.map((schema) => {
+  const types = allOf.map( ( schema ) => {
     const body =
       typeof schema !== "boolean"
-        ? toTypeBody(schema, refMap)
+        ? toTypeBody( schema, refMap )
         : schema === true
           ? "unknown"
           : "never";
 
     return body;
-  });
-  const body = types.join("&");
+  } );
+  const body = types.join( "&" );
 
   return body;
 }
 
 function createAnyOfBody(
-  anyOf: Required<IJSONSchemaObject>["anyOf"],
+  anyOf: Required< IJSONSchemaObject >[ "anyOf" ],
   refMap: IRefMap,
   // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
-  const types = anyOf.map((schema) => {
+  const types = anyOf.map( ( schema ) => {
     const body =
       typeof schema !== "boolean"
-        ? toTypeBody(schema, refMap)
+        ? toTypeBody( schema, refMap )
         : schema === true
           ? "unknown"
           : "never";
 
     return body;
-  });
-  const body = types.join("|");
+  } );
+  const body = types.join( "|" );
 
   return body;
 }
 
 function createOneOfBody(
-  oneOf: Required<IJSONSchemaObject>["oneOf"],
+  oneOf: Required< IJSONSchemaObject >[ "oneOf" ],
   refMap: IRefMap,
   // biome-ignore lint/correctness/noUnusedFunctionParameters: same signature
   isSymbolDeclaration = false,
 ) {
-  const types = oneOf.map((schema) => {
+  const types = oneOf.map( ( schema ) => {
     const body =
       typeof schema !== "boolean"
-        ? toTypeBody(schema, refMap)
+        ? toTypeBody( schema, refMap )
         : schema === true
           ? "unknown"
           : "never";
 
     return body;
-  });
-  const body = types.join("|");
+  } );
+  const body = types.join( "|" );
 
   return body;
 }

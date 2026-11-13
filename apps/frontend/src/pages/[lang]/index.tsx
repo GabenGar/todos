@@ -22,41 +22,45 @@ import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 import styles from "./index.module.scss";
 
-function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = usePageTranslation("page-home");
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
+function FrontPage( {
+  lang,
+}: InferGetStaticPropsType< typeof getStaticProps > ) {
+  const { t } = usePageTranslation( "page-home" );
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {(headinglevel) => (
-          <OverviewHeader className={styles.header}>
-            <Heading level={headinglevel + 1}>{t((t) => t["Tools"])}</Heading>
-            <List className={styles.list}>
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { ( headinglevel ) => (
+          <OverviewHeader className={ styles.header }>
+            <Heading level={ headinglevel + 1 }>
+              { t( ( t ) => t[ "Tools" ] ) }
+            </Heading>
+            <List className={ styles.list }>
               <ListItem>
                 <DescriptionList>
                   <DescriptionSection
-                    dKey={t((t) => t["Planned events"])}
+                    dKey={ t( ( t ) => t[ "Planned events" ] ) }
                     dValue={
-                      <List className={styles.list}>
+                      <List className={ styles.list }>
                         <ListItem>
                           <Link
-                            className={styles.link}
-                            href={createPlannedEventsPageURL(lang, {
+                            className={ styles.link }
+                            href={ createPlannedEventsPageURL( lang, {
                               order: "recently_updated",
-                            })}
+                            } ) }
                           >
-                            {t((t) => t["Recently updated"])}
+                            { t( ( t ) => t[ "Recently updated" ] ) }
                           </Link>
                         </ListItem>
 
                         <ListItem>
                           <Link
-                            className={styles.link}
-                            href={createPlannedEventsPageURL(lang)}
+                            className={ styles.link }
+                            href={ createPlannedEventsPageURL( lang ) }
                           >
-                            {t((t) => t["Recently created"])}
+                            { t( ( t ) => t[ "Recently created" ] ) }
                           </Link>
                         </ListItem>
                       </List>
@@ -67,86 +71,89 @@ function FrontPage({ lang }: InferGetStaticPropsType<typeof getStaticProps>) {
 
               <ListItem>
                 <Link
-                  className={styles.link}
-                  href={createStatsPlacesPageURL(lang)}
+                  className={ styles.link }
+                  href={ createStatsPlacesPageURL( lang ) }
                 >
-                  {t((t) => t["Places"])}
+                  { t( ( t ) => t[ "Places" ] ) }
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link
-                  className={styles.link}
-                  href={createTaskStatsPageURL(lang)}
+                  className={ styles.link }
+                  href={ createTaskStatsPageURL( lang ) }
                 >
-                  {t((t) => t["Tasks"])}
+                  { t( ( t ) => t[ "Tasks" ] ) }
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link
-                  className={styles.link}
-                  href={createFileAnalyzerPageURL(lang)}
+                  className={ styles.link }
+                  href={ createFileAnalyzerPageURL( lang ) }
                 >
-                  {t((t) => t["file-analyzer"])}
+                  { t( ( t ) => t[ "file-analyzer" ] ) }
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link
-                  className={styles.link}
-                  href={createQRCodeReaderURL(lang)}
+                  className={ styles.link }
+                  href={ createQRCodeReaderURL( lang ) }
                 >
-                  {t((t) => t["QR code reader"])}
+                  { t( ( t ) => t[ "QR code reader" ] ) }
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link
-                  className={styles.link}
-                  href={createURLViewerPageURL(lang)}
+                  className={ styles.link }
+                  href={ createURLViewerPageURL( lang ) }
                 >
-                  {t((t) => t["URL Viewer"])}
+                  { t( ( t ) => t[ "URL Viewer" ] ) }
                 </Link>
               </ListItem>
 
               <ListItem>
                 <Link
-                  className={styles.link}
-                  href={createURLEditorPageURL(lang)}
+                  className={ styles.link }
+                  href={ createURLEditorPageURL( lang ) }
                 >
-                  {t((t) => t["URL Editor"])}
+                  { t( ( t ) => t[ "URL Editor" ] ) }
                 </Link>
               </ListItem>
 
               <ListItem>
-                <Link className={styles.link} href={createAccountPageURL(lang)}>
-                  {t((t) => t["Account"])}
+                <Link
+                  className={ styles.link }
+                  href={ createAccountPageURL( lang ) }
+                >
+                  { t( ( t ) => t[ "Account" ] ) }
                 </Link>
               </ListItem>
             </List>
 
-            <Heading level={headinglevel + 1}>
-              {t((t) => t["Miscellaneous"])}
+            <Heading level={ headinglevel + 1 }>
+              { t( ( t ) => t[ "Miscellaneous" ] ) }
             </Heading>
-            <List className={styles.list}>
+            <List className={ styles.list }>
               <ListItem>
                 <Link
-                  className={styles.link}
-                  href={createYTDLPConfigPage(lang)}
+                  className={ styles.link }
+                  href={ createYTDLPConfigPage( lang ) }
                 >
-                  {t((t) => t["YT-DLP configs"])}
+                  { t( ( t ) => t[ "YT-DLP configs" ] ) }
                 </Link>
               </ListItem>
             </List>
           </OverviewHeader>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-home");
+export const getStaticProps = createGetStaticProps( "page-home" );
 
 export const getStaticPaths = getStaticExportPaths;
 

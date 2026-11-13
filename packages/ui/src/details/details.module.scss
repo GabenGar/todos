@@ -1,12 +1,12 @@
 @use "../styles/sass/variables" as *;
 
 .block {
-  border: $size-thin solid var(--colour-background-tertiary);
+  border: $size-thin solid var( --colour-background-tertiary );
   border-radius: $size-little;
 
-  &[open] {
+  &[ open ] {
     .summary {
-      border-bottom: $size-thin solid var(--colour-background-tertiary);
+      border-bottom: $size-thin solid var( --colour-background-tertiary );
     }
   }
 }

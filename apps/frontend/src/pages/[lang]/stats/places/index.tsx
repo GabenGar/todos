@@ -13,68 +13,70 @@ import { usePageTranslation } from "#hooks";
 import { createPlacesPageURL } from "#lib/urls";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-function PlacesStatsPage({
+function PlacesStatsPage( {
   lang,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = usePageTranslation("page-stats-places");
-  const [stats, changeStats] =
-    useState<Awaited<ReturnType<typeof getPlacesStats>>>();
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
-  const description = t((t) => t.description);
+}: InferGetStaticPropsType< typeof getStaticProps > ) {
+  const { t } = usePageTranslation( "page-stats-places" );
+  const [ stats, changeStats ] =
+    useState< Awaited< ReturnType< typeof getPlacesStats > > >();
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
+  const description = t( ( t ) => t.description );
 
-  useEffect(() => {
-    (async () => {
+  useEffect( () => {
+    ( async () => {
       const newStats = await getPlacesStats();
-      changeStats(newStats);
-    })();
-  }, []);
+      changeStats( newStats );
+    } )();
+  }, [] );
 
   return (
-    <Page heading={heading} title={title} description={description}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title } description={ description }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <OverviewHeader>
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
-                dKey={t((t) => t.stats["All"])}
+                dKey={ t( ( t ) => t.stats[ "All" ] ) }
                 dValue={
-                  !stats ? (
+                  ! stats ? (
                     <Loading />
                   ) : (
-                    <Link href={createPlacesPageURL(lang)}>{stats.all}</Link>
+                    <Link href={ createPlacesPageURL( lang ) }>
+                      { stats.all }
+                    </Link>
                   )
                 }
               />
               <DescriptionSection
                 isHorizontal
-                dKey={t((t) => t.stats["Eventless"])}
+                dKey={ t( ( t ) => t.stats[ "Eventless" ] ) }
                 dValue={
-                  !stats ? (
+                  ! stats ? (
                     <Loading />
                   ) : stats.eventless === 0 ? (
-                    <span>{stats.eventless}</span>
+                    <span>{ stats.eventless }</span>
                   ) : (
                     <Link
-                      href={createPlacesPageURL(lang, {
+                      href={ createPlacesPageURL( lang, {
                         category: "eventless",
-                      })}
+                      } ) }
                     >
-                      {stats.eventless}
+                      { stats.eventless }
                     </Link>
                   )
                 }
               />
             </DescriptionList>
           </OverviewHeader>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-stats-places");
+export const getStaticProps = createGetStaticProps( "page-stats-places" );
 
 export const getStaticPaths = getStaticExportPaths;
 

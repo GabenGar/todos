@@ -8,10 +8,10 @@ import type { IInputProps } from "../input";
 import styles from "./section.module.scss";
 
 interface IFormSectionProps
-  extends Omit<IBaseComponentPropsWithChildren<"div">, "id"> {}
+  extends Omit< IBaseComponentPropsWithChildren< "div" >, "id" > {}
 
 export interface IInputSectionProps
-  extends Omit<IFormSectionProps, "id">,
+  extends Omit< IFormSectionProps, "id" >,
     Pick<
       IInputProps,
       | "id"
@@ -23,8 +23,8 @@ export interface IInputSectionProps
       | "disabled"
     > {}
 
-export const InputSection = createBlockComponent(styles, Component);
+export const InputSection = createBlockComponent( styles, Component );
 
-function Component({ ...blockProps }: IFormSectionProps) {
-  return <div {...blockProps} />;
+function Component( { ...blockProps }: IFormSectionProps ) {
+  return <div { ...blockProps } />;
 }

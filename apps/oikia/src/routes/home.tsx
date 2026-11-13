@@ -19,42 +19,42 @@ interface IProps extends ILocalizedProps {
   isRegistered: boolean;
 }
 
-function HomePage({ loaderData }: Route.ComponentProps) {
+function HomePage( { loaderData }: Route.ComponentProps ) {
   const { t } = useTranslation();
   const { language, isRegistered } = loaderData;
-  const title = createMetaTitle(t((t) => t.pages.home.Welcome));
-  const heading = t((t) => t.pages.home["Welcome"]);
+  const title = createMetaTitle( t( ( t ) => t.pages.home.Welcome ) );
+  const heading = t( ( t ) => t.pages.home[ "Welcome" ] );
   const formID = "logout";
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={t((t) => t.pages.home["Authentication"])}
+                  dKey={ t( ( t ) => t.pages.home[ "Authentication" ] ) }
                   dValue={
                     isRegistered ? (
                       <List>
                         <ListItem>
                           <LinkInternal
-                            href={href("/:language/account", { language })}
+                            href={ href( "/:language/account", { language } ) }
                           >
-                            {t((t) => t.pages.home["Account"])}
+                            { t( ( t ) => t.pages.home[ "Account" ] ) }
                           </LinkInternal>
                         </ListItem>
 
-                        <ListItem className={styles.logout}>
+                        <ListItem className={ styles.logout }>
                           <Form
-                            id={formID}
+                            id={ formID }
                             method="POST"
-                            action={href("/:language/authentication/logout", {
+                            action={ href( "/:language/authentication/logout", {
                               language,
-                            })}
-                            submitButton={() =>
-                              t((t) => t.pages.home["Log out"])
+                            } ) }
+                            submitButton={ () =>
+                              t( ( t ) => t.pages.home[ "Log out" ] )
                             }
                           />
                         </ListItem>
@@ -63,22 +63,22 @@ function HomePage({ loaderData }: Route.ComponentProps) {
                       <List>
                         <ListItem>
                           <LinkInternal
-                            href={href(
+                            href={ href(
                               "/:language/authentication/registration",
                               { language },
-                            )}
+                            ) }
                           >
-                            {t((t) => t.pages.home["Register"])}
+                            { t( ( t ) => t.pages.home[ "Register" ] ) }
                           </LinkInternal>
                         </ListItem>
 
                         <ListItem>
                           <LinkInternal
-                            href={href("/:language/authentication/login", {
+                            href={ href( "/:language/authentication/login", {
                               language,
-                            })}
+                            } ) }
                           >
-                            {t((t) => t.pages.home["Log in"])}
+                            { t( ( t ) => t.pages.home[ "Log in" ] ) }
                           </LinkInternal>
                         </ListItem>
                       </List>
@@ -88,22 +88,22 @@ function HomePage({ loaderData }: Route.ComponentProps) {
               </DescriptionList>
             </OverviewHeader>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  const language = getLanguage(params);
-  const translation = await getTranslation(language);
+export async function loader( { request, params }: Route.LoaderArgs ) {
+  const language = getLanguage( params );
+  const translation = await getTranslation( language );
   let isRegistered: boolean;
 
   try {
-    await authenticateRequest(request);
+    await authenticateRequest( request );
     isRegistered = true;
     // biome-ignore lint/correctness/noUnusedVariables: no idea what biome expects there
-  } catch (error) {
+  } catch ( error ) {
     isRegistered = false;
   }
 

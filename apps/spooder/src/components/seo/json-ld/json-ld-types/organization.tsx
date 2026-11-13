@@ -9,76 +9,82 @@ interface IOrganizationProps {
   jsonLD: IOrganizationJSONLD;
 }
 
-export function OrganizationJSONLD({ jsonLD }: IOrganizationProps) {
+export function OrganizationJSONLD( { jsonLD }: IOrganizationProps ) {
   const { t } = useTranslation();
   const { name, alternateName, url, logo, description, sameAs } = jsonLD;
 
   return (
     <>
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"].organization.name,
-        )}
-        dValue={name}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].organization.name,
+        ) }
+        dValue={ name }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"].organization[
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].organization[
               "alternate-name"
             ],
-        )}
-        dValue={alternateName}
+        ) }
+        dValue={ alternateName }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"].organization.url,
-        )}
-        dValue={url}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].organization.url,
+        ) }
+        dValue={ url }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"].organization.logo,
-        )}
-        dValue={logo}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].organization.logo,
+        ) }
+        dValue={ logo }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"].organization.description,
-        )}
-        dValue={description}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].organization
+              .description,
+        ) }
+        dValue={ description }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"].organization["same-as"],
-        )}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].organization[
+              "same-as"
+            ],
+        ) }
         dValue={
-          <Details summary={sameAs?.length}>
+          <Details summary={ sameAs?.length }>
             <OneOrManyItems
-              item={sameAs}
-              itemElement={(url) => <Preformatted>{url}</Preformatted>}
+              item={ sameAs }
+              itemElement={ ( url ) => <Preformatted>{ url }</Preformatted> }
             />
           </Details>
         }

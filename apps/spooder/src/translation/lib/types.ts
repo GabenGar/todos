@@ -1,4 +1,4 @@
-export const SUPPORTED_LANGUAGES = ["en", "ru"] as const;
+export const SUPPORTED_LANGUAGES = [ "en", "ru" ] as const;
 
 export const BASE_NAMESPACES = [
   "common",
@@ -7,8 +7,8 @@ export const BASE_NAMESPACES = [
 ] as const;
 export const DEFAULT_NAMESPACES = BASE_NAMESPACES;
 export const NAMESPACES = BASE_NAMESPACES;
-export type ILocale = (typeof SUPPORTED_LANGUAGES)[number];
-export type IBaseNamespace = (typeof BASE_NAMESPACES)[number];
+export type ILocale = ( typeof SUPPORTED_LANGUAGES )[ number ];
+export type IBaseNamespace = ( typeof BASE_NAMESPACES )[ number ];
 export type INameSpace = IBaseNamespace;
 export type IDefaultNamespace = Exclude<
   IBaseNamespace,
@@ -16,22 +16,24 @@ export type IDefaultNamespace = Exclude<
 >;
 export type IActionableNameSpace = IDefaultNamespace;
 
-export function isLocale(input: unknown): input is ILocale {
-  return SUPPORTED_LANGUAGES.includes(input as ILocale);
+export function isLocale( input: unknown ): input is ILocale {
+  return SUPPORTED_LANGUAGES.includes( input as ILocale );
 }
 
-export function validateLocale(input: unknown): asserts input is ILocale {
-  if (!isLocale(input)) {
-    throw new Error(`Invalid locale "${input}".`);
+export function validateLocale( input: unknown ): asserts input is ILocale {
+  if ( ! isLocale( input ) ) {
+    throw new Error( `Invalid locale "${ input }".` );
   }
 }
 
-export function isNamespace(input: unknown): input is INameSpace {
-  return NAMESPACES.includes(input as INameSpace);
+export function isNamespace( input: unknown ): input is INameSpace {
+  return NAMESPACES.includes( input as INameSpace );
 }
 
-export function validateNamespace(input: unknown): asserts input is INameSpace {
-  if (!isNamespace(input)) {
-    throw new Error(`Invalid namespace "${input}".`);
+export function validateNamespace(
+  input: unknown,
+): asserts input is INameSpace {
+  if ( ! isNamespace( input ) ) {
+    throw new Error( `Invalid namespace "${ input }".` );
   }
 }

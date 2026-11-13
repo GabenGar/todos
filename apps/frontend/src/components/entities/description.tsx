@@ -3,8 +3,8 @@ import { type IPreProps, Pre } from "#components/pre";
 
 interface IProps extends IPreProps {}
 
-export const EntityDescription = createBlockComponent(undefined, Component);
+export const EntityDescription = createBlockComponent( undefined, Component );
 
-function Component({ ...props }: IProps) {
-  return <Pre {...props} />;
+function Component( { ...props }: IProps ) {
+  return <Pre { ...props } />;
 }

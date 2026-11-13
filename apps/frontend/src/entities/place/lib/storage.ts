@@ -2,20 +2,20 @@ import { createValidator } from "#lib/json/schema";
 import { createLocalStorage } from "#store/local";
 import type { IPlace } from "../types";
 
-const validatePlace: ReturnType<typeof createValidator<IPlace>> =
-  createValidator<IPlace>("/entities/place/entity");
+const validatePlace: ReturnType< typeof createValidator< IPlace > > =
+  createValidator< IPlace >( "/entities/place/entity" );
 
-function validatePlacesKey(input: unknown): asserts input is IPlace[] {
-  if (!Array.isArray(input)) {
-    throw new Error(`The value of "tasks" is not an array.`);
+function validatePlacesKey( input: unknown ): asserts input is IPlace[] {
+  if ( ! Array.isArray( input ) ) {
+    throw new Error( `The value of "tasks" is not an array.` );
   }
 
-  input.forEach((value) => {
-    validatePlace(value);
-  });
+  input.forEach( ( value ) => {
+    validatePlace( value );
+  } );
 }
 
-const { get, set } = createLocalStorage("places", [], validatePlacesKey);
+const { get, set } = createLocalStorage( "places", [], validatePlacesKey );
 
 export const getLocalStorePlaces = get;
 export const setLocalStorePlaces = set;

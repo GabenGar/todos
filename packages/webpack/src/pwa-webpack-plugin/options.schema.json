@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "required": ["name", "short_name"],
+  "required": [ "name", "short_name" ],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -22,7 +22,7 @@
       "type": "string"
     },
     "display": {
-      "enum": ["standalone", "browser", "fullscreen", "minimal-ui"]
+      "enum": [ "standalone", "browser", "fullscreen", "minimal-ui" ]
     },
     "theme_color": {
       "type": "string"

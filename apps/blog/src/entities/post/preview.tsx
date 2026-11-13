@@ -17,73 +17,81 @@ interface IProps extends IPreviewProps {
   post: IBlogPostPreview;
 }
 
-export function BlogPostPreview({ post, ...props }: IProps) {
+export function BlogPostPreview( { post, ...props }: IProps ) {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
   const { id, title, description, created_at, edited_at, published_at } = post;
 
   return (
-    <Preview {...props}>
-      {(level) => (
+    <Preview { ...props }>
+      { ( level ) => (
         <>
           <PreviewHeader>
-            <Heading level={level}>{title}</Heading>
-            <EntityID entityID={id} />
+            <Heading level={ level }>{ title }</Heading>
+            <EntityID entityID={ id } />
           </PreviewHeader>
 
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.entities["blog-post"].description)}
-                dValue={description}
+                dKey={ t( ( t ) => t.entities[ "blog-post" ].description ) }
+                dValue={ description }
                 isKeyPreformatted
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t((t) => t.entities["blog-post"]["created-at"])}
-                dValue={<DateTimeView dateTime={created_at} />}
+                dKey={ t( ( t ) => t.entities[ "blog-post" ][ "created-at" ] ) }
+                dValue={ <DateTimeView dateTime={ created_at } /> }
                 isKeyPreformatted
               />
 
-              {!published_at ? (
+              { ! published_at ? (
                 <DescriptionSection
-                  dKey={t((t) => t.entities["blog-post"]["published-at"])}
+                  dKey={ t(
+                    ( t ) => t.entities[ "blog-post" ][ "published-at" ],
+                  ) }
                   isKeyPreformatted
                 />
               ) : (
                 <DescriptionSection
-                  dKey={t((t) => t.entities["blog-post"]["published-at"])}
-                  dValue={<DateTimeView dateTime={published_at} />}
+                  dKey={ t(
+                    ( t ) => t.entities[ "blog-post" ][ "published-at" ],
+                  ) }
+                  dValue={ <DateTimeView dateTime={ published_at } /> }
                   isKeyPreformatted
                 />
-              )}
+              ) }
 
-              {!edited_at ? (
+              { ! edited_at ? (
                 <DescriptionSection
-                  dKey={t((t) => t.entities["blog-post"]["edited-at"])}
+                  dKey={ t(
+                    ( t ) => t.entities[ "blog-post" ][ "edited-at" ],
+                  ) }
                   isKeyPreformatted
                 />
               ) : (
                 <DescriptionSection
-                  dKey={t((t) => t.entities["blog-post"]["edited-at"])}
-                  dValue={<DateTimeView dateTime={edited_at} />}
+                  dKey={ t(
+                    ( t ) => t.entities[ "blog-post" ][ "edited-at" ],
+                  ) }
+                  dValue={ <DateTimeView dateTime={ edited_at } /> }
                   isKeyPreformatted
                 />
-              )}
+              ) }
             </DescriptionList>
           </PreviewBody>
 
           <PreviewFooter>
             <LinkInternal
-              to={"/$language/blog/post/$post_id"}
-              params={{ language, post_id: id }}
+              to={ "/$language/blog/post/$post_id" }
+              params={ { language, post_id: id } }
             >
-              {t((t) => t.entities["blog-post"]["read-more"])}
+              { t( ( t ) => t.entities[ "blog-post" ][ "read-more" ] ) }
             </LinkInternal>
           </PreviewFooter>
         </>
-      )}
+      ) }
     </Preview>
   );
 }

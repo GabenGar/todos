@@ -12,10 +12,10 @@ export interface IPlannedEvent {
 }
 
 export interface IPlannedEventInit
-  extends Pick<IPlannedEvent, "title" | "description"> {}
+  extends Pick< IPlannedEvent, "title" | "description" > {}
 
 export interface IPlannedEventUpdate
-  extends Pick<Required<IPlannedEvent>, "id">,
-    Pick<Partial<IPlannedEvent>, "title" | "description"> {}
+  extends Pick< Required< IPlannedEvent >, "id" >,
+    Pick< Partial< IPlannedEvent >, "title" | "description" > {}
 
 export type IPlannedEventOrder = "recently_created" | "recently_updated";

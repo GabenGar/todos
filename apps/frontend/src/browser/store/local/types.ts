@@ -9,6 +9,6 @@ export const LOCAL_STORAGE_KEYS = {
 } as const;
 
 export type ILocalStoreKey = Exclude<
-  (typeof LOCAL_STORAGE_KEYS)[keyof typeof LOCAL_STORAGE_KEYS],
+  ( typeof LOCAL_STORAGE_KEYS )[ keyof typeof LOCAL_STORAGE_KEYS ],
   typeof LOCAL_STORAGE_KEYS.STORAGE_TEST
 >;

@@ -7,18 +7,18 @@ import {
 
 import styles from "./label.module.scss";
 
-interface IProps extends IBaseComponentPropsWithChildren<"label"> {
+interface IProps extends IBaseComponentPropsWithChildren< "label" > {
   separator?: ReactNode;
 }
 
-export const Label = createBlockComponent(styles, Component);
+export const Label = createBlockComponent( styles, Component );
 
-function Component({ children, separator = ":", ...props }: IProps) {
+function Component( { children, separator = ":", ...props }: IProps ) {
   return (
     // biome-ignore lint/a11y/noLabelWithoutControl: no explanation
-    <label {...props}>
-      {children}
-      {separator}
+    <label { ...props }>
+      { children }
+      { separator }
     </label>
   );
 }

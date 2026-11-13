@@ -27,63 +27,63 @@ interface IProps extends ILanguageProps, IPreviewProps {
 }
 
 export const InvitationPreview: ReturnType<
-  typeof createBlockComponent<IProps>
-> = createBlockComponent(undefined, Component);
+  typeof createBlockComponent< IProps >
+> = createBlockComponent( undefined, Component );
 
-function Component({ language, invitation, ...props }: IProps) {
+function Component( { language, invitation, ...props }: IProps ) {
   const { t } = useTranslation();
   const { id, title, description, code, is_active, target_role, created_by } =
     invitation;
-  const parsedTitle = parseTitle(title);
-  const parsedName = parseName(created_by?.name);
+  const parsedTitle = parseTitle( title );
+  const parsedName = parseName( created_by?.name );
 
   return (
-    <Preview {...props}>
-      {(headingLevel) => (
+    <Preview { ...props }>
+      { ( headingLevel ) => (
         <>
           <PreviewHeader>
-            <Heading level={headingLevel}>
+            <Heading level={ headingLevel }>
               <LinkInternal
-                href={href(
+                href={ href(
                   "/:language/account/role/administrator/invitation/:id",
                   {
                     language,
                     id,
                   },
-                )}
+                ) }
               >
-                {parsedTitle}
+                { parsedTitle }
               </LinkInternal>
             </Heading>
 
-            <EntityID entityID={id} />
+            <EntityID entityID={ id } />
           </PreviewHeader>
 
           <PreviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.entities.invitation["Code"])}
-                dValue={code}
+                dKey={ t( ( t ) => t.entities.invitation[ "Code" ] ) }
+                dValue={ code }
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t((t) => t.entities.invitation["Target role"])}
-                dValue={target_role}
+                dKey={ t( ( t ) => t.entities.invitation[ "Target role" ] ) }
+                dValue={ target_role }
                 isValuePreformatted
                 isHorizontal
               />
 
               <DescriptionSection
-                dKey={t((t) => t.entities.invitation["Status"])}
+                dKey={ t( ( t ) => t.entities.invitation[ "Status" ] ) }
                 dValue={
                   is_active ? (
-                    <span className={styles.active}>
-                      {t((t) => t.entities.invitation["Active"])}
+                    <span className={ styles.active }>
+                      { t( ( t ) => t.entities.invitation[ "Active" ] ) }
                     </span>
                   ) : (
-                    <span className={styles.inactive}>
-                      {t((t) => t.entities.invitation["Inactive"])}
+                    <span className={ styles.inactive }>
+                      { t( ( t ) => t.entities.invitation[ "Inactive" ] ) }
                     </span>
                   )
                 }
@@ -91,30 +91,33 @@ function Component({ language, invitation, ...props }: IProps) {
               />
 
               <DescriptionSection
-                dKey={t((t) => t.entities.invitation["Description"])}
+                dKey={ t( ( t ) => t.entities.invitation[ "Description" ] ) }
                 dValue={
-                  !description ? (
-                    t((t) => t.entities.invitation["No description provided"])
+                  ! description ? (
+                    t(
+                      ( t ) =>
+                        t.entities.invitation[ "No description provided" ],
+                    )
                   ) : (
-                    <EntityDescription>{description}</EntityDescription>
+                    <EntityDescription>{ description }</EntityDescription>
                   )
                 }
               />
 
               <DescriptionSection
-                dKey={t((t) => t.entities.invitation["Creator"])}
+                dKey={ t( ( t ) => t.entities.invitation[ "Creator" ] ) }
                 dValue={
-                  !created_by ? undefined : (
+                  ! created_by ? undefined : (
                     <LinkInternal
-                      href={href(
+                      href={ href(
                         "/:language/account/role/administrator/account/:id",
                         {
                           language,
                           id: created_by.id,
                         },
-                      )}
+                      ) }
                     >
-                      {parsedName} ({created_by.id})
+                      { parsedName } ({ created_by.id })
                     </LinkInternal>
                   )
                 }
@@ -123,7 +126,7 @@ function Component({ language, invitation, ...props }: IProps) {
             </DescriptionList>
           </PreviewBody>
         </>
-      )}
+      ) }
     </Preview>
   );
 }

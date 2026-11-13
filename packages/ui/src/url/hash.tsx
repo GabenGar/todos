@@ -8,22 +8,22 @@ interface IProps {
 /**
  * @TODO per-type rundown
  */
-export function Hash({ hash }: IProps) {
+export function Hash( { hash }: IProps ) {
   const { t } = useTranslation();
-  const hashType = guessHashType(hash);
+  const hashType = guessHashType( hash );
 
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={t((t) => t.url.hash.type)}
-        dValue={t((t) => t.url.hash[hashType])}
+        dKey={ t( ( t ) => t.url.hash.type ) }
+        dValue={ t( ( t ) => t.url.hash[ hashType ] ) }
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t((t) => t.url.hash.value)}
-        dValue={hash}
+        dKey={ t( ( t ) => t.url.hash.value ) }
+        dValue={ hash }
         isKeyPreformatted
         isValuePreformatted
       />
@@ -40,19 +40,19 @@ type IHashType =
   | "spatial-dimension-media-fragment"
   | "text-fragment";
 
-function guessHashType(value: string): IHashType {
+function guessHashType( value: string ): IHashType {
   // get rid of "#"
-  const normalizedValue = value.slice(1);
+  const normalizedValue = value.slice( 1 );
 
-  if (normalizedValue.startsWith("t=")) {
+  if ( normalizedValue.startsWith( "t=" ) ) {
     return "temporal-dimension-media-fragment";
   }
 
-  if (normalizedValue.startsWith("xywh=")) {
+  if ( normalizedValue.startsWith( "xywh=" ) ) {
     return "spatial-dimension-media-fragment";
   }
 
-  if (normalizedValue.startsWith(":~:text=")) {
+  if ( normalizedValue.startsWith( ":~:text=" ) ) {
     return "text-fragment";
   }
 

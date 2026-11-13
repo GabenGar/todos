@@ -22,46 +22,52 @@ interface IProps extends ILocalizedProps {
 /**
  * @TODO client render
  */
-function AdministratorPage({ loaderData }: Route.ComponentProps) {
+function AdministratorPage( { loaderData }: Route.ComponentProps ) {
   const { t } = useTranslation();
   const { language, accounts, invitations } = loaderData;
-  const heading = t((t) => t.pages["administrator-home"]["Administrator"]);
+  const heading = t(
+    ( t ) => t.pages[ "administrator-home" ][ "Administrator" ],
+  );
   const title = createMetaTitle(
-    t((t) => t.pages["administrator-home"]["Administrator"]),
+    t( ( t ) => t.pages[ "administrator-home" ][ "Administrator" ] ),
   );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={t((t) => t.pages["administrator-home"]["Accounts"])}
+                  dKey={ t(
+                    ( t ) => t.pages[ "administrator-home" ][ "Accounts" ],
+                  ) }
                   dValue={
                     <LinkInternal
-                      href={href(
+                      href={ href(
                         "/:language/account/role/administrator/accounts",
                         { language },
-                      )}
+                      ) }
                     >
-                      {accounts}
+                      { accounts }
                     </LinkInternal>
                   }
                   isHorizontal
                 />
 
                 <DescriptionSection
-                  dKey={t((t) => t.pages["administrator-home"]["Invitations"])}
+                  dKey={ t(
+                    ( t ) => t.pages[ "administrator-home" ][ "Invitations" ],
+                  ) }
                   dValue={
                     <LinkInternal
-                      href={href(
+                      href={ href(
                         "/:language/account/role/administrator/invitations",
                         { language },
-                      )}
+                      ) }
                     >
-                      {invitations}
+                      { invitations }
                     </LinkInternal>
                   }
                   isHorizontal
@@ -69,22 +75,22 @@ function AdministratorPage({ loaderData }: Route.ComponentProps) {
               </DescriptionList>
             </OverviewHeader>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export const loader = createLocalizedLoader(async function loader(
+export const loader = createLocalizedLoader( async function loader(
   { request }: Route.LoaderArgs,
   localizedProps,
 ) {
-  await authenticateAdmin(request);
+  await authenticateAdmin( request );
 
   const { accounts, invitations } = await runTransaction(
-    async (transaction) => {
-      const accountCount = await selectAccountCount(transaction);
-      const invitationCount = await selectInvitationCount(transaction);
+    async ( transaction ) => {
+      const accountCount = await selectAccountCount( transaction );
+      const invitationCount = await selectInvitationCount( transaction );
       const result = { accounts: accountCount, invitations: invitationCount };
 
       return result;
@@ -98,6 +104,6 @@ export const loader = createLocalizedLoader(async function loader(
   };
 
   return props;
-});
+} );
 
 export default AdministratorPage;

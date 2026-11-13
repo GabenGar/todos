@@ -28,25 +28,28 @@ import { type ITask, type ITaskInit, isTaskStatus } from "./types";
 
 interface IProps
   extends ILocalizableProps,
-    Pick<IOverviewProps, "headingLevel"> {
+    Pick< IOverviewProps, "headingLevel" > {
   id: string;
 }
 
 /**
  * @TODO move the state out of the component
  */
-export function TaskList({ language, id, headingLevel }: IProps) {
+export function TaskList( { language, id, headingLevel }: IProps ) {
   const router = useRouter();
   const { isReady, query: pageQuery } = router;
-  const [tasks, changeTasks] = useState<Awaited<ReturnType<typeof getTasks>>>();
-  const inputPage = getSingleValueFromQuery(pageQuery, "page");
-  const page = !inputPage ? undefined : parseInt(inputPage, 10);
-  const query = getSingleValueFromQuery(pageQuery, "query");
-  const inputStatus = getSingleValueFromQuery(pageQuery, "status");
-  const status = !isTaskStatus(inputStatus) ? undefined : inputStatus;
-  const placeID = getSingleValueFromQuery(pageQuery, "place_id");
+  const [ tasks, changeTasks ] =
+    useState< Awaited< ReturnType< typeof getTasks > > >();
+  const inputPage = getSingleValueFromQuery( pageQuery, "page" );
+  const page = ! inputPage ? undefined : parseInt( inputPage, 10 );
+  const query = getSingleValueFromQuery( pageQuery, "query" );
+  const inputStatus = getSingleValueFromQuery( pageQuery, "status" );
+  const status = ! isTaskStatus( inputStatus ) ? undefined : inputStatus;
+  const placeID = getSingleValueFromQuery( pageQuery, "place_id" );
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  const options = useMemo<Required<Parameters<typeof getTasks>>[0]>(() => {
+  const options = useMemo<
+    Required< Parameters< typeof getTasks > >[ 0 ]
+  >( () => {
     return {
       includeDeleted: false,
       page,
@@ -54,136 +57,138 @@ export function TaskList({ language, id, headingLevel }: IProps) {
       status,
       placeID,
     };
-  }, [isReady, page, query, status, placeID]);
+  }, [ isReady, page, query, status, placeID ] );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    if (!isReady) {
+  useEffect( () => {
+    if ( ! isReady ) {
       return;
     }
 
-    (async () => {
-      const newTasks = await getTasks(options);
+    ( async () => {
+      const newTasks = await getTasks( options );
 
       // short circuit if nothing found
-      if (newTasks.pagination.totalCount === 0) {
-        changeTasks(newTasks);
+      if ( newTasks.pagination.totalCount === 0 ) {
+        changeTasks( newTasks );
         return;
       }
 
-      if (options.page !== newTasks.pagination.currentPage) {
-        const newTasksURL = createTasksPageURL(language, {
+      if ( options.page !== newTasks.pagination.currentPage ) {
+        const newTasksURL = createTasksPageURL( language, {
           page: newTasks.pagination.currentPage,
           query: options.query,
           placeID: options.placeID,
           status: options.status,
-        });
+        } );
 
-        router.replace(newTasksURL);
+        router.replace( newTasksURL );
 
         return;
       }
 
-      changeTasks(newTasks);
-    })();
-  }, [isReady, options]);
+      changeTasks( newTasks );
+    } )();
+  }, [ isReady, options ] );
 
-  async function handleTaskCreation(init: ITaskInit) {
-    await createTask(init);
-    const newTasks = await getTasks(options);
+  async function handleTaskCreation( init: ITaskInit ) {
+    await createTask( init );
+    const newTasks = await getTasks( options );
 
-    if (newTasks.pagination.totalPages !== tasks?.pagination.totalPages) {
-      const newOptions: Required<Parameters<typeof createTasksPageURL>>[1] = {
+    if ( newTasks.pagination.totalPages !== tasks?.pagination.totalPages ) {
+      const newOptions: Required< Parameters< typeof createTasksPageURL > >[
+        1
+      ] = {
         query: options.query,
         placeID: options.placeID,
         status: options.status,
         page: newTasks.pagination.totalPages,
       };
-      const newURL = createTasksPageURL(language, newOptions);
-      router.replace(newURL);
+      const newURL = createTasksPageURL( language, newOptions );
+      router.replace( newURL );
 
       return;
     }
 
-    changeTasks(newTasks);
+    changeTasks( newTasks );
   }
 
-  async function handleTaskSearch(newQuery: ITaskSearchQuery) {
-    const { pagination } = await getTasks({
+  async function handleTaskSearch( newQuery: ITaskSearchQuery ) {
+    const { pagination } = await getTasks( {
       includeDeleted: false,
       query: newQuery.query,
       status: newQuery.status,
       placeID: newQuery.place_id,
-    });
+    } );
 
-    const newURL = createTasksPageURL(language, {
+    const newURL = createTasksPageURL( language, {
       page: pagination.currentPage,
       query: newQuery.query,
       status: newQuery.status,
       placeID: newQuery.place_id,
-    });
+    } );
 
-    router.replace(newURL);
+    router.replace( newURL );
   }
 
   return (
     <>
       <Forms
-        language={language}
-        headingLevel={headingLevel}
-        id={id}
-        query={query}
-        status={status}
-        placeID={placeID}
-        onNewTask={handleTaskCreation}
-        onSearch={handleTaskSearch}
+        language={ language }
+        headingLevel={ headingLevel }
+        id={ id }
+        query={ query }
+        status={ status }
+        placeID={ placeID }
+        onNewTask={ handleTaskCreation }
+        onSearch={ handleTaskSearch }
       />
 
-      {!tasks ? (
-        <Overview headingLevel={headingLevel}>
-          {() => (
+      { ! tasks ? (
+        <Overview headingLevel={ headingLevel }>
+          { () => (
             <OverviewHeader>
               <Loading />
             </OverviewHeader>
-          )}
+          ) }
         </Overview>
       ) : (
         <PreviewList
-          pagination={tasks.pagination}
-          buildURL={(page) => {
-            const url = createTasksPageURL(language, {
+          pagination={ tasks.pagination }
+          buildURL={ ( page ) => {
+            const url = createTasksPageURL( language, {
               ...options,
               page,
-            });
+            } );
 
             return url;
-          }}
+          } }
           sortingOrder="descending"
         >
-          {tasks.items.map((task) => (
+          { tasks.items.map( ( task ) => (
             <TaskPreview
-              key={task.id}
-              language={language}
-              headingLevel={headingLevel}
-              task={task}
+              key={ task.id }
+              language={ language }
+              headingLevel={ headingLevel }
+              task={ task }
             />
-          ))}
+          ) ) }
         </PreviewList>
-      )}
+      ) }
     </>
   );
 }
 
 interface IFormsProps
-  extends Pick<IProps, "language" | "id" | "headingLevel">,
-    Pick<INewTaskFormProps, "onNewTask">,
-    Pick<ISearchTasksFormProps, "onSearch"> {
+  extends Pick< IProps, "language" | "id" | "headingLevel" >,
+    Pick< INewTaskFormProps, "onNewTask" >,
+    Pick< ISearchTasksFormProps, "onSearch" > {
   query?: string;
-  status?: ITask["status"];
-  placeID?: IPlace["id"];
+  status?: ITask[ "status" ];
+  placeID?: IPlace[ "id" ];
 }
 
-function Forms({
+function Forms( {
   language,
   headingLevel,
   id,
@@ -192,63 +197,64 @@ function Forms({
   placeID,
   onNewTask,
   onSearch,
-}: IFormsProps) {
-  const { t } = useTranslation("translation");
-  const [place, changePlace] = useState<Awaited<ReturnType<typeof getPlace>>>();
-  const newFormID = `${id}-task-list-new`;
-  const searchFormID = `${id}-task-list-search`;
+}: IFormsProps ) {
+  const { t } = useTranslation( "translation" );
+  const [ place, changePlace ] =
+    useState< Awaited< ReturnType< typeof getPlace > > >();
+  const newFormID = `${ id }-task-list-new`;
+  const searchFormID = `${ id }-task-list-search`;
 
-  useEffect(() => {
+  useEffect( () => {
     // do not fetch new place if it's the same or undefined
-    if (!placeID) {
-      changePlace(undefined);
+    if ( ! placeID ) {
+      changePlace( undefined );
       return;
     }
 
-    (async () => {
-      const newPlace = await getPlace(placeID);
-      changePlace(newPlace);
-    })();
-  }, [placeID]);
+    ( async () => {
+      const newPlace = await getPlace( placeID );
+      changePlace( newPlace );
+    } )();
+  }, [ placeID ] );
 
   return (
-    <Overview headingLevel={headingLevel}>
-      {() => (
+    <Overview headingLevel={ headingLevel }>
+      { () => (
         <>
-          {place && (
+          { place && (
             <OverviewHeader>
               <List>
                 <ListItem>
-                  <Link href={createPlacePageURL(language, place.id)}>
-                    {t((t) => t.task.new_todo.place)}
+                  <Link href={ createPlacePageURL( language, place.id ) }>
+                    { t( ( t ) => t.task.new_todo.place ) }
                   </Link>
                 </ListItem>
               </List>
             </OverviewHeader>
-          )}
+          ) }
 
           <OverviewBody>
-            <Details summary={t((t) => t.task.search)}>
+            <Details summary={ t( ( t ) => t.task.search ) }>
               <SearchTasksForm
-                language={language}
-                id={searchFormID}
-                defaultQuery={{ query, status }}
-                place={place}
-                onSearch={onSearch}
+                language={ language }
+                id={ searchFormID }
+                defaultQuery={ { query, status } }
+                place={ place }
+                onSearch={ onSearch }
               />
             </Details>
 
-            <Details summary={t((t) => t.task.add)}>
+            <Details summary={ t( ( t ) => t.task.add ) }>
               <NewTaskForm
-                language={language}
-                id={newFormID}
-                place={place}
-                onNewTask={onNewTask}
+                language={ language }
+                id={ newFormID }
+                place={ place }
+                onNewTask={ onNewTask }
               />
             </Details>
           </OverviewBody>
         </>
-      )}
+      ) }
     </Overview>
   );
 }

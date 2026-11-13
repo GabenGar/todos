@@ -25,7 +25,7 @@ export interface IOverviewFooterProps extends IArticleFooterProps {
   isFilled?: boolean;
 }
 
-export const Overview = createBlockComponent(styles, OverviewComponent);
+export const Overview = createBlockComponent( styles, OverviewComponent );
 export const OverviewHeader = createBlockComponent(
   styles.header,
   OverviewHeaderComponent,
@@ -39,36 +39,36 @@ export const OverviewFooter = createBlockComponent(
   OverviewFooterComponent,
 );
 
-function OverviewComponent({ ...props }: IOverviewProps) {
-  return <Article {...props} />;
+function OverviewComponent( { ...props }: IOverviewProps ) {
+  return <Article { ...props } />;
 }
 
-function OverviewHeaderComponent({
+function OverviewHeaderComponent( {
   isFilled,
   className,
   ...props
-}: IOverviewHeaderProps) {
-  const resolvedClassname = clsx(className, isFilled && styles.filled);
+}: IOverviewHeaderProps ) {
+  const resolvedClassname = clsx( className, isFilled && styles.filled );
 
-  return <ArticleHeader className={resolvedClassname} {...props} />;
+  return <ArticleHeader className={ resolvedClassname } { ...props } />;
 }
 
-function OverviewBodyComponent({
+function OverviewBodyComponent( {
   isFilled,
   className,
   ...props
-}: IOverviewBodyProps) {
-  const resolvedClassname = clsx(className, isFilled && styles.filled);
+}: IOverviewBodyProps ) {
+  const resolvedClassname = clsx( className, isFilled && styles.filled );
 
-  return <ArticleBody className={resolvedClassname} {...props} />;
+  return <ArticleBody className={ resolvedClassname } { ...props } />;
 }
 
-function OverviewFooterComponent({
+function OverviewFooterComponent( {
   isFilled,
   className,
   ...props
-}: IOverviewFooterProps) {
-  const resolvedClassname = clsx(className, isFilled && styles.filled);
+}: IOverviewFooterProps ) {
+  const resolvedClassname = clsx( className, isFilled && styles.filled );
 
-  return <ArticleFooter className={resolvedClassname} {...props} />;
+  return <ArticleFooter className={ resolvedClassname } { ...props } />;
 }

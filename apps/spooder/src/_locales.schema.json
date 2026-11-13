@@ -7,7 +7,7 @@
       {
         "type": "object",
         "additionalProperties": false,
-        "required": ["message"],
+        "required": [ "message" ],
         "properties": {
           "message": { "type": "string" },
           "description": { "type": "string" },
@@ -16,7 +16,7 @@
             "additionalProperties": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["content"],
+              "required": [ "content" ],
               "properties": {
                 "content": {
                   "type": "string"
@@ -32,7 +32,7 @@
       {
         "type": "object",
         "additionalProperties": false,
-        "required": ["message"],
+        "required": [ "message" ],
         "properties": {
           "message": { "type": "string" },
           "description": { "type": "string" }

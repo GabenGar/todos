@@ -10,13 +10,13 @@ import styles from "./layout.module.scss";
 export function Layout() {
   return (
     <ClientProvider>
-      <LayoutHeader className={styles.header} />
+      <LayoutHeader className={ styles.header } />
 
-      <main className={styles.main}>
+      <main className={ styles.main }>
         <Outlet />
       </main>
 
-      <footer className={styles.footer}>
+      <footer className={ styles.footer }>
         <ul>
           <li>
             <LinkExternal
@@ -24,7 +24,7 @@ export function Layout() {
                 "https://github.com/GabenGar/todos/tree/master/apps/extension"
               }
             >
-              {getLocalizedMessage("Source code")}
+              { getLocalizedMessage( "Source code" ) }
             </LinkExternal>
           </li>
         </ul>

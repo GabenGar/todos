@@ -15,14 +15,14 @@ const formatDateTimeOptions: Intl.DateTimeFormatOptions = {
 
 export function createDateTimeFormatter(
   locale: Intl.Locale,
-): (dateTime: IDateTime) => string {
+): ( dateTime: IDateTime ) => string {
   const formatter = new Intl.DateTimeFormat(
-    String(locale),
+    String( locale ),
     formatDateTimeOptions,
   );
 
-  function formatDateTime(dateTime: IDateTime) {
-    const formattedDateTime = formatter.format(new Date(dateTime));
+  function formatDateTime( dateTime: IDateTime ) {
+    const formattedDateTime = formatter.format( new Date( dateTime ) );
 
     return formattedDateTime;
   }

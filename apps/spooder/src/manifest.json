@@ -9,12 +9,12 @@
     "gecko": {
       "id": "@spooder.gabengar",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [ "none" ]
       },
       "strict_min_version": "115.0"
     }
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": [ "activeTab", "scripting" ],
   "action": {
     "default_icon": {
       "32": "icons/icon-32.png",

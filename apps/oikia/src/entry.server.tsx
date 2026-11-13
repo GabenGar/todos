@@ -15,46 +15,46 @@ export default function handleRequest(
   routerContext: EntryContext,
   // loadContext: AppLoadContext,
 ) {
-  return new Promise((resolve, reject) => {
+  return new Promise( ( resolve, reject ) => {
     let shellRendered = false;
-    const userAgent = request.headers.get("user-agent");
+    const userAgent = request.headers.get( "user-agent" );
 
     // Ensure requests from bots and SPA Mode renders wait for all content to load before responding
     // https://react.dev/reference/react-dom/server/renderToPipeableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
     const readyOption: keyof RenderToPipeableStreamOptions =
-      (userAgent && isbot(userAgent)) || routerContext.isSpaMode
+      ( userAgent && isbot( userAgent ) ) || routerContext.isSpaMode
         ? "onAllReady"
         : "onShellReady";
 
     const { pipe, abort } = renderToPipeableStream(
-      <ServerRouter context={routerContext} url={request.url} />,
+      <ServerRouter context={ routerContext } url={ request.url } />,
       {
-        [readyOption]() {
+        [ readyOption ]() {
           shellRendered = true;
           const body = new PassThrough();
-          const stream = createReadableStreamFromReadable(body);
+          const stream = createReadableStreamFromReadable( body );
 
-          responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.set( "Content-Type", "text/html" );
 
           resolve(
-            new Response(stream, {
+            new Response( stream, {
               headers: responseHeaders,
               status: responseStatusCode,
-            }),
+            } ),
           );
 
-          pipe(body);
+          pipe( body );
         },
-        onShellError(error: unknown) {
-          reject(error);
+        onShellError( error: unknown ) {
+          reject( error );
         },
-        onError(error: unknown) {
+        onError( error: unknown ) {
           responseStatusCode = 500;
           // Log streaming rendering errors from inside the shell.  Don't log
           // errors encountered during initial shell rendering since they'll
           // reject and get logged in handleDocumentRequest.
-          if (shellRendered) {
-            console.error(error);
+          if ( shellRendered ) {
+            console.error( error );
           }
         },
       },
@@ -62,6 +62,6 @@ export default function handleRequest(
 
     // Abort the rendering stream after the `streamTimeout` so it has time to
     // flush down the rejected boundaries
-    setTimeout(abort, streamTimeout + 1000);
-  });
+    setTimeout( abort, streamTimeout + 1000 );
+  } );
 }

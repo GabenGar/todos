@@ -7,14 +7,18 @@ interface IProps extends IPreformattedProps {
   size: number;
 }
 
-export const DigitalSize = createBlockComponent(undefined, Component);
+export const DigitalSize = createBlockComponent( undefined, Component );
 
-function Component({ size, children, ...props }: IProps) {
+function Component( { size, children, ...props }: IProps ) {
   const client = useClient();
 
   return (
-    <Preformatted date-size={String(size)} {...props}>
-      {(children ?? !client) ? <Loading /> : client.formatDigitalSize(size)}
+    <Preformatted date-size={ String( size ) } { ...props }>
+      { ( children ?? ! client ) ? (
+        <Loading />
+      ) : (
+        client.formatDigitalSize( size )
+      ) }
     </Preformatted>
   );
 }

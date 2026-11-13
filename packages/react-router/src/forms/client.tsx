@@ -12,50 +12,50 @@ import type { IFormProps } from "./form";
 export interface IFormClientProps extends IFormProps {}
 
 export const FormClient: ReturnType<
-  typeof createBlockComponent<IFormClientProps>
-> = createBlockComponent(baseFormStyles.block, Component);
+  typeof createBlockComponent< IFormClientProps >
+> = createBlockComponent( baseFormStyles.block, Component );
 
-function Component({
+function Component( {
   id,
   className,
   submitButton,
   children,
   ...props
-}: IFormProps) {
+}: IFormProps ) {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const data = useActionData() as unknown;
-  const formID = `${id}-form`;
+  const formID = `${ id }-form`;
 
   return (
-    <div id={id} className={className}>
-      {children?.(formID)}
+    <div id={ id } className={ className }>
+      { children?.( formID ) }
 
       <InputSection>
-        {navigation.state === "loading" ? (
-          t((t) => t.form.state.initializing)
+        { navigation.state === "loading" ? (
+          t( ( t ) => t.form.state.initializing )
         ) : navigation.state === "submitting" ? (
-          t((t) => t.form.state.submitting)
+          t( ( t ) => t.form.state.submitting )
         ) : data instanceof Error ? (
           <List isOrdered>
             <ListItem>
-              <Preformatted>{String(data)}</Preformatted>
+              <Preformatted>{ String( data ) }</Preformatted>
             </ListItem>
           </List>
         ) : (
-          t((t) => t.form.state.ready)
-        )}
+          t( ( t ) => t.form.state.ready )
+        ) }
       </InputSection>
 
       <InputSection>
-        <ButtonSubmit form={formID} disabled={navigation.state !== "idle"}>
-          {!submitButton
-            ? t((t) => t.form.submit)
-            : submitButton(navigation.state)}
+        <ButtonSubmit form={ formID } disabled={ navigation.state !== "idle" }>
+          { ! submitButton
+            ? t( ( t ) => t.form.submit )
+            : submitButton( navigation.state ) }
         </ButtonSubmit>
       </InputSection>
 
-      <RouterForm {...props} id={formID} />
+      <RouterForm { ...props } id={ formID } />
     </div>
   );
 }

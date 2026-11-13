@@ -10,10 +10,10 @@ import { fetchTranslation } from "./fetch-translation";
 import { DEFAULT_NAMESPACES, type ILocale } from "./types";
 
 i18next
-  .use(resourcesToBackend(fetchTranslation))
-  .use(initReactI18next)
-  .on("failedLoading", (_language, _namespace, message) =>
-    console.error(message),
+  .use( resourcesToBackend( fetchTranslation ) )
+  .use( initReactI18next )
+  .on( "failedLoading", ( _language, _namespace, message ) =>
+    console.error( message ),
   );
 
 const options = {
@@ -34,42 +34,47 @@ const options = {
   returnNull: false,
 } satisfies InitOptions;
 
-export async function getTranslation(language: ILocale): Promise<Resource> {
+export async function getTranslation( language: ILocale ): Promise< Resource > {
   await initServerTranslation();
 
-  await i18next.changeLanguage(language);
-  await i18next.loadNamespaces(DEFAULT_NAMESPACES);
+  await i18next.changeLanguage( language );
+  await i18next.loadNamespaces( DEFAULT_NAMESPACES );
 
   return i18next.store.data;
 }
 
 async function initServerTranslation() {
-  if (!i18next.isInitialized) {
-    await i18next.init({ ...options });
+  if ( ! i18next.isInitialized ) {
+    await i18next.init( { ...options } );
   }
 }
 
-export function initClientTranslation(locale: ILocale, translation: Resource) {
-  if (!i18next.isInitialized) {
-    i18next.init({
+export function initClientTranslation(
+  locale: ILocale,
+  translation: Resource,
+) {
+  if ( ! i18next.isInitialized ) {
+    i18next.init( {
       ...options,
       initAsync: false,
       lng: locale,
       resources: translation,
-    });
+    } );
 
     return;
   }
 
-  if (i18next.language !== locale) {
-    for (const [namespace, resource] of Object.entries(translation[locale])) {
-      i18next.addResourceBundle(locale, namespace, resource, false, true);
+  if ( i18next.language !== locale ) {
+    for ( const [ namespace, resource ] of Object.entries(
+      translation[ locale ],
+    ) ) {
+      i18next.addResourceBundle( locale, namespace, resource, false, true );
     }
 
-    i18next.changeLanguage(locale);
+    i18next.changeLanguage( locale );
   }
 }
 
-export function isSupportedLanguage(input?: unknown): input is ILocale {
-  return !input ? false : SUPPORTED_LANGUAGES.includes(input as ILocale);
+export function isSupportedLanguage( input?: unknown ): input is ILocale {
+  return ! input ? false : SUPPORTED_LANGUAGES.includes( input as ILocale );
 }

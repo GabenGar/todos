@@ -17,132 +17,143 @@ interface IProps {
   jsonLD: IJSONLD;
 }
 
-export function KnownJSONLDOverview({ jsonLD }: IProps) {
+export function KnownJSONLDOverview( { jsonLD }: IProps ) {
   const { t } = useTranslation();
   const { "@type": type, unknownKeys, "@context": context, "@id": id } = jsonLD;
 
   let title: string;
   let component: ReactNode;
-  switch (type) {
+  switch ( type ) {
     case "Organization": {
       title = t(
-        (t) => t.seo["json-ld-overview"]["type-overview"].organization.type,
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ].organization.type,
       );
-      component = <OrganizationJSONLD jsonLD={jsonLD} />;
+      component = <OrganizationJSONLD jsonLD={ jsonLD } />;
       break;
     }
 
     case "SoftwareApplication": {
       title = t(
-        (t) =>
-          t.seo["json-ld-overview"]["type-overview"]["software-application"]
-            .type,
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ][
+            "software-application"
+          ].type,
       );
-      component = <SoftwareApplicationJSONLD jsonLD={jsonLD} />;
+      component = <SoftwareApplicationJSONLD jsonLD={ jsonLD } />;
       break;
     }
     case "FAQPage": {
       title = t(
-        (t) => t.seo["json-ld-overview"]["type-overview"]["faq-page"].type,
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ][ "faq-page" ].type,
       );
-      component = <FAQPageJSONLD jsonLD={jsonLD} />;
+      component = <FAQPageJSONLD jsonLD={ jsonLD } />;
       break;
     }
 
     case "WebSite": {
       title = t(
-        (t) => t.seo["json-ld-overview"]["type-overview"]["website"].type,
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ][ "website" ].type,
       );
-      component = <WebsiteJSONLD jsonLD={jsonLD} />;
+      component = <WebsiteJSONLD jsonLD={ jsonLD } />;
       break;
     }
 
     case "ProfilePage": {
       title = t(
-        (t) => t.seo["json-ld-overview"]["type-overview"]["profile-page"].type,
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ][ "profile-page" ].type,
       );
-      component = <ProfilePageJSONLD jsonLD={jsonLD} />;
+      component = <ProfilePageJSONLD jsonLD={ jsonLD } />;
       break;
     }
 
     case "Article": {
       title = t(
-        (t) =>
-          t.seo["json-ld-overview"]["type-overview"]["article"]["type-name"],
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ][ "article" ][
+            "type-name"
+          ],
       );
-      component = <ArticleJSONLD jsonLD={jsonLD} />;
+      component = <ArticleJSONLD jsonLD={ jsonLD } />;
       break;
     }
 
     case "WebPage": {
       title = t(
-        (t) =>
-          t.seo["json-ld-overview"]["type-overview"]["web-page"]["type-name"],
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
+            "type-name"
+          ],
       );
-      component = <WebPageJSONLD jsonLD={jsonLD} />;
+      component = <WebPageJSONLD jsonLD={ jsonLD } />;
       break;
     }
 
     case "VideoObject": {
       title = t(
-        (t) =>
-          t.seo["json-ld-overview"]["type-overview"]["video-object"][
+        ( t ) =>
+          t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ][
             "type-name"
           ],
       );
-      component = <VideoObjectJSONLD jsonLD={jsonLD} />;
+      component = <VideoObjectJSONLD jsonLD={ jsonLD } />;
       break;
     }
 
     default: {
-      throw new Error(`Unknown JSON-LD type "${type satisfies never}".`);
+      throw new Error( `Unknown JSON-LD type "${ type satisfies never }".` );
     }
   }
 
   return (
-    <Details summary={<Preformatted>{title}</Preformatted>}>
+    <Details summary={ <Preformatted>{ title }</Preformatted> }>
       <DescriptionList>
         <DescriptionSection
-          dKey={t((t) => t.seo["json-ld-overview"].context)}
-          dValue={context}
+          dKey={ t( ( t ) => t.seo[ "json-ld-overview" ].context ) }
+          dValue={ context }
           isKeyPreformatted
           isValuePreformatted
         />
 
         <DescriptionSection
-          dKey={t((t) => t.seo["json-ld-overview"].id)}
-          dValue={id}
+          dKey={ t( ( t ) => t.seo[ "json-ld-overview" ].id ) }
+          dValue={ id }
           isOptional
           isKeyPreformatted
           isValuePreformatted
         />
 
-        {component}
+        { component }
 
-        {!unknownKeys ? undefined : (
+        { ! unknownKeys ? undefined : (
           <DescriptionSection
-            dKey={t((t) => t.seo["json-ld-overview"]["unknown-keys"])}
+            dKey={ t( ( t ) => t.seo[ "json-ld-overview" ][ "unknown-keys" ] ) }
             dValue={
               <Details
-                summary={<Preformatted>{unknownKeys.size}</Preformatted>}
+                summary={ <Preformatted>{ unknownKeys.size }</Preformatted> }
               >
                 <DescriptionList>
-                  {Array.from(unknownKeys.entries()).map(([key, value]) => (
-                    <DescriptionSection
-                      key={key}
-                      dKey={key}
-                      dValue={String(value)}
-                      isKeyPreformatted
-                      isValuePreformatted
-                    />
-                  ))}
+                  { Array.from( unknownKeys.entries() ).map(
+                    ( [ key, value ] ) => (
+                      <DescriptionSection
+                        key={ key }
+                        dKey={ key }
+                        dValue={ String( value ) }
+                        isKeyPreformatted
+                        isValuePreformatted
+                      />
+                    ),
+                  ) }
                 </DescriptionList>
               </Details>
             }
             isOptional
             isKeyPreformatted
           />
-        )}
+        ) }
       </DescriptionList>
     </Details>
   );

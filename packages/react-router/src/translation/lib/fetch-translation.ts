@@ -1,22 +1,22 @@
 import type { ResourceKey } from "i18next";
 import type { ILocale } from "./types";
 
-export async function fetchTranslation(language: ILocale) {
+export async function fetchTranslation( language: ILocale ) {
   let translation: ResourceKey;
 
-  switch (language) {
+  switch ( language ) {
     case "en": {
-      translation = await import("#translation/en.json");
+      translation = await import( "#translation/en.json" );
       break;
     }
 
     case "ru": {
-      translation = await import("#translation/ru.json");
+      translation = await import( "#translation/ru.json" );
       break;
     }
 
     default: {
-      throw new Error(`Unknown language "${language satisfies never}".`);
+      throw new Error( `Unknown language "${ language satisfies never }".` );
     }
   }
 

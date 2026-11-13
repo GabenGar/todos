@@ -39,18 +39,18 @@ export const schemas = [
   plannedEventInitSchema,
   plannedEventUpdateSchema,
 ] as const;
-const validIDs = schemas.map((schema) => schema.$id);
+const validIDs = schemas.map( ( schema ) => schema.$id );
 
-export type IValidSchemaID = (typeof validIDs)[number];
+export type IValidSchemaID = ( typeof validIDs )[ number ];
 
-export function isValidSchemaID(input: unknown): input is IValidSchemaID {
-  return validIDs.includes(input as IValidSchemaID);
+export function isValidSchemaID( input: unknown ): input is IValidSchemaID {
+  return validIDs.includes( input as IValidSchemaID );
 }
 
 export function validateSchemaID(
   input: unknown,
 ): asserts input is IValidSchemaID {
-  if (!isValidSchemaID(input)) {
-    throw new Error(`Unknown schema ID "${input}".`);
+  if ( ! isValidSchemaID( input ) ) {
+    throw new Error( `Unknown schema ID "${ input }".` );
   }
 }

@@ -4,12 +4,14 @@ import {
   type IBaseComponentPropsWithChildren,
 } from "#meta";
 
-interface IProps extends IBaseComponentPropsWithChildren<"div"> {}
+interface IProps extends IBaseComponentPropsWithChildren< "div" > {}
 
-export const Loading = createBlockComponent(undefined, Component);
+export const Loading = createBlockComponent( undefined, Component );
 
-function Component({ children, ...props }: IProps) {
+function Component( { children, ...props }: IProps ) {
   const { t } = useTranslation();
 
-  return <div {...props}>{children ?? t((t) => t.loading.loading)}</div>;
+  return (
+    <div { ...props }>{ children ?? t( ( t ) => t.loading.loading ) }</div>
+  );
 }

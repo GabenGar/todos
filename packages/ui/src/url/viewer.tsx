@@ -16,91 +16,95 @@ export interface IURLViewerProps {
   headingLevel: IHeadingLevel;
 }
 
-export function URLViewer({ headingLevel, url }: IURLViewerProps) {
+export function URLViewer( { headingLevel, url }: IURLViewerProps ) {
   const { t } = useTranslation();
   const { href, origin, pathname, search, searchParams, hash } = url;
-  const transformedSearchParams = transformSearchparams(searchParams);
-  const transformedURL = transformURL(url);
-  const decodedURL = decodeURIComponent(String(transformedURL));
+  const transformedSearchParams = transformSearchparams( searchParams );
+  const transformedURL = transformURL( url );
+  const decodedURL = decodeURIComponent( String( transformedURL ) );
   const isEncodedURL = href !== decodedURL;
 
   return (
     <>
-      <Heading level={headingLevel}>{t((t) => t.url["URLs"])}</Heading>
+      <Heading level={ headingLevel }>
+        { t( ( t ) => t.url[ "URLs" ] ) }
+      </Heading>
       <DescriptionList>
         <DescriptionSection
-          dKey={t((t) => (isEncodedURL ? t.url.encoded : t.url["Full URL"]))}
-          dValue={<Preformatted>{href}</Preformatted>}
+          dKey={ t( ( t ) =>
+            isEncodedURL ? t.url.encoded : t.url[ "Full URL" ],
+          ) }
+          dValue={ <Preformatted>{ href }</Preformatted> }
         />
-        {isEncodedURL && (
+        { isEncodedURL && (
           <DescriptionSection
-            dKey={t((t) => t.url["Decoded URL"])}
-            dValue={<Preformatted>{decodedURL}</Preformatted>}
+            dKey={ t( ( t ) => t.url[ "Decoded URL" ] ) }
+            dValue={ <Preformatted>{ decodedURL }</Preformatted> }
           />
-        )}
+        ) }
       </DescriptionList>
 
-      {origin && (
+      { origin && (
         <Details
           summary={
-            <Heading level={headingLevel}>
-              {t((t) => t.url["Origin Details"])}
+            <Heading level={ headingLevel }>
+              { t( ( t ) => t.url[ "Origin Details" ] ) }
             </Heading>
           }
         >
-          <Origin url={url} />
+          <Origin url={ url } />
         </Details>
-      )}
+      ) }
 
       <Details
         summary={
-          <Heading level={headingLevel}>
-            {t((t) => t.url["Pathname Details"])}
+          <Heading level={ headingLevel }>
+            { t( ( t ) => t.url[ "Pathname Details" ] ) }
           </Heading>
         }
       >
-        <Pathname pathname={pathname} />
+        <Pathname pathname={ pathname } />
       </Details>
 
-      {transformedSearchParams.size !== 0 && (
+      { transformedSearchParams.size !== 0 && (
         <>
-          <Heading level={headingLevel}>
-            {t((t) => t.url["Search Parameters Details"])}
+          <Heading level={ headingLevel }>
+            { t( ( t ) => t.url[ "Search Parameters Details" ] ) }
           </Heading>
 
           <DescriptionList>
             <DescriptionSection
-              dKey={t((t) => t.url["Search"])}
-              dValue={<Preformatted>{search}</Preformatted>}
+              dKey={ t( ( t ) => t.url[ "Search" ] ) }
+              dValue={ <Preformatted>{ search }</Preformatted> }
             />
 
             <DescriptionSection
-              dKey={t((t) => t.url["Search parameters"])}
+              dKey={ t( ( t ) => t.url[ "Search parameters" ] ) }
               dValue={
-                <TransformedSearchParams params={transformedSearchParams} />
+                <TransformedSearchParams params={ transformedSearchParams } />
               }
             />
           </DescriptionList>
         </>
-      )}
+      ) }
 
-      {hash.length === 0 ? undefined : (
+      { hash.length === 0 ? undefined : (
         <Details
           summary={
-            <Heading level={headingLevel}>
-              {t((t) => t.url["Fragment Details"])}
+            <Heading level={ headingLevel }>
+              { t( ( t ) => t.url[ "Fragment Details" ] ) }
             </Heading>
           }
         >
-          <Hash hash={hash} />
+          <Hash hash={ hash } />
         </Details>
-      )}
+      ) }
     </>
   );
 }
 
-function transformURL(url: URL) {
-  const newURL = new URL(url);
+function transformURL( url: URL ) {
+  const newURL = new URL( url );
 
   newURL.searchParams.sort();
 
@@ -110,16 +114,16 @@ function transformURL(url: URL) {
 function transformSearchparams(
   searchParams: URLSearchParams,
 ): ITransformedSearchParams {
-  const sortedParams = new URLSearchParams(searchParams);
+  const sortedParams = new URLSearchParams( searchParams );
   const transformedSearchParams: ITransformedSearchParams = new Map();
 
   sortedParams.sort();
 
-  for (const key of sortedParams.keys()) {
-    const values = sortedParams.getAll(key);
-    const value = values.length === 1 ? values[0] : new Set(values);
+  for ( const key of sortedParams.keys() ) {
+    const values = sortedParams.getAll( key );
+    const value = values.length === 1 ? values[ 0 ] : new Set( values );
     // @ts-ignore
-    transformedSearchParams.set(key, value);
+    transformedSearchParams.set( key, value );
   }
 
   return transformedSearchParams;

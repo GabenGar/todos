@@ -13,4 +13,4 @@ export interface IPlannedEventInitIDB
 
 export interface IPlannedEventUpdateIDB
   extends IPlannedEventUpdate,
-    Pick<IPlannedEvent, "updated_at" | "parsed_updated_at"> {}
+    Pick< IPlannedEvent, "updated_at" | "parsed_updated_at" > {}

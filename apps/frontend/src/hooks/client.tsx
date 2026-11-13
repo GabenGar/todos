@@ -30,8 +30,8 @@ type IClientContext =
       logLevel: ILogLevel;
       compatibility: ICompatibility;
       changeLoglevel: (
-        ...args: Parameters<typeof changeCurrentLogLevel>
-      ) => Promise<void>;
+        ...args: Parameters< typeof changeCurrentLogLevel >
+      ) => Promise< void >;
     };
 
 interface ICompatibility {
@@ -41,37 +41,37 @@ interface ICompatibility {
 
 const defaultContext = undefined satisfies IClientContext;
 
-const ClientContext = createContext<IClientContext>(defaultContext);
+const ClientContext = createContext< IClientContext >( defaultContext );
 const { get: getLocalStoreLogLevel, set: setLocalStoreLogLevel } =
-  createLocalStorage("log_level", DEFAULT_LOG_LEVEL, validateLogLevel);
+  createLocalStorage( "log_level", DEFAULT_LOG_LEVEL, validateLogLevel );
 
 interface IProps {
   lang: ILocale;
   children: ReactNode;
 }
 
-export function ClientProvider({ lang, children }: IProps) {
+export function ClientProvider( { lang, children }: IProps ) {
   const { isReady } = useRouter();
   const uiClient = useUIClient();
-  const [locale, changeLocale] = useState<Intl.Locale>();
-  const [logLevel, changeLogLevel] = useState<ILogLevel>();
-  const [compatibility, changeCompatiblity] = useState<ICompatibility>();
+  const [ locale, changeLocale ] = useState< Intl.Locale >();
+  const [ logLevel, changeLogLevel ] = useState< ILogLevel >();
+  const [ compatibility, changeCompatiblity ] = useState< ICompatibility >();
 
   async function switchLogLevel(
-    ...args: Parameters<typeof changeCurrentLogLevel>
+    ...args: Parameters< typeof changeCurrentLogLevel >
   ) {
-    const newLevel = changeCurrentLogLevel(...args);
-    await setLocalStoreLogLevel(newLevel);
-    changeLogLevel(newLevel);
+    const newLevel = changeCurrentLogLevel( ...args );
+    await setLocalStoreLogLevel( newLevel );
+    changeLogLevel( newLevel );
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    if (!isReady || !uiClient) {
+  useEffect( () => {
+    if ( ! isReady || ! uiClient ) {
       return;
     }
 
-    (async () => {
+    ( async () => {
       const localStorage = isLocalStorageAvailable();
       const indexedDB = await isIndexedDBAvailable();
       const newCompatibility: ICompatibility = {
@@ -81,28 +81,28 @@ export function ClientProvider({ lang, children }: IProps) {
       const newLogLevel = await getLocalStoreLogLevel();
       registerServiceWorker();
 
-      changeCompatiblity(newCompatibility);
-      changeLogLevel(newLogLevel);
-    })();
-  }, [lang, isReady, uiClient]);
+      changeCompatiblity( newCompatibility );
+      changeLogLevel( newLogLevel );
+    } )();
+  }, [ lang, isReady, uiClient ] );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
+  useEffect( () => {
     // no idea why is it undefined on the first render
     // despite being a literal prop of the component
-    if (!lang) {
+    if ( ! lang ) {
       return;
     }
 
-    const newLocale = new Intl.Locale(lang);
-    changeLocale(newLocale);
-  }, [uiClient, lang]);
+    const newLocale = new Intl.Locale( lang );
+    changeLocale( newLocale );
+  }, [ uiClient, lang ] );
 
   return (
     <UIClientProvider>
       <ClientContext.Provider
         value={
-          !isReady || !uiClient || !locale
+          ! isReady || ! uiClient || ! locale
             ? defaultContext
             : {
                 isClient: true,
@@ -115,14 +115,14 @@ export function ClientProvider({ lang, children }: IProps) {
               }
         }
       >
-        <IndexedDBProvider>{children}</IndexedDBProvider>
+        <IndexedDBProvider>{ children }</IndexedDBProvider>
       </ClientContext.Provider>
     </UIClientProvider>
   );
 }
 
 export function useClient(): IClientContext {
-  const context = useContext(ClientContext);
+  const context = useContext( ClientContext );
 
   return context;
 }

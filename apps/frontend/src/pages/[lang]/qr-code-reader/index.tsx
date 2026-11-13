@@ -12,97 +12,97 @@ import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 
 function QRCodeReaderPage() {
-  const { t } = usePageTranslation("page-qr-code-reader");
-  const [content, changeContent] = useState<string>();
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
+  const { t } = usePageTranslation( "page-qr-code-reader" );
+  const [ content, changeContent ] = useState< string >();
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
               <QRCodeReaderForm
                 id="qr-code-reader"
-                onSuccessfulScan={async (result) => changeContent(result)}
+                onSuccessfulScan={ async ( result ) => changeContent( result ) }
               />
             </OverviewHeader>
 
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={t((t) => t.result)}
-                  dValue={content ?? t((t) => t.no_result)}
+                  dKey={ t( ( t ) => t.result ) }
+                  dValue={ content ?? t( ( t ) => t.no_result ) }
                 />
               </DescriptionList>
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
 interface IFormProps extends IFormComponentProps {
-  onSuccessfulScan: (result: string) => Promise<void>;
+  onSuccessfulScan: ( result: string ) => Promise< void >;
 }
 
-function QRCodeReaderForm({ id, onSuccessfulScan }: IFormProps) {
-  const { t } = usePageTranslation("page-qr-code-reader");
-  const [qrReader, changeQRreader] = useState<Html5Qrcode>();
+function QRCodeReaderForm( { id, onSuccessfulScan }: IFormProps ) {
+  const { t } = usePageTranslation( "page-qr-code-reader" );
+  const [ qrReader, changeQRreader ] = useState< Html5Qrcode >();
   const FIELD = {
-    FILE: { name: "file", label: t((t) => t.form.file_label) },
+    FILE: { name: "file", label: t( ( t ) => t.form.file_label ) },
   } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
-  const readerID = `${id}-qr-reader`;
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
+  const readerID = `${ id }-qr-reader`;
 
-  useEffect(() => {
-    const reader = new Html5Qrcode(readerID);
-    changeQRreader(reader);
-  }, [readerID]);
+  useEffect( () => {
+    const reader = new Html5Qrcode( readerID );
+    changeQRreader( reader );
+  }, [ readerID ] );
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const filesInput = event.currentTarget.elements.file;
     const files = filesInput.files;
 
-    if (!qrReader || files === null) {
+    if ( ! qrReader || files === null ) {
       return;
     }
 
     // biome-ignore lint/style/noNonNullAssertion: blah
-    const QRCodeFile = files.item(0)!;
-    const result = await qrReader.scanFile(QRCodeFile, false);
+    const QRCodeFile = files.item( 0 )!;
+    const result = await qrReader.scanFile( QRCodeFile, false );
 
-    await onSuccessfulScan(result);
+    await onSuccessfulScan( result );
   }
 
   return (
-    <Form<IFieldName>
-      id={id}
-      submitButton={(_formID, isSubmitting) =>
-        t((t) => (!isSubmitting ? t.form.scan : t.form.scanning))
+    <Form< IFieldName >
+      id={ id }
+      submitButton={ ( _formID, isSubmitting ) =>
+        t( ( t ) => ( ! isSubmitting ? t.form.scan : t.form.scanning ) )
       }
-      onSubmit={handleSubmit}
+      onSubmit={ handleSubmit }
     >
-      {(formID) => (
+      { ( formID ) => (
         <>
-          <div id={readerID} />
+          <div id={ readerID } />
           <InputSectionFile
-            id={`${formID}-${FIELD.FILE.name}`}
-            form={formID}
-            name={FIELD.FILE.name}
+            id={ `${ formID }-${ FIELD.FILE.name }` }
+            form={ formID }
+            name={ FIELD.FILE.name }
             required
           >
-            {FIELD.FILE.label}
+            { FIELD.FILE.label }
           </InputSectionFile>
         </>
-      )}
+      ) }
     </Form>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-qr-code-reader");
+export const getStaticProps = createGetStaticProps( "page-qr-code-reader" );
 export const getStaticPaths = getStaticExportPaths;
 
 export default QRCodeReaderPage;

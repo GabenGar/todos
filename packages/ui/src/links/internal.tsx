@@ -9,16 +9,16 @@ export { default as linkInternalStyles } from "./internal.module.scss";
 import styles from "./internal.module.scss";
 
 export interface ILinkInternalProps
-  extends Omit<IBaseComponentPropsWithChildren<"a">, "href"> {
+  extends Omit< IBaseComponentPropsWithChildren< "a" >, "href" > {
   href?: URL | string;
 }
 
-export const LinkInternal = forwardRef<HTMLAnchorElement, ILinkInternalProps>(
-  createBlockComponent(styles, Component),
+export const LinkInternal = forwardRef< HTMLAnchorElement, ILinkInternalProps >(
+  createBlockComponent( styles, Component ),
 );
 
-function Component({ href, ...props }: ILinkInternalProps) {
+function Component( { href, ...props }: ILinkInternalProps ) {
   const urlString = href instanceof URL ? href.toString() : href;
 
-  return <a href={urlString} {...props} />;
+  return <a href={ urlString } { ...props } />;
 }

@@ -11,27 +11,28 @@ import { onLocalStorageChange } from "#lib/storage";
  * @TODO
  * context
  */
-export function useSetting(settingKey: ISettingKey) {
-  const [settingValue, changeSettingValue] = useState<ISettings[ISettingKey]>();
+export function useSetting( settingKey: ISettingKey ) {
+  const [ settingValue, changeSettingValue ] =
+    useState< ISettings[ ISettingKey ] >();
   // const data = settings[settingKey];
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    const localCleanup = onLocalStorageChange(handleLocalStorageChange);
+  useEffect( () => {
+    const localCleanup = onLocalStorageChange( handleLocalStorageChange );
 
-    getSetting(settingKey).then((value) => changeSettingValue(value));
+    getSetting( settingKey ).then( ( value ) => changeSettingValue( value ) );
 
     return () => {
       localCleanup();
     };
-  }, []);
+  }, [] );
 
   async function handleLocalStorageChange(
-    changes: Parameters<Parameters<typeof onLocalStorageChange>[0]>[0],
+    changes: Parameters< Parameters< typeof onLocalStorageChange >[ 0 ] >[ 0 ],
   ) {
-    const newValue = changes[settingKey].newValue;
+    const newValue = changes[ settingKey ].newValue;
 
-    changeSettingValue(newValue as ISettings[ISettingKey]);
+    changeSettingValue( newValue as ISettings[ ISettingKey ] );
   }
 
   return settingValue;

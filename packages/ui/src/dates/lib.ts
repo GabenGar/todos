@@ -3,25 +3,25 @@ import { endOfTomorrow } from "date-fns";
 import type { IDateTime } from "./types";
 
 export function now(): IDateTime {
-  const timestamp = toISODateTime(new TZDate());
+  const timestamp = toISODateTime( new TZDate() );
 
   return timestamp;
 }
 
 export function tomorrow(): IDateTime {
-  const timestamp = toISODateTime(endOfTomorrow());
+  const timestamp = toISODateTime( endOfTomorrow() );
 
   return timestamp;
 }
 
-export function toISODateTime(date: Date): IDateTime {
+export function toISODateTime( date: Date ): IDateTime {
   const timestamp = date.toISOString();
 
   return timestamp;
 }
 
-export function toJavascriptDate(dateTime: IDateTime): TZDate {
-  const date = new TZDate(dateTime);
+export function toJavascriptDate( dateTime: IDateTime ): TZDate {
+  const date = new TZDate( dateTime );
 
   return date;
 }

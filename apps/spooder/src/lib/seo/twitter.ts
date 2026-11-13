@@ -6,7 +6,7 @@ import {
   knownMetaAttributes,
 } from "./types";
 
-export const twitterMetaNames = new Set([
+export const twitterMetaNames = new Set( [
   "twitter:site",
   "twitter:site:id",
   "twitter:creator",
@@ -16,18 +16,18 @@ export const twitterMetaNames = new Set([
   "twitter:image:alt",
   "twitter:card",
   "twitter:url",
-] as const);
+] as const );
 
-type ITwitterMetaName = IElementType<typeof twitterMetaNames>;
+type ITwitterMetaName = IElementType< typeof twitterMetaNames >;
 
-export function isTwitterMetaName(input: unknown): input is ITwitterMetaName {
-  return twitterMetaNames.has(input as ITwitterMetaName);
+export function isTwitterMetaName( input: unknown ): input is ITwitterMetaName {
+  return twitterMetaNames.has( input as ITwitterMetaName );
 }
 
-export function isTwitterElement(element: HTMLMetaElement) {
-  const name = element.getAttribute("name");
+export function isTwitterElement( element: HTMLMetaElement ) {
+  const name = element.getAttribute( "name" );
 
-  if (name?.startsWith("twitter:")) {
+  if ( name?.startsWith( "twitter:" ) ) {
     return true;
   }
 
@@ -38,44 +38,44 @@ export function collectTwitterElement(
   twitter: ITwitterTags,
   element: HTMLMetaElement,
 ) {
-  const name = element.getAttribute("name") ?? undefined;
-  const content = element.getAttribute("content") ?? undefined;
+  const name = element.getAttribute( "name" ) ?? undefined;
+  const content = element.getAttribute( "content" ) ?? undefined;
   const unknownAttributes = collectUnknownElementAttributes(
     element,
     knownMetaAttributes,
   );
   const tag: ITwitterMetaTag = {};
 
-  if (name) {
+  if ( name ) {
     tag.name = name;
   }
 
-  if (content) {
+  if ( content ) {
     tag.content = content;
   }
 
-  if (unknownAttributes && unknownAttributes.size !== 0) {
+  if ( unknownAttributes && unknownAttributes.size !== 0 ) {
     tag.unknownAttributes = unknownAttributes;
   }
 
-  if (!isTwitterMetaName(name)) {
-    if (!twitter.unknownTags) {
+  if ( ! isTwitterMetaName( name ) ) {
+    if ( ! twitter.unknownTags ) {
       twitter.unknownTags = [];
     }
 
-    twitter.unknownTags.push(tag);
+    twitter.unknownTags.push( tag );
 
     return;
   }
 
-  switch (name) {
+  switch ( name ) {
     case "twitter:site":
     case "twitter:site:id": {
-      if (!twitter.site) {
+      if ( ! twitter.site ) {
         twitter.site = {};
       }
 
-      switch (name) {
+      switch ( name ) {
         case "twitter:site": {
           twitter.site.url = content;
           break;
@@ -110,11 +110,11 @@ export function collectTwitterElement(
 
     case "twitter:image":
     case "twitter:image:alt": {
-      if (!twitter.image) {
+      if ( ! twitter.image ) {
         twitter.image = {};
       }
 
-      switch (name) {
+      switch ( name ) {
         case "twitter:image": {
           twitter.image.url = content;
           break;
@@ -127,7 +127,7 @@ export function collectTwitterElement(
 
         default: {
           throw new Error(
-            `Unknown twitter meta tag name "${name satisfies never}".`,
+            `Unknown twitter meta tag name "${ name satisfies never }".`,
           );
         }
       }
@@ -135,11 +135,11 @@ export function collectTwitterElement(
     }
 
     default: {
-      if (!twitter.unknownTags) {
+      if ( ! twitter.unknownTags ) {
         twitter.unknownTags = [];
       }
 
-      twitter.unknownTags.push(tag);
+      twitter.unknownTags.push( tag );
 
       break;
     }

@@ -19,40 +19,40 @@ import styles from "./index.module.scss";
  */
 function LanguageSelectPage() {
   return (
-    <Page heading={SITE_TITLE}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ SITE_TITLE }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <OverviewBody>
-            <List className={styles.list}>
-              {LOCALES.map((locale) => (
-                <ListItem key={locale} className={styles.item}>
-                  <LocaleLink locale={locale} />
+            <List className={ styles.list }>
+              { LOCALES.map( ( locale ) => (
+                <ListItem key={ locale } className={ styles.item }>
+                  <LocaleLink locale={ locale } />
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </OverviewBody>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-LanguageSelectPage.getLayout = (page: ReactNode) => {
-  return <RootLayout>{page}</RootLayout>;
+LanguageSelectPage.getLayout = ( page: ReactNode ) => {
+  return <RootLayout>{ page }</RootLayout>;
 };
 
 interface ILocalLinkProps {
   locale: ILocale;
 }
-function LocaleLink({ locale }: ILocalLinkProps) {
+function LocaleLink( { locale }: ILocalLinkProps ) {
   // biome-ignore lint/style/noNonNullAssertion: blah
-  const language = parseLocale(locale).language!;
+  const language = parseLocale( locale ).language!;
 
   return (
-    <LinkButton className={styles.link} href={createHomePageURL(locale)}>
+    <LinkButton className={ styles.link } href={ createHomePageURL( locale ) }>
       <span>
-        <span className={styles.language}>{language}</span>{" "}
-        {iso6391.getNativeName(language)} ({iso6391.getName(language)})
+        <span className={ styles.language }>{ language }</span>{ " " }
+        { iso6391.getNativeName( language ) } ({ iso6391.getName( language ) })
       </span>
     </LinkButton>
   );

@@ -19,19 +19,19 @@ function LanguageSelectPage() {
   const title = createMetaTitle();
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <OverviewBody>
-            <List className={styles.list}>
-              {SUPPORTED_LANGUAGES.map((locale) => (
-                <ListItem key={locale} className={styles.item}>
-                  <LocaleLink locale={locale} />
+            <List className={ styles.list }>
+              { SUPPORTED_LANGUAGES.map( ( locale ) => (
+                <ListItem key={ locale } className={ styles.item }>
+                  <LocaleLink locale={ locale } />
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </OverviewBody>
-        )}
+        ) }
       </Overview>
     </Page>
   );
@@ -41,21 +41,21 @@ interface ILocalLinkProps {
   locale: ILocale;
 }
 
-function LocaleLink({ locale }: ILocalLinkProps) {
-  const language = parseLocale(locale).language;
+function LocaleLink( { locale }: ILocalLinkProps ) {
+  const language = parseLocale( locale ).language;
 
-  if (!language) {
-    throw new Error(`No language was found for locale "${locale}".`);
+  if ( ! language ) {
+    throw new Error( `No language was found for locale "${ locale }".` );
   }
 
   return (
     <LinkButton
-      className={styles.link}
-      href={href("/:language", { language: locale })}
+      className={ styles.link }
+      href={ href( "/:language", { language: locale } ) }
     >
       <span>
-        <span className={styles.language}>{language}</span>{" "}
-        {iso6391.getNativeName(language)} ({iso6391.getName(language)})
+        <span className={ styles.language }>{ language }</span>{ " " }
+        { iso6391.getNativeName( language ) } ({ iso6391.getName( language ) })
       </span>
     </LinkButton>
   );

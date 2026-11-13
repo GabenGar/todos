@@ -30,7 +30,7 @@ export interface ISystemError {
   /**
    * Extra details about the error condition.
    */
-  info?: Record<string, unknown>;
+  info?: Record< string, unknown >;
   /**
    * The file path when reporting a file system error.
    */
@@ -45,12 +45,12 @@ export interface ISystemError {
   port?: number;
 }
 
-interface IFileSystemError extends Omit<ISystemError, "address" | "port"> {
+interface IFileSystemError extends Omit< ISystemError, "address" | "port" > {
   path: string;
 }
 
-export function isSystemError(error: unknown): error is ISystemError {
-  if (!isError(error)) {
+export function isSystemError( error: unknown ): error is ISystemError {
+  if ( ! isError( error ) ) {
     return false;
   }
 
@@ -66,12 +66,12 @@ export function isSystemError(error: unknown): error is ISystemError {
   return false;
 }
 
-export function isFileSystemError(error: unknown): error is IFileSystemError {
-  if (!isSystemError(error)) {
+export function isFileSystemError( error: unknown ): error is IFileSystemError {
+  if ( ! isSystemError( error ) ) {
     return false;
   }
 
-  if ("path" in error) {
+  if ( "path" in error ) {
     return true;
   }
 

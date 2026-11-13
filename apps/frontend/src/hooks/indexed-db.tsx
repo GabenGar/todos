@@ -15,74 +15,76 @@ import { useClient } from "./client";
 
 type IIndexedDBContext = IIDBTransactionRunner;
 
-interface IIDBTransactionRunner<StoreName extends IStorageName = IStorageName> {
+interface IIDBTransactionRunner<
+  StoreName extends IStorageName = IStorageName,
+> {
   (
-    storeNames: StoreName | StoreName[] | Iterable<StoreName>,
-    mode: Exclude<IDBTransactionMode, "versionchange">,
-    onError: (error: Error | DOMException) => void,
-    onSuccess: (transaction: IIDBTransaction<StoreName>) => void,
+    storeNames: StoreName | StoreName[] | Iterable< StoreName >,
+    mode: Exclude< IDBTransactionMode, "versionchange" >,
+    onError: ( error: Error | DOMException ) => void,
+    onSuccess: ( transaction: IIDBTransaction< StoreName > ) => void,
   ): void;
 }
 
 const defaultContext: IIndexedDBContext = () => {};
-const IndexedDBContext = createContext<IIndexedDBContext>(defaultContext);
+const IndexedDBContext = createContext< IIndexedDBContext >( defaultContext );
 
-export function IndexedDBProvider({ children }: { children: ReactNode }) {
+export function IndexedDBProvider( { children }: { children: ReactNode } ) {
   const client = useClient();
-  const [database, changeDatabase] = useState<IDBDatabase>();
+  const [ database, changeDatabase ] = useState< IDBDatabase >();
 
   // @TODO: check for client without race conditions
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
   const runIndexedDBTransaction = useCallback(
-    <StoreName extends IStorageName>(
-      storeNames: StoreName | StoreName[] | Iterable<StoreName>,
+    < StoreName extends IStorageName >(
+      storeNames: StoreName | StoreName[] | Iterable< StoreName >,
       mode: IDBTransactionMode,
-      onError: (error: Error | DOMException) => void,
-      onSuccess: (transaction: IIDBTransaction<StoreName>) => void,
+      onError: ( error: Error | DOMException ) => void,
+      onSuccess: ( transaction: IIDBTransaction< StoreName > ) => void,
     ) => {
-      if (!database) {
+      if ( ! database ) {
         getDatabase(
-          (error) => {
+          ( error ) => {
             throw error;
           },
-          (db) => {
-            changeDatabase(db);
+          ( db ) => {
+            changeDatabase( db );
 
-            const transaction = getTransaction(db, storeNames, mode);
+            const transaction = getTransaction( db, storeNames, mode );
 
             transaction.onerror = handleError;
             transaction.onabort = handleError;
 
-            onSuccess(transaction);
+            onSuccess( transaction );
           },
         );
       } else {
-        const transaction = getTransaction(database, storeNames, mode);
+        const transaction = getTransaction( database, storeNames, mode );
 
         transaction.onerror = handleError;
         transaction.onabort = handleError;
 
-        onSuccess(transaction);
+        onSuccess( transaction );
       }
 
-      function handleError(event: Event) {
+      function handleError( event: Event ) {
         // biome-ignore lint/style/noNonNullAssertion: blah
-        const error = (event.target as IIDBTransaction<StoreName>).error!;
-        onError(error);
+        const error = ( event.target as IIDBTransaction< StoreName > ).error!;
+        onError( error );
       }
     },
-    [database, client],
+    [ database, client ],
   );
 
   return (
-    <IndexedDBContext.Provider value={runIndexedDBTransaction}>
-      {children}
+    <IndexedDBContext.Provider value={ runIndexedDBTransaction }>
+      { children }
     </IndexedDBContext.Provider>
   );
 }
 
 export function useIndexedDB() {
-  const context = useContext(IndexedDBContext);
+  const context = useContext( IndexedDBContext );
 
   return context;
 }

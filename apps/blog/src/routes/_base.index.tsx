@@ -18,19 +18,19 @@ function LanguageSelectPage() {
   const heading = createMetaTitle();
 
   return (
-    <Page title={title} heading={heading}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page title={ title } heading={ heading }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <OverviewHeader>
-            <List className={styles.list}>
-              {SUPPORTED_LANGUAGES.map((locale) => (
-                <ListItem key={locale} className={styles.item}>
-                  <LocaleLink locale={locale} />
+            <List className={ styles.list }>
+              { SUPPORTED_LANGUAGES.map( ( locale ) => (
+                <ListItem key={ locale } className={ styles.item }>
+                  <LocaleLink locale={ locale } />
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </OverviewHeader>
-        )}
+        ) }
       </Overview>
     </Page>
   );
@@ -40,33 +40,33 @@ interface ILocalLinkProps {
   locale: ILocale;
 }
 
-function LocaleLink({ locale }: ILocalLinkProps) {
-  const language = parseLocale(locale).language;
+function LocaleLink( { locale }: ILocalLinkProps ) {
+  const language = parseLocale( locale ).language;
 
-  if (!language) {
-    throw new Error(`No language was found for locale "${locale}".`);
+  if ( ! language ) {
+    throw new Error( `No language was found for locale "${ locale }".` );
   }
 
   return (
     <LinkButton
-      internalLinkElement={({ children }) => (
+      internalLinkElement={ ( { children } ) => (
         <LinkInternal
-          className={styles.link}
-          to={"/$language"}
-          params={{ language }}
+          className={ styles.link }
+          to={ "/$language" }
+          params={ { language } }
         >
-          {children}
+          { children }
         </LinkInternal>
-      )}
+      ) }
     >
       <span>
-        <span className={styles.language}>{language}</span>{" "}
-        {iso6391.getNativeName(language)} ({iso6391.getName(language)})
+        <span className={ styles.language }>{ language }</span>{ " " }
+        { iso6391.getNativeName( language ) } ({ iso6391.getName( language ) })
       </span>
     </LinkButton>
   );
 }
 
-export const Route = createFileRoute("/_base/")({
+export const Route = createFileRoute( "/_base/" )( {
   component: LanguageSelectPage,
-});
+} );

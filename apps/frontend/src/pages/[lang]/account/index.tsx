@@ -29,79 +29,81 @@ import styles from "./index.module.scss";
 const namespace = "page-account" satisfies IPageNamespace;
 
 function AccountPage() {
-  const { t } = usePageTranslation(namespace);
+  const { t } = usePageTranslation( namespace );
   const router = useRouter();
   const client = useClient();
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { ( headingLevel ) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>{t((t) => t["Data"])}</Heading>
+              <Heading level={ headingLevel + 1 }>
+                { t( ( t ) => t[ "Data" ] ) }
+              </Heading>
             </OverviewHeader>
 
             <OverviewBody>
-              <Heading level={headingLevel + 2}>
-                {t((t) => t["Export"])}
+              <Heading level={ headingLevel + 2 }>
+                { t( ( t ) => t[ "Export" ] ) }
               </Heading>
               <DataExportForm />
 
-              <Heading level={headingLevel + 2}>
-                {t((t) => t["Import"])}
+              <Heading level={ headingLevel + 2 }>
+                { t( ( t ) => t[ "Import" ] ) }
               </Heading>
               <ImportDataExportForm
                 id="import-data-export"
-                onSuccess={async () => router.reload()}
+                onSuccess={ async () => router.reload() }
               />
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
 
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
+      <Overview headingLevel={ 2 }>
+        { ( headingLevel ) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>
-                {t((t) => t["feature-support"].heading)}
+              <Heading level={ headingLevel + 1 }>
+                { t( ( t ) => t[ "feature-support" ].heading ) }
               </Heading>
             </OverviewHeader>
             <OverviewBody>
               <FeatureSupport />
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
 
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
+      <Overview headingLevel={ 2 }>
+        { ( headingLevel ) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel + 1}>
-                {t((t) => t["Settings"])}
+              <Heading level={ headingLevel + 1 }>
+                { t( ( t ) => t[ "Settings" ] ) }
               </Heading>
             </OverviewHeader>
 
             <OverviewBody>
-              {!client ? (
+              { ! client ? (
                 <Loading />
               ) : (
                 <SettingsForm
-                  key={client.logLevel}
+                  key={ client.logLevel }
                   id="edit-account-settings"
-                  currentLogLevel={client.logLevel}
-                  onSettingsUpdate={async (settingsUpdate) => {
-                    client.changeLoglevel(settingsUpdate.log_level);
-                  }}
+                  currentLogLevel={ client.logLevel }
+                  onSettingsUpdate={ async ( settingsUpdate ) => {
+                    client.changeLoglevel( settingsUpdate.log_level );
+                  } }
                 />
-              )}
+              ) }
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
@@ -113,7 +115,7 @@ function AccountPage() {
 
 // biome-ignore lint/correctness/noUnusedVariables: @TODO reintroduce it
 function Compatibility() {
-  const { t } = usePageTranslation(namespace);
+  const { t } = usePageTranslation( namespace );
   const client = useClient();
 
   return (
@@ -126,12 +128,12 @@ function Compatibility() {
           </Link>
         }
         dValue={
-          !client ? (
+          ! client ? (
             <Loading />
           ) : client.compatibility.localStorage ? (
-            t((t) => t["Supported"])
+            t( ( t ) => t[ "Supported" ] )
           ) : (
-            t((t) => t["Not supported"])
+            t( ( t ) => t[ "Not supported" ] )
           )
         }
       />
@@ -144,12 +146,12 @@ function Compatibility() {
           </Link>
         }
         dValue={
-          !client ? (
+          ! client ? (
             <Loading />
           ) : client.compatibility.indexedDB ? (
-            t((t) => t["Supported"])
+            t( ( t ) => t[ "Supported" ] )
           ) : (
-            t((t) => t["Not supported"])
+            t( ( t ) => t[ "Not supported" ] )
           )
         }
       />
@@ -159,7 +161,7 @@ function Compatibility() {
 
 interface ISettingsFormProps extends IFormComponentProps {
   currentLogLevel: ILogLevel;
-  onSettingsUpdate: (updatedSettings: ISettingsUpdate) => Promise<void>;
+  onSettingsUpdate: ( updatedSettings: ISettingsUpdate ) => Promise< void >;
 }
 
 interface ISettingsUpdate {
@@ -178,62 +180,65 @@ const logLevelTranslation = {
  * @TODO
  * Find a way to instantiate log level from the user setting on client.
  */
-export function SettingsForm({
+export function SettingsForm( {
   id,
   currentLogLevel,
   onSettingsUpdate,
-}: ISettingsFormProps) {
-  const { t } = usePageTranslation(namespace);
+}: ISettingsFormProps ) {
+  const { t } = usePageTranslation( namespace );
   const FIELD = {
-    LOG_LEVEL: { name: "log_level", label: t((t) => t.logger["Log level"]) },
+    LOG_LEVEL: {
+      name: "log_level",
+      label: t( ( t ) => t.logger[ "Log level" ] ),
+    },
   } as const;
 
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const formElements = event.currentTarget.elements;
     const log_level = formElements.log_level.value.trim();
 
-    validateLogLevel(log_level);
+    validateLogLevel( log_level );
 
     const update: ISettingsUpdate = {
       log_level,
     };
 
-    await onSettingsUpdate(update);
+    await onSettingsUpdate( update );
   }
 
   return (
-    <Form<IFieldName>
-      id={id}
-      submitButton={(_, isSubmitting) =>
-        t((t) => (isSubmitting ? t["Updating..."] : t["Update"]))
+    <Form< IFieldName >
+      id={ id }
+      submitButton={ ( _, isSubmitting ) =>
+        t( ( t ) => ( isSubmitting ? t[ "Updating..." ] : t[ "Update" ] ) )
       }
-      onSubmit={handleSubmit}
+      onSubmit={ handleSubmit }
     >
-      {(formID) => (
+      { ( formID ) => (
         <>
           <InputSectionSelect
-            label={FIELD.LOG_LEVEL.label}
-            id={`${formID}-${FIELD.LOG_LEVEL.name}`}
-            form={formID}
-            name={FIELD.LOG_LEVEL.name}
-            defaultValue={currentLogLevel}
+            label={ FIELD.LOG_LEVEL.label }
+            id={ `${ formID }-${ FIELD.LOG_LEVEL.name }` }
+            form={ formID }
+            name={ FIELD.LOG_LEVEL.name }
+            defaultValue={ currentLogLevel }
           >
-            {Object.entries(logLevelTranslation).map(
-              ([value, translatedValue]) => (
+            { Object.entries( logLevelTranslation ).map(
+              ( [ value, translatedValue ] ) => (
                 <InputOption
-                  key={value}
-                  className={styles[value]}
-                  value={value}
+                  key={ value }
+                  className={ styles[ value ] }
+                  value={ value }
                 >
-                  {t((t) => t.logger.levels[translatedValue])}
+                  { t( ( t ) => t.logger.levels[ translatedValue ] ) }
                 </InputOption>
               ),
-            )}
+            ) }
           </InputSectionSelect>
         </>
-      )}
+      ) }
     </Form>
   );
 }
@@ -249,132 +254,135 @@ interface IFeatureSupport {
 
 function FeatureSupport() {
   const client = useClient();
-  const { t } = usePageTranslation("page-account");
-  const [featureSupport, changeFeatureSupport] = useState<IFeatureSupport>();
+  const { t } = usePageTranslation( "page-account" );
+  const [ featureSupport, changeFeatureSupport ] =
+    useState< IFeatureSupport >();
 
-  useEffect(() => {
-    if (!client) {
+  useEffect( () => {
+    if ( ! client ) {
       return;
     }
 
     const nextFeatureSupport = collectFeatureSupport();
 
-    changeFeatureSupport(nextFeatureSupport);
-  }, [client]);
+    changeFeatureSupport( nextFeatureSupport );
+  }, [ client ] );
 
-  return !featureSupport ? (
+  return ! featureSupport ? (
     <Loading />
   ) : (
     <DescriptionList>
       <DescriptionSection
-        dKey={t((t) => t["feature-support"].calendars)}
+        dKey={ t( ( t ) => t[ "feature-support" ].calendars ) }
         dValue={
           <Details
             summary={
-              <Preformatted>{featureSupport.calendar.length}</Preformatted>
+              <Preformatted>{ featureSupport.calendar.length }</Preformatted>
             }
           >
             <List>
-              {featureSupport.calendar.map((calendar, index) => (
-                <ListItem key={`${calendar}${index}`}>
-                  <Preformatted>{calendar}</Preformatted>
+              { featureSupport.calendar.map( ( calendar, index ) => (
+                <ListItem key={ `${ calendar }${ index }` }>
+                  <Preformatted>{ calendar }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </Details>
         }
       />
 
       <DescriptionSection
-        dKey={t((t) => t["feature-support"].collations)}
+        dKey={ t( ( t ) => t[ "feature-support" ].collations ) }
         dValue={
           <Details
             summary={
-              <Preformatted>{featureSupport.collation.length}</Preformatted>
+              <Preformatted>{ featureSupport.collation.length }</Preformatted>
             }
           >
             <List>
-              {featureSupport.collation.map((collation, index) => (
-                <ListItem key={`${collation}${index}`}>
-                  <Preformatted>{collation}</Preformatted>
+              { featureSupport.collation.map( ( collation, index ) => (
+                <ListItem key={ `${ collation }${ index }` }>
+                  <Preformatted>{ collation }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </Details>
         }
       />
 
       <DescriptionSection
-        dKey={t((t) => t["feature-support"].currencies)}
+        dKey={ t( ( t ) => t[ "feature-support" ].currencies ) }
         dValue={
           <Details
             summary={
-              <Preformatted>{featureSupport.currency.length}</Preformatted>
+              <Preformatted>{ featureSupport.currency.length }</Preformatted>
             }
           >
             <List>
-              {featureSupport.currency.map((currency, index) => (
-                <ListItem key={`${currency}${index}`}>
-                  <Preformatted>{currency}</Preformatted>
+              { featureSupport.currency.map( ( currency, index ) => (
+                <ListItem key={ `${ currency }${ index }` }>
+                  <Preformatted>{ currency }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </Details>
         }
       />
 
       <DescriptionSection
-        dKey={t((t) => t["feature-support"]["numbering-systems"])}
+        dKey={ t( ( t ) => t[ "feature-support" ][ "numbering-systems" ] ) }
         dValue={
           <Details
             summary={
               <Preformatted>
-                {featureSupport.numberingSystem.length}
+                { featureSupport.numberingSystem.length }
               </Preformatted>
             }
           >
             <List>
-              {featureSupport.numberingSystem.map((system, index) => (
-                <ListItem key={`${system}${index}`}>
-                  <Preformatted>{system}</Preformatted>
+              { featureSupport.numberingSystem.map( ( system, index ) => (
+                <ListItem key={ `${ system }${ index }` }>
+                  <Preformatted>{ system }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </Details>
         }
       />
 
       <DescriptionSection
-        dKey={t((t) => t["feature-support"]["time-zones"])}
+        dKey={ t( ( t ) => t[ "feature-support" ][ "time-zones" ] ) }
         dValue={
           <Details
             summary={
-              <Preformatted>{featureSupport.timeZone.length}</Preformatted>
+              <Preformatted>{ featureSupport.timeZone.length }</Preformatted>
             }
           >
             <List>
-              {featureSupport.timeZone.map((zone, index) => (
-                <ListItem key={`${zone}${index}`}>
-                  <Preformatted>{zone}</Preformatted>
+              { featureSupport.timeZone.map( ( zone, index ) => (
+                <ListItem key={ `${ zone }${ index }` }>
+                  <Preformatted>{ zone }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </Details>
         }
       />
 
       <DescriptionSection
-        dKey={t((t) => t["feature-support"].units)}
+        dKey={ t( ( t ) => t[ "feature-support" ].units ) }
         dValue={
           <Details
-            summary={<Preformatted>{featureSupport.unit.length}</Preformatted>}
+            summary={
+              <Preformatted>{ featureSupport.unit.length }</Preformatted>
+            }
           >
             <List>
-              {featureSupport.unit.map((unit, index) => (
-                <ListItem key={`${unit}${index}`}>
-                  <Preformatted>{unit}</Preformatted>
+              { featureSupport.unit.map( ( unit, index ) => (
+                <ListItem key={ `${ unit }${ index }` }>
+                  <Preformatted>{ unit }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           </Details>
         }
@@ -384,12 +392,12 @@ function FeatureSupport() {
 }
 
 function collectFeatureSupport(): IFeatureSupport {
-  const calendar = Intl.supportedValuesOf("calendar");
-  const collation = Intl.supportedValuesOf("collation");
-  const currency = Intl.supportedValuesOf("currency");
-  const numberingSystem = Intl.supportedValuesOf("numberingSystem");
-  const timeZone = Intl.supportedValuesOf("timeZone");
-  const unit = Intl.supportedValuesOf("unit");
+  const calendar = Intl.supportedValuesOf( "calendar" );
+  const collation = Intl.supportedValuesOf( "collation" );
+  const currency = Intl.supportedValuesOf( "currency" );
+  const numberingSystem = Intl.supportedValuesOf( "numberingSystem" );
+  const timeZone = Intl.supportedValuesOf( "timeZone" );
+  const unit = Intl.supportedValuesOf( "unit" );
 
   const featureSupport = {
     calendar,
@@ -403,7 +411,7 @@ function collectFeatureSupport(): IFeatureSupport {
   return featureSupport;
 }
 
-export const getStaticProps = createGetStaticProps(namespace);
+export const getStaticProps = createGetStaticProps( namespace );
 
 export const getStaticPaths = getStaticExportPaths;
 

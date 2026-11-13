@@ -7,15 +7,18 @@ import type { IPlannedEvent, IPlannedEventInit } from "../types";
 import { validatePlannedEventInit } from "./validate";
 
 export function createPlannedEvent(
-  transaction: IIDBTransaction<"planned_events">,
+  transaction: IIDBTransaction< "planned_events" >,
   init: IPlannedEventInit,
-  onSuccess: (plannedEvent: IPlannedEvent) => void,
+  onSuccess: ( plannedEvent: IPlannedEvent ) => void,
 ): void {
-  validatePlannedEventInit(init);
+  validatePlannedEventInit( init );
 
-  insertPlannedEvents(transaction, [init], ([id]) => {
-    selectPlannedEventEntities({ transaction, ids: [id] }, ([plannedEvent]) => {
-      onSuccess(plannedEvent);
-    });
-  });
+  insertPlannedEvents( transaction, [ init ], ( [ id ] ) => {
+    selectPlannedEventEntities(
+      { transaction, ids: [ id ] },
+      ( [ plannedEvent ] ) => {
+        onSuccess( plannedEvent );
+      },
+    );
+  } );
 }

@@ -7,14 +7,14 @@
   width: 100%;
   max-width: $width-phone;
   border-radius: $radius-normal;
-  border: $size-thin solid var(--colour-text-primary);
+  border: $size-thin solid var( --colour-text-primary );
   padding: $size-normal;
 
   transition-property: border;
-  transition-duration: var(--duration-global);
+  transition-duration: var( --duration-global );
 
-  @media (min-width: $width-laptop) {
-    max-width: calc(#{$width-phone} * 1.1);
+  @media ( min-width: $width-laptop ) {
+    max-width: calc( #{$width-phone} * 1.1 );
   }
 }
 

@@ -19,47 +19,47 @@ interface IProps {
 function PostListPage() {
   const { t } = useTranslation();
   const { posts } = Route.useLoaderData();
-  const title = createMetaTitle(t((t) => t.page.posts.title));
-  const heading = t((t) => t.page.posts.heading);
-  const pagination = createPagination(String(posts.length));
+  const title = createMetaTitle( t( ( t ) => t.page.posts.title ) );
+  const heading = t( ( t ) => t.page.posts.heading );
+  const pagination = createPagination( String( posts.length ) );
 
   return (
-    <Page title={title} heading={heading}>
+    <Page title={ title } heading={ heading }>
       <PreviewList
         noItemsElement={
-          <Overview headingLevel={2}>
-            {() => (
+          <Overview headingLevel={ 2 }>
+            { () => (
               <OverviewHeader>
-                {t((t) => t.page.posts["no-posts-found"])}
+                { t( ( t ) => t.page.posts[ "no-posts-found" ] ) }
               </OverviewHeader>
-            )}
+            ) }
           </Overview>
         }
-        buildURL={() => ""}
-        pagination={pagination}
+        buildURL={ () => "" }
+        pagination={ pagination }
       >
-        {posts.map((post) => (
-          <BlogPostPreview headingLevel={2} key={post.id} post={post} />
-        ))}
+        { posts.map( ( post ) => (
+          <BlogPostPreview headingLevel={ 2 } key={ post.id } post={ post } />
+        ) ) }
       </PreviewList>
     </Page>
   );
 }
 
-export const Route = createFileRoute("/$language/blog/posts/$page")({
+export const Route = createFileRoute( "/$language/blog/posts/$page" )( {
   component: PostListPage,
-  loader: async ({ params }) => {
+  loader: async ( { params } ) => {
     const { language } = params;
 
-    if (!isSupportedLanguage(language)) {
-      throw new Error(`Unknown locale "${language}".`);
+    if ( ! isSupportedLanguage( language ) ) {
+      throw new Error( `Unknown locale "${ language }".` );
     }
 
-    const posts = await getBlogPosts({ data: { language } });
+    const posts = await getBlogPosts( { data: { language } } );
     const props: IProps = {
       posts,
     };
 
     return props;
   },
-});
+} );

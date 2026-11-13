@@ -7,40 +7,40 @@ import { List, ListItem } from "#lists";
 interface IProps {
   pathname: string;
 }
-export function Pathname({ pathname }: IProps) {
+export function Pathname( { pathname }: IProps ) {
   const { t } = useTranslation();
-  const segments = pathname.split("/").slice(1);
+  const segments = pathname.split( "/" ).slice( 1 );
   const totalSegments = segments.length;
 
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={t((t) => t.url["Pathname"])}
-        dValue={<Preformatted>{pathname}</Preformatted>}
+        dKey={ t( ( t ) => t.url[ "Pathname" ] ) }
+        dValue={ <Preformatted>{ pathname }</Preformatted> }
       />
 
-      {totalSegments === 0 ? (
+      { totalSegments === 0 ? (
         <DescriptionSection
-          dKey={t((t) => t.url["Segments"])}
-          dValue={<Preformatted>{totalSegments}</Preformatted>}
+          dKey={ t( ( t ) => t.url[ "Segments" ] ) }
+          dValue={ <Preformatted>{ totalSegments }</Preformatted> }
           isHorizontal
         />
       ) : (
         <DescriptionSection
-          dKey={t((t) => t.url["Segments"])}
+          dKey={ t( ( t ) => t.url[ "Segments" ] ) }
           dValue={
-            <Details summary={<Preformatted>{totalSegments}</Preformatted>}>
+            <Details summary={ <Preformatted>{ totalSegments }</Preformatted> }>
               <List isOrdered>
-                {segments.map((segment, index) => (
-                  <ListItem key={`${segment}${index}`}>
-                    <Preformatted>/{segment}</Preformatted>
+                { segments.map( ( segment, index ) => (
+                  <ListItem key={ `${ segment }${ index }` }>
+                    <Preformatted>/{ segment }</Preformatted>
                   </ListItem>
-                ))}
+                ) ) }
               </List>
             </Details>
           }
         />
-      )}
+      ) }
     </DescriptionList>
   );
 }

@@ -7,12 +7,16 @@ import {
 
 interface IProps extends ILinkInternalProps {}
 
-const BaseComponent = forwardRef<HTMLAnchorElement, IProps>((props, ref) => {
-  return <BaseLinkInternal ref={ref} {...props} />;
-});
+const BaseComponent = forwardRef< HTMLAnchorElement, IProps >(
+  ( props, ref ) => {
+    return <BaseLinkInternal ref={ ref } { ...props } />;
+  },
+);
 
-const CreatedLinkComponent = createLink(BaseComponent);
+const CreatedLinkComponent = createLink( BaseComponent );
 
-export const LinkInternal: LinkComponent<typeof BaseComponent> = (props) => {
-  return <CreatedLinkComponent {...props} />;
+export const LinkInternal: LinkComponent< typeof BaseComponent > = (
+  props,
+) => {
+  return <CreatedLinkComponent { ...props } />;
 };
