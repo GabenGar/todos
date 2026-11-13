@@ -7,7 +7,15 @@
     },
     "rules": {
       // it's a bit of nuisanse to deal here and there
-      "suspicious": "off"
+      "suspicious": "off",
+      "a11y": {
+        // svgs are not used in runtime
+        "noSvgWithoutTitle": "off"
+      },
+      "style": {
+        // it trips up on `.scss` files bigly
+        "noDescendingSpecificity":"off"
+      }
     }
   }
 }

@@ -23,6 +23,7 @@ export function createPagination(
   const currentMin =
     parsedTotalCount === BIGINT_ZERO ? BIGINT_ZERO : offset + BIGINT_ONE;
   const currentMax =
+    // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
     offset + PAGINATION_LIMIT > parsedTotalCount
       ? parsedTotalCount
       : offset + PAGINATION_LIMIT;
@@ -67,6 +68,7 @@ export function createClientPagination(
   const currentMin =
     parsedTotalCount === BIGINT_ZERO ? BIGINT_ZERO : offset + BIGINT_ONE;
   const currentMax =
+    // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
     offset + parsedLimit > parsedTotalCount
       ? parsedTotalCount
       : offset + parsedLimit;

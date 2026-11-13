@@ -16,6 +16,7 @@ export function createPagination(
   const offset = (currentPage - 1) * PAGINATION_LIMIT;
   const currentMin = totalCount === 0 ? 0 : offset + 1;
   const currentMax =
+    // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
     offset + PAGINATION_LIMIT > totalCount
       ? totalCount
       : offset + PAGINATION_LIMIT;
@@ -49,6 +50,7 @@ export function createClientPagination(
 
   const offset = currentPage - 1 < 0 ? 0 : (currentPage - 1) * limit;
   const currentMin = totalCount === 0 ? 0 : offset + 1;
+  // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
   const currentMax = offset + limit > totalCount ? totalCount : offset + limit;
 
   const pagination: IPagination = {

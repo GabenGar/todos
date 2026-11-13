@@ -16,9 +16,17 @@
         // it's a bit of nuisanse to deal here and there
         "noArrayIndexKey": "off"
       },
+      "a11y": {
+        // svgs are not used in runtime
+        "noSvgWithoutTitle": "off"
+      },
       "performance": {
         // we don't use `Image` in any of the nextjs projects
         "noImgElement": "off"
+      },
+      "style": {
+        // it trips up on `.scss` files bigly
+        "noDescendingSpecificity":"off"
       }
     }
   }

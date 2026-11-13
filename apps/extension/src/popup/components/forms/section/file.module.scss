@@ -21,7 +21,7 @@
   opacity: 0;
 
   &:focus,
-  &::focus-within {
+  &:focus-within {
     & + .label {
       outline: thin dotted;
     }
