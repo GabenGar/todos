@@ -38,7 +38,7 @@
   },
   "definitions": {
     "supported_language": {
-      "enum": ["en", "ru"]
+      "enum": [ "en", "ru" ]
     }
   }
 }

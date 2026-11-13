@@ -53,8 +53,8 @@ export function selectPlannedEventEntities(
         }
 
         const orderedEvents = ids.map(
-          // biome-ignore lint/style/noNonNullAssertion: blah
           ( id ) =>
+            // biome-ignore lint/style/noNonNullAssertion: blah
             plannedEvents.find( ( plannedEvent ) => plannedEvent.id === id )!,
         );
         onSuccess( orderedEvents );

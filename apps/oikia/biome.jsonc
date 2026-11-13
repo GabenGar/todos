@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.6.7/schema.json",
   "root": false,
-  "extends": ["@repo/biome-config/base", "@repo/biome-config/react"],
+  "extends": [ "@repo/biome-config/base", "@repo/biome-config/react" ],
   "files": {
     "includes": [
       "**",
@@ -11,7 +11,7 @@
     ]
   },
   "linter": {
-    "includes": ["**", "!**/src/.vite-env.d.ts"],
+    "includes": [ "**", "!**/src/.vite-env.d.ts" ],
     "rules": {
       "correctness": {
         // server endpoints feature a lot of `req`/`res` arguments

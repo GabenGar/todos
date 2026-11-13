@@ -3,6 +3,7 @@
 In order to limit registrations by time or specific amount without rebuilding the frontend, the invitation system must reside in the database.
 
 Invitations have this data outside of usual entity id/creation/update/title/description:
+
 - Code which is used in registration form
 - Account which created it
 - Maximum amount of usages
