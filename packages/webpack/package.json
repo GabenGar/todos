@@ -27,13 +27,13 @@
   },
   "dependencies": {
     "@repo/nodejs": "*",
-    "schema-utils": "^4.3.3"
+    "schema-utils": "4.8.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.7",
     "@repo/biome-config": "*",
     "@types/node": "^22.20.4",
-    "typescript": "^6.0.3",
-    "webpack": "^5.112.0"
+    "typescript": "6.0.3",
+    "webpack": "5.112.2"
   }
 }
