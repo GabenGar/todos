@@ -149,6 +149,6 @@ The packages in question:
    React Router stuff.
 
 
-Always run `npm update` after all version manipualtions are complete.
+Always run `npm update` after all version manipualtions are complete, and `npm install` afterwards, because reasons.
 
 
