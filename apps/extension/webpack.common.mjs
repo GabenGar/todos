@@ -79,11 +79,7 @@ const commonConfiguration = {
           ,
           "sass-loader",
         ],
-      },
-      {
-        test: /\.svg$/,
-        use: ["@svgr/webpack"],
-      },
+      }
     ],
   },
   resolve: {
