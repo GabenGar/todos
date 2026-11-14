@@ -33,8 +33,6 @@ async function build() {
       },
     ],
     {
-      restartTries: 3,
-      restartDelay: 5000,
       killOthersOn: "failure",
       maxProcesses: 1,
     },
