@@ -89,7 +89,7 @@ async function loadRouteModule(route, routeModulesCache) {
 //#endregion
 ```
 
-Then it's some [React Router][3] stuff, presumably related to lazy route mechanics. In context of extensions React Router is invoked purely client-side, thus only in context of browser's DOM. Presumably the set of possible route modules is known at build time and doesn't change at runtime, therefore no 3rd-party values are involved.
+Then it's some [React Router][3] stuff, presumably related to lazy route mechanics. In context of extensions React Router is invoked purely client-side. Presumably the set of possible route modules is known at build time and doesn't change at runtime, therefore no 3rd-party values are involved.
 
 ## Relevant Links
 
