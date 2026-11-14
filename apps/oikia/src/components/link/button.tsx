@@ -4,29 +4,29 @@ import { type ILinkInternalProps, LinkInternal } from "./internal";
 
 interface ILinkButtonProps extends ILinkInternalProps {}
 
-export function LinkButton({
+export function LinkButton( {
   href,
   className,
   children,
   ...blockProps
-}: ILinkButtonProps) {
+}: ILinkButtonProps ) {
   return (
     <LinkInternal
-      className={(props) =>
+      className={ ( props ) =>
         clsx(
           styles.block,
           className &&
-            (typeof className === "string" ? className : className(props)),
+            ( typeof className === "string" ? className : className( props ) ),
         )
       }
-      href={href}
-      {...blockProps}
+      href={ href }
+      { ...blockProps }
     >
-      {(props) => (
-        <span className={styles.content}>
-          {typeof children === "function" ? children(props) : children}
+      { ( props ) => (
+        <span className={ styles.content }>
+          { typeof children === "function" ? children( props ) : children }
         </span>
-      )}
+      ) }
     </LinkInternal>
   );
 }

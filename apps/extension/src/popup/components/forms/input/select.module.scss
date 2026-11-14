@@ -6,11 +6,11 @@
   cursor: pointer;
 
   &:focus {
-    background-color: var(--colour-background-primary);
+    background-color: var( --colour-background-primary );
   }
 }
 
 .option {
-  background-color: var(--colour-background-primary);
+  background-color: var( --colour-background-primary );
   cursor: pointer;
 }

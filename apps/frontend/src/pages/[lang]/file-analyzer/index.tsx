@@ -11,31 +11,33 @@ import type { IPageNamespace } from "#translation";
 const namespace = "page-file-analyzer" satisfies IPageNamespace;
 
 function QRCodeReaderPage() {
-  const { t } = usePageTranslation(namespace);
-  const [fileOverview, changeFileOverview] = useState<IFileOverview>();
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
+  const { t } = usePageTranslation( namespace );
+  const [ fileOverview, changeFileOverview ] = useState< IFileOverview >();
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
   const formID = "file-analyzer";
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader isFilled>
               <FileForm
-                id={formID}
-                onSuccess={async (overview) => changeFileOverview(overview)}
+                id={ formID }
+                onSuccess={ async ( overview ) =>
+                  changeFileOverview( overview )
+                }
               />
             </OverviewHeader>
 
-            {!fileOverview ? undefined : (
+            { ! fileOverview ? undefined : (
               <OverviewBody>
-                <FileOverview headingLevel={3} overview={fileOverview} />
+                <FileOverview headingLevel={ 3 } overview={ fileOverview } />
               </OverviewBody>
-            )}
+            ) }
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
@@ -43,54 +45,54 @@ function QRCodeReaderPage() {
 
 interface IFileProps {
   id: string;
-  onSuccess: (overview: IFileOverview) => Promise<void>;
+  onSuccess: ( overview: IFileOverview ) => Promise< void >;
 }
 
-function FileForm({ id, onSuccess }: IFileProps) {
-  const { t } = usePageTranslation(namespace);
+function FileForm( { id, onSuccess }: IFileProps ) {
+  const { t } = usePageTranslation( namespace );
   const FIELD = {
-    FILE: { name: "file", label: t((t) => t.form.label) },
+    FILE: { name: "file", label: t( ( t ) => t.form.label ) },
   } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const filesInput = event.currentTarget.elements.file;
     const files = filesInput.files;
 
-    if (files === null) {
+    if ( files === null ) {
       return;
     }
 
     // biome-ignore lint/style/noNonNullAssertion: blah
-    const file = files.item(0)!;
+    const file = files.item( 0 )!;
     const overview = { file } satisfies IFileOverview;
 
-    await onSuccess(overview);
+    await onSuccess( overview );
   }
 
   return (
-    <FormClient<IFieldName>
-      id={id}
-      onSubmit={handleSubmit}
-      submitButton={(_, isSubmitting) =>
-        t((t) => (isSubmitting ? t.form.submitting : t.form.submit))
+    <FormClient< IFieldName >
+      id={ id }
+      onSubmit={ handleSubmit }
+      submitButton={ ( _, isSubmitting ) =>
+        t( ( t ) => ( isSubmitting ? t.form.submitting : t.form.submit ) )
       }
     >
-      {(formID) => (
+      { ( formID ) => (
         <InputSectionFile
-          id={`${formID}-${FIELD.FILE.name}`}
-          form={formID}
-          name={FIELD.FILE.name}
-          label={FIELD.FILE.label}
-          multiple={false}
+          id={ `${ formID }-${ FIELD.FILE.name }` }
+          form={ formID }
+          name={ FIELD.FILE.name }
+          label={ FIELD.FILE.label }
+          multiple={ false }
           required
         />
-      )}
+      ) }
     </FormClient>
   );
 }
 
-export const getStaticProps = createGetStaticProps(namespace);
+export const getStaticProps = createGetStaticProps( namespace );
 export const getStaticPaths = getStaticExportPaths;
 
 export default QRCodeReaderPage;

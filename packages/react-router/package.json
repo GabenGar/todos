@@ -22,22 +22,22 @@
   },
   "dependencies": {
     "@repo/ui": "*",
-    "clsx": "^2.1.1",
-    "i18next": "26.4.2",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "react-i18next": "17.0.15",
-    "react-router": "7.18.0"
+    "clsx": "2.1.1",
+    "i18next": "27.1.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-i18next": "18.0.1",
+    "react-router": "8.5.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.4",
-    "@react-router/dev": "7.18.0",
+    "@biomejs/biome": "2.6.7",
+    "@react-router/dev": "8.5.1",
     "@repo/biome-config": "*",
     "@types/node": "^22.20.4",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "sass": "^1.97.3",
-    "typescript": "^6.0.3",
-    "vite": "^7.3.1"
+    "sass": "1.108.2",
+    "typescript": "6.0.3",
+    "vite": "8.3.8"
   }
 }

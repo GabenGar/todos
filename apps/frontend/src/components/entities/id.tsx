@@ -10,35 +10,37 @@ import { logError } from "#lib/logs";
 
 import styles from "./id.module.scss";
 
-interface IProps extends IBaseComponentProps<"div"> {
-  entityID: IEntityItem["id"];
+interface IProps extends IBaseComponentProps< "div" > {
+  entityID: IEntityItem[ "id" ];
 }
 
-export const EntityID = createBlockComponent(styles, Component);
+export const EntityID = createBlockComponent( styles, Component );
 
-function Component({ entityID, ...props }: IProps) {
-  const { t } = useTranslation("common");
-  const [isCopied, switchCopiedStatus] = useState(false);
+function Component( { entityID, ...props }: IProps ) {
+  const { t } = useTranslation( "common" );
+  const [ isCopied, switchCopiedStatus ] = useState( false );
 
   return (
-    <div {...props}>
-      <Pre className={styles.id}>{entityID}</Pre>
+    <div { ...props }>
+      <Pre className={ styles.id }>{ entityID }</Pre>
       <Button
-        className={styles.button}
-        disabled={isCopied}
-        onClick={async () => {
+        className={ styles.button }
+        disabled={ isCopied }
+        onClick={ async () => {
           try {
-            await navigator.clipboard.writeText(entityID);
-            switchCopiedStatus(true);
-            setTimeout(() => {
-              switchCopiedStatus(false);
-            }, 3000);
-          } catch (error) {
-            logError(error);
+            await navigator.clipboard.writeText( entityID );
+            switchCopiedStatus( true );
+            setTimeout( () => {
+              switchCopiedStatus( false );
+            }, 3000 );
+          } catch ( error ) {
+            logError( error );
           }
-        }}
+        } }
       >
-        {t((t) => (!isCopied ? t.entity["Copy"] : t.entity["Copied"]))}
+        { t( ( t ) =>
+          ! isCopied ? t.entity[ "Copy" ] : t.entity[ "Copied" ],
+        ) }
       </Button>
     </div>
   );

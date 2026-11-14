@@ -14,7 +14,7 @@ export interface IPagination {
   offset: INonNegativeInteger;
 }
 
-export interface IPaginatedCollection<ItemType> {
+export interface IPaginatedCollection< ItemType > {
   pagination: IPagination;
   items: ItemType[];
 }

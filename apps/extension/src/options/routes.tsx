@@ -9,7 +9,7 @@ import { getLocalizedMessage } from "#lib/localization";
 import { Layout } from "#options/components/layouts";
 import { HomePage } from "./pages/home";
 
-export const router = createHashRouter([
+export const router = createHashRouter( [
   {
     element: <Layout />,
     errorElement: <RootError />,
@@ -20,44 +20,44 @@ export const router = createHashRouter([
       },
     ],
   },
-]);
+] );
 
 function RootError() {
   const error = useRouteError();
 
-  if (isRouteErrorResponse(error)) {
+  if ( isRouteErrorResponse( error ) ) {
     const { status, statusText, data } = error;
 
     return (
       <DescriptionList>
         <DescriptionSection
-          dKey={getLocalizedMessage("Status")}
-          dValue={<Preformatted>{status}</Preformatted>}
+          dKey={ getLocalizedMessage( "Status" ) }
+          dValue={ <Preformatted>{ status }</Preformatted> }
         />
         <DescriptionSection
-          dKey={getLocalizedMessage("Message")}
-          dValue={<Preformatted>{statusText}</Preformatted>}
+          dKey={ getLocalizedMessage( "Message" ) }
+          dValue={ <Preformatted>{ statusText }</Preformatted> }
         />
         <DescriptionSection
-          dKey={getLocalizedMessage("Data")}
-          dValue={<Preformatted>{String(data)}</Preformatted>}
+          dKey={ getLocalizedMessage( "Data" ) }
+          dValue={ <Preformatted>{ String( data ) }</Preformatted> }
         />
       </DescriptionList>
     );
   }
 
-  if (error instanceof Error) {
+  if ( error instanceof Error ) {
     const { name, message } = error;
 
     return (
       <DescriptionList>
         <DescriptionSection
-          dKey={getLocalizedMessage("Name")}
-          dValue={<Preformatted>{name}</Preformatted>}
+          dKey={ getLocalizedMessage( "Name" ) }
+          dValue={ <Preformatted>{ name }</Preformatted> }
         />
         <DescriptionSection
-          dKey={getLocalizedMessage("Message")}
-          dValue={<Preformatted>{message}</Preformatted>}
+          dKey={ getLocalizedMessage( "Message" ) }
+          dValue={ <Preformatted>{ message }</Preformatted> }
         />
       </DescriptionList>
     );
@@ -66,14 +66,16 @@ function RootError() {
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={getLocalizedMessage("Name")}
+        dKey={ getLocalizedMessage( "Name" ) }
         dValue={
-          <Preformatted>{getLocalizedMessage("Unknown Error")}</Preformatted>
+          <Preformatted>
+            { getLocalizedMessage( "Unknown Error" ) }
+          </Preformatted>
         }
       />
       <DescriptionSection
-        dKey={getLocalizedMessage("Message")}
-        dValue={<Preformatted>{String(error)}</Preformatted>}
+        dKey={ getLocalizedMessage( "Message" ) }
+        dValue={ <Preformatted>{ String( error ) }</Preformatted> }
       />
     </DescriptionList>
   );

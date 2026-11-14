@@ -1,5 +1,17 @@
 {
-  "$schema": "https://v2-8-20.turborepo.dev/schema.json",
+  "$schema": "https://v2-11-11.turborepo.dev/schema.json",
+  "futureFlags": {
+    "globalConfiguration": true,
+    "affectedUsingTaskInputs": true,
+    "watchUsingTaskInputs": true,
+    "pruneIncludesGlobalFiles": true,
+    "errorsOnlyShowHash": true,
+    "longerSignatureKey": true,
+    "experimentalObservability": true,
+    "experimentalCargoWorkspaces": true,
+    "experimentalPythonWorkspaces": true,
+    
+  },
   "tasks": {
     "lint": {
       "dependsOn": ["^lint"]

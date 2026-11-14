@@ -13,17 +13,17 @@ const queryFileBasePath = path.join(
   "queries",
 );
 
-export function getQueryFile(...pathSegments: string[]) {
-  const fullPath = path.join(queryFileBasePath, ...pathSegments);
-  const queryFile = new pgPromise.QueryFile(fullPath, { minify: true });
+export function getQueryFile( ...pathSegments: string[] ) {
+  const fullPath = path.join( queryFileBasePath, ...pathSegments );
+  const queryFile = new pgPromise.QueryFile( fullPath, { minify: true } );
 
   return queryFile;
 }
 
-export function toEntityIDs<EntityType extends IEntityRow>(
+export function toEntityIDs< EntityType extends IEntityRow >(
   entities: EntityType[],
 ) {
-  const ids = entities.map(({ id }) => id);
+  const ids = entities.map( ( { id } ) => id );
 
   return ids;
 }
@@ -37,23 +37,23 @@ export async function migrateDatabase() {
     checkOrder: true,
     singleTransaction: true,
   };
-  await runMigrations(options);
+  await runMigrations( options );
 }
 
-export function toOrderedEntities<EntityType extends IEntityRow>(
-  ids: EntityType["id"][],
+export function toOrderedEntities< EntityType extends IEntityRow >(
+  ids: EntityType[ "id" ][],
   items: EntityType[],
 ) {
-  if (ids.length !== items.length) {
+  if ( ids.length !== items.length ) {
     throw new Error(
-      `The amount of IDs ${ids.length} and items ${items.length} doesn't match.`,
+      `The amount of IDs ${ ids.length } and items ${ items.length } doesn't match.`,
     );
   }
 
   const results = ids.map(
-    (accID) =>
+    ( accID ) =>
       // biome-ignore lint/style/noNonNullAssertion: already mapped
-      items.find(({ id }) => id === accID)!,
+      items.find( ( { id } ) => id === accID )!,
   );
 
   return results;

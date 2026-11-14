@@ -20,12 +20,14 @@ async function ServerErrorPage() {
   const title = "500 Internal Server Error";
 
   return (
-    <Page title={title}>
-      <Overview headingLevel={2}>
-        {(headinglevel) => (
+    <Page title={ title }>
+      <Overview headingLevel={ 2 }>
+        { ( headinglevel ) => (
           <>
-            <OverviewHeader className={styles.header}>
-              <Heading level={headinglevel}>500 Internal Server Error</Heading>
+            <OverviewHeader className={ styles.header }>
+              <Heading level={ headinglevel }>
+                500 Internal Server Error
+              </Heading>
             </OverviewHeader>
 
             <OverviewBody>
@@ -33,17 +35,17 @@ async function ServerErrorPage() {
             </OverviewBody>
 
             <OverviewFooter>
-              <Link href={"/"}>Return home</Link>
+              <Link href={ "/" }>Return home</Link>
             </OverviewFooter>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-ServerErrorPage.getLayout = (page: ReactNode) => {
-  return <RootLayout>{page}</RootLayout>;
+ServerErrorPage.getLayout = ( page: ReactNode ) => {
+  return <RootLayout>{ page }</RootLayout>;
 };
 
 export default ServerErrorPage;

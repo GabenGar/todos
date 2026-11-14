@@ -15,77 +15,79 @@ export async function generateNestedCode(
   let moduleCount = 1;
 
   console.debug(
-    `Generating ${moduleMap.size} modules for the nested module "${name}" at "${generatorPath}"...`,
+    `Generating ${ moduleMap.size } modules for the nested module "${ name }" at "${ generatorPath }"...`,
   );
 
-  for await (const [moduleName, moduleInfos] of moduleMap) {
-    const moduleFolderPath = path.join(generatorPath, moduleName);
-    const indexModules = new Map<string, IModuleInfo["exports"]>();
+  for await ( const [ moduleName, moduleInfos ] of moduleMap ) {
+    const moduleFolderPath = path.join( generatorPath, moduleName );
+    const indexModules = new Map< string, IModuleInfo[ "exports" ] >();
 
-    await mkdir(moduleFolderPath, { recursive: true });
+    await mkdir( moduleFolderPath, { recursive: true } );
 
-    for await (const moduleInfo of moduleInfos) {
+    for await ( const moduleInfo of moduleInfos ) {
       const formattedModuleCount = moduleCount
         .toString()
-        .padStart(moduleMap.size.toString().length, "0");
+        .padStart( moduleMap.size.toString().length, "0" );
 
-      await generateModule(moduleInfo, moduleFolderPath);
-      indexModules.set(moduleInfo.name, moduleInfo.exports);
+      await generateModule( moduleInfo, moduleFolderPath );
+      indexModules.set( moduleInfo.name, moduleInfo.exports );
 
       console.debug(
-        `Generated code for the module "${moduleInfo.name}" (${formattedModuleCount} out of ${moduleMap.size}).`,
+        `Generated code for the module "${ moduleInfo.name }" (${ formattedModuleCount } out of ${ moduleMap.size }).`,
       );
       moduleCount++;
     }
 
-    await saveIndexFile(moduleFolderPath, indexModules);
+    await saveIndexFile( moduleFolderPath, indexModules );
   }
 
-  console.debug(`Generated nested module "${name}" at "${generatorPath}".`);
+  console.debug(
+    `Generated nested module "${ name }" at "${ generatorPath }".`,
+  );
 }
 
-async function generateModule(moduleInfo: IModuleInfo, folderPath: string) {
+async function generateModule( moduleInfo: IModuleInfo, folderPath: string ) {
   const { name, content } = moduleInfo;
-  const moduleFilePath = path.join(folderPath, `${name}.ts`);
-  const fileContent = [codeMessage, content].join("\n");
+  const moduleFilePath = path.join( folderPath, `${ name }.ts` );
+  const fileContent = [ codeMessage, content ].join( "\n" );
 
-  await writeFile(moduleFilePath, fileContent, { encoding: "utf8" });
+  await writeFile( moduleFilePath, fileContent, { encoding: "utf8" } );
 }
 
 async function saveIndexFile(
   modulePath: string,
-  indexModules: Map<string, IModuleInfo["exports"]>,
+  indexModules: Map< string, IModuleInfo[ "exports" ] >,
 ) {
-  console.debug(`Generating index file for module "${modulePath}"...`);
+  console.debug( `Generating index file for module "${ modulePath }"...` );
 
-  const indexFilePath = path.join(modulePath, indexFileName);
-  const indexContent = Array.from(indexModules)
-    .reduce<string[]>((lines, [moduleName, moduleExports]) => {
-      if (!moduleExports.length) {
+  const indexFilePath = path.join( modulePath, indexFileName );
+  const indexContent = Array.from( indexModules )
+    .reduce< string[] >( ( lines, [ moduleName, moduleExports ] ) => {
+      if ( ! moduleExports.length ) {
         throw new Error(
-          `Generated code must export at least one symbol and the module "${moduleName}" exported none.`,
+          `Generated code must export at least one symbol and the module "${ moduleName }" exported none.`,
         );
       }
 
       const symbolExports = moduleExports
-        .map<string>(({ name, type, alias }) => {
-          const symbolString = `${type === "abstract" ? `type ${name}` : name}${
-            alias ? ` as ${alias}` : ""
+        .map< string >( ( { name, type, alias } ) => {
+          const symbolString = `${ type === "abstract" ? `type ${ name }` : name }${
+            alias ? ` as ${ alias }` : ""
           }`;
 
           return symbolString;
-        })
-        .join(", ");
+        } )
+        .join( ", " );
 
-      const exportStatement = `export {${symbolExports}} from "./${moduleName}"`;
+      const exportStatement = `export {${ symbolExports }} from "./${ moduleName }"`;
 
-      lines.push(exportStatement);
+      lines.push( exportStatement );
 
       return lines;
-    }, [])
-    .join("\n");
+    }, [] )
+    .join( "\n" );
 
-  await writeFile(indexFilePath, indexContent, { encoding: "utf8" });
+  await writeFile( indexFilePath, indexContent, { encoding: "utf8" } );
 
-  console.debug(`Generated index file for module "${modulePath}".`);
+  console.debug( `Generated index file for module "${ modulePath }".` );
 }

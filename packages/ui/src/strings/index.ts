@@ -1,12 +1,12 @@
 import type { nanoid } from "nanoid";
 
-export type INanoidID = ReturnType<typeof nanoid>;
+export type INanoidID = ReturnType< typeof nanoid >;
 export type ITitle = string;
 export type IDescription = string;
 
-type IStringCollection = readonly string[] | Set<string>;
+type IStringCollection = readonly string[] | Set< string >;
 
-export function parseString(input: string): string | undefined {
+export function parseString( input: string ): string | undefined {
   const normalizedString = input.trim();
 
   return normalizedString.length === 0 ? undefined : normalizedString;
@@ -18,17 +18,17 @@ export function toQuotedStrings(
 ): string {
   const stringArray =
     stringCollection instanceof Set
-      ? Array.from(stringCollection)
+      ? Array.from( stringCollection )
       : stringCollection;
   const quotedStrings = stringArray
-    .map((value) => toQuotedString(value))
-    .join(joiner);
+    .map( ( value ) => toQuotedString( value ) )
+    .join( joiner );
 
   return quotedStrings;
 }
 
-export function toQuotedString(inputString: string): string {
-  const quotedString = `"${inputString}"`;
+export function toQuotedString( inputString: string ): string {
+  const quotedString = `"${ inputString }"`;
 
   return quotedString;
 }
@@ -45,7 +45,7 @@ export function isSubstring(
   const normalizedInputString = inputString.trim().toLowerCase();
   const normalizedParentString = parentString?.trim().toLowerCase();
   const result = Boolean(
-    normalizedParentString?.includes(normalizedInputString),
+    normalizedParentString?.includes( normalizedInputString ),
   );
 
   return result;

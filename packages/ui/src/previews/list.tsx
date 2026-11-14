@@ -16,8 +16,11 @@ import {
 import styles from "./list.module.scss";
 
 interface IProps
-  extends IBaseComponentPropsWithChildren<"div">,
-    Pick<IPaginationProps, "pagination" | "buildURL" | "internalLinkElement"> {
+  extends IBaseComponentPropsWithChildren< "div" >,
+    Pick<
+      IPaginationProps,
+      "pagination" | "buildURL" | "internalLinkElement"
+    > {
   sortingOrder?: "ascending" | "descending";
   noItemsElement?: ReactNode;
 }
@@ -25,9 +28,9 @@ interface IProps
 /**
  * @TODO `previews` prop
  */
-export const PreviewList = createBlockComponent(styles, Component);
+export const PreviewList = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   pagination,
   buildURL,
   internalLinkElement,
@@ -35,36 +38,41 @@ function Component({
   noItemsElement,
   children,
   ...props
-}: IProps) {
+}: IProps ) {
   const { t } = useTranslation();
-  const parsedTotalCount = BigInt(pagination.total_count);
+  const parsedTotalCount = BigInt( pagination.total_count );
   const listClass = clsx(
     styles.list,
     sortingOrder === "descending" && styles.descending,
   );
 
   return (
-    <div {...props}>
-      {parsedTotalCount === BIGINT_ZERO ? (
-        !noItemsElement ? (
-          <p className={styles.nothing}>{t((t) => t.list["empty-list"])}</p>
+    <div { ...props }>
+      { parsedTotalCount === BIGINT_ZERO ? (
+        ! noItemsElement ? (
+          <p className={ styles.nothing }>
+            { t( ( t ) => t.list[ "empty-list" ] ) }
+          </p>
         ) : (
           noItemsElement
         )
       ) : (
         <>
-          <PaginationOverview className={styles.info} pagination={pagination} />
+          <PaginationOverview
+            className={ styles.info }
+            pagination={ pagination }
+          />
 
-          <div className={listClass}>{children}</div>
+          <div className={ listClass }>{ children }</div>
 
           <Pagination
-            className={styles.pagination}
-            pagination={pagination}
-            buildURL={buildURL}
-            internalLinkElement={internalLinkElement}
+            className={ styles.pagination }
+            pagination={ pagination }
+            buildURL={ buildURL }
+            internalLinkElement={ internalLinkElement }
           />
         </>
-      )}
+      ) }
     </div>
   );
 }

@@ -1,8 +1,5 @@
 @use "@repo/ui/styles/sass/variables" as *;
 
-.block {
-}
-
 .section {
   display: grid;
   gap: $size-small;
@@ -21,8 +18,7 @@
   display: grid;
   grid-template:
     "title select" 1fr
-    "id select" 1fr
-    / 1fr 6em;
+    "id select" 1fr / 1fr 6em;
   padding: $size-small;
 }
 

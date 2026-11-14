@@ -3,11 +3,12 @@ import { InputNanoID } from "../../inputs";
 import { Label } from "../../label";
 import { type IInputSectionProps, InputSection } from "../section";
 
-interface IProps extends Omit<IInputSectionProps, "minLength" | "maxLength"> {}
+interface IProps
+  extends Omit< IInputSectionProps, "minLength" | "maxLength" > {}
 
-export const InputSectionNanoID = createBlockComponent(undefined, Component);
+export const InputSectionNanoID = createBlockComponent( undefined, Component );
 
-function Component({
+function Component( {
   id,
   form,
   name,
@@ -17,18 +18,18 @@ function Component({
   disabled,
   children,
   ...props
-}: IProps) {
+}: IProps ) {
   return (
-    <InputSection {...props}>
-      <Label htmlFor={id}>{children}</Label>
+    <InputSection { ...props }>
+      <Label htmlFor={ id }>{ children }</Label>
       <InputNanoID
-        id={id}
-        form={form}
-        name={name}
-        required={required}
-        readOnly={readOnly}
-        disabled={disabled}
-        defaultValue={defaultValue}
+        id={ id }
+        form={ form }
+        name={ name }
+        required={ required }
+        readOnly={ readOnly }
+        disabled={ disabled }
+        defaultValue={ defaultValue }
       />
     </InputSection>
   );

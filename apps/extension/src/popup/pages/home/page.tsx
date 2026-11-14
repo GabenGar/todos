@@ -7,72 +7,72 @@ import { getLocalizedMessage } from "#lib/localization";
 import { InputSectionText } from "#popup/components/forms/section";
 
 export function HomePage() {
-  const url = useActionData<typeof action>();
-  const heading = getLocalizedMessage("URL parser");
+  const url = useActionData< typeof action >();
+  const heading = getLocalizedMessage( "URL parser" );
   const formID = "input-url";
 
   return (
-    <Page heading={heading}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader isFilled>
               <FormClient
-                id={formID}
+                id={ formID }
                 method="POST"
-                submitButton={() => getLocalizedMessage("Analyze")}
+                submitButton={ () => getLocalizedMessage( "Analyze" ) }
               >
-                {(formID) => (
+                { ( formID ) => (
                   <>
                     <InputSectionText
                       name="url"
-                      id={`${formID}-url`}
-                      form={formID}
+                      id={ `${ formID }-url` }
+                      form={ formID }
                     >
-                      {getLocalizedMessage("URL")}
+                      { getLocalizedMessage( "URL" ) }
                     </InputSectionText>
                   </>
-                )}
+                ) }
               </FormClient>
             </OverviewHeader>
 
             <OverviewBody>
-              {!url || !(url instanceof URL) ? (
-                getLocalizedMessage("No URL is selected.")
+              { ! url || ! ( url instanceof URL ) ? (
+                getLocalizedMessage( "No URL is selected." )
               ) : (
-                <URLViewer headingLevel={2} url={url} />
-              )}
+                <URLViewer headingLevel={ 2 } url={ url } />
+              ) }
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export async function action({
+export async function action( {
   request,
-}: ActionFunctionArgs): Promise<Error | URL> {
+}: ActionFunctionArgs ): Promise< Error | URL > {
   try {
-    if (request.method !== "POST") {
+    if ( request.method !== "POST" ) {
       throw new Error(
-        getLocalizedMessage("Unknown method $METHOD$", request.method),
+        getLocalizedMessage( "Unknown method $METHOD$", request.method ),
       );
     }
 
     const data = await request.formData();
 
-    const inputURL = data.get("url") as string | null;
+    const inputURL = data.get( "url" ) as string | null;
 
-    if (!inputURL) {
-      throw new Error(getLocalizedMessage("URL is required."));
+    if ( ! inputURL ) {
+      throw new Error( getLocalizedMessage( "URL is required." ) );
     }
 
-    const url = new URL(inputURL);
+    const url = new URL( inputURL );
 
     return url;
-  } catch (error) {
-    if (!(error instanceof Error)) {
+  } catch ( error ) {
+    if ( ! ( error instanceof Error ) ) {
       throw error;
     }
     return error;

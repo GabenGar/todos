@@ -18,36 +18,36 @@ interface IProps extends IOverviewProps {
   overview: IFileOverview;
 }
 
-export const FileOverview = createBlockComponent(undefined, Component);
+export const FileOverview = createBlockComponent( undefined, Component );
 
-function Component({ overview, ...props }: IProps) {
+function Component( { overview, ...props }: IProps ) {
   const { t } = useTranslation();
   const { file } = overview;
   const { name, type, size, lastModified } = file;
-  const lastModifiedDateTime = toISODateTime(new Date(lastModified));
+  const lastModifiedDateTime = toISODateTime( new Date( lastModified ) );
 
   return (
-    <Overview {...props}>
-      {(headingLevel) => (
+    <Overview { ...props }>
+      { ( headingLevel ) => (
         <>
           <OverviewHeader>
-            <Heading level={headingLevel}>
-              <Preformatted>{name}</Preformatted>
+            <Heading level={ headingLevel }>
+              <Preformatted>{ name }</Preformatted>
             </Heading>
           </OverviewHeader>
 
           <OverviewBody>
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.file.type)}
-                dValue={type}
+                dKey={ t( ( t ) => t.file.type ) }
+                dValue={ type }
                 isKeyPreformatted
                 isValuePreformatted
                 isHorizontal
               />
               <DescriptionSection
-                dKey={t((t) => t.file.size)}
-                dValue={<DigitalSize size={size} />}
+                dKey={ t( ( t ) => t.file.size ) }
+                dValue={ <DigitalSize size={ size } /> }
                 isKeyPreformatted
                 isHorizontal
               />
@@ -57,14 +57,14 @@ function Component({ overview, ...props }: IProps) {
           <OverviewFooter>
             <DescriptionList>
               <DescriptionSection
-                dKey={t((t) => t.file["last-modified"])}
-                dValue={<DateTimeView dateTime={lastModifiedDateTime} />}
+                dKey={ t( ( t ) => t.file[ "last-modified" ] ) }
+                dValue={ <DateTimeView dateTime={ lastModifiedDateTime } /> }
                 isKeyPreformatted
               />
             </DescriptionList>
           </OverviewFooter>
         </>
-      )}
+      ) }
     </Overview>
   );
 }

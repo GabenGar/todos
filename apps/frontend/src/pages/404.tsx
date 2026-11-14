@@ -20,12 +20,12 @@ function NotFoundPage() {
   const title = "404 Not Found";
 
   return (
-    <Page title={title}>
-      <Overview headingLevel={2}>
-        {(headinglevel) => (
+    <Page title={ title }>
+      <Overview headingLevel={ 2 }>
+        { ( headinglevel ) => (
           <>
-            <OverviewHeader className={styles.header}>
-              <Heading level={headinglevel}>404 Not Found</Heading>
+            <OverviewHeader className={ styles.header }>
+              <Heading level={ headinglevel }>404 Not Found</Heading>
             </OverviewHeader>
 
             <OverviewBody>
@@ -33,17 +33,17 @@ function NotFoundPage() {
             </OverviewBody>
 
             <OverviewFooter>
-              <Link href={"/"}>Return home</Link>
+              <Link href={ "/" }>Return home</Link>
             </OverviewFooter>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-NotFoundPage.getLayout = (page: ReactNode) => {
-  return <RootLayout>{page}</RootLayout>;
+NotFoundPage.getLayout = ( page: ReactNode ) => {
+  return <RootLayout>{ page }</RootLayout>;
 };
 
 export default NotFoundPage;

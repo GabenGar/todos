@@ -5,34 +5,34 @@ import { Button, type IButtonProps } from "./button";
 
 import styles from "./menu.module.scss";
 
-interface IMenuButtonsProps extends IBaseComponentPropsWithChildren<"menu"> {}
+interface IMenuButtonsProps extends IBaseComponentPropsWithChildren< "menu" > {}
 interface IMenuItemProps
-  extends Omit<IBaseComponentPropsWithChildren<"li">, "onClick">,
-    Pick<IButtonProps, "onClick" | "disabled" | "viewType"> {}
+  extends Omit< IBaseComponentPropsWithChildren< "li" >, "onClick" >,
+    Pick< IButtonProps, "onClick" | "disabled" | "viewType" > {}
 
-export const MenuButtons = createBlockComponent(styles, MenuComponent);
-export const MenuItem = createBlockComponent(styles.item, ItemComponent);
+export const MenuButtons = createBlockComponent( styles, MenuComponent );
+export const MenuItem = createBlockComponent( styles.item, ItemComponent );
 
-function MenuComponent({ children, ...props }: IMenuButtonsProps) {
-  return <menu {...props}>{children}</menu>;
+function MenuComponent( { children, ...props }: IMenuButtonsProps ) {
+  return <menu { ...props }>{ children }</menu>;
 }
 
-function ItemComponent({
+function ItemComponent( {
   viewType,
   disabled,
   onClick,
   children,
   ...props
-}: IMenuItemProps) {
+}: IMenuItemProps ) {
   return (
-    <li {...props}>
+    <li { ...props }>
       <Button
-        className={styles.button}
-        viewType={viewType}
-        disabled={disabled}
-        onClick={onClick}
+        className={ styles.button }
+        viewType={ viewType }
+        disabled={ disabled }
+        onClick={ onClick }
       >
-        {children}
+        { children }
       </Button>
     </li>
   );

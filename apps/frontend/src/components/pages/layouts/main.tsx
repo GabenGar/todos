@@ -15,8 +15,8 @@ interface IProps {
   children: ReactNode;
 }
 
-export function MainLayout({ children }: IProps) {
-  const { t, i18n } = useTranslation("common");
+export function MainLayout( { children }: IProps ) {
+  const { t, i18n } = useTranslation( "common" );
   const lang = i18n.language as ILocale;
   /**
    * `pages` router doesn't allow to set `"lang"`
@@ -26,22 +26,24 @@ export function MainLayout({ children }: IProps) {
    * Otherwise it requires `getInitialProps()` fuckery
    * on `_document.tsx` file.
    */
-  useEffect(() => {
+  useEffect( () => {
     document.documentElement.lang = lang;
-  }, [lang]);
+  }, [ lang ] );
 
   return (
-    <ClientProvider lang={lang}>
-      <header className={styles.header}>
-        <GlobalNavigation language={lang} />
+    <ClientProvider lang={ lang }>
+      <header className={ styles.header }>
+        <GlobalNavigation language={ lang } />
       </header>
 
-      <main className={styles.main}>{children}</main>
+      <main className={ styles.main }>{ children }</main>
 
-      <footer className={styles.footer}>
-        <List className={styles.list}>
+      <footer className={ styles.footer }>
+        <List className={ styles.list }>
           <ListItem>
-            <Link href={REPOSITORY_URL}>{t(($) => $.layout.source_code)}</Link>
+            <Link href={ REPOSITORY_URL }>
+              { t( ( $ ) => $.layout.source_code ) }
+            </Link>
           </ListItem>
         </List>
 
@@ -54,15 +56,15 @@ export function MainLayout({ children }: IProps) {
 }
 
 function ServiceWorkerOverview() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation( "common" );
   const serviceWorkerContext = useServiceWorker();
 
   return (
     <DescriptionSection
-      dKey={t(($) => $.layout.service_worker["Service Worker"])}
-      dValue={t(
-        ($) => $.layout.service_worker.status[serviceWorkerContext.status],
-      )}
+      dKey={ t( ( $ ) => $.layout.service_worker[ "Service Worker" ] ) }
+      dValue={ t(
+        ( $ ) => $.layout.service_worker.status[ serviceWorkerContext.status ],
+      ) }
       isHorizontal
     />
   );

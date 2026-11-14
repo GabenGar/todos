@@ -3,86 +3,88 @@ import type { IPlannedEvent } from "#entities/planned-event";
 import { logInfo } from "#lib/logs";
 import { databaseVersion, type IIDBTransaction } from "../types";
 
-export function runMigrations(event: IDBVersionChangeEvent) {
+export function runMigrations( event: IDBVersionChangeEvent ) {
   const { oldVersion, newVersion } = event;
   // biome-ignore lint/style/noNonNullAssertion: blah
-  const transaction = (event.target as IDBOpenDBRequest)
+  const transaction = ( event.target as IDBOpenDBRequest )
     .transaction! as IIDBTransaction;
 
   logInfo(
-    `Migrating database "${databaseVersion}" from version ${oldVersion} to ${newVersion}...`,
+    `Migrating database "${ databaseVersion }" from version ${ oldVersion } to ${ newVersion }...`,
   );
 
-  switch (oldVersion) {
+  switch ( oldVersion ) {
     case 0: {
-      runMigrationV0(transaction, (transaction) => runMigrationV1(transaction));
+      runMigrationV0( transaction, ( transaction ) =>
+        runMigrationV1( transaction ),
+      );
       break;
     }
 
     case 1: {
-      runMigrationV1(transaction);
+      runMigrationV1( transaction );
       break;
     }
 
     default: {
-      throw new Error(`Unknown indexed DB version ${oldVersion}.`);
+      throw new Error( `Unknown indexed DB version ${ oldVersion }.` );
     }
   }
 
   logInfo(
-    `Successfully migrated database "${databaseVersion}" from version ${oldVersion} to ${newVersion}.`,
+    `Successfully migrated database "${ databaseVersion }" from version ${ oldVersion } to ${ newVersion }.`,
   );
 }
 
 function runMigrationV0(
   transaction: IIDBTransaction,
-  onSuccess?: (transaction: IIDBTransaction) => void,
+  onSuccess?: ( transaction: IIDBTransaction ) => void,
 ) {
   const database = transaction.db;
-  database.createObjectStore("planned_events", {
+  database.createObjectStore( "planned_events", {
     keyPath: "id",
     autoIncrement: true,
-  });
+  } );
 
-  onSuccess?.(transaction);
+  onSuccess?.( transaction );
 }
 
 function runMigrationV1(
   transaction: IIDBTransaction,
-  onSuccess?: (transaction: IIDBTransaction) => void,
+  onSuccess?: ( transaction: IIDBTransaction ) => void,
 ) {
-  const store = transaction.objectStore("planned_events");
+  const store = transaction.objectStore( "planned_events" );
 
-  store.createIndex("recently_created", ["parsed_created_at", "id"], {
+  store.createIndex( "recently_created", [ "parsed_created_at", "id" ], {
     unique: true,
-  });
-  store.createIndex("recently_updated", ["parsed_updated_at", "id"], {
+  } );
+  store.createIndex( "recently_updated", [ "parsed_updated_at", "id" ], {
     unique: true,
-  });
+  } );
 
   // update existing planned events without parsed fields
   const cursorRequest = store.openCursor();
 
-  cursorRequest.onsuccess = (event) => {
-    const cursor = (event.target as typeof cursorRequest).result;
+  cursorRequest.onsuccess = ( event ) => {
+    const cursor = ( event.target as typeof cursorRequest ).result;
 
-    if (cursor) {
+    if ( cursor ) {
       const plannedEvent = cursor.value as IPlannedEvent;
       const isMissingParsedFields =
-        !plannedEvent.parsed_created_at || !plannedEvent.parsed_updated_at;
+        ! plannedEvent.parsed_created_at || ! plannedEvent.parsed_updated_at;
 
-      if (isMissingParsedFields) {
+      if ( isMissingParsedFields ) {
         const update = plannedEvent;
 
-        if (!plannedEvent.parsed_created_at) {
-          update.parsed_created_at = toJavascriptDate(update.created_at);
+        if ( ! plannedEvent.parsed_created_at ) {
+          update.parsed_created_at = toJavascriptDate( update.created_at );
         }
 
-        if (!plannedEvent.parsed_updated_at) {
-          update.parsed_updated_at = toJavascriptDate(update.updated_at);
+        if ( ! plannedEvent.parsed_updated_at ) {
+          update.parsed_updated_at = toJavascriptDate( update.updated_at );
         }
 
-        const updateRequest = cursor.update(update);
+        const updateRequest = cursor.update( update );
 
         updateRequest.onsuccess = () => {
           cursor.continue();
@@ -91,7 +93,7 @@ function runMigrationV1(
         cursor.continue();
       }
     } else {
-      onSuccess?.(transaction);
+      onSuccess?.( transaction );
     }
   };
 }

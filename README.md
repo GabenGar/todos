@@ -6,6 +6,7 @@
 - [Develop](#develop)
 - [Turborepo](#turborepo)
 - [Troubleshooting](#troubleshooting)
+- [Update dependencies](#update-dependencies)
 
 ## Requrements
 NodeJS - 20.9+
@@ -107,3 +108,47 @@ npm install
 
 - **I get `npm ERR! code ENOWORKSPACES frontend:dev: npm ERR! This command does not support workspaces.` error when starting development.**
   Run `cd apps/frontend && npx next telemetry disable`.
+
+## Update dependencies
+
+The repo has a bunch of singleteon packages or the packages which don't work well when there are different versions of them across worspaces. These packages have to be pinned up to minor versions across all workspaces which depend on them and updated to the same versions at the same time.
+
+The packages in question:
+- `turbo`
+   Run `npx @turbo/codemod migrate` after updating to new version.
+- `biome`
+   Run `npx biome migrate --write` after updating to new version.
+- `typescript`
+- `@types/node`
+   Must match `engines` field.
+
+- `i18next`
+- `i18next-resources-to-backend`
+- `react-i18next`
+   `i18next` stuff.
+
+- `react`
+- `react-dom`
+- `@types/react`
+- `@types/react-dom`
+   ReactJS stuff.
+
+- `@next/env`
+- `next`
+   NextJS stuff.
+
+- `@tanstack/react-router`
+- `@tanstack/react-start`
+   TankStack stuff.
+
+- `react-router`
+- `@react-router/express`
+- `@react-router/node`
+- `@react-router/serve`
+- `@react-router/dev`
+   React Router stuff.
+
+
+Always run `npm update` after all version manipualtions are complete, and `npm install` afterwards, because reasons.
+
+

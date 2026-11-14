@@ -8,15 +8,15 @@ import {
   OverviewHeader,
 } from "./overview";
 
-interface IProps extends Pick<IOverviewProps, "headingLevel"> {}
+interface IProps extends Pick< IOverviewProps, "headingLevel" > {}
 
-export function OverviewPlaceHolder({ ...props }: IProps) {
+export function OverviewPlaceHolder( { ...props }: IProps ) {
   return (
-    <Overview {...props}>
-      {(headinglevel) => (
+    <Overview { ...props }>
+      { ( headinglevel ) => (
         <>
           <OverviewHeader>
-            <Heading level={headinglevel}>
+            <Heading level={ headinglevel }>
               <Loading />
             </Heading>
           </OverviewHeader>
@@ -27,7 +27,7 @@ export function OverviewPlaceHolder({ ...props }: IProps) {
             <Loading />
           </OverviewFooter>
         </>
-      )}
+      ) }
     </Overview>
   );
 }

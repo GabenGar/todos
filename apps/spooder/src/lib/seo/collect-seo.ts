@@ -17,13 +17,13 @@ interface IResult {
   errors?: Error[];
 }
 
-export async function collectSEO(): Promise<IResult> {
+export async function collectSEO(): Promise< IResult > {
   const errors: Error[] = [];
-  const title = collectTitle(errors);
+  const title = collectTitle( errors );
   const { known, unknown, invalid } = selectMetaElements();
-  const charSet = collectCharset(known);
-  const unknownMetaTags = collectUnknownMetaTags(unknown);
-  const invalidMetaTags = collectInvalidMetaTags(invalid);
+  const charSet = collectCharset( known );
+  const unknownMetaTags = collectUnknownMetaTags( unknown );
+  const invalidMetaTags = collectInvalidMetaTags( invalid );
   const {
     description,
     applicationName,
@@ -42,7 +42,7 @@ export async function collectSEO(): Promise<IResult> {
     viewport,
     openGraph,
     twitter,
-  } = collectKnownMetaTags(known);
+  } = collectKnownMetaTags( known );
   const jsonLD = collectJSONLD();
 
   const seo: ISEO = {
@@ -52,75 +52,75 @@ export async function collectSEO(): Promise<IResult> {
     invalidMetaTags,
   };
 
-  if (description) {
+  if ( description ) {
     seo.description = description;
   }
 
-  if (applicationName) {
+  if ( applicationName ) {
     seo.applicationName = applicationName;
   }
 
-  if (author) {
+  if ( author ) {
     seo.author = author;
   }
 
-  if (colorScheme) {
+  if ( colorScheme ) {
     seo.colorScheme = colorScheme;
   }
 
-  if (creator) {
+  if ( creator ) {
     seo.creator = creator;
   }
 
-  if (generator) {
+  if ( generator ) {
     seo.generator = generator;
   }
 
-  if (googlebot) {
+  if ( googlebot ) {
     seo.googlebot = googlebot;
   }
 
-  if (keywords) {
+  if ( keywords ) {
     seo.keywords = keywords;
   }
 
-  if (publisher) {
+  if ( publisher ) {
     seo.publisher = publisher;
   }
 
-  if (referrer) {
+  if ( referrer ) {
     seo.referrer = referrer;
   }
 
-  if (responsiveEmbeddedSizing) {
+  if ( responsiveEmbeddedSizing ) {
     seo.responsiveEmbeddedSizing = responsiveEmbeddedSizing;
   }
 
-  if (robots) {
+  if ( robots ) {
     seo.robots = robots;
   }
 
-  if (textScale) {
+  if ( textScale ) {
     seo.textScale = textScale;
   }
 
-  if (themeColor) {
+  if ( themeColor ) {
     seo.themeColor = themeColor;
   }
 
-  if (viewport) {
+  if ( viewport ) {
     seo.viewport = viewport;
   }
 
-  if (openGraph) {
+  if ( openGraph ) {
     seo.openGraph = openGraph;
   }
 
-  if (twitter) {
+  if ( twitter ) {
     seo.twitter = twitter;
   }
 
-  if (jsonLD) {
+  if ( jsonLD ) {
     seo.jsonLD = jsonLD;
   }
 
@@ -128,7 +128,7 @@ export async function collectSEO(): Promise<IResult> {
     seo,
   };
 
-  if (errors.length !== 0) {
+  if ( errors.length !== 0 ) {
     result.errors = errors;
   }
 
@@ -137,55 +137,55 @@ export async function collectSEO(): Promise<IResult> {
 
 function collectCharset(
   elements: HTMLMetaElement[],
-): IMaybe<IOneOrMany<string>> {
-  let result: IMaybe<IOneOrMany<string>> = undefined;
+): IMaybe< IOneOrMany< string > > {
+  let result: IMaybe< IOneOrMany< string > > = undefined;
 
-  for (const element of elements) {
-    if (!element.hasAttribute("charset")) {
+  for ( const element of elements ) {
+    if ( ! element.hasAttribute( "charset" ) ) {
       continue;
     }
 
     // biome-ignore lint/style/noNonNullAssertion: blah
-    const charSet = element.getAttribute("charset")!;
+    const charSet = element.getAttribute( "charset" )!;
 
-    if (!result) {
+    if ( ! result ) {
       result = charSet;
       continue;
     }
 
-    if (Array.isArray(result)) {
-      result.push(charSet);
+    if ( Array.isArray( result ) ) {
+      result.push( charSet );
       continue;
     }
 
-    result = [result, charSet];
+    result = [ result, charSet ];
   }
 
   return result;
 }
 
-function collectTitle(errors: Error[]): ISEO["title"] {
+function collectTitle( errors: Error[] ): ISEO[ "title" ] {
   // exclude <title> descendats of <svg> elements
   // since they have a different semantic meaning
-  const elements = document.querySelectorAll("title:not(svg title)");
+  const elements = document.querySelectorAll( "title:not(svg title)" );
   const count = elements.length;
 
-  if (count === 0) {
-    errors.push(new Error("Failed to find a single <title> element."));
+  if ( count === 0 ) {
+    errors.push( new Error( "Failed to find a single <title> element." ) );
 
     return;
-  } else if (count === 1) {
-    const title = parseString(elements[0].textContent);
+  } else if ( count === 1 ) {
+    const title = parseString( elements[ 0 ].textContent );
 
     return title;
   } else {
     const titles: string[] = [];
 
-    for (const element of elements) {
-      const title = parseString(element.textContent);
+    for ( const element of elements ) {
+      const title = parseString( element.textContent );
 
-      if (title) {
-        titles.push(title);
+      if ( title ) {
+        titles.push( title );
       }
     }
 
@@ -193,73 +193,73 @@ function collectTitle(errors: Error[]): ISEO["title"] {
   }
 }
 
-function collectUnknownMetaTags(elements: HTMLMetaElement[]) {
-  const unknownMetaTags = elements.map<IUnknownMetaTag>((element) => {
+function collectUnknownMetaTags( elements: HTMLMetaElement[] ) {
+  const unknownMetaTags = elements.map< IUnknownMetaTag >( ( element ) => {
     const metaTag: IUnknownMetaTag = new Map();
 
-    for (const attribute of element.attributes) {
+    for ( const attribute of element.attributes ) {
       const name = attribute.name;
-      const value = parseString(attribute.value);
+      const value = parseString( attribute.value );
 
-      if (!value) {
+      if ( ! value ) {
         continue;
       }
 
-      if (!metaTag.has(name)) {
-        metaTag.set(name, value);
+      if ( ! metaTag.has( name ) ) {
+        metaTag.set( name, value );
         continue;
       }
 
       // biome-ignore lint/style/noNonNullAssertion: it just works
-      const currentValue = metaTag.get(name)!;
+      const currentValue = metaTag.get( name )!;
 
-      if (Array.isArray(currentValue)) {
-        currentValue.push(value);
+      if ( Array.isArray( currentValue ) ) {
+        currentValue.push( value );
       } else {
-        metaTag.set(name, [currentValue, value]);
+        metaTag.set( name, [ currentValue, value ] );
       }
     }
 
     return metaTag;
-  });
+  } );
 
   return unknownMetaTags;
 }
 
-function collectInvalidMetaTags(elements: HTMLMetaElement[]) {
-  const unknownMetaTags = elements.map<IUnknownMetaTag>((element) => {
+function collectInvalidMetaTags( elements: HTMLMetaElement[] ) {
+  const unknownMetaTags = elements.map< IUnknownMetaTag >( ( element ) => {
     const metaTag: IUnknownMetaTag = new Map();
 
-    for (const attribute of element.attributes) {
+    for ( const attribute of element.attributes ) {
       const name = attribute.name;
-      const value = parseString(attribute.value);
+      const value = parseString( attribute.value );
 
-      if (!value) {
+      if ( ! value ) {
         continue;
       }
 
-      if (!metaTag.has(name)) {
-        metaTag.set(name, value);
+      if ( ! metaTag.has( name ) ) {
+        metaTag.set( name, value );
         continue;
       }
 
       // biome-ignore lint/style/noNonNullAssertion: it just works
-      const currentValue = metaTag.get(name)!;
+      const currentValue = metaTag.get( name )!;
 
-      if (Array.isArray(currentValue)) {
-        currentValue.push(value);
+      if ( Array.isArray( currentValue ) ) {
+        currentValue.push( value );
       } else {
-        metaTag.set(name, [currentValue, value]);
+        metaTag.set( name, [ currentValue, value ] );
       }
     }
 
     return metaTag;
-  });
+  } );
 
   return unknownMetaTags;
 }
 
-const supportedNames = new Set([
+const supportedNames = new Set( [
   "description",
   "application-name",
   "author",
@@ -275,9 +275,9 @@ const supportedNames = new Set([
   "publisher",
   "googlebot",
   "robots",
-] satisfies IKnownMetaName[]);
+] satisfies IKnownMetaName[] );
 
-type ISupportedName = IElementType<typeof supportedNames>;
+type ISupportedName = IElementType< typeof supportedNames >;
 
 type ISEOMeta = Omit<
   ISEO,
@@ -286,38 +286,38 @@ type ISEOMeta = Omit<
 
 type ISEOKey = keyof ISEOMeta;
 
-function isSupportedName(input: unknown): input is ISupportedName {
-  return supportedNames.has(input as ISupportedName);
+function isSupportedName( input: unknown ): input is ISupportedName {
+  return supportedNames.has( input as ISupportedName );
 }
 
-function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
-  const result: ReturnType<typeof collectKnownMetaTags> = {};
+function collectKnownMetaTags( elements: HTMLMetaElement[] ): ISEOMeta {
+  const result: ReturnType< typeof collectKnownMetaTags > = {};
   const openGraphPrefix = collectOpenGraphPrefix();
-  const openGraph: Required<ISEO>["openGraph"] = {};
-  const twitter: Required<ISEO>["twitter"] = {};
+  const openGraph: Required< ISEO >[ "openGraph" ] = {};
+  const twitter: Required< ISEO >[ "twitter" ] = {};
 
-  if (openGraphPrefix) {
+  if ( openGraphPrefix ) {
     openGraph.prefix = openGraphPrefix;
   }
 
-  for (const element of elements) {
-    if (isOpenGraphElement(element)) {
-      collectOpenGraphElement(openGraph, element);
+  for ( const element of elements ) {
+    if ( isOpenGraphElement( element ) ) {
+      collectOpenGraphElement( openGraph, element );
       continue;
     }
 
-    if (isTwitterElement(element)) {
-      collectTwitterElement(twitter, element);
+    if ( isTwitterElement( element ) ) {
+      collectTwitterElement( twitter, element );
       continue;
     }
 
     const name = element.name;
 
-    if (!isSupportedName(name)) {
+    if ( ! isSupportedName( name ) ) {
       continue;
     }
 
-    const content = parseString(element.content);
+    const content = parseString( element.content );
 
     const metaTag: IMetaTag = {
       name,
@@ -325,34 +325,34 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
     };
     const unknownAttributes = collectUnknownElementAttributes(
       element,
-      new Set(["name", "content"]),
+      new Set( [ "name", "content" ] ),
     );
 
-    if (unknownAttributes && unknownAttributes.size !== 0) {
+    if ( unknownAttributes && unknownAttributes.size !== 0 ) {
       metaTag.unknownAttributes = unknownAttributes;
     }
 
-    const lookupKey = normalizeLookupKey(name);
-    const oldMeta = result[lookupKey];
+    const lookupKey = normalizeLookupKey( name );
+    const oldMeta = result[ lookupKey ];
 
-    if (!oldMeta) {
-      result[lookupKey] = metaTag;
+    if ( ! oldMeta ) {
+      result[ lookupKey ] = metaTag;
       continue;
     }
 
-    if (Array.isArray(oldMeta)) {
-      oldMeta.push(metaTag);
+    if ( Array.isArray( oldMeta ) ) {
+      oldMeta.push( metaTag );
       continue;
     }
 
-    result[lookupKey] = [oldMeta, metaTag];
+    result[ lookupKey ] = [ oldMeta, metaTag ];
   }
 
-  if (Object.keys(openGraph).length !== 0) {
+  if ( Object.keys( openGraph ).length !== 0 ) {
     result.openGraph = openGraph;
   }
 
-  if (Object.keys(twitter).length !== 0) {
+  if ( Object.keys( twitter ).length !== 0 ) {
     result.twitter = twitter;
   }
 
@@ -361,8 +361,8 @@ function collectKnownMetaTags(elements: HTMLMetaElement[]): ISEOMeta {
 
 function normalizeLookupKey(
   name: ISupportedName,
-): Exclude<ISEOKey, "openGraph" | "twitter" | "jsonLD"> {
-  switch (name) {
+): Exclude< ISEOKey, "openGraph" | "twitter" | "jsonLD" > {
+  switch ( name ) {
     case "application-name": {
       return "applicationName";
     }
@@ -388,18 +388,18 @@ function normalizeLookupKey(
   }
 }
 
-function collectOpenGraphPrefix(): IMaybe<string> {
-  const htmlElement = document.querySelector(`html[prefix]`);
-  const headElement = document.querySelector(`head[prefix]`);
+function collectOpenGraphPrefix(): IMaybe< string > {
+  const htmlElement = document.querySelector( `html[prefix]` );
+  const headElement = document.querySelector( `head[prefix]` );
   const finalElement = htmlElement || headElement;
 
-  if (!finalElement) {
+  if ( ! finalElement ) {
     return undefined;
   }
 
-  const prefix = finalElement.getAttribute("prefix");
+  const prefix = finalElement.getAttribute( "prefix" );
 
-  if (!prefix) {
+  if ( ! prefix ) {
     return undefined;
   }
 

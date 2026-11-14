@@ -5,17 +5,17 @@ import type { IBaseComponentPropsWithChildren } from "#components/types";
 
 import styles from "./details.module.scss";
 
-interface IProps extends IBaseComponentPropsWithChildren<"details"> {
+interface IProps extends IBaseComponentPropsWithChildren< "details" > {
   summary: ReactNode;
 }
 
-export const Details = createBlockComponent(styles, Component);
+export const Details = createBlockComponent( styles, Component );
 
-function Component({ summary, children, ...props }: IProps) {
+function Component( { summary, children, ...props }: IProps ) {
   return (
-    <details {...props}>
-      <summary className={styles.summary}>{summary}</summary>
-      {children}
+    <details { ...props }>
+      <summary className={ styles.summary }>{ summary }</summary>
+      { children }
     </details>
   );
 }

@@ -11,8 +11,8 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": ["node"],
-    "lib": ["esnext", "WebWorker"],
+    "types": [ "node" ],
+    "lib": [ "esnext", "WebWorker" ],
     "allowJs": true,
     "plugins": [
       {
@@ -20,5 +20,5 @@
       }
     ]
   },
-  "include": ["src/browser/workers/service-worker.ts"]
+  "include": [ "src/browser/workers/service-worker.ts" ]
 }

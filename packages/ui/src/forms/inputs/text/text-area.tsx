@@ -10,19 +10,19 @@ import styles from "./text-area.module.scss";
 
 export interface IInputTextAreaProps
   extends Omit<
-      IBaseComponentPropsWithChildren<"textarea">,
+      IBaseComponentPropsWithChildren< "textarea" >,
       "id" | "name" | "form"
     >,
-    Pick<IInputProps, "id" | "name" | "form"> {}
+    Pick< IInputProps, "id" | "name" | "form" > {}
 
 export const InputTextArea = forwardRef<
   HTMLTextAreaElement,
   IInputTextAreaProps
->(createBlockComponent(styles, Component));
+>( createBlockComponent( styles, Component ) );
 
 function Component(
   { rows = 2, ...props }: IInputTextAreaProps,
-  ref?: Ref<HTMLTextAreaElement>,
+  ref?: Ref< HTMLTextAreaElement >,
 ) {
-  return <textarea rows={rows} {...props} ref={ref} />;
+  return <textarea rows={ rows } { ...props } ref={ ref } />;
 }

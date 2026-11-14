@@ -10,16 +10,16 @@ import {
 
 import styles from "./description-list.module.scss";
 
-export type IDescriptionListProps = IBaseComponentProps<"dl"> & {
+export type IDescriptionListProps = IBaseComponentProps< "dl" > & {
   isNested?: boolean;
-} & ({ sections: IDescriptionMap } | { children: ReactNode });
+} & ( { sections: IDescriptionMap } | { children: ReactNode } );
 
 /**
  * Is not actual `Map` because keys can be of nullish values
  * without being equal.
  */
-interface IDescriptionMap extends Array<[ReactNode, ReactNode]> {}
-export type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
+interface IDescriptionMap extends Array< [ ReactNode, ReactNode ] > {}
+export type IDescriptionSectionProps = IBaseComponentProps< "div" > & {
   isHorizontal?: boolean;
 } & (
     | { children?: ReactNode }
@@ -35,10 +35,11 @@ export type IDescriptionSectionProps = IBaseComponentProps<"div"> & {
       }
   );
 
-interface IDescriptionTermProps extends IBaseComponentPropsWithChildren<"dt"> {}
+interface IDescriptionTermProps
+  extends IBaseComponentPropsWithChildren< "dt" > {}
 
 interface IDescriptionDetailsProps
-  extends IBaseComponentPropsWithChildren<"dd"> {}
+  extends IBaseComponentPropsWithChildren< "dd" > {}
 
 export const DescriptionList = createBlockComponent(
   styles,
@@ -60,33 +61,33 @@ export const DescriptionDetails = createBlockComponent(
   DescriptionDetailsComponent,
 );
 
-function DescriptionListComponent({
+function DescriptionListComponent( {
   isNested,
   className,
   ...props
-}: IDescriptionListProps) {
-  const resolvedClassname = clsx(className, isNested && styles.nested);
+}: IDescriptionListProps ) {
+  const resolvedClassname = clsx( className, isNested && styles.nested );
 
-  if ("children" in props) {
-    return <dl className={resolvedClassname} {...props} />;
+  if ( "children" in props ) {
+    return <dl className={ resolvedClassname } { ...props } />;
   }
 
   const { sections, ...otherProps } = props;
 
   return (
-    <dl className={resolvedClassname} {...otherProps}>
-      {sections.map(([dKey, dValue], index) => (
-        <DescriptionSection key={index} dKey={dKey} dValue={dValue} />
-      ))}
+    <dl className={ resolvedClassname } { ...otherProps }>
+      { sections.map( ( [ dKey, dValue ], index ) => (
+        <DescriptionSection key={ index } dKey={ dKey } dValue={ dValue } />
+      ) ) }
     </dl>
   );
 }
 
-function DescriptionSectionComponent({
+function DescriptionSectionComponent( {
   isHorizontal = false,
   className,
   ...props
-}: IDescriptionSectionProps) {
+}: IDescriptionSectionProps ) {
   const blockClass = clsx(
     className,
     "dKey" in props && styles.section_keyValue,
@@ -94,10 +95,10 @@ function DescriptionSectionComponent({
   );
 
   // separate returns to avoid passing `dKey` and `dValue` to DOM
-  if (!("dKey" in props)) {
+  if ( ! ( "dKey" in props ) ) {
     return (
-      <div className={blockClass} {...props}>
-        {props.children}
+      <div className={ blockClass } { ...props }>
+        { props.children }
       </div>
     );
   }
@@ -115,35 +116,35 @@ function DescriptionSectionComponent({
     // biome-ignore lint/complexity/noUselessFragments: it has to be this way for decorator to work
     <></>
   ) : (
-    <div className={blockClass} {...blockProps}>
-      <DescriptionTerm className={styles.key}>
-        {isKeyPreformatted ? (
-          <Preformatted>{dKey}:</Preformatted>
+    <div className={ blockClass } { ...blockProps }>
+      <DescriptionTerm className={ styles.key }>
+        { isKeyPreformatted ? (
+          <Preformatted>{ dKey }:</Preformatted>
         ) : (
-          <>{dKey}:</>
-        )}
+          <>{ dKey }:</>
+        ) }
       </DescriptionTerm>
 
-      <DescriptionDetails className={styles.value}>
-        {!dValue ? (
+      <DescriptionDetails className={ styles.value }>
+        { ! dValue ? (
           dValue
         ) : isValuePreformatted ? (
-          <Preformatted>{dValue}</Preformatted>
+          <Preformatted>{ dValue }</Preformatted>
         ) : (
           dValue
-        )}
+        ) }
       </DescriptionDetails>
     </div>
   );
 }
 
-function DescriptionTermComponent({ ...props }: IDescriptionTermProps) {
-  return <dt {...props} />;
+function DescriptionTermComponent( { ...props }: IDescriptionTermProps ) {
+  return <dt { ...props } />;
 }
 
-function DescriptionDetailsComponent({
+function DescriptionDetailsComponent( {
   children,
   ...props
-}: IDescriptionDetailsProps) {
-  return <dd {...props}>{children ?? "Unknown"}</dd>;
+}: IDescriptionDetailsProps ) {
+  return <dd { ...props }>{ children ?? "Unknown" }</dd>;
 }

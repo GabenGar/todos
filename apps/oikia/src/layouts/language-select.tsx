@@ -5,7 +5,7 @@ import styles from "./language-select.module.scss";
 
 function LanguageSelectLayout() {
   return (
-    <main className={styles.main}>
+    <main className={ styles.main }>
       <Outlet />
     </main>
   );

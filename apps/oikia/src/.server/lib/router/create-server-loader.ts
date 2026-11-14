@@ -6,23 +6,23 @@ import {
 } from "#server/lib/api";
 
 export function createServerLoader<
-  ActionFunc extends (...args: any[]) => Promise<any>,
->(loaderFunc: ActionFunc) {
+  ActionFunc extends ( ...args: any[] ) => Promise< any >,
+>( loaderFunc: ActionFunc ) {
   async function serverAction(
-    ...args: Parameters<typeof loaderFunc>
+    ...args: Parameters< typeof loaderFunc >
   ): Promise<
-    | ReturnType<typeof data<ReturnType<typeof createFailedAPIResponse>>>
-    | ISuccessfulAPIResponse<Awaited<ReturnType<typeof loaderFunc>>>
+    | ReturnType< typeof data< ReturnType< typeof createFailedAPIResponse > > >
+    | ISuccessfulAPIResponse< Awaited< ReturnType< typeof loaderFunc > > >
   > {
     try {
-      const data = await loaderFunc(...args);
+      const data = await loaderFunc( ...args );
 
-      return createSuccessfullAPIResponse(data);
-    } catch (error) {
-      return data(createFailedAPIResponse(error as Error), {
-        headers: new Headers([["Content-Type", "application/json"]]),
+      return createSuccessfullAPIResponse( data );
+    } catch ( error ) {
+      return data( createFailedAPIResponse( error as Error ), {
+        headers: new Headers( [ [ "Content-Type", "application/json" ] ] ),
         status: 500,
-      });
+      } );
     }
   }
 

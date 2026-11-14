@@ -43,8 +43,8 @@ interface IError extends Error {
  */
 export class ClientError extends Error implements IError {
   statusCode: IClientStatusCode;
-  constructor(message: string, options?: IClientErrorOptions) {
-    super(message, options);
+  constructor( message: string, options?: IClientErrorOptions ) {
+    super( message, options );
 
     this.statusCode = options?.statusCode ?? 400;
   }

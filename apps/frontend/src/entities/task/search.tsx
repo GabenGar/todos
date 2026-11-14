@@ -12,41 +12,44 @@ import statusStyles from "./status.module.scss";
 
 export interface ITaskSearchQuery {
   query?: string;
-  status?: ITask["status"];
-  place_id?: IPlace["id"];
+  status?: ITask[ "status" ];
+  place_id?: IPlace[ "id" ];
 }
 
 export interface ISearchTasksFormProps extends ILocalizableProps {
   id: string;
   defaultQuery?: ITaskSearchQuery;
-  onSearch: (newSearchQuery: ITaskSearchQuery) => Promise<void>;
+  onSearch: ( newSearchQuery: ITaskSearchQuery ) => Promise< void >;
   place?: IPlace;
 }
 
-export function SearchTasksForm({
+export function SearchTasksForm( {
   language,
   id,
   defaultQuery,
   place,
   onSearch,
-}: ISearchTasksFormProps) {
-  const { t } = useTranslation("translation");
-  const [oldQuery, changeOldQuery] = useState<ITaskSearchQuery | undefined>(
+}: ISearchTasksFormProps ) {
+  const { t } = useTranslation( "translation" );
+  const [ oldQuery, changeOldQuery ] = useState< ITaskSearchQuery | undefined >(
     defaultQuery,
   );
   const FIELD = {
-    QUERY: { name: "query", label: t((t) => t.task.search_tasks.query) },
-    PLACE: { name: "place_id", label: t((t) => t.task.search_tasks["Place"]) },
-    STATUS: { name: "status", label: t((t) => t.task.status) },
+    QUERY: { name: "query", label: t( ( t ) => t.task.search_tasks.query ) },
+    PLACE: {
+      name: "place_id",
+      label: t( ( t ) => t.task.search_tasks[ "Place" ] ),
+    },
+    STATUS: { name: "status", label: t( ( t ) => t.task.status ) },
   } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const formElements = event.currentTarget.elements;
     const query = formElements.query.value.trim();
     const inputStatus = formElements.status.value.trim();
     const status =
-      inputStatus === "" || !isTaskStatus(inputStatus)
+      inputStatus === "" || ! isTaskStatus( inputStatus )
         ? undefined
         : inputStatus;
     const place_id = formElements.place_id.value.trim();
@@ -65,79 +68,79 @@ export function SearchTasksForm({
       status,
     };
 
-    changeOldQuery(newSearchQuery);
-    await onSearch(newSearchQuery);
+    changeOldQuery( newSearchQuery );
+    await onSearch( newSearchQuery );
   }
 
   return (
-    <Form<IFieldName>
-      id={id}
-      onSubmit={handleSubmit}
-      submitButton={(_, isSubmitting) =>
-        t((t) =>
-          !isSubmitting
+    <Form< IFieldName >
+      id={ id }
+      onSubmit={ handleSubmit }
+      submitButton={ ( _, isSubmitting ) =>
+        t( ( t ) =>
+          ! isSubmitting
             ? t.task.search_tasks.search
             : t.task.search_tasks.searching,
         )
       }
     >
-      {(formID) => (
+      { ( formID ) => (
         <>
           <InputSectionText
-            id={`${formID}-${FIELD.QUERY.name}`}
-            form={formID}
-            name={FIELD.QUERY.name}
-            minLength={1}
-            maxLength={20}
-            defaultValue={defaultQuery?.query}
+            id={ `${ formID }-${ FIELD.QUERY.name }` }
+            form={ formID }
+            name={ FIELD.QUERY.name }
+            minLength={ 1 }
+            maxLength={ 20 }
+            defaultValue={ defaultQuery?.query }
           >
-            {FIELD.QUERY.label}
+            { FIELD.QUERY.label }
           </InputSectionText>
 
           <PlaceSection
             // a dirty hack to force update on the component state
-            key={place?.id}
-            language={language}
-            id={`${formID}-${FIELD.PLACE.name}`}
-            form={formID}
-            name={FIELD.PLACE.name}
-            place={place}
+            key={ place?.id }
+            language={ language }
+            id={ `${ formID }-${ FIELD.PLACE.name }` }
+            form={ formID }
+            name={ FIELD.PLACE.name }
+            place={ place }
           >
-            {FIELD.PLACE.label}
+            { FIELD.PLACE.label }
           </PlaceSection>
 
           <InputSectionSelect
-            label={FIELD.STATUS.label}
-            id={`${formID}-${FIELD.STATUS.name}`}
-            form={formID}
-            name={FIELD.STATUS.name}
-            defaultValue={defaultQuery?.status ?? ""}
+            label={ FIELD.STATUS.label }
+            id={ `${ formID }-${ FIELD.STATUS.name }` }
+            form={ formID }
+            name={ FIELD.STATUS.name }
+            defaultValue={ defaultQuery?.status ?? "" }
           >
             <InputOption value="">
-              {t((t) => t.task.status_values.all)}
+              { t( ( t ) => t.task.status_values.all ) }
             </InputOption>
 
             <InputOption
-              className={statusStyles["in-progress"]}
+              className={ statusStyles[ "in-progress" ] }
               value="in-progress"
             >
-              {t((t) => t.task.status_values["in-progress"])}
+              { t( ( t ) => t.task.status_values[ "in-progress" ] ) }
             </InputOption>
 
-            <InputOption className={statusStyles.pending} value="pending">
-              {t((t) => t.task.status_values.pending)}
+            <InputOption className={ statusStyles.pending } value="pending">
+              { t( ( t ) => t.task.status_values.pending ) }
             </InputOption>
 
-            <InputOption className={statusStyles.finished} value="finished">
-              {t((t) => t.task.status_values.finished)}
+            <InputOption className={ statusStyles.finished } value="finished">
+              { t( ( t ) => t.task.status_values.finished ) }
             </InputOption>
 
-            <InputOption className={statusStyles.failed} value="failed">
-              {t((t) => t.task.status_values.failed)}
+            <InputOption className={ statusStyles.failed } value="failed">
+              { t( ( t ) => t.task.status_values.failed ) }
             </InputOption>
           </InputSectionSelect>
         </>
-      )}
+      ) }
     </Form>
   );
 }

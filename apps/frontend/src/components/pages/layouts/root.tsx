@@ -7,6 +7,6 @@ interface IProps {
   children: ReactNode;
 }
 
-export function RootLayout({ children }: IProps) {
-  return <main className={styles.main}>{children}</main>;
+export function RootLayout( { children }: IProps ) {
+  return <main className={ styles.main }>{ children }</main>;
 }

@@ -6,13 +6,13 @@ interface IProps extends IPreformattedProps {
   data: unknown;
 }
 
-export const JavascriptValue = createBlockComponent(undefined, Component);
+export const JavascriptValue = createBlockComponent( undefined, Component );
 
-function Component({ data, ...props }: IProps) {
-  if (typeof data === "object" && data !== null && !Array.isArray(data)) {
+function Component( { data, ...props }: IProps ) {
+  if ( typeof data === "object" && data !== null && ! Array.isArray( data ) ) {
     // @ts-expect-error @TODO nuke `DescriptionList` `sections` prop
-    return <JavascriptObject data={data} />;
+    return <JavascriptObject data={ data } />;
   }
 
-  return <Preformatted {...props}>{String(data)}</Preformatted>;
+  return <Preformatted { ...props }>{ String( data ) }</Preformatted>;
 }

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { JSX } from "react";
 
-export type IFuncComponent<PropsType> = (
+export type IFuncComponent< PropsType > = (
   props: PropsType,
   ref?: any,
 ) => JSX.Element;
@@ -51,18 +51,18 @@ interface IBlockStyles {
  * }
  * ```
  */
-export function createBlockComponent<Props extends IBaseProps = IBaseProps>(
+export function createBlockComponent< Props extends IBaseProps = IBaseProps >(
   blockClassName: IBlockStyles | string | undefined,
-  functionComponent: IFuncComponent<Props>,
+  functionComponent: IFuncComponent< Props >,
 ): typeof functionComponent {
-  return (...args: Parameters<typeof functionComponent>) => {
-    const [props, ref] = args;
+  return ( ...args: Parameters< typeof functionComponent > ) => {
+    const [ props, ref ] = args;
     const baseClassName =
       typeof blockClassName === "string"
         ? blockClassName
         : blockClassName?.block;
-    const className = clsx(baseClassName, props.className);
+    const className = clsx( baseClassName, props.className );
 
-    return functionComponent({ ...props, className }, ref);
+    return functionComponent( { ...props, className }, ref );
   };
 }

@@ -12,7 +12,7 @@ import styles from "./file.module.scss";
 
 interface IProps
   extends IInputSectionProps,
-    Pick<IInputFileProps, "accept" | "multiple"> {
+    Pick< IInputFileProps, "accept" | "multiple" > {
   label?: ReactNode;
 }
 
@@ -21,9 +21,9 @@ interface IProps
  * - styling for drag and drop states
  * - validation of inputs
  */
-export const InputSectionFile = createBlockComponent(styles, Component);
+export const InputSectionFile = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   id,
   name,
   form,
@@ -39,49 +39,49 @@ function Component({
   onDragOver,
   onDrop,
   ...props
-}: IProps) {
+}: IProps ) {
   const { t } = useTranslation();
-  const [currentFiles, changeCurrentFiles] = useState<File[]>();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [ currentFiles, changeCurrentFiles ] = useState< File[] >();
+  const inputRef = useRef< HTMLInputElement >( null );
 
   async function handleChange(
-    event: ChangeEvent<HTMLInputElement, HTMLInputElement>,
+    event: ChangeEvent< HTMLInputElement, HTMLInputElement >,
   ) {
     const fileList = event.target.files;
 
-    if (!fileList) {
-      changeCurrentFiles(undefined);
+    if ( ! fileList ) {
+      changeCurrentFiles( undefined );
       return;
     }
 
-    const files = Array.from(fileList);
-    changeCurrentFiles(files);
+    const files = Array.from( fileList );
+    changeCurrentFiles( files );
   }
 
   return (
     <InputSection
       // Drag'n'Drop from
       // https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications#selecting_files_using_drag_and_drop
-      onDragEnter={async (event) => {
+      onDragEnter={ async ( event ) => {
         event.stopPropagation();
         event.preventDefault();
 
-        onDragEnter?.(event);
-      }}
-      onDragOver={async (event) => {
+        onDragEnter?.( event );
+      } }
+      onDragOver={ async ( event ) => {
         event.stopPropagation();
         event.preventDefault();
 
-        onDragOver?.(event);
-      }}
-      onDrop={async (event) => {
+        onDragOver?.( event );
+      } }
+      onDrop={ async ( event ) => {
         event.stopPropagation();
         event.preventDefault();
 
         const dataTransfer = event.dataTransfer;
         const fileList = dataTransfer.files;
 
-        if (!inputRef.current) {
+        if ( ! inputRef.current ) {
           return;
         }
 
@@ -89,39 +89,39 @@ function Component({
         // setting the thing above doesn't trigger `onChange()`
         // so it is set manually in there
         // @TODO find a way to trigger `onChange()`
-        changeCurrentFiles(Array.from(fileList));
+        changeCurrentFiles( Array.from( fileList ) );
 
-        onDrop?.(event);
-      }}
-      {...props}
+        onDrop?.( event );
+      } }
+      { ...props }
     >
-      {!label ? undefined : <Label htmlFor={id}>{label}</Label>}
+      { ! label ? undefined : <Label htmlFor={ id }>{ label }</Label> }
 
       <InputFile
-        ref={inputRef}
-        id={id}
-        className={styles.input}
-        name={name}
-        form={form}
-        accept={accept}
-        multiple={multiple}
-        readOnly={readOnly}
-        disabled={disabled}
-        required={required}
-        onChange={handleChange}
+        ref={ inputRef }
+        id={ id }
+        className={ styles.input }
+        name={ name }
+        form={ form }
+        accept={ accept }
+        multiple={ multiple }
+        readOnly={ readOnly }
+        disabled={ disabled }
+        required={ required }
+        onChange={ handleChange }
       />
 
-      <Label className={styles.label} htmlFor={id} separator={null}>
-        {children ?? t((t) => t.input.file.label)}
+      <Label className={ styles.label } htmlFor={ id } separator={ null }>
+        { children ?? t( ( t ) => t.input.file.label ) }
       </Label>
 
-      {!currentFiles ? undefined : (
-        <List className={styles.list}>
-          {currentFiles.map((file, index) => (
-            <FileItem key={index} file={file} />
-          ))}
+      { ! currentFiles ? undefined : (
+        <List className={ styles.list }>
+          { currentFiles.map( ( file, index ) => (
+            <FileItem key={ index } file={ file } />
+          ) ) }
         </List>
-      )}
+      ) }
     </InputSection>
   );
 }

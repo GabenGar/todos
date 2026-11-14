@@ -26,7 +26,7 @@
       "$ref": "meta/content"
     }
   ],
-  "type": ["object", "boolean"],
+  "type": [ "object", "boolean" ],
   "properties": {
     "definitions": {
       "$comment": "While no longer an official keyword as it is replaced by $defs, this keyword is retained in the meta-schema to prevent incompatible extensions as it remains in common use.",
@@ -56,7 +56,7 @@
       "$id": "https://json-schema.org/draft/2020-12/meta/core",
       "title": "Core vocabulary meta-schema",
       "$dynamicAnchor": "meta",
-      "type": ["object", "boolean"],
+      "type": [ "object", "boolean" ],
       "properties": {
         "$id": {
           "type": "string",
@@ -110,7 +110,7 @@
       "$id": "https://json-schema.org/draft/2020-12/meta/applicator",
       "title": "Applicator vocabulary meta-schema",
       "$dynamicAnchor": "meta",
-      "type": ["object", "boolean"],
+      "type": [ "object", "boolean" ],
       "properties": {
         "prefixItems": {
           "$ref": "#/$defs/schemaArray"
@@ -186,7 +186,7 @@
       "$id": "https://json-schema.org/draft/2020-12/meta/unevaluated",
       "title": "Unevaluated applicator vocabulary meta-schema",
       "$dynamicAnchor": "meta",
-      "type": ["object", "boolean"],
+      "type": [ "object", "boolean" ],
       "properties": {
         "unevaluatedItems": {
           "$dynamicRef": "#meta"
@@ -200,7 +200,7 @@
       "$id": "https://json-schema.org/draft/2020-12/meta/validation",
       "title": "Validation vocabulary meta-schema",
       "$dynamicAnchor": "meta",
-      "type": ["object", "boolean"],
+      "type": [ "object", "boolean" ],
       "properties": {
         "multipleOf": {
           "type": "number",
@@ -315,7 +315,7 @@
       "$id": "https://json-schema.org/draft/2020-12/meta/meta-data",
       "title": "Meta-data vocabulary meta-schema",
       "$dynamicAnchor": "meta",
-      "type": ["object", "boolean"],
+      "type": [ "object", "boolean" ],
       "properties": {
         "title": {
           "type": "string"
@@ -346,7 +346,7 @@
       "$id": "https://json-schema.org/draft/2020-12/meta/format-annotation",
       "title": "Format vocabulary meta-schema for annotation results",
       "$dynamicAnchor": "meta",
-      "type": ["object", "boolean"],
+      "type": [ "object", "boolean" ],
       "properties": {
         "format": {
           "type": "string"
@@ -357,7 +357,7 @@
       "$id": "https://json-schema.org/draft/2020-12/meta/content",
       "title": "Content vocabulary meta-schema",
       "$dynamicAnchor": "meta",
-      "type": ["object", "boolean"],
+      "type": [ "object", "boolean" ],
       "properties": {
         "contentMediaType": {
           "type": "string"

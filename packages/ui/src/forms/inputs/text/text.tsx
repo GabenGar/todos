@@ -4,10 +4,13 @@ import { type IInputProps, Input } from "../input";
 
 export interface IInputTextProps extends IInputProps {}
 
-export const InputText = forwardRef<HTMLInputElement, IInputTextProps>(
-  createBlockComponent(undefined, Component),
+export const InputText = forwardRef< HTMLInputElement, IInputTextProps >(
+  createBlockComponent( undefined, Component ),
 );
 
-function Component({ ...props }: IInputTextProps, ref?: Ref<HTMLInputElement>) {
-  return <Input type="text" {...props} ref={ref} />;
+function Component(
+  { ...props }: IInputTextProps,
+  ref?: Ref< HTMLInputElement >,
+) {
+  return <Input type="text" { ...props } ref={ ref } />;
 }

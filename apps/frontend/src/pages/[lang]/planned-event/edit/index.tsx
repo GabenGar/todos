@@ -26,136 +26,144 @@ import {
 } from "#lib/urls";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
 
-function PlannedEventEditPage({
+function PlannedEventEditPage( {
   lang,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = usePageTranslation("page-planned-event-edit");
-  const { t: eT } = useTranslation("translation");
-  const { t: cT } = useTranslation("common");
+}: InferGetStaticPropsType< typeof getStaticProps > ) {
+  const { t } = usePageTranslation( "page-planned-event-edit" );
+  const { t: eT } = useTranslation( "translation" );
+  const { t: cT } = useTranslation( "common" );
   const router = useRouter();
   const runTransaction = useIndexedDB();
-  const [currentPlannedEvent, changePlannedEvent] = useState<IPlannedEvent>();
+  const [ currentPlannedEvent, changePlannedEvent ] =
+    useState< IPlannedEvent >();
 
   const { isReady, query } = router;
-  const inputID = getSingleValueFromQuery(query, "planned_event_id");
+  const inputID = getSingleValueFromQuery( query, "planned_event_id" );
   // consider an empty string as `undefined`
-  const parsedID = !inputID?.length ? undefined : Number.parseInt(inputID, 10);
-  const title = t((t) => t.title);
-  const heading = t((t) => t.heading);
+  const parsedID = ! inputID?.length
+    ? undefined
+    : Number.parseInt( inputID, 10 );
+  const title = t( ( t ) => t.title );
+  const heading = t( ( t ) => t.heading );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: blah
-  useEffect(() => {
-    if (!isReady) {
+  useEffect( () => {
+    if ( ! isReady ) {
       return;
     }
 
-    if (!parsedID) {
-      router.replace("/404");
+    if ( ! parsedID ) {
+      router.replace( "/404" );
       return;
     }
 
     runTransaction(
       "planned_events",
       "readonly",
-      (error) => {
+      ( error ) => {
         throw error;
       },
-      (transaction) => {
-        getPlannedEvent({ transaction, id: parsedID }, (plannedEvent) =>
-          changePlannedEvent(plannedEvent),
+      ( transaction ) => {
+        getPlannedEvent( { transaction, id: parsedID }, ( plannedEvent ) =>
+          changePlannedEvent( plannedEvent ),
         );
       },
     );
-  }, [isReady, parsedID]);
+  }, [ isReady, parsedID ] );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {() => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { () => (
           <>
             <OverviewHeader>
               <List>
                 <ListItem>
-                  {!currentPlannedEvent ? (
+                  { ! currentPlannedEvent ? (
                     <Loading />
                   ) : (
                     <Link
-                      href={createPlannedEventPageURL(
+                      href={ createPlannedEventPageURL(
                         lang,
                         currentPlannedEvent.id,
-                      )}
+                      ) }
                     >
-                      {eT((t) => t.planned_event["Planned event"])}
+                      { eT( ( t ) => t.planned_event[ "Planned event" ] ) }
                     </Link>
-                  )}
+                  ) }
                 </ListItem>
               </List>
             </OverviewHeader>
 
             <OverviewBody>
-              {!currentPlannedEvent ? (
+              { ! currentPlannedEvent ? (
                 <Loading />
               ) : (
                 <EditPlannedEventForm
-                  id={`edit-planned-event-${currentPlannedEvent.id}`}
-                  currentPlannedEvent={currentPlannedEvent}
-                  onPlannedEventEdit={async (update) => {
+                  id={ `edit-planned-event-${ currentPlannedEvent.id }` }
+                  currentPlannedEvent={ currentPlannedEvent }
+                  onPlannedEventEdit={ async ( update ) => {
                     runTransaction(
                       "planned_events",
                       "readwrite",
-                      (error) => {
+                      ( error ) => {
                         throw error;
                       },
-                      (transaction) => {
-                        editPlannedEvent(transaction, update, (updatedEvent) =>
-                          changePlannedEvent(updatedEvent),
+                      ( transaction ) => {
+                        editPlannedEvent(
+                          transaction,
+                          update,
+                          ( updatedEvent ) =>
+                            changePlannedEvent( updatedEvent ),
                         );
                       },
                     );
-                  }}
+                  } }
                 />
-              )}
+              ) }
             </OverviewBody>
 
             <OverviewFooter>
-              {!currentPlannedEvent ? (
+              { ! currentPlannedEvent ? (
                 <Loading />
               ) : (
                 <MenuButtons>
                   <MenuItem
                     viewType="negative"
-                    onClick={async () => {
+                    onClick={ async () => {
                       runTransaction(
                         "planned_events",
                         "readwrite",
-                        (event) => {
-                          throw new Error(String(event));
+                        ( event ) => {
+                          throw new Error( String( event ) );
                         },
-                        (transaction) => {
+                        ( transaction ) => {
                           removePlannedEvent(
                             transaction,
                             currentPlannedEvent.id,
                             () => {
-                              router.replace(createPlannedEventsPageURL(lang));
+                              router.replace(
+                                createPlannedEventsPageURL( lang ),
+                              );
                             },
                           );
                         },
                       );
-                    }}
+                    } }
                   >
-                    {cT((t) => t.entity["Delete"])}
+                    { cT( ( t ) => t.entity[ "Delete" ] ) }
                   </MenuItem>
                 </MenuButtons>
-              )}
+              ) }
             </OverviewFooter>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
-export const getStaticProps = createGetStaticProps("page-planned-event-edit");
+export const getStaticProps = createGetStaticProps( "page-planned-event-edit" );
 export const getStaticPaths = getStaticExportPaths;
 
 export default PlannedEventEditPage;

@@ -6,18 +6,18 @@ import {
   type IBaseComponentPropsWithChildren,
 } from "#meta";
 
-export interface IArticleProps extends IBaseComponentProps<"article"> {
+export interface IArticleProps extends IBaseComponentProps< "article" > {
   headingLevel: IHeadingLevel;
-  children?: (headingLevel: IHeadingLevel) => ReactNode;
+  children?: ( headingLevel: IHeadingLevel ) => ReactNode;
 }
 export interface IArticleHeaderProps
-  extends IBaseComponentPropsWithChildren<"header"> {}
+  extends IBaseComponentPropsWithChildren< "header" > {}
 export interface IArticleBodyProps
-  extends IBaseComponentPropsWithChildren<"section"> {}
+  extends IBaseComponentPropsWithChildren< "section" > {}
 export interface IArticleFooterProps
-  extends IBaseComponentPropsWithChildren<"footer"> {}
+  extends IBaseComponentPropsWithChildren< "footer" > {}
 
-export const Article = createBlockComponent(undefined, ArticleComponent);
+export const Article = createBlockComponent( undefined, ArticleComponent );
 export const ArticleHeader = createBlockComponent(
   undefined,
   ArticleHeaderComponent,
@@ -31,20 +31,24 @@ export const ArticleFooter = createBlockComponent(
   ArticleFooterComponent,
 );
 
-function ArticleComponent({ headingLevel, children, ...props }: IArticleProps) {
-  validateHeadinglevel(headingLevel);
+function ArticleComponent( {
+  headingLevel,
+  children,
+  ...props
+}: IArticleProps ) {
+  validateHeadinglevel( headingLevel );
 
-  return <article {...props}>{children?.(headingLevel)}</article>;
+  return <article { ...props }>{ children?.( headingLevel ) }</article>;
 }
 
-function ArticleHeaderComponent({ ...props }: IArticleHeaderProps) {
-  return <header {...props} />;
+function ArticleHeaderComponent( { ...props }: IArticleHeaderProps ) {
+  return <header { ...props } />;
 }
 
-function ArticleBodyComponent({ ...props }: IArticleBodyProps) {
-  return <section {...props} />;
+function ArticleBodyComponent( { ...props }: IArticleBodyProps ) {
+  return <section { ...props } />;
 }
 
-function ArticleFooterComponent({ ...props }: IArticleFooterProps) {
-  return <footer {...props} />;
+function ArticleFooterComponent( { ...props }: IArticleFooterProps ) {
+  return <footer { ...props } />;
 }

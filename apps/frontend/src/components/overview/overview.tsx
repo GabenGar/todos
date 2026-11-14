@@ -18,7 +18,7 @@ export interface IOverviewHeaderProps extends IArticleHeaderProps {}
 export interface IOverviewBodyProps extends IArticleBodyProps {}
 export interface IOverviewFooterProps extends IArticleFooterProps {}
 
-export const Overview = createBlockComponent(styles, OverviewComponent);
+export const Overview = createBlockComponent( styles, OverviewComponent );
 export const OverviewHeader = createBlockComponent(
   styles.header,
   OverviewHeaderComponent,
@@ -32,18 +32,18 @@ export const OverviewFooter = createBlockComponent(
   OverviewFooterComponent,
 );
 
-function OverviewComponent({ ...props }: IOverviewProps) {
-  return <Article {...props} />;
+function OverviewComponent( { ...props }: IOverviewProps ) {
+  return <Article { ...props } />;
 }
 
-function OverviewHeaderComponent({ ...props }: IOverviewHeaderProps) {
-  return <ArticleHeader {...props} />;
+function OverviewHeaderComponent( { ...props }: IOverviewHeaderProps ) {
+  return <ArticleHeader { ...props } />;
 }
 
-function OverviewBodyComponent({ ...props }: IOverviewBodyProps) {
-  return <ArticleBody {...props} />;
+function OverviewBodyComponent( { ...props }: IOverviewBodyProps ) {
+  return <ArticleBody { ...props } />;
 }
 
-function OverviewFooterComponent({ ...props }: IOverviewFooterProps) {
-  return <ArticleFooter {...props} />;
+function OverviewFooterComponent( { ...props }: IOverviewFooterProps ) {
+  return <ArticleFooter { ...props } />;
 }

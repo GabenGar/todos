@@ -6,18 +6,18 @@
   grid-template-columns: 100%;
   align-content: baseline;
   gap: $size-normal;
-  color: var(--colour-text-primary);
-  background-color: var(--colour-background-tertiary);
+  color: var( --colour-text-primary );
+  background-color: var( --colour-background-tertiary );
   padding-bottom: $size-normal;
 
   & > * {
     padding: 0 $size-small;
 
-    @media (min-width: $width-phone) {
+    @media ( min-width: $width-phone ) {
       padding: 0 $size-normal;
     }
 
-    @media (min-width: $width-tablet) {
+    @media ( min-width: $width-tablet ) {
       padding: 0 $size-big;
     }
   }

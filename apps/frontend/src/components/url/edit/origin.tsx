@@ -14,27 +14,27 @@ interface IProps {
   defaultValue: string | undefined;
 }
 
-export function Origin({ id, formID, name, defaultValue }: IProps) {
-  const { t } = usePageTranslation("page-url-edit");
-  const { t: cT } = useTranslation("common");
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [currentOrigin, changeCurrentOrigin] = useState(() => {
-    if (inputRef.current) {
+export function Origin( { id, formID, name, defaultValue }: IProps ) {
+  const { t } = usePageTranslation( "page-url-edit" );
+  const { t: cT } = useTranslation( "common" );
+  const inputRef = useRef< HTMLInputElement >( null );
+  const [ currentOrigin, changeCurrentOrigin ] = useState( () => {
+    if ( inputRef.current ) {
       inputRef.current.value = defaultValue ?? "";
     }
     return defaultValue;
-  });
+  } );
   const FIELD = {
-    PROTOCOL: { name: "protocol", label: t((t) => t["Protocol"]) },
-    HOSTNAME: { name: "hostname", label: t((t) => t["Hostname"]) },
-    PORT: { name: "port", label: t((t) => t["Port"]) },
-    USERNAME: { name: "username", label: t((t) => t["Username"]) },
-    PASSWORD: { name: "password", label: t((t) => t["Password"]) },
+    PROTOCOL: { name: "protocol", label: t( ( t ) => t[ "Protocol" ] ) },
+    HOSTNAME: { name: "hostname", label: t( ( t ) => t[ "Hostname" ] ) },
+    PORT: { name: "port", label: t( ( t ) => t[ "Port" ] ) },
+    USERNAME: { name: "username", label: t( ( t ) => t[ "Username" ] ) },
+    PASSWORD: { name: "password", label: t( ( t ) => t[ "Password" ] ) },
   } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
-  const nestedFormID = `${id}-origin`;
-  const originURL = !currentOrigin ? undefined : new URL(currentOrigin);
+  const nestedFormID = `${ id }-origin`;
+  const originURL = ! currentOrigin ? undefined : new URL( currentOrigin );
   const defaultProtocol = originURL?.protocol ?? "https:";
   const defaultHostname = originURL?.hostname;
   const defaultPort =
@@ -50,113 +50,114 @@ export function Origin({ id, formID, name, defaultValue }: IProps) {
   const defaultUsername = originURL?.username;
   const defaultPassword = originURL?.password;
 
-  useEffect(() => {
-    if (inputRef.current) {
+  useEffect( () => {
+    if ( inputRef.current ) {
       inputRef.current.value = defaultValue ?? "";
     }
 
-    changeCurrentOrigin(defaultValue);
-  }, [defaultValue]);
+    changeCurrentOrigin( defaultValue );
+  }, [ defaultValue ] );
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const inputs = event.currentTarget.elements;
     const protocol = inputs.protocol.value.trim();
     const username = inputs.username.value.trim();
     const password = inputs.password.value.trim();
     const hostname = inputs.hostname.value.trim();
     const port = inputs.port.value.trim();
-    const creds = username || password ? `${username}:${password}` : undefined;
-    const host = `${hostname}:${port}`;
+    const creds =
+      username || password ? `${ username }:${ password }` : undefined;
+    const host = `${ hostname }:${ port }`;
 
-    const origin = `${protocol}//${!creds ? host : `${creds}@${host}`}`;
+    const origin = `${ protocol }//${ ! creds ? host : `${ creds }@${ host }` }`;
 
-    if (inputRef.current) {
+    if ( inputRef.current ) {
       inputRef.current.value = origin;
-      changeCurrentOrigin(origin);
+      changeCurrentOrigin( origin );
     }
   }
 
   return (
     <InputSection>
-      <InputHidden ref={inputRef} form={formID} name={name} />
+      <InputHidden ref={ inputRef } form={ formID } name={ name } />
       <DescriptionList>
         <DescriptionSection
-          dKey={t((t) => t["Origin"])}
+          dKey={ t( ( t ) => t[ "Origin" ] ) }
           dValue={
             <Details
               summary={
-                !currentOrigin ? (
-                  t((t) => t["Unknown"])
+                ! currentOrigin ? (
+                  t( ( t ) => t[ "Unknown" ] )
                 ) : (
-                  <Preformatted>{currentOrigin}</Preformatted>
+                  <Preformatted>{ currentOrigin }</Preformatted>
                 )
               }
             >
-              <Form<IFieldName>
-                id={nestedFormID}
+              <Form< IFieldName >
+                id={ nestedFormID }
                 isNested
-                submitButton={(_, isSubmitting) =>
-                  cT((t) =>
+                submitButton={ ( _, isSubmitting ) =>
+                  cT( ( t ) =>
                     isSubmitting
-                      ? t.form["Applying changes..."]
-                      : t.form["Confirm changes"],
+                      ? t.form[ "Applying changes..." ]
+                      : t.form[ "Confirm changes" ],
                   )
                 }
-                onSubmit={handleSubmit}
+                onSubmit={ handleSubmit }
               >
-                {(formID) => (
+                { ( formID ) => (
                   <>
                     <InputSectionText
-                      id={`${formID}-${FIELD.PROTOCOL.name}`}
-                      form={formID}
-                      name={FIELD.PROTOCOL.name}
-                      defaultValue={defaultProtocol}
-                      rows={1}
+                      id={ `${ formID }-${ FIELD.PROTOCOL.name }` }
+                      form={ formID }
+                      name={ FIELD.PROTOCOL.name }
+                      defaultValue={ defaultProtocol }
+                      rows={ 1 }
                     >
-                      {FIELD.PROTOCOL.label}
+                      { FIELD.PROTOCOL.label }
                     </InputSectionText>
 
                     <InputSectionText
-                      id={`${formID}-${FIELD.HOSTNAME.name}`}
-                      form={formID}
-                      name={FIELD.HOSTNAME.name}
-                      defaultValue={defaultHostname}
-                      rows={1}
+                      id={ `${ formID }-${ FIELD.HOSTNAME.name }` }
+                      form={ formID }
+                      name={ FIELD.HOSTNAME.name }
+                      defaultValue={ defaultHostname }
+                      rows={ 1 }
                     >
-                      {FIELD.HOSTNAME.label}
+                      { FIELD.HOSTNAME.label }
                     </InputSectionText>
 
                     <InputSectionText
-                      id={`${formID}-${FIELD.PORT.name}`}
-                      form={formID}
-                      name={FIELD.PORT.name}
-                      defaultValue={defaultPort}
-                      rows={1}
+                      id={ `${ formID }-${ FIELD.PORT.name }` }
+                      form={ formID }
+                      name={ FIELD.PORT.name }
+                      defaultValue={ defaultPort }
+                      rows={ 1 }
                     >
-                      {FIELD.PORT.label}
+                      { FIELD.PORT.label }
                     </InputSectionText>
 
                     <InputSectionText
-                      id={`${formID}-${FIELD.USERNAME.name}`}
-                      form={formID}
-                      name={FIELD.USERNAME.name}
-                      defaultValue={defaultUsername}
-                      rows={1}
+                      id={ `${ formID }-${ FIELD.USERNAME.name }` }
+                      form={ formID }
+                      name={ FIELD.USERNAME.name }
+                      defaultValue={ defaultUsername }
+                      rows={ 1 }
                     >
-                      {FIELD.USERNAME.label}
+                      { FIELD.USERNAME.label }
                     </InputSectionText>
 
                     <InputSectionText
-                      id={`${formID}-${FIELD.PASSWORD.name}`}
-                      form={formID}
-                      name={FIELD.PASSWORD.name}
-                      defaultValue={defaultPassword}
-                      rows={1}
+                      id={ `${ formID }-${ FIELD.PASSWORD.name }` }
+                      form={ formID }
+                      name={ FIELD.PASSWORD.name }
+                      defaultValue={ defaultPassword }
+                      rows={ 1 }
                     >
-                      {FIELD.PASSWORD.label}
+                      { FIELD.PASSWORD.label }
                     </InputSectionText>
                   </>
-                )}
+                ) }
               </Form>
             </Details>
           }

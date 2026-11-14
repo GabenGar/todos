@@ -5,7 +5,7 @@ import { whatwgMetaNames } from "./whatwg";
 /**
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name#meta_names_defined_in_the_html_specification
  */
-const htmlMetaNames = new Set([
+const htmlMetaNames = new Set( [
   /**
    * A short and accurate summary of the content of the page usually referred to as a "meta description". Search engines like Google use this metadata to adjust the appearance of a webpage in search results.
    */
@@ -25,16 +25,16 @@ const htmlMetaNames = new Set([
   "theme-color",
   "text-scale",
   "viewport",
-] as const);
+] as const );
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name#meta_names_defined_in_other_specifications
  */
-const otherMetaNames = new Set([
+const otherMetaNames = new Set( [
   "responsive-embedded-sizing",
   "text-scale",
   "viewport",
-] as const);
+] as const );
 
 const knownMetaNames = mergeSets(
   htmlMetaNames,
@@ -42,8 +42,8 @@ const knownMetaNames = mergeSets(
   whatwgMetaNames,
 );
 
-export type IKnownMetaName = IElementType<typeof knownMetaNames>;
+export type IKnownMetaName = IElementType< typeof knownMetaNames >;
 
-export function isKnownMetaName(input: unknown): input is IKnownMetaName {
-  return knownMetaNames.has(input as IKnownMetaName);
+export function isKnownMetaName( input: unknown ): input is IKnownMetaName {
+  return knownMetaNames.has( input as IKnownMetaName );
 }

@@ -7,22 +7,22 @@ interface IFAQPageProps {
   jsonLD: IFAQPageJSONLD;
 }
 
-export function FAQPageJSONLD({ jsonLD }: IFAQPageProps) {
+export function FAQPageJSONLD( { jsonLD }: IFAQPageProps ) {
   // const { t } = useTranslation();
   const { mainEntity } = jsonLD;
 
   return (
     <OneOrManyItems
-      item={mainEntity}
-      itemElement={(entity) => {
-        if (!entity) {
+      item={ mainEntity }
+      itemElement={ ( entity ) => {
+        if ( ! entity ) {
           return undefined;
         }
 
         const { name, acceptedAnswer } = entity;
 
-        return <Details summary={name}>{acceptedAnswer?.text}</Details>;
-      }}
+        return <Details summary={ name }>{ acceptedAnswer?.text }</Details>;
+      } }
     />
   );
 }

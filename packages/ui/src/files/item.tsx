@@ -13,33 +13,33 @@ interface IProps {
   file: File;
 }
 
-export function FileItem({ file }: IProps) {
+export function FileItem( { file }: IProps ) {
   const { t } = useTranslation();
   const { type, name, size, lastModified } = file;
-  const lastModifiedDateTime = toISODateTime(new Date(lastModified));
+  const lastModifiedDateTime = toISODateTime( new Date( lastModified ) );
 
   return (
-    <ListItem className={styles.file}>
-      <Details summary={<Preformatted>{name}</Preformatted>}>
+    <ListItem className={ styles.file }>
+      <Details summary={ <Preformatted>{ name }</Preformatted> }>
         <DescriptionList>
           <DescriptionSection
-            dKey={t((t) => t.file.type)}
-            dValue={type}
+            dKey={ t( ( t ) => t.file.type ) }
+            dValue={ type }
             isKeyPreformatted
             isValuePreformatted
             isHorizontal
           />
 
           <DescriptionSection
-            dKey={t((t) => t.file.size)}
-            dValue={<DigitalSize size={size} />}
+            dKey={ t( ( t ) => t.file.size ) }
+            dValue={ <DigitalSize size={ size } /> }
             isKeyPreformatted
             isHorizontal
           />
 
           <DescriptionSection
-            dKey={t((t) => t.file["last-modified"])}
-            dValue={<DateTimeView dateTime={lastModifiedDateTime} />}
+            dKey={ t( ( t ) => t.file[ "last-modified" ] ) }
+            dValue={ <DateTimeView dateTime={ lastModifiedDateTime } /> }
             isKeyPreformatted
           />
         </DescriptionList>

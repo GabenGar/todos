@@ -3,23 +3,23 @@ import { createBlockComponent } from "@repo/ui/meta";
 import type { IBaseComponentProps } from "#components/types";
 import { ListItem } from "./item";
 
-export type IUnorderedListProps = IBaseComponentProps<"ul"> &
-  ({ children: ReactNode } | { items: ReactNode[] });
+export type IUnorderedListProps = IBaseComponentProps< "ul" > &
+  ( { children: ReactNode } | { items: ReactNode[] } );
 
-export const UnorderedList = createBlockComponent(undefined, Component);
+export const UnorderedList = createBlockComponent( undefined, Component );
 
-function Component(props: IUnorderedListProps) {
-  if ("children" in props) {
-    return <ul {...props} />;
+function Component( props: IUnorderedListProps ) {
+  if ( "children" in props ) {
+    return <ul { ...props } />;
   }
 
   const { items, ...restProps } = props;
 
   return (
-    <ul {...restProps}>
-      {items.map((item, index) => (
-        <ListItem key={index}>{item}</ListItem>
-      ))}
+    <ul { ...restProps }>
+      { items.map( ( item, index ) => (
+        <ListItem key={ index }>{ item }</ListItem>
+      ) ) }
     </ul>
   );
 }

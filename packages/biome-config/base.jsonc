@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.7/schema.json",
   "root": false,
   "vcs": {
     "enabled": true,
@@ -14,12 +14,13 @@
     "enabled": true,
     "indentStyle": "space",
     "lineWidth": 80,
-    "lineEnding": "auto"
+    "lineEnding": "auto",
+    "delimiterSpacing": true
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "a11y": {
         // it is handled by translations
         "useHtmlLang": "off"
@@ -28,7 +29,7 @@
         // translation keys are everywhere
         "useLiteralKeys": "off"
       },
-      "nursery": {
+      "suspicious": {
         "noUndeclaredEnvVars": "error"
       }
     }
@@ -55,6 +56,11 @@
     "formatter": {
       "enabled": true,
       "indentStyle": "space"
+    }
+  },
+  "markdown": {
+    "parser": {
+      "frontmatter": true
     }
   },
   "overrides": [

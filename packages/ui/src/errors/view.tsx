@@ -5,8 +5,8 @@ interface IProps extends IPreformattedProps {
   error: Error;
 }
 
-export const ErrorView = createBlockComponent(undefined, Component);
+export const ErrorView = createBlockComponent( undefined, Component );
 
-function Component({ error, ...props }: IProps) {
-  return <Preformatted {...props}>{String(error)}</Preformatted>;
+function Component( { error, ...props }: IProps ) {
+  return <Preformatted { ...props }>{ String( error ) }</Preformatted>;
 }

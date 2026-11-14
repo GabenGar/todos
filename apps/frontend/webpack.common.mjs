@@ -5,7 +5,7 @@ import webpack from "webpack";
 
 const { EnvironmentPlugin } = webpack;
 const projectDir = process.cwd();
-nextEnv.loadEnvConfig(projectDir);
+nextEnv.loadEnvConfig( projectDir );
 
 /**
  * @typedef ITSLoaderOptions
@@ -43,7 +43,7 @@ const commonConfiguration = {
     },
   },
   plugins: [
-    new EnvironmentPlugin({
+    new EnvironmentPlugin( {
       VERCEL: null,
       VERCEL_ENV: null,
       VERCEL_URL: null,
@@ -54,7 +54,7 @@ const commonConfiguration = {
       NEXT_PUBLIC_REPOSITORY_URL: null,
       NEXT_PUBLIC_DEFAULT_LOG_LEVEL: null,
       NEXT_PUBLIC_IS_SERVICE_WORKER_ENABLED: null,
-    }),
+    } ),
   ],
   module: {
     parser: {
@@ -79,7 +79,7 @@ const commonConfiguration = {
     ],
   },
   resolve: {
-    extensions: [".ts"],
+    extensions: [ ".ts" ],
   },
   cache: {
     type: "filesystem",

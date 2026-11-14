@@ -5,36 +5,37 @@ export function createPagination(
   totalCount: string,
   page?: string,
 ): IPagination {
-  const parsedTotalCount = BigInt(totalCount);
+  const parsedTotalCount = BigInt( totalCount );
   // https://stackoverflow.com/a/66192429
   const isDivisible = parsedTotalCount % PAGINATION_LIMIT === BIGINT_ZERO;
   const totalPages = isDivisible
     ? parsedTotalCount / PAGINATION_LIMIT
     : parsedTotalCount / PAGINATION_LIMIT + BIGINT_ONE;
-  const currentPage = page ? BigInt(page) : totalPages;
+  const currentPage = page ? BigInt( page ) : totalPages;
 
-  if (currentPage > totalPages) {
+  if ( currentPage > totalPages ) {
     throw new Error(
-      `Current page ${page} of total count ${totalCount} and limit ${PAGINATION_LIMIT} is greater than ${totalPages}.`,
+      `Current page ${ page } of total count ${ totalCount } and limit ${ PAGINATION_LIMIT } is greater than ${ totalPages }.`,
     );
   }
 
-  const offset = (currentPage - BIGINT_ONE) * PAGINATION_LIMIT;
+  const offset = ( currentPage - BIGINT_ONE ) * PAGINATION_LIMIT;
   const currentMin =
     parsedTotalCount === BIGINT_ZERO ? BIGINT_ZERO : offset + BIGINT_ONE;
   const currentMax =
+    // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
     offset + PAGINATION_LIMIT > parsedTotalCount
       ? parsedTotalCount
       : offset + PAGINATION_LIMIT;
 
   const pagination: IPagination = {
     total_count: totalCount,
-    total_pages: String(totalPages),
-    current_page: String(currentPage),
-    limit: String(PAGINATION_LIMIT),
-    offset: String(offset),
-    current_min: String(currentMin),
-    current_max: String(currentMax),
+    total_pages: String( totalPages ),
+    current_page: String( currentPage ),
+    limit: String( PAGINATION_LIMIT ),
+    offset: String( offset ),
+    current_min: String( currentMin ),
+    current_max: String( currentMax ),
   };
 
   return pagination;
@@ -45,40 +46,41 @@ export function createClientPagination(
   limit: string,
   page?: string,
 ): IPagination {
-  const parsedTotalCount = BigInt(totalCount);
-  const parsedLimit = BigInt(limit);
+  const parsedTotalCount = BigInt( totalCount );
+  const parsedLimit = BigInt( limit );
   // https://stackoverflow.com/a/66192429
   const isDivisible = parsedTotalCount % parsedLimit === BIGINT_ZERO;
   const totalPages = isDivisible
     ? parsedTotalCount / parsedLimit
     : parsedTotalCount / parsedLimit + BIGINT_ONE;
-  const currentPage = page ? BigInt(page) : totalPages;
+  const currentPage = page ? BigInt( page ) : totalPages;
 
-  if (currentPage > totalPages) {
+  if ( currentPage > totalPages ) {
     throw new Error(
-      `Current page ${page} of total count ${totalCount} and limit ${limit} is greater than ${totalPages}.`,
+      `Current page ${ page } of total count ${ totalCount } and limit ${ limit } is greater than ${ totalPages }.`,
     );
   }
 
   const offset =
     currentPage - BIGINT_ONE < BIGINT_ZERO
       ? BIGINT_ZERO
-      : (currentPage - BIGINT_ONE) * parsedLimit;
+      : ( currentPage - BIGINT_ONE ) * parsedLimit;
   const currentMin =
     parsedTotalCount === BIGINT_ZERO ? BIGINT_ZERO : offset + BIGINT_ONE;
   const currentMax =
+    // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
     offset + parsedLimit > parsedTotalCount
       ? parsedTotalCount
       : offset + parsedLimit;
 
   const pagination: IPagination = {
     total_count: totalCount,
-    total_pages: String(totalPages),
-    current_page: String(currentPage),
+    total_pages: String( totalPages ),
+    current_page: String( currentPage ),
     limit,
-    offset: String(offset),
-    current_min: String(currentMin),
-    current_max: String(currentMax),
+    offset: String( offset ),
+    current_min: String( currentMin ),
+    current_max: String( currentMax ),
   };
 
   return pagination;

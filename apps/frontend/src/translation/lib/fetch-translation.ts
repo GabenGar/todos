@@ -9,57 +9,57 @@ export async function fetchTranslation(
 ) {
   let translation: ResourceKey;
 
-  switch (language) {
+  switch ( language ) {
     case "en": {
-      switch (namespace) {
+      switch ( namespace ) {
         case "common": {
-          translation = await import("#translation/en/common.json");
+          translation = await import( "#translation/en/common.json" );
           break;
         }
 
         case "translation": {
-          translation = await import("#translation/en/translation.json");
+          translation = await import( "#translation/en/translation.json" );
           break;
         }
 
         case "@repo/ui": {
-          translation = await fetchUITranslation(language);
+          translation = await fetchUITranslation( language );
           break;
         }
 
         default: {
-          translation = await fetchPageTranslation(language, namespace);
+          translation = await fetchPageTranslation( language, namespace );
         }
       }
       break;
     }
 
     case "ru": {
-      switch (namespace) {
+      switch ( namespace ) {
         case "common": {
-          translation = await import("#translation/ru/common.json");
+          translation = await import( "#translation/ru/common.json" );
           break;
         }
 
         case "translation": {
-          translation = await import("#translation/ru/translation.json");
+          translation = await import( "#translation/ru/translation.json" );
           break;
         }
 
         case "@repo/ui": {
-          translation = await fetchUITranslation(language);
+          translation = await fetchUITranslation( language );
           break;
         }
 
         default: {
-          translation = await fetchPageTranslation(language, namespace);
+          translation = await fetchPageTranslation( language, namespace );
         }
       }
       break;
     }
 
     default: {
-      throw new Error(`Unknown language "${language satisfies never}".`);
+      throw new Error( `Unknown language "${ language satisfies never }".` );
     }
   }
 

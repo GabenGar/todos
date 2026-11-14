@@ -6,7 +6,7 @@ interface IProps {
   jsonLD: IArticleJSONLD;
 }
 
-export function ArticleJSONLD({ jsonLD }: IProps) {
+export function ArticleJSONLD( { jsonLD }: IProps ) {
   const { t } = useTranslation();
   const {
     mainEntity,
@@ -24,94 +24,103 @@ export function ArticleJSONLD({ jsonLD }: IProps) {
   return (
     <>
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"].article.headline,
-        )}
-        dValue={headline}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].article.headline,
+        ) }
+        dValue={ headline }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t((t) => t.seo["json-ld-overview"]["type-overview"].article.name)}
-        dValue={name}
+        dKey={ t(
+          ( t ) => t.seo[ "json-ld-overview" ][ "type-overview" ].article.name,
+        ) }
+        dValue={ name }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"].article.image,
-        )}
-        dValue={image}
+        dKey={ t(
+          ( t ) => t.seo[ "json-ld-overview" ][ "type-overview" ].article.image,
+        ) }
+        dValue={ image }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"].article[
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].article[
               "date-published"
             ],
-        )}
-        dValue={datePublished}
+        ) }
+        dValue={ datePublished }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"].article["date-modified"],
-        )}
-        dValue={dateModified}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].article[
+              "date-modified"
+            ],
+        ) }
+        dValue={ dateModified }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"].article["url"],
-        )}
-        dValue={url}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].article[ "url" ],
+        ) }
+        dValue={ url }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!author ? undefined : (
+      { ! author ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) => t.seo["json-ld-overview"]["type-overview"].article["author"],
-          )}
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ].article[
+                "author"
+              ],
+          ) }
           dValue={
             <DescriptionList isNested>
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].article[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].article[
                       "author-type"
                     ],
-                )}
-                dValue={author["@type"]}
+                ) }
+                dValue={ author[ "@type" ] }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].article[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].article[
                       "author-name"
                     ],
-                )}
-                dValue={author.name}
+                ) }
+                dValue={ author.name }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
@@ -120,50 +129,52 @@ export function ArticleJSONLD({ jsonLD }: IProps) {
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!publisher ? undefined : (
+      { ! publisher ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"].article["publisher"],
-          )}
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ].article[
+                "publisher"
+              ],
+          ) }
           dValue={
             <DescriptionList isNested>
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].article[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].article[
                       "publisher-type"
                     ],
-                )}
-                dValue={publisher["@type"]}
+                ) }
+                dValue={ publisher[ "@type" ] }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].article[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].article[
                       "publisher-name"
                     ],
-                )}
-                dValue={publisher.name}
+                ) }
+                dValue={ publisher.name }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"].article[
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ].article[
                       "publisher-logo"
                     ],
-                )}
-                dValue={publisher.logo?.url}
+                ) }
+                dValue={ publisher.logo?.url }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
@@ -172,24 +183,27 @@ export function ArticleJSONLD({ jsonLD }: IProps) {
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"].article["main-entity"],
-        )}
-        dValue={mainEntity}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].article[
+              "main-entity"
+            ],
+        ) }
+        dValue={ mainEntity }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"].article["same-as"],
-        )}
-        dValue={sameAs}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ].article[ "same-as" ],
+        ) }
+        dValue={ sameAs }
         isOptional
         isKeyPreformatted
         isValuePreformatted

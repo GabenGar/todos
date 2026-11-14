@@ -8,10 +8,10 @@ interface IBaseProps extends ILocalizedProps {}
 export type NextPageWithLayout<
   Props = IBaseProps,
   InitialProps = Props,
-> = NextPage<Props, InitialProps> & {
-  getLayout?: (page: ReactElement) => ReactNode;
+> = NextPage< Props, InitialProps > & {
+  getLayout?: ( page: ReactElement ) => ReactNode;
 };
 
-export type AppPropsWithLayout = AppProps<IBaseProps> & {
+export type AppPropsWithLayout = AppProps< IBaseProps > & {
   Component: NextPageWithLayout;
 };

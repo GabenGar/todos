@@ -4,7 +4,7 @@
   "description": "Configuration for the server.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["server", "database"],
+  "required": [ "server", "database" ],
   "properties": {
     "server": { "$ref": "#/definitions/server" },
     "database": {
@@ -15,7 +15,7 @@
     "server": {
       "description": "Server options.",
       "type": "object",
-      "required": ["port", "secret_key"],
+      "required": [ "port", "secret_key" ],
       "additionalProperties": false,
       "properties": {
         "port": {
@@ -35,7 +35,7 @@
       "description": "PostgreSQL accounts.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["migrations", "administrator"],
+      "required": [ "migrations", "administrator" ],
       "properties": {
         "migrations": {
           "description": "Connection used for migrations. Must have postgresql superuser privileges because it can install extensions.",
@@ -59,7 +59,7 @@
       "description": "PostgreSQL connection object.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["user", "host", "port", "database"],
+      "required": [ "user", "host", "port", "database" ],
       "properties": {
         "user": {
           "type": "string",

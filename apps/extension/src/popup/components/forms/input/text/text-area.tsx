@@ -9,13 +9,13 @@ import styles from "./text-area.module.scss";
 
 export interface IInputTextAreaProps
   extends Omit<
-      IBaseComponentPropsWithChildren<"textarea">,
+      IBaseComponentPropsWithChildren< "textarea" >,
       "id" | "name" | "form"
     >,
-    Pick<IInputProps, "id" | "name" | "form"> {}
+    Pick< IInputProps, "id" | "name" | "form" > {}
 
-export const InputTextArea = createBlockComponent(styles, Component);
+export const InputTextArea = createBlockComponent( styles, Component );
 
-function Component({ rows = 2, ...props }: IInputTextAreaProps) {
-  return <textarea rows={rows} {...props} />;
+function Component( { rows = 2, ...props }: IInputTextAreaProps ) {
+  return <textarea rows={ rows } { ...props } />;
 }

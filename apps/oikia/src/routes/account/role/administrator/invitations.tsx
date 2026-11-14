@@ -6,30 +6,30 @@ import { selectInvitationCount } from "#database/queries/invitations";
 import { authenticateAdmin, getLanguage } from "#server/lib/router";
 import type { Route } from "./+types/invitations";
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
+export async function loader( { request, params }: Route.LoaderArgs ) {
+  await authenticateAdmin( request );
 
-  const language = getLanguage(params);
-  const count = await runTransaction(async (transaction) => {
-    const count = await selectInvitationCount(transaction);
+  const language = getLanguage( params );
+  const count = await runTransaction( async ( transaction ) => {
+    const count = await selectInvitationCount( transaction );
 
     return count;
-  });
+  } );
 
-  if (BigInt(count) === BIGINT_ZERO) {
+  if ( BigInt( count ) === BIGINT_ZERO ) {
     const url = href(
       "/:language/account/role/administrator/create/invitation",
       { language },
     );
 
-    return redirect(url);
+    return redirect( url );
   }
 
-  const pagination = createPagination(count);
-  const url = href("/:language/account/role/administrator/invitations/:page", {
+  const pagination = createPagination( count );
+  const url = href( "/:language/account/role/administrator/invitations/:page", {
     language,
     page: pagination.current_page,
-  });
+  } );
 
-  return replace(url);
+  return replace( url );
 }

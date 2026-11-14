@@ -7,33 +7,34 @@ interface IResult {
 }
 
 export function selectMetaElements(): IResult {
-  const metaElements = document.querySelectorAll<HTMLMetaElement>("head meta");
+  const metaElements =
+    document.querySelectorAll< HTMLMetaElement >( "head meta" );
   const known: HTMLMetaElement[] = [];
   const unknown: HTMLMetaElement[] = [];
   const invalid: HTMLMetaElement[] = [];
 
-  for (const element of metaElements) {
-    if (!isValidMetaElement(element)) {
-      invalid.push(element);
+  for ( const element of metaElements ) {
+    if ( ! isValidMetaElement( element ) ) {
+      invalid.push( element );
       continue;
     }
 
-    if (element.hasAttribute("charset")) {
-      known.push(element);
+    if ( element.hasAttribute( "charset" ) ) {
+      known.push( element );
       continue;
     }
 
     const name =
-      element.getAttribute("name") ||
+      element.getAttribute( "name" ) ||
       // opengraph tags rely on this value
-      element.getAttribute("property");
+      element.getAttribute( "property" );
 
-    if (name === null || !isKnownMetaName(name)) {
-      unknown.push(element);
+    if ( name === null || ! isKnownMetaName( name ) ) {
+      unknown.push( element );
       continue;
     }
 
-    known.push(element);
+    known.push( element );
   }
 
   const result: IResult = {
@@ -48,32 +49,32 @@ export function selectMetaElements(): IResult {
 /**
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta
  */
-export function isValidMetaElement(element: HTMLMetaElement): boolean {
+export function isValidMetaElement( element: HTMLMetaElement ): boolean {
   const isDocumentLevelMetadata =
-    element.hasAttribute("name") ||
+    element.hasAttribute( "name" ) ||
     // OpenGraph tags rely on this atribute as a key
-    element.hasAttribute("property");
-  const isPragmaDirective = element.hasAttribute("http-equiv");
-  const isCharsetDeclaration = element.hasAttribute("charset");
-  const isUserDefinedMetadata = element.hasAttribute("itemprop");
+    element.hasAttribute( "property" );
+  const isPragmaDirective = element.hasAttribute( "http-equiv" );
+  const isCharsetDeclaration = element.hasAttribute( "charset" );
+  const isUserDefinedMetadata = element.hasAttribute( "itemprop" );
 
   // The `itemprop` attribute must not be set on a `<meta>` element
   // that includes a `name`, `http-equiv`, or `charset` attribute.
   if (
     isUserDefinedMetadata &&
-    (isDocumentLevelMetadata || isPragmaDirective || isCharsetDeclaration)
+    ( isDocumentLevelMetadata || isPragmaDirective || isCharsetDeclaration )
   ) {
     return false;
   }
 
-  if (isCharsetDeclaration) {
-    const value = element.getAttribute("charset");
+  if ( isCharsetDeclaration ) {
+    const value = element.getAttribute( "charset" );
 
     return value?.toLowerCase() === "utf-8";
   }
 
-  if (isDocumentLevelMetadata || isPragmaDirective) {
-    if (!element.hasAttribute("content")) {
+  if ( isDocumentLevelMetadata || isPragmaDirective ) {
+    if ( ! element.hasAttribute( "content" ) ) {
       return false;
     }
 

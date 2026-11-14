@@ -11,34 +11,34 @@ interface IProps {
   defaultValue: string | undefined;
 }
 
-export function Hash({ formID, name, label, defaultValue }: IProps) {
-  const [currentHash, changeCurrentHash] = useState(() => {
+export function Hash( { formID, name, label, defaultValue }: IProps ) {
+  const [ currentHash, changeCurrentHash ] = useState( () => {
     return defaultValue;
-  });
+  } );
 
-  useEffect(() => {
-    changeCurrentHash(defaultValue);
-  }, [defaultValue]);
+  useEffect( () => {
+    changeCurrentHash( defaultValue );
+  }, [ defaultValue ] );
 
   return (
     <InputSection>
-      <Label htmlFor={`${formID}-${name}`}>{label}</Label>
+      <Label htmlFor={ `${ formID }-${ name }` }>{ label }</Label>
       <InputTextArea
-        id={`${formID}-${name}`}
-        form={formID}
-        name={name}
-        rows={1}
+        id={ `${ formID }-${ name }` }
+        form={ formID }
+        name={ name }
+        rows={ 1 }
         // using controllable input in there because it's the only way
         // to avoid synchronization bugs caused by `defaultValue`
         // @TODO make it uncontrollable
-        value={currentHash}
-        onChange={(event) => {
+        value={ currentHash }
+        onChange={ ( event ) => {
           const nextHash = event.currentTarget.value;
 
-          changeCurrentHash((oldHash) =>
+          changeCurrentHash( ( oldHash ) =>
             oldHash === nextHash ? oldHash : nextHash,
           );
-        }}
+        } }
       />
     </InputSection>
   );

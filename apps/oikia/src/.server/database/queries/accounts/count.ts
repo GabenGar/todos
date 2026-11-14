@@ -6,7 +6,7 @@ import {
 } from "#database";
 import type { IAccountRole } from "#entities/account";
 
-const query = getQueryFile("accounts", "count.sql");
+const query = getQueryFile( "accounts", "count.sql" );
 
 interface IFilter {
   role?: IAccountRole;
@@ -15,12 +15,12 @@ interface IFilter {
 export async function selectAccountCount(
   transaction: ITransaction,
   filter?: IFilter,
-): Promise<ICount> {
+): Promise< ICount > {
   const params = {
     role: filter?.role,
   };
 
-  const { count } = await transaction.one<ICountResult>(query, params);
+  const { count } = await transaction.one< ICountResult >( query, params );
 
   return count;
 }

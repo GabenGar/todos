@@ -5,19 +5,22 @@ import { getPlannedEvent } from "./get";
 import { validatePlannedEventUpdate } from "./validate";
 
 export function editPlannedEvent(
-  transaction: IIDBTransaction<"planned_events">,
+  transaction: IIDBTransaction< "planned_events" >,
   update: IPlannedEventUpdate,
-  onSuccess: (updatedEvent: IPlannedEvent) => void,
+  onSuccess: ( updatedEvent: IPlannedEvent ) => void,
 ): void {
-  validatePlannedEventUpdate(update);
+  validatePlannedEventUpdate( update );
 
   const id = update.id;
 
-  getPlannedEvent({ transaction, id }, () => {
-    updatePlannedEvents(transaction, [update], ([updatedEventID]) => {
-      getPlannedEvent({ transaction, id: updatedEventID }, (updatedEvent) => {
-        onSuccess(updatedEvent);
-      });
-    });
-  });
+  getPlannedEvent( { transaction, id }, () => {
+    updatePlannedEvents( transaction, [ update ], ( [ updatedEventID ] ) => {
+      getPlannedEvent(
+        { transaction, id: updatedEventID },
+        ( updatedEvent ) => {
+          onSuccess( updatedEvent );
+        },
+      );
+    } );
+  } );
 }

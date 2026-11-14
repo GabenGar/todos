@@ -1,8 +1,8 @@
-export type IAPIResponse<DataShape> =
-  | ISuccessfulAPIResponse<DataShape>
+export type IAPIResponse< DataShape > =
+  | ISuccessfulAPIResponse< DataShape >
   | IFailedAPIResponse;
 
-export interface ISuccessfulAPIResponse<DataShape> {
+export interface ISuccessfulAPIResponse< DataShape > {
   is_successful: true;
   data: DataShape;
 }

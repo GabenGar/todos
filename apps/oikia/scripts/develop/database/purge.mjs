@@ -5,9 +5,9 @@ import { parseConfig } from "../../lib/parse-configuration.mjs";
 await run();
 
 async function run() {
-  log("Purging development database...");
+  log( "Purging development database..." );
 
-  const config = await parseConfig(true);
+  const config = await parseConfig( true );
   const connectionData = config.server.database.migrations;
   /**
    * @type {import("pg-promise").IInitOptions}
@@ -15,7 +15,7 @@ async function run() {
   const initOptions = {
     capSQL: true,
   };
-  const pgPromise = pgPromiseLib(initOptions);
+  const pgPromise = pgPromiseLib( initOptions );
 
   /**
    * @type {import("pg-promise/typescript/pg-subset").IConnectionParameters}
@@ -25,14 +25,14 @@ async function run() {
   /**
    * @type {import("pg-promise").IDatabase<{}, import("pg-promise/typescript/pg-subset").IClient>}
    */
-  const database = pgPromise(connectionOptions);
+  const database = pgPromise( connectionOptions );
   const query = `
     DROP SCHEMA IF EXISTS public CASCADE;
 
     CREATE SCHEMA IF NOT EXISTS public;
   `;
-  await database.any(query);
+  await database.any( query );
   database.$pool.end();
 
-  log("Purged development database.");
+  log( "Purged development database." );
 }

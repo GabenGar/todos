@@ -15,34 +15,34 @@ interface ITransformedSearchParamsProps {
 }
 
 export interface ITransformedSearchParams
-  extends Map<string, string | Set<string>> {}
+  extends Map< string, string | Set< string > > {}
 
-export function TransformedSearchParams({
+export function TransformedSearchParams( {
   params,
-}: ITransformedSearchParamsProps) {
+}: ITransformedSearchParamsProps ) {
   return (
     <DescriptionList isNested>
-      {Array.from(params).map(([key, value]) => (
-        <DescriptionSection key={key}>
+      { Array.from( params ).map( ( [ key, value ] ) => (
+        <DescriptionSection key={ key }>
           <DescriptionTerm>
-            <Preformatted>{key}:</Preformatted>
+            <Preformatted>{ key }:</Preformatted>
           </DescriptionTerm>
 
-          <DescriptionDetails className={styles.params}>
-            {typeof value === "string" ? (
-              <Preformatted>{value}</Preformatted>
+          <DescriptionDetails className={ styles.params }>
+            { typeof value === "string" ? (
+              <Preformatted>{ value }</Preformatted>
             ) : (
               <List isOrdered>
-                {Array.from(value).map((value, index) => (
-                  <ListItem key={`${value}-${index}`}>
-                    <Preformatted>{value}</Preformatted>
+                { Array.from( value ).map( ( value, index ) => (
+                  <ListItem key={ `${ value }-${ index }` }>
+                    <Preformatted>{ value }</Preformatted>
                   </ListItem>
-                ))}
+                ) ) }
               </List>
-            )}
+            ) }
           </DescriptionDetails>
         </DescriptionSection>
-      ))}
+      ) ) }
     </DescriptionList>
   );
 }

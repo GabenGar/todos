@@ -1,6 +1,6 @@
 {
-  "$schema": "https://v2-8-20.turborepo.dev/schema.json",
-  "extends": ["//"],
+  "$schema": "https://v2-11-11.turborepo.dev/schema.json",
+  "extends": [ "//" ],
   "tasks": {
     "build": {
       "inputs": [
@@ -12,8 +12,8 @@
         "localization/**",
         "backend/**"
       ],
-      "env": ["MODE", "BASE_URL", "PROD", "DEV", "SSR"],
-      "outputs": ["build/**"]
+      "env": [ "MODE", "BASE_URL", "PROD", "DEV", "SSR" ],
+      "outputs": [ "build/**" ]
     },
     "start": {
       "persistent": true,

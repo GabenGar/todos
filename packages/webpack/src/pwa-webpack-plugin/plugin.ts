@@ -12,8 +12,8 @@ const configuration = {
 export class PWAWebpackPlugin {
   options: IPWAWebpackPluginOptions;
 
-  constructor(options: IPWAWebpackPluginOptions) {
-    validate(schema as Schema, options, configuration);
+  constructor( options: IPWAWebpackPluginOptions ) {
+    validate( schema as Schema, options, configuration );
 
     this.options = options;
   }

@@ -41,13 +41,13 @@ interface ILoaderProps extends ILocalizedProps {}
 
 export const links: Route.LinksFunction = () => [];
 
-export function Layout({ children }: ILayoutProps) {
-  const data = useRouteLoaderData<ILoaderProps>("root");
+export function Layout( { children }: ILayoutProps ) {
+  const data = useRouteLoaderData< ILoaderProps >( "root" );
 
   const language = data?.language ?? DEFAULT_LANGUAGE;
 
   return (
-    <html lang={language}>
+    <html lang={ language }>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,7 +55,7 @@ export function Layout({ children }: ILayoutProps) {
         <Links />
       </head>
       <body>
-        {children}
+        { children }
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -64,64 +64,67 @@ export function Layout({ children }: ILayoutProps) {
 }
 
 function App() {
-  const { language, translation } = useLoaderData<typeof loader>();
+  const { language, translation } = useLoaderData< typeof loader >();
 
-  if (IS_BROWSER) {
-    initClientTranslation(language, translation);
+  if ( IS_BROWSER ) {
+    initClientTranslation( language, translation );
   }
 
-  useSSR(translation, language);
+  useSSR( translation, language );
 
   return (
-    <BaseClientProvider serverLanguage={language}>
+    <BaseClientProvider serverLanguage={ language }>
       <Outlet />
     </BaseClientProvider>
   );
 }
 
-export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
-  const { t } = useTranslation("translation");
+export function ErrorBoundary( {
+  error,
+  loaderData,
+}: Route.ErrorBoundaryProps ) {
+  const { t } = useTranslation( "translation" );
   const language = loaderData?.language ?? DEFAULT_LANGUAGE;
-  const heading = t((t) => t.common["Error"]);
-  let message = t((t) => t.common["Error"]);
-  let details = t((t) => t.common["An unexpected error occurred."]);
+  const heading = t( ( t ) => t.common[ "Error" ] );
+  let message = t( ( t ) => t.common[ "Error" ] );
+  let details = t( ( t ) => t.common[ "An unexpected error occurred." ] );
   let stack: string | undefined;
 
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : t((t) => t.common["Error"]);
+  if ( isRouteErrorResponse( error ) ) {
+    message = error.status === 404 ? "404" : t( ( t ) => t.common[ "Error" ] );
     details =
       error.status === 404
-        ? t((t) => t.common["The requested page could not be found."])
+        ? t( ( t ) => t.common[ "The requested page could not be found." ] )
         : error.statusText || details;
-  } else if (IS_DEVELOPMENT && error && error instanceof Error) {
+  } else if ( IS_DEVELOPMENT && error && error instanceof Error ) {
     details = error.message;
     stack = error.stack;
   }
 
   return (
-    <main className={styles.main}>
-      <Page heading={heading}>
-        <Overview headingLevel={2}>
-          {() => (
+    <main className={ styles.main }>
+      <Page heading={ heading }>
+        <Overview headingLevel={ 2 }>
+          { () => (
             <>
-              <OverviewHeader>{message}</OverviewHeader>
+              <OverviewHeader>{ message }</OverviewHeader>
 
               <OverviewBody>
-                <p>{details}</p>
-                {stack && (
+                <p>{ details }</p>
+                { stack && (
                   <Preformatted>
-                    <code>{stack}</code>
+                    <code>{ stack }</code>
                   </Preformatted>
-                )}
+                ) }
               </OverviewBody>
 
               <OverviewFooter>
-                <LinkInternal href={href("/:language", { language })}>
+                <LinkInternal href={ href( "/:language", { language } ) }>
                   Back
                 </LinkInternal>
               </OverviewFooter>
             </>
-          )}
+          ) }
         </Overview>
       </Page>
     </main>

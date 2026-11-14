@@ -10,7 +10,7 @@ import type { IClickEvent, IViewType } from "./types";
 import styles from "./base.module.scss";
 
 export interface IButtonBaseProps
-  extends IBaseComponentPropsWithChildren<"button"> {
+  extends IBaseComponentPropsWithChildren< "button" > {
   /**
    * A type of the view of button.
    * Is not related to `HTMLButtonElement.type`
@@ -19,36 +19,38 @@ export interface IButtonBaseProps
    * it needs to behave like a submit button, but look like a normal one.
    */
   viewType?: IViewType;
-  onClick?: (event: IClickEvent) => Promise<void> | void;
+  onClick?: ( event: IClickEvent ) => Promise< void > | void;
 }
 
-export const ButtonBase = createBlockComponent(styles, Component);
+export const ButtonBase = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   className,
   viewType = "button",
   onClick,
   ...props
-}: IButtonBaseProps) {
-  const [isClicking, switchClicking] = useState(false);
+}: IButtonBaseProps ) {
+  const [ isClicking, switchClicking ] = useState( false );
   const blockClass = clsx(
     className,
-    styles[viewType],
+    styles[ viewType ],
     isClicking && styles.block_clicking,
   );
 
-  async function handleClick(event: IClickEvent) {
-    if (isClicking) {
+  async function handleClick( event: IClickEvent ) {
+    if ( isClicking ) {
       return;
     }
 
     try {
-      switchClicking(true);
-      onClick && (await onClick(event));
+      switchClicking( true );
+      onClick && ( await onClick( event ) );
     } finally {
-      switchClicking(false);
+      switchClicking( false );
     }
   }
 
-  return <button className={blockClass} onClick={handleClick} {...props} />;
+  return (
+    <button className={ blockClass } onClick={ handleClick } { ...props } />
+  );
 }

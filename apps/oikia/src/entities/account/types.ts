@@ -12,7 +12,7 @@ export interface IAccountLogin {
   password: string;
 }
 
-export interface IAccount extends Pick<IAccountInit, "name"> {
+export interface IAccount extends Pick< IAccountInit, "name" > {
   created_at: string;
   role: IAccountRole;
   invited_through?: IInvitationItem;
@@ -25,7 +25,7 @@ export type IInvitation = {
   target_role: IAccountRole;
   created_at: string;
   updated_at: string;
-  created_by?: IAccountDB["id"];
+  created_by?: IAccountDB[ "id" ];
   expires_at?: string;
   is_active: boolean;
   title?: string;
@@ -35,4 +35,5 @@ export type IInvitation = {
   | { max_uses: string; current_uses: string }
 );
 
-export interface IInvitationItem extends Pick<IInvitation, "code" | "title"> {}
+export interface IInvitationItem
+  extends Pick< IInvitation, "code" | "title" > {}

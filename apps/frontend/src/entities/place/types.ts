@@ -20,20 +20,20 @@ interface IPlaceStats {
   tasks: ITasksStats;
 }
 
-export interface IPlaceInit extends Pick<IPlace, "title" | "description"> {}
+export interface IPlaceInit extends Pick< IPlace, "title" | "description" > {}
 
 export interface IPlaceUpdate
-  extends Pick<Required<IPlace>, "id">,
-    Pick<Partial<IPlace>, "title" | "description" | "deleted_at"> {}
+  extends Pick< Required< IPlace >, "id" >,
+    Pick< Partial< IPlace >, "title" | "description" | "deleted_at" > {}
 
 export interface IPlacesStatsAll {
   all: INonNegativeInteger;
   eventless: INonNegativeInteger;
 }
 
-const placeCategories = ["eventless"] as const;
-export type IPlacesCategory = (typeof placeCategories)[number];
+const placeCategories = [ "eventless" ] as const;
+export type IPlacesCategory = ( typeof placeCategories )[ number ];
 
-export function isPlaceCategory(input: unknown): input is IPlacesCategory {
-  return placeCategories.includes(input as IPlacesCategory);
+export function isPlaceCategory( input: unknown ): input is IPlacesCategory {
+  return placeCategories.includes( input as IPlacesCategory );
 }

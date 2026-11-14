@@ -2,8 +2,8 @@ import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig, type UserConfig } from "vite";
 import { parseConfig } from "./scripts/lib/parse-configuration.mjs";
 
-const config = defineConfig(async ({ mode, isSsrBuild }) => {
-  const publicConfig = (await parseConfig(mode === "development")).public;
+const config = defineConfig( async ( { mode, isSsrBuild } ) => {
+  const publicConfig = ( await parseConfig( mode === "development" ) ).public;
 
   process.env.VITE_SITE_TITLE = publicConfig.site_title;
   process.env.VITE_SUPPORTED_LANGUAGES = JSON.stringify(
@@ -12,14 +12,14 @@ const config = defineConfig(async ({ mode, isSsrBuild }) => {
   process.env.VITE_DEFAULT_LANGUAGE = publicConfig.default_language;
   process.env.VITE_SOURCE_CODE_URL = publicConfig.source_code_url;
 
-  if (publicConfig.is_translation_debug_enabled) {
+  if ( publicConfig.is_translation_debug_enabled ) {
     process.env.VITE_IS_TRANSLATION_DEBUG_ENABLED = JSON.stringify(
       publicConfig.is_translation_debug_enabled,
     );
   }
 
   const finalConfig: UserConfig = {
-    plugins: [reactRouter()],
+    plugins: [ reactRouter() ],
     css: {
       preprocessorOptions: {
         scss: {
@@ -36,7 +36,7 @@ const config = defineConfig(async ({ mode, isSsrBuild }) => {
          * Shut down messages in build log
          * https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
          */
-        onLog(level, log, handler) {
+        onLog( level, log, handler ) {
           if (
             log.cause &&
             // @ts-expect-error generic lib types
@@ -45,7 +45,7 @@ const config = defineConfig(async ({ mode, isSsrBuild }) => {
             return;
           }
 
-          handler(level, log);
+          handler( level, log );
         },
         input: isSsrBuild ? "./backend/app.ts" : undefined,
       },
@@ -53,6 +53,6 @@ const config = defineConfig(async ({ mode, isSsrBuild }) => {
   };
 
   return finalConfig;
-});
+} );
 
 export default config;

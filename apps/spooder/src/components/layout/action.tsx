@@ -15,19 +15,19 @@ export function ActionLayout() {
 
   return (
     <ClientProvider>
-      <header className={styles.header}>
-        <nav className={styles.nav}>
-          <ul className={styles.header_list}>
-            <li>{getLocalizedMessage("extension_title")}</li>
+      <header className={ styles.header }>
+        <nav className={ styles.nav }>
+          <ul className={ styles.header_list }>
+            <li>{ getLocalizedMessage( "extension_title" ) }</li>
           </ul>
         </nav>
       </header>
 
-      <main className={styles.main}>
+      <main className={ styles.main }>
         <Outlet />
       </main>
 
-      <footer className={styles.footer}>
+      <footer className={ styles.footer }>
         <List>
           <ListItem>
             <LinkExternal
@@ -35,7 +35,7 @@ export function ActionLayout() {
                 "https://github.com/GabenGar/todos/tree/master/apps/spooder"
               }
             >
-              {t((t) => t.layout["source-code"])}
+              { t( ( t ) => t.layout[ "source-code" ] ) }
             </LinkExternal>
           </ListItem>
         </List>

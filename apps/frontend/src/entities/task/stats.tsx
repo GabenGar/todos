@@ -8,32 +8,32 @@ import { useTranslation } from "#hooks";
 import { createTasksPageURL } from "#lib/urls";
 
 interface IProps extends ILocalizableProps {
-  placeID?: IPlace["id"];
+  placeID?: IPlace[ "id" ];
 }
 
-export function TasksStats({ language, placeID }: IProps) {
-  const { t } = useTranslation("translation");
-  const [stats, changeStats] =
-    useState<Awaited<ReturnType<typeof getTasksStats>>>();
+export function TasksStats( { language, placeID }: IProps ) {
+  const { t } = useTranslation( "translation" );
+  const [ stats, changeStats ] =
+    useState< Awaited< ReturnType< typeof getTasksStats > > >();
 
-  useEffect(() => {
-    (async () => {
-      const newStats = await getTasksStats(placeID);
-      changeStats(newStats);
-    })();
-  }, [placeID]);
+  useEffect( () => {
+    ( async () => {
+      const newStats = await getTasksStats( placeID );
+      changeStats( newStats );
+    } )();
+  }, [ placeID ] );
 
   return (
     <DescriptionList>
       <DescriptionSection
         isHorizontal
-        dKey={t((t) => t.task.status_values.all)}
+        dKey={ t( ( t ) => t.task.status_values.all ) }
         dValue={
-          !stats ? (
+          ! stats ? (
             <Loading />
           ) : (
-            <Link href={createTasksPageURL(language, { placeID: placeID })}>
-              {stats.all}
+            <Link href={ createTasksPageURL( language, { placeID: placeID } ) }>
+              { stats.all }
             </Link>
           )
         }
@@ -41,20 +41,20 @@ export function TasksStats({ language, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus status={"in-progress"} />}
+        dKey={ <TaskStatus status={ "in-progress" } /> }
         dValue={
-          !stats ? (
+          ! stats ? (
             <Loading />
-          ) : stats["in-progress"] === 0 ? (
-            <span>{stats["in-progress"]}</span>
+          ) : stats[ "in-progress" ] === 0 ? (
+            <span>{ stats[ "in-progress" ] }</span>
           ) : (
             <Link
-              href={createTasksPageURL(language, {
+              href={ createTasksPageURL( language, {
                 status: "in-progress",
                 placeID: placeID,
-              })}
+              } ) }
             >
-              {stats["in-progress"]}
+              { stats[ "in-progress" ] }
             </Link>
           )
         }
@@ -62,20 +62,20 @@ export function TasksStats({ language, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus status={"pending"} />}
+        dKey={ <TaskStatus status={ "pending" } /> }
         dValue={
-          !stats ? (
+          ! stats ? (
             <Loading />
           ) : stats.pending === 0 ? (
-            <span>{stats.pending}</span>
+            <span>{ stats.pending }</span>
           ) : (
             <Link
-              href={createTasksPageURL(language, {
+              href={ createTasksPageURL( language, {
                 status: "pending",
                 placeID: placeID,
-              })}
+              } ) }
             >
-              {stats.pending}
+              { stats.pending }
             </Link>
           )
         }
@@ -83,20 +83,20 @@ export function TasksStats({ language, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus status={"finished"} />}
+        dKey={ <TaskStatus status={ "finished" } /> }
         dValue={
-          !stats ? (
+          ! stats ? (
             <Loading />
           ) : stats.finished === 0 ? (
-            <span>{stats.finished}</span>
+            <span>{ stats.finished }</span>
           ) : (
             <Link
-              href={createTasksPageURL(language, {
+              href={ createTasksPageURL( language, {
                 status: "finished",
                 placeID: placeID,
-              })}
+              } ) }
             >
-              {stats.finished}
+              { stats.finished }
             </Link>
           )
         }
@@ -104,20 +104,20 @@ export function TasksStats({ language, placeID }: IProps) {
 
       <DescriptionSection
         isHorizontal
-        dKey={<TaskStatus status={"failed"} />}
+        dKey={ <TaskStatus status={ "failed" } /> }
         dValue={
-          !stats ? (
+          ! stats ? (
             <Loading />
           ) : stats.failed === 0 ? (
-            <span>{stats.failed}</span>
+            <span>{ stats.failed }</span>
           ) : (
             <Link
-              href={createTasksPageURL(language, {
+              href={ createTasksPageURL( language, {
                 status: "failed",
                 placeID: placeID,
-              })}
+              } ) }
             >
-              {stats.failed}
+              { stats.failed }
             </Link>
           )
         }

@@ -8,16 +8,16 @@ import { router } from "./routes";
 import "#translation/lib";
 
 const rootID = "root";
-const rootElement = document.getElementById(rootID);
+const rootElement = document.getElementById( rootID );
 
-if (!rootElement) {
-  throw new Error(`No root element exists for ID "${rootID}".`);
+if ( ! rootElement ) {
+  throw new Error( `No root element exists for ID "${ rootID }".` );
 }
 
-const root = createRoot(rootElement);
+const root = createRoot( rootElement );
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={ router } />
   </StrictMode>,
 );

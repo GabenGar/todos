@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.7/schema.json",
   "root": false,
   "linter": {
     "domains": {
@@ -7,7 +7,15 @@
     },
     "rules": {
       // it's a bit of nuisanse to deal here and there
-      "suspicious": "off"
+      "suspicious": "off",
+      "a11y": {
+        // svgs are not used in runtime
+        "noSvgWithoutTitle": "off"
+      },
+      "style": {
+        // it trips up on `.scss` files bigly
+        "noDescendingSpecificity": "off"
+      }
     }
   }
 }

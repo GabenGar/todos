@@ -18,65 +18,65 @@ interface IProps {
   permission: IPermission;
 }
 
-export function Permission({ permission }: IProps) {
-  const [error, changeError] = useState();
+export function Permission( { permission }: IProps ) {
+  const [ error, changeError ] = useState();
   const permissions = usePermissions();
-  const isEnabled = permissions?.has(permission);
+  const isEnabled = permissions?.has( permission );
 
-  return !permissions ? (
+  return ! permissions ? (
     <Loading />
   ) : (
     <Details
       summary={
         <>
-          {permission}:{" "}
-          {isEnabled ? (
-            <span className={styles.enabled}>
-              {getLocalizedMessage("enabled")}
+          { permission }:{ " " }
+          { isEnabled ? (
+            <span className={ styles.enabled }>
+              { getLocalizedMessage( "enabled" ) }
             </span>
           ) : (
-            <span className={styles.disabled}>
-              {getLocalizedMessage("disabled")}
+            <span className={ styles.disabled }>
+              { getLocalizedMessage( "disabled" ) }
             </span>
-          )}
+          ) }
         </>
       }
     >
       <MenuButtons>
         <MenuItem
           viewType="negative"
-          disabled={!isEnabled}
-          onClick={async () => {
+          disabled={ ! isEnabled }
+          onClick={ async () => {
             try {
-              await revokePermission(permission);
-              changeError(undefined);
-            } catch (error) {
+              await revokePermission( permission );
+              changeError( undefined );
+            } catch ( error ) {
               // @ts-expect-error
-              changeError(error);
+              changeError( error );
             }
-          }}
+          } }
         >
-          {getLocalizedMessage("Disable")}
+          { getLocalizedMessage( "Disable" ) }
         </MenuItem>
 
         <MenuItem
           viewType="positive"
-          disabled={isEnabled}
-          onClick={async () => {
+          disabled={ isEnabled }
+          onClick={ async () => {
             try {
-              await requestPermission(permission);
-              changeError(undefined);
-            } catch (error) {
+              await requestPermission( permission );
+              changeError( undefined );
+            } catch ( error ) {
               // @ts-expect-error
-              changeError(error);
+              changeError( error );
             }
-          }}
+          } }
         >
-          {getLocalizedMessage("Enable")}
+          { getLocalizedMessage( "Enable" ) }
         </MenuItem>
       </MenuButtons>
 
-      {error && <Preformatted>{String(error)}</Preformatted>}
+      { error && <Preformatted>{ String( error ) }</Preformatted> }
     </Details>
   );
 }

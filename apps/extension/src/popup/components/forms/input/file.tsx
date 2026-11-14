@@ -4,13 +4,13 @@ import { type IInputProps, Input } from "./input";
 
 export interface IInputFileProps extends IInputProps {}
 
-export const InputFile = forwardRef<HTMLInputElement, IInputFileProps>(
-  createBlockComponent(undefined, Component),
+export const InputFile = forwardRef< HTMLInputElement, IInputFileProps >(
+  createBlockComponent( undefined, Component ),
 );
 
 function Component(
   { ...blockProps }: IInputFileProps,
-  ref?: Ref<HTMLInputElement>,
+  ref?: Ref< HTMLInputElement >,
 ) {
-  return <Input ref={ref} type="file" {...blockProps} />;
+  return <Input ref={ ref } type="file" { ...blockProps } />;
 }

@@ -10,17 +10,18 @@ interface IProps {
   jsonLD: IWebPageJSONLD;
 }
 
-export function WebPageJSONLD({ jsonLD }: IProps) {
+export function WebPageJSONLD( { jsonLD }: IProps ) {
   const { t } = useTranslation();
   const { mainEntity, url: pageURL } = jsonLD;
 
-  if (!mainEntity) {
+  if ( ! mainEntity ) {
     return (
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"]["web-page"].url,
-        )}
-        dValue={pageURL}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ].url,
+        ) }
+        dValue={ pageURL }
         isOptional
         isKeyPreformatted
         isValuePreformatted
@@ -45,156 +46,159 @@ export function WebPageJSONLD({ jsonLD }: IProps) {
   return (
     <>
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"]["web-page"].url,
-        )}
-        dValue={pageURL}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ].url,
+        ) }
+        dValue={ pageURL }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
             ].type,
-        )}
-        dValue={type}
+        ) }
+        dValue={ type }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
             ].identifier,
-        )}
-        dValue={identifier}
+        ) }
+        dValue={ identifier }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
             ].body,
-        )}
-        dValue={body}
+        ) }
+        dValue={ body }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["thumbnail-url"],
-        )}
-        dValue={thumbnailUrl}
+            ][ "thumbnail-url" ],
+        ) }
+        dValue={ thumbnailUrl }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!images ? undefined : (
+      { ! images ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"]["web-page"][
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
                 "main-entity-overview"
               ].images,
-          )}
+          ) }
           dValue={
             <OneOrManyItems
-              item={images}
-              itemElement={(image) => <Preformatted>{image}</Preformatted>}
+              item={ images }
+              itemElement={ ( image ) => (
+                <Preformatted>{ image }</Preformatted>
+              ) }
             />
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["date-published"],
-        )}
-        dValue={datePublished}
+            ][ "date-published" ],
+        ) }
+        dValue={ datePublished }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!author ? undefined : (
+      { ! author ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"]["web-page"][
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
                 "main-entity-overview"
-              ]["author"],
-          )}
+              ][ "author" ],
+          ) }
           dValue={
-            <Details summary={<Preformatted>{author.name}</Preformatted>}>
+            <Details summary={ <Preformatted>{ author.name }</Preformatted> }>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={t(
-                    (t) =>
-                      t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                        "main-entity-overview"
-                      ]["author-type"],
-                  )}
-                  dValue={author["@type"]}
+                  dKey={ t(
+                    ( t ) =>
+                      t.seo[ "json-ld-overview" ][ "type-overview" ][
+                        "web-page"
+                      ][ "main-entity-overview" ][ "author-type" ],
+                  ) }
+                  dValue={ author[ "@type" ] }
                   isOptional
                   isKeyPreformatted
                   isValuePreformatted
                 />
 
                 <DescriptionSection
-                  dKey={t(
-                    (t) =>
-                      t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                        "main-entity-overview"
-                      ]["author-alternate-name"],
-                  )}
-                  dValue={author.alternateName}
+                  dKey={ t(
+                    ( t ) =>
+                      t.seo[ "json-ld-overview" ][ "type-overview" ][
+                        "web-page"
+                      ][ "main-entity-overview" ][ "author-alternate-name" ],
+                  ) }
+                  dValue={ author.alternateName }
                   isOptional
                   isKeyPreformatted
                   isValuePreformatted
                 />
 
                 <DescriptionSection
-                  dKey={t(
-                    (t) =>
-                      t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                        "main-entity-overview"
-                      ]["author-identifier"],
-                  )}
-                  dValue={author.identifier}
+                  dKey={ t(
+                    ( t ) =>
+                      t.seo[ "json-ld-overview" ][ "type-overview" ][
+                        "web-page"
+                      ][ "main-entity-overview" ][ "author-identifier" ],
+                  ) }
+                  dValue={ author.identifier }
                   isOptional
                   isKeyPreformatted
                   isValuePreformatted
                 />
 
                 <DescriptionSection
-                  dKey={t(
-                    (t) =>
-                      t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                        "main-entity-overview"
-                      ]["author-url"],
-                  )}
-                  dValue={author.url}
+                  dKey={ t(
+                    ( t ) =>
+                      t.seo[ "json-ld-overview" ][ "type-overview" ][
+                        "web-page"
+                      ][ "main-entity-overview" ][ "author-url" ],
+                  ) }
+                  dValue={ author.url }
                   isOptional
                   isKeyPreformatted
                   isValuePreformatted
@@ -204,139 +208,143 @@ export function WebPageJSONLD({ jsonLD }: IProps) {
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
             ].url,
-        )}
-        dValue={url}
+        ) }
+        dValue={ url }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!interactionStatistic ? undefined : (
+      { ! interactionStatistic ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"]["web-page"][
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
                 "main-entity-overview"
-              ]["interaction-statistic"],
-          )}
+              ][ "interaction-statistic" ],
+          ) }
           dValue={
             <Details
               summary={
-                <Preformatted>{interactionStatistic.length}</Preformatted>
+                <Preformatted>{ interactionStatistic.length }</Preformatted>
               }
             >
               <OneOrManyItems
-                item={interactionStatistic}
-                itemElement={({
+                item={ interactionStatistic }
+                itemElement={ ( {
                   "@type": type,
                   interactionType,
                   userInteractionCount,
-                }) => {
+                } ) => {
                   return (
                     <DescriptionList isNested>
                       <DescriptionSection
-                        dKey={t(
-                          (t) =>
-                            t.seo["json-ld-overview"]["type-overview"][
+                        dKey={ t(
+                          ( t ) =>
+                            t.seo[ "json-ld-overview" ][ "type-overview" ][
                               "web-page"
-                            ]["main-entity-overview"][
+                            ][ "main-entity-overview" ][
                               "interaction-statistic-type"
                             ],
-                        )}
-                        dValue={type}
+                        ) }
+                        dValue={ type }
                         isOptional
                         isKeyPreformatted
                         isValuePreformatted
                       />
 
                       <DescriptionSection
-                        dKey={t(
-                          (t) =>
-                            t.seo["json-ld-overview"]["type-overview"][
+                        dKey={ t(
+                          ( t ) =>
+                            t.seo[ "json-ld-overview" ][ "type-overview" ][
                               "web-page"
-                            ]["main-entity-overview"][
+                            ][ "main-entity-overview" ][
                               "interaction-statistic-interaction-type"
                             ],
-                        )}
-                        dValue={interactionType}
+                        ) }
+                        dValue={ interactionType }
                         isOptional
                         isKeyPreformatted
                         isValuePreformatted
                       />
 
                       <DescriptionSection
-                        dKey={t(
-                          (t) =>
-                            t.seo["json-ld-overview"]["type-overview"][
+                        dKey={ t(
+                          ( t ) =>
+                            t.seo[ "json-ld-overview" ][ "type-overview" ][
                               "web-page"
-                            ]["main-entity-overview"][
+                            ][ "main-entity-overview" ][
                               "interaction-statistic-user-interaction-count"
                             ],
-                        )}
-                        dValue={userInteractionCount}
+                        ) }
+                        dValue={ userInteractionCount }
                         isOptional
                         isKeyPreformatted
                         isValuePreformatted
                       />
                     </DescriptionList>
                   );
-                }}
+                } }
               />
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["comment-count"],
-        )}
-        dValue={commentCount}
+            ][ "comment-count" ],
+        ) }
+        dValue={ commentCount }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!comments ? undefined : (
+      { ! comments ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"]["web-page"][
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
                 "main-entity-overview"
-              ]["comments"],
-          )}
+              ][ "comments" ],
+          ) }
           dValue={
-            <Details summary={<Preformatted>{comments.length}</Preformatted>}>
+            <Details
+              summary={ <Preformatted>{ comments.length }</Preformatted> }
+            >
               <OneOrManyItems
-                item={comments}
-                itemElement={(comment) => <Comment comment={comment} />}
+                item={ comments }
+                itemElement={ ( comment ) => <Comment comment={ comment } /> }
               />
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
     </>
   );
 }
 
 interface ICommentProps {
-  comment: IElementType<Required<IWebPageJSONLD["mainEntity"]>["comment"]>;
+  comment: IElementType<
+    Required< IWebPageJSONLD[ "mainEntity" ] >[ "comment" ]
+  >;
 }
 
-function Comment({ comment }: ICommentProps) {
+function Comment( { comment }: ICommentProps ) {
   const { t } = useTranslation();
 
   const {
@@ -351,149 +359,161 @@ function Comment({ comment }: ICommentProps) {
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["comment-overview"].type,
-        )}
-        dValue={type}
+            ][ "comment-overview" ].type,
+        ) }
+        dValue={ type }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["comment-overview"].identifier,
-        )}
-        dValue={identifier}
+            ][ "comment-overview" ].identifier,
+        ) }
+        dValue={ identifier }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["comment-overview"].body,
-        )}
-        dValue={body}
+            ][ "comment-overview" ].body,
+        ) }
+        dValue={ body }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["comment-overview"]["date-published"],
-        )}
-        dValue={datePublished}
+            ][ "comment-overview" ][ "date-published" ],
+        ) }
+        dValue={ datePublished }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!author ? undefined : (
+      { ! author ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"]["web-page"][
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
                 "main-entity-overview"
-              ]["comment-overview"].author,
-          )}
+              ][ "comment-overview" ].author,
+          ) }
           dValue={
-            <Details summary={<Preformatted>{author.name}</Preformatted>}>
+            <Details summary={ <Preformatted>{ author.name }</Preformatted> }>
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                      "main-entity-overview"
-                    ]["comment-overview"]["author-overview"].type,
-                )}
-                dValue={author["@type"]}
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ][
+                      "web-page"
+                    ][ "main-entity-overview" ][ "comment-overview" ][
+                      "author-overview"
+                    ].type,
+                ) }
+                dValue={ author[ "@type" ] }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                      "main-entity-overview"
-                    ]["comment-overview"]["author-overview"].identifier,
-                )}
-                dValue={author.identifier}
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ][
+                      "web-page"
+                    ][ "main-entity-overview" ][ "comment-overview" ][
+                      "author-overview"
+                    ].identifier,
+                ) }
+                dValue={ author.identifier }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                      "main-entity-overview"
-                    ]["comment-overview"]["author-overview"]["alternate-name"],
-                )}
-                dValue={author.alternateName}
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ][
+                      "web-page"
+                    ][ "main-entity-overview" ][ "comment-overview" ][
+                      "author-overview"
+                    ][ "alternate-name" ],
+                ) }
+                dValue={ author.alternateName }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
 
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                      "main-entity-overview"
-                    ]["comment-overview"]["author-overview"]["thumbnail-url"],
-                )}
-                dValue={author.thumbnailUrl}
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ][
+                      "web-page"
+                    ][ "main-entity-overview" ][ "comment-overview" ][
+                      "author-overview"
+                    ][ "thumbnail-url" ],
+                ) }
+                dValue={ author.thumbnailUrl }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
               />
 
-              {!author.image ? undefined : (
+              { ! author.image ? undefined : (
                 <DescriptionSection
-                  dKey={t(
-                    (t) =>
-                      t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                        "main-entity-overview"
-                      ]["comment-overview"]["author-overview"]["images"],
-                  )}
+                  dKey={ t(
+                    ( t ) =>
+                      t.seo[ "json-ld-overview" ][ "type-overview" ][
+                        "web-page"
+                      ][ "main-entity-overview" ][ "comment-overview" ][
+                        "author-overview"
+                      ][ "images" ],
+                  ) }
                   dValue={
                     <OneOrManyItems
-                      item={author.image}
-                      itemElement={(image) => (
-                        <Preformatted>{image}</Preformatted>
-                      )}
+                      item={ author.image }
+                      itemElement={ ( image ) => (
+                        <Preformatted>{ image }</Preformatted>
+                      ) }
                     />
                   }
                   isOptional
                   isKeyPreformatted
                   isValuePreformatted
                 />
-              )}
+              ) }
 
               <DescriptionSection
-                dKey={t(
-                  (t) =>
-                    t.seo["json-ld-overview"]["type-overview"]["web-page"][
-                      "main-entity-overview"
-                    ]["comment-overview"]["author-overview"]["url"],
-                )}
-                dValue={author.url}
+                dKey={ t(
+                  ( t ) =>
+                    t.seo[ "json-ld-overview" ][ "type-overview" ][
+                      "web-page"
+                    ][ "main-entity-overview" ][ "comment-overview" ][
+                      "author-overview"
+                    ][ "url" ],
+                ) }
+                dValue={ author.url }
                 isOptional
                 isKeyPreformatted
                 isValuePreformatted
@@ -502,16 +522,16 @@ function Comment({ comment }: ICommentProps) {
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["web-page"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "web-page" ][
               "main-entity-overview"
-            ]["comment-overview"].url,
-        )}
-        dValue={url}
+            ][ "comment-overview" ].url,
+        ) }
+        dValue={ url }
         isOptional
         isKeyPreformatted
         isValuePreformatted

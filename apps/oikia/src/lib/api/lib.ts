@@ -6,34 +6,34 @@ export function isFailedAPIResponse(
   input: unknown,
 ): input is IFailedAPIResponse {
   const isValidObject =
-    isObject(input) &&
+    isObject( input ) &&
     "is_successful" in input &&
     input.is_successful === false &&
     "errors" in input &&
-    Array.isArray(input.errors);
+    Array.isArray( input.errors );
 
-  if (!isValidObject) {
+  if ( ! isValidObject ) {
     return false;
   }
 
-  const isValidErrors = (input.errors as unknown[]).every((value) =>
-    isAPIError(value),
+  const isValidErrors = ( input.errors as unknown[] ).every( ( value ) =>
+    isAPIError( value ),
   );
 
-  if (!isValidErrors) {
+  if ( ! isValidErrors ) {
     return false;
   }
 
   return true;
 }
 
-export function isAPIError(input: unknown): input is IAPIError {
+export function isAPIError( input: unknown ): input is IAPIError {
   const isValid =
-    isObject(input) &&
+    isObject( input ) &&
     "name" in input &&
-    isNonEmptyString(input.name) &&
+    isNonEmptyString( input.name ) &&
     "message" in input &&
-    isNonEmptyString(input.message);
+    isNonEmptyString( input.message );
 
   return isValid;
 }

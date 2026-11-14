@@ -24,76 +24,84 @@ interface IProps extends ILocalizedProps {
   account: IAccountDB;
 }
 
-function InvitationOverviewPage({ loaderData }: Route.ComponentProps) {
+function InvitationOverviewPage( { loaderData }: Route.ComponentProps ) {
   const { t } = useTranslation();
   const { language, account } = loaderData;
   const { id, role, name, created_at, invited_through } = account;
-  const parsedName = parseName(name);
+  const parsedName = parseName( name );
   const title = createMetaTitle(
-    `${t((t) => t.pages["account-overview"]["Account"])} ${parsedName} ${t((t) => t.pages["account-overview"]["overview"])}`,
+    `${ t( ( t ) => t.pages[ "account-overview" ][ "Account" ] ) } ${ parsedName } ${ t( ( t ) => t.pages[ "account-overview" ][ "overview" ] ) }`,
   );
-  const heading = t((t) => t.pages["account-overview"]["Account Overview"]);
+  const heading = t(
+    ( t ) => t.pages[ "account-overview" ][ "Account Overview" ],
+  );
 
   return (
-    <Page heading={heading} title={title}>
-      <Overview headingLevel={2}>
-        {(headingLevel) => (
+    <Page heading={ heading } title={ title }>
+      <Overview headingLevel={ 2 }>
+        { ( headingLevel ) => (
           <>
             <OverviewHeader>
-              <Heading level={headingLevel}>{parsedName}</Heading>
-              <Preformatted>{id}</Preformatted>
+              <Heading level={ headingLevel }>{ parsedName }</Heading>
+              <Preformatted>{ id }</Preformatted>
             </OverviewHeader>
 
             <OverviewBody>
               <DescriptionList>
                 <DescriptionSection
-                  dKey={t((t) => t.pages["account-overview"]["Role"])}
-                  dValue={role}
+                  dKey={ t( ( t ) => t.pages[ "account-overview" ][ "Role" ] ) }
+                  dValue={ role }
                   isHorizontal
                 />
 
                 <DescriptionSection
-                  dKey={t((t) => t.pages["account-overview"]["Join date"])}
-                  dValue={<DateTimeView dateTime={created_at} />}
+                  dKey={ t(
+                    ( t ) => t.pages[ "account-overview" ][ "Join date" ],
+                  ) }
+                  dValue={ <DateTimeView dateTime={ created_at } /> }
                 />
 
-                {invited_through && (
+                { invited_through && (
                   <DescriptionSection
-                    dKey={t(
-                      (t) => t.pages["account-overview"]["Invited through"],
-                    )}
+                    dKey={ t(
+                      ( t ) =>
+                        t.pages[ "account-overview" ][ "Invited through" ],
+                    ) }
                     dValue={
                       <LinkInternal
-                        href={href(
+                        href={ href(
                           "/:language/account/role/administrator/invitation/:id",
                           { language, id: invited_through.id },
-                        )}
+                        ) }
                       >
-                        {parseTitle(invited_through.title, invited_through.id)}
+                        { parseTitle(
+                          invited_through.title,
+                          invited_through.id,
+                        ) }
                       </LinkInternal>
                     }
                   />
-                )}
+                ) }
               </DescriptionList>
             </OverviewBody>
           </>
-        )}
+        ) }
       </Overview>
     </Page>
   );
 }
 
 export const loader = createLocalizedLoader(
-  async ({ request, params }: Route.LoaderArgs, localizedProps) => {
-    await authenticateAdmin(request);
+  async ( { request, params }: Route.LoaderArgs, localizedProps ) => {
+    await authenticateAdmin( request );
 
     const { id } = params;
 
-    const account = await runTransaction(async (transaction) => {
-      const [account] = await selectAccountEntities(transaction, [id]);
+    const account = await runTransaction( async ( transaction ) => {
+      const [ account ] = await selectAccountEntities( transaction, [ id ] );
 
       return account;
-    });
+    } );
 
     const props: IProps = {
       ...localizedProps,

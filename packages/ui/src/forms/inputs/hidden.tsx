@@ -14,13 +14,13 @@ export interface IInputHiddenProps
     | "placeholder"
   > {}
 
-export const InputHidden = forwardRef<HTMLInputElement, IInputHiddenProps>(
-  createBlockComponent(undefined, Component),
+export const InputHidden = forwardRef< HTMLInputElement, IInputHiddenProps >(
+  createBlockComponent( undefined, Component ),
 );
 
 function Component(
   { ...props }: IInputHiddenProps,
-  ref?: Ref<HTMLInputElement>,
+  ref?: Ref< HTMLInputElement >,
 ) {
-  return <Input ref={ref} type="hidden" {...props} />;
+  return <Input ref={ ref } type="hidden" { ...props } />;
 }

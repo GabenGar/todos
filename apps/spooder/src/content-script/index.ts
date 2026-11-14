@@ -6,7 +6,7 @@ runContentScript();
 
 async function runContentScript() {
   const seoResult = await collectSEO();
-  const message = createMessage("seo", seoResult);
+  const message = createMessage( "seo", seoResult );
 
-  await browser.runtime.sendMessage(message);
+  await browser.runtime.sendMessage( message );
 }

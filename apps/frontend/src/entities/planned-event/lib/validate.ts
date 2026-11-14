@@ -6,13 +6,13 @@ import type {
 } from "../types";
 
 export const validatePlannedEvent: ReturnType<
-  typeof createValidator<IPlannedEvent>
-> = createValidator<IPlannedEvent>("/entities/planned-event/entity");
+  typeof createValidator< IPlannedEvent >
+> = createValidator< IPlannedEvent >( "/entities/planned-event/entity" );
 
 export const validatePlannedEventInit: ReturnType<
-  typeof createValidator<IPlannedEventInit>
-> = createValidator<IPlannedEventInit>("/entities/planned-event/init");
+  typeof createValidator< IPlannedEventInit >
+> = createValidator< IPlannedEventInit >( "/entities/planned-event/init" );
 
 export const validatePlannedEventUpdate: ReturnType<
-  typeof createValidator<IPlannedEventUpdate>
-> = createValidator<IPlannedEventUpdate>("/entities/planned-event/update");
+  typeof createValidator< IPlannedEventUpdate >
+> = createValidator< IPlannedEventUpdate >( "/entities/planned-event/update" );

@@ -10,12 +10,12 @@
 
 .alternating {
   & > * {
-    &:nth-child(odd) {
-      background-color: var(--colour-background-secondary-transparent);
+    &:nth-child( odd ) {
+      background-color: var( --colour-background-secondary-transparent );
     }
 
-    &:nth-child(even) {
-      background-color: var(--colour-background-tertiary-transparent);
+    &:nth-child( even ) {
+      background-color: var( --colour-background-tertiary-transparent );
     }
   }
 }

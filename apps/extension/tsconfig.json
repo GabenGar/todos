@@ -5,7 +5,7 @@
     "target": "es2021",
     "moduleResolution": "bundler",
     "types": [],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [ "dom", "dom.iterable", "esnext" ],
     "strict": true,
     "jsx": "react-jsx",
     "noImplicitAny": true,
@@ -16,6 +16,6 @@
     // too annoying to configure pacakge css imports
     "noUncheckedSideEffectImports": false
   },
-  "include": ["custom.d.ts", "src/**/*"],
-  "exclude": ["./dev", "./build", "./dist"]
+  "include": [ "custom.d.ts", "src/**/*" ],
+  "exclude": [ "./dev", "./build", "./dist" ]
 }

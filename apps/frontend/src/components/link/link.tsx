@@ -3,47 +3,51 @@ import { logDebug } from "#lib/logs";
 import { type ILinkExternalProps, LinkExternal } from "./external";
 import { type ILinkInternalProps, LinkInternal } from "./internal";
 
-const linkTypes = ["internal", "external"] as const;
-type ILinkType = (typeof linkTypes)[number];
+const linkTypes = [ "internal", "external" ] as const;
+type ILinkType = ( typeof linkTypes )[ number ];
 
-export type ILinkProps<RouteInferType = undefined> =
-  | ({ linkType?: "external" } & ILinkExternalProps)
-  | ({ linkType?: "internal" } & ILinkInternalProps<RouteInferType>);
+export type ILinkProps< RouteInferType = undefined > =
+  | ( { linkType?: "external" } & ILinkExternalProps )
+  | ( { linkType?: "internal" } & ILinkInternalProps< RouteInferType > );
 
-export const Link = createBlockComponent(undefined, Component);
+export const Link = createBlockComponent( undefined, Component );
 
-function Component<RouteInferType>({ ...props }: ILinkProps<RouteInferType>) {
-  if (!props.linkType) {
-    props.linkType = guessLinkType(props.href);
+function Component< RouteInferType >( {
+  ...props
+}: ILinkProps< RouteInferType > ) {
+  if ( ! props.linkType ) {
+    props.linkType = guessLinkType( props.href );
   }
 
-  logDebug(`HREF "${props.href}" is of type "${props.linkType}"`);
+  logDebug( `HREF "${ props.href }" is of type "${ props.linkType }"` );
 
-  switch (props.linkType) {
+  switch ( props.linkType ) {
     case "external": {
       const { linkType, ...linkProps } = props;
 
-      return <LinkExternal {...linkProps} />;
+      return <LinkExternal { ...linkProps } />;
     }
 
     case "internal": {
       const { linkType, ...linkProps } = props;
 
-      return <LinkInternal<RouteInferType> {...linkProps} />;
+      return <LinkInternal< RouteInferType > { ...linkProps } />;
     }
 
     default: {
-      throw new Error(`Illegal link type "${props.linkType satisfies never}"`);
+      throw new Error(
+        `Illegal link type "${ props.linkType satisfies never }"`,
+      );
     }
   }
 }
 
-function guessLinkType(href: ILinkProps["href"]): ILinkType {
-  if (typeof href === "undefined" || href instanceof URL) {
+function guessLinkType( href: ILinkProps[ "href" ] ): ILinkType {
+  if ( typeof href === "undefined" || href instanceof URL ) {
     return "external";
   }
 
-  if (typeof href === "string" && href.startsWith("http")) {
+  if ( typeof href === "string" && href.startsWith( "http" ) ) {
     return "external";
   }
 

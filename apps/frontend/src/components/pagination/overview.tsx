@@ -7,23 +7,24 @@ import type { IPagination } from "#lib/pagination";
 
 import styles from "./overview.module.scss";
 
-interface IProps extends IBaseComponentProps<"ul"> {
+interface IProps extends IBaseComponentProps< "ul" > {
   pagination: IPagination;
 }
 
-export const PaginationOverview = createBlockComponent(styles, Component);
+export const PaginationOverview = createBlockComponent( styles, Component );
 
-function Component({ pagination, ...props }: IProps) {
-  const { t } = useTranslation("common");
+function Component( { pagination, ...props }: IProps ) {
+  const { t } = useTranslation( "common" );
   const { currentPage, currentMin, currentMax, totalCount } = pagination;
 
   return (
-    <List {...props}>
+    <List { ...props }>
       <ListItem>
-        {currentMin} - {currentMax} {t((t) => t.pagination.out_of)} {totalCount}
+        { currentMin } - { currentMax } { t( ( t ) => t.pagination.out_of ) }{ " " }
+        { totalCount }
       </ListItem>
       <ListItem>
-        {t((t) => t.pagination.current)}: {currentPage}
+        { t( ( t ) => t.pagination.current ) }: { currentPage }
       </ListItem>
     </List>
   );

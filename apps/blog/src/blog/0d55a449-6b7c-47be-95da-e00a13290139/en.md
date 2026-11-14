@@ -103,8 +103,8 @@ This augments translation types for the workspace and allows to typecheck transl
 The index file has to export at least one symbol with this signature:
 
 ```typescript
-interface IGetTranslationFunction<Locale, ResourceShape> {
-  (language: Locale): Promise<ResourceShape>;
+interface IGetTranslationFunction< Locale, ResourceShape > {
+  ( language: Locale ): Promise< ResourceShape >;
 }
 ```
 
@@ -129,25 +129,25 @@ export async function fetchTranslation(
 ) {
   let translation: ResourceKey;
 
-  switch (language) {
+  switch ( language ) {
     case "en": {
-      switch (namespace) {
+      switch ( namespace ) {
         // for apps
         case "<workspace_name>": {
-          translation = await import("#translation/en.json");
+          translation = await import( "#translation/en.json" );
           break;
         }
 
         default: {
           throw new Error(
-            `Unknown translation namespace "${namespace satisfies never}"`,
+            `Unknown translation namespace "${ namespace satisfies never }"`,
           );
         }
       }
     }
 
     default: {
-      throw new Error(`Unknown language "${language satisfies never}".`);
+      throw new Error( `Unknown language "${ language satisfies never }".` );
     }
   }
 
@@ -167,14 +167,14 @@ import resourcesToBackend from "i18next-resources-to-backend";
 import { fetchTranslation } from "./fetch-translation";
 
 const DEFAULT_LANGUAGE = "en";
-const SUPPORTED_LANGUAGES = ["en"];
-const DEFAULT_NAMESPACES = ["translation"];
-type ILocale = (typeof SUPPORTED_LANGUAGES)[number];
+const SUPPORTED_LANGUAGES = [ "en" ];
+const DEFAULT_NAMESPACES = [ "translation" ];
+type ILocale = ( typeof SUPPORTED_LANGUAGES )[ number ];
 
 i18next
-  .use(resourcesToBackend(fetchTranslation))
-  .on("failedLoading", (_language, _namespace, message) =>
-    console.error(message),
+  .use( resourcesToBackend( fetchTranslation ) )
+  .on( "failedLoading", ( _language, _namespace, message ) =>
+    console.error( message ),
   );
 
 const options = {
@@ -186,13 +186,13 @@ const options = {
   returnNull: false,
 } satisfies InitOptions;
 
-export async function getTranslation(language: ILocale): Promise<Resource> {
-  if (!i18next.isInitialized) {
-    await i18next.init({ ...options });
+export async function getTranslation( language: ILocale ): Promise< Resource > {
+  if ( ! i18next.isInitialized ) {
+    await i18next.init( { ...options } );
   }
 
-  await i18next.changeLanguage(language);
-  await i18next.loadNamespaces(DEFAULT_NAMESPACES);
+  await i18next.changeLanguage( language );
+  await i18next.loadNamespaces( DEFAULT_NAMESPACES );
 
   return i18next.store.data;
 }

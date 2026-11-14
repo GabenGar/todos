@@ -9,23 +9,25 @@ import {
 import styles from "./details.module.scss";
 
 export interface IDetailsProps
-  extends IBaseComponentPropsWithChildren<"details"> {
+  extends IBaseComponentPropsWithChildren< "details" > {
   summary: ReactNode;
   contentClassname?: string;
 }
 
-export const Details = createBlockComponent(styles, Component);
+export const Details = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   summary,
   children,
   contentClassname,
   ...props
-}: IDetailsProps) {
+}: IDetailsProps ) {
   return (
-    <details {...props}>
-      <summary className={styles.summary}>{summary}</summary>
-      <div className={clsx(styles.content, contentClassname)}>{children}</div>
+    <details { ...props }>
+      <summary className={ styles.summary }>{ summary }</summary>
+      <div className={ clsx( styles.content, contentClassname ) }>
+        { children }
+      </div>
     </details>
   );
 }

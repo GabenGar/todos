@@ -42,10 +42,10 @@ import { lint, parser } from "@exodus/schemasafe";
  * @param {boolean} [isDevelopment]
  * @returns {Promise<{server: IConfiguration, public:IPublicConfiguration }>}
  */
-export async function parseConfig(isDevelopment) {
-  const schemaBasePath = path.join(cwd(), "schema");
-  const configBasePath = path.join(cwd(), "config");
-  const configSchemaPath = path.join(schemaBasePath, "server.schema.json");
+export async function parseConfig( isDevelopment ) {
+  const schemaBasePath = path.join( cwd(), "schema" );
+  const configBasePath = path.join( cwd(), "config" );
+  const configSchemaPath = path.join( schemaBasePath, "server.schema.json" );
   const publicConfigSchemaPath = path.join(
     schemaBasePath,
     "public.schema.json",
@@ -59,62 +59,62 @@ export async function parseConfig(isDevelopment) {
     isDevelopment ? "public.development.json" : "public.json",
   );
 
-  const schemaContent = await fs.readFile(configSchemaPath, {
+  const schemaContent = await fs.readFile( configSchemaPath, {
     encoding: "utf-8",
-  });
-  const publicSchemaContent = await fs.readFile(publicConfigSchemaPath, {
+  } );
+  const publicSchemaContent = await fs.readFile( publicConfigSchemaPath, {
     encoding: "utf-8",
-  });
+  } );
 
   /**
    * @type {import("@exodus/schemasafe").Schema}
    */
-  const schema = JSON.parse(schemaContent);
+  const schema = JSON.parse( schemaContent );
   /**
    * @type {import("@exodus/schemasafe").Schema}
    */
-  const publicSchema = JSON.parse(publicSchemaContent);
+  const publicSchema = JSON.parse( publicSchemaContent );
 
-  const schemaErrors = lint(schema, { mode: "strong" });
+  const schemaErrors = lint( schema, { mode: "strong" } );
 
-  if (schemaErrors.length !== 0) {
+  if ( schemaErrors.length !== 0 ) {
     throw new AggregateError(
       schemaErrors,
       "Failed to validate server configuration schema.",
     );
   }
 
-  const publicSchemaErrors = lint(publicSchema, { mode: "strong" });
+  const publicSchemaErrors = lint( publicSchema, { mode: "strong" } );
 
-  if (publicSchemaErrors.length !== 0) {
+  if ( publicSchemaErrors.length !== 0 ) {
     throw new AggregateError(
       publicSchemaErrors,
       "Failed to validate public configuration schema.",
     );
   }
 
-  const parseConfig = parser(schema, { includeErrors: true });
-  const parsePublicConfig = parser(publicSchema, { includeErrors: true });
+  const parseConfig = parser( schema, { includeErrors: true } );
+  const parsePublicConfig = parser( publicSchema, { includeErrors: true } );
 
-  const configContent = await fs.readFile(configPath, { encoding: "utf-8" });
-  const publicConfigContent = await fs.readFile(publicConfigPath, {
+  const configContent = await fs.readFile( configPath, { encoding: "utf-8" } );
+  const publicConfigContent = await fs.readFile( publicConfigPath, {
     encoding: "utf-8",
-  });
+  } );
 
-  const result = parseConfig(configContent);
+  const result = parseConfig( configContent );
 
-  if (!result.valid) {
-    throw new Error("Failed to parse server configuration.", {
+  if ( ! result.valid ) {
+    throw new Error( "Failed to parse server configuration.", {
       cause: result.error,
-    });
+    } );
   }
 
-  const publicResult = parsePublicConfig(publicConfigContent);
+  const publicResult = parsePublicConfig( publicConfigContent );
 
-  if (!publicResult.valid) {
-    throw new Error("Failed to parse public configuration.", {
+  if ( ! publicResult.valid ) {
+    throw new Error( "Failed to parse public configuration.", {
       cause: result.error,
-    });
+    } );
   }
 
   /**

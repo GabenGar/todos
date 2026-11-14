@@ -7,19 +7,19 @@ import styles from "./input.module.scss";
 
 interface IInputBaseProps
   extends IRequiredSome<
-    IBaseComponentProps<"input">,
+    IBaseComponentProps< "input" >,
     "id" | "name" | "form" | "type"
   > {}
 
-export interface IInputProps extends Omit<IInputBaseProps, "type"> {}
+export interface IInputProps extends Omit< IInputBaseProps, "type" > {}
 
-export const Input = forwardRef<HTMLInputElement, IInputBaseProps>(
-  createBlockComponent(styles, Component),
+export const Input = forwardRef< HTMLInputElement, IInputBaseProps >(
+  createBlockComponent( styles, Component ),
 );
 
 function Component(
   { ...blockProps }: IInputBaseProps,
-  ref?: Ref<HTMLInputElement>,
+  ref?: Ref< HTMLInputElement >,
 ) {
-  return <input {...blockProps} ref={ref} />;
+  return <input { ...blockProps } ref={ ref } />;
 }

@@ -9,29 +9,31 @@ import { authenticateAdmin, getLanguage } from "#server/lib/router";
 
 import type { Route } from "./+types/accounts";
 
-export async function loader({ request, params }: Route.LoaderArgs) {
-  await authenticateAdmin(request);
+export async function loader( { request, params }: Route.LoaderArgs ) {
+  await authenticateAdmin( request );
 
-  const language = getLanguage(params);
+  const language = getLanguage( params );
 
   const { id } = params;
 
-  const pagination = await runReadOnlyTransaction(async (transaction) => {
-    const [invitation] = await selectInvitationEntities(transaction, [id]);
+  const pagination = await runReadOnlyTransaction( async ( transaction ) => {
+    const [ invitation ] = await selectInvitationEntities( transaction, [
+      id,
+    ] );
 
-    const parsedCurrentUses = !invitation.current_uses
+    const parsedCurrentUses = ! invitation.current_uses
       ? undefined
-      : BigInt(invitation.current_uses);
+      : BigInt( invitation.current_uses );
 
-    if (!parsedCurrentUses || parsedCurrentUses === BIGINT_ZERO) {
+    if ( ! parsedCurrentUses || parsedCurrentUses === BIGINT_ZERO ) {
       throw new NotFoundError();
     }
 
     // biome-ignore lint/style/noNonNullAssertion: typescript losing context
-    const pagination = createPagination(invitation.current_uses!);
+    const pagination = createPagination( invitation.current_uses! );
 
     return pagination;
-  });
+  } );
 
   return redirect(
     href(

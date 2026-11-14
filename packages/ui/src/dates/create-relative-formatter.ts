@@ -18,26 +18,26 @@ const durationUnitsOrder = [
 
 export function createRelativeDateTimeFormatter(
   locale: Intl.Locale,
-): (dateTime: IDateTime) => string {
+): ( dateTime: IDateTime ) => string {
   const formatter = new Intl.RelativeTimeFormat(
-    String(locale),
+    String( locale ),
     formatRelativeDateTimeOptions,
   );
 
-  function formatRelativeDateTime(dateTime: IDateTime): string {
-    const end = parseISO(dateTime);
+  function formatRelativeDateTime( dateTime: IDateTime ): string {
+    const end = parseISO( dateTime );
     const start = now();
-    const duration = intervalToDuration({ start, end });
+    const duration = intervalToDuration( { start, end } );
     let formattedDateTime = "unknown";
 
-    for (const durationUnit of durationUnitsOrder) {
-      const value = duration[durationUnit];
+    for ( const durationUnit of durationUnitsOrder ) {
+      const value = duration[ durationUnit ];
 
-      if (!value) {
+      if ( ! value ) {
         continue;
       }
 
-      formattedDateTime = formatter.format(value, durationUnit);
+      formattedDateTime = formatter.format( value, durationUnit );
       break;
     }
 

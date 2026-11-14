@@ -28,15 +28,15 @@ interface IRootContext {
 function RootComponent() {
   const { language, translation } = Route.useRouteContext();
 
-  if (IS_BROWSER) {
-    initClientTranslation(language, translation);
+  if ( IS_BROWSER ) {
+    initClientTranslation( language, translation );
   }
 
-  useSSR(translation, language);
+  useSSR( translation, language );
 
   return (
     <RootDocument>
-      <ClientProvider serverLanguage={language}>
+      <ClientProvider serverLanguage={ language }>
         <Outlet />
       </ClientProvider>
     </RootDocument>
@@ -47,34 +47,34 @@ interface IRootDocumentProps {
   children: ReactNode;
 }
 
-function RootDocument({ children }: Readonly<IRootDocumentProps>) {
+function RootDocument( { children }: Readonly< IRootDocumentProps > ) {
   const { language } = Route.useRouteContext();
 
   return (
-    <html lang={language}>
+    <html lang={ language }>
       <head>
         <HeadContent />
       </head>
 
       <body>
-        {children}
+        { children }
         <Scripts />
       </body>
     </html>
   );
 }
 
-export const Route = createRootRouteWithContext<IRootContext>()({
-  beforeLoad: async ({ params }) => {
+export const Route = createRootRouteWithContext< IRootContext >()( {
+  beforeLoad: async ( { params } ) => {
     let language: ILocale;
 
-    if ("language" in params && isSupportedLanguage(params.language)) {
+    if ( "language" in params && isSupportedLanguage( params.language ) ) {
       language = params.language;
     } else {
       language = DEFAULT_LANGUAGE;
     }
 
-    const translation = await getTranslation(language);
+    const translation = await getTranslation( language );
 
     return {
       language,
@@ -98,4 +98,4 @@ export const Route = createRootRouteWithContext<IRootContext>()({
     };
   },
   component: RootComponent,
-});
+} );

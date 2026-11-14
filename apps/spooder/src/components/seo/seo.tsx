@@ -14,7 +14,7 @@ interface ISEOViewProps {
   seo: ISEO;
 }
 
-export function SEOView({ seo }: ISEOViewProps) {
+export function SEOView( { seo }: ISEOViewProps ) {
   const { t } = useTranslation();
   const {
     charSet,
@@ -44,17 +44,17 @@ export function SEOView({ seo }: ISEOViewProps) {
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={t((t) => t.seo.charset)}
+        dKey={ t( ( t ) => t.seo.charset ) }
         dValue={
-          !charSet ? undefined : !Array.isArray(charSet) ? (
-            <Preformatted>{charSet}</Preformatted>
+          ! charSet ? undefined : ! Array.isArray( charSet ) ? (
+            <Preformatted>{ charSet }</Preformatted>
           ) : (
             <List>
-              {charSet.map((charSet, index) => (
-                <ListItem key={index}>
-                  <Preformatted>{charSet}</Preformatted>
+              { charSet.map( ( charSet, index ) => (
+                <ListItem key={ index }>
+                  <Preformatted>{ charSet }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           )
         }
@@ -62,214 +62,214 @@ export function SEOView({ seo }: ISEOViewProps) {
       />
 
       <DescriptionSection
-        dKey={t((t) => t.seo.title)}
+        dKey={ t( ( t ) => t.seo.title ) }
         dValue={
-          !title ? undefined : !Array.isArray(title) ? (
-            <Preformatted>{title}</Preformatted>
+          ! title ? undefined : ! Array.isArray( title ) ? (
+            <Preformatted>{ title }</Preformatted>
           ) : (
             <List>
-              {title.map((title, index) => (
-                <ListItem key={index}>
-                  <Preformatted>{title}</Preformatted>
+              { title.map( ( title, index ) => (
+                <ListItem key={ index }>
+                  <Preformatted>{ title }</Preformatted>
                 </ListItem>
-              ))}
+              ) ) }
             </List>
           )
         }
         isKeyPreformatted
       />
 
-      {!description ? undefined : (
+      { ! description ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo.description)}
-          dValue={<MetaTagView metaTag={description} />}
+          dKey={ t( ( t ) => t.seo.description ) }
+          dValue={ <MetaTagView metaTag={ description } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!applicationName ? undefined : (
+      { ! applicationName ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["application-name"])}
-          dValue={<MetaTagView metaTag={applicationName} />}
+          dKey={ t( ( t ) => t.seo[ "application-name" ] ) }
+          dValue={ <MetaTagView metaTag={ applicationName } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!author ? undefined : (
+      { ! author ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["author"])}
-          dValue={<MetaTagView metaTag={author} />}
+          dKey={ t( ( t ) => t.seo[ "author" ] ) }
+          dValue={ <MetaTagView metaTag={ author } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!creator ? undefined : (
+      { ! creator ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["creator"])}
-          dValue={<MetaTagView metaTag={creator} />}
+          dKey={ t( ( t ) => t.seo[ "creator" ] ) }
+          dValue={ <MetaTagView metaTag={ creator } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!publisher ? undefined : (
+      { ! publisher ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["publisher"])}
-          dValue={<MetaTagView metaTag={publisher} />}
+          dKey={ t( ( t ) => t.seo[ "publisher" ] ) }
+          dValue={ <MetaTagView metaTag={ publisher } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!generator ? undefined : (
+      { ! generator ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["generator"])}
-          dValue={<MetaTagView metaTag={generator} />}
+          dKey={ t( ( t ) => t.seo[ "generator" ] ) }
+          dValue={ <MetaTagView metaTag={ generator } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!keywords ? undefined : (
+      { ! keywords ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["keywords"])}
-          dValue={<MetaTagView metaTag={keywords} />}
+          dKey={ t( ( t ) => t.seo[ "keywords" ] ) }
+          dValue={ <MetaTagView metaTag={ keywords } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!robots ? undefined : (
+      { ! robots ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["robots"])}
-          dValue={<MetaTagView metaTag={robots} />}
+          dKey={ t( ( t ) => t.seo[ "robots" ] ) }
+          dValue={ <MetaTagView metaTag={ robots } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!googlebot ? undefined : (
+      { ! googlebot ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["googlebot"])}
-          dValue={<MetaTagView metaTag={googlebot} />}
+          dKey={ t( ( t ) => t.seo[ "googlebot" ] ) }
+          dValue={ <MetaTagView metaTag={ googlebot } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!themeColor ? undefined : (
+      { ! themeColor ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["theme-color"])}
-          dValue={<MetaTagView metaTag={themeColor} />}
+          dKey={ t( ( t ) => t.seo[ "theme-color" ] ) }
+          dValue={ <MetaTagView metaTag={ themeColor } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!colorScheme ? undefined : (
+      { ! colorScheme ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["color-scheme"])}
-          dValue={<MetaTagView metaTag={colorScheme} />}
+          dKey={ t( ( t ) => t.seo[ "color-scheme" ] ) }
+          dValue={ <MetaTagView metaTag={ colorScheme } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!responsiveEmbeddedSizing ? undefined : (
+      { ! responsiveEmbeddedSizing ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["responsive-embedded-sizing"])}
-          dValue={<MetaTagView metaTag={responsiveEmbeddedSizing} />}
+          dKey={ t( ( t ) => t.seo[ "responsive-embedded-sizing" ] ) }
+          dValue={ <MetaTagView metaTag={ responsiveEmbeddedSizing } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!textScale ? undefined : (
+      { ! textScale ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["text-scale"])}
-          dValue={<MetaTagView metaTag={textScale} />}
+          dKey={ t( ( t ) => t.seo[ "text-scale" ] ) }
+          dValue={ <MetaTagView metaTag={ textScale } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!viewport ? undefined : (
+      { ! viewport ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["viewport"])}
-          dValue={<MetaTagView metaTag={viewport} />}
+          dKey={ t( ( t ) => t.seo[ "viewport" ] ) }
+          dValue={ <MetaTagView metaTag={ viewport } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!referrer ? undefined : (
+      { ! referrer ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["referrer"])}
-          dValue={<MetaTagView metaTag={referrer} />}
+          dKey={ t( ( t ) => t.seo[ "referrer" ] ) }
+          dValue={ <MetaTagView metaTag={ referrer } /> }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!openGraph ? undefined : (
+      { ! openGraph ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["opengraph"])}
+          dKey={ t( ( t ) => t.seo[ "opengraph" ] ) }
           dValue={
-            <Details summary={Object.keys(openGraph).length}>
-              <OpenGraphView openGraph={openGraph} />
+            <Details summary={ Object.keys( openGraph ).length }>
+              <OpenGraphView openGraph={ openGraph } />
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!twitter ? undefined : (
+      { ! twitter ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["twitter"])}
+          dKey={ t( ( t ) => t.seo[ "twitter" ] ) }
           dValue={
-            <Details summary={Object.keys(twitter).length}>
-              <TwitterOverview twitter={twitter} />
+            <Details summary={ Object.keys( twitter ).length }>
+              <TwitterOverview twitter={ twitter } />
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {!jsonLD ? undefined : (
+      { ! jsonLD ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["json-ld"])}
+          dKey={ t( ( t ) => t.seo[ "json-ld" ] ) }
           dValue={
-            <Details summary={Object.keys(jsonLD).length}>
-              <JSONLDOverview jsonLD={jsonLD} />
+            <Details summary={ Object.keys( jsonLD ).length }>
+              <JSONLDOverview jsonLD={ jsonLD } />
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {unknownMetaTags.length === 0 ? undefined : (
+      { unknownMetaTags.length === 0 ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["unknown-meta-elements"])}
+          dKey={ t( ( t ) => t.seo[ "unknown-meta-elements" ] ) }
           dValue={
-            <Details summary={unknownMetaTags.length}>
+            <Details summary={ unknownMetaTags.length }>
               <List isOrdered>
-                {unknownMetaTags.map((metaTag, index) => (
-                  <ListItem key={index}>
-                    <UnknownMetaTagView metaTag={metaTag} />
+                { unknownMetaTags.map( ( metaTag, index ) => (
+                  <ListItem key={ index }>
+                    <UnknownMetaTagView metaTag={ metaTag } />
                   </ListItem>
-                ))}
+                ) ) }
               </List>
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
 
-      {invalidMetaTags.length === 0 ? undefined : (
+      { invalidMetaTags.length === 0 ? undefined : (
         <DescriptionSection
-          dKey={t((t) => t.seo["invalid-meta-elements"])}
+          dKey={ t( ( t ) => t.seo[ "invalid-meta-elements" ] ) }
           dValue={
-            <Details summary={invalidMetaTags.length}>
+            <Details summary={ invalidMetaTags.length }>
               <List isOrdered>
-                {invalidMetaTags.map((metaTag, index) => (
-                  <ListItem key={index}>
-                    <UnknownMetaTagView metaTag={metaTag} />
+                { invalidMetaTags.map( ( metaTag, index ) => (
+                  <ListItem key={ index }>
+                    <UnknownMetaTagView metaTag={ metaTag } />
                   </ListItem>
-                ))}
+                ) ) }
               </List>
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
     </DescriptionList>
   );
 }

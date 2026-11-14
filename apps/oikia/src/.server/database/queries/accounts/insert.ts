@@ -6,22 +6,22 @@ import {
 } from "#database";
 import type { IAccountDB, IAccountDBInit } from "./types";
 
-const query = getQueryFile("accounts", "insert.sql");
+const query = getQueryFile( "accounts", "insert.sql" );
 
 export async function insertAccounts(
   transaction: ITransaction,
   inits: IAccountDBInit[],
-): Promise<IAccountDB["id"][]> {
+): Promise< IAccountDB[ "id" ][] > {
   const params = { inits };
 
-  if (inits.length === 1) {
-    const { id } = await transaction.one<IEntityRow>(query, params);
+  if ( inits.length === 1 ) {
+    const { id } = await transaction.one< IEntityRow >( query, params );
 
-    return [id];
+    return [ id ];
   }
 
-  const results = await transaction.many<IEntityRow>(query, params);
-  const ids = toEntityIDs(results);
+  const results = await transaction.many< IEntityRow >( query, params );
+  const ids = toEntityIDs( results );
 
   return ids;
 }

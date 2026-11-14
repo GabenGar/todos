@@ -7,7 +7,7 @@ import styles from "./layout.module.scss";
 export function Layout() {
   return (
     <ClientProvider>
-      <main className={styles.main}>
+      <main className={ styles.main }>
         <Outlet />
       </main>
 

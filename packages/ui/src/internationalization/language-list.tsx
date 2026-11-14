@@ -12,8 +12,8 @@ export interface ILanguageListProps extends IUnorderedListProps {
   locales: readonly string[];
   currentLocale: string;
   currentURL: string;
-  getLocalizedURL: (language: string, currentURL: string) => string;
-  internalLinkElement?: (props: IInternalLinkElementProps) => ReactElement;
+  getLocalizedURL: ( language: string, currentURL: string ) => string;
+  internalLinkElement?: ( props: IInternalLinkElementProps ) => ReactElement;
 }
 
 interface IInternalLinkElementProps extends ILinkElementProps {
@@ -21,28 +21,28 @@ interface IInternalLinkElementProps extends ILinkElementProps {
   localizedURL: string;
 }
 
-export const LanguageList = createBlockComponent(styles, Component);
+export const LanguageList = createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   locales,
   currentLocale,
   currentURL,
   getLocalizedURL,
   internalLinkElement,
   ...props
-}: ILanguageListProps) {
+}: ILanguageListProps ) {
   return (
-    <ListUnordered {...props}>
-      {locales.map((locale) => (
+    <ListUnordered { ...props }>
+      { locales.map( ( locale ) => (
         <LocaleItem
-          key={locale}
-          locale={locale}
-          currentLocale={currentLocale}
-          currentURL={currentURL}
-          getLocalizedURL={getLocalizedURL}
-          internalLinkElement={internalLinkElement}
+          key={ locale }
+          locale={ locale }
+          currentLocale={ currentLocale }
+          currentURL={ currentURL }
+          getLocalizedURL={ getLocalizedURL }
+          internalLinkElement={ internalLinkElement }
         />
-      ))}
+      ) ) }
     </ListUnordered>
   );
 }
@@ -55,39 +55,39 @@ interface ILocaleItemsProps
   locale: string;
 }
 
-function LocaleItem({
+function LocaleItem( {
   locale,
   currentLocale,
   currentURL,
   getLocalizedURL,
   internalLinkElement,
-}: ILocaleItemsProps) {
+}: ILocaleItemsProps ) {
   // biome-ignore lint/style/noNonNullAssertion: just typescript things
-  const language = parseLocale(locale).language!;
-  const href = getLocalizedURL(locale, currentURL);
+  const language = parseLocale( locale ).language!;
+  const href = getLocalizedURL( locale, currentURL );
 
   return (
     <ListItem>
-      {locale === currentLocale ? (
-        <Language language={language} />
+      { locale === currentLocale ? (
+        <Language language={ language } />
       ) : (
         <Link
-          className={styles.link}
-          href={href}
+          className={ styles.link }
+          href={ href }
           internalLinkElement={
-            !internalLinkElement
+            ! internalLinkElement
               ? undefined
-              : (props) =>
-                  internalLinkElement({
+              : ( props ) =>
+                  internalLinkElement( {
                     ...props,
                     language,
                     localizedURL: href,
-                  })
+                  } )
           }
         >
-          <Language language={language} />
+          <Language language={ language } />
         </Link>
-      )}
+      ) }
     </ListItem>
   );
 }

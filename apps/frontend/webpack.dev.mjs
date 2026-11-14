@@ -6,8 +6,8 @@ import { merge } from "webpack-merge";
 import commonConfiguration from "./webpack.common.mjs";
 
 const { EnvironmentPlugin } = webpack;
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const outputPath = path.resolve(__dirname, "public");
+const __dirname = path.dirname( fileURLToPath( import.meta.url ) );
+const outputPath = path.resolve( __dirname, "public" );
 
 /**
  * @type {import("webpack").Configuration}
@@ -18,12 +18,12 @@ const devConfig = {
   watch: true,
   devtool: "inline-source-map",
   plugins: [
-    new EnvironmentPlugin({
+    new EnvironmentPlugin( {
       // add this one so it wouldn't error in dev
       // due to opaque parsing error
       NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS: null,
       NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_HASH: null,
-    }),
+    } ),
   ],
   output: {
     path: outputPath,
@@ -31,6 +31,6 @@ const devConfig = {
   },
 };
 
-const finalConfig = merge(commonConfiguration, devConfig);
+const finalConfig = merge( commonConfiguration, devConfig );
 
 export default finalConfig;

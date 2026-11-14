@@ -6,12 +6,12 @@ import { type IInputSectionProps, InputSection } from "../section";
 
 export interface IInputSectionTextProps
   extends IInputSectionProps,
-    Pick<IInputTextProps, "minLength" | "maxLength">,
-    Pick<IInputTextAreaProps, "rows"> {}
+    Pick< IInputTextProps, "minLength" | "maxLength" >,
+    Pick< IInputTextAreaProps, "rows" > {}
 
-export const InputSectionText = createBlockComponent(undefined, Component);
+export const InputSectionText = createBlockComponent( undefined, Component );
 
-function Component({
+function Component( {
   id,
   form,
   name,
@@ -24,7 +24,7 @@ function Component({
   rows,
   children,
   ...props
-}: IInputSectionTextProps) {
+}: IInputSectionTextProps ) {
   // render a normal input if constraints fit a value
   // into a single row on a preview component
   const isShort = Boolean(
@@ -32,34 +32,34 @@ function Component({
   );
 
   return (
-    <InputSection {...props}>
-      <Label htmlFor={id}>{children}</Label>
-      {isShort ? (
+    <InputSection { ...props }>
+      <Label htmlFor={ id }>{ children }</Label>
+      { isShort ? (
         <InputText
-          id={id}
-          form={form}
-          name={name}
-          required={required}
-          readOnly={readOnly}
-          disabled={disabled}
-          minLength={minLength}
-          maxLength={maxLength}
-          defaultValue={defaultValue}
+          id={ id }
+          form={ form }
+          name={ name }
+          required={ required }
+          readOnly={ readOnly }
+          disabled={ disabled }
+          minLength={ minLength }
+          maxLength={ maxLength }
+          defaultValue={ defaultValue }
         />
       ) : (
         <InputTextArea
-          id={id}
-          form={form}
-          name={name}
-          required={required}
-          readOnly={readOnly}
-          disabled={disabled}
-          minLength={minLength}
-          maxLength={maxLength}
-          defaultValue={defaultValue}
-          rows={rows}
+          id={ id }
+          form={ form }
+          name={ name }
+          required={ required }
+          readOnly={ readOnly }
+          disabled={ disabled }
+          minLength={ minLength }
+          maxLength={ maxLength }
+          defaultValue={ defaultValue }
+          rows={ rows }
         />
-      )}
+      ) }
     </InputSection>
   );
 }

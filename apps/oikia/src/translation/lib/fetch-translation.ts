@@ -8,22 +8,22 @@ export async function fetchTranslation(
 ) {
   let translation: ResourceKey;
 
-  switch (language) {
+  switch ( language ) {
     case "en": {
-      switch (namespace) {
+      switch ( namespace ) {
         case "translation": {
-          translation = await import("#translation/en.json");
+          translation = await import( "#translation/en.json" );
           break;
         }
 
         case "@repo/ui": {
-          translation = await fetchUITranslation(language);
+          translation = await fetchUITranslation( language );
           break;
         }
 
         default: {
           throw new Error(
-            `Unknown translation namespace "${namespace satisfies never}"`,
+            `Unknown translation namespace "${ namespace satisfies never }"`,
           );
         }
       }
@@ -31,20 +31,20 @@ export async function fetchTranslation(
     }
 
     case "ru": {
-      switch (namespace) {
+      switch ( namespace ) {
         case "translation": {
-          translation = await import("#translation/ru.json");
+          translation = await import( "#translation/ru.json" );
           break;
         }
 
         case "@repo/ui": {
-          translation = await fetchUITranslation(language);
+          translation = await fetchUITranslation( language );
           break;
         }
 
         default: {
           throw new Error(
-            `Unknown translation namespace "${namespace satisfies never}"`,
+            `Unknown translation namespace "${ namespace satisfies never }"`,
           );
         }
       }
@@ -52,7 +52,7 @@ export async function fetchTranslation(
     }
 
     default: {
-      throw new Error(`Unknown language "${language satisfies never}".`);
+      throw new Error( `Unknown language "${ language satisfies never }".` );
     }
   }
 

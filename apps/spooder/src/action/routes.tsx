@@ -8,7 +8,7 @@ import { Preformatted } from "@repo/ui/formatting";
 import { HomePage, homePageLoader } from "#action/pages/home";
 import { ActionLayout } from "#components/layout";
 
-export const routes = createMemoryRouter([
+export const routes = createMemoryRouter( [
   {
     element: <ActionLayout />,
     errorElement: <RootError />,
@@ -20,44 +20,44 @@ export const routes = createMemoryRouter([
       },
     ],
   },
-]);
+] );
 
 function RootError() {
   const error = useRouteError();
 
-  if (isRouteErrorResponse(error)) {
+  if ( isRouteErrorResponse( error ) ) {
     const { status, statusText, data } = error;
 
     return (
       <DescriptionList>
         <DescriptionSection
-          dKey={"Status"}
-          dValue={<Preformatted>{status}</Preformatted>}
+          dKey={ "Status" }
+          dValue={ <Preformatted>{ status }</Preformatted> }
         />
         <DescriptionSection
-          dKey={"Message"}
-          dValue={<Preformatted>{statusText}</Preformatted>}
+          dKey={ "Message" }
+          dValue={ <Preformatted>{ statusText }</Preformatted> }
         />
         <DescriptionSection
-          dKey={"Data"}
-          dValue={<Preformatted>{String(data)}</Preformatted>}
+          dKey={ "Data" }
+          dValue={ <Preformatted>{ String( data ) }</Preformatted> }
         />
       </DescriptionList>
     );
   }
 
-  if (error instanceof Error) {
+  if ( error instanceof Error ) {
     const { name, message } = error;
 
     return (
       <DescriptionList>
         <DescriptionSection
-          dKey={"Name"}
-          dValue={<Preformatted>{name}</Preformatted>}
+          dKey={ "Name" }
+          dValue={ <Preformatted>{ name }</Preformatted> }
         />
         <DescriptionSection
-          dKey={"Message"}
-          dValue={<Preformatted>{message}</Preformatted>}
+          dKey={ "Message" }
+          dValue={ <Preformatted>{ message }</Preformatted> }
         />
       </DescriptionList>
     );
@@ -66,12 +66,12 @@ function RootError() {
   return (
     <DescriptionList>
       <DescriptionSection
-        dKey={"Name"}
-        dValue={<Preformatted>{"Unknown Error"}</Preformatted>}
+        dKey={ "Name" }
+        dValue={ <Preformatted>{ "Unknown Error" }</Preformatted> }
       />
       <DescriptionSection
-        dKey={"Message"}
-        dValue={<Preformatted>{String(error)}</Preformatted>}
+        dKey={ "Message" }
+        dValue={ <Preformatted>{ String( error ) }</Preformatted> }
       />
     </DescriptionList>
   );

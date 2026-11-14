@@ -16,7 +16,7 @@ import styles from "./boundary.module.scss";
 
 interface IProps {
   children: ReactNode;
-  onError?: (error: Error, errorInfo: IErrorInfo) => void;
+  onError?: ( error: Error, errorInfo: IErrorInfo ) => void;
 }
 
 interface IErrorInfo extends ErrorInfo {
@@ -31,108 +31,108 @@ type IState = { extra?: { error: Error; errorInfo: IErrorInfo } } & (
 /**
  * @TODO localization
  */
-export class ErrorBoundary extends Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
+export class ErrorBoundary extends Component< IProps, IState > {
+  constructor( props: IProps ) {
+    super( props );
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error): IState {
+  static getDerivedStateFromError( error: Error ): IState {
     return { error, hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    this.setState({ ...this.state, extra: { error, errorInfo } });
+  componentDidCatch( error: Error, errorInfo: ErrorInfo ) {
+    this.setState( { ...this.state, extra: { error, errorInfo } } );
   }
 
   render() {
     const { props, state } = this;
 
-    if (!state.hasError) {
+    if ( ! state.hasError ) {
       return props.children;
     }
 
-    const serializedError = JSON.stringify({
+    const serializedError = JSON.stringify( {
       error: {
         name: state.error.name,
         message: state.error.message,
         stack: state.error.stack,
-        cause: String(state.error.cause),
+        cause: String( state.error.cause ),
       },
       extra: {
-        error: String(state.extra?.error),
+        error: String( state.extra?.error ),
         digest: state.extra?.errorInfo.digest,
         componentStack: state.extra?.errorInfo.componentStack,
       },
-    });
+    } );
 
     return (
-      <main className={styles.main}>
-        <Overview headingLevel={2}>
-          {() => (
+      <main className={ styles.main }>
+        <Overview headingLevel={ 2 }>
+          { () => (
             <>
               <OverviewHeader>
-                <Heading level={1}>Error</Heading>
+                <Heading level={ 1 }>Error</Heading>
               </OverviewHeader>
 
               <OverviewBody>
                 <DescriptionList>
                   <DescriptionSection
-                    dKey={"Name"}
-                    dValue={state.error.name}
+                    dKey={ "Name" }
+                    dValue={ state.error.name }
                     isKeyPreformatted
                     isValuePreformatted
                     isHorizontal
                   />
 
                   <DescriptionSection
-                    dKey={"Message"}
-                    dValue={state.error.message}
+                    dKey={ "Message" }
+                    dValue={ state.error.message }
                     isKeyPreformatted
                     isValuePreformatted
                     isHorizontal
                   />
 
-                  {/* {!state.error.stack ? undefined : (
+                  { /* {!state.error.stack ? undefined : (
                     <DescriptionSection
                       dKey={"Call Stack"}
                       dValue={state.error.stack}
                       isKeyPreformatted
                       isValuePreformatted
                     />
-                  )} */}
+                  )} */ }
 
-                  {!state.error.cause ? undefined : (
+                  { ! state.error.cause ? undefined : (
                     <DescriptionSection
-                      dKey={"Cause"}
-                      dValue={String(state.error.cause)}
+                      dKey={ "Cause" }
+                      dValue={ String( state.error.cause ) }
                       isKeyPreformatted
                       isValuePreformatted
                     />
-                  )}
+                  ) }
 
-                  {!state.extra ? undefined : (
+                  { ! state.extra ? undefined : (
                     <DescriptionSection
-                      dKey={"Extra data"}
+                      dKey={ "Extra data" }
                       dValue={
                         <DescriptionList isNested>
                           <DescriptionSection
-                            dKey={"Error"}
-                            dValue={String(state.extra.error)}
+                            dKey={ "Error" }
+                            dValue={ String( state.extra.error ) }
                             isKeyPreformatted
                           />
 
-                          {!state.extra.errorInfo.digest ? undefined : (
+                          { ! state.extra.errorInfo.digest ? undefined : (
                             <DescriptionSection
-                              dKey={"Digest"}
-                              dValue={String(state.extra.errorInfo.digest)}
+                              dKey={ "Digest" }
+                              dValue={ String( state.extra.errorInfo.digest ) }
                               isKeyPreformatted
                               isValuePreformatted
                               isHorizontal
                             />
-                          )}
+                          ) }
 
-                          {/* {state.extra.errorInfo.componentStack ?? (
+                          { /* {state.extra.errorInfo.componentStack ?? (
                             <DescriptionSection
                               dKey={"Component Stack"}
                               dValue={String(
@@ -141,23 +141,23 @@ export class ErrorBoundary extends Component<IProps, IState> {
                               isKeyPreformatted
                               isValuePreformatted
                             />
-                          )} */}
+                          )} */ }
                         </DescriptionList>
                       }
                     />
-                  )}
+                  ) }
                 </DescriptionList>
 
-                <ButtonCopy valueToCopy={serializedError} />
+                <ButtonCopy valueToCopy={ serializedError } />
               </OverviewBody>
 
               <OverviewFooter>
-                <LinkInternal href={createRootPageURL()}>
+                <LinkInternal href={ createRootPageURL() }>
                   Return to home page
                 </LinkInternal>
               </OverviewFooter>
             </>
-          )}
+          ) }
         </Overview>
       </main>
     );

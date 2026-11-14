@@ -8,17 +8,17 @@ type SessionData = {
 const maxAge = 60 * 60 * 24 * 30;
 
 const { getSession, commitSession, destroySession } =
-  createCookieSessionStorage<SessionData>({
+  createCookieSessionStorage< SessionData >( {
     cookie: {
       name: "__session",
       httpOnly: true,
       maxAge,
       path: "/",
       sameSite: "strict",
-      secrets: [SESSION_SECRET_KEY],
+      secrets: [ SESSION_SECRET_KEY ],
       secure: true,
       isSigned: true,
     },
-  });
+  } );
 
-export { getSession, commitSession, destroySession };
+export { commitSession, destroySession, getSession };

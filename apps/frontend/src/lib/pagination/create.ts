@@ -4,18 +4,19 @@ export function createPagination(
   totalCount: number,
   page?: number,
 ): IPagination {
-  const totalPages = Math.ceil(totalCount / PAGINATION_LIMIT);
+  const totalPages = Math.ceil( totalCount / PAGINATION_LIMIT );
   const currentPage = page ?? totalPages;
 
-  if (totalPages !== 0 && currentPage > totalPages) {
+  if ( totalPages !== 0 && currentPage > totalPages ) {
     throw new Error(
-      `Current page ${page} of total count ${totalCount} and limit ${PAGINATION_LIMIT} is greater than ${totalPages}.`,
+      `Current page ${ page } of total count ${ totalCount } and limit ${ PAGINATION_LIMIT } is greater than ${ totalPages }.`,
     );
   }
 
-  const offset = (currentPage - 1) * PAGINATION_LIMIT;
+  const offset = ( currentPage - 1 ) * PAGINATION_LIMIT;
   const currentMin = totalCount === 0 ? 0 : offset + 1;
   const currentMax =
+    // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
     offset + PAGINATION_LIMIT > totalCount
       ? totalCount
       : offset + PAGINATION_LIMIT;
@@ -38,17 +39,18 @@ export function createClientPagination(
   limit: number,
   page?: number,
 ): IPagination {
-  const totalPages = Math.ceil(totalCount / limit);
+  const totalPages = Math.ceil( totalCount / limit );
   const currentPage = page ?? totalPages;
 
-  if (totalPages !== 0 && currentPage > totalPages) {
+  if ( totalPages !== 0 && currentPage > totalPages ) {
     throw new Error(
-      `Current page ${page} of total count ${totalCount} and limit ${limit} is greater than ${totalPages}.`,
+      `Current page ${ page } of total count ${ totalCount } and limit ${ limit } is greater than ${ totalPages }.`,
     );
   }
 
-  const offset = currentPage - 1 < 0 ? 0 : (currentPage - 1) * limit;
+  const offset = currentPage - 1 < 0 ? 0 : ( currentPage - 1 ) * limit;
   const currentMin = totalCount === 0 ? 0 : offset + 1;
+  // biome-ignore lint/complexity/useMathMinMax: wait for 2.6.8
   const currentMax = offset + limit > totalCount ? totalCount : offset + limit;
 
   const pagination: IPagination = {

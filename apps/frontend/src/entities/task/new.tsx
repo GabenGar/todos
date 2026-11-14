@@ -13,28 +13,28 @@ import statusStyles from "./status.module.scss";
 export interface INewTaskFormProps extends ILocalizableProps {
   id: string;
   place?: IPlace;
-  onNewTask: (taskInit: ITaskInit) => Promise<void>;
+  onNewTask: ( taskInit: ITaskInit ) => Promise< void >;
 }
 
-export function NewTaskForm({
+export function NewTaskForm( {
   language,
   id,
   place,
   onNewTask,
-}: INewTaskFormProps) {
-  const { t } = useTranslation("translation");
+}: INewTaskFormProps ) {
+  const { t } = useTranslation( "translation" );
   const FIELD = {
-    TITLE: { name: "title", label: t((t) => t.task.new_todo.title) },
+    TITLE: { name: "title", label: t( ( t ) => t.task.new_todo.title ) },
     DESCRIPTION: {
       name: "description",
-      label: t((t) => t.task.new_todo.description),
+      label: t( ( t ) => t.task.new_todo.description ),
     },
-    STATUS: { name: "status", label: t((t) => t.task.new_todo.status) },
-    PLACE: { name: "place_id", label: t((t) => t.task.new_todo.place) },
+    STATUS: { name: "status", label: t( ( t ) => t.task.new_todo.status ) },
+    PLACE: { name: "place_id", label: t( ( t ) => t.task.new_todo.place ) },
   } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const formElements = event.currentTarget.elements;
     const title = formElements.title.value.trim();
     const description = formElements.description.value.trim();
@@ -45,95 +45,97 @@ export function NewTaskForm({
       title,
     };
 
-    if (description.length) {
+    if ( description.length ) {
       init.description = description;
     }
 
-    if (isTaskStatus(status)) {
+    if ( isTaskStatus( status ) ) {
       init.status = status;
     }
 
-    if (place_id.length) {
+    if ( place_id.length ) {
       init.place_id = place_id;
     }
 
-    await onNewTask(init);
+    await onNewTask( init );
   }
 
   return (
-    <Form<IFieldName>
-      id={id}
-      className={styles.block}
-      onSubmit={handleSubmit}
-      submitButton={(_formID, isSubmitting) =>
-        t((t) => (!isSubmitting ? t.task.new_todo.add : t.task.new_todo.adding))
+    <Form< IFieldName >
+      id={ id }
+      className={ styles.block }
+      onSubmit={ handleSubmit }
+      submitButton={ ( _formID, isSubmitting ) =>
+        t( ( t ) =>
+          ! isSubmitting ? t.task.new_todo.add : t.task.new_todo.adding,
+        )
       }
     >
-      {(formID) => (
+      { ( formID ) => (
         <>
           <InputSectionText
-            id={`${formID}-${FIELD.TITLE.name}`}
-            form={formID}
-            name={FIELD.TITLE.name}
-            minLength={1}
-            maxLength={256}
-            rows={2}
+            id={ `${ formID }-${ FIELD.TITLE.name }` }
+            form={ formID }
+            name={ FIELD.TITLE.name }
+            minLength={ 1 }
+            maxLength={ 256 }
+            rows={ 2 }
             required
           >
-            {FIELD.TITLE.label}
+            { FIELD.TITLE.label }
           </InputSectionText>
 
           <InputSectionText
-            id={`${formID}-${FIELD.DESCRIPTION.name}`}
-            form={formID}
-            name={FIELD.DESCRIPTION.name}
-            minLength={1}
-            maxLength={2048}
-            rows={4}
+            id={ `${ formID }-${ FIELD.DESCRIPTION.name }` }
+            form={ formID }
+            name={ FIELD.DESCRIPTION.name }
+            minLength={ 1 }
+            maxLength={ 2048 }
+            rows={ 4 }
           >
-            {FIELD.DESCRIPTION.label}
+            { FIELD.DESCRIPTION.label }
           </InputSectionText>
 
           <PlaceSection
             // a dirty hack to force update on the component state
-            key={place?.id}
-            language={language}
-            id={`${formID}-${FIELD.PLACE.name}`}
-            form={formID}
-            name={FIELD.PLACE.name}
-            place={place}
+            key={ place?.id }
+            language={ language }
+            id={ `${ formID }-${ FIELD.PLACE.name }` }
+            form={ formID }
+            name={ FIELD.PLACE.name }
+            place={ place }
           >
-            {FIELD.PLACE.label}
+            { FIELD.PLACE.label }
           </PlaceSection>
 
           <InputSectionSelect
-            label={FIELD.STATUS.label}
-            id={`${formID}-${FIELD.STATUS.name}`}
-            form={formID}
-            name={FIELD.STATUS.name}
+            label={ FIELD.STATUS.label }
+            id={ `${ formID }-${ FIELD.STATUS.name }` }
+            form={ formID }
+            name={ FIELD.STATUS.name }
             defaultValue="pending"
           >
             <InputOption
-              className={statusStyles["in-progress"]}
+              className={ statusStyles[ "in-progress" ] }
               value="in-progress"
             >
-              {t((t) => t.task.status_values["in-progress"])}
+              { t( ( t ) => t.task.status_values[ "in-progress" ] ) }
             </InputOption>
 
-            <InputOption className={statusStyles.pending} value="pending">
-              {t((t) => t.task.status_values.pending)}
+            <InputOption className={ statusStyles.pending } value="pending">
+              { t( ( t ) => t.task.status_values.pending ) }
             </InputOption>
 
-            <InputOption className={statusStyles.finished} value="finished">
-              {t((t) => t.task.status_values.finished)}
+            <InputOption className={ statusStyles.finished } value="finished">
+              { t( ( t ) => t.task.status_values.finished ) }
             </InputOption>
 
-            <InputOption className={statusStyles.failed} value="failed">
-              {t((t) => t.task.status_values.failed)}
+            <InputOption className={ statusStyles.failed } value="failed">
+              { t( ( t ) => t.task.status_values.failed ) }
             </InputOption>
           </InputSectionSelect>
         </>
-      )}
+      ) }
     </Form>
   );
 }

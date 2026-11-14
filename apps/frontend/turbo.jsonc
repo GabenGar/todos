@@ -1,14 +1,14 @@
 {
-  "$schema": "https://v2-8-20.turborepo.dev/schema.json",
-  "extends": ["//"],
+  "$schema": "https://v2-11-11.turborepo.dev/schema.json",
+  "extends": [ "//" ],
   "tasks": {
     "start": { "persistent": true },
     "build": {
-      "dependsOn": ["build-pages", "build-workers"]
+      "dependsOn": [ "build-pages", "build-workers" ]
     },
     "build-pages": {
-      "dependsOn": ["@repo/webpack#build"],
-      "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
+      "dependsOn": [ "@repo/webpack#build" ],
+      "env": [ "NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL" ],
       "inputs": [
         ".env",
         ".env.production",
@@ -38,8 +38,8 @@
         "NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_PATHS",
         "NEXT_PUBLIC_SERVICE_WORKER_STATIC_ASSETS_HASH"
       ],
-      "env": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
-      "dependsOn": ["build-pages"],
+      "env": [ "NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL" ],
+      "dependsOn": [ "build-pages" ],
       "inputs": [
         ".env",
         ".env.production",
@@ -51,10 +51,10 @@
         "scripts/**",
         "codegen/**"
       ],
-      "outputs": ["out/service-worker.js", "out/service-worker.js.map"]
+      "outputs": [ "out/service-worker.js", "out/service-worker.js.map" ]
     },
     "dev": {
-      "with": ["dev-workers", "@repo/webpack#dev", "@repo/nodejs#dev"]
+      "with": [ "dev-workers", "@repo/webpack#dev", "@repo/nodejs#dev" ]
     },
     "dev-workers": {
       "persistent": true

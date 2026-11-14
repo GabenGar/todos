@@ -46,7 +46,7 @@ jobs:
           path: .turbo
           key: ${{ runner.os }}-turbo-${{ github.sha }}
           restore-keys: |
-              ${{ runner.os }}-turbo-
+            ${{ runner.os }}-turbo-
 
       - name: Install dependencies
         run: npm ci

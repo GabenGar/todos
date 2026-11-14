@@ -14,10 +14,10 @@ const RawSource = webpackSources.RawSource;
 // a typecript magic to declare the value of `this`
 // outside of class declaration
 // https://www.typescriptlang.org/docs/handbook/2/functions.html#declaring-this-in-a-function
-export function applyMethod(this: PWAWebpackPlugin, compiler: Compiler) {
+export function applyMethod( this: PWAWebpackPlugin, compiler: Compiler ) {
   const { thisCompilation } = compiler.hooks;
 
-  thisCompilation.tap(pluginName, (compilation) => {
+  thisCompilation.tap( pluginName, ( compilation ) => {
     const { hooks /*outputOptions*/ } = compilation;
     const { processAssets } = hooks;
     // const hashDigestLength = outputOptions.hashDigestLength;
@@ -41,14 +41,14 @@ export function applyMethod(this: PWAWebpackPlugin, compiler: Compiler) {
         name: pluginName,
         stage: Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE,
       },
-      (_compilationAssets) => {
+      ( _compilationAssets ) => {
         compilation.emitAsset(
           "manifest.webmanifest",
-          new RawSource(JSON.stringify(manifest)),
+          new RawSource( JSON.stringify( manifest ) ),
         );
       },
     );
-  });
+  } );
 }
 
 // function extname(filename: string): string {

@@ -28,52 +28,52 @@ interface IProps extends ILocalizableProps, IPreviewProps {
  * allow to hide specific fields, i.e. no point
  * showing place link in a list of tasks for the place.
  */
-export const TaskPreview = createBlockComponent(styles, Component);
+export const TaskPreview = createBlockComponent( styles, Component );
 
-function Component({ language, task, ...props }: IProps) {
-  const { t } = useTranslation("translation");
+function Component( { language, task, ...props }: IProps ) {
+  const { t } = useTranslation( "translation" );
   const { id, title, description, status, place } = task;
 
   return (
-    <Preview {...props}>
-      {(headingLevel) => (
+    <Preview { ...props }>
+      { ( headingLevel ) => (
         <>
           <PreviewHeader>
-            <Heading level={headingLevel}>{title}</Heading>
+            <Heading level={ headingLevel }>{ title }</Heading>
           </PreviewHeader>
 
           <PreviewBody>
-            <EntityID entityID={id} />
+            <EntityID entityID={ id } />
             <DescriptionList>
               <DescriptionSection
                 isHorizontal
-                dKey={t((t) => t.task.status)}
-                dValue={<TaskStatus status={status} />}
+                dKey={ t( ( t ) => t.task.status ) }
+                dValue={ <TaskStatus status={ status } /> }
               />
 
               <DescriptionSection
-                dKey={t((t) => t.task.description)}
+                dKey={ t( ( t ) => t.task.description ) }
                 dValue={
-                  !description ? (
-                    t((t) => t.task.no_description)
+                  ! description ? (
+                    t( ( t ) => t.task.no_description )
                   ) : (
-                    <EntityDescription>{description}</EntityDescription>
+                    <EntityDescription>{ description }</EntityDescription>
                   )
                 }
               />
 
               <DescriptionSection
-                dKey={t((t) => t.task.place)}
+                dKey={ t( ( t ) => t.task.place ) }
                 dValue={
-                  !place ? (
-                    t((t) => t.task.place_unknown)
+                  ! place ? (
+                    t( ( t ) => t.task.place_unknown )
                   ) : (
                     <Link
-                      href={createPlacePageURL(language, place.id)}
+                      href={ createPlacePageURL( language, place.id ) }
                       target="_blank"
                     >
-                      {place.title ?? t((t) => t.task.place_unknown)} (
-                      {place.id})
+                      { place.title ?? t( ( t ) => t.task.place_unknown ) } (
+                      { place.id })
                     </Link>
                   )
                 }
@@ -83,14 +83,14 @@ function Component({ language, task, ...props }: IProps) {
 
           <PreviewFooter>
             <Link
-              className={styles.link}
-              href={createTaskPageURL(language, id)}
+              className={ styles.link }
+              href={ createTaskPageURL( language, id ) }
             >
-              {t((t) => t.task.details)}
+              { t( ( t ) => t.task.details ) }
             </Link>
           </PreviewFooter>
         </>
-      )}
+      ) }
     </Preview>
   );
 }

@@ -10,19 +10,19 @@ import { ClientError } from "#server/lib/errors";
 export async function loginAccount(
   transaction: ITransaction,
   data: IAccountLogin,
-): Promise<IAccountDBAuthData> {
+): Promise< IAccountDBAuthData > {
   const { login, password } = data;
-  const accountAuth = await selectAccountAuth(transaction, { login });
+  const accountAuth = await selectAccountAuth( transaction, { login } );
 
-  if (!accountAuth) {
-    throw new ClientError("Not Authorized", { statusCode: 401 });
+  if ( ! accountAuth ) {
+    throw new ClientError( "Not Authorized", { statusCode: 401 } );
   }
 
   const hashedPassword = accountAuth.password;
-  const isMatching = await comparePassword(password, hashedPassword);
+  const isMatching = await comparePassword( password, hashedPassword );
 
-  if (!isMatching) {
-    throw new Error("Account with this login and password doesn't exist.");
+  if ( ! isMatching ) {
+    throw new Error( "Account with this login and password doesn't exist." );
   }
 
   return accountAuth;

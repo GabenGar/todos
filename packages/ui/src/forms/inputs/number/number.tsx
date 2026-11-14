@@ -12,29 +12,29 @@ export interface IInputNumberProps
   step?: number | bigint;
 }
 
-export const InputNumber = createBlockComponent(undefined, Component);
+export const InputNumber = createBlockComponent( undefined, Component );
 
-function Component({
+function Component( {
   min,
   max,
   step,
   defaultValue,
   ...props
-}: IInputNumberProps) {
+}: IInputNumberProps ) {
   const normalizedDefaultValue =
-    typeof defaultValue === "bigint" ? String(defaultValue) : defaultValue;
-  const normalizedMin = typeof min === "bigint" ? String(min) : min;
-  const normalizedMax = typeof max === "bigint" ? String(max) : max;
-  const normalizedStep = typeof step === "bigint" ? String(step) : step;
+    typeof defaultValue === "bigint" ? String( defaultValue ) : defaultValue;
+  const normalizedMin = typeof min === "bigint" ? String( min ) : min;
+  const normalizedMax = typeof max === "bigint" ? String( max ) : max;
+  const normalizedStep = typeof step === "bigint" ? String( step ) : step;
 
   return (
     <Input
       type="number"
-      defaultValue={normalizedDefaultValue}
-      min={normalizedMin}
-      max={normalizedMax}
-      step={normalizedStep}
-      {...props}
+      defaultValue={ normalizedDefaultValue }
+      min={ normalizedMin }
+      max={ normalizedMax }
+      step={ normalizedStep }
+      { ...props }
     />
   );
 }

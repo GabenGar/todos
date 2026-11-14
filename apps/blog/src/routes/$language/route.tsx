@@ -27,73 +27,73 @@ function LocalizedLayout() {
   const { t } = useTranslation();
   const client = useClient();
   const location = useLocation();
-  const search = new URLSearchParams(location.search);
-  const currentURL = `${location.pathname}${search}${location.hash}`;
+  const search = new URLSearchParams( location.search );
+  const currentURL = `${ location.pathname }${ search }${ location.hash }`;
 
-  if (IS_BROWSER) {
-    initClientTranslation(language, translation);
+  if ( IS_BROWSER ) {
+    initClientTranslation( language, translation );
   }
 
-  useSSR(translation, language);
+  useSSR( translation, language );
 
-  function getLocalizedURL(locale: string, currentURL: string): string {
-    const segments = currentURL.split("/");
+  function getLocalizedURL( locale: string, currentURL: string ): string {
+    const segments = currentURL.split( "/" );
 
     // the first element is an empty string due to slash at start
-    segments[1] = locale;
+    segments[ 1 ] = locale;
 
-    const resultPath = segments.join("/");
+    const resultPath = segments.join( "/" );
 
     return resultPath;
   }
 
   return (
     <>
-      <header className={styles.header}>
-        <nav className={styles.nav}>
-          <List className={styles.list}>
+      <header className={ styles.header }>
+        <nav className={ styles.nav }>
+          <List className={ styles.list }>
             <ListItem>
-              <LinkInternal to={"/$language"} params={{ language }}>
-                {SITE_TITLE}
+              <LinkInternal to={ "/$language" } params={ { language } }>
+                { SITE_TITLE }
               </LinkInternal>
             </ListItem>
 
             <ListItem>
               <LanguageSwitcher
-                locales={SUPPORTED_LANGUAGES}
-                currentLocale={language}
-                currentURL={currentURL}
-                getLocalizedURL={getLocalizedURL}
-                internalLinkElement={({ children, localizedURL }) => (
-                  <LinkInternal to={localizedURL}>{children}</LinkInternal>
-                )}
+                locales={ SUPPORTED_LANGUAGES }
+                currentLocale={ language }
+                currentURL={ currentURL }
+                getLocalizedURL={ getLocalizedURL }
+                internalLinkElement={ ( { children, localizedURL } ) => (
+                  <LinkInternal to={ localizedURL }>{ children }</LinkInternal>
+                ) }
               />
             </ListItem>
           </List>
         </nav>
       </header>
 
-      <main className={styles.main}>
+      <main className={ styles.main }>
         <Outlet />
       </main>
 
-      <footer className={styles.footer}>
-        <List className={styles.flist}>
+      <footer className={ styles.footer }>
+        <List className={ styles.flist }>
           <ListItem>
-            <LinkExternal href={SOURCE_CODE_URL}>
-              {t((t) => t.common.layout["source-code"])}
+            <LinkExternal href={ SOURCE_CODE_URL }>
+              { t( ( t ) => t.common.layout[ "source-code" ] ) }
             </LinkExternal>
           </ListItem>
 
           <ListItem>
-            <DescriptionList className={styles.client}>
+            <DescriptionList className={ styles.client }>
               <DescriptionSection
-                dKey={t((t) => t.common.layout["client-language"])}
+                dKey={ t( ( t ) => t.common.layout[ "client-language" ] ) }
                 dValue={
-                  !client ? (
+                  ! client ? (
                     <Loading />
                   ) : (
-                    <Language language={client.locale.language} />
+                    <Language language={ client.locale.language } />
                   )
                 }
               />
@@ -105,20 +105,20 @@ function LocalizedLayout() {
   );
 }
 
-export const Route = createFileRoute("/$language")({
+export const Route = createFileRoute( "/$language" )( {
   component: LocalizedLayout,
-  loader: async ({ params }) => {
+  loader: async ( { params } ) => {
     const { language } = params;
 
-    if (!isSupportedLanguage(language)) {
-      throw new Error(`Unknown locale "${language}".`);
+    if ( ! isSupportedLanguage( language ) ) {
+      throw new Error( `Unknown locale "${ language }".` );
     }
 
-    const translation = await getTranslation(language);
+    const translation = await getTranslation( language );
 
     return {
       language,
       translation,
     };
   },
-});
+} );

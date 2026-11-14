@@ -6,19 +6,22 @@ export function createLocalizedLoader<
   Props extends ILocalizedProps,
   Args extends ILocalizedArgs,
 >(
-  loaderFunc?: (args: Args, localizedProps: ILocalizedProps) => Promise<Props>,
+  loaderFunc?: (
+    args: Args,
+    localizedProps: ILocalizedProps,
+  ) => Promise< Props >,
 ) {
-  async function loader(loaderArgs: Args): Promise<Props> {
-    const language = getLanguage(loaderArgs.params);
-    const translation = await getTranslation(language);
+  async function loader( loaderArgs: Args ): Promise< Props > {
+    const language = getLanguage( loaderArgs.params );
+    const translation = await getTranslation( language );
     const localizedProps = {
       language,
       translation,
     };
 
-    const props = !loaderFunc
+    const props = ! loaderFunc
       ? localizedProps
-      : await loaderFunc(loaderArgs, localizedProps);
+      : await loaderFunc( loaderArgs, localizedProps );
     // @ts-expect-error something something generics
     return props;
   }

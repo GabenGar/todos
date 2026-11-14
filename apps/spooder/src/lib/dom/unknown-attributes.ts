@@ -4,7 +4,7 @@ import type { IElementAttributeMapping } from "./types";
 
 export function collectUnknownElementAttributes(
   element: HTMLElement,
-  knownAttributeNames?: ReadonlySet<string>,
-): IMaybe<IElementAttributeMapping> {
-  return collectAttributes(element, knownAttributeNames);
+  knownAttributeNames?: ReadonlySet< string >,
+): IMaybe< IElementAttributeMapping > {
+  return collectAttributes( element, knownAttributeNames );
 }

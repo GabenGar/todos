@@ -11,50 +11,51 @@ import {
 } from "#store/indexed/queries/planned-events";
 import type { IPlannedEvent, IPlannedEventOrder } from "../types";
 
-interface ICountPlannedEventsArgs extends IIDBArgs<"planned_events"> {}
+interface ICountPlannedEventsArgs extends IIDBArgs< "planned_events" > {}
 
 export function countPlannedEvents(
   { transaction }: ICountPlannedEventsArgs,
-  onSuccess: (count: number) => void,
+  onSuccess: ( count: number ) => void,
 ): void {
-  selectPlannedEventCount(transaction, onSuccess);
+  selectPlannedEventCount( transaction, onSuccess );
 }
 
-interface IGetPlannedEventsArgs extends IIDBArgs<"planned_events"> {
+interface IGetPlannedEventsArgs extends IIDBArgs< "planned_events" > {
   page?: number;
   order?: IPlannedEventOrder;
 }
 
 export function getPlannedEvents(
   { transaction, page, order }: IGetPlannedEventsArgs,
-  onSuccess: (plannedEvents: IPaginatedCollection<IPlannedEvent>) => void,
+  onSuccess: ( plannedEvents: IPaginatedCollection< IPlannedEvent > ) => void,
 ): void {
-  selectPlannedEventCount(transaction, (count) => {
-    const pagination = createClientPagination(count, PAGINATION_LIMIT, page);
+  selectPlannedEventCount( transaction, ( count ) => {
+    const pagination = createClientPagination( count, PAGINATION_LIMIT, page );
 
-    selectPlannedEventIDs({ transaction, pagination, order }, (ids) => {
-      selectPlannedEventEntities({ transaction, ids }, (plannedEvents) => {
-        const result: IPaginatedCollection<IPlannedEvent> = {
+    selectPlannedEventIDs( { transaction, pagination, order }, ( ids ) => {
+      selectPlannedEventEntities( { transaction, ids }, ( plannedEvents ) => {
+        const result: IPaginatedCollection< IPlannedEvent > = {
           pagination,
           items: plannedEvents,
         };
 
-        onSuccess(result);
-      });
-    });
-  });
+        onSuccess( result );
+      } );
+    } );
+  } );
 }
 
-interface IGetPlannedEventArgs extends IIDBArgs<"planned_events"> {
-  id: IPlannedEvent["id"];
+interface IGetPlannedEventArgs extends IIDBArgs< "planned_events" > {
+  id: IPlannedEvent[ "id" ];
 }
 
 export function getPlannedEvent(
   { transaction, id }: IGetPlannedEventArgs,
-  onSuccess: (plannedEvent: IPlannedEvent) => void,
+  onSuccess: ( plannedEvent: IPlannedEvent ) => void,
 ): void {
-  selectPlannedEventEntities({ transaction, ids: [id] }, ([plannedEvent]) =>
-    onSuccess(plannedEvent),
+  selectPlannedEventEntities(
+    { transaction, ids: [ id ] },
+    ( [ plannedEvent ] ) => onSuccess( plannedEvent ),
   );
 }
 

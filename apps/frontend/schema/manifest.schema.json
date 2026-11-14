@@ -32,7 +32,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["src"],
+        "required": [ "src" ],
         "additionalProperties": false,
         "properties": {
           "src": {
@@ -115,7 +115,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["src"],
+        "required": [ "src" ],
         "additionalProperties": false,
         "properties": {
           "src": {
@@ -176,7 +176,7 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["name", "url"],
+              "required": [ "name", "url" ],
               "additionalProperties": false,
               "properties": {
                 "name": {

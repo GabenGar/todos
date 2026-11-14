@@ -27,50 +27,50 @@ declare module "react-router" {
 let isMigrated = false;
 
 export async function createApp() {
-  if (!isMigrated) {
+  if ( ! isMigrated ) {
     await migrateDatabase();
     isMigrated = true;
   }
-  await runStrictTransaction(async (transaction) => {
-    await handleAdminInvitation(transaction);
-  });
+  await runStrictTransaction( async ( transaction ) => {
+    await handleAdminInvitation( transaction );
+  } );
 
   const app = express();
 
   app.use(
-    createRequestHandler({
-      build: () => import("virtual:react-router/server-build"),
-      async getLoadContext(req, res) {
-        return {
-          VALUE_FROM_EXPRESS: "Hello from Express",
-        };
-      },
-    }),
+    createRequestHandler( {
+      build: () => import( "virtual:react-router/server-build" ),
+      // async getLoadContext( req, res ) {
+      //   return {
+      //     VALUE_FROM_EXPRESS: "Hello from Express",
+      //   };
+      // },
+    } ),
   );
 
   return app;
 }
 
-async function handleAdminInvitation(transaction: ITransaction) {
-  const adminCount = await selectAccountCount(transaction, {
+async function handleAdminInvitation( transaction: ITransaction ) {
+  const adminCount = await selectAccountCount( transaction, {
     role: "administrator",
-  });
-  const parsedAdminCount = BigInt(adminCount);
+  } );
+  const parsedAdminCount = BigInt( adminCount );
 
-  if (parsedAdminCount !== BIGINT_ZERO) {
+  if ( parsedAdminCount !== BIGINT_ZERO ) {
     return;
   }
 
   const expiresAt = now();
-  const invitationCount = await selectInvitationCount(transaction, {
+  const invitationCount = await selectInvitationCount( transaction, {
     target_role: "administrator",
     is_active: true,
     expires_at: expiresAt,
-  });
+  } );
 
-  const parsedInvitationCount = BigInt(invitationCount);
+  const parsedInvitationCount = BigInt( invitationCount );
 
-  if (parsedInvitationCount !== BIGINT_ZERO) {
+  if ( parsedInvitationCount !== BIGINT_ZERO ) {
     return;
   }
 
@@ -83,12 +83,12 @@ async function handleAdminInvitation(transaction: ITransaction) {
   const init: IInvitationDBInit = {
     code,
     target_role: "administrator",
-    max_uses: String(BIGINT_ONE),
+    max_uses: String( BIGINT_ONE ),
     title: "Admin system invitation",
     description: "tfw no admin",
   };
 
-  await insertInvitations(transaction, [init]);
+  await insertInvitations( transaction, [ init ] );
 
-  console.log("Successfuly created an invitation for administrator.");
+  console.log( "Successfuly created an invitation for administrator." );
 }

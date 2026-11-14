@@ -7,28 +7,28 @@ import path from "node:path";
  */
 export async function walkFolder(
   folderPath: string,
-  callback: (entry: Dirent, folderPath: string) => Promise<void>,
+  callback: ( entry: Dirent, folderPath: string ) => Promise< void >,
 ) {
-  console.debug(`Walking folder "${folderPath}"...`);
+  console.debug( `Walking folder "${ folderPath }"...` );
 
-  await walk(folderPath, callback);
+  await walk( folderPath, callback );
 
-  console.debug(`Walked folder "${folderPath}".`);
+  console.debug( `Walked folder "${ folderPath }".` );
 }
 
 async function walk(
   folderPath: string,
-  callback: (entry: Dirent, folderPath: string) => Promise<void>,
+  callback: ( entry: Dirent, folderPath: string ) => Promise< void >,
 ) {
-  const folder = await opendir(folderPath, { encoding: "utf8" });
+  const folder = await opendir( folderPath, { encoding: "utf8" } );
 
-  for await (const entry of folder) {
-    if (!entry.isDirectory()) {
+  for await ( const entry of folder ) {
+    if ( ! entry.isDirectory() ) {
       continue;
     }
 
-    const nextFolderPath = path.join(folder.path, entry.name);
-    await callback(entry, nextFolderPath);
-    await walk(nextFolderPath, callback);
+    const nextFolderPath = path.join( folder.path, entry.name );
+    await callback( entry, nextFolderPath );
+    await walk( nextFolderPath, callback );
   }
 }

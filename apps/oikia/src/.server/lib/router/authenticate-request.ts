@@ -11,38 +11,40 @@ import { destroySession, getSession } from "../sessions";
 export async function authenticateRequest(
   request: Request,
   allowedRoles?: IAccountRole | IAccountRole[],
-): Promise<IAccountDB> {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authID = session.get("auth_id");
+): Promise< IAccountDB > {
+  const session = await getSession( request.headers.get( "Cookie" ) );
+  const authID = session.get( "auth_id" );
 
-  if (!authID) {
-    throw new ClientError("Not Authorized", { statusCode: 401 });
+  if ( ! authID ) {
+    throw new ClientError( "Not Authorized", { statusCode: 401 } );
   }
 
-  const account = await runTransaction(async (transaction) => {
-    const result = await selectAccountAuth(transaction, {
+  const account = await runTransaction( async ( transaction ) => {
+    const result = await selectAccountAuth( transaction, {
       auth_id: authID,
-    });
+    } );
 
-    if (!result) {
-      await destroySession(session);
+    if ( ! result ) {
+      await destroySession( session );
 
       throw new NotFoundError();
     }
 
-    const [account] = await selectAccountEntities(transaction, [result.id]);
+    const [ account ] = await selectAccountEntities( transaction, [
+      result.id,
+    ] );
 
     return account;
-  });
+  } );
 
   // @TODO proper error handling
-  if (allowedRoles) {
+  if ( allowedRoles ) {
     const isValidRole =
       typeof allowedRoles === "string"
         ? account.role === allowedRoles
-        : allowedRoles.includes(account.role);
+        : allowedRoles.includes( account.role );
 
-    if (!isValidRole) {
+    if ( ! isValidRole ) {
       throw new NotFoundError();
     }
   }
@@ -50,8 +52,8 @@ export async function authenticateRequest(
   return account;
 }
 
-export async function authenticateAdmin(request: Request) {
-  const account = await authenticateRequest(request, "administrator");
+export async function authenticateAdmin( request: Request ) {
+  const account = await authenticateRequest( request, "administrator" );
 
   return account;
 }

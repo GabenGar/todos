@@ -13,11 +13,11 @@ export function getLocalizedMessage(
   message: IMessage,
   ...substitutions: string[]
 ) {
-  return browser.i18n.getMessage(message, substitutions);
+  return browser.i18n.getMessage( message, substitutions );
 }
 
 export function getCurrentLocale() {
-  return getLocalizedMessage("@@ui_locale");
+  return getLocalizedMessage( "@@ui_locale" );
 }
 
 const options = {
@@ -36,11 +36,11 @@ const options = {
 } satisfies InitOptions;
 
 i18next
-  .use(resourcesToBackend(fetchTranslation))
-  .use(initReactI18next)
-  .on("failedLoading", (_language, _namespace, message) =>
-    console.error(message),
+  .use( resourcesToBackend( fetchTranslation ) )
+  .use( initReactI18next )
+  .on( "failedLoading", ( _language, _namespace, message ) =>
+    console.error( message ),
   )
-  .init(options);
+  .init( options );
 
 export const i18n = i18next;

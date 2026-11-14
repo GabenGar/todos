@@ -11,26 +11,26 @@ interface IProps {
   currentPlannedEvent: IPlannedEvent;
   onPlannedEventEdit: (
     plannedEventUpdate: IPlannedEventUpdate,
-  ) => Promise<void>;
+  ) => Promise< void >;
 }
 
-export function EditPlannedEventForm({
+export function EditPlannedEventForm( {
   currentPlannedEvent,
   id,
   onPlannedEventEdit,
-}: IProps) {
-  const { t } = useTranslation("translation");
-  const { t: cT } = useTranslation("common");
+}: IProps ) {
+  const { t } = useTranslation( "translation" );
+  const { t: cT } = useTranslation( "common" );
   const FIELD = {
-    TITLE: { name: "title", label: t((t) => t.planned_event["Title"]) },
+    TITLE: { name: "title", label: t( ( t ) => t.planned_event[ "Title" ] ) },
     DESCRIPTION: {
       name: "description",
-      label: t((t) => t.planned_event["Description"]),
+      label: t( ( t ) => t.planned_event[ "Description" ] ),
     },
   } as const;
-  type IFieldName = (typeof FIELD)[keyof typeof FIELD]["name"];
+  type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
-  async function handleSubmit(event: IFormEvent<IFieldName>) {
+  async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const formElements = event.currentTarget.elements;
     const title = formElements.title.value.trim();
     const description = formElements.description.value.trim();
@@ -39,56 +39,56 @@ export function EditPlannedEventForm({
       id: currentPlannedEvent.id,
     };
 
-    if (!title && !description) {
+    if ( ! title && ! description ) {
       return;
     }
 
-    if (title && title !== currentPlannedEvent.title) {
+    if ( title && title !== currentPlannedEvent.title ) {
       update.title = title;
     }
 
-    if (description && description !== currentPlannedEvent.description) {
+    if ( description && description !== currentPlannedEvent.description ) {
       update.description = description;
     }
 
-    await onPlannedEventEdit(update);
+    await onPlannedEventEdit( update );
   }
 
   return (
     <Form
-      id={id}
-      submitButton={(_formID, isSubmitting) =>
-        cT((t) =>
-          !isSubmitting
-            ? t.form["Confirm changes"]
-            : t.form["Applying changes..."],
+      id={ id }
+      submitButton={ ( _formID, isSubmitting ) =>
+        cT( ( t ) =>
+          ! isSubmitting
+            ? t.form[ "Confirm changes" ]
+            : t.form[ "Applying changes..." ],
         )
       }
-      onSubmit={handleSubmit}
+      onSubmit={ handleSubmit }
     >
-      {(formID) => (
+      { ( formID ) => (
         <>
           <InputSectionTitle
-            id={`${formID}-${FIELD.TITLE.name}`}
-            form={formID}
-            name={FIELD.TITLE.name}
-            rows={2}
-            defaultValue={currentPlannedEvent.title}
+            id={ `${ formID }-${ FIELD.TITLE.name }` }
+            form={ formID }
+            name={ FIELD.TITLE.name }
+            rows={ 2 }
+            defaultValue={ currentPlannedEvent.title }
           >
-            {FIELD.TITLE.label}
+            { FIELD.TITLE.label }
           </InputSectionTitle>
 
           <InputSectionDescription
-            id={`${formID}-${FIELD.DESCRIPTION.name}`}
-            form={formID}
-            name={FIELD.DESCRIPTION.name}
-            rows={4}
-            defaultValue={currentPlannedEvent.description}
+            id={ `${ formID }-${ FIELD.DESCRIPTION.name }` }
+            form={ formID }
+            name={ FIELD.DESCRIPTION.name }
+            rows={ 4 }
+            defaultValue={ currentPlannedEvent.description }
           >
-            {FIELD.DESCRIPTION.label}
+            { FIELD.DESCRIPTION.label }
           </InputSectionDescription>
         </>
-      )}
+      ) }
     </Form>
   );
 }

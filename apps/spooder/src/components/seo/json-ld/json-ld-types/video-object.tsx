@@ -8,7 +8,7 @@ interface IProps {
   jsonLD: IVideoObjectJSONLD;
 }
 
-export function VideoObjectJSONLD({ jsonLD }: IProps) {
+export function VideoObjectJSONLD( { jsonLD }: IProps ) {
   const { t } = useTranslation();
   const {
     actor: actors,
@@ -25,145 +25,150 @@ export function VideoObjectJSONLD({ jsonLD }: IProps) {
   return (
     <>
       <DescriptionSection
-        dKey={t(
-          (t) => t.seo["json-ld-overview"]["type-overview"]["video-object"].url,
-        )}
-        dValue={url}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ]
+              .url,
+        ) }
+        dValue={ url }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["video-object"].name,
-        )}
-        dValue={name}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ]
+              .name,
+        ) }
+        dValue={ name }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["video-object"].duration,
-        )}
-        dValue={duration}
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ]
+              .duration,
+        ) }
+        dValue={ duration }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["video-object"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ][
               "thumbnail-url"
             ],
-        )}
-        dValue={thumbnailUrl}
+        ) }
+        dValue={ thumbnailUrl }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["video-object"]
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ]
               .description,
-        )}
-        dValue={description}
+        ) }
+        dValue={ description }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["video-object"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ][
               "upload-date"
             ],
-        )}
-        dValue={uploadDate}
+        ) }
+        dValue={ uploadDate }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["video-object"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ][
               "is-family-friendly"
             ],
-        )}
-        dValue={isFamilyFriendly}
+        ) }
+        dValue={ isFamilyFriendly }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
       <DescriptionSection
-        dKey={t(
-          (t) =>
-            t.seo["json-ld-overview"]["type-overview"]["video-object"][
+        dKey={ t(
+          ( t ) =>
+            t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ][
               "content-url"
             ],
-        )}
-        dValue={contentUrl}
+        ) }
+        dValue={ contentUrl }
         isOptional
         isKeyPreformatted
         isValuePreformatted
       />
 
-      {!actors ? undefined : (
+      { ! actors ? undefined : (
         <DescriptionSection
-          dKey={t(
-            (t) =>
-              t.seo["json-ld-overview"]["type-overview"]["video-object"].actors,
-          )}
+          dKey={ t(
+            ( t ) =>
+              t.seo[ "json-ld-overview" ][ "type-overview" ][ "video-object" ]
+                .actors,
+          ) }
           dValue={
-            <Details summary={actors.length}>
+            <Details summary={ actors.length }>
               <OneOrManyItems
-                item={actors}
-                itemElement={({ "@type": type, name }) => (
+                item={ actors }
+                itemElement={ ( { "@type": type, name } ) => (
                   <DescriptionList isNested>
                     <DescriptionSection
-                      dKey={t(
-                        (t) =>
-                          t.seo["json-ld-overview"]["type-overview"][
+                      dKey={ t(
+                        ( t ) =>
+                          t.seo[ "json-ld-overview" ][ "type-overview" ][
                             "video-object"
-                          ]["actor-type"],
-                      )}
-                      dValue={type}
+                          ][ "actor-type" ],
+                      ) }
+                      dValue={ type }
                       isOptional
                       isKeyPreformatted
                       isValuePreformatted
                     />
                     <DescriptionSection
-                      dKey={t(
-                        (t) =>
-                          t.seo["json-ld-overview"]["type-overview"][
+                      dKey={ t(
+                        ( t ) =>
+                          t.seo[ "json-ld-overview" ][ "type-overview" ][
                             "video-object"
-                          ]["actor-name"],
-                      )}
-                      dValue={name}
+                          ][ "actor-name" ],
+                      ) }
+                      dValue={ name }
                       isOptional
                       isKeyPreformatted
                       isValuePreformatted
                     />
                   </DescriptionList>
-                )}
+                ) }
               />
             </Details>
           }
           isKeyPreformatted
         />
-      )}
+      ) }
     </>
   );
 }

@@ -6,12 +6,12 @@ interface ILanguageParams {
   language?: string;
 }
 
-export function getLanguage<Params extends ILanguageParams>(
+export function getLanguage< Params extends ILanguageParams >(
   params: Params,
 ): ILocale {
   const language = params.language ?? DEFAULT_LANGUAGE;
 
-  if (!isSupportedLanguage(language)) {
+  if ( ! isSupportedLanguage( language ) ) {
     throw new NotFoundError();
   }
 

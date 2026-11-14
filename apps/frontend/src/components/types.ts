@@ -4,12 +4,12 @@ import type { ILocale } from "#translation";
 /**
  * Base props for components.
  */
-export type IBaseComponentProps<HTMLTag extends keyof JSX.IntrinsicElements> =
-  Omit<ComponentPropsWithoutRef<HTMLTag>, "children">;
+export type IBaseComponentProps< HTMLTag extends keyof JSX.IntrinsicElements > =
+  Omit< ComponentPropsWithoutRef< HTMLTag >, "children" >;
 
 export type IBaseComponentPropsWithChildren<
   HTMLTag extends keyof JSX.IntrinsicElements,
-> = IBaseComponentProps<HTMLTag> & {
+> = IBaseComponentProps< HTMLTag > & {
   children?: ReactNode;
 };
 

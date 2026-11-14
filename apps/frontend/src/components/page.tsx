@@ -8,7 +8,7 @@ import type { IBaseComponentPropsWithChildren } from "./types";
 
 import styles from "./page.module.scss";
 
-interface IProps extends IBaseComponentPropsWithChildren<"section"> {
+interface IProps extends IBaseComponentPropsWithChildren< "section" > {
   title?: string;
   heading?: ReactNode;
   description?: string;
@@ -17,10 +17,10 @@ interface IProps extends IBaseComponentPropsWithChildren<"section"> {
   canonicalURL?: string;
 }
 
-export const Page: ReturnType<typeof createBlockComponent<IProps>> =
-  createBlockComponent(styles, Component);
+export const Page: ReturnType< typeof createBlockComponent< IProps > > =
+  createBlockComponent( styles, Component );
 
-function Component({
+function Component( {
   title,
   heading,
   description,
@@ -29,50 +29,54 @@ function Component({
   canonicalURL,
   children,
   ...props
-}: IProps) {
-  const finalTitle = !title ? SITE_TITLE : `${title} | ${SITE_TITLE}`;
+}: IProps ) {
+  const finalTitle = ! title ? SITE_TITLE : `${ title } | ${ SITE_TITLE }`;
 
   return (
     <>
       <Head>
-        <title>{finalTitle}</title>
+        <title>{ finalTitle }</title>
 
-        {description && (
+        { description && (
           <meta
             key="description"
             property="description"
-            content={description}
+            content={ description }
           />
-        )}
+        ) }
 
-        <meta key="og:type" property="og:type" content={type} />
-        <meta key="og:site_name" property="og:site_name" content={SITE_TITLE} />
-        <meta key="og:title" property="og:title" content={finalTitle} />
+        <meta key="og:type" property="og:type" content={ type } />
+        <meta
+          key="og:site_name"
+          property="og:site_name"
+          content={ SITE_TITLE }
+        />
+        <meta key="og:title" property="og:title" content={ finalTitle } />
 
         <meta
           key="og:image"
           property="og:image"
-          content={imageURL ?? "/next.svg"}
+          content={ imageURL ?? "/next.svg" }
         />
 
-        {canonicalURL && (
+        { canonicalURL && (
           <meta
             key="og:url"
             property="og:url"
-            content={imageURL ?? "/next.svg"}
+            content={ imageURL ?? "/next.svg" }
           />
-        )}
+        ) }
 
         <link
           rel="icon"
-          href={`${SITE_BASE_PATHNAME}/favicon.ico`}
+          href={ `${ SITE_BASE_PATHNAME }/favicon.ico` }
           type="image/x-icon"
         />
       </Head>
 
-      {heading && <Heading level={1}>{heading}</Heading>}
+      { heading && <Heading level={ 1 }>{ heading }</Heading> }
 
-      <section {...props}>{children}</section>
+      <section { ...props }>{ children }</section>
     </>
   );
 }
