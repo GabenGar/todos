@@ -4,7 +4,7 @@
 
 1. Clone repo and switch to it:
 ```sh
-git clone https://github.com/GabenGar/todos.git
+git clone https://github.com/GabenGar/todos.git --branch spooder --single-branch
 cd todos
 ```
 
