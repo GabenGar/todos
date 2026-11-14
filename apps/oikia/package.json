@@ -12,7 +12,6 @@
     "dev": "node ./scripts/dev.js",
     "lint": "biome lint ./src",
     "format": "biome format --write ./src",
-    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && react-router typegen && tsc --build",
     "develop-database-purge": "node scripts/develop/database/purge.mjs"
   },
   "imports": {
