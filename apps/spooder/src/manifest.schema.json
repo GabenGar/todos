@@ -44,8 +44,9 @@
               "type": "string"
             },
             "strict_min_version": {
-              "description": "Minimum version of Gecko to support.",
-              "type": "string"
+              "description": "Minimum version of Gecko to support. Do note the modern manifest requires a minimum version of 140 to support \"browser_specific_settings.gecko.data_collection_permissions\".",
+              "type": "string",
+              "default": "140"
             },
             "strict_max_version": {
               "description": "Maximum version of Gecko to support.",
@@ -110,7 +111,13 @@
           "description": "For the Android version of Firefox.",
           "type": "object",
           "additionalProperties": false,
-          "properties": {}
+          "properties": {
+            "strict_min_version": {
+              "description": "Minimum version of Gecko for Android to support. Do note the modern manifest requires a minimum version of 142 to support \"browser_specific_settings.gecko.data_collection_permissions\".",
+              "type": "string",
+              "default": "142"
+            }
+          }
         }
       }
     },
