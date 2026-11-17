@@ -1,0 +1,10 @@
+@use "../styles/sass/variables.scss" as *;
+
+.block {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.progress {
+}

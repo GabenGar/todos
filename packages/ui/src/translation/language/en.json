@@ -1,6 +1,8 @@
 {
   "form": {
     "state": {
+      "initializing": "Initializing...",
+      "ready": "Ready for submit",
       "submit": "Submit",
       "submitting": "Submitting..."
     }
@@ -57,7 +59,8 @@
     "name": "Name",
     "type": "Type",
     "size": "Size",
-    "last-modified": "Last modification date"
+    "last-modified": "Last modification date",
+    "hashes": "Hashes"
   },
   "loading": {
     "loading": "Loading..."

@@ -1,11 +1,12 @@
-import { type ReactNode, Suspense, useState } from "react";
+import { type ReactNode, Suspense, useEffect, useState } from "react";
 import { ButtonSubmit } from "@repo/ui/buttons";
 import { createBlockComponent } from "@repo/ui/meta";
 import { isError, validateError } from "#errors";
 import { Preformatted } from "#formatting";
-import { useTranslation } from "#hooks";
+import { useClient, useTranslation } from "#hooks";
 import { List, ListItem } from "#lists";
 import { Loading } from "#loading";
+import { type IProgress, ProgressBar } from "#progress";
 import { InputSection } from "../sections";
 import { Form } from "./form";
 import type { IFormEvent, IFormProps } from "./types";
@@ -24,7 +25,10 @@ export interface IFormClientProps< InputName extends string = string >
     | false
     | ( ( formID: string, isSubmitting: boolean ) => ReactNode );
   isResetOnSuccess?: boolean;
+  progress?: IProgress;
 }
+
+type IFormStatus = "initializing" | "ready" | "submitting";
 
 /**
  * Client-only form.
@@ -40,11 +44,21 @@ function Component< InputName extends string >( {
   onReset,
   isResetOnSuccess = true,
   children,
+  progress,
   ...props
 }: IFormClientProps< InputName > ) {
   const { t } = useTranslation();
-  const [ isSubmitting, switchSubmitting ] = useState( false );
+  const client = useClient();
+  const [ formStatus, changeFormStatus ] = useState< IFormStatus >(
+    ! client ? "initializing" : "ready",
+  );
   const [ errors, changeErrors ] = useState< ( Error | string )[] >();
+  const progressID = `${ id }-progress`;
+  const isSubmitting = formStatus === "submitting";
+
+  useEffect( () => {
+    changeFormStatus( ! client ? "initializing" : "ready" );
+  }, [ client ] );
 
   async function handleSubmit( event: IFormEvent< InputName > ) {
     event.preventDefault();
@@ -53,7 +67,7 @@ function Component< InputName extends string >( {
       return;
     }
 
-    switchSubmitting( true );
+    changeFormStatus( "submitting" );
     changeErrors( undefined );
 
     try {
@@ -66,7 +80,7 @@ function Component< InputName extends string >( {
       validateError( error );
       changeErrors( [ error ] );
     } finally {
-      switchSubmitting( false );
+      changeFormStatus( "ready" );
     }
   }
 
@@ -76,11 +90,11 @@ function Component< InputName extends string >( {
     }
 
     try {
-      switchSubmitting( true );
+      changeFormStatus( "submitting" );
       await onReset?.( event );
       ( event.target as HTMLFormElement ).reset();
     } finally {
-      switchSubmitting( false );
+      changeFormStatus( "ready" );
     }
   }
 
@@ -108,6 +122,16 @@ function Component< InputName extends string >( {
               </List>
             ) }
 
+            <InputSection>
+              <ProgressBar
+                id={ progressID }
+                current={ progress?.current ?? 0 }
+                total={ progress?.total ?? 1 }
+              >
+                { t( ( t ) => t.form.state[ formStatus ] ) }
+              </ProgressBar>
+            </InputSection>
+
             {
               // don't render the button at all if `false`
               submitButton === false ? undefined : (
@@ -119,9 +143,7 @@ function Component< InputName extends string >( {
                       viewType={ isNested ? "button" : "submit" }
                       disabled={ isSubmitting }
                     >
-                      { ! isSubmitting
-                        ? t( ( t ) => t.form.state.submit )
-                        : t( ( t ) => t.form.state.submitting ) }
+                      { t( ( t ) => t.form.state.submit ) }
                     </ButtonSubmit>
                   ) : (
                     <CustomButton

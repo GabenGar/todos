@@ -5,6 +5,7 @@ import { Preformatted } from "#formatting";
 import { useTranslation } from "#hooks";
 import { ListItem } from "#lists";
 import { DigitalSize } from "#numbers";
+import { parseString } from "#strings";
 //
 
 import styles from "./item.module.scss";
@@ -17,6 +18,7 @@ export function FileItem( { file }: IProps ) {
   const { t } = useTranslation();
   const { type, name, size, lastModified } = file;
   const lastModifiedDateTime = toISODateTime( new Date( lastModified ) );
+  const parsedType = parseString( type );
 
   return (
     <ListItem className={ styles.file }>
@@ -24,7 +26,7 @@ export function FileItem( { file }: IProps ) {
         <DescriptionList>
           <DescriptionSection
             dKey={ t( ( t ) => t.file.type ) }
-            dValue={ type }
+            dValue={ parsedType }
             isKeyPreformatted
             isValuePreformatted
             isHorizontal
