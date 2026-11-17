@@ -5,6 +5,7 @@ import {
   OverviewFooter,
   OverviewHeader,
 } from "@repo/ui/articles";
+import { ButtonCopy } from "#buttons";
 import { DateTimeView, toISODateTime } from "#dates";
 import { DescriptionList, DescriptionSection } from "#description-list";
 import { Preformatted } from "#formatting";
@@ -12,9 +13,8 @@ import { Heading } from "#headings";
 import { useTranslation } from "#hooks";
 import { createBlockComponent } from "#meta";
 import { DigitalSize } from "#numbers";
-import type { IFileOverview } from "./types";
 import { parseString } from "#strings";
-import { ButtonCopy } from "#buttons";
+import type { IFileOverview } from "./types";
 
 interface IProps extends IOverviewProps {
   overview: IFileOverview;

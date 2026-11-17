@@ -1,6 +1,8 @@
 {
   "form": {
     "state": {
+      "initializing": "Initializing...",
+      "ready": "Ready for submit",
       "submit": "Submit",
       "submitting": "Submitting..."
     }

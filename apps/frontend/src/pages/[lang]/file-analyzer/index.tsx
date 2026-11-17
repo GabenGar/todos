@@ -3,7 +3,8 @@ import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
 import { InputSectionFile } from "@repo/ui/forms/sections";
-import { calculteHashes } from "@repo/ui/hashes";
+import { calculateHashes } from "@repo/ui/hashes";
+import type { IProgress } from "@repo/ui/progress";
 import { Page } from "#components";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
@@ -16,7 +17,7 @@ function QRCodeReaderPage() {
   const [ fileOverview, changeFileOverview ] = useState< IFileOverview >();
   const title = t( ( t ) => t.title );
   const heading = t( ( t ) => t.heading );
-  const formID = "file-analyzer"
+  const formID = "file-analyzer";
 
   return (
     <Page heading={ heading } title={ title }>
@@ -51,10 +52,33 @@ interface IFileProps {
 
 function FileForm( { id, onSuccess }: IFileProps ) {
   const { t } = usePageTranslation( namespace );
+  const [ progress, changeProgress ] = useState< IProgress >();
   const FIELD = {
     FILE: { name: "file", label: t( ( t ) => t.form.label ) },
   } as const;
   type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
+
+  async function handleProgress( current: number, total: number ) {
+    if ( ! progress ) {
+      changeProgress( { current, total } );
+      return;
+    }
+
+    if ( current === progress.current ) {
+      return;
+    }
+
+    const currentRatio = progress.current / total;
+    const nextRatio = current / total;
+    const increment = nextRatio - currentRatio;
+    const incrementThreshold = 0.5;
+
+    if ( increment < incrementThreshold ) {
+      return;
+    }
+
+    changeProgress( { current, total } );
+  }
 
   async function handleSubmit( event: IFormEvent< IFieldName > ) {
     const filesInput = event.currentTarget.elements.file;
@@ -66,15 +90,20 @@ function FileForm( { id, onSuccess }: IFileProps ) {
 
     // biome-ignore lint/style/noNonNullAssertion: blah
     const file = files.item( 0 )!;
-    const hashes = await calculteHashes( file );
+
+    changeProgress( { current: 0, total: file.size } );
+
+    const hashes = await calculateHashes( file, handleProgress );
     const overview = { file, hashes } satisfies IFileOverview;
 
     await onSuccess( overview );
+    await changeProgress( undefined );
   }
 
   return (
     <FormClient< IFieldName >
       id={ id }
+      progress={ progress }
       onSubmit={ handleSubmit }
       submitButton={ ( _, isSubmitting ) =>
         t( ( t ) => ( isSubmitting ? t.form.submitting : t.form.submit ) )
