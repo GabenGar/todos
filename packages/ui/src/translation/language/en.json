@@ -57,7 +57,8 @@
     "name": "Name",
     "type": "Type",
     "size": "Size",
-    "last-modified": "Last modification date"
+    "last-modified": "Last modification date",
+    "hashes": "Hashes"
   },
   "loading": {
     "loading": "Loading..."

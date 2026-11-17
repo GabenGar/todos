@@ -3,6 +3,7 @@ import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
 import { InputSectionFile } from "@repo/ui/forms/sections";
+import { calculteHashes } from "@repo/ui/hashes";
 import { Page } from "#components";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
@@ -15,7 +16,7 @@ function QRCodeReaderPage() {
   const [ fileOverview, changeFileOverview ] = useState< IFileOverview >();
   const title = t( ( t ) => t.title );
   const heading = t( ( t ) => t.heading );
-  const formID = "file-analyzer";
+  const formID = "file-analyzer"
 
   return (
     <Page heading={ heading } title={ title }>
@@ -65,7 +66,8 @@ function FileForm( { id, onSuccess }: IFileProps ) {
 
     // biome-ignore lint/style/noNonNullAssertion: blah
     const file = files.item( 0 )!;
-    const overview = { file } satisfies IFileOverview;
+    const hashes = await calculteHashes( file );
+    const overview = { file, hashes } satisfies IFileOverview;
 
     await onSuccess( overview );
   }
