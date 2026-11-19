@@ -1,12 +1,13 @@
 import { type ReactNode, Suspense, useEffect, useState } from "react";
+import { isError, validateError } from "@repo/core/errors";
+import type { IProgress } from "@repo/core/progress";
 import { ButtonSubmit } from "@repo/ui/buttons";
 import { createBlockComponent } from "@repo/ui/meta";
-import { isError, validateError } from "#errors";
 import { Preformatted } from "#formatting";
 import { useClient, useTranslation } from "#hooks";
 import { List, ListItem } from "#lists";
 import { Loading } from "#loading";
-import { type IProgress, ProgressBar } from "#progress";
+import { ProgressBar } from "#progress";
 import { InputSection } from "../sections";
 import { Form } from "./form";
 import type { IFormEvent, IFormProps } from "./types";

@@ -1,3 +1,5 @@
+export type { IICheckBoxInputProps } from "./checkbox";
+export { CheckBoxInput } from "./checkbox";
 export { type IInputDateTimeProps, InputDateTime } from "./datetime/datetime";
 export type { IInputFileProps } from "./file";
 export { InputFile } from "./file";

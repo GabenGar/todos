@@ -4,7 +4,10 @@ import type { IProgress } from "@repo/core/progress";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
-import { InputSectionFile } from "@repo/ui/forms/sections";
+import {
+  InputSectionCheckBox,
+  InputSectionFile,
+} from "@repo/ui/forms/sections";
 import { Page } from "#components";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
@@ -54,7 +57,11 @@ function FileForm( { id, onSuccess }: IFileProps ) {
   const { t } = usePageTranslation( namespace );
   const [ progress, changeProgress ] = useState< IProgress >();
   const FIELD = {
-    FILE: { name: "file", label: t( ( t ) => t.form.label ) },
+    FILE: { name: "file", label: t( ( t ) => t.form.file.label ) },
+    SHOW_PROGRESS: {
+      name: "is-showing-progress",
+      label: t( ( t ) => t.form["show-progress"].label ),
+    },
   } as const;
   type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
@@ -97,7 +104,7 @@ function FileForm( { id, onSuccess }: IFileProps ) {
     const overview = { file, hashes } satisfies IFileOverview;
 
     await onSuccess( overview );
-    await changeProgress( undefined );
+    changeProgress( undefined );
   }
 
   return (
@@ -110,14 +117,25 @@ function FileForm( { id, onSuccess }: IFileProps ) {
       }
     >
       { ( formID ) => (
-        <InputSectionFile
-          id={ `${ formID }-${ FIELD.FILE.name }` }
-          form={ formID }
-          name={ FIELD.FILE.name }
-          label={ FIELD.FILE.label }
-          multiple={ false }
-          required
-        />
+        <>
+          <InputSectionFile
+            id={ `${ formID }-${ FIELD.FILE.name }` }
+            form={ formID }
+            name={ FIELD.FILE.name }
+            label={ FIELD.FILE.label }
+            multiple={ false }
+            required
+          />
+
+          <InputSectionCheckBox
+            id={ `${ formID }-${ FIELD.SHOW_PROGRESS.name }` }
+            form={ formID }
+            name={ FIELD.SHOW_PROGRESS.name }
+            defaultChecked
+          >
+            { FIELD.SHOW_PROGRESS.label }
+          </InputSectionCheckBox>
+        </>
       ) }
     </FormClient>
   );

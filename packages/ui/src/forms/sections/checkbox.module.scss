@@ -1,0 +1,17 @@
+@use "@repo/ui/styles/sass/variables" as *;
+
+.block {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: $size-normal;
+}
+
+.input {
+  cursor: pointer;
+  width: unset;
+}
+
+.label {
+  padding: 0
+}

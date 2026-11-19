@@ -1,2 +1,2 @@
-export { calculateHashes } from "./calculate-hashes";
-export type { IHashData } from "./types";
+export { calculateHashes } from "./calculate-hashes.js";
+export type { IHashData } from "./types.js";

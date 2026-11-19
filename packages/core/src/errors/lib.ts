@@ -1,4 +1,4 @@
-import { UnknownError } from "./unknown";
+import { UnknownError } from "./unknown.js";
 
 export function isError( error: unknown ): error is Error {
   return error instanceof Error;
