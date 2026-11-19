@@ -1,0 +1,54 @@
+{
+  "name": "@repo/core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "biome lint ./ && tsc --noEmit",
+    "format": "biome format --write ./src",
+    "check": "biome check --formatter-enabled=false --linter-enabled=false --write && tsc --noEmit"
+  },
+  "exports": {
+    "./translation": {
+      "types": "./src/translation/lib/index.ts",
+      "default": "./dist/translation/lib/index.js"
+    },
+    "./translation/*": {
+      "types": "./src/translation/language/*",
+      "default": "./dist/translation/language/*"
+    },
+    "./*": {
+      "types": "./src/*/index.ts",
+      "default": "./dist/*/index.js"
+    }
+  },
+  "imports": {
+    "#translation": {
+      "types": "./src/translation/lib/index.ts",
+      "default": "./dist/translation/lib/index.js"
+    },
+    "#translation/*": {
+      "types":"./src/translation/language/*",
+      "default": "./src/translation/language/*"
+    },
+    "#*": {
+      "types": "./src/*/index.ts",
+      "default": "./src/*/index.js"
+    }
+  },
+  "dependencies": {
+    "hash-wasm": "^4.13.0",
+    "i18next": "27.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.7",
+    "@repo/biome-config": "*",
+    "@types/node": "^22.20.4",
+    "typescript": "6.0.3"
+  }
+}

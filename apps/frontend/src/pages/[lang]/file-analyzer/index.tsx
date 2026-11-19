@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { calculateHashes } from "@repo/core/hashes";
+import type { IProgress } from "@repo/core/progress";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
 import { InputSectionFile } from "@repo/ui/forms/sections";
-import { calculateHashes } from "@repo/ui/hashes";
-import type { IProgress } from "@repo/ui/progress";
 import { Page } from "#components";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";

@@ -7,7 +7,7 @@ import {
   type IHasher,
 } from "hash-wasm";
 import type { IProgressFunction } from "#progress";
-import type { IHashData } from "./types";
+import type { IHashData } from "./types.js";
 
 export async function calculateHashes(
   input: File,

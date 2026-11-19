@@ -54,7 +54,12 @@
       "outputs": [ "out/service-worker.js", "out/service-worker.js.map" ]
     },
     "dev": {
-      "with": [ "dev-workers", "@repo/webpack#dev", "@repo/nodejs#dev" ]
+      "with": [
+        "dev-workers",
+        "@repo/webpack#dev",
+        "@repo/nodejs#dev",
+        "@repo/core#dev"
+      ]
     },
     "dev-workers": {
       "persistent": true
