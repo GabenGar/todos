@@ -60,7 +60,7 @@ function FileForm( { id, onSuccess }: IFileProps ) {
     FILE: { name: "file", label: t( ( t ) => t.form.file.label ) },
     SHOW_PROGRESS: {
       name: "is-showing-progress",
-      label: t( ( t ) => t.form["show-progress"].label ),
+      label: t( ( t ) => t.form[ "show-progress" ].label ),
     },
   } as const;
   type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
@@ -88,6 +88,8 @@ function FileForm( { id, onSuccess }: IFileProps ) {
   }
 
   async function handleSubmit( event: IFormEvent< IFieldName > ) {
+    const elements = event.currentTarget.elements;
+    const isProgressShown = elements[ "is-showing-progress" ].checked;
     const filesInput = event.currentTarget.elements.file;
     const files = filesInput.files;
 
@@ -98,9 +100,12 @@ function FileForm( { id, onSuccess }: IFileProps ) {
     // biome-ignore lint/style/noNonNullAssertion: blah
     const file = files.item( 0 )!;
 
-    changeProgress( { current: 0, total: file.size } );
+    isProgressShown && changeProgress( { current: 0, total: file.size } );
 
-    const hashes = await calculateHashes( file, handleProgress );
+    const hashes = await calculateHashes(
+      file,
+      ! isProgressShown ? undefined : handleProgress,
+    );
     const overview = { file, hashes } satisfies IFileOverview;
 
     await onSuccess( overview );
@@ -110,7 +115,6 @@ function FileForm( { id, onSuccess }: IFileProps ) {
   return (
     <FormClient< IFieldName >
       id={ id }
-      progress={ progress }
       onSubmit={ handleSubmit }
       submitButton={ ( _, isSubmitting ) =>
         t( ( t ) => ( isSubmitting ? t.form.submitting : t.form.submit ) )
