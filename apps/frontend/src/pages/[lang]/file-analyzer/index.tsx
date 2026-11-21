@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { calculateHashes } from "@repo/core/hashes";
+import type { IProgress } from "@repo/core/progress";
+import { sleep } from "@repo/core/utils";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
-import { InputSectionFile } from "@repo/ui/forms/sections";
-import { calculateHashes } from "@repo/ui/hashes";
-import type { IProgress } from "@repo/ui/progress";
+import {
+  InputSectionCheckBox,
+  InputSectionFile,
+} from "@repo/ui/forms/sections";
 import { Page } from "#components";
 import { usePageTranslation } from "#hooks";
 import { createGetStaticProps, getStaticExportPaths } from "#server";
@@ -54,13 +58,18 @@ function FileForm( { id, onSuccess }: IFileProps ) {
   const { t } = usePageTranslation( namespace );
   const [ progress, changeProgress ] = useState< IProgress >();
   const FIELD = {
-    FILE: { name: "file", label: t( ( t ) => t.form.label ) },
+    FILE: { name: "file", label: t( ( t ) => t.form.file.label ) },
+    SHOW_PROGRESS: {
+      name: "is-showing-progress",
+      label: t( ( t ) => t.form[ "show-progress" ].label ),
+    },
   } as const;
   type IFieldName = ( typeof FIELD )[ keyof typeof FIELD ][ "name" ];
 
   async function handleProgress( current: number, total: number ) {
     if ( ! progress ) {
       changeProgress( { current, total } );
+      await sleep();
       return;
     }
 
@@ -78,9 +87,12 @@ function FileForm( { id, onSuccess }: IFileProps ) {
     }
 
     changeProgress( { current, total } );
+    await sleep();
   }
 
   async function handleSubmit( event: IFormEvent< IFieldName > ) {
+    const elements = event.currentTarget.elements;
+    const isProgressShown = elements[ "is-showing-progress" ].checked;
     const filesInput = event.currentTarget.elements.file;
     const files = filesInput.files;
 
@@ -91,33 +103,46 @@ function FileForm( { id, onSuccess }: IFileProps ) {
     // biome-ignore lint/style/noNonNullAssertion: blah
     const file = files.item( 0 )!;
 
-    changeProgress( { current: 0, total: file.size } );
+    isProgressShown && changeProgress( { current: 0, total: file.size } );
 
-    const hashes = await calculateHashes( file, handleProgress );
+    const hashes = await calculateHashes(
+      file,
+      ! isProgressShown ? undefined : handleProgress,
+    );
     const overview = { file, hashes } satisfies IFileOverview;
 
     await onSuccess( overview );
-    await changeProgress( undefined );
+    changeProgress( undefined );
   }
 
   return (
     <FormClient< IFieldName >
       id={ id }
-      progress={ progress }
       onSubmit={ handleSubmit }
       submitButton={ ( _, isSubmitting ) =>
         t( ( t ) => ( isSubmitting ? t.form.submitting : t.form.submit ) )
       }
     >
       { ( formID ) => (
-        <InputSectionFile
-          id={ `${ formID }-${ FIELD.FILE.name }` }
-          form={ formID }
-          name={ FIELD.FILE.name }
-          label={ FIELD.FILE.label }
-          multiple={ false }
-          required
-        />
+        <>
+          <InputSectionFile
+            id={ `${ formID }-${ FIELD.FILE.name }` }
+            form={ formID }
+            name={ FIELD.FILE.name }
+            label={ FIELD.FILE.label }
+            multiple={ false }
+            required
+          />
+
+          <InputSectionCheckBox
+            id={ `${ formID }-${ FIELD.SHOW_PROGRESS.name }` }
+            form={ formID }
+            name={ FIELD.SHOW_PROGRESS.name }
+            defaultChecked
+          >
+            { FIELD.SHOW_PROGRESS.label }
+          </InputSectionCheckBox>
+        </>
       ) }
     </FormClient>
   );

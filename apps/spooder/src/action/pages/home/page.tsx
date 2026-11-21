@@ -2,12 +2,13 @@ import { useLoaderData } from "react-router";
 import browser, { type Scripting } from "webextension-polyfill";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { Details } from "@repo/ui/details";
-import { ErrorView, isError, UnknownError } from "@repo/ui/errors";
+import { ErrorView } from "@repo/ui/errors";
 import { Page } from "@repo/ui/pages";
 import { SEOView } from "#components/seo";
 import { useTranslation } from "#hooks";
 import { type IMessage, parseMessage } from "#lib/messages";
 import { getCurrentTabID } from "#lib/tabs";
+import { isError, UnknownError } from "@repo/core/errors";
 
 export function HomePage() {
   const { t } = useTranslation();

@@ -1,12 +1,13 @@
 import { type ReactNode, Suspense, useEffect, useState } from "react";
+import { isError, validateError } from "@repo/core/errors";
 import { ButtonSubmit } from "@repo/ui/buttons";
 import { createBlockComponent } from "@repo/ui/meta";
-import { isError, validateError } from "#errors";
 import { Preformatted } from "#formatting";
 import { useClient, useTranslation } from "#hooks";
 import { List, ListItem } from "#lists";
 import { Loading } from "#loading";
-import { type IProgress, ProgressBar } from "#progress";
+import { ProgressBar } from "#progress";
+import { StopWatch } from "#timer";
 import { InputSection } from "../sections";
 import { Form } from "./form";
 import type { IFormEvent, IFormProps } from "./types";
@@ -25,10 +26,13 @@ export interface IFormClientProps< InputName extends string = string >
     | false
     | ( ( formID: string, isSubmitting: boolean ) => ReactNode );
   isResetOnSuccess?: boolean;
-  progress?: IProgress;
+  progressElement?: () => ReactNode;
 }
 
-type IFormStatus = "initializing" | "ready" | "submitting";
+type IFormState =
+  | { status: "initializing" }
+  | { status: "ready"; startTime?: number; endTime?: number }
+  | { status: "submitting"; startTime: number };
 
 /**
  * Client-only form.
@@ -44,20 +48,24 @@ function Component< InputName extends string >( {
   onReset,
   isResetOnSuccess = true,
   children,
-  progress,
+  progressElement,
   ...props
 }: IFormClientProps< InputName > ) {
   const { t } = useTranslation();
   const client = useClient();
-  const [ formStatus, changeFormStatus ] = useState< IFormStatus >(
-    ! client ? "initializing" : "ready",
+  const [ formState, changeFormState ] = useState< IFormState >(
+    ! client ? { status: "initializing" } : { status: "ready" },
   );
   const [ errors, changeErrors ] = useState< ( Error | string )[] >();
   const progressID = `${ id }-progress`;
-  const isSubmitting = formStatus === "submitting";
+  const isInitializing = formState.status === "initializing";
+  const isSubmitting = formState.status === "submitting";
+  const isReady = formState.status === "ready";
 
   useEffect( () => {
-    changeFormStatus( ! client ? "initializing" : "ready" );
+    changeFormState(
+      ! client ? { status: "initializing" } : { status: "ready" },
+    );
   }, [ client ] );
 
   async function handleSubmit( event: IFormEvent< InputName > ) {
@@ -67,7 +75,8 @@ function Component< InputName extends string >( {
       return;
     }
 
-    changeFormStatus( "submitting" );
+    const startTime = Date.now();
+    changeFormState( { status: "submitting", startTime } );
     changeErrors( undefined );
 
     try {
@@ -80,7 +89,7 @@ function Component< InputName extends string >( {
       validateError( error );
       changeErrors( [ error ] );
     } finally {
-      changeFormStatus( "ready" );
+      changeFormState( { status: "ready", startTime, endTime: Date.now() } );
     }
   }
 
@@ -90,11 +99,11 @@ function Component< InputName extends string >( {
     }
 
     try {
-      changeFormStatus( "submitting" );
+      changeFormState( { status: "submitting", startTime: Date.now() } );
       await onReset?.( event );
       ( event.target as HTMLFormElement ).reset();
     } finally {
-      changeFormStatus( "ready" );
+      changeFormState( { status: "ready", endTime: Date.now() } );
     }
   }
 
@@ -123,13 +132,29 @@ function Component< InputName extends string >( {
             ) }
 
             <InputSection>
-              <ProgressBar
-                id={ progressID }
-                current={ progress?.current ?? 0 }
-                total={ progress?.total ?? 1 }
-              >
-                { t( ( t ) => t.form.state[ formStatus ] ) }
-              </ProgressBar>
+              { progressElement ? (
+                progressElement()
+              ) : (
+                <ProgressBar
+                  id={ progressID }
+                  current={ isInitializing || isSubmitting ? undefined : 0 }
+                  total={ 1 }
+                >
+                  <span className={ styles.progress }>
+                    <span>
+                      { t( ( t ) => t.form.state[ formState.status ] ) }
+                    </span>
+                    { isInitializing ? (
+                      0
+                    ) : (
+                      <StopWatch
+                        startTime={ formState.startTime }
+                        endTime={ ! isReady ? undefined : formState.endTime }
+                      />
+                    ) }
+                  </span>
+                </ProgressBar>
+              ) }
             </InputSection>
 
             {

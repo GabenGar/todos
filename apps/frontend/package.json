@@ -40,6 +40,7 @@
   "dependencies": {
     "@hyperjump/json-schema": "1.18.0",
     "@next/env": "16.4.6",
+    "@repo/core": "*",
     "@repo/nodejs": "*",
     "@repo/ui": "*",
     "@repo/webpack": "*",

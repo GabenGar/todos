@@ -21,6 +21,14 @@
       "path": "apps/spooder"
     },
     {
+      "name": "oikia",
+      "path": "apps/oikia"
+    },
+    {
+      "name": "@repo/core",
+      "path": "packages/core"
+    },
+    {
       "name": "@repo/ui",
       "path": "packages/ui"
     },

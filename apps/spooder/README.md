@@ -31,21 +31,26 @@ npm run build
 - `The Function constructor is eval.`
 
 If the offending segment looks like this:
+
 ```javascript
-/******/ 	__webpack_require__.g = (function() {
-/******/ 		if (typeof globalThis === 'object') return globalThis;
-/******/ 		try {
-/******/ 			return this || new Function('return this')();
-/******/ 		} catch (e) {
-/******/ 			if (typeof window === 'object') return window;
-/******/ 		}
-/******/ 	})();
+/******/ __webpack_require__.g = ( function () {
+  /******/ if ( typeof globalThis === "object" ) return globalThis;
+  /******/ try {
+    /******/ return this || new Function( "return this" )();
+    /******/
+  } catch ( e ) {
+    /******/ if ( typeof window === "object" ) return window;
+    /******/
+  }
+  /******/
+} )();
 ```
 This is some webpack-specific runtime stuff and we have to use webpack until the `"strict_min_version"` of firefox supports static ESM imports (new-ish bundlers leave them by default) in all possible extension contexts.
 
 - `Unsafe assignment to innerHTML`
 
 if the offending segment looks like this:
+
 ```javascript
 case "dangerouslySetInnerHTML":
   if (null != value) {
@@ -65,26 +70,34 @@ Then it's ReactJS implementation of [`dangerouslySetInnerHTML`][2] common prop. 
 - `Unsafe call to import for argument 0`
 
 If the offending segment looks like this:
+
 ```javascript
 //#region lib/dom/ssr/routeModules.ts
-async function loadRouteModule(route, routeModulesCache) {
-	if (route.id in routeModulesCache) return routeModulesCache[route.id];
-	try {
-		let routeModule = await import(
-			/* @vite-ignore */
-			/* webpackIgnore: true */
-			route.module
-);
-		routeModulesCache[route.id] = routeModule;
-		return routeModule;
-	} catch (error) {
-		console.error(`Error loading route module \`${route.module}\`, reloading page...`);
-		console.error(error);
-		if (window.__reactRouterContext && window.__reactRouterContext.isSpaMode && /* unsupported import.meta.hot */ undefined) // removed by dead control flow
-{}
-		window.location.reload();
-		return new Promise(() => {});
-	}
+async function loadRouteModule( route, routeModulesCache ) {
+  if ( route.id in routeModulesCache ) return routeModulesCache[ route.id ];
+  try {
+    let routeModule = await import(
+      /* @vite-ignore */
+      /* webpackIgnore: true */
+      route.module
+    );
+    routeModulesCache[ route.id ] = routeModule;
+    return routeModule;
+  } catch ( error ) {
+    console.error(
+      `Error loading route module \`${ route.module }\`, reloading page...`,
+    );
+    console.error( error );
+    if (
+      window.__reactRouterContext &&
+      window.__reactRouterContext.isSpaMode &&
+      /* unsupported import.meta.hot */ undefined
+    ) {
+      // removed by dead control flow
+    }
+    window.location.reload();
+    return new Promise( () => {} );
+  }
 }
 //#endregion
 ```

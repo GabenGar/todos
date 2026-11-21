@@ -4,6 +4,12 @@
   "form": {
     "label": "Файл",
     "submit": "Анализировать",
-    "submitting": "Анализируем..."
+    "submitting": "Анализируем...",
+    "file": {
+      "label": "Файл"
+    },
+    "show-progress": {
+      "label": "Показывать прогресс"
+    }
   }
 }

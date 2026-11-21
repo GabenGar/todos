@@ -50,7 +50,7 @@ async function createNextConfig( phase ) {
       // https://github.com/vercel/next.js/issues/71638#issuecomment-2454463904
       silenceDeprecations: [ "legacy-js-api" ],
     },
-    transpilePackages: [ "@repo/ui" ],
+    transpilePackages: [ "@repo/ui", "@repo/core" ],
     typedRoutes: true,
     crossOrigin: "anonymous",
     reactStrictMode: true,

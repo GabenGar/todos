@@ -1,3 +1,4 @@
+export { InputSectionCheckBox } from "./checkbox";
 export { InputSectionDatetime } from "./datetime/datetime";
 export { InputSectionFile } from "./file";
 export { InputSectionInteger } from "./number/integer";

@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 
 export type IFuncComponent< PropsType > = (
   props: PropsType,
   ref?: any,
-) => JSX.Element;
+) => ReactNode;
 
 export interface IBaseProps {
   className?: string;
