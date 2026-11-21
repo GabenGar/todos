@@ -1,8 +1,8 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.6.7/schema.json",
   "root": false,
-  "extends": ["@repo/biome-config/base"],
+  "extends": [ "@repo/biome-config/base" ],
   "files": {
-    "includes": ["**", "!**/dist", "!**/.tmp"]
+    "includes": [ "**", "!**/dist", "!**/.tmp" ]
   }
 }

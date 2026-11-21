@@ -33,7 +33,7 @@
       "default": "./dist/translation/lib/index.js"
     },
     "#translation/*": {
-      "types":"./src/translation/language/*",
+      "types": "./src/translation/language/*",
       "default": "./src/translation/language/*"
     },
     "#*": {

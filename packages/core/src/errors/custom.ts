@@ -6,7 +6,11 @@ export class CustomError extends Error {
     super( message, options );
 
     // Maintains proper stack trace for where our error was thrown (non-standard)
+    // biome-ignore lint/suspicious/noTsIgnore: just monorepo things
+    // @ts-ignore `@repo/ui` is upset over this
     if ( Error.captureStackTrace ) {
+      // biome-ignore lint/suspicious/noTsIgnore: just monorepo things
+      // @ts-ignore `@repo/ui` is upset over this
       Error.captureStackTrace( this, CustomError );
     }
   }

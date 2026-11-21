@@ -30,6 +30,7 @@ function Component( { startTime, endTime, ...props }: IProps ) {
       return;
     }
 
+    // @ts-ignore "frontend" workspace is upset over it
     id = setInterval( () => {
       changeCurrentTime( Date.now() - startTime );
     }, 1000 );
