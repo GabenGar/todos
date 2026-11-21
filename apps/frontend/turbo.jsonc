@@ -8,6 +8,7 @@
     },
     "build-pages": {
       "env": [ "NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL" ],
+      "dependsOn": ["@repo/core#build", "@repo/webpack#build"],
       "inputs": [
         ".env",
         ".env.production",
