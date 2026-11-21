@@ -7,7 +7,6 @@
       "dependsOn": [ "build-pages", "build-workers" ]
     },
     "build-pages": {
-      "dependsOn": [ "@repo/webpack#build" ],
       "env": [ "NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL" ],
       "inputs": [
         ".env",
