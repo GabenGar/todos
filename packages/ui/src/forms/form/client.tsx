@@ -75,7 +75,7 @@ function Component< InputName extends string >( {
       return;
     }
 
-    const startTime = Date.now()
+    const startTime = Date.now();
     changeFormState( { status: "submitting", startTime } );
     changeErrors( undefined );
 

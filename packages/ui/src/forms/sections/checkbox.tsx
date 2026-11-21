@@ -35,7 +35,7 @@ function Component( {
       <CheckBoxInput
         ref={ inputRef }
         id={ id }
-        className={styles.input}
+        className={ styles.input }
         form={ form }
         name={ name }
         required={ required }
@@ -43,7 +43,7 @@ function Component( {
         disabled={ disabled }
         defaultChecked={ defaultChecked }
       />
-      <Label className={styles.label} htmlFor={ id } separator={ "" }>
+      <Label className={ styles.label } htmlFor={ id } separator={ "" }>
         { children }
       </Label>
     </InputSection>
