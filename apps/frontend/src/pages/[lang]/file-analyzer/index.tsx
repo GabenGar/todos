@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { calculateHashes } from "@repo/core/hashes";
 import type { IProgress } from "@repo/core/progress";
+import { sleep } from "@repo/core/utils";
 import { Overview, OverviewBody, OverviewHeader } from "@repo/ui/articles";
 import { FileOverview, type IFileOverview } from "@repo/ui/files";
 import { FormClient, type IFormEvent } from "@repo/ui/forms";
@@ -68,6 +69,7 @@ function FileForm( { id, onSuccess }: IFileProps ) {
   async function handleProgress( current: number, total: number ) {
     if ( ! progress ) {
       changeProgress( { current, total } );
+      await sleep();
       return;
     }
 
@@ -85,6 +87,7 @@ function FileForm( { id, onSuccess }: IFileProps ) {
     }
 
     changeProgress( { current, total } );
+    await sleep();
   }
 
   async function handleSubmit( event: IFormEvent< IFieldName > ) {

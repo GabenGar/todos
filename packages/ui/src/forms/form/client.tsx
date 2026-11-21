@@ -75,7 +75,8 @@ function Component< InputName extends string >( {
       return;
     }
 
-    changeFormState( { status: "submitting", startTime: Date.now() } );
+    const startTime = Date.now()
+    changeFormState( { status: "submitting", startTime } );
     changeErrors( undefined );
 
     try {
@@ -88,7 +89,7 @@ function Component< InputName extends string >( {
       validateError( error );
       changeErrors( [ error ] );
     } finally {
-      changeFormState( { status: "ready", endTime: Date.now() } );
+      changeFormState( { status: "ready", startTime, endTime: Date.now() } );
     }
   }
 
@@ -144,14 +145,10 @@ function Component< InputName extends string >( {
                       { t( ( t ) => t.form.state[ formState.status ] ) }
                     </span>
                     { isInitializing ? (
-                      Date.now()
+                      0
                     ) : (
                       <StopWatch
-                        startTime={
-                          isInitializing
-                            ? Date.now()
-                            : ( formState.startTime ?? Date.now() )
-                        }
+                        startTime={ formState.startTime }
                         endTime={ ! isReady ? undefined : formState.endTime }
                       />
                     ) }

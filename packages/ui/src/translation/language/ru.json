@@ -2,7 +2,9 @@
   "form": {
     "state": {
       "submit": "Отправить",
-      "submitting": "Отправляем..."
+      "submitting": "Отправляем...",
+      "initializing": "Инициализируем...",
+      "ready": "Готовы к отправке"
     }
   },
   "input": {
